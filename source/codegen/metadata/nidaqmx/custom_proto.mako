@@ -1,30 +1,30 @@
-message AnalogPowerUpState {
+message AnalogPowerUpChannelsAndState {
   string channelNames = 1;
   double state = 2;
   PowerUpChannelType channelType = 3;
 }
 
-message ChannelNamesAndExpState {
-  string channelNames = 1;
+message WatchdogExpChannelsAndState {
+  string lines = 1;
   DigitalLineState expState = 2;
 }
 
 message DigitalPowerUpTypeAndChannel {
   string channelName = 1;
-  DigitalPowerUpChannelType state = 2;
+  PowerUpStates state = 2;
 }
 
-message DigitalPowerUpTypeAndChannels {
+message DigitalPowerUpChannelsAndState {
   string channelNames = 1;
-  DigitalPowerUpChannelType state = 2;
+  PowerUpStates state = 2;
 }
 
-message DigitalPullUpPullDownStateAndChannel {
+message DigitalPullUpPullDownChannelsAndState {
   string channelNames = 1;
-  DigitalPullUpPullDownState state = 2;
+  ResistorState state = 2;
 }
 
-message PowerUpChannelTypeAndName {
+message AnalogPowerUpChannelAndType {
   string channelName = 1;
   PowerUpChannelType channelType = 2;
 }

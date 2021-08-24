@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 namespace niscope_grpc {
+const auto kErrorReadBufferTooSmall = -200229;
 
 struct DriverErrorException : std::runtime_error {
   DriverErrorException(int status) : std::runtime_error("") { status_ = status; }
@@ -449,17 +450,23 @@ void CheckStatus(int status)
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
 
-    ViInt32 number_of_coefficient_sets;
-    CheckStatus(library_->GetNormalizationCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets));
+    while (true) {
+      ViInt32 number_of_coefficient_sets;
+      CheckStatus(library_->GetNormalizationCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets));
 
-    std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
-    auto status = library_->GetNormalizationCoefficients(vi, channel_list, static_cast<ViInt32>(coefficient_info.size()), coefficient_info.data(), &number_of_coefficient_sets);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_number_of_coefficient_sets(number_of_coefficient_sets);
-      Copy(coefficient_info, response->mutable_coefficient_info());
+      std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
+      auto status = library_->GetNormalizationCoefficients(vi, channel_list, static_cast<ViInt32>(coefficient_info.size()), coefficient_info.data(), &number_of_coefficient_sets);
+      if (status == kErrorReadBufferTooSmall) {
+        // buffer is now too small, try again
+        continue;
+      }
+      response->set_status(status);
+      if (status == 0) {
+        response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+        Copy(coefficient_info, response->mutable_coefficient_info());
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -482,17 +489,24 @@ void CheckStatus(int status)
     ViSession vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
 
-    ViInt32 number_of_coefficient_sets;
-    CheckStatus(library_->GetScalingCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets));
+    while (true) {
+      ViInt32 number_of_coefficient_sets;
+      CheckStatus(library_->GetScalingCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets));
 
-    std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
-    auto status = library_->GetScalingCoefficients(vi, channel_list, static_cast<ViInt32>(coefficient_info.size()), coefficient_info.data(), &number_of_coefficient_sets);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_number_of_coefficient_sets(number_of_coefficient_sets);
-      Copy(coefficient_info, response->mutable_coefficient_info());
+      std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
+      auto status = library_->GetScalingCoefficients(vi, channel_list, static_cast<ViInt32>(coefficient_info.size()), coefficient_info.data(), &number_of_coefficient_sets);
+      if (status == kErrorReadBufferTooSmall) {
+        // buffer is now too small, try again
+        continue;
+      }
+      response->set_status(status);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+        Copy(coefficient_info, response->mutable_coefficient_info());
+      }
+      return ::grpc::Status::OK;
     }
-    return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

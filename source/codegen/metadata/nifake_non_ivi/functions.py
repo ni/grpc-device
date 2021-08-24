@@ -52,6 +52,31 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetMarbleAttributeInt32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'MarbleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': '10'
+                },
+                'type': 'int32[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'Init': {
         'init_method': True,
         'parameters': [
@@ -424,4 +449,20 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetColors': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'enum': 'BeautifulColor',
+                'name': 'colors',
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    }
 }

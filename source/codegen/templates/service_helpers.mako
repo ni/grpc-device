@@ -57,7 +57,9 @@ ${initialize_input_params(function_name, non_ivi_params)}\
 ${initialize_output_params(output_parameters)}\
 </%block>\
         status = library_->${function_name}(${service_helpers.create_args(parameters)});
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > ${common_helpers.camel_to_snake(size_param['cppName'])}) {
+        ## We cast status into ${common_helpers.camel_to_snake(size_param['cppName'])} above, so it's safe to cast
+        ## back to status's type here. (we do this to avoid a compiler warning)
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(${common_helpers.camel_to_snake(size_param['cppName'])})) {
           // buffer is now too small, try again
           continue;
         }
@@ -234,6 +236,8 @@ ${initialize_input_param(function_name, parameter, input_vararg_parameter)}\
 ${initialize_repeating_param(parameter, input_vararg_parameter)}
 % elif common_helpers.is_repeated_varargs_parameter(parameter):
 ${initialize_repeated_varargs_param(parameter)}
+% elif common_helpers.is_enum(parameter) and common_helpers.is_array(parameter['type']):
+${initialize_enum_array_input_param(function_name, parameter)}
 % elif common_helpers.is_enum(parameter):
 ${initialize_enum_input_param(function_name, parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
@@ -295,6 +299,26 @@ ${initialize_standard_input_param(function_name, parameter)}
       if (${parameter_name}.size() > ${max_vector_size}) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than ${max_vector_size} values for ${parameter["name"]} were specified");
       }
+</%def>
+
+
+## Initialize an enum array input parameter.
+## This is a straight copy and does not support all of the features of enum parameters 
+## (i.e. mapped enums, _raw fields, etc.)
+<%def name="initialize_enum_array_input_param(function_name, parameter)">\
+<%
+  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  field_name = common_helpers.camel_to_snake(parameter["name"])
+  element_type = service_helpers.get_c_element_type(parameter)
+%>\
+      auto ${parameter_name}_vector = std::vector<${element_type}>();
+      ${parameter_name}_vector.reserve(request->${field_name}().size());
+      std::transform(
+        request->${field_name}().begin(),
+        request->${field_name}().end(),
+        std::back_inserter(${parameter_name}_vector),
+        [](auto x) { return x; });
+      auto ${parameter_name} = ${parameter_name}_vector.data();
 </%def>
 
 ## Initialize an enum input parameter for an API call.
@@ -507,6 +531,9 @@ ${initialize_standard_input_param(function_name, parameter)}
       }
 %     elif service_helpers.is_output_array_that_needs_coercion(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size});
+%     elif common_helpers.is_enum(parameter):
+      response->mutable_${parameter_name}_raw()->Resize(${size}, 0);
+      ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}_raw()->mutable_data());
 ## uInt32 requires cast because of int vs long in that typedef vs uint32_t
 %     elif underlying_param_type in ['ViAddr', 'ViInt32', 'ViUInt32', 'ViUInt16', 'uInt32', 'int32']:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
@@ -554,6 +581,10 @@ ${initialize_standard_input_param(function_name, parameter)}
     mapped_enum_name = parameter["mapped-enum"]
     map_name = mapped_enum_name.lower() + "_output_map_"
     mapped_enum_iterator_name = parameter_name + "_omap_it"
+  is_array = common_helpers.is_array(parameter["type"])
+  is_string = common_helpers.is_string_arg(parameter)
+  uses_raw_output_as_read_buffer = is_array and not is_string
+  use_checked_enum_conversion = parameter.get("use_checked_enum_conversion", False)
 %>\
 %     if has_mapped_enum:
         auto ${mapped_enum_iterator_name} = ${map_name}.find(${parameter_name});
@@ -562,31 +593,40 @@ ${initialize_standard_input_param(function_name, parameter)}
         }
 %     endif
 %     if has_unmapped_enum:
-%       if common_helpers.is_array(parameter['type']) and common_helpers.is_string_arg(parameter):
+%       if use_checked_enum_conversion:
+        auto checked_convert_${parameter_name} = [](auto raw_value) {
+          bool raw_value_is_valid = ${namespace_prefix}${parameter["enum"]}_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<${namespace_prefix}${parameter["enum"]}>(valid_enum_value);
+        };
+%       endif
+%       if is_string:
         CopyBytesToEnums(${parameter_name}, response->mutable_${parameter_name}());
+%       elif uses_raw_output_as_read_buffer:
+<%
+      raw_response_field = f"response->{parameter_name}_raw()"
+      cast_x_to_enum = f"static_cast<{namespace_prefix}{parameter['enum']}>(x)"
+      checked_convert_x_to_enum = f"checked_convert_{parameter_name}(x)"
+      convert_x_to_enum = checked_convert_x_to_enum if use_checked_enum_conversion else cast_x_to_enum
+%>\
+${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
+${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_name=parameter_name, transform_x=convert_x_to_enum)}\
 %       elif parameter['type'] == 'ViReal64':
         if(${parameter_name} == (int)${parameter_name}) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
         }
 %       elif parameter.get("use_checked_enum_conversion", False):
-        bool ${parameter_name}_is_valid = ${namespace_prefix}${parameter["enum"]}_IsValid(${parameter_name});
-        auto ${parameter_name}_as_valid_enum_value = ${parameter_name}_is_valid ? ${parameter_name} : 0;
-        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}_as_valid_enum_value));
+        response->set_${parameter_name}(checked_convert_${parameter_name}(${parameter_name}));
 %       else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %       endif
 %     endif
+%     if not uses_raw_output_as_read_buffer: # Set data to raw, unless we *got* the data from raw.
         response->set_${parameter_name}_raw(${parameter_name});
+%     endif
 %   elif service_helpers.is_output_array_that_needs_coercion(parameter):
-        response->mutable_${parameter_name}()->Clear();
-        response->mutable_${parameter_name}()->Reserve(${common_helpers.get_size_expression(parameter)});
-        std::transform(
-          ${parameter_name}.begin(),
-          ${parameter_name}.end(),
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
-          [](auto x) { 
-              return x;
-          });
+${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
+${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x")}\
 %   elif common_helpers.is_array(parameter['type']):
 %     if common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
@@ -602,4 +642,21 @@ ${initialize_standard_input_param(function_name, parameter)}
         response->set_${parameter_name}(${parameter_name});
 %   endif
 % endfor
+</%def>
+
+## Allocate the response buffer using get_size_expression.
+<%def name="initialize_response_buffer(parameter_name, parameter)">\
+        response->mutable_${parameter_name}()->Clear();
+        response->mutable_${parameter_name}()->Reserve(${common_helpers.get_size_expression(parameter)});
+</%def>
+
+## Copy source_buffer to response->mutable_[parameter_name]() applying transform_x.
+<%def name="copy_to_response_with_transform(source_buffer, parameter_name, transform_x)">\
+        std::transform(
+          ${source_buffer}.begin(),
+          ${source_buffer}.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
+          [&](auto x) { 
+              return ${transform_x};
+          });
 </%def>

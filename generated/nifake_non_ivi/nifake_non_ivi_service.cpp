@@ -85,10 +85,51 @@ namespace nifake_non_ivi_grpc {
       auto status = library_->GetMarbleAttributeInt32(handle, attribute, &value);
       response->set_status(status);
       if (status == 0) {
-        bool value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(value);
-        auto value_as_valid_enum_value = value_is_valid ? value : 0;
-        response->set_value(static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(value_as_valid_enum_value));
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
+        };
+        response->set_value(checked_convert_value(value));
         response->set_value_raw(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetMarbleAttributeInt32Array(::grpc::ServerContext* context, const GetMarbleAttributeInt32ArrayRequest* request, GetMarbleAttributeInt32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute = request->attribute();
+      response->mutable_value_raw()->Resize(10, 0);
+      int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
+      auto status = library_->GetMarbleAttributeInt32Array(handle, attribute, value);
+      response->set_status(status);
+      if (status == 0) {
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
+        };
+        response->mutable_value()->Clear();
+        response->mutable_value()->Reserve(10);
+        std::transform(
+          response->value_raw().begin(),
+          response->value_raw().end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+          [&](auto x) { 
+              return checked_convert_value(x);
+          });
       }
       return ::grpc::Status::OK;
     }
@@ -277,7 +318,7 @@ namespace nifake_non_ivi_grpc {
           u16_data.begin(),
           u16_data.end(),
           google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
-          [](auto x) { 
+          [&](auto x) { 
               return x;
           });
         response->mutable_i16_data()->Clear();
@@ -286,7 +327,7 @@ namespace nifake_non_ivi_grpc {
           i16_data.begin(),
           i16_data.end(),
           google::protobuf::RepeatedFieldBackInserter(response->mutable_i16_data()),
-          [](auto x) { 
+          [&](auto x) { 
               return x;
           });
         response->mutable_i8_data()->Clear();
@@ -295,7 +336,7 @@ namespace nifake_non_ivi_grpc {
           i8_data.begin(),
           i8_data.end(),
           google::protobuf::RepeatedFieldBackInserter(response->mutable_i8_data()),
-          [](auto x) { 
+          [&](auto x) { 
               return x;
           });
       }
@@ -597,6 +638,33 @@ namespace nifake_non_ivi_grpc {
       }
 
       auto status = library_->SetMarbleAttributeInt32(handle, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetColors(::grpc::ServerContext* context, const SetColorsRequest* request, SetColorsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto colors_vector = std::vector<int32>();
+      colors_vector.reserve(request->colors().size());
+      std::transform(
+        request->colors().begin(),
+        request->colors().end(),
+        std::back_inserter(colors_vector),
+        [](auto x) { return x; });
+      auto colors = colors_vector.data();
+
+      int32 size = request->size();
+      auto status = library_->SetColors(colors, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

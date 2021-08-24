@@ -135,7 +135,8 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     return response.status();
   }
 
-  void setup_iota_with_custom_size() {
+  void setup_iota_with_custom_size()
+  {
     auto set_iota_data = [](int32 size_one, int32 size_two, int32* data) {
       auto out_size = (size_one == -1) ? size_two : size_one + 1;
       std::iota(data, data + out_size, 0);
@@ -147,7 +148,8 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
             Return(kDriverSuccess)));
   }
 
-  static void EXPECT_IOTA_OF_SIZE(IotaWithCustomSizeResponse response, size_t size) {
+  static void EXPECT_IOTA_OF_SIZE(IotaWithCustomSizeResponse response, size_t size)
+  {
     std::vector<int32> expected(size);
     std::iota(expected.begin(), expected.end(), 0);
     std::vector<int32> actual{response.data().cbegin(), response.data().cend()};
@@ -810,6 +812,54 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32Enum_ReturnsValueAndValu
   EXPECT_EQ(VALUE, response.value_raw());
 }
 
+template <typename TValueEnum, typename TIterator>
+auto convert_to_enum_vector(TIterator begin, TIterator end)
+{
+  auto vec = std::vector<TValueEnum>{};
+  std::transform(
+      begin,
+      end,
+      std::back_inserter(vec),
+      [](auto x) { return static_cast<TValueEnum>(x); });
+  return vec;
+}
+
+template <typename TValueEnum, typename TResponse>
+auto get_value_enum_vector(const TResponse& response)
+{
+  // Repeated enums are just ints in the c++ generated code: cast/convert them.
+  return convert_to_enum_vector<TValueEnum>(
+      response.value().cbegin(),
+      response.value().cend());
+}
+
+template <typename TRaw = int32, typename TResponse>
+auto get_value_raw_vector(const TResponse& response)
+{
+  return std::vector<TRaw>{response.value_raw().cbegin(), response.value_raw().cend()};
+}
+
+TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32ArrayNonEnum_ReturnsValueRawAndUnspecifiedValue)
+{
+  const auto ATTRIBUTE = MarbleInt32ArrayAttributes::MARBLE_ATTRIBUTE_TEN_RANDOM_NUMBERS;
+  int VALUE[] = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
+  EXPECT_CALL(library_, GetMarbleAttributeInt32Array(_, ATTRIBUTE, _))
+      .WillOnce(DoAll(SetArrayArgument<2>(VALUE, VALUE + 10), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  GetMarbleAttributeInt32ArrayRequest request;
+  request.set_attribute(ATTRIBUTE);
+  GetMarbleAttributeInt32ArrayResponse response;
+  service_.GetMarbleAttributeInt32Array(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  auto expected_raw = std::vector<int32>(VALUE, VALUE + 10);
+  auto raw_result = get_value_raw_vector(response);
+  EXPECT_THAT(raw_result, ContainerEq(expected_raw));
+  auto expected = std::vector<MarbleInt32AttributeValues>(10, MarbleInt32AttributeValues::MARBLE_INT32_UNSPECIFIED);
+  auto result = get_value_enum_vector<MarbleInt32AttributeValues>(response);
+  EXPECT_THAT(result, ContainerEq(expected));
+}
+
 TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32NonEnum_ReturnsValueRawAndUnspecifiedValue)
 {
   const auto ATTRIBUTE = MarbleInt32Attributes::MARBLE_ATTRIBUTE_NUMBER_OF_FAILED_ATTEMPTS;
@@ -827,6 +877,38 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32NonEnum_ReturnsValueRawA
   EXPECT_EQ(VALUE, response.value_raw());
 }
 
+TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32ArrayEnum_ReturnsValueAndValueRaw)
+{
+  const auto ATTRIBUTE = MarbleInt32ArrayAttributes::MARBLE_ATTRIBUTE_TEN_FAVORITE_COLORS;
+  int VALUE[] = {
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_AQUA,
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
+      MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_PINK,
+  };
+  EXPECT_CALL(library_, GetMarbleAttributeInt32Array(_, ATTRIBUTE, _))
+      .WillOnce(DoAll(SetArrayArgument<2>(VALUE, VALUE + 10), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  GetMarbleAttributeInt32ArrayRequest request;
+  request.set_attribute(ATTRIBUTE);
+  GetMarbleAttributeInt32ArrayResponse response;
+  service_.GetMarbleAttributeInt32Array(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  auto expected_raw = std::vector<int32>(VALUE, VALUE + 10);
+  auto raw_result = get_value_raw_vector(response);
+  EXPECT_THAT(raw_result, ContainerEq(expected_raw));
+  auto expected = convert_to_enum_vector<MarbleInt32AttributeValues>(VALUE, VALUE + 10);
+  auto result = get_value_enum_vector<MarbleInt32AttributeValues>(response);
+  EXPECT_THAT(result, ContainerEq(expected));
+}
+
 TEST_F(NiFakeNonIviServiceTests, ResetMarbleAttribute_Succeeds)
 {
   const auto ATTRIBUTE = MarbleResetAttributes::MARBLE_RESET_ATTRIBUTE_WEIGHT;
@@ -837,6 +919,25 @@ TEST_F(NiFakeNonIviServiceTests, ResetMarbleAttribute_Succeeds)
   request.set_attribute(ATTRIBUTE);
   ResetMarbleAttributeResponse response;
   service_.ResetMarbleAttribute(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetColors_PassesColorsArrayToLibrary)
+{
+  const auto COLORS = std::vector<BeautifulColor>{
+      BeautifulColor::BEAUTIFUL_COLOR_AQUA,
+      BeautifulColor::BEAUTIFUL_COLOR_GREEN,
+      BeautifulColor::BEAUTIFUL_COLOR_PINK};
+  EXPECT_CALL(library_, SetColors(_, _))
+      .With(Args<0, 1>(ElementsAreArray(COLORS.data(), COLORS.size())))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  SetColorsRequest request;
+  request.mutable_colors()->CopyFrom({COLORS.begin(), COLORS.end()});
+  request.set_size(static_cast<int32>(COLORS.size()));
+  SetColorsResponse response;
+  service_.SetColors(&context, &request, &response);
 
   EXPECT_EQ(kDriverSuccess, response.status());
 }

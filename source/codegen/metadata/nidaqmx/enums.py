@@ -24,6 +24,302 @@ enums = {
             }
         ]
     },
+    'ADCTimingMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Uses the most appropriate supported timing mode based on the Sample Clock Rate.'
+                },
+                'name': 'AUTOMATIC',
+                'value': 16097
+            },
+            {
+                'documentation': {
+                    'description': ' Increases resolution and noise rejection while decreasing conversion rate.'
+                },
+                'name': 'HIGH_RESOLUTION',
+                'value': 10195
+            },
+            {
+                'documentation': {
+                    'description': 'Increases conversion rate while decreasing resolution.'
+                },
+                'name': 'HIGH_SPEED',
+                'value': 14712
+            },
+            {
+                'documentation': {
+                    'description': ' Improves 50 Hz noise rejection while decreasing noise rejection at other  frequencies.'
+                },
+                'name': 'BEST_50_HZ_REJECTION',
+                'value': 14713
+            },
+            {
+                'documentation': {
+                    'description': ' Improves 60 Hz noise rejection while decreasing noise rejection at other  frequencies.'
+                },
+                'name': 'BEST_60_HZ_REJECTION',
+                'value': 14714
+            },
+            {
+                'documentation': {
+                    'description': ' Use DAQmx_AI_ADCCustomTimingMode to specify a custom value controlling the  tradeoff between speed and resolution.'
+                },
+                'name': 'CUSTOM',
+                'value': 10137
+            }
+        ]
+    },
+    'AIMeasurementType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage measurement.'
+                },
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Voltage RMS measurement.'
+                },
+                'name': 'VOLTAGE_RMS',
+                'value': 10350
+            },
+            {
+                'documentation': {
+                    'description': 'Current measurement.'
+                },
+                'name': 'CURRENT',
+                'value': 10134
+            },
+            {
+                'documentation': {
+                    'description': 'Current RMS measurement.'
+                },
+                'name': 'CURRENT_RMS',
+                'value': 10351
+            },
+            {
+                'documentation': {
+                    'description': ' Voltage measurement with an excitation source. You can use this measurement  type for custom sensors that require excitation, but you must use a custom  scale to scale the measured voltage.'
+                },
+                'name': 'VOLTAGE_CUSTOM_WITH_EXCITATION',
+                'value': 10323
+            },
+            {
+                'documentation': {
+                    'description': 'Measure voltage ratios from a Wheatstone bridge.'
+                },
+                'name': 'BRIDGE',
+                'value': 15908
+            },
+            {
+                'documentation': {
+                    'description': ' Frequency measurement using a frequency to voltage converter.'
+                },
+                'name': 'FREQ_VOLTAGE',
+                'value': 10181
+            },
+            {
+                'documentation': {
+                    'description': 'Resistance measurement.'
+                },
+                'name': 'RESISTANCE',
+                'value': 10278
+            },
+            {
+                'documentation': {
+                    'description': 'Temperature measurement using a thermocouple.'
+                },
+                'name': 'TEMP_TC',
+                'value': 10303
+            },
+            {
+                'documentation': {
+                    'description': 'Temperature measurement using a thermistor.'
+                },
+                'name': 'TEMP_THRMSTR',
+                'value': 10302
+            },
+            {
+                'documentation': {
+                    'description': 'Temperature measurement using an RTD.'
+                },
+                'name': 'TEMP_RTD',
+                'value': 10301
+            },
+            {
+                'documentation': {
+                    'description': ' Temperature measurement using a built-in sensor on a terminal block or device.  On SCXI modules, for example, this could be the CJC sensor.'
+                },
+                'name': 'TEMP_BUILT_IN_SENSOR',
+                'value': 10311
+            },
+            {
+                'documentation': {
+                    'description': 'Strain measurement.'
+                },
+                'name': 'STRAIN_GAGE',
+                'value': 10300
+            },
+            {
+                'documentation': {
+                    'description': 'Strain measurement using a rosette strain gage.'
+                },
+                'name': 'ROSETTE_STRAIN_GAGE',
+                'value': 15980
+            },
+            {
+                'documentation': {
+                    'description': 'Position measurement using an LVDT.'
+                },
+                'name': 'POSITION_LVDT',
+                'value': 10352
+            },
+            {
+                'documentation': {
+                    'description': 'Position measurement using an RVDT.'
+                },
+                'name': 'POSITION_RVDT',
+                'value': 10353
+            },
+            {
+                'documentation': {
+                    'description': 'Position measurement using an eddy current proximity probe.'
+                },
+                'name': 'POSITION_EDDY_CURRENT_PROXIMITY_PROBE',
+                'value': 14835
+            },
+            {
+                'documentation': {
+                    'description': 'Acceleration measurement using an accelerometer.'
+                },
+                'name': 'ACCELEROMETER',
+                'value': 10356
+            },
+            {
+                'documentation': {
+                    'description': 'Acceleration measurement using a charge-based sensor.'
+                },
+                'name': 'ACCELERATION_CHARGE',
+                'value': 16104
+            },
+            {
+                'documentation': {
+                    'description': ' Acceleration measurement using a 4 wire DC voltage based sensor.'
+                },
+                'name': 'ACCELERATION_4_WIRE_DC_VOLTAGE',
+                'value': 16106
+            },
+            {
+                'documentation': {
+                    'description': 'Velocity measurement using an IEPE Sensor.'
+                },
+                'name': 'VELOCITY_IEPE_SENSOR',
+                'value': 15966
+            },
+            {
+                'documentation': {
+                    'description': 'Force measurement using a bridge-based sensor.'
+                },
+                'name': 'FORCE_BRIDGE',
+                'value': 15899
+            },
+            {
+                'documentation': {
+                    'description': 'Force measurement using an IEPE Sensor.'
+                },
+                'name': 'FORCE_IEPE_SENSOR',
+                'value': 15895
+            },
+            {
+                'documentation': {
+                    'description': 'Pressure measurement using a bridge-based sensor.'
+                },
+                'name': 'PRESSURE_BRIDGE',
+                'value': 15902
+            },
+            {
+                'documentation': {
+                    'description': 'Sound pressure measurement using a microphone.'
+                },
+                'name': 'SOUND_PRESSURE_MICROPHONE',
+                'value': 10354
+            },
+            {
+                'documentation': {
+                    'description': 'Torque measurement using a bridge-based sensor.'
+                },
+                'name': 'TORQUE_BRIDGE',
+                'value': 15905
+            },
+            {
+                'documentation': {
+                    'description': 'Measurement type defined by TEDS.'
+                },
+                'name': 'TEDS_SENSOR',
+                'value': 12531
+            },
+            {
+                'documentation': {
+                    'description': 'Charge measurement.'
+                },
+                'name': 'CHARGE',
+                'value': 16105
+            }
+        ]
+    },
+    'AOIdleOutputBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Generate 0 V.'
+                },
+                'name': 'ZERO_VOLTS',
+                'value': 12526
+            },
+            {
+                'documentation': {
+                    'description': ' Set the channel to high-impedance, effectively disconnecting the analog output  circuitry from the I/O connector.'
+                },
+                'name': 'HIGH_IMPEDANCE',
+                'value': 12527
+            },
+            {
+                'documentation': {
+                    'description': 'Continue generating the current value.'
+                },
+                'name': 'MAINTAIN_EXISTING_VALUE',
+                'value': 12528
+            }
+        ]
+    },
+    'AOOutputChannelType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage generation.'
+                },
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Current generation.'
+                },
+                'name': 'CURRENT',
+                'value': 10134
+            },
+            {
+                'documentation': {
+                    'description': 'Function generation.'
+                },
+                'name': 'FUNC_GEN',
+                'value': 14750
+            }
+        ]
+    },
     'AccelChargeSensitivityUnits': {
         'values': [
             {
@@ -124,6 +420,36 @@ enums = {
             }
         ]
     },
+    'ActiveLevel': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while the signal is above the threshold.'
+                },
+                'name': 'ABOVE_LVL',
+                'value': 10093
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while the signal is below the threshold.'
+                },
+                'name': 'BELOW_LVL',
+                'value': 10107
+            }
+        ]
+    },
+    'AltRef': {
+        'values': [
+            {
+                'name': 'MSL',
+                'value': 16005
+            },
+            {
+                'name': 'HAE',
+                'value': 16006
+            }
+        ]
+    },
     'AngleUnits1': {
         'values': [
             {
@@ -181,6 +507,18 @@ enums = {
             }
         ]
     },
+    'AngleUnits3': {
+        'values': [
+            {
+                'name': 'DEGREES',
+                'value': 10146
+            },
+            {
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            }
+        ]
+    },
     'AngularVelocityUnits': {
         'values': [
             {
@@ -210,6 +548,51 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'AntStatus': {
+        'values': [
+            {
+                'name': 'UNKNOWN',
+                'value': 12588
+            },
+            {
+                'name': 'NORMAL',
+                'value': 10459
+            },
+            {
+                'name': 'ABSENT',
+                'value': 15994
+            },
+            {
+                'name': 'OVERCURRENT',
+                'value': 15995
+            }
+        ]
+    },
+    'AutoZeroType1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Do not perform an autozero.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            },
+            {
+                'documentation': {
+                    'description': ' Perform an auto zero at the beginning of the acquisition. This auto zero task  might not run if you have used DAQmx Control Task previously in your task.'
+                },
+                'name': 'ONCE',
+                'value': 10244
+            },
+            {
+                'documentation': {
+                    'description': 'Perform an auto zero at every sample of the acquisition.'
+                },
+                'name': 'EVERY_SAMPLE',
+                'value': 10164
             }
         ]
     },
@@ -337,6 +720,24 @@ enums = {
             }
         ]
     },
+    'BridgeShuntCalSource': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Use the internal shunt.'
+                },
+                'name': 'BUILT_IN',
+                'value': 10200
+            },
+            {
+                'documentation': {
+                    'description': 'Use an external shunt.'
+                },
+                'name': 'USER_PROVIDED',
+                'value': 10167
+            }
+        ]
+    },
     'BridgeUnits': {
         'values': [
             {
@@ -369,6 +770,210 @@ enums = {
             }
         ]
     },
+    'BusType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'PCI.'
+                },
+                'name': 'PCI',
+                'value': 12582
+            },
+            {
+                'documentation': {
+                    'description': 'PCI Express.'
+                },
+                'name': 'PC_IE',
+                'value': 13612
+            },
+            {
+                'documentation': {
+                    'description': 'PXI.'
+                },
+                'name': 'PXI',
+                'value': 12583
+            },
+            {
+                'documentation': {
+                    'description': 'PXI Express.'
+                },
+                'name': 'PX_IE',
+                'value': 14706
+            },
+            {
+                'documentation': {
+                    'description': 'SCXI.'
+                },
+                'name': 'SCXI',
+                'value': 12584
+            },
+            {
+                'documentation': {
+                    'description': 'SCC.'
+                },
+                'name': 'SCC',
+                'value': 14707
+            },
+            {
+                'documentation': {
+                    'description': 'PC Card/PCMCIA.'
+                },
+                'name': 'PC_CARD',
+                'value': 12585
+            },
+            {
+                'documentation': {
+                    'description': 'USB.'
+                },
+                'name': 'USB',
+                'value': 12586
+            },
+            {
+                'documentation': {
+                    'description': 'CompactDAQ.'
+                },
+                'name': 'COMPACT_DAQ',
+                'value': 14637
+            },
+            {
+                'documentation': {
+                    'description': 'CompactRIO.'
+                },
+                'name': 'COMPACT_RIO',
+                'value': 16143
+            },
+            {
+                'documentation': {
+                    'description': 'TCP/IP.'
+                },
+                'name': 'TCPIP',
+                'value': 14828
+            },
+            {
+                'documentation': {
+                    'description': 'Unknown bus type.'
+                },
+                'name': 'UNKNOWN',
+                'value': 12588
+            },
+            {
+                'documentation': {
+                    'description': 'SwitchBlock.'
+                },
+                'name': 'SWITCH_BLOCK',
+                'value': 15870
+            }
+        ]
+    },
+    'CIMeasurementType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Count edges of a digital signal.'
+                },
+                'name': 'COUNT_EDGES',
+                'value': 10125
+            },
+            {
+                'documentation': {
+                    'description': 'Measure the frequency of a digital signal.'
+                },
+                'name': 'FREQ',
+                'value': 10179
+            },
+            {
+                'documentation': {
+                    'description': 'Measure the period of a digital signal.'
+                },
+                'name': 'PERIOD',
+                'value': 10256
+            },
+            {
+                'documentation': {
+                    'description': 'Measure the width of a pulse of a digital signal.'
+                },
+                'name': 'PULSE_WIDTH',
+                'value': 10359
+            },
+            {
+                'documentation': {
+                    'description': ' Measure the time between state transitions of a digital signal.'
+                },
+                'name': 'SEMI_PERIOD',
+                'value': 10289
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse measurement, returning the result as frequency and duty cycle.'
+                },
+                'name': 'PULSE_FREQUENCY',
+                'value': 15864
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse measurement, returning the result as high time and low time.'
+                },
+                'name': 'PULSE_TIME',
+                'value': 15865
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse measurement, returning the result as high ticks and low ticks.'
+                },
+                'name': 'PULSE_TICKS',
+                'value': 15866
+            },
+            {
+                'documentation': {
+                    'description': 'Measure the duty cycle of a digital signal.'
+                },
+                'name': 'DUTY_CYCLE',
+                'value': 16070
+            },
+            {
+                'documentation': {
+                    'description': 'Angular position measurement using an angular encoder.'
+                },
+                'name': 'POSITION_ANG_ENCODER',
+                'value': 10360
+            },
+            {
+                'documentation': {
+                    'description': 'Linear position measurement using a linear encoder.'
+                },
+                'name': 'POSITION_LIN_ENCODER',
+                'value': 10361
+            },
+            {
+                'documentation': {
+                    'description': 'Angular velocity measurement using an angular encoder.'
+                },
+                'name': 'VELOCITY_ANG_ENCODER',
+                'value': 16078
+            },
+            {
+                'documentation': {
+                    'description': 'Linear velocity measurement using a linear encoder.'
+                },
+                'name': 'VELOCITY_LIN_ENCODER',
+                'value': 16079
+            },
+            {
+                'documentation': {
+                    'description': 'Measure time between edges of two digital signals.'
+                },
+                'name': 'TWO_EDGE_SEP',
+                'value': 10267
+            },
+            {
+                'documentation': {
+                    'description': ' Timestamp measurement, synchronizing the counter to a GPS receiver.'
+                },
+                'name': 'GPS_TIMESTAMP',
+                'value': 10362
+            }
+        ]
+    },
     'CJCSource1': {
         'values': [
             {
@@ -394,6 +999,77 @@ enums = {
             }
         ]
     },
+    'COOutputType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Generate pulses defined by the time the pulse is at a low state and the time  the pulse is at a high state.'
+                },
+                'name': 'PULSE_TIME',
+                'value': 10269
+            },
+            {
+                'documentation': {
+                    'description': 'Generate digital pulses defined by frequency and duty cycle.'
+                },
+                'name': 'PULSE_FREQ',
+                'value': 10119
+            },
+            {
+                'documentation': {
+                    'description': ' Generate digital pulses defined by the number of timebase ticks that the pulse  is at a low state and the number of timebase ticks that the pulse is at a high  state.'
+                },
+                'name': 'PULSE_TICKS',
+                'value': 10268
+            }
+        ]
+    },
+    'ChannelType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Analog input channel.'
+                },
+                'name': 'AI',
+                'value': 10100
+            },
+            {
+                'documentation': {
+                    'description': 'Analog output channel.'
+                },
+                'name': 'AO',
+                'value': 10102
+            },
+            {
+                'documentation': {
+                    'description': 'Digital input channel.'
+                },
+                'name': 'DI',
+                'value': 10151
+            },
+            {
+                'documentation': {
+                    'description': 'Digital output channel.'
+                },
+                'name': 'DO',
+                'value': 10153
+            },
+            {
+                'documentation': {
+                    'description': 'Counter input channel.'
+                },
+                'name': 'CI',
+                'value': 10131
+            },
+            {
+                'documentation': {
+                    'description': 'Counter output channel.'
+                },
+                'name': 'CO',
+                'value': 10132
+            }
+        ]
+    },
     'ChargeUnits': {
         'values': [
             {
@@ -416,6 +1092,38 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'ConstrainedGenMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Counter has no restrictions on pulse generation.'
+                },
+                'name': 'UNCONSTRAINED',
+                'value': 14708
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse frequency must be above 7.63 Hz and cannot change while the task runs. In  this mode, the duty cycle has 8 bits of resolution.'
+                },
+                'name': 'FIXED_HIGH_FREQ',
+                'value': 14709
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse frequency must be below 366.21 Hz and cannot change while the task runs.  In this mode, the duty cycle has 16 bits of resolution.'
+                },
+                'name': 'FIXED_LOW_FREQ',
+                'value': 14710
+            },
+            {
+                'documentation': {
+                    'description': ' Pulse duty cycle must be 50 percent. The frequency can change while the task  runs.'
+                },
+                'name': 'FIXED_50_PERCENT_DUTY_CYCLE',
+                'value': 14711
             }
         ]
     },
@@ -476,6 +1184,67 @@ enums = {
             }
         ]
     },
+    'Coupling1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Remove the DC offset from the signal.'
+                },
+                'name': 'AC',
+                'value': 10045
+            },
+            {
+                'documentation': {
+                    'description': 'Allow NI-DAQmx to measure all of the signal.'
+                },
+                'name': 'DC',
+                'value': 10050
+            },
+            {
+                'documentation': {
+                    'description': ' Remove the signal from the measurement and measure only ground.'
+                },
+                'name': 'GND',
+                'value': 10066
+            }
+        ]
+    },
+    'Coupling2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Alternating Current.'
+                },
+                'name': 'AC',
+                'value': 10045
+            },
+            {
+                'documentation': {
+                    'description': 'Direct Current.'
+                },
+                'name': 'DC',
+                'value': 10050
+            }
+        ]
+    },
+    'CurrentShuntResistorLocation1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Use the built-in shunt resistor of the device.'
+                },
+                'name': 'INTERNAL',
+                'value': 10200
+            },
+            {
+                'documentation': {
+                    'description': ' Use a shunt resistor external to the device. You must specify the value of the  shunt resistor by using DAQmx_AI_CurrentShunt_Resistance.'
+                },
+                'name': 'EXTERNAL',
+                'value': 10167
+            }
+        ]
+    },
     'CurrentShuntResistorLocationWithDefault': {
         'values': [
             {
@@ -492,6 +1261,31 @@ enums = {
             }
         ]
     },
+    'CurrentUnits1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Amperes.'
+                },
+                'name': 'AMPS',
+                'value': 10342
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            },
+            {
+                'documentation': {
+                    'description': ' Units defined by TEDS information associated with the channel.'
+                },
+                'name': 'FROM_TEDS',
+                'value': 12516
+            }
+        ]
+    },
     'CurrentUnits2': {
         'values': [
             {
@@ -501,6 +1295,74 @@ enums = {
             {
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'DataJustification1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Samples occupy the lower bits of the integer.'
+                },
+                'name': 'RIGHT_JUSTIFIED',
+                'value': 10279
+            },
+            {
+                'documentation': {
+                    'description': 'Samples occupy the higher bits of the integer.'
+                },
+                'name': 'LEFT_JUSTIFIED',
+                'value': 10209
+            }
+        ]
+    },
+    'DataTransferMechanism': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Direct Memory Access. Data transfers take place independently from the  application.'
+                },
+                'name': 'DMA',
+                'value': 10054
+            },
+            {
+                'documentation': {
+                    'description': ' Data transfers take place independently from the application. Using interrupts  increases CPU usage because the CPU must service interrupt requests. Typically,  you should use interrupts if the device is out of DMA channels.'
+                },
+                'name': 'INTERRUPTS',
+                'value': 10204
+            },
+            {
+                'documentation': {
+                    'description': ' Data transfers take place when you call an NI-DAQmx Read function or an  NI-DAQmx Write function.'
+                },
+                'name': 'PROGRAMMED_IO',
+                'value': 10264
+            },
+            {
+                'documentation': {
+                    'description': ' Data transfers take place independently from the application using a USB bulk  pipe.'
+                },
+                'name': 'US_BBULK',
+                'value': 12590
+            }
+        ]
+    },
+    'DigitalDriveType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Drive the output pin to approximately 0 V for logic low and +3.3 V or +5 V,  depending on the device, for logic high.'
+                },
+                'name': 'ACTIVE_DRIVE',
+                'value': 12573
+            },
+            {
+                'documentation': {
+                    'description': ' Drive the output pin to 0 V for logic low. For logic high, the output driver  assumes a high-impedance state and does not drive a voltage.'
+                },
+                'name': 'OPEN_COLLECTOR',
+                'value': 12574
             }
         ]
     },
@@ -554,41 +1416,47 @@ enums = {
             }
         ]
     },
-    'DigitalPowerUpChannelType': {
+    'DigitalWidthUnits1': {
         'values': [
             {
                 'documentation': {
-                    'description': 'High logic.'
+                    'description': 'Complete periods of the Sample Clock.'
                 },
-                'name': 'HIGH',
-                'value': 10192
+                'name': 'SAMP_CLK_PERIODS',
+                'value': 10286
             },
             {
                 'documentation': {
-                    'description': 'Low logic.'
+                    'description': 'Seconds.'
                 },
-                'name': 'LOW',
-                'value': 10214
+                'name': 'SECONDS',
+                'value': 10364
             },
             {
                 'documentation': {
-                    'description': 'High-impedance state. You can select this state only on devices with bidirectional ports, and you can select it only for entire ports. You cannot select this state for dedicated digital output lines.'
+                    'description': 'Timebase ticks.'
                 },
-                'name': 'TRISTATE',
-                'value': 10310
+                'name': 'TICKS',
+                'value': 10304
             }
         ]
     },
-    'DigitalPullUpPullDownState': {
+    'DigitalWidthUnits2': {
         'values': [
             {
-                'name': 'PULL_UP',
-                'value': 15950
+                'documentation': {
+                    'description': 'Seconds.'
+                },
+                'name': 'SECONDS',
+                'value': 10364
             },
             {
-                'name': 'PULL_DOWN',
-                'value': 15951
-            },
+                'documentation': {
+                    'description': 'Timebase ticks.'
+                },
+                'name': 'TICKS',
+                'value': 10304
+            }
         ]
     },
     'DigitalWidthUnits3': {
@@ -599,6 +1467,24 @@ enums = {
                 },
                 'name': 'SECONDS',
                 'value': 10364
+            }
+        ]
+    },
+    'DigitalWidthUnits4': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Seconds.'
+                },
+                'name': 'SECONDS',
+                'value': 10364
+            },
+            {
+                'documentation': {
+                    'description': 'Sample Clock Periods.'
+                },
+                'name': 'SAMPLE_CLK_PERIODS',
+                'value': 10286
             }
         ]
     },
@@ -665,21 +1551,21 @@ enums = {
                 'documentation': {
                     'description': ' If signal A leads signal B, count the rising edges of signal A. If signal B  leads signal A, count the falling edges of signal A.'
                 },
-                'name': 'X_1',
+                'name': 'X1',
                 'value': 10090
             },
             {
                 'documentation': {
                     'description': 'Count the rising and falling edges of signal A.'
                 },
-                'name': 'X_2',
+                'name': 'X2',
                 'value': 10091
             },
             {
                 'documentation': {
                     'description': 'Count the rising and falling edges of signal A and signal B.'
                 },
-                'name': 'X_4',
+                'name': 'X4',
                 'value': 10092
             },
             {
@@ -735,6 +1621,42 @@ enums = {
             }
         ]
     },
+    'ExcitationDCorAC': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'DC excitation.'
+                },
+                'name': 'DC',
+                'value': 10050
+            },
+            {
+                'documentation': {
+                    'description': 'AC excitation.'
+                },
+                'name': 'AC',
+                'value': 10045
+            }
+        ]
+    },
+    'ExcitationIdleOutputBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Drive excitation output to zero.'
+                },
+                'name': 'ZERO_VOLTS_OR_AMPS',
+                'value': 12526
+            },
+            {
+                'documentation': {
+                    'description': 'Continue generating the current value.'
+                },
+                'name': 'MAINTAIN_EXISTING_VALUE',
+                'value': 12528
+            }
+        ]
+    },
     'ExcitationSource': {
         'values': [
             {
@@ -757,6 +1679,135 @@ enums = {
                 },
                 'name': 'NONE',
                 'value': 10230
+            }
+        ]
+    },
+    'ExcitationVoltageOrCurrent': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage excitation.'
+                },
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Current excitation.'
+                },
+                'name': 'CURRENT',
+                'value': 10134
+            }
+        ]
+    },
+    'FilterResponse': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Constant group delay filter response.'
+                },
+                'name': 'CONSTANT_GROUP_DELAY',
+                'value': 16075
+            },
+            {
+                'documentation': {
+                    'description': 'Butterworth filter response.'
+                },
+                'name': 'BUTTERWORTH',
+                'value': 16076
+            },
+            {
+                'documentation': {
+                    'description': 'Elliptical filter response.'
+                },
+                'name': 'ELLIPTICAL',
+                'value': 16077
+            },
+            {
+                'documentation': {
+                    'description': 'Use the hardware-defined filter response.'
+                },
+                'name': 'HARDWARE_DEFINED',
+                'value': 10191
+            }
+        ]
+    },
+    'FilterResponse1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Comb filter response.'
+                },
+                'name': 'COMB',
+                'value': 16152
+            },
+            {
+                'documentation': {
+                    'description': 'Bessel filter response.'
+                },
+                'name': 'BESSEL',
+                'value': 16153
+            },
+            {
+                'documentation': {
+                    'description': 'Brickwall filter response.'
+                },
+                'name': 'BRICKWALL',
+                'value': 16155
+            },
+            {
+                'documentation': {
+                    'description': 'Butterworth filter response.'
+                },
+                'name': 'BUTTERWORTH',
+                'value': 16076
+            }
+        ]
+    },
+    'FilterType1': {
+        'values': [
+            {
+                'name': 'HARDWARE_DEFINED',
+                'value': 10191
+            }
+        ]
+    },
+    'FilterType2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Lowpass filter.'
+                },
+                'name': 'LOWPASS',
+                'value': 16071
+            },
+            {
+                'documentation': {
+                    'description': 'Highpass filter.'
+                },
+                'name': 'HIGHPASS',
+                'value': 16072
+            },
+            {
+                'documentation': {
+                    'description': 'Bandpass filter.'
+                },
+                'name': 'BANDPASS',
+                'value': 16073
+            },
+            {
+                'documentation': {
+                    'description': 'Notch filter.'
+                },
+                'name': 'NOTCH',
+                'value': 16074
+            },
+            {
+                'documentation': {
+                    'description': 'Custom filter.'
+                },
+                'name': 'CUSTOM',
+                'value': 10137
             }
         ]
     },
@@ -949,6 +2000,113 @@ enums = {
             }
         ]
     },
+    'HandshakeStartCondition': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Device is waiting for space in the FIFO (for acquisition) or waiting for  samples (for generation).'
+                },
+                'name': 'IMMEDIATE',
+                'value': 10198
+            },
+            {
+                'documentation': {
+                    'description': 'Device is waiting for the Handshake Trigger to assert.'
+                },
+                'name': 'WAIT_FOR_HANDSHAKE_TRIGGER_ASSERT',
+                'value': 12550
+            },
+            {
+                'documentation': {
+                    'description': 'Device is waiting for the Handshake Trigger to deassert.'
+                },
+                'name': 'WAIT_FOR_HANDSHAKE_TRIGGER_DEASSERT',
+                'value': 12551
+            }
+        ]
+    },
+    'InputDataTransferCondition': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Transfer data from the device when more than half of the onboard memory of the  device fills.'
+                },
+                'name': 'ON_BRD_MEM_MORE_THAN_HALF_FULL',
+                'value': 10237
+            },
+            {
+                'documentation': {
+                    'description': ' Transfer data from the device when there is data in the onboard memory.'
+                },
+                'name': 'ON_BRD_MEM_NOT_EMPTY',
+                'value': 10241
+            },
+            {
+                'documentation': {
+                    'description': ' Transfer data from the device when the number of samples specified with  DAQmx_AI_DataXferCustomThreshold are in the device FIFO.'
+                },
+                'name': 'ONBRD_MEM_CUSTOM_THRESHOLD',
+                'value': 12577
+            },
+            {
+                'documentation': {
+                    'description': 'Transfer data when the acquisition is complete.'
+                },
+                'name': 'WHEN_ACQ_COMPLETE',
+                'value': 12546
+            }
+        ]
+    },
+    'InputTermCfg': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Referenced Single-Ended.'
+                },
+                'name': 'RSE',
+                'value': 10083
+            },
+            {
+                'documentation': {
+                    'description': 'Non-Referenced Single-Ended.'
+                },
+                'name': 'NRSE',
+                'value': 10078
+            },
+            {
+                'documentation': {
+                    'description': 'Differential.'
+                },
+                'name': 'DIFF',
+                'value': 10106
+            },
+            {
+                'documentation': {
+                    'description': 'Pseudodifferential.'
+                },
+                'name': 'PSEUDO_DIFF',
+                'value': 12529
+            }
+        ]
+    },
+    'InputTermCfg2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Differential.'
+                },
+                'name': 'DIFF',
+                'value': 10106
+            },
+            {
+                'documentation': {
+                    'description': 'Referenced Single-Ended.'
+                },
+                'name': 'RSE',
+                'value': 10083
+            }
+        ]
+    },
     'InputTermCfgWithDefault': {
         'values': [
             {
@@ -1060,6 +2218,22 @@ enums = {
             }
         ]
     },
+    'LengthUnits4': {
+        'values': [
+            {
+                'name': 'METERS',
+                'value': 10219
+            },
+            {
+                'name': 'FEET',
+                'value': 10380
+            },
+            {
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            }
+        ]
+    },
     'Level1': {
         'values': [
             {
@@ -1081,12 +2255,12 @@ enums = {
     'LineGrouping': {
         'values': [
             {
-                'name': 'CHAN_FOR_ALL_LINES',
-                'value': 1
-            },
-            {
                 'name': 'CHAN_PER_LINE',
                 'value': 0
+            },
+            {
+                'name': 'CHAN_FOR_ALL_LINES',
+                'value': 1
             }
         ]
     },
@@ -1172,6 +2346,211 @@ enums = {
             }
         ]
     },
+    'LogicLvlBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'High logic.'
+                },
+                'name': 'LOGIC_LEVEL_PULL_UP',
+                'value': 16064
+            },
+            {
+                'documentation': {
+                    'description': 'Supply no excitation to the channel.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'MIOAIConvertTbSrc': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Use the same source as Sample Clock timebase.'
+                },
+                'name': 'SAME_AS_SAMP_TIMEBASE',
+                'value': 10284
+            },
+            {
+                'documentation': {
+                    'description': 'Use the same source as the Master Timebase.'
+                },
+                'name': 'SAME_AS_MASTER_TIMEBASE',
+                'value': 10282
+            },
+            {
+                'documentation': {
+                    'description': 'Use the onboard 100 MHz timebase.'
+                },
+                'name': '100_M_HZ_TIMEBASE',
+                'value': 15857
+            },
+            {
+                'documentation': {
+                    'description': 'Use the onboard 80 MHz timebase.'
+                },
+                'name': '80_M_HZ_TIMEBASE',
+                'value': 14636
+            },
+            {
+                'documentation': {
+                    'description': 'Use the onboard 20 MHz timebase.'
+                },
+                'name': '20_M_HZ_TIMEBASE',
+                'value': 12537
+            },
+            {
+                'documentation': {
+                    'description': 'Use the onboard 8 MHz timebase.'
+                },
+                'name': '8_M_HZ_TIMEBASE',
+                'value': 16023
+            }
+        ]
+    },
+    'ModulationType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Amplitude modulation.'
+                },
+                'name': 'AM',
+                'value': 14756
+            },
+            {
+                'documentation': {
+                    'description': 'Frequency modulation.'
+                },
+                'name': 'FM',
+                'value': 14757
+            },
+            {
+                'documentation': {
+                    'description': 'No modulation.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'NavMeasurementType': {
+        'values': [
+            {
+                'name': 'ALTITUDE',
+                'value': 15997
+            },
+            {
+                'name': 'LONGITUDE',
+                'value': 15998
+            },
+            {
+                'name': 'LATITUDE',
+                'value': 15999
+            },
+            {
+                'name': 'SPEED_OVER_GROUND',
+                'value': 16000
+            },
+            {
+                'name': 'TRACK',
+                'value': 16001
+            },
+            {
+                'name': 'TIMESTAMP',
+                'value': 15986
+            },
+            {
+                'name': 'VERT_VELOCITY',
+                'value': 16003
+            }
+        ]
+    },
+    'NavMode': {
+        'values': [
+            {
+                'name': 'MOBILE',
+                'value': 15989
+            },
+            {
+                'name': 'STATIONARY_WITH_SURVEY',
+                'value': 15990
+            },
+            {
+                'name': 'STATIONARY_WITH_PRESET_LOCATION',
+                'value': 15991
+            }
+        ]
+    },
+    'OutputDataTransferCondition': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Transfer data to the device only when there is no data in the onboard memory of  the device.'
+                },
+                'name': 'ON_BRD_MEM_EMPTY',
+                'value': 10235
+            },
+            {
+                'documentation': {
+                    'description': ' Transfer data to the device any time the onboard memory is less than half full.'
+                },
+                'name': 'ON_BRD_MEM_HALF_FULL_OR_LESS',
+                'value': 10239
+            },
+            {
+                'documentation': {
+                    'description': ' Transfer data to the device any time the onboard memory of the device is not  full.'
+                },
+                'name': 'ON_BRD_MEM_NOT_FULL',
+                'value': 10242
+            }
+        ]
+    },
+    'OutputTermCfg': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Referenced Single-Ended.'
+                },
+                'name': 'RSE',
+                'value': 10083
+            },
+            {
+                'documentation': {
+                    'description': 'Differential.'
+                },
+                'name': 'DIFF',
+                'value': 10106
+            },
+            {
+                'documentation': {
+                    'description': 'Pseudodifferential.'
+                },
+                'name': 'PSEUDO_DIFF',
+                'value': 12529
+            }
+        ]
+    },
+    'OverflowBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Stop task and return an error.'
+                },
+                'name': 'STOP_TASK_AND_ERROR',
+                'value': 15862
+            },
+            {
+                'documentation': {
+                    'description': ' NI-DAQmx ignores Sample Clock overruns, and the task continues to run.'
+                },
+                'name': 'IGNORE_OVERRUNS',
+                'value': 15863
+            }
+        ]
+    },
     'Polarity2': {
         'values': [
             {
@@ -1199,6 +2578,26 @@ enums = {
             {
                 'name': 'CHANNEL_CURRENT',
                 'value': 1
+            },
+            {
+                'name': 'CHANNEL_HIGH_IMPEDANCE',
+                'value': 2
+            }
+        ]
+    },
+    'PowerUpStates': {
+        'values': [
+            {
+                'name': 'HIGH',
+                'value': 10192
+            },
+            {
+                'name': 'LOW',
+                'value': 10214
+            },
+            {
+                'name': 'TRISTATE',
+                'value': 10310
             }
         ]
     },
@@ -1231,6 +2630,171 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'ProductCategory': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'M Series DAQ.'
+                },
+                'name': 'M_SERIES_DAQ',
+                'value': 14643
+            },
+            {
+                'documentation': {
+                    'description': 'X Series DAQ.'
+                },
+                'name': 'X_SERIES_DAQ',
+                'value': 15858
+            },
+            {
+                'documentation': {
+                    'description': 'E Series DAQ.'
+                },
+                'name': 'E_SERIES_DAQ',
+                'value': 14642
+            },
+            {
+                'documentation': {
+                    'description': 'S Series DAQ.'
+                },
+                'name': 'S_SERIES_DAQ',
+                'value': 14644
+            },
+            {
+                'documentation': {
+                    'description': 'B Series DAQ.'
+                },
+                'name': 'B_SERIES_DAQ',
+                'value': 14662
+            },
+            {
+                'documentation': {
+                    'description': 'SC Series DAQ.'
+                },
+                'name': 'SC_SERIES_DAQ',
+                'value': 14645
+            },
+            {
+                'documentation': {
+                    'description': 'USB DAQ.'
+                },
+                'name': 'USBDAQ',
+                'value': 14646
+            },
+            {
+                'documentation': {
+                    'description': 'AO Series.'
+                },
+                'name': 'AO_SERIES',
+                'value': 14647
+            },
+            {
+                'documentation': {
+                    'description': 'Digital I/O.'
+                },
+                'name': 'DIGITAL_IO',
+                'value': 14648
+            },
+            {
+                'documentation': {
+                    'description': 'TIO Series.'
+                },
+                'name': 'TIO_SERIES',
+                'value': 14661
+            },
+            {
+                'documentation': {
+                    'description': 'Dynamic Signal Acquisition.'
+                },
+                'name': 'DYNAMIC_SIGNAL_ACQUISITION',
+                'value': 14649
+            },
+            {
+                'documentation': {
+                    'description': 'Switches.'
+                },
+                'name': 'SWITCHES',
+                'value': 14650
+            },
+            {
+                'documentation': {
+                    'description': 'CompactDAQ chassis.'
+                },
+                'name': 'COMPACT_DAQ_CHASSIS',
+                'value': 14658
+            },
+            {
+                'documentation': {
+                    'description': 'CompactRIO Chassis.'
+                },
+                'name': 'COMPACT_RIO_CHASSIS',
+                'value': 16144
+            },
+            {
+                'documentation': {
+                    'description': 'C Series I/O module.'
+                },
+                'name': 'C_SERIES_MODULE',
+                'value': 14659
+            },
+            {
+                'documentation': {
+                    'description': 'SCXI module.'
+                },
+                'name': 'SCXI_MODULE',
+                'value': 14660
+            },
+            {
+                'documentation': {
+                    'description': 'SCC Connector Block.'
+                },
+                'name': 'SCC_CONNECTOR_BLOCK',
+                'value': 14704
+            },
+            {
+                'documentation': {
+                    'description': 'SCC Module.'
+                },
+                'name': 'SCC_MODULE',
+                'value': 14705
+            },
+            {
+                'documentation': {
+                    'description': 'NI ELVIS.'
+                },
+                'name': 'NIELVIS',
+                'value': 14755
+            },
+            {
+                'documentation': {
+                    'description': 'Network DAQ.'
+                },
+                'name': 'NETWORK_DAQ',
+                'value': 14829
+            },
+            {
+                'documentation': {
+                    'description': 'SC Express.'
+                },
+                'name': 'SC_EXPRESS',
+                'value': 15886
+            },
+            {
+                'documentation': {
+                    'description': 'FieldDAQ.'
+                },
+                'name': 'FIELD_DAQ',
+                'value': 16151
+            },
+            {
+                'documentation': {
+                    'description': 'Unknown category.'
+                },
+                'name': 'UNKNOWN',
+                'value': 12588
             }
         ]
     },
@@ -1305,6 +2869,31 @@ enums = {
             }
         ]
     },
+    'RawDataCompressionType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Do not compress samples.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            },
+            {
+                'documentation': {
+                    'description': 'Remove unused bits from samples. No resolution is lost.'
+                },
+                'name': 'LOSSLESS_PACKING',
+                'value': 12555
+            },
+            {
+                'documentation': {
+                    'description': ' Remove unused bits from samples. Then, if necessary, remove bits from samples  until the samples are the size specified with  DAQmx_AI_LossyLSBRemoval_CompressedSampSize. This compression type limits  resolution to the specified sample size.'
+                },
+                'name': 'LOSSY_LSB_REMOVAL',
+                'value': 12556
+            }
+        ]
+    },
     'ResistanceConfiguration': {
         'values': [
             {
@@ -1330,6 +2919,31 @@ enums = {
             }
         ]
     },
+    'ResistanceUnits1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Ohms.'
+                },
+                'name': 'OHMS',
+                'value': 10384
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            },
+            {
+                'documentation': {
+                    'description': ' Units defined by TEDS information associated with the channel.'
+                },
+                'name': 'FROM_TEDS',
+                'value': 12516
+            }
+        ]
+    },
     'ResistanceUnits2': {
         'values': [
             {
@@ -1339,6 +2953,136 @@ enums = {
             {
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'ResistorState': {
+        'values': [
+            {
+                'name': 'PULL_UP',
+                'value': 15950
+            },
+            {
+                'name': 'PULL_DOWN',
+                'value': 15951
+            }
+        ]
+    },
+    'ResolutionType1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Bits.'
+                },
+                'name': 'BITS',
+                'value': 10109
+            }
+        ]
+    },
+    'SampClkOverrunBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Repeat the last sample.'
+                },
+                'name': 'REPEATED_DATA',
+                'value': 16062
+            },
+            {
+                'documentation': {
+                    'description': 'Return the sentinel value.'
+                },
+                'name': 'SENTINEL_VALUE',
+                'value': 16063
+            }
+        ]
+    },
+    'SampleClockActiveOrInactiveEdgeSelection': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Active edges.'
+                },
+                'name': 'SAMP_CLK_ACTIVE_EDGE',
+                'value': 14617
+            },
+            {
+                'documentation': {
+                    'description': 'Inactive edges.'
+                },
+                'name': 'SAMP_CLK_INACTIVE_EDGE',
+                'value': 14618
+            }
+        ]
+    },
+    'SampleInputDataWhen': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Latch data when the Handshake Trigger asserts.'
+                },
+                'name': 'HANDSHAKE_TRIGGER_ASSERTS',
+                'value': 12552
+            },
+            {
+                'documentation': {
+                    'description': 'Latch data when the Handshake Trigger deasserts.'
+                },
+                'name': 'HANDSHAKE_TRIGGER_DEASSERTS',
+                'value': 12553
+            }
+        ]
+    },
+    'SampleTimingType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Acquire or generate samples on the specified edge of the sample clock.'
+                },
+                'name': 'SAMP_CLK',
+                'value': 10388
+            },
+            {
+                'documentation': {
+                    'description': ' Determine sample timing using burst handshaking between the device and a  peripheral device.'
+                },
+                'name': 'BURST_HANDSHAKE',
+                'value': 12548
+            },
+            {
+                'documentation': {
+                    'description': ' Determine sample timing by using digital handshaking between the device and a  peripheral device.'
+                },
+                'name': 'HANDSHAKE',
+                'value': 10389
+            },
+            {
+                'documentation': {
+                    'description': 'Configure only the duration of the task.'
+                },
+                'name': 'IMPLICIT',
+                'value': 10451
+            },
+            {
+                'documentation': {
+                    'description': ' Acquire or generate a sample on each read or write operation. This timing type  is also referred to as static or software-timed.'
+                },
+                'name': 'ON_DEMAND',
+                'value': 10390
+            },
+            {
+                'documentation': {
+                    'description': ' Acquire samples when a change occurs in the state of one or more digital input  lines. The lines must be contained within a digital input channel.'
+                },
+                'name': 'CHANGE_DETECTION',
+                'value': 12504
+            },
+            {
+                'documentation': {
+                    'description': ' Device acquires or generates samples on each sample clock edge, but does not  respond to certain triggers until a few sample clock edges later. Pipelining  allows higher data transfer rates at the cost of increased trigger response  latency.  Refer to the device documentation for information about which  triggers pipelining affects. This timing type allows handshaking with some  devices using the Pause trigger, the Ready for Transfer event, or the Data  Active event. Refer to the device documentation for more information.'
+                },
+                'name': 'PIPELINED_SAMP_CLK',
+                'value': 14668
             }
         ]
     },
@@ -1387,6 +3131,171 @@ enums = {
                 },
                 'name': 'TABLE',
                 'value': 10450
+            }
+        ]
+    },
+    'ScaleType2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Scale values by using an Nth order polynomial equation.'
+                },
+                'name': 'POLYNOMIAL',
+                'value': 10449
+            },
+            {
+                'documentation': {
+                    'description': ' Map an array of prescaled values to an array of corresponding scaled values,  with all other values scaled proportionally.'
+                },
+                'name': 'TABLE',
+                'value': 10450
+            }
+        ]
+    },
+    'ScaleType3': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Scale values by using an Nth order polynomial equation.'
+                },
+                'name': 'POLYNOMIAL',
+                'value': 10449
+            },
+            {
+                'documentation': {
+                    'description': ' Map an array of prescaled values to an array of corresponding scaled values,  with all other values scaled proportionally.'
+                },
+                'name': 'TABLE',
+                'value': 10450
+            },
+            {
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'ScaleType4': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Do not scale electrical values to physical units.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            },
+            {
+                'documentation': {
+                    'description': ' You provide two pairs of electrical values and their corresponding physical  values. NI-DAQmx uses those values to calculate the slope and y-intercept of a  linear equation and uses that equation to scale electrical values to physical  values.'
+                },
+                'name': 'TWO_POINT_LINEAR',
+                'value': 15898
+            },
+            {
+                'documentation': {
+                    'description': ' Map an array of electrical values to an array of corresponding physical values,  with all other values scaled proportionally. If you specify this scaling type,  DAQmx_AI_Max and DAQmx_AI_Min must be within the smallest and largest physical  values. For any data outside those endpoints, NI-DAQmx coerces that data to the  endpoints.'
+                },
+                'name': 'TABLE',
+                'value': 10450
+            },
+            {
+                'documentation': {
+                    'description': 'Scale values by using an Nth order polynomial equation.'
+                },
+                'name': 'POLYNOMIAL',
+                'value': 10449
+            }
+        ]
+    },
+    'Sense': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Local.'
+                },
+                'name': 'LOCAL',
+                'value': 16095
+            },
+            {
+                'documentation': {
+                    'description': 'Remote.'
+                },
+                'name': 'REMOTE',
+                'value': 16096
+            }
+        ]
+    },
+    'SensorPowerCfg': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Sensor power supply configuration is not changed.'
+                },
+                'name': 'NO_CHANGE',
+                'value': 10160
+            },
+            {
+                'documentation': {
+                    'description': 'Sensor power supply is turned on.'
+                },
+                'name': 'ENABLED',
+                'value': 16145
+            },
+            {
+                'documentation': {
+                    'description': 'Sensor power supply is turned off.'
+                },
+                'name': 'DISABLED',
+                'value': 16146
+            }
+        ]
+    },
+    'SensorPowerType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Sensor power supply generates a single DC voltage level.'
+                },
+                'name': 'DC',
+                'value': 10050
+            },
+            {
+                'documentation': {
+                    'description': 'Sensor power supply generates an AC voltage.'
+                },
+                'name': 'AC',
+                'value': 10045
+            },
+            {
+                'documentation': {
+                    'description': 'Sensor power supply generates a pair of DC voltage levels.'
+                },
+                'name': 'BIPOLAR_DC',
+                'value': 16147
+            }
+        ]
+    },
+    'ShuntCalSelect': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Switch A.'
+                },
+                'name': 'A',
+                'value': 12513
+            },
+            {
+                'documentation': {
+                    'description': 'Switch B.'
+                },
+                'name': 'B',
+                'value': 12514
+            },
+            {
+                'documentation': {
+                    'description': 'Switches A and B.'
+                },
+                'name': 'AAND_B',
+                'value': 12515
             }
         ]
     },
@@ -1510,6 +3419,24 @@ enums = {
             }
         ]
     },
+    'SourceSelection': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Internal to the device.'
+                },
+                'name': 'INTERNAL',
+                'value': 10200
+            },
+            {
+                'documentation': {
+                    'description': 'External to the device.'
+                },
+                'name': 'EXTERNAL',
+                'value': 10167
+            }
+        ]
+    },
     'StrainGageBridgeType1': {
         'values': [
             {
@@ -1563,6 +3490,66 @@ enums = {
             }
         ]
     },
+    'StrainGageRosetteMeasurementType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' The maximum tensile strain coplanar to the surface of the material under stress.'
+                },
+                'name': 'PRINCIPAL_STRAIN_1',
+                'value': 15971
+            },
+            {
+                'documentation': {
+                    'description': ' The minimum tensile strain coplanar to the surface of the material under stress.'
+                },
+                'name': 'PRINCIPAL_STRAIN_2',
+                'value': 15972
+            },
+            {
+                'documentation': {
+                    'description': ' The angle at which the principal strains of the rosette occur.'
+                },
+                'name': 'PRINCIPAL_STRAIN_ANGLE',
+                'value': 15973
+            },
+            {
+                'documentation': {
+                    'description': ' The tensile strain coplanar to the surface of the material under stress in the  X coordinate direction.'
+                },
+                'name': 'CARTESIAN_STRAIN_X',
+                'value': 15974
+            },
+            {
+                'documentation': {
+                    'description': ' The tensile strain coplanar to the surface of the material under stress in the  Y coordinate direction.'
+                },
+                'name': 'CARTESIAN_STRAIN_Y',
+                'value': 15975
+            },
+            {
+                'documentation': {
+                    'description': ' The tensile strain coplanar to the surface of the material under stress in the  XY coordinate direction.'
+                },
+                'name': 'CARTESIAN_SHEAR_STRAIN_XY',
+                'value': 15976
+            },
+            {
+                'documentation': {
+                    'description': ' The maximum strain coplanar to the cross section of the material under stress.'
+                },
+                'name': 'MAX_SHEAR_STRAIN',
+                'value': 15977
+            },
+            {
+                'documentation': {
+                    'description': ' The angle at which the maximum shear strain of the rosette occurs.'
+                },
+                'name': 'MAX_SHEAR_STRAIN_ANGLE',
+                'value': 15978
+            }
+        ]
+    },
     'StrainGageRosetteType': {
         'values': [
             {
@@ -1603,6 +3590,74 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'SyncPulseType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Use the synchronization pulse type specified by the device.'
+                },
+                'name': 'ONBOARD',
+                'value': 16128
+            },
+            {
+                'documentation': {
+                    'description': 'Digital Edge synchronization.'
+                },
+                'name': 'DIG_EDGE',
+                'value': 10150
+            },
+            {
+                'documentation': {
+                    'description': 'Time synchronization.'
+                },
+                'name': 'TIME',
+                'value': 15996
+            }
+        ]
+    },
+    'SyncType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Disables trigger skew correction.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            },
+            {
+                'documentation': {
+                    'description': 'Device is the source for shared clocks and triggers.'
+                },
+                'name': 'MASTER',
+                'value': 15888
+            },
+            {
+                'documentation': {
+                    'description': 'Device uses clocks and triggers from the master device.'
+                },
+                'name': 'SLAVE',
+                'value': 15889
+            }
+        ]
+    },
+    'SyncUnlockBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Stop task and return an error.'
+                },
+                'name': 'STOP_TASK_AND_ERROR',
+                'value': 15862
+            },
+            {
+                'documentation': {
+                    'description': 'Ignore the loss of synchronization and do nothing.'
+                },
+                'name': 'IGNORE_LOST_SYNC_LOCK',
+                'value': 16129
             }
         ]
     },
@@ -1673,6 +3728,45 @@ enums = {
             {
                 'name': 'DEG_R',
                 'value': 10145
+            }
+        ]
+    },
+    'TemperatureUnits1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Degrees Celsius.'
+                },
+                'name': 'DEG_C',
+                'value': 10143
+            },
+            {
+                'documentation': {
+                    'description': 'Degrees Fahrenheit.'
+                },
+                'name': 'DEG_F',
+                'value': 10144
+            },
+            {
+                'documentation': {
+                    'description': 'Kelvins.'
+                },
+                'name': 'KELVINS',
+                'value': 10325
+            },
+            {
+                'documentation': {
+                    'description': 'Degrees Rankine.'
+                },
+                'name': 'DEG_R',
+                'value': 10145
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
             }
         ]
     },
@@ -1754,6 +3848,17 @@ enums = {
             }
         ]
     },
+    'TimeUnits2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Seconds.'
+                },
+                'name': 'SECONDS',
+                'value': 10364
+            }
+        ]
+    },
     'TimeUnits3': {
         'values': [
             {
@@ -1776,6 +3881,18 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'Timescale': {
+        'values': [
+            {
+                'name': 'TAI',
+                'value': 15988
+            },
+            {
+                'name': 'UTC',
+                'value': 15987
             }
         ]
     },
@@ -1853,6 +3970,265 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'TriggerType10': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Trigger when an analog signal signal crosses a threshold.'
+                },
+                'name': 'ANLG_EDGE',
+                'value': 10099
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when any of the configured analog signals cross their respective  thresholds.'
+                },
+                'name': 'ANLG_MULTI_EDGE',
+                'value': 16108
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger on the rising or falling edge of a digital signal.'
+                },
+                'name': 'DIG_EDGE',
+                'value': 10150
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when digital physical channels match a digital pattern.'
+                },
+                'name': 'DIG_PATTERN',
+                'value': 10398
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when an analog signal enters or leaves a range of values. The range is  in the units of the measurement.'
+                },
+                'name': 'ANLG_WIN',
+                'value': 10103
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger when a specified time is reached.'
+                },
+                'name': 'TIME',
+                'value': 15996
+            },
+            {
+                'documentation': {
+                    'description': 'Disable triggering for the task.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType4': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Trigger on a rising or falling edge of a digital signal.'
+                },
+                'name': 'DIG_EDGE',
+                'value': 10150
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger when a specified time is reached.'
+                },
+                'name': 'TIME',
+                'value': 15996
+            },
+            {
+                'documentation': {
+                    'description': 'Disable the trigger.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType5': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Advance to the next entry in a scan list on the rising or falling edge of a  digital signal.'
+                },
+                'name': 'DIG_EDGE',
+                'value': 10150
+            },
+            {
+                'documentation': {
+                    'description': ' Advance to the next entry in a scan list when you call  DAQmxSendSoftwareTrigger().'
+                },
+                'name': 'SOFTWARE',
+                'value': 10292
+            },
+            {
+                'documentation': {
+                    'description': ' Advance through all entries in the scan list as fast as possible.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType6': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while an analog signal is above or below a  level.'
+                },
+                'name': 'ANLG_LVL',
+                'value': 10101
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while an analog signal is either inside or  outside of a range of values.'
+                },
+                'name': 'ANLG_WIN',
+                'value': 10103
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while a digital signal is at either a high  or low state.'
+                },
+                'name': 'DIG_LVL',
+                'value': 10152
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while digital physical channels either  match or do not match a digital pattern.'
+                },
+                'name': 'DIG_PATTERN',
+                'value': 10398
+            },
+            {
+                'documentation': {
+                    'description': 'Do not pause the measurement or generation.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType8': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Trigger when an analog signal signal crosses a threshold.'
+                },
+                'name': 'ANLG_EDGE',
+                'value': 10099
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when any of the configured analog signals cross their respective  thresholds.'
+                },
+                'name': 'ANLG_MULTI_EDGE',
+                'value': 16108
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger on the rising or falling edge of a digital signal.'
+                },
+                'name': 'DIG_EDGE',
+                'value': 10150
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when digital physical channels match a digital pattern.'
+                },
+                'name': 'DIG_PATTERN',
+                'value': 10398
+            },
+            {
+                'documentation': {
+                    'description': ' Trigger when an analog signal enters or leaves a range of values. The range is  in the units of the measurement.'
+                },
+                'name': 'ANLG_WIN',
+                'value': 10103
+            },
+            {
+                'documentation': {
+                    'description': 'Trigger when a specified time is reached.'
+                },
+                'name': 'TIME',
+                'value': 15996
+            },
+            {
+                'documentation': {
+                    'description': 'Disable triggering for the task.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerType9': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Use the Handshake Trigger as a control signal for asynchronous handshaking,  such as 8255 handshaking.'
+                },
+                'name': 'INTERLOCKED',
+                'value': 12549
+            },
+            {
+                'documentation': {
+                    'description': ' Start the measurement or generation immediately when you start the task.'
+                },
+                'name': 'NONE',
+                'value': 10230
+            }
+        ]
+    },
+    'TriggerUsage': {
+        'values': [
+            {
+                'name': 'ADVANCE',
+                'value': 12488
+            },
+            {
+                'name': 'PAUSE',
+                'value': 12489
+            },
+            {
+                'name': 'REFERENCE',
+                'value': 12490
+            },
+            {
+                'name': 'START',
+                'value': 12491
+            },
+            {
+                'name': 'HANDSHAKE',
+                'value': 10389
+            },
+            {
+                'name': 'ARM_START',
+                'value': 14641
+            }
+        ]
+    },
+    'UnderflowBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Stop generating samples and return an error.'
+                },
+                'name': 'HALT_OUTPUT_AND_ERROR',
+                'value': 14615
+            },
+            {
+                'documentation': {
+                    'description': 'Pause the task until samples are available in the FIFO.'
+                },
+                'name': 'PAUSE_UNTIL_DATA_AVAILABLE',
+                'value': 14616
             }
         ]
     },
@@ -2169,6 +4545,59 @@ enums = {
             }
         ]
     },
+    'VelocityUnits2': {
+        'values': [
+            {
+                'name': 'METERS_PER_SECOND',
+                'value': 15959
+            },
+            {
+                'name': 'KILOMETERS_PER_HOUR',
+                'value': 16007
+            },
+            {
+                'name': 'FEET_PER_SECOND',
+                'value': 16008
+            },
+            {
+                'name': 'MILES_PER_HOUR',
+                'value': 16009
+            },
+            {
+                'name': 'KNOTS',
+                'value': 16010
+            },
+            {
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            }
+        ]
+    },
+    'VoltageUnits1': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Volts.'
+                },
+                'name': 'VOLTS',
+                'value': 10348
+            },
+            {
+                'documentation': {
+                    'description': ' Units a custom scale specifies. If you select this value, you must specify a  custom scale name.'
+                },
+                'name': 'FROM_CUSTOM_SCALE',
+                'value': 10065
+            },
+            {
+                'documentation': {
+                    'description': ' Units defined by TEDS information associated with the channel.'
+                },
+                'name': 'FROM_TEDS',
+                'value': 12516
+            }
+        ]
+    },
     'VoltageUnits2': {
         'values': [
             {
@@ -2184,6 +4613,47 @@ enums = {
                 },
                 'name': 'FROM_CUSTOM_SCALE',
                 'value': 10065
+            }
+        ]
+    },
+    'WatchdogAOOutputType': {
+        'values': [
+            {
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'name': 'CURRENT',
+                'value': 10134
+            },
+            {
+                'name': 'NO_CHANGE',
+                'value': 10160
+            }
+        ]
+    },
+    'WatchdogCOExpirState': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Low logic.'
+                },
+                'name': 'LOW',
+                'value': 10214
+            },
+            {
+                'documentation': {
+                    'description': 'High logic.'
+                },
+                'name': 'HIGH',
+                'value': 10192
+            },
+            {
+                'documentation': {
+                    'description': ' Expiration does not affect the state of the counter output. The channels retain  their states at the time of the watchdog timer expiration, and no further  counter generation runs.'
+                },
+                'name': 'NO_CHANGE',
+                'value': 10160
             }
         ]
     },
@@ -2214,6 +4684,24 @@ enums = {
                 },
                 'name': 'LEAVING_WIN',
                 'value': 10208
+            }
+        ]
+    },
+    'WindowTriggerCondition2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while the trigger is inside the window.'
+                },
+                'name': 'INSIDE_WIN',
+                'value': 10199
+            },
+            {
+                'documentation': {
+                    'description': ' Pause the measurement or generation while the signal is outside the window.'
+                },
+                'name': 'OUTSIDE_WIN',
+                'value': 10251
             }
         ]
     },

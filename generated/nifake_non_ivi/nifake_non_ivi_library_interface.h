@@ -18,6 +18,7 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 Close(FakeHandle handle) = 0;
   virtual int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value) = 0;
   virtual int32 GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value) = 0;
+  virtual int32 GetMarbleAttributeInt32Array(FakeHandle handle, int32 attribute, int32 value[]) = 0;
   virtual int32 Init(const char sessionName[], FakeHandle* handle) = 0;
   virtual int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle) = 0;
   virtual int32 InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]) = 0;
@@ -34,6 +35,7 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 ResetMarbleAttribute(FakeHandle handle, int32 attribute) = 0;
   virtual int32 SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value) = 0;
   virtual int32 SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value) = 0;
+  virtual int32 SetColors(int32 colors[], int32 size) = 0;
 };
 
 }  // namespace nifake_non_ivi_grpc

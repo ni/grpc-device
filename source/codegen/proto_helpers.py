@@ -39,15 +39,30 @@ def get_enum_definitions(enums_to_define, enums):
     enum_definitions.update({enum_name: enum_definition})
   return enum_definitions
 
+
+def is_array_input(parameter: dict):
+  return common_helpers.is_array(parameter["type"]) and common_helpers.is_input_parameter(parameter)
+
+
+def is_decomposable_enum(parameter: dict):
+  """
+  Enums are typically decomposed from a single param into an enum param and an _raw param.
+  The exception is array_inputs which are left as single enum param.
+  This is because protobuf does not support oneof on repeated types, so the standard
+  input decomposition does not work for arrays.
+  """
+  return common_helpers.is_enum(parameter) and not is_array_input(parameter)
+
+
 def get_message_parameter_definitions(parameters):
-  """Get simplified list of all parameters that can be used for definiing request/respones messages in proto file."""
+  """Get simplified list of all parameters that can be used for defining request/respones messages in proto file."""
   parameter_definitions = []
   used_indexes = []
   for parameter in parameters:
     is_array = common_helpers.is_array(parameter["type"])
     parameter_name = common_helpers.camel_to_snake(parameter["name"])
     parameter_type = get_parameter_type(parameter)
-    if common_helpers.is_enum(parameter):
+    if is_decomposable_enum(parameter):
       is_request_message = common_helpers.is_input_parameter(parameter)
       enum_parameters = get_enum_parameters(parameter, parameter_name, parameter_type, is_array, used_indexes)
       if is_request_message:

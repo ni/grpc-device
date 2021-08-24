@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <random>
+#include <stdexcept>
 
 #include "device_server.h"
 #include "enumerate_devices.h"
@@ -139,17 +140,30 @@ class NiDAQmxDriverApiTests : public Test {
     return create_ai_voltage_chan(request, response);
   }
 
-  ::grpc::Status create_ao_voltage_chan(double min_val, double max_val, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
+  CreateAOVoltageChanRequest create_ao_voltage_chan_request(double min_val, double max_val, const std::string& name = "ao0")
   {
-    ::grpc::ClientContext context;
     CreateAOVoltageChanRequest request;
     set_request_session_id(request);
+
     request.set_physical_channel("gRPCSystemTestDAQ/ao0");
-    request.set_name_to_assign_to_channel("ao0");
+    request.set_name_to_assign_to_channel(name);
+
     request.set_min_val(min_val);
     request.set_max_val(max_val);
     request.set_units(VoltageUnits2::VOLTAGE_UNITS2_VOLTS);
+    return request;
+  }
+
+  ::grpc::Status create_ao_voltage_chan(const CreateAOVoltageChanRequest& request, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
+  {
+    ::grpc::ClientContext context;
     return stub()->CreateAOVoltageChan(&context, request, &response);
+  }
+
+  ::grpc::Status create_ao_voltage_chan(double min_val, double max_val, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
+  {
+    auto request = create_ao_voltage_chan_request(min_val, max_val);
+    return create_ao_voltage_chan(request, response);
   }
 
   ::grpc::Status create_di_chan(CreateDIChanResponse& response = ThrowawayResponse<CreateDIChanResponse>::response())
@@ -421,7 +435,7 @@ class NiDAQmxDriverApiTests : public Test {
     return request;
   }
 
-  ::grpc::Status cfg_samp_clk_timing(CfgSampClkTimingResponse& response)
+  ::grpc::Status cfg_samp_clk_timing(CfgSampClkTimingResponse& response = ThrowawayResponse<CfgSampClkTimingResponse>::response())
   {
     auto request = create_cfg_samp_clk_timing_request(100.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 1000UL);
     return cfg_samp_clk_timing(request, response);
@@ -769,7 +783,9 @@ class NiDAQmxDriverApiTests : public Test {
 
     set_request_session_id(request, watchdog_session);
     request.set_channel_names("gRPCSystemTestDAQ/port1/line0:1");
-    auto expir_states = std::vector<int32>{DAQmx_Val_High, DAQmx_Val_High};
+    auto expir_states = std::vector<DigitalLineState>{
+        DigitalLineState::DIGITAL_LINE_STATE_HIGH,
+        DigitalLineState::DIGITAL_LINE_STATE_HIGH};
     request.mutable_expir_state_array()->CopyFrom({expir_states.cbegin(), expir_states.cend()});
     request.set_array_size(2);
     return stub()->CfgWatchdogDOExpirStates(&context, request, &response);
@@ -812,6 +828,151 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ResetBufferAttribute(&context, request, &response);
   }
 
+  template <typename TRequest, typename T, typename TAttributes>
+  TRequest create_set_chan_attribute_request(const std::string& channel_name, TAttributes attribute, T value)
+  {
+    TRequest request;
+    set_request_session_id(request);
+    request.set_channel(channel_name);
+    request.set_attribute(attribute);
+    request.set_value(value);
+    return request;
+  }
+
+  template <typename TRequest, typename TAttributes>
+  TRequest create_get_chan_attribute_request(const std::string& channel_name, TAttributes attribute)
+  {
+    TRequest request;
+    set_request_session_id(request);
+    request.set_channel(channel_name);
+    request.set_attribute(attribute);
+    return request;
+  }
+
+  ::grpc::Status get_chan_attribute_double(const GetChanAttributeDoubleRequest& request, GetChanAttributeDoubleResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->GetChanAttributeDouble(&context, request, &response);
+  }
+
+  ::grpc::Status set_chan_attribute_double(const SetChanAttributeDoubleRequest& request, SetChanAttributeDoubleResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->SetChanAttributeDouble(&context, request, &response);
+  }
+
+  ::grpc::Status get_chan_attribute_bool(const GetChanAttributeBoolRequest& request, GetChanAttributeBoolResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->GetChanAttributeBool(&context, request, &response);
+  }
+
+  ::grpc::Status set_chan_attribute_bool(const SetChanAttributeBoolRequest& request, SetChanAttributeBoolResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->SetChanAttributeBool(&context, request, &response);
+  }
+
+  ::grpc::Status get_chan_attribute_i32(const GetChanAttributeInt32Request& request, GetChanAttributeInt32Response& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->GetChanAttributeInt32(&context, request, &response);
+  }
+
+  ::grpc::Status set_chan_attribute_i32(const SetChanAttributeInt32Request& request, SetChanAttributeInt32Response& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->SetChanAttributeInt32(&context, request, &response);
+  }
+
+  template <typename TRequest, typename TAttributes>
+  TRequest create_get_device_attribute_request(const std::string& device_name, TAttributes attribute)
+  {
+    TRequest request;
+    request.set_device_name(device_name);
+    request.set_attribute(attribute);
+    return request;
+  }
+
+  ::grpc::Status get_device_attribute_i32_array(const GetDeviceAttributeInt32ArrayRequest& request, GetDeviceAttributeInt32ArrayResponse& response)
+  {
+    ::grpc::ClientContext context;
+    return stub()->GetDeviceAttributeInt32Array(&context, request, &response);
+  }
+
+  template <typename TRequest, typename TAttributes>
+  TRequest create_get_task_attribute_request(TAttributes attribute)
+  {
+    TRequest request;
+    set_request_session_id(request);
+    request.set_attribute(attribute);
+    return request;
+  }
+
+  ::grpc::Status get_task_attribute_bool(TaskBoolAttributes attribute, GetTaskAttributeBoolResponse& response)
+  {
+    auto request = create_get_task_attribute_request<GetTaskAttributeBoolRequest>(attribute);
+    ::grpc::ClientContext context;
+    return stub()->GetTaskAttributeBool(&context, request, &response);
+  }
+
+  ::grpc::Status get_task_attribute_u32(TaskUInt32Attributes attribute, GetTaskAttributeUInt32Response& response)
+  {
+    auto request = create_get_task_attribute_request<GetTaskAttributeUInt32Request>(attribute);
+    ::grpc::ClientContext context;
+    return stub()->GetTaskAttributeUInt32(&context, request, &response);
+  }
+
+  ::grpc::Status get_task_attribute_string(TaskStringAttributes attribute, GetTaskAttributeStringResponse& response)
+  {
+    auto request = create_get_task_attribute_request<GetTaskAttributeStringRequest>(attribute);
+    request.set_size(2048);
+    ::grpc::ClientContext context;
+    return stub()->GetTaskAttributeString(&context, request, &response);
+  }
+
+  void raise_if_error(::grpc::Status status)
+  {
+    if (!status.ok()) {
+      throw new std::runtime_error(status.error_message());
+    }
+  }
+
+  template <typename TRequest, typename TAttributes>
+  TRequest create_get_timing_attribute_request(TAttributes attribute)
+  {
+    TRequest request;
+    set_request_session_id(request);
+    request.set_attribute(attribute);
+    return request;
+  }
+
+  template <typename TRequest, typename TAttributes, typename TValue>
+  TRequest create_set_timing_attribute_request(TAttributes attribute, TValue value)
+  {
+    TRequest request = create_get_timing_attribute_request<SetTimingAttributeDoubleRequest>(attribute);
+    request.set_value(value);
+    return request;
+  }
+
+  GetTimingAttributeDoubleResponse get_timing_attribute_double(TimingDoubleAttributes attribute)
+  {
+    ::grpc::ClientContext context;
+    auto request = create_get_timing_attribute_request<GetTimingAttributeDoubleRequest>(attribute);
+    auto response = GetTimingAttributeDoubleResponse{};
+    raise_if_error(stub()->GetTimingAttributeDouble(&context, request, &response));
+    return response;
+  }
+
+  SetTimingAttributeDoubleResponse set_timing_attribute_double(TimingDoubleAttributes attribute, double value)
+  {
+    ::grpc::ClientContext context;
+    auto request = create_set_timing_attribute_request<SetTimingAttributeDoubleRequest>(attribute, value);
+    auto response = SetTimingAttributeDoubleResponse{};
+    raise_if_error(stub()->SetTimingAttributeDouble(&context, request, &response));
+    return response;
+  }
+
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
@@ -830,9 +991,15 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   template <typename TResponse>
-  void EXPECT_SUCCESS(const ::grpc::Status& status, const TResponse& response)
+  void EXPECT_SUCCESS(const TResponse& response)
   {
     EXPECT_EQ(DAQmxSuccess, response.status());
+  }
+
+  template <typename TResponse>
+  void EXPECT_SUCCESS(const ::grpc::Status& status, const TResponse& response)
+  {
+    EXPECT_SUCCESS(response);
     EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
   }
 
@@ -1636,6 +1803,133 @@ TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBuffer
   EXPECT_EQ(initial_value, read_after_reset_response.value());
   EXPECT_EQ(initial_value * 2, readback_response.value());
 }
+
+TEST_F(NiDAQmxDriverApiTests, GetAISupportMeasurementTypes_ResultIncludesCurrentAndVoltage)
+{
+  const auto ATTRIBUTE = DeviceInt32ArrayAttributes::DEVICE_ATTRIBUTE_AI_SUPPORTED_MEAS_TYPES;
+  auto request = create_get_device_attribute_request<GetDeviceAttributeInt32ArrayRequest>(
+      DEVICE_NAME,
+      ATTRIBUTE);
+  auto response = GetDeviceAttributeInt32ArrayResponse{};
+  auto query_status = get_device_attribute_i32_array(request, response);
+  request.set_size(response.status());
+  auto status = get_device_attribute_i32_array(request, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_THAT(response.value(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_CURRENT));
+  EXPECT_THAT(response.value(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_VOLTAGE));
+  EXPECT_THAT(response.value_raw(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_CURRENT));
+  EXPECT_THAT(response.value_raw(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_VOLTAGE));
+}
+
+TEST_F(NiDAQmxDriverApiTests, AOChannel_GetAOMax_ReturnsAOMax)
+{
+  const auto A0_MIN = -10.0;
+  const auto AO_MAX = 10.0;
+  const auto CHANNEL_NAME = "AO Channel";
+  create_ao_voltage_chan(
+      create_ao_voltage_chan_request(A0_MIN, AO_MAX, CHANNEL_NAME));
+
+  auto request = create_get_chan_attribute_request<GetChanAttributeDoubleRequest>(
+      CHANNEL_NAME,
+      ChannelDoubleAttributes::CHANNEL_ATTRIBUTE_AO_MAX);
+  auto response = GetChanAttributeDoubleResponse{};
+  auto status = get_chan_attribute_double(request, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_NEAR(AO_MAX, response.value(), 0.0001);
+}
+
+TEST_F(NiDAQmxDriverApiTests, AOChannel_SetAndGetAllowConnToGround_SucceedsAndReturnsSetValue)
+{
+  const auto CHANNEL_NAME = "AO Channel";
+  create_ao_voltage_chan(
+      create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
+
+  auto initial_get_request = create_get_chan_attribute_request<GetChanAttributeBoolRequest>(
+      CHANNEL_NAME,
+      ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
+  auto initial_get_response = GetChanAttributeBoolResponse{};
+  auto initial_get_status = get_chan_attribute_bool(initial_get_request, initial_get_response);
+  auto set_request = create_set_chan_attribute_request<SetChanAttributeBoolRequest>(
+      CHANNEL_NAME,
+      ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND,
+      true);
+  auto set_response = SetChanAttributeBoolResponse{};
+  auto set_status = set_chan_attribute_bool(set_request, set_response);
+  auto get_request = create_get_chan_attribute_request<GetChanAttributeBoolRequest>(
+      CHANNEL_NAME,
+      ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
+  auto get_response = GetChanAttributeBoolResponse{};
+  auto get_status = get_chan_attribute_bool(get_request, get_response);
+
+  EXPECT_SUCCESS(initial_get_status, set_response);
+  EXPECT_SUCCESS(set_status, set_response);
+  EXPECT_SUCCESS(get_status, get_response);
+  EXPECT_FALSE(initial_get_response.value());
+  EXPECT_TRUE(get_response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, AOChannel_GetAOOutputType_SucceedsAndReturnsVoltage)
+{
+  const auto CHANNEL_NAME = "AO Channel";
+  create_ao_voltage_chan(
+      create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
+
+  auto request = create_get_chan_attribute_request<GetChanAttributeInt32Request>(
+      CHANNEL_NAME,
+      ChannelInt32Attributes::CHANNEL_ATTRIBUTE_AO_OUTPUT_TYPE);
+  auto response = GetChanAttributeInt32Response{};
+  auto status = get_chan_attribute_i32(request, response);
+
+  EXPECT_SUCCESS(status, response);
+  EXPECT_EQ(
+      ChannelInt32AttributeValues::CHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_VOLTAGE,
+      response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, TaskWithChannel_GetTaskAttributes_ReturnsCorectResults)
+{
+  const auto CHANNEL_NAME = "AO Channel";
+  create_ao_voltage_chan(
+      create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
+  start_task();
+
+  auto num_chans_response = GetTaskAttributeUInt32Response{};
+  auto num_chans_status = get_task_attribute_u32(TaskUInt32Attributes::TASK_ATTRIBUTE_NUM_CHANS, num_chans_response);
+  auto channels_response = GetTaskAttributeStringResponse{};
+  auto channels_status = get_task_attribute_string(TaskStringAttributes::TASK_ATTRIBUTE_CHANNELS, channels_response);
+  auto complete_response = GetTaskAttributeBoolResponse{};
+  auto complete_status = get_task_attribute_bool(TaskBoolAttributes::TASK_ATTRIBUTE_COMPLETE, complete_response);
+
+  EXPECT_SUCCESS(num_chans_status, num_chans_response);
+  EXPECT_SUCCESS(channels_status, channels_response);
+  EXPECT_SUCCESS(complete_status, complete_response);
+  EXPECT_EQ(1, num_chans_response.value());
+  auto stripped_channels = std::string(channels_response.value().c_str());
+  EXPECT_THAT(stripped_channels, StrEq(CHANNEL_NAME));
+  EXPECT_FALSE(complete_response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, AIChannelWithSampleClock_ReconfigureRate_UpdatesRateSuccessfully)
+{
+  const auto INITIAL_RATE = 100.0;
+  const auto RECONFIGURED_RATE = 200.0;
+  create_ai_voltage_chan(0.0, 10.0);
+  auto cfg_request = create_cfg_samp_clk_timing_request(INITIAL_RATE, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 1U);
+  cfg_samp_clk_timing(cfg_request);
+
+  auto initial_response = get_timing_attribute_double(TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
+  auto set_response = set_timing_attribute_double(TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE, RECONFIGURED_RATE);
+  auto get_response = get_timing_attribute_double(TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
+
+  EXPECT_SUCCESS(initial_response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(get_response);
+  EXPECT_NEAR(INITIAL_RATE, initial_response.value(), .0001);
+  EXPECT_NEAR(RECONFIGURED_RATE, get_response.value(), .0001);
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
