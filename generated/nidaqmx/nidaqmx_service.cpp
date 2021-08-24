@@ -8090,6 +8090,245 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetPhysicalChanAttributeBool(::grpc::ServerContext* context, const GetPhysicalChanAttributeBoolRequest* request, GetPhysicalChanAttributeBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto physical_channel = request->physical_channel().c_str();
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      bool32 value {};
+      auto status = library_->GetPhysicalChanAttributeBool(physical_channel, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetPhysicalChanAttributeBytes(::grpc::ServerContext* context, const GetPhysicalChanAttributeBytesRequest* request, GetPhysicalChanAttributeBytesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto physical_channel = request->physical_channel().c_str();
+      int32 attribute = request->attribute();
+      uInt32 size = request->size();
+      std::string value(size, '\0');
+      auto status = library_->GetPhysicalChanAttributeBytes(physical_channel, attribute, (uInt8*)value.data(), size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetPhysicalChanAttributeDouble(::grpc::ServerContext* context, const GetPhysicalChanAttributeDoubleRequest* request, GetPhysicalChanAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto physical_channel = request->physical_channel().c_str();
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      float64 value {};
+      auto status = library_->GetPhysicalChanAttributeDouble(physical_channel, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetPhysicalChanAttributeDoubleArray(::grpc::ServerContext* context, const GetPhysicalChanAttributeDoubleArrayRequest* request, GetPhysicalChanAttributeDoubleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto physical_channel = request->physical_channel().c_str();
+      int32 attribute = request->attribute();
+      uInt32 size = request->size();
+      response->mutable_value()->Resize(size, 0);
+      float64* value = response->mutable_value()->mutable_data();
+      auto status = library_->GetPhysicalChanAttributeDoubleArray(physical_channel, attribute, value, size);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetPhysicalChanAttributeInt32(::grpc::ServerContext* context, const GetPhysicalChanAttributeInt32Request* request, GetPhysicalChanAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto physical_channel = request->physical_channel().c_str();
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      int32 value {};
+      auto status = library_->GetPhysicalChanAttributeInt32(physical_channel, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nidaqmx_grpc::PhysicalChannelInt32AttributeValues>(valid_enum_value);
+        };
+        response->set_value(checked_convert_value(value));
+        response->set_value_raw(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetPhysicalChanAttributeInt32Array(::grpc::ServerContext* context, const GetPhysicalChanAttributeInt32ArrayRequest* request, GetPhysicalChanAttributeInt32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto physical_channel = request->physical_channel().c_str();
+      int32 attribute = request->attribute();
+      uInt32 size = request->size();
+      response->mutable_value_raw()->Resize(size, 0);
+      int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
+      auto status = library_->GetPhysicalChanAttributeInt32Array(physical_channel, attribute, value, size);
+      response->set_status(status);
+      if (status == 0) {
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nidaqmx_grpc::PhysicalChannelInt32AttributeValues>(valid_enum_value);
+        };
+        response->mutable_value()->Clear();
+        response->mutable_value()->Reserve(size);
+        std::transform(
+          response->value_raw().begin(),
+          response->value_raw().end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+          [&](auto x) { 
+              return checked_convert_value(x);
+          });
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetPhysicalChanAttributeString(::grpc::ServerContext* context, const GetPhysicalChanAttributeStringRequest* request, GetPhysicalChanAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto physical_channel = request->physical_channel().c_str();
+      int32 attribute = request->attribute();
+      uInt32 size = request->size();
+      std::string value;
+      if (size > 0) {
+          value.resize(size-1);
+      }
+      auto status = library_->GetPhysicalChanAttributeString(physical_channel, attribute, (char*)value.data(), size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetPhysicalChanAttributeUInt32(::grpc::ServerContext* context, const GetPhysicalChanAttributeUInt32Request* request, GetPhysicalChanAttributeUInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto physical_channel = request->physical_channel().c_str();
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      uInt32 value {};
+      auto status = library_->GetPhysicalChanAttributeUInt32(physical_channel, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetPhysicalChanAttributeUInt32Array(::grpc::ServerContext* context, const GetPhysicalChanAttributeUInt32ArrayRequest* request, GetPhysicalChanAttributeUInt32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto physical_channel = request->physical_channel().c_str();
+      int32 attribute = request->attribute();
+      uInt32 size = request->size();
+      response->mutable_value()->Resize(size, 0);
+      uInt32* value = reinterpret_cast<uInt32*>(response->mutable_value()->mutable_data());
+      auto status = library_->GetPhysicalChanAttributeUInt32Array(physical_channel, attribute, value, size);
+      response->set_status(status);
+      if (status == 0) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetReadAttributeBool(::grpc::ServerContext* context, const GetReadAttributeBoolRequest* request, GetReadAttributeBoolResponse* response)
   {
     if (context->IsCancelled()) {

@@ -195,6 +195,15 @@ public:
   ::grpc::Status GetNthTaskChannel(::grpc::ServerContext* context, const GetNthTaskChannelRequest* request, GetNthTaskChannelResponse* response) override;
   ::grpc::Status GetNthTaskDevice(::grpc::ServerContext* context, const GetNthTaskDeviceRequest* request, GetNthTaskDeviceResponse* response) override;
   ::grpc::Status GetNthTaskReadChannel(::grpc::ServerContext* context, const GetNthTaskReadChannelRequest* request, GetNthTaskReadChannelResponse* response) override;
+  ::grpc::Status GetPhysicalChanAttributeBool(::grpc::ServerContext* context, const GetPhysicalChanAttributeBoolRequest* request, GetPhysicalChanAttributeBoolResponse* response) override;
+  ::grpc::Status GetPhysicalChanAttributeBytes(::grpc::ServerContext* context, const GetPhysicalChanAttributeBytesRequest* request, GetPhysicalChanAttributeBytesResponse* response) override;
+  ::grpc::Status GetPhysicalChanAttributeDouble(::grpc::ServerContext* context, const GetPhysicalChanAttributeDoubleRequest* request, GetPhysicalChanAttributeDoubleResponse* response) override;
+  ::grpc::Status GetPhysicalChanAttributeDoubleArray(::grpc::ServerContext* context, const GetPhysicalChanAttributeDoubleArrayRequest* request, GetPhysicalChanAttributeDoubleArrayResponse* response) override;
+  ::grpc::Status GetPhysicalChanAttributeInt32(::grpc::ServerContext* context, const GetPhysicalChanAttributeInt32Request* request, GetPhysicalChanAttributeInt32Response* response) override;
+  ::grpc::Status GetPhysicalChanAttributeInt32Array(::grpc::ServerContext* context, const GetPhysicalChanAttributeInt32ArrayRequest* request, GetPhysicalChanAttributeInt32ArrayResponse* response) override;
+  ::grpc::Status GetPhysicalChanAttributeString(::grpc::ServerContext* context, const GetPhysicalChanAttributeStringRequest* request, GetPhysicalChanAttributeStringResponse* response) override;
+  ::grpc::Status GetPhysicalChanAttributeUInt32(::grpc::ServerContext* context, const GetPhysicalChanAttributeUInt32Request* request, GetPhysicalChanAttributeUInt32Response* response) override;
+  ::grpc::Status GetPhysicalChanAttributeUInt32Array(::grpc::ServerContext* context, const GetPhysicalChanAttributeUInt32ArrayRequest* request, GetPhysicalChanAttributeUInt32ArrayResponse* response) override;
   ::grpc::Status GetReadAttributeBool(::grpc::ServerContext* context, const GetReadAttributeBoolRequest* request, GetReadAttributeBoolResponse* response) override;
   ::grpc::Status GetReadAttributeDouble(::grpc::ServerContext* context, const GetReadAttributeDoubleRequest* request, GetReadAttributeDoubleResponse* response) override;
   ::grpc::Status GetReadAttributeInt32(::grpc::ServerContext* context, const GetReadAttributeInt32Request* request, GetReadAttributeInt32Response* response) override;

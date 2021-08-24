@@ -180,6 +180,15 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetNthTaskChannel, (TaskHandle task, uInt32 index, char buffer[], int32 bufferSize), (override));
   MOCK_METHOD(int32, GetNthTaskDevice, (TaskHandle task, uInt32 index, char buffer[], int32 bufferSize), (override));
   MOCK_METHOD(int32, GetNthTaskReadChannel, (TaskHandle task, uInt32 index, char buffer[], int32 bufferSize), (override));
+  MOCK_METHOD(int32, GetPhysicalChanAttributeBool, (const char physicalChannel[], int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetPhysicalChanAttributeBytes, (const char physicalChannel[], int32 attribute, uInt8 value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetPhysicalChanAttributeDouble, (const char physicalChannel[], int32 attribute, float64* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetPhysicalChanAttributeDoubleArray, (const char physicalChannel[], int32 attribute, float64 value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetPhysicalChanAttributeInt32, (const char physicalChannel[], int32 attribute, int32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetPhysicalChanAttributeInt32Array, (const char physicalChannel[], int32 attribute, int32 value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetPhysicalChanAttributeString, (const char physicalChannel[], int32 attribute, char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetPhysicalChanAttributeUInt32, (const char physicalChannel[], int32 attribute, uInt32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetPhysicalChanAttributeUInt32Array, (const char physicalChannel[], int32 attribute, uInt32 value[], uInt32 size), (override));
   MOCK_METHOD(int32, GetReadAttributeBool, (TaskHandle task, int32 attribute, bool32* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetReadAttributeDouble, (TaskHandle task, int32 attribute, float64* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetReadAttributeInt32, (TaskHandle task, int32 attribute, int32* value, uInt32 size), (override));

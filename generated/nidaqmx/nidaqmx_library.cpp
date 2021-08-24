@@ -188,6 +188,15 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetNthTaskChannel = reinterpret_cast<GetNthTaskChannelPtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskChannel"));
   function_pointers_.GetNthTaskDevice = reinterpret_cast<GetNthTaskDevicePtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskDevice"));
   function_pointers_.GetNthTaskReadChannel = reinterpret_cast<GetNthTaskReadChannelPtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskReadChannel"));
+  function_pointers_.GetPhysicalChanAttributeBool = reinterpret_cast<GetPhysicalChanAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
+  function_pointers_.GetPhysicalChanAttributeBytes = reinterpret_cast<GetPhysicalChanAttributeBytesPtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
+  function_pointers_.GetPhysicalChanAttributeDouble = reinterpret_cast<GetPhysicalChanAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
+  function_pointers_.GetPhysicalChanAttributeDoubleArray = reinterpret_cast<GetPhysicalChanAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
+  function_pointers_.GetPhysicalChanAttributeInt32 = reinterpret_cast<GetPhysicalChanAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
+  function_pointers_.GetPhysicalChanAttributeInt32Array = reinterpret_cast<GetPhysicalChanAttributeInt32ArrayPtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
+  function_pointers_.GetPhysicalChanAttributeString = reinterpret_cast<GetPhysicalChanAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
+  function_pointers_.GetPhysicalChanAttributeUInt32 = reinterpret_cast<GetPhysicalChanAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
+  function_pointers_.GetPhysicalChanAttributeUInt32Array = reinterpret_cast<GetPhysicalChanAttributeUInt32ArrayPtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
   function_pointers_.GetReadAttributeBool = reinterpret_cast<GetReadAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetReadAttribute"));
   function_pointers_.GetReadAttributeDouble = reinterpret_cast<GetReadAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetReadAttribute"));
   function_pointers_.GetReadAttributeInt32 = reinterpret_cast<GetReadAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetReadAttribute"));
@@ -2389,6 +2398,114 @@ int32 NiDAQmxLibrary::GetNthTaskReadChannel(TaskHandle task, uInt32 index, char 
   return DAQmxGetNthTaskReadChannel(task, index, buffer, bufferSize);
 #else
   return function_pointers_.GetNthTaskReadChannel(task, index, buffer, bufferSize);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeBool(const char physicalChannel[], int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetPhysicalChanAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+#else
+  return function_pointers_.GetPhysicalChanAttributeBool(physicalChannel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeBytes(const char physicalChannel[], int32 attribute, uInt8 value[], uInt32 size)
+{
+  if (!function_pointers_.GetPhysicalChanAttributeBytes) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+#else
+  return function_pointers_.GetPhysicalChanAttributeBytes(physicalChannel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeDouble(const char physicalChannel[], int32 attribute, float64* value, uInt32 size)
+{
+  if (!function_pointers_.GetPhysicalChanAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+#else
+  return function_pointers_.GetPhysicalChanAttributeDouble(physicalChannel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeDoubleArray(const char physicalChannel[], int32 attribute, float64 value[], uInt32 size)
+{
+  if (!function_pointers_.GetPhysicalChanAttributeDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+#else
+  return function_pointers_.GetPhysicalChanAttributeDoubleArray(physicalChannel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeInt32(const char physicalChannel[], int32 attribute, int32* value, uInt32 size)
+{
+  if (!function_pointers_.GetPhysicalChanAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+#else
+  return function_pointers_.GetPhysicalChanAttributeInt32(physicalChannel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeInt32Array(const char physicalChannel[], int32 attribute, int32 value[], uInt32 size)
+{
+  if (!function_pointers_.GetPhysicalChanAttributeInt32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+#else
+  return function_pointers_.GetPhysicalChanAttributeInt32Array(physicalChannel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeString(const char physicalChannel[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetPhysicalChanAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+#else
+  return function_pointers_.GetPhysicalChanAttributeString(physicalChannel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32(const char physicalChannel[], int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetPhysicalChanAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+#else
+  return function_pointers_.GetPhysicalChanAttributeUInt32(physicalChannel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPhysicalChanAttributeUInt32Array(const char physicalChannel[], int32 attribute, uInt32 value[], uInt32 size)
+{
+  if (!function_pointers_.GetPhysicalChanAttributeUInt32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPhysicalChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPhysicalChanAttribute(physicalChannel, attribute, value, size);
+#else
+  return function_pointers_.GetPhysicalChanAttributeUInt32Array(physicalChannel, attribute, value, size);
 #endif
 }
 

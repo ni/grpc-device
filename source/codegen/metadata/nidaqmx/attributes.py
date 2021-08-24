@@ -5023,6 +5023,254 @@ attributes = {
             'type': 'uInt32'
         }
     },
+    'PhysicalChannel': {
+        8666: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_MFG_ID',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8667: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_MODEL_NUM',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8668: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_SERIAL_NUM',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8669: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_VERSION_NUM',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8670: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_VERSION_LETTER',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8671: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_BIT_STREAM',
+            'resettable': False,
+            'type': 'uInt8[]'
+        },
+        8847: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_TEMPLATE_I_DS',
+            'resettable': False,
+            'type': 'uInt32[]'
+        },
+        9026: {
+            'access': 'read',
+            'enum': 'InputTermCfg',
+            'name': 'PHYSICAL_CHAN_AI_TERM_CFGS',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        10659: {
+            'access': 'read',
+            'enum': 'OutputTermCfg',
+            'name': 'PHYSICAL_CHAN_AO_TERM_CFGS',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        10660: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DI_PORT_WIDTH',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        10661: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DI_SAMP_CLK_SUPPORTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10662: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DI_CHANGE_DETECT_SUPPORTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10663: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DO_PORT_WIDTH',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        10664: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DO_SAMP_CLK_SUPPORTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10782: {
+            'access': 'read-write',
+            'name': 'PHYSICAL_CHAN_AO_MANUAL_CONTROL_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        10783: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AO_MANUAL_CONTROL_AMPLITUDE',
+            'resettable': False,
+            'type': 'float64'
+        },
+        10784: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AO_MANUAL_CONTROL_FREQ',
+            'resettable': False,
+            'type': 'float64'
+        },
+        11971: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AO_MANUAL_CONTROL_SHORT_DETECTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12247: {
+            'access': 'read',
+            'enum': 'AIMeasurementType',
+            'name': 'PHYSICAL_CHAN_AI_SUPPORTED_MEAS_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12248: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AI_INPUT_SRCS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12249: {
+            'access': 'read',
+            'enum': 'AOOutputChannelType',
+            'name': 'PHYSICAL_CHAN_AO_SUPPORTED_OUTPUT_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12250: {
+            'access': 'read',
+            'enum': 'CIMeasurementType',
+            'name': 'PHYSICAL_CHAN_CI_SUPPORTED_MEAS_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12251: {
+            'access': 'read',
+            'enum': 'COOutputType',
+            'name': 'PHYSICAL_CHAN_CO_SUPPORTED_OUTPUT_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12256: {
+            'access': 'read',
+            'enum': 'AcquisitionType',
+            'name': 'PHYSICAL_CHAN_DI_SAMP_MODES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12257: {
+            'access': 'read',
+            'enum': 'AcquisitionType',
+            'name': 'PHYSICAL_CHAN_DO_SAMP_MODES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12343: {
+            'access': 'read',
+            'enum': 'NavMeasurementType',
+            'name': 'PHYSICAL_CHAN_NAV_SUPPORTED_MEAS_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12366: {
+            'access': 'read',
+            'enum': 'AOPowerUpOutputBehavior',
+            'name': 'PHYSICAL_CHAN_AO_SUPPORTED_POWER_UP_OUTPUT_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12386: {
+            'access': 'read-write',
+            'name': 'AO_POWER_AMP_CHANNEL_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12387: {
+            'access': 'read',
+            'name': 'AO_POWER_AMP_SCALING_COEFF',
+            'resettable': False,
+            'type': 'float64[]'
+        },
+        12388: {
+            'access': 'read',
+            'name': 'AO_POWER_AMP_OVERCURRENT',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12389: {
+            'access': 'read',
+            'name': 'AO_POWER_AMP_GAIN',
+            'resettable': False,
+            'type': 'float64'
+        },
+        12390: {
+            'access': 'read',
+            'name': 'AO_POWER_AMP_OFFSET',
+            'resettable': False,
+            'type': 'float64'
+        },
+        12652: {
+            'access': 'read-write',
+            'name': 'PHYSICAL_CHAN_AI_POWER_CONTROL_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12653: {
+            'access': 'read-write',
+            'name': 'PHYSICAL_CHAN_AI_POWER_CONTROL_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12654: {
+            'access': 'read-write',
+            'enum': 'SensorPowerType',
+            'name': 'PHYSICAL_CHAN_AI_POWER_CONTROL_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12665: {
+            'access': 'read',
+            'enum': 'SensorPowerType',
+            'name': 'PHYSICAL_CHAN_AI_SENSOR_POWER_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12666: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AI_SENSOR_POWER_VOLTAGE_RANGE_VALS',
+            'resettable': False,
+            'type': 'float64[]'
+        },
+        12668: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AI_SENSOR_POWER_OPEN_CHAN',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12669: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AI_SENSOR_POWER_OVERCURRENT',
+            'resettable': False,
+            'type': 'bool32'
+        }
+    },
     'Read': {
         4625: {
             'access': 'read-write',

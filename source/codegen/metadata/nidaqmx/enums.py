@@ -320,6 +320,31 @@ enums = {
             }
         ]
     },
+    'AOPowerUpOutputBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage output.'
+                },
+                'name': '10322',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Current output.'
+                },
+                'name': '10134',
+                'value': 10134
+            },
+            {
+                'documentation': {
+                    'description': 'High-impedance state.'
+                },
+                'name': '12527',
+                'value': 12527
+            }
+        ]
+    },
     'AccelChargeSensitivityUnits': {
         'values': [
             {

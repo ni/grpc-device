@@ -6914,6 +6914,277 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetPhysicalChanAttributeBool': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeBytes': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeDouble': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeDoubleArray': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeInt32': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeInt32Array': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeString': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeUInt32': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeUInt32Array': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetReadAttributeBool': {
         'cname': 'DAQmxGetReadAttribute',
         'parameters': [
