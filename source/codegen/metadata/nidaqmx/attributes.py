@@ -5584,6 +5584,40 @@ attributes = {
             'type': 'char[]'
         }
     },
+    'RealTime': {
+        8941: {
+            'access': 'read-write',
+            'name': 'NUM_OF_WARMUP_ITERS',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        8942: {
+            'access': 'read-write',
+            'name': 'CONV_LATE_ERRORS_TO_WARNINGS',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8943: {
+            'access': 'read-write',
+            'enum': 'WaitMode3',
+            'name': 'WAIT_FOR_NEXT_SAMP_CLK_WAIT_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8985: {
+            'access': 'read-write',
+            'name': 'REPORT_MISSED_SAMP',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8986: {
+            'access': 'read-write',
+            'enum': 'WaitMode4',
+            'name': 'WRITE_RECOVERY_MODE',
+            'resettable': True,
+            'type': 'int32'
+        }
+    },
     'Scale': {
         4646: {
             'access': 'read-write',

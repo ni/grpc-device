@@ -203,6 +203,9 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetReadAttributeString = reinterpret_cast<GetReadAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetReadAttribute"));
   function_pointers_.GetReadAttributeUInt32 = reinterpret_cast<GetReadAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetReadAttribute"));
   function_pointers_.GetReadAttributeUInt64 = reinterpret_cast<GetReadAttributeUInt64Ptr>(shared_library_.get_function_pointer("DAQmxGetReadAttribute"));
+  function_pointers_.GetRealTimeAttributeBool = reinterpret_cast<GetRealTimeAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetRealTimeAttribute"));
+  function_pointers_.GetRealTimeAttributeInt32 = reinterpret_cast<GetRealTimeAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetRealTimeAttribute"));
+  function_pointers_.GetRealTimeAttributeUInt32 = reinterpret_cast<GetRealTimeAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetRealTimeAttribute"));
   function_pointers_.GetRefTrigTimestampVal = reinterpret_cast<GetRefTrigTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetRefTrigTimestampVal"));
   function_pointers_.GetScaleAttributeDouble = reinterpret_cast<GetScaleAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetScaleAttribute"));
   function_pointers_.GetScaleAttributeDoubleArray = reinterpret_cast<GetScaleAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxGetScaleAttribute"));
@@ -280,6 +283,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("DAQmxResetDevice"));
   function_pointers_.ResetExportedSignalAttribute = reinterpret_cast<ResetExportedSignalAttributePtr>(shared_library_.get_function_pointer("DAQmxResetExportedSignalAttribute"));
   function_pointers_.ResetReadAttribute = reinterpret_cast<ResetReadAttributePtr>(shared_library_.get_function_pointer("DAQmxResetReadAttribute"));
+  function_pointers_.ResetRealTimeAttribute = reinterpret_cast<ResetRealTimeAttributePtr>(shared_library_.get_function_pointer("DAQmxResetRealTimeAttribute"));
   function_pointers_.ResetTimingAttribute = reinterpret_cast<ResetTimingAttributePtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttribute"));
   function_pointers_.ResetTimingAttributeEx = reinterpret_cast<ResetTimingAttributeExPtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttributeEx"));
   function_pointers_.ResetTrigAttribute = reinterpret_cast<ResetTrigAttributePtr>(shared_library_.get_function_pointer("DAQmxResetTrigAttribute"));
@@ -320,6 +324,9 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetReadAttributeString = reinterpret_cast<SetReadAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetReadAttribute"));
   function_pointers_.SetReadAttributeUInt32 = reinterpret_cast<SetReadAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetReadAttribute"));
   function_pointers_.SetReadAttributeUInt64 = reinterpret_cast<SetReadAttributeUInt64Ptr>(shared_library_.get_function_pointer("DAQmxSetReadAttribute"));
+  function_pointers_.SetRealTimeAttributeBool = reinterpret_cast<SetRealTimeAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetRealTimeAttribute"));
+  function_pointers_.SetRealTimeAttributeInt32 = reinterpret_cast<SetRealTimeAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetRealTimeAttribute"));
+  function_pointers_.SetRealTimeAttributeUInt32 = reinterpret_cast<SetRealTimeAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetRealTimeAttribute"));
   function_pointers_.SetScaleAttributeDouble = reinterpret_cast<SetScaleAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetScaleAttribute"));
   function_pointers_.SetScaleAttributeDoubleArray = reinterpret_cast<SetScaleAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxSetScaleAttribute"));
   function_pointers_.SetScaleAttributeInt32 = reinterpret_cast<SetScaleAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetScaleAttribute"));
@@ -2581,6 +2588,42 @@ int32 NiDAQmxLibrary::GetReadAttributeUInt64(TaskHandle task, int32 attribute, u
 #endif
 }
 
+int32 NiDAQmxLibrary::GetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetRealTimeAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRealTimeAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetRealTimeAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetRealTimeAttributeBool(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+{
+  if (!function_pointers_.GetRealTimeAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRealTimeAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetRealTimeAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetRealTimeAttributeInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetRealTimeAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetRealTimeAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetRealTimeAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetRealTimeAttributeUInt32(task, attribute, value, size);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data)
 {
   if (!function_pointers_.GetRefTrigTimestampVal) {
@@ -3505,6 +3548,18 @@ int32 NiDAQmxLibrary::ResetReadAttribute(TaskHandle task, int32 attribute)
 #endif
 }
 
+int32 NiDAQmxLibrary::ResetRealTimeAttribute(TaskHandle task, int32 attribute)
+{
+  if (!function_pointers_.ResetRealTimeAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetRealTimeAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxResetRealTimeAttribute(task, attribute);
+#else
+  return function_pointers_.ResetRealTimeAttribute(task, attribute);
+#endif
+}
+
 int32 NiDAQmxLibrary::ResetTimingAttribute(TaskHandle task, int32 attribute)
 {
   if (!function_pointers_.ResetTimingAttribute) {
@@ -3982,6 +4037,42 @@ int32 NiDAQmxLibrary::SetReadAttributeUInt64(TaskHandle task, int32 attribute, u
   return DAQmxSetReadAttribute(task, attribute, value, size);
 #else
   return function_pointers_.SetReadAttributeUInt64(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+{
+  if (!function_pointers_.SetRealTimeAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRealTimeAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetRealTimeAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetRealTimeAttributeBool(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+{
+  if (!function_pointers_.SetRealTimeAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRealTimeAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetRealTimeAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetRealTimeAttributeInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+{
+  if (!function_pointers_.SetRealTimeAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetRealTimeAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetRealTimeAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetRealTimeAttributeUInt32(task, attribute, value, size);
 #endif
 }
 

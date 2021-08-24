@@ -193,6 +193,9 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetReadAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size) = 0;
   virtual int32 GetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size) = 0;
+  virtual int32 GetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size) = 0;
+  virtual int32 GetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size) = 0;
+  virtual int32 GetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size) = 0;
   virtual int32 GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value, uInt32 size) = 0;
   virtual int32 GetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, float64 value[], uInt32 size) = 0;
@@ -270,6 +273,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 ResetDevice(const char deviceName[]) = 0;
   virtual int32 ResetExportedSignalAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 ResetReadAttribute(TaskHandle task, int32 attribute) = 0;
+  virtual int32 ResetRealTimeAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 ResetTimingAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 ResetTimingAttributeEx(TaskHandle task, const char deviceNames[], int32 attribute) = 0;
   virtual int32 ResetTrigAttribute(TaskHandle task, int32 attribute) = 0;
@@ -307,6 +311,9 @@ class NiDAQmxLibraryInterface {
   virtual int32 SetReadAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size) = 0;
   virtual int32 SetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size) = 0;
   virtual int32 SetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size) = 0;
+  virtual int32 SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size) = 0;
+  virtual int32 SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size) = 0;
+  virtual int32 SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size) = 0;
   virtual int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value, uInt32 size) = 0;
   virtual int32 SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, const float64 value[], uInt32 size) = 0;
   virtual int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value, uInt32 size) = 0;

@@ -200,6 +200,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetReadAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size);
   int32 GetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
   int32 GetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size);
+  int32 GetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size);
+  int32 GetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size);
+  int32 GetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
   int32 GetRefTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data);
   int32 GetScaleAttributeDouble(const char scaleName[], int32 attribute, float64* value, uInt32 size);
   int32 GetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, float64 value[], uInt32 size);
@@ -277,6 +280,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ResetDevice(const char deviceName[]);
   int32 ResetExportedSignalAttribute(TaskHandle task, int32 attribute);
   int32 ResetReadAttribute(TaskHandle task, int32 attribute);
+  int32 ResetRealTimeAttribute(TaskHandle task, int32 attribute);
   int32 ResetTimingAttribute(TaskHandle task, int32 attribute);
   int32 ResetTimingAttributeEx(TaskHandle task, const char deviceNames[], int32 attribute);
   int32 ResetTrigAttribute(TaskHandle task, int32 attribute);
@@ -317,6 +321,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 SetReadAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size);
   int32 SetReadAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size);
   int32 SetReadAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size);
+  int32 SetRealTimeAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size);
+  int32 SetRealTimeAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size);
+  int32 SetRealTimeAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size);
   int32 SetScaleAttributeDouble(const char scaleName[], int32 attribute, float64 value, uInt32 size);
   int32 SetScaleAttributeDoubleArray(const char scaleName[], int32 attribute, const float64 value[], uInt32 size);
   int32 SetScaleAttributeInt32(const char scaleName[], int32 attribute, int32 value, uInt32 size);
@@ -565,6 +572,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetReadAttributeStringPtr = int32 (*)(TaskHandle task, int32 attribute, char value[], uInt32 size);
   using GetReadAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
   using GetReadAttributeUInt64Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt64* value, uInt32 size);
+  using GetRealTimeAttributeBoolPtr = int32 (*)(TaskHandle task, int32 attribute, bool32* value, uInt32 size);
+  using GetRealTimeAttributeInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, int32* value, uInt32 size);
+  using GetRealTimeAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
   using GetRefTrigTimestampValPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
   using GetScaleAttributeDoublePtr = int32 (*)(const char scaleName[], int32 attribute, float64* value, uInt32 size);
   using GetScaleAttributeDoubleArrayPtr = int32 (*)(const char scaleName[], int32 attribute, float64 value[], uInt32 size);
@@ -642,6 +652,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ResetDevicePtr = int32 (*)(const char deviceName[]);
   using ResetExportedSignalAttributePtr = int32 (*)(TaskHandle task, int32 attribute);
   using ResetReadAttributePtr = int32 (*)(TaskHandle task, int32 attribute);
+  using ResetRealTimeAttributePtr = int32 (*)(TaskHandle task, int32 attribute);
   using ResetTimingAttributePtr = int32 (*)(TaskHandle task, int32 attribute);
   using ResetTimingAttributeExPtr = int32 (*)(TaskHandle task, const char deviceNames[], int32 attribute);
   using ResetTrigAttributePtr = int32 (*)(TaskHandle task, int32 attribute);
@@ -682,6 +693,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using SetReadAttributeStringPtr = int32 (*)(TaskHandle task, int32 attribute, const char value[], uInt32 size);
   using SetReadAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32 value, uInt32 size);
   using SetReadAttributeUInt64Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt64 value, uInt32 size);
+  using SetRealTimeAttributeBoolPtr = int32 (*)(TaskHandle task, int32 attribute, bool32 value, uInt32 size);
+  using SetRealTimeAttributeInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, int32 value, uInt32 size);
+  using SetRealTimeAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32 value, uInt32 size);
   using SetScaleAttributeDoublePtr = int32 (*)(const char scaleName[], int32 attribute, float64 value, uInt32 size);
   using SetScaleAttributeDoubleArrayPtr = int32 (*)(const char scaleName[], int32 attribute, const float64 value[], uInt32 size);
   using SetScaleAttributeInt32Ptr = int32 (*)(const char scaleName[], int32 attribute, int32 value, uInt32 size);
@@ -930,6 +944,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetReadAttributeStringPtr GetReadAttributeString;
     GetReadAttributeUInt32Ptr GetReadAttributeUInt32;
     GetReadAttributeUInt64Ptr GetReadAttributeUInt64;
+    GetRealTimeAttributeBoolPtr GetRealTimeAttributeBool;
+    GetRealTimeAttributeInt32Ptr GetRealTimeAttributeInt32;
+    GetRealTimeAttributeUInt32Ptr GetRealTimeAttributeUInt32;
     GetRefTrigTimestampValPtr GetRefTrigTimestampVal;
     GetScaleAttributeDoublePtr GetScaleAttributeDouble;
     GetScaleAttributeDoubleArrayPtr GetScaleAttributeDoubleArray;
@@ -1007,6 +1024,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ResetDevicePtr ResetDevice;
     ResetExportedSignalAttributePtr ResetExportedSignalAttribute;
     ResetReadAttributePtr ResetReadAttribute;
+    ResetRealTimeAttributePtr ResetRealTimeAttribute;
     ResetTimingAttributePtr ResetTimingAttribute;
     ResetTimingAttributeExPtr ResetTimingAttributeEx;
     ResetTrigAttributePtr ResetTrigAttribute;
@@ -1047,6 +1065,9 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     SetReadAttributeStringPtr SetReadAttributeString;
     SetReadAttributeUInt32Ptr SetReadAttributeUInt32;
     SetReadAttributeUInt64Ptr SetReadAttributeUInt64;
+    SetRealTimeAttributeBoolPtr SetRealTimeAttributeBool;
+    SetRealTimeAttributeInt32Ptr SetRealTimeAttributeInt32;
+    SetRealTimeAttributeUInt32Ptr SetRealTimeAttributeUInt32;
     SetScaleAttributeDoublePtr SetScaleAttributeDouble;
     SetScaleAttributeDoubleArrayPtr SetScaleAttributeDoubleArray;
     SetScaleAttributeInt32Ptr SetScaleAttributeInt32;

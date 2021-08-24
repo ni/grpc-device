@@ -4868,6 +4868,42 @@ enums = {
             }
         ]
     },
+    'WaitMode3': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Check for Sample Clock pulses when the system receives an interrupt service  request. This mode is the most CPU efficient, but results in lower possible  sampling rates.'
+                },
+                'name': 'WAIT_FOR_INTERRUPT',
+                'value': 12523
+            },
+            {
+                'documentation': {
+                    'description': ' Repeatedly check for Sample Clock pulses as fast as possible. This mode allows  for the highest sampling rates at the expense of CPU efficiency.'
+                },
+                'name': 'POLL',
+                'value': 12524
+            }
+        ]
+    },
+    'WaitMode4': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Attempt to recover when the system receives an interrupt service request. This  mode is the most CPU efficient and best suited for recovery at lower pulse  train frequencies.'
+                },
+                'name': 'WAIT_FOR_INTERRUPT',
+                'value': 12523
+            },
+            {
+                'documentation': {
+                    'description': ' Repeatedly attempt to recover as fast as possible. This mode has the highest  probability of recovery success at the expense of CPU efficiency.'
+                },
+                'name': 'POLL',
+                'value': 12524
+            }
+        ]
+    },
     'WatchdogAOExpirState': {
         'values': [
             {

@@ -210,6 +210,9 @@ public:
   ::grpc::Status GetReadAttributeString(::grpc::ServerContext* context, const GetReadAttributeStringRequest* request, GetReadAttributeStringResponse* response) override;
   ::grpc::Status GetReadAttributeUInt32(::grpc::ServerContext* context, const GetReadAttributeUInt32Request* request, GetReadAttributeUInt32Response* response) override;
   ::grpc::Status GetReadAttributeUInt64(::grpc::ServerContext* context, const GetReadAttributeUInt64Request* request, GetReadAttributeUInt64Response* response) override;
+  ::grpc::Status GetRealTimeAttributeBool(::grpc::ServerContext* context, const GetRealTimeAttributeBoolRequest* request, GetRealTimeAttributeBoolResponse* response) override;
+  ::grpc::Status GetRealTimeAttributeInt32(::grpc::ServerContext* context, const GetRealTimeAttributeInt32Request* request, GetRealTimeAttributeInt32Response* response) override;
+  ::grpc::Status GetRealTimeAttributeUInt32(::grpc::ServerContext* context, const GetRealTimeAttributeUInt32Request* request, GetRealTimeAttributeUInt32Response* response) override;
   ::grpc::Status GetRefTrigTimestampVal(::grpc::ServerContext* context, const GetRefTrigTimestampValRequest* request, GetRefTrigTimestampValResponse* response) override;
   ::grpc::Status GetScaleAttributeDouble(::grpc::ServerContext* context, const GetScaleAttributeDoubleRequest* request, GetScaleAttributeDoubleResponse* response) override;
   ::grpc::Status GetScaleAttributeDoubleArray(::grpc::ServerContext* context, const GetScaleAttributeDoubleArrayRequest* request, GetScaleAttributeDoubleArrayResponse* response) override;
@@ -287,6 +290,7 @@ public:
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
   ::grpc::Status ResetExportedSignalAttribute(::grpc::ServerContext* context, const ResetExportedSignalAttributeRequest* request, ResetExportedSignalAttributeResponse* response) override;
   ::grpc::Status ResetReadAttribute(::grpc::ServerContext* context, const ResetReadAttributeRequest* request, ResetReadAttributeResponse* response) override;
+  ::grpc::Status ResetRealTimeAttribute(::grpc::ServerContext* context, const ResetRealTimeAttributeRequest* request, ResetRealTimeAttributeResponse* response) override;
   ::grpc::Status ResetTimingAttribute(::grpc::ServerContext* context, const ResetTimingAttributeRequest* request, ResetTimingAttributeResponse* response) override;
   ::grpc::Status ResetTimingAttributeEx(::grpc::ServerContext* context, const ResetTimingAttributeExRequest* request, ResetTimingAttributeExResponse* response) override;
   ::grpc::Status ResetTrigAttribute(::grpc::ServerContext* context, const ResetTrigAttributeRequest* request, ResetTrigAttributeResponse* response) override;
@@ -327,6 +331,9 @@ public:
   ::grpc::Status SetReadAttributeString(::grpc::ServerContext* context, const SetReadAttributeStringRequest* request, SetReadAttributeStringResponse* response) override;
   ::grpc::Status SetReadAttributeUInt32(::grpc::ServerContext* context, const SetReadAttributeUInt32Request* request, SetReadAttributeUInt32Response* response) override;
   ::grpc::Status SetReadAttributeUInt64(::grpc::ServerContext* context, const SetReadAttributeUInt64Request* request, SetReadAttributeUInt64Response* response) override;
+  ::grpc::Status SetRealTimeAttributeBool(::grpc::ServerContext* context, const SetRealTimeAttributeBoolRequest* request, SetRealTimeAttributeBoolResponse* response) override;
+  ::grpc::Status SetRealTimeAttributeInt32(::grpc::ServerContext* context, const SetRealTimeAttributeInt32Request* request, SetRealTimeAttributeInt32Response* response) override;
+  ::grpc::Status SetRealTimeAttributeUInt32(::grpc::ServerContext* context, const SetRealTimeAttributeUInt32Request* request, SetRealTimeAttributeUInt32Response* response) override;
   ::grpc::Status SetScaleAttributeDouble(::grpc::ServerContext* context, const SetScaleAttributeDoubleRequest* request, SetScaleAttributeDoubleResponse* response) override;
   ::grpc::Status SetScaleAttributeDoubleArray(::grpc::ServerContext* context, const SetScaleAttributeDoubleArrayRequest* request, SetScaleAttributeDoubleArrayResponse* response) override;
   ::grpc::Status SetScaleAttributeInt32(::grpc::ServerContext* context, const SetScaleAttributeInt32Request* request, SetScaleAttributeInt32Response* response) override;
