@@ -148,6 +148,10 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetArmStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetAutoConfiguredCDAQSyncConnections, (char portList[], uInt32 portListSize), (override));
   MOCK_METHOD(int32, GetBufferAttributeUInt32, (TaskHandle task, int32 attribute, uInt32* value), (override));
+  MOCK_METHOD(int32, GetCalInfoAttributeBool, (const char deviceName[], int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetCalInfoAttributeDouble, (const char deviceName[], int32 attribute, float64* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetCalInfoAttributeString, (const char deviceName[], int32 attribute, char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetCalInfoAttributeUInt32, (const char deviceName[], int32 attribute, uInt32* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetChanAttributeBool, (TaskHandle task, const char channel[], int32 attribute, bool32* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetChanAttributeDouble, (TaskHandle task, const char channel[], int32 attribute, float64* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetChanAttributeDoubleArray, (TaskHandle task, const char channel[], int32 attribute, float64 value[], uInt32 size), (override));
@@ -273,6 +277,10 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, SetAIChanCalExpDate, (TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute), (override));
   MOCK_METHOD(int32, SetArmStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime data), (override));
   MOCK_METHOD(int32, SetBufferAttributeUInt32, (TaskHandle task, int32 attribute, uInt32 value), (override));
+  MOCK_METHOD(int32, SetCalInfoAttributeBool, (const char deviceName[], int32 attribute, bool32 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetCalInfoAttributeDouble, (const char deviceName[], int32 attribute, float64 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetCalInfoAttributeString, (const char deviceName[], int32 attribute, const char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, SetCalInfoAttributeUInt32, (const char deviceName[], int32 attribute, uInt32 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetChanAttributeBool, (TaskHandle task, const char channel[], int32 attribute, bool32 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetChanAttributeDouble, (TaskHandle task, const char channel[], int32 attribute, float64 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetChanAttributeDoubleArray, (TaskHandle task, const char channel[], int32 attribute, const float64 value[], uInt32 size), (override));

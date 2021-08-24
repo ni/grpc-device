@@ -154,6 +154,10 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetArmStartTrigTrigWhen = reinterpret_cast<GetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxGetArmStartTrigTrigWhen"));
   function_pointers_.GetAutoConfiguredCDAQSyncConnections = reinterpret_cast<GetAutoConfiguredCDAQSyncConnectionsPtr>(shared_library_.get_function_pointer("DAQmxGetAutoConfiguredCDAQSyncConnections"));
   function_pointers_.GetBufferAttributeUInt32 = reinterpret_cast<GetBufferAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetBufferAttribute"));
+  function_pointers_.GetCalInfoAttributeBool = reinterpret_cast<GetCalInfoAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetCalInfoAttribute"));
+  function_pointers_.GetCalInfoAttributeDouble = reinterpret_cast<GetCalInfoAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetCalInfoAttribute"));
+  function_pointers_.GetCalInfoAttributeString = reinterpret_cast<GetCalInfoAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetCalInfoAttribute"));
+  function_pointers_.GetCalInfoAttributeUInt32 = reinterpret_cast<GetCalInfoAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetCalInfoAttribute"));
   function_pointers_.GetChanAttributeBool = reinterpret_cast<GetChanAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetChanAttribute"));
   function_pointers_.GetChanAttributeDouble = reinterpret_cast<GetChanAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetChanAttribute"));
   function_pointers_.GetChanAttributeDoubleArray = reinterpret_cast<GetChanAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxGetChanAttribute"));
@@ -282,6 +286,10 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAnalogPowerUpStates = reinterpret_cast<SetAnalogPowerUpStatesPtr>(shared_library_.get_function_pointer("DAQmxSetAnalogPowerUpStates"));
   function_pointers_.SetArmStartTrigTrigWhen = reinterpret_cast<SetArmStartTrigTrigWhenPtr>(shared_library_.get_function_pointer("DAQmxSetArmStartTrigTrigWhen"));
   function_pointers_.SetBufferAttributeUInt32 = reinterpret_cast<SetBufferAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetBufferAttribute"));
+  function_pointers_.SetCalInfoAttributeBool = reinterpret_cast<SetCalInfoAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetCalInfoAttribute"));
+  function_pointers_.SetCalInfoAttributeDouble = reinterpret_cast<SetCalInfoAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetCalInfoAttribute"));
+  function_pointers_.SetCalInfoAttributeString = reinterpret_cast<SetCalInfoAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetCalInfoAttribute"));
+  function_pointers_.SetCalInfoAttributeUInt32 = reinterpret_cast<SetCalInfoAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetCalInfoAttribute"));
   function_pointers_.SetChanAttributeBool = reinterpret_cast<SetChanAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetChanAttribute"));
   function_pointers_.SetChanAttributeDouble = reinterpret_cast<SetChanAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetChanAttribute"));
   function_pointers_.SetChanAttributeDoubleArray = reinterpret_cast<SetChanAttributeDoubleArrayPtr>(shared_library_.get_function_pointer("DAQmxSetChanAttribute"));
@@ -1976,6 +1984,54 @@ int32 NiDAQmxLibrary::GetBufferAttributeUInt32(TaskHandle task, int32 attribute,
 #endif
 }
 
+int32 NiDAQmxLibrary::GetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetCalInfoAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetCalInfoAttributeBool(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size)
+{
+  if (!function_pointers_.GetCalInfoAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetCalInfoAttributeDouble(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetCalInfoAttributeString(const char deviceName[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetCalInfoAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetCalInfoAttributeString(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetCalInfoAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetCalInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetCalInfoAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.GetCalInfoAttributeUInt32(deviceName, attribute, value, size);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32* value, uInt32 size)
 {
   if (!function_pointers_.GetChanAttributeBool) {
@@ -3509,6 +3565,54 @@ int32 NiDAQmxLibrary::SetBufferAttributeUInt32(TaskHandle task, int32 attribute,
   return DAQmxSetBufferAttribute(task, attribute, value);
 #else
   return function_pointers_.SetBufferAttributeUInt32(task, attribute, value);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32 value, uInt32 size)
+{
+  if (!function_pointers_.SetCalInfoAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.SetCalInfoAttributeBool(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64 value, uInt32 size)
+{
+  if (!function_pointers_.SetCalInfoAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.SetCalInfoAttributeDouble(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetCalInfoAttributeString(const char deviceName[], int32 attribute, const char value[], uInt32 size)
+{
+  if (!function_pointers_.SetCalInfoAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.SetCalInfoAttributeString(deviceName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32 value, uInt32 size)
+{
+  if (!function_pointers_.SetCalInfoAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetCalInfoAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetCalInfoAttribute(deviceName, attribute, value, size);
+#else
+  return function_pointers_.SetCalInfoAttributeUInt32(deviceName, attribute, value, size);
 #endif
 }
 

@@ -161,6 +161,10 @@ public:
   ::grpc::Status GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetAutoConfiguredCDAQSyncConnections(::grpc::ServerContext* context, const GetAutoConfiguredCDAQSyncConnectionsRequest* request, GetAutoConfiguredCDAQSyncConnectionsResponse* response) override;
   ::grpc::Status GetBufferAttributeUInt32(::grpc::ServerContext* context, const GetBufferAttributeUInt32Request* request, GetBufferAttributeUInt32Response* response) override;
+  ::grpc::Status GetCalInfoAttributeBool(::grpc::ServerContext* context, const GetCalInfoAttributeBoolRequest* request, GetCalInfoAttributeBoolResponse* response) override;
+  ::grpc::Status GetCalInfoAttributeDouble(::grpc::ServerContext* context, const GetCalInfoAttributeDoubleRequest* request, GetCalInfoAttributeDoubleResponse* response) override;
+  ::grpc::Status GetCalInfoAttributeString(::grpc::ServerContext* context, const GetCalInfoAttributeStringRequest* request, GetCalInfoAttributeStringResponse* response) override;
+  ::grpc::Status GetCalInfoAttributeUInt32(::grpc::ServerContext* context, const GetCalInfoAttributeUInt32Request* request, GetCalInfoAttributeUInt32Response* response) override;
   ::grpc::Status GetChanAttributeBool(::grpc::ServerContext* context, const GetChanAttributeBoolRequest* request, GetChanAttributeBoolResponse* response) override;
   ::grpc::Status GetChanAttributeDouble(::grpc::ServerContext* context, const GetChanAttributeDoubleRequest* request, GetChanAttributeDoubleResponse* response) override;
   ::grpc::Status GetChanAttributeDoubleArray(::grpc::ServerContext* context, const GetChanAttributeDoubleArrayRequest* request, GetChanAttributeDoubleArrayResponse* response) override;
@@ -289,6 +293,10 @@ public:
   ::grpc::Status SetAnalogPowerUpStates(::grpc::ServerContext* context, const SetAnalogPowerUpStatesRequest* request, SetAnalogPowerUpStatesResponse* response) override;
   ::grpc::Status SetArmStartTrigTrigWhen(::grpc::ServerContext* context, const SetArmStartTrigTrigWhenRequest* request, SetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status SetBufferAttributeUInt32(::grpc::ServerContext* context, const SetBufferAttributeUInt32Request* request, SetBufferAttributeUInt32Response* response) override;
+  ::grpc::Status SetCalInfoAttributeBool(::grpc::ServerContext* context, const SetCalInfoAttributeBoolRequest* request, SetCalInfoAttributeBoolResponse* response) override;
+  ::grpc::Status SetCalInfoAttributeDouble(::grpc::ServerContext* context, const SetCalInfoAttributeDoubleRequest* request, SetCalInfoAttributeDoubleResponse* response) override;
+  ::grpc::Status SetCalInfoAttributeString(::grpc::ServerContext* context, const SetCalInfoAttributeStringRequest* request, SetCalInfoAttributeStringResponse* response) override;
+  ::grpc::Status SetCalInfoAttributeUInt32(::grpc::ServerContext* context, const SetCalInfoAttributeUInt32Request* request, SetCalInfoAttributeUInt32Response* response) override;
   ::grpc::Status SetChanAttributeBool(::grpc::ServerContext* context, const SetChanAttributeBoolRequest* request, SetChanAttributeBoolResponse* response) override;
   ::grpc::Status SetChanAttributeDouble(::grpc::ServerContext* context, const SetChanAttributeDoubleRequest* request, SetChanAttributeDoubleResponse* response) override;
   ::grpc::Status SetChanAttributeDoubleArray(::grpc::ServerContext* context, const SetChanAttributeDoubleArrayRequest* request, SetChanAttributeDoubleArrayResponse* response) override;

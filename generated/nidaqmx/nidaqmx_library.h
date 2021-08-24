@@ -151,6 +151,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data);
   int32 GetAutoConfiguredCDAQSyncConnections(char portList[], uInt32 portListSize);
   int32 GetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value);
+  int32 GetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32* value, uInt32 size);
+  int32 GetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64* value, uInt32 size);
+  int32 GetCalInfoAttributeString(const char deviceName[], int32 attribute, char value[], uInt32 size);
+  int32 GetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32* value, uInt32 size);
   int32 GetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32* value, uInt32 size);
   int32 GetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64* value, uInt32 size);
   int32 GetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, float64 value[], uInt32 size);
@@ -279,6 +283,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 SetAnalogPowerUpStates(const char deviceName[], const char channelNames[], float64 state, int32 channelType, const char channelNames0[], float64 state0, int32 channelType0, const char channelNames1[], float64 state1, int32 channelType1, const char channelNames2[], float64 state2, int32 channelType2, const char channelNames3[], float64 state3, int32 channelType3, const char channelNames4[], float64 state4, int32 channelType4, const char channelNames5[], float64 state5, int32 channelType5, const char channelNames6[], float64 state6, int32 channelType6, const char channelNames7[], float64 state7, int32 channelType7, const char channelNames8[], float64 state8, int32 channelType8, const char channelNames9[], float64 state9, int32 channelType9, const char channelNames10[], float64 state10, int32 channelType10, const char channelNames11[], float64 state11, int32 channelType11, const char channelNames12[], float64 state12, int32 channelType12, const char channelNames13[], float64 state13, int32 channelType13, const char channelNames14[], float64 state14, int32 channelType14, const char channelNames15[], float64 state15, int32 channelType15, const char channelNames16[], float64 state16, int32 channelType16, const char channelNames17[], float64 state17, int32 channelType17, const char channelNames18[], float64 state18, int32 channelType18, const char channelNames19[], float64 state19, int32 channelType19, const char channelNames20[], float64 state20, int32 channelType20, const char channelNames21[], float64 state21, int32 channelType21, const char channelNames22[], float64 state22, int32 channelType22, const char channelNames23[], float64 state23, int32 channelType23, const char channelNames24[], float64 state24, int32 channelType24, const char channelNames25[], float64 state25, int32 channelType25, const char channelNames26[], float64 state26, int32 channelType26, const char channelNames27[], float64 state27, int32 channelType27, const char channelNames28[], float64 state28, int32 channelType28, const char channelNames29[], float64 state29, int32 channelType29, const char channelNames30[], float64 state30, int32 channelType30, const char channelNames31[], float64 state31, int32 channelType31, const char channelNames32[], float64 state32, int32 channelType32, const char channelNames33[], float64 state33, int32 channelType33, const char channelNames34[], float64 state34, int32 channelType34, const char channelNames35[], float64 state35, int32 channelType35, const char channelNames36[], float64 state36, int32 channelType36, const char channelNames37[], float64 state37, int32 channelType37, const char channelNames38[], float64 state38, int32 channelType38, const char channelNames39[], float64 state39, int32 channelType39, const char channelNames40[], float64 state40, int32 channelType40, const char channelNames41[], float64 state41, int32 channelType41, const char channelNames42[], float64 state42, int32 channelType42, const char channelNames43[], float64 state43, int32 channelType43, const char channelNames44[], float64 state44, int32 channelType44, const char channelNames45[], float64 state45, int32 channelType45, const char channelNames46[], float64 state46, int32 channelType46, const char channelNames47[], float64 state47, int32 channelType47, const char channelNames48[], float64 state48, int32 channelType48, const char channelNames49[], float64 state49, int32 channelType49, const char channelNames50[], float64 state50, int32 channelType50, const char channelNames51[], float64 state51, int32 channelType51, const char channelNames52[], float64 state52, int32 channelType52, const char channelNames53[], float64 state53, int32 channelType53, const char channelNames54[], float64 state54, int32 channelType54, const char channelNames55[], float64 state55, int32 channelType55, const char channelNames56[], float64 state56, int32 channelType56, const char channelNames57[], float64 state57, int32 channelType57, const char channelNames58[], float64 state58, int32 channelType58, const char channelNames59[], float64 state59, int32 channelType59, const char channelNames60[], float64 state60, int32 channelType60, const char channelNames61[], float64 state61, int32 channelType61, const char channelNames62[], float64 state62, int32 channelType62, const char channelNames63[], float64 state63, int32 channelType63, const char channelNames64[], float64 state64, int32 channelType64, const char channelNames65[], float64 state65, int32 channelType65, const char channelNames66[], float64 state66, int32 channelType66, const char channelNames67[], float64 state67, int32 channelType67, const char channelNames68[], float64 state68, int32 channelType68, const char channelNames69[], float64 state69, int32 channelType69, const char channelNames70[], float64 state70, int32 channelType70, const char channelNames71[], float64 state71, int32 channelType71, const char channelNames72[], float64 state72, int32 channelType72, const char channelNames73[], float64 state73, int32 channelType73, const char channelNames74[], float64 state74, int32 channelType74, const char channelNames75[], float64 state75, int32 channelType75, const char channelNames76[], float64 state76, int32 channelType76, const char channelNames77[], float64 state77, int32 channelType77, const char channelNames78[], float64 state78, int32 channelType78, const char channelNames79[], float64 state79, int32 channelType79, const char channelNames80[], float64 state80, int32 channelType80, const char channelNames81[], float64 state81, int32 channelType81, const char channelNames82[], float64 state82, int32 channelType82, const char channelNames83[], float64 state83, int32 channelType83, const char channelNames84[], float64 state84, int32 channelType84, const char channelNames85[], float64 state85, int32 channelType85, const char channelNames86[], float64 state86, int32 channelType86, const char channelNames87[], float64 state87, int32 channelType87, const char channelNames88[], float64 state88, int32 channelType88, const char channelNames89[], float64 state89, int32 channelType89, const char channelNames90[], float64 state90, int32 channelType90, const char channelNames91[], float64 state91, int32 channelType91, const char channelNames92[], float64 state92, int32 channelType92, const char channelNames93[], float64 state93, int32 channelType93, const char channelNames94[], float64 state94, int32 channelType94, const char channelNames95[], float64 state95, int32 channelType95);
   int32 SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data);
   int32 SetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value);
+  int32 SetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32 value, uInt32 size);
+  int32 SetCalInfoAttributeDouble(const char deviceName[], int32 attribute, float64 value, uInt32 size);
+  int32 SetCalInfoAttributeString(const char deviceName[], int32 attribute, const char value[], uInt32 size);
+  int32 SetCalInfoAttributeUInt32(const char deviceName[], int32 attribute, uInt32 value, uInt32 size);
   int32 SetChanAttributeBool(TaskHandle task, const char channel[], int32 attribute, bool32 value, uInt32 size);
   int32 SetChanAttributeDouble(TaskHandle task, const char channel[], int32 attribute, float64 value, uInt32 size);
   int32 SetChanAttributeDoubleArray(TaskHandle task, const char channel[], int32 attribute, const float64 value[], uInt32 size);
@@ -499,6 +507,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetArmStartTrigTrigWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime* data);
   using GetAutoConfiguredCDAQSyncConnectionsPtr = int32 (*)(char portList[], uInt32 portListSize);
   using GetBufferAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32* value);
+  using GetCalInfoAttributeBoolPtr = int32 (*)(const char deviceName[], int32 attribute, bool32* value, uInt32 size);
+  using GetCalInfoAttributeDoublePtr = int32 (*)(const char deviceName[], int32 attribute, float64* value, uInt32 size);
+  using GetCalInfoAttributeStringPtr = int32 (*)(const char deviceName[], int32 attribute, char value[], uInt32 size);
+  using GetCalInfoAttributeUInt32Ptr = int32 (*)(const char deviceName[], int32 attribute, uInt32* value, uInt32 size);
   using GetChanAttributeBoolPtr = int32 (*)(TaskHandle task, const char channel[], int32 attribute, bool32* value, uInt32 size);
   using GetChanAttributeDoublePtr = int32 (*)(TaskHandle task, const char channel[], int32 attribute, float64* value, uInt32 size);
   using GetChanAttributeDoubleArrayPtr = int32 (*)(TaskHandle task, const char channel[], int32 attribute, float64 value[], uInt32 size);
@@ -627,6 +639,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using SetAnalogPowerUpStatesPtr = int32 (*)(const char deviceName[], const char channelNames[], float64 state, int32 channelType, ...);
   using SetArmStartTrigTrigWhenPtr = int32 (*)(TaskHandle task, CVIAbsoluteTime data);
   using SetBufferAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32 value);
+  using SetCalInfoAttributeBoolPtr = int32 (*)(const char deviceName[], int32 attribute, bool32 value, uInt32 size);
+  using SetCalInfoAttributeDoublePtr = int32 (*)(const char deviceName[], int32 attribute, float64 value, uInt32 size);
+  using SetCalInfoAttributeStringPtr = int32 (*)(const char deviceName[], int32 attribute, const char value[], uInt32 size);
+  using SetCalInfoAttributeUInt32Ptr = int32 (*)(const char deviceName[], int32 attribute, uInt32 value, uInt32 size);
   using SetChanAttributeBoolPtr = int32 (*)(TaskHandle task, const char channel[], int32 attribute, bool32 value, uInt32 size);
   using SetChanAttributeDoublePtr = int32 (*)(TaskHandle task, const char channel[], int32 attribute, float64 value, uInt32 size);
   using SetChanAttributeDoubleArrayPtr = int32 (*)(TaskHandle task, const char channel[], int32 attribute, const float64 value[], uInt32 size);
@@ -847,6 +863,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetArmStartTrigTrigWhenPtr GetArmStartTrigTrigWhen;
     GetAutoConfiguredCDAQSyncConnectionsPtr GetAutoConfiguredCDAQSyncConnections;
     GetBufferAttributeUInt32Ptr GetBufferAttributeUInt32;
+    GetCalInfoAttributeBoolPtr GetCalInfoAttributeBool;
+    GetCalInfoAttributeDoublePtr GetCalInfoAttributeDouble;
+    GetCalInfoAttributeStringPtr GetCalInfoAttributeString;
+    GetCalInfoAttributeUInt32Ptr GetCalInfoAttributeUInt32;
     GetChanAttributeBoolPtr GetChanAttributeBool;
     GetChanAttributeDoublePtr GetChanAttributeDouble;
     GetChanAttributeDoubleArrayPtr GetChanAttributeDoubleArray;
@@ -975,6 +995,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     SetAnalogPowerUpStatesPtr SetAnalogPowerUpStates;
     SetArmStartTrigTrigWhenPtr SetArmStartTrigTrigWhen;
     SetBufferAttributeUInt32Ptr SetBufferAttributeUInt32;
+    SetCalInfoAttributeBoolPtr SetCalInfoAttributeBool;
+    SetCalInfoAttributeDoublePtr SetCalInfoAttributeDouble;
+    SetCalInfoAttributeStringPtr SetCalInfoAttributeString;
+    SetCalInfoAttributeUInt32Ptr SetCalInfoAttributeUInt32;
     SetChanAttributeBoolPtr SetChanAttributeBool;
     SetChanAttributeDoublePtr SetChanAttributeDouble;
     SetChanAttributeDoubleArrayPtr SetChanAttributeDoubleArray;

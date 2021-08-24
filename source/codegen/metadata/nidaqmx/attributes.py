@@ -25,6 +25,62 @@ attributes = {
             'type': 'uInt32'
         }
     },
+    'CalibrationInfo': {
+        6240: {
+            'access': 'read',
+            'name': 'SELF_CAL_SUPPORTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        6241: {
+            'access': 'read-write',
+            'name': 'CAL_USER_DEFINED_INFO',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        6244: {
+            'access': 'read',
+            'name': 'SELF_CAL_LAST_TEMP',
+            'resettable': False,
+            'type': 'float64'
+        },
+        6247: {
+            'access': 'read',
+            'name': 'EXT_CAL_LAST_TEMP',
+            'resettable': False,
+            'type': 'float64'
+        },
+        6248: {
+            'access': 'read',
+            'name': 'EXT_CAL_RECOMMENDED_INTERVAL',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        6428: {
+            'access': 'read',
+            'name': 'CAL_USER_DEFINED_INFO_MAX_SIZE',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8763: {
+            'access': 'read',
+            'name': 'CAL_DEV_TEMP',
+            'resettable': False,
+            'type': 'float64'
+        },
+        12267: {
+            'access': 'read-write',
+            'name': 'CAL_ACC_CONNECTION_COUNT',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        12268: {
+            'access': 'read',
+            'name': 'CAL_RECOMMENDED_ACC_CONNECTION_COUNT_LIMIT',
+            'resettable': False,
+            'type': 'uInt32'
+        }
+    },
     'Channel': {
         80: {
             'access': 'read',
