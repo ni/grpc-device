@@ -180,6 +180,12 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetNthTaskChannel, (TaskHandle task, uInt32 index, char buffer[], int32 bufferSize), (override));
   MOCK_METHOD(int32, GetNthTaskDevice, (TaskHandle task, uInt32 index, char buffer[], int32 bufferSize), (override));
   MOCK_METHOD(int32, GetNthTaskReadChannel, (TaskHandle task, uInt32 index, char buffer[], int32 bufferSize), (override));
+  MOCK_METHOD(int32, GetPersistedChanAttributeBool, (const char channel[], int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetPersistedChanAttributeString, (const char channel[], int32 attribute, char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetPersistedScaleAttributeBool, (const char scaleName[], int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetPersistedScaleAttributeString, (const char scaleName[], int32 attribute, char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetPersistedTaskAttributeBool, (const char taskName[], int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetPersistedTaskAttributeString, (const char taskName[], int32 attribute, char value[], uInt32 size), (override));
   MOCK_METHOD(int32, GetPhysicalChanAttributeBool, (const char physicalChannel[], int32 attribute, bool32* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetPhysicalChanAttributeBytes, (const char physicalChannel[], int32 attribute, uInt8 value[], uInt32 size), (override));
   MOCK_METHOD(int32, GetPhysicalChanAttributeDouble, (const char physicalChannel[], int32 attribute, float64* value, uInt32 size), (override));

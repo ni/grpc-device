@@ -6914,6 +6914,186 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetPersistedChanAttributeBool': {
+        'cname': 'DAQmxGetPersistedChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedChanAttributeString': {
+        'cname': 'DAQmxGetPersistedChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedScaleAttributeBool': {
+        'cname': 'DAQmxGetPersistedScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedScaleAttributeString': {
+        'cname': 'DAQmxGetPersistedScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedTaskAttributeBool': {
+        'cname': 'DAQmxGetPersistedTaskAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'taskName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedTaskAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedTaskAttributeString': {
+        'cname': 'DAQmxGetPersistedTaskAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'taskName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedTaskAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetPhysicalChanAttributeBool': {
         'cname': 'DAQmxGetPhysicalChanAttribute',
         'parameters': [

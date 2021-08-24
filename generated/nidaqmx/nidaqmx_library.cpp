@@ -188,6 +188,12 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetNthTaskChannel = reinterpret_cast<GetNthTaskChannelPtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskChannel"));
   function_pointers_.GetNthTaskDevice = reinterpret_cast<GetNthTaskDevicePtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskDevice"));
   function_pointers_.GetNthTaskReadChannel = reinterpret_cast<GetNthTaskReadChannelPtr>(shared_library_.get_function_pointer("DAQmxGetNthTaskReadChannel"));
+  function_pointers_.GetPersistedChanAttributeBool = reinterpret_cast<GetPersistedChanAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetPersistedChanAttribute"));
+  function_pointers_.GetPersistedChanAttributeString = reinterpret_cast<GetPersistedChanAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetPersistedChanAttribute"));
+  function_pointers_.GetPersistedScaleAttributeBool = reinterpret_cast<GetPersistedScaleAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetPersistedScaleAttribute"));
+  function_pointers_.GetPersistedScaleAttributeString = reinterpret_cast<GetPersistedScaleAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetPersistedScaleAttribute"));
+  function_pointers_.GetPersistedTaskAttributeBool = reinterpret_cast<GetPersistedTaskAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetPersistedTaskAttribute"));
+  function_pointers_.GetPersistedTaskAttributeString = reinterpret_cast<GetPersistedTaskAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetPersistedTaskAttribute"));
   function_pointers_.GetPhysicalChanAttributeBool = reinterpret_cast<GetPhysicalChanAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
   function_pointers_.GetPhysicalChanAttributeBytes = reinterpret_cast<GetPhysicalChanAttributeBytesPtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
   function_pointers_.GetPhysicalChanAttributeDouble = reinterpret_cast<GetPhysicalChanAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetPhysicalChanAttribute"));
@@ -2405,6 +2411,78 @@ int32 NiDAQmxLibrary::GetNthTaskReadChannel(TaskHandle task, uInt32 index, char 
   return DAQmxGetNthTaskReadChannel(task, index, buffer, bufferSize);
 #else
   return function_pointers_.GetNthTaskReadChannel(task, index, buffer, bufferSize);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPersistedChanAttributeBool(const char channel[], int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetPersistedChanAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPersistedChanAttribute(channel, attribute, value, size);
+#else
+  return function_pointers_.GetPersistedChanAttributeBool(channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPersistedChanAttributeString(const char channel[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetPersistedChanAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedChanAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPersistedChanAttribute(channel, attribute, value, size);
+#else
+  return function_pointers_.GetPersistedChanAttributeString(channel, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPersistedScaleAttributeBool(const char scaleName[], int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetPersistedScaleAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedScaleAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPersistedScaleAttribute(scaleName, attribute, value, size);
+#else
+  return function_pointers_.GetPersistedScaleAttributeBool(scaleName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPersistedScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetPersistedScaleAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedScaleAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPersistedScaleAttribute(scaleName, attribute, value, size);
+#else
+  return function_pointers_.GetPersistedScaleAttributeString(scaleName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPersistedTaskAttributeBool(const char taskName[], int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetPersistedTaskAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedTaskAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPersistedTaskAttribute(taskName, attribute, value, size);
+#else
+  return function_pointers_.GetPersistedTaskAttributeBool(taskName, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetPersistedTaskAttributeString(const char taskName[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetPersistedTaskAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetPersistedTaskAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetPersistedTaskAttribute(taskName, attribute, value, size);
+#else
+  return function_pointers_.GetPersistedTaskAttributeString(taskName, attribute, value, size);
 #endif
 }
 

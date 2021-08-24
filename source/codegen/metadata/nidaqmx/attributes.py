@@ -5023,6 +5023,84 @@ attributes = {
             'type': 'uInt32'
         }
     },
+    'PersistedChannel': {
+        8911: {
+            'access': 'write',
+            'name': 'ACTIVE_CHAN',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8912: {
+            'access': 'read',
+            'name': 'AUTHOR',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8913: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_EDITING',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8914: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_DELETION',
+            'resettable': False,
+            'type': 'bool32'
+        }
+    },
+    'PersistedScale': {
+        8915: {
+            'access': 'write',
+            'name': 'ACTIVE_SCALE',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8916: {
+            'access': 'read',
+            'name': 'AUTHOR',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8917: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_EDITING',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8918: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_DELETION',
+            'resettable': False,
+            'type': 'bool32'
+        }
+    },
+    'PersistedTask': {
+        8907: {
+            'access': 'write',
+            'name': 'ACTIVE_TASK',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8908: {
+            'access': 'read',
+            'name': 'AUTHOR',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8909: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_EDITING',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8910: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_DELETION',
+            'resettable': False,
+            'type': 'bool32'
+        }
+    },
     'PhysicalChannel': {
         8666: {
             'access': 'read',

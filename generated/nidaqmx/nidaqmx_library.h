@@ -185,6 +185,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetNthTaskChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   int32 GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   int32 GetNthTaskReadChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
+  int32 GetPersistedChanAttributeBool(const char channel[], int32 attribute, bool32* value, uInt32 size);
+  int32 GetPersistedChanAttributeString(const char channel[], int32 attribute, char value[], uInt32 size);
+  int32 GetPersistedScaleAttributeBool(const char scaleName[], int32 attribute, bool32* value, uInt32 size);
+  int32 GetPersistedScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size);
+  int32 GetPersistedTaskAttributeBool(const char taskName[], int32 attribute, bool32* value, uInt32 size);
+  int32 GetPersistedTaskAttributeString(const char taskName[], int32 attribute, char value[], uInt32 size);
   int32 GetPhysicalChanAttributeBool(const char physicalChannel[], int32 attribute, bool32* value, uInt32 size);
   int32 GetPhysicalChanAttributeBytes(const char physicalChannel[], int32 attribute, uInt8 value[], uInt32 size);
   int32 GetPhysicalChanAttributeDouble(const char physicalChannel[], int32 attribute, float64* value, uInt32 size);
@@ -557,6 +563,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetNthTaskChannelPtr = int32 (*)(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   using GetNthTaskDevicePtr = int32 (*)(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
   using GetNthTaskReadChannelPtr = int32 (*)(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize);
+  using GetPersistedChanAttributeBoolPtr = int32 (*)(const char channel[], int32 attribute, bool32* value, uInt32 size);
+  using GetPersistedChanAttributeStringPtr = int32 (*)(const char channel[], int32 attribute, char value[], uInt32 size);
+  using GetPersistedScaleAttributeBoolPtr = int32 (*)(const char scaleName[], int32 attribute, bool32* value, uInt32 size);
+  using GetPersistedScaleAttributeStringPtr = int32 (*)(const char scaleName[], int32 attribute, char value[], uInt32 size);
+  using GetPersistedTaskAttributeBoolPtr = int32 (*)(const char taskName[], int32 attribute, bool32* value, uInt32 size);
+  using GetPersistedTaskAttributeStringPtr = int32 (*)(const char taskName[], int32 attribute, char value[], uInt32 size);
   using GetPhysicalChanAttributeBoolPtr = int32 (*)(const char physicalChannel[], int32 attribute, bool32* value, uInt32 size);
   using GetPhysicalChanAttributeBytesPtr = int32 (*)(const char physicalChannel[], int32 attribute, uInt8 value[], uInt32 size);
   using GetPhysicalChanAttributeDoublePtr = int32 (*)(const char physicalChannel[], int32 attribute, float64* value, uInt32 size);
@@ -929,6 +941,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetNthTaskChannelPtr GetNthTaskChannel;
     GetNthTaskDevicePtr GetNthTaskDevice;
     GetNthTaskReadChannelPtr GetNthTaskReadChannel;
+    GetPersistedChanAttributeBoolPtr GetPersistedChanAttributeBool;
+    GetPersistedChanAttributeStringPtr GetPersistedChanAttributeString;
+    GetPersistedScaleAttributeBoolPtr GetPersistedScaleAttributeBool;
+    GetPersistedScaleAttributeStringPtr GetPersistedScaleAttributeString;
+    GetPersistedTaskAttributeBoolPtr GetPersistedTaskAttributeBool;
+    GetPersistedTaskAttributeStringPtr GetPersistedTaskAttributeString;
     GetPhysicalChanAttributeBoolPtr GetPhysicalChanAttributeBool;
     GetPhysicalChanAttributeBytesPtr GetPhysicalChanAttributeBytes;
     GetPhysicalChanAttributeDoublePtr GetPhysicalChanAttributeDouble;

@@ -184,6 +184,12 @@ service NiDAQmx {
   rpc GetNthTaskChannel(GetNthTaskChannelRequest) returns (GetNthTaskChannelResponse);
   rpc GetNthTaskDevice(GetNthTaskDeviceRequest) returns (GetNthTaskDeviceResponse);
   rpc GetNthTaskReadChannel(GetNthTaskReadChannelRequest) returns (GetNthTaskReadChannelResponse);
+  rpc GetPersistedChanAttributeBool(GetPersistedChanAttributeBoolRequest) returns (GetPersistedChanAttributeBoolResponse);
+  rpc GetPersistedChanAttributeString(GetPersistedChanAttributeStringRequest) returns (GetPersistedChanAttributeStringResponse);
+  rpc GetPersistedScaleAttributeBool(GetPersistedScaleAttributeBoolRequest) returns (GetPersistedScaleAttributeBoolResponse);
+  rpc GetPersistedScaleAttributeString(GetPersistedScaleAttributeStringRequest) returns (GetPersistedScaleAttributeStringResponse);
+  rpc GetPersistedTaskAttributeBool(GetPersistedTaskAttributeBoolRequest) returns (GetPersistedTaskAttributeBoolResponse);
+  rpc GetPersistedTaskAttributeString(GetPersistedTaskAttributeStringRequest) returns (GetPersistedTaskAttributeStringResponse);
   rpc GetPhysicalChanAttributeBool(GetPhysicalChanAttributeBoolRequest) returns (GetPhysicalChanAttributeBoolResponse);
   rpc GetPhysicalChanAttributeBytes(GetPhysicalChanAttributeBytesRequest) returns (GetPhysicalChanAttributeBytesResponse);
   rpc GetPhysicalChanAttributeDouble(GetPhysicalChanAttributeDoubleRequest) returns (GetPhysicalChanAttributeDoubleResponse);
@@ -1906,6 +1912,42 @@ enum ExportSignalUInt32Attributes {
   EXPORTSIGNAL_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   EXPORTSIGNAL_ATTRIBUTE_20_M_HZ_TIMEBASE_DIVIDE_DOWN_BY_N = 5718;
   EXPORTSIGNAL_ATTRIBUTE_RDY_FOR_XFER_EVENT_DEASSERT_COND_CUSTOM_THRESHOLD = 10596;
+}
+
+enum PersistedChannelStringAttributes {
+  PERSISTEDCHANNEL_STRING_ATTRIBUTE_UNSPECIFIED = 0;
+  PERSISTEDCHANNEL_ATTRIBUTE_ACTIVE_CHAN = 8911;
+  PERSISTEDCHANNEL_ATTRIBUTE_AUTHOR = 8912;
+}
+
+enum PersistedChannelBoolAttributes {
+  PERSISTEDCHANNEL_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
+  PERSISTEDCHANNEL_ATTRIBUTE_ALLOW_INTERACTIVE_EDITING = 8913;
+  PERSISTEDCHANNEL_ATTRIBUTE_ALLOW_INTERACTIVE_DELETION = 8914;
+}
+
+enum PersistedScaleStringAttributes {
+  PERSISTEDSCALE_STRING_ATTRIBUTE_UNSPECIFIED = 0;
+  PERSISTEDSCALE_ATTRIBUTE_ACTIVE_SCALE = 8915;
+  PERSISTEDSCALE_ATTRIBUTE_AUTHOR = 8916;
+}
+
+enum PersistedScaleBoolAttributes {
+  PERSISTEDSCALE_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
+  PERSISTEDSCALE_ATTRIBUTE_ALLOW_INTERACTIVE_EDITING = 8917;
+  PERSISTEDSCALE_ATTRIBUTE_ALLOW_INTERACTIVE_DELETION = 8918;
+}
+
+enum PersistedTaskStringAttributes {
+  PERSISTEDTASK_STRING_ATTRIBUTE_UNSPECIFIED = 0;
+  PERSISTEDTASK_ATTRIBUTE_ACTIVE_TASK = 8907;
+  PERSISTEDTASK_ATTRIBUTE_AUTHOR = 8908;
+}
+
+enum PersistedTaskBoolAttributes {
+  PERSISTEDTASK_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
+  PERSISTEDTASK_ATTRIBUTE_ALLOW_INTERACTIVE_EDITING = 8909;
+  PERSISTEDTASK_ATTRIBUTE_ALLOW_INTERACTIVE_DELETION = 8910;
 }
 
 enum PhysicalChannelUInt32Attributes {
@@ -7192,6 +7234,69 @@ message GetNthTaskReadChannelRequest {
 message GetNthTaskReadChannelResponse {
   int32 status = 1;
   string buffer = 2;
+}
+
+message GetPersistedChanAttributeBoolRequest {
+  string channel = 1;
+  PersistedChannelBoolAttributes attribute = 2;
+}
+
+message GetPersistedChanAttributeBoolResponse {
+  int32 status = 1;
+  bool value = 2;
+}
+
+message GetPersistedChanAttributeStringRequest {
+  string channel = 1;
+  PersistedChannelStringAttributes attribute = 2;
+  uint32 size = 3;
+}
+
+message GetPersistedChanAttributeStringResponse {
+  int32 status = 1;
+  string value = 2;
+}
+
+message GetPersistedScaleAttributeBoolRequest {
+  string scale_name = 1;
+  PersistedScaleBoolAttributes attribute = 2;
+}
+
+message GetPersistedScaleAttributeBoolResponse {
+  int32 status = 1;
+  bool value = 2;
+}
+
+message GetPersistedScaleAttributeStringRequest {
+  string scale_name = 1;
+  PersistedScaleStringAttributes attribute = 2;
+  uint32 size = 3;
+}
+
+message GetPersistedScaleAttributeStringResponse {
+  int32 status = 1;
+  string value = 2;
+}
+
+message GetPersistedTaskAttributeBoolRequest {
+  string task_name = 1;
+  PersistedTaskBoolAttributes attribute = 2;
+}
+
+message GetPersistedTaskAttributeBoolResponse {
+  int32 status = 1;
+  bool value = 2;
+}
+
+message GetPersistedTaskAttributeStringRequest {
+  string task_name = 1;
+  PersistedTaskStringAttributes attribute = 2;
+  uint32 size = 3;
+}
+
+message GetPersistedTaskAttributeStringResponse {
+  int32 status = 1;
+  string value = 2;
 }
 
 message GetPhysicalChanAttributeBoolRequest {

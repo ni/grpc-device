@@ -178,6 +178,12 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetNthTaskChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize) = 0;
   virtual int32 GetNthTaskDevice(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize) = 0;
   virtual int32 GetNthTaskReadChannel(TaskHandle task, uInt32 index, char buffer[], int32 bufferSize) = 0;
+  virtual int32 GetPersistedChanAttributeBool(const char channel[], int32 attribute, bool32* value, uInt32 size) = 0;
+  virtual int32 GetPersistedChanAttributeString(const char channel[], int32 attribute, char value[], uInt32 size) = 0;
+  virtual int32 GetPersistedScaleAttributeBool(const char scaleName[], int32 attribute, bool32* value, uInt32 size) = 0;
+  virtual int32 GetPersistedScaleAttributeString(const char scaleName[], int32 attribute, char value[], uInt32 size) = 0;
+  virtual int32 GetPersistedTaskAttributeBool(const char taskName[], int32 attribute, bool32* value, uInt32 size) = 0;
+  virtual int32 GetPersistedTaskAttributeString(const char taskName[], int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetPhysicalChanAttributeBool(const char physicalChannel[], int32 attribute, bool32* value, uInt32 size) = 0;
   virtual int32 GetPhysicalChanAttributeBytes(const char physicalChannel[], int32 attribute, uInt8 value[], uInt32 size) = 0;
   virtual int32 GetPhysicalChanAttributeDouble(const char physicalChannel[], int32 attribute, float64* value, uInt32 size) = 0;

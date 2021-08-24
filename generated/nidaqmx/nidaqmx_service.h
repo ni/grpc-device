@@ -195,6 +195,12 @@ public:
   ::grpc::Status GetNthTaskChannel(::grpc::ServerContext* context, const GetNthTaskChannelRequest* request, GetNthTaskChannelResponse* response) override;
   ::grpc::Status GetNthTaskDevice(::grpc::ServerContext* context, const GetNthTaskDeviceRequest* request, GetNthTaskDeviceResponse* response) override;
   ::grpc::Status GetNthTaskReadChannel(::grpc::ServerContext* context, const GetNthTaskReadChannelRequest* request, GetNthTaskReadChannelResponse* response) override;
+  ::grpc::Status GetPersistedChanAttributeBool(::grpc::ServerContext* context, const GetPersistedChanAttributeBoolRequest* request, GetPersistedChanAttributeBoolResponse* response) override;
+  ::grpc::Status GetPersistedChanAttributeString(::grpc::ServerContext* context, const GetPersistedChanAttributeStringRequest* request, GetPersistedChanAttributeStringResponse* response) override;
+  ::grpc::Status GetPersistedScaleAttributeBool(::grpc::ServerContext* context, const GetPersistedScaleAttributeBoolRequest* request, GetPersistedScaleAttributeBoolResponse* response) override;
+  ::grpc::Status GetPersistedScaleAttributeString(::grpc::ServerContext* context, const GetPersistedScaleAttributeStringRequest* request, GetPersistedScaleAttributeStringResponse* response) override;
+  ::grpc::Status GetPersistedTaskAttributeBool(::grpc::ServerContext* context, const GetPersistedTaskAttributeBoolRequest* request, GetPersistedTaskAttributeBoolResponse* response) override;
+  ::grpc::Status GetPersistedTaskAttributeString(::grpc::ServerContext* context, const GetPersistedTaskAttributeStringRequest* request, GetPersistedTaskAttributeStringResponse* response) override;
   ::grpc::Status GetPhysicalChanAttributeBool(::grpc::ServerContext* context, const GetPhysicalChanAttributeBoolRequest* request, GetPhysicalChanAttributeBoolResponse* response) override;
   ::grpc::Status GetPhysicalChanAttributeBytes(::grpc::ServerContext* context, const GetPhysicalChanAttributeBytesRequest* request, GetPhysicalChanAttributeBytesResponse* response) override;
   ::grpc::Status GetPhysicalChanAttributeDouble(::grpc::ServerContext* context, const GetPhysicalChanAttributeDoubleRequest* request, GetPhysicalChanAttributeDoubleResponse* response) override;
