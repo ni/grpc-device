@@ -13,8 +13,8 @@
   # But there are 2 cases that need to be disambiguated:
   # * Each attribute has an UNSPECIFIED placeholder.
   # * Reset attributes overlap the data-type-specific attributes.
-  unspecified_disambiguator = "_" + common_helpers.pascal_to_snake(sub_group).upper() if sub_group else ""
-  disambiguated_attribute_value_prefix = group_name.upper() + unspecified_disambiguator + "_ATTRIBUTE"
+  attribute_disambiguator = "_" + common_helpers.pascal_to_snake(sub_group).upper() if sub_group else ""
+  disambiguated_attribute_value_prefix = group_name.upper() + attribute_disambiguator + "_ATTRIBUTE"
   unspecified_attribute_value_prefix = disambiguated_attribute_value_prefix
   attribute_value_prefix = disambiguated_attribute_value_prefix if sub_group == "Reset" else attribute_value_prefix
 %>\
