@@ -7598,6 +7598,7 @@ functions = {
         'returns': 'int32'
     },
     'ReadAnalogF64': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -7624,7 +7625,7 @@ functions = {
                 'direction': 'out',
                 'name': 'readArray',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'custom-code',
                     'value': 'arraySizeInSamps'
                 },
                 'type': 'float64[]'
