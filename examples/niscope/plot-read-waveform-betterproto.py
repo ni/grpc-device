@@ -35,8 +35,9 @@
 
 from nidevice import niscope_grpc
 import asyncio
-from grpclib.client import Channel
 import sys
+from grpclib.client import Channel
+from grpclib.exceptions import GRPCError
 
 server_address = "localhost"
 server_port = "31763"
@@ -133,13 +134,13 @@ async def PerformAcquire():
         values = read_result.waveform[0:10]
         print(values)
     
+    except GRPCError as e:
+        if e.status.name == "UNIMPLEMENTED":
+            print("The operation is not implemented or is not supported/enabled in this service")
+        else:
+            print(f"GRPCError: {str(e)}")
     except Exception as e:
-        error_message = e.args[1]
-        if e.args[0] == 22:
-            error_message = f"Failed to connect to server on {server_address}:{server_port}"
-        elif e.status.name == "UNIMPLEMENTED":
-            error_message = "The operation is not implemented or is not supported/enabled in this service"
-        print(error_message)
+        print(str(e))
     finally:
         if('vi' in vars() and vi.id != 0):
             await scope_service.close(vi = vi)

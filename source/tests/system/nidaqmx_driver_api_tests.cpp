@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <random>
+#include <stdexcept>
 
 #include "device_server.h"
 #include "enumerate_devices.h"
@@ -442,7 +443,7 @@ class NiDAQmxDriverApiTests : public Test {
     return request;
   }
 
-  ::grpc::Status cfg_samp_clk_timing(CfgSampClkTimingResponse& response)
+  ::grpc::Status cfg_samp_clk_timing(CfgSampClkTimingResponse& response = ThrowawayResponse<CfgSampClkTimingResponse>::response())
   {
     auto request = create_cfg_samp_clk_timing_request(100.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 1000UL);
     return cfg_samp_clk_timing(request, response);
@@ -981,6 +982,41 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_size(2048);
     ::grpc::ClientContext context;
     return stub()->GetTaskAttributeString(&context, request, &response);
+  }
+
+  template <typename TRequest, typename TAttributes>
+  TRequest create_get_timing_attribute_request(TAttributes attribute)
+  {
+    TRequest request;
+    set_request_session_id(request);
+    request.set_attribute(attribute);
+    return request;
+  }
+
+  template <typename TRequest, typename TAttributes, typename TValue>
+  TRequest create_set_timing_attribute_request(TAttributes attribute, TValue value)
+  {
+    TRequest request = create_get_timing_attribute_request<SetTimingAttributeDoubleRequest>(attribute);
+    request.set_value(value);
+    return request;
+  }
+
+  GetTimingAttributeDoubleResponse get_timing_attribute_double(TimingDoubleAttributes attribute)
+  {
+    ::grpc::ClientContext context;
+    auto request = create_get_timing_attribute_request<GetTimingAttributeDoubleRequest>(attribute);
+    auto response = GetTimingAttributeDoubleResponse{};
+    raise_if_error(stub()->GetTimingAttributeDouble(&context, request, &response));
+    return response;
+  }
+
+  SetTimingAttributeDoubleResponse set_timing_attribute_double(TimingDoubleAttributes attribute, double value)
+  {
+    ::grpc::ClientContext context;
+    auto request = create_set_timing_attribute_request<SetTimingAttributeDoubleRequest>(attribute, value);
+    auto response = SetTimingAttributeDoubleResponse{};
+    raise_if_error(stub()->SetTimingAttributeDouble(&context, request, &response));
+    return response;
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -1923,6 +1959,25 @@ TEST_F(NiDAQmxDriverApiTests, TaskWithChannel_GetTaskAttributes_ReturnsCorectRes
   auto stripped_channels = std::string(channels_response.value().c_str());
   EXPECT_THAT(stripped_channels, StrEq(CHANNEL_NAME));
   EXPECT_FALSE(complete_response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, AIChannelWithSampleClock_ReconfigureRate_UpdatesRateSuccessfully)
+{
+  const auto INITIAL_RATE = 100.0;
+  const auto RECONFIGURED_RATE = 200.0;
+  create_ai_voltage_chan(0.0, 10.0);
+  auto cfg_request = create_cfg_samp_clk_timing_request(INITIAL_RATE, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 1U);
+  cfg_samp_clk_timing(cfg_request);
+
+  auto initial_response = get_timing_attribute_double(TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
+  auto set_response = set_timing_attribute_double(TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE, RECONFIGURED_RATE);
+  auto get_response = get_timing_attribute_double(TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
+
+  EXPECT_SUCCESS(initial_response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(get_response);
+  EXPECT_NEAR(INITIAL_RATE, initial_response.value(), .0001);
+  EXPECT_NEAR(RECONFIGURED_RATE, get_response.value(), .0001);
 }
 
 }  // namespace system

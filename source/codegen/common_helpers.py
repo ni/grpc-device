@@ -456,6 +456,8 @@ def get_grpc_type_name_for_identifier(data_type, config):
     """
     grpc_type = get_grpc_type(data_type, config)
     grpc_type = re.sub(r'^(repeated )(\w+)$', r'\2Array', grpc_type)
+    # take the last identifier if the type is namespaced (i.e., Timestamp)
+    grpc_type = grpc_type.split(".")[-1]
     return ensure_pascal_case(grpc_type)
 
 
