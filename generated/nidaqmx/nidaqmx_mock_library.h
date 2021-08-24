@@ -165,6 +165,11 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetDigitalLogicFamilyPowerUpState, (const char deviceName[], int32* logicFamily), (override));
   MOCK_METHOD(int32, GetDisconnectedCDAQSyncPorts, (char portList[], uInt32 portListSize), (override));
   MOCK_METHOD(int32, GetErrorString, (int32 errorCode, char errorString[], uInt32 bufferSize), (override));
+  MOCK_METHOD(int32, GetExportedSignalAttributeBool, (TaskHandle task, int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetExportedSignalAttributeDouble, (TaskHandle task, int32 attribute, float64* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetExportedSignalAttributeInt32, (TaskHandle task, int32 attribute, int32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetExportedSignalAttributeString, (TaskHandle task, int32 attribute, char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, GetExportedSignalAttributeUInt32, (TaskHandle task, int32 attribute, uInt32* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetExtendedErrorInfo, (char errorString[], uInt32 bufferSize), (override));
   MOCK_METHOD(int32, GetFirstSampClkWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetFirstSampTimestampVal, (TaskHandle task, CVIAbsoluteTime* data), (override));
@@ -248,6 +253,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ResetBufferAttribute, (TaskHandle task, int32 attribute), (override));
   MOCK_METHOD(int32, ResetChanAttribute, (TaskHandle task, const char channel[], int32 attribute), (override));
   MOCK_METHOD(int32, ResetDevice, (const char deviceName[]), (override));
+  MOCK_METHOD(int32, ResetExportedSignalAttribute, (TaskHandle task, int32 attribute), (override));
   MOCK_METHOD(int32, ResetReadAttribute, (TaskHandle task, int32 attribute), (override));
   MOCK_METHOD(int32, ResetTimingAttribute, (TaskHandle task, int32 attribute), (override));
   MOCK_METHOD(int32, ResetTimingAttributeEx, (TaskHandle task, const char deviceNames[], int32 attribute), (override));
@@ -269,6 +275,11 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, SetChanAttributeString, (TaskHandle task, const char channel[], int32 attribute, const char value[], uInt32 size), (override));
   MOCK_METHOD(int32, SetChanAttributeUInt32, (TaskHandle task, const char channel[], int32 attribute, uInt32 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetDigitalLogicFamilyPowerUpState, (const char deviceName[], int32 logicFamily), (override));
+  MOCK_METHOD(int32, SetExportedSignalAttributeBool, (TaskHandle task, int32 attribute, bool32 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetExportedSignalAttributeDouble, (TaskHandle task, int32 attribute, float64 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetExportedSignalAttributeInt32, (TaskHandle task, int32 attribute, int32 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetExportedSignalAttributeString, (TaskHandle task, int32 attribute, const char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, SetExportedSignalAttributeUInt32, (TaskHandle task, int32 attribute, uInt32 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetFirstSampClkWhen, (TaskHandle task, CVIAbsoluteTime data), (override));
   MOCK_METHOD(int32, SetReadAttributeBool, (TaskHandle task, int32 attribute, bool32 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetReadAttributeDouble, (TaskHandle task, int32 attribute, float64 value, uInt32 size), (override));

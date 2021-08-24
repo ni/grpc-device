@@ -1348,6 +1348,31 @@ enums = {
             }
         ]
     },
+    'DeassertCondition': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Deassert the signal when more than half of the onboard memory of the device  fills.'
+                },
+                'name': 'ONBRD_MEM_MORE_THAN_HALF_FULL',
+                'value': 10237
+            },
+            {
+                'documentation': {
+                    'description': 'Deassert the signal when the onboard memory fills.'
+                },
+                'name': 'ONBRD_MEM_FULL',
+                'value': 10236
+            },
+            {
+                'documentation': {
+                    'description': ' Deassert the signal when the amount of space available in the onboard memory is  below the value specified with  DAQmx_Exported_RdyForXferEvent_DeassertCondCustomThreshold.'
+                },
+                'name': 'ONBRD_MEM_CUSTOM_THRESHOLD',
+                'value': 12577
+            }
+        ]
+    },
     'DigitalDriveType': {
         'values': [
             {
@@ -1697,6 +1722,76 @@ enums = {
                 },
                 'name': 'CURRENT',
                 'value': 10134
+            }
+        ]
+    },
+    'ExportActions': {
+        'values': [
+            {
+                'name': 'PULSE',
+                'value': 10265
+            },
+            {
+                'name': 'TOGGLE',
+                'value': 10307
+            },
+            {
+                'name': 'LVL',
+                'value': 10210
+            }
+        ]
+    },
+    'ExportActions2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Send a pulse to the terminal.'
+                },
+                'name': 'PULSE',
+                'value': 10265
+            },
+            {
+                'documentation': {
+                    'description': ' Toggle the state of the terminal from low to high or from high to low.'
+                },
+                'name': 'TOGGLE',
+                'value': 10307
+            }
+        ]
+    },
+    'ExportActions3': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' The exported Sample Clock pulses at the beginning of each sample.'
+                },
+                'name': 'PULSE',
+                'value': 10265
+            },
+            {
+                'documentation': {
+                    'description': ' The exported Sample Clock goes high at the beginning of the sample and goes low  when the last AI Convert begins.'
+                },
+                'name': 'LVL',
+                'value': 10210
+            }
+        ]
+    },
+    'ExportActions5': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Handshake Event deasserts after the Handshake Trigger asserts, plus the amount  of time specified with DAQmx_Exported_HshkEvent_Interlocked_DeassertDelay.'
+                },
+                'name': 'INTERLOCKED',
+                'value': 12549
+            },
+            {
+                'documentation': {
+                    'description': ' Handshake Event pulses with the pulse width specified in  DAQmx_Exported_HshkEvent_Pulse_Width.'
+                },
+                'name': 'PULSE',
+                'value': 10265
             }
         ]
     },

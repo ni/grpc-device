@@ -7689,6 +7689,140 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetExportedSignalAttributeBool(::grpc::ServerContext* context, const GetExportedSignalAttributeBoolRequest* request, GetExportedSignalAttributeBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      bool32 value {};
+      auto status = library_->GetExportedSignalAttributeBool(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetExportedSignalAttributeDouble(::grpc::ServerContext* context, const GetExportedSignalAttributeDoubleRequest* request, GetExportedSignalAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      float64 value {};
+      auto status = library_->GetExportedSignalAttributeDouble(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetExportedSignalAttributeInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeInt32Request* request, GetExportedSignalAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      int32 value {};
+      auto status = library_->GetExportedSignalAttributeInt32(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nidaqmx_grpc::ExportSignalInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nidaqmx_grpc::ExportSignalInt32AttributeValues>(valid_enum_value);
+        };
+        response->set_value(checked_convert_value(value));
+        response->set_value_raw(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetExportedSignalAttributeString(::grpc::ServerContext* context, const GetExportedSignalAttributeStringRequest* request, GetExportedSignalAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      uInt32 size = request->size();
+      std::string value;
+      if (size > 0) {
+          value.resize(size-1);
+      }
+      auto status = library_->GetExportedSignalAttributeString(task, attribute, (char*)value.data(), size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetExportedSignalAttributeUInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeUInt32Request* request, GetExportedSignalAttributeUInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto size = 0U;
+      uInt32 value {};
+      auto status = library_->GetExportedSignalAttributeUInt32(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response)
   {
     if (context->IsCancelled()) {
@@ -10286,6 +10420,26 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ResetExportedSignalAttribute(::grpc::ServerContext* context, const ResetExportedSignalAttributeRequest* request, ResetExportedSignalAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto status = library_->ResetExportedSignalAttribute(task, attribute);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ResetReadAttribute(::grpc::ServerContext* context, const ResetReadAttributeRequest* request, ResetReadAttributeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -10922,6 +11076,131 @@ namespace nidaqmx_grpc {
       }
 
       auto status = ((NiDAQmxLibrary*)library_)->SetDigitalPullUpPullDownStates(device_name, get_channelNames_if(pull_up_pull_down_states, 0), get_state_if(pull_up_pull_down_states, 0), get_channelNames_if(pull_up_pull_down_states, 1), get_state_if(pull_up_pull_down_states, 1), get_channelNames_if(pull_up_pull_down_states, 2), get_state_if(pull_up_pull_down_states, 2), get_channelNames_if(pull_up_pull_down_states, 3), get_state_if(pull_up_pull_down_states, 3), get_channelNames_if(pull_up_pull_down_states, 4), get_state_if(pull_up_pull_down_states, 4), get_channelNames_if(pull_up_pull_down_states, 5), get_state_if(pull_up_pull_down_states, 5), get_channelNames_if(pull_up_pull_down_states, 6), get_state_if(pull_up_pull_down_states, 6), get_channelNames_if(pull_up_pull_down_states, 7), get_state_if(pull_up_pull_down_states, 7), get_channelNames_if(pull_up_pull_down_states, 8), get_state_if(pull_up_pull_down_states, 8), get_channelNames_if(pull_up_pull_down_states, 9), get_state_if(pull_up_pull_down_states, 9), get_channelNames_if(pull_up_pull_down_states, 10), get_state_if(pull_up_pull_down_states, 10), get_channelNames_if(pull_up_pull_down_states, 11), get_state_if(pull_up_pull_down_states, 11), get_channelNames_if(pull_up_pull_down_states, 12), get_state_if(pull_up_pull_down_states, 12), get_channelNames_if(pull_up_pull_down_states, 13), get_state_if(pull_up_pull_down_states, 13), get_channelNames_if(pull_up_pull_down_states, 14), get_state_if(pull_up_pull_down_states, 14), get_channelNames_if(pull_up_pull_down_states, 15), get_state_if(pull_up_pull_down_states, 15), get_channelNames_if(pull_up_pull_down_states, 16), get_state_if(pull_up_pull_down_states, 16), get_channelNames_if(pull_up_pull_down_states, 17), get_state_if(pull_up_pull_down_states, 17), get_channelNames_if(pull_up_pull_down_states, 18), get_state_if(pull_up_pull_down_states, 18), get_channelNames_if(pull_up_pull_down_states, 19), get_state_if(pull_up_pull_down_states, 19), get_channelNames_if(pull_up_pull_down_states, 20), get_state_if(pull_up_pull_down_states, 20), get_channelNames_if(pull_up_pull_down_states, 21), get_state_if(pull_up_pull_down_states, 21), get_channelNames_if(pull_up_pull_down_states, 22), get_state_if(pull_up_pull_down_states, 22), get_channelNames_if(pull_up_pull_down_states, 23), get_state_if(pull_up_pull_down_states, 23), get_channelNames_if(pull_up_pull_down_states, 24), get_state_if(pull_up_pull_down_states, 24), get_channelNames_if(pull_up_pull_down_states, 25), get_state_if(pull_up_pull_down_states, 25), get_channelNames_if(pull_up_pull_down_states, 26), get_state_if(pull_up_pull_down_states, 26), get_channelNames_if(pull_up_pull_down_states, 27), get_state_if(pull_up_pull_down_states, 27), get_channelNames_if(pull_up_pull_down_states, 28), get_state_if(pull_up_pull_down_states, 28), get_channelNames_if(pull_up_pull_down_states, 29), get_state_if(pull_up_pull_down_states, 29), get_channelNames_if(pull_up_pull_down_states, 30), get_state_if(pull_up_pull_down_states, 30), get_channelNames_if(pull_up_pull_down_states, 31), get_state_if(pull_up_pull_down_states, 31), get_channelNames_if(pull_up_pull_down_states, 32), get_state_if(pull_up_pull_down_states, 32), get_channelNames_if(pull_up_pull_down_states, 33), get_state_if(pull_up_pull_down_states, 33), get_channelNames_if(pull_up_pull_down_states, 34), get_state_if(pull_up_pull_down_states, 34), get_channelNames_if(pull_up_pull_down_states, 35), get_state_if(pull_up_pull_down_states, 35), get_channelNames_if(pull_up_pull_down_states, 36), get_state_if(pull_up_pull_down_states, 36), get_channelNames_if(pull_up_pull_down_states, 37), get_state_if(pull_up_pull_down_states, 37), get_channelNames_if(pull_up_pull_down_states, 38), get_state_if(pull_up_pull_down_states, 38), get_channelNames_if(pull_up_pull_down_states, 39), get_state_if(pull_up_pull_down_states, 39), get_channelNames_if(pull_up_pull_down_states, 40), get_state_if(pull_up_pull_down_states, 40), get_channelNames_if(pull_up_pull_down_states, 41), get_state_if(pull_up_pull_down_states, 41), get_channelNames_if(pull_up_pull_down_states, 42), get_state_if(pull_up_pull_down_states, 42), get_channelNames_if(pull_up_pull_down_states, 43), get_state_if(pull_up_pull_down_states, 43), get_channelNames_if(pull_up_pull_down_states, 44), get_state_if(pull_up_pull_down_states, 44), get_channelNames_if(pull_up_pull_down_states, 45), get_state_if(pull_up_pull_down_states, 45), get_channelNames_if(pull_up_pull_down_states, 46), get_state_if(pull_up_pull_down_states, 46), get_channelNames_if(pull_up_pull_down_states, 47), get_state_if(pull_up_pull_down_states, 47), get_channelNames_if(pull_up_pull_down_states, 48), get_state_if(pull_up_pull_down_states, 48), get_channelNames_if(pull_up_pull_down_states, 49), get_state_if(pull_up_pull_down_states, 49), get_channelNames_if(pull_up_pull_down_states, 50), get_state_if(pull_up_pull_down_states, 50), get_channelNames_if(pull_up_pull_down_states, 51), get_state_if(pull_up_pull_down_states, 51), get_channelNames_if(pull_up_pull_down_states, 52), get_state_if(pull_up_pull_down_states, 52), get_channelNames_if(pull_up_pull_down_states, 53), get_state_if(pull_up_pull_down_states, 53), get_channelNames_if(pull_up_pull_down_states, 54), get_state_if(pull_up_pull_down_states, 54), get_channelNames_if(pull_up_pull_down_states, 55), get_state_if(pull_up_pull_down_states, 55), get_channelNames_if(pull_up_pull_down_states, 56), get_state_if(pull_up_pull_down_states, 56), get_channelNames_if(pull_up_pull_down_states, 57), get_state_if(pull_up_pull_down_states, 57), get_channelNames_if(pull_up_pull_down_states, 58), get_state_if(pull_up_pull_down_states, 58), get_channelNames_if(pull_up_pull_down_states, 59), get_state_if(pull_up_pull_down_states, 59), get_channelNames_if(pull_up_pull_down_states, 60), get_state_if(pull_up_pull_down_states, 60), get_channelNames_if(pull_up_pull_down_states, 61), get_state_if(pull_up_pull_down_states, 61), get_channelNames_if(pull_up_pull_down_states, 62), get_state_if(pull_up_pull_down_states, 62), get_channelNames_if(pull_up_pull_down_states, 63), get_state_if(pull_up_pull_down_states, 63), get_channelNames_if(pull_up_pull_down_states, 64), get_state_if(pull_up_pull_down_states, 64), get_channelNames_if(pull_up_pull_down_states, 65), get_state_if(pull_up_pull_down_states, 65), get_channelNames_if(pull_up_pull_down_states, 66), get_state_if(pull_up_pull_down_states, 66), get_channelNames_if(pull_up_pull_down_states, 67), get_state_if(pull_up_pull_down_states, 67), get_channelNames_if(pull_up_pull_down_states, 68), get_state_if(pull_up_pull_down_states, 68), get_channelNames_if(pull_up_pull_down_states, 69), get_state_if(pull_up_pull_down_states, 69), get_channelNames_if(pull_up_pull_down_states, 70), get_state_if(pull_up_pull_down_states, 70), get_channelNames_if(pull_up_pull_down_states, 71), get_state_if(pull_up_pull_down_states, 71), get_channelNames_if(pull_up_pull_down_states, 72), get_state_if(pull_up_pull_down_states, 72), get_channelNames_if(pull_up_pull_down_states, 73), get_state_if(pull_up_pull_down_states, 73), get_channelNames_if(pull_up_pull_down_states, 74), get_state_if(pull_up_pull_down_states, 74), get_channelNames_if(pull_up_pull_down_states, 75), get_state_if(pull_up_pull_down_states, 75), get_channelNames_if(pull_up_pull_down_states, 76), get_state_if(pull_up_pull_down_states, 76), get_channelNames_if(pull_up_pull_down_states, 77), get_state_if(pull_up_pull_down_states, 77), get_channelNames_if(pull_up_pull_down_states, 78), get_state_if(pull_up_pull_down_states, 78), get_channelNames_if(pull_up_pull_down_states, 79), get_state_if(pull_up_pull_down_states, 79), get_channelNames_if(pull_up_pull_down_states, 80), get_state_if(pull_up_pull_down_states, 80), get_channelNames_if(pull_up_pull_down_states, 81), get_state_if(pull_up_pull_down_states, 81), get_channelNames_if(pull_up_pull_down_states, 82), get_state_if(pull_up_pull_down_states, 82), get_channelNames_if(pull_up_pull_down_states, 83), get_state_if(pull_up_pull_down_states, 83), get_channelNames_if(pull_up_pull_down_states, 84), get_state_if(pull_up_pull_down_states, 84), get_channelNames_if(pull_up_pull_down_states, 85), get_state_if(pull_up_pull_down_states, 85), get_channelNames_if(pull_up_pull_down_states, 86), get_state_if(pull_up_pull_down_states, 86), get_channelNames_if(pull_up_pull_down_states, 87), get_state_if(pull_up_pull_down_states, 87), get_channelNames_if(pull_up_pull_down_states, 88), get_state_if(pull_up_pull_down_states, 88), get_channelNames_if(pull_up_pull_down_states, 89), get_state_if(pull_up_pull_down_states, 89), get_channelNames_if(pull_up_pull_down_states, 90), get_state_if(pull_up_pull_down_states, 90), get_channelNames_if(pull_up_pull_down_states, 91), get_state_if(pull_up_pull_down_states, 91), get_channelNames_if(pull_up_pull_down_states, 92), get_state_if(pull_up_pull_down_states, 92), get_channelNames_if(pull_up_pull_down_states, 93), get_state_if(pull_up_pull_down_states, 93), get_channelNames_if(pull_up_pull_down_states, 94), get_state_if(pull_up_pull_down_states, 94), get_channelNames_if(pull_up_pull_down_states, 95), get_state_if(pull_up_pull_down_states, 95), get_channelNames_if(pull_up_pull_down_states, 96), get_state_if(pull_up_pull_down_states, 96));
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetExportedSignalAttributeBool(::grpc::ServerContext* context, const SetExportedSignalAttributeBoolRequest* request, SetExportedSignalAttributeBoolResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      bool32 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetExportedSignalAttributeBool(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetExportedSignalAttributeDouble(::grpc::ServerContext* context, const SetExportedSignalAttributeDoubleRequest* request, SetExportedSignalAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      float64 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetExportedSignalAttributeDouble(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetExportedSignalAttributeInt32(::grpc::ServerContext* context, const SetExportedSignalAttributeInt32Request* request, SetExportedSignalAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      int32 value;
+      switch (request->value_enum_case()) {
+        case nidaqmx_grpc::SetExportedSignalAttributeInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<int32>(request->value());
+          break;
+        }
+        case nidaqmx_grpc::SetExportedSignalAttributeInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<int32>(request->value_raw());
+          break;
+        }
+        case nidaqmx_grpc::SetExportedSignalAttributeInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
+      auto size = 0U;
+      auto status = library_->SetExportedSignalAttributeInt32(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetExportedSignalAttributeString(::grpc::ServerContext* context, const SetExportedSignalAttributeStringRequest* request, SetExportedSignalAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      auto value = request->value().c_str();
+      auto size = 0U;
+      auto status = library_->SetExportedSignalAttributeString(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetExportedSignalAttributeUInt32(::grpc::ServerContext* context, const SetExportedSignalAttributeUInt32Request* request, SetExportedSignalAttributeUInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute = request->attribute();
+      uInt32 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetExportedSignalAttributeUInt32(task, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

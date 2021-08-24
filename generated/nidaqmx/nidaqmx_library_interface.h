@@ -163,6 +163,11 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetDigitalLogicFamilyPowerUpState(const char deviceName[], int32* logicFamily) = 0;
   virtual int32 GetDisconnectedCDAQSyncPorts(char portList[], uInt32 portListSize) = 0;
   virtual int32 GetErrorString(int32 errorCode, char errorString[], uInt32 bufferSize) = 0;
+  virtual int32 GetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size) = 0;
+  virtual int32 GetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size) = 0;
+  virtual int32 GetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size) = 0;
+  virtual int32 GetExportedSignalAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size) = 0;
+  virtual int32 GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size) = 0;
   virtual int32 GetExtendedErrorInfo(char errorString[], uInt32 bufferSize) = 0;
   virtual int32 GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetFirstSampTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
@@ -246,6 +251,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 ResetBufferAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 ResetChanAttribute(TaskHandle task, const char channel[], int32 attribute) = 0;
   virtual int32 ResetDevice(const char deviceName[]) = 0;
+  virtual int32 ResetExportedSignalAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 ResetReadAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 ResetTimingAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 ResetTimingAttributeEx(TaskHandle task, const char deviceNames[], int32 attribute) = 0;
@@ -267,6 +273,11 @@ class NiDAQmxLibraryInterface {
   virtual int32 SetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, const char value[], uInt32 size) = 0;
   virtual int32 SetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32 value, uInt32 size) = 0;
   virtual int32 SetDigitalLogicFamilyPowerUpState(const char deviceName[], int32 logicFamily) = 0;
+  virtual int32 SetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size) = 0;
+  virtual int32 SetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size) = 0;
+  virtual int32 SetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size) = 0;
+  virtual int32 SetExportedSignalAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size) = 0;
+  virtual int32 SetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size) = 0;
   virtual int32 SetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime data) = 0;
   virtual int32 SetReadAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size) = 0;
   virtual int32 SetReadAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size) = 0;

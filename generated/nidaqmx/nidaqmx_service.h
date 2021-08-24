@@ -180,6 +180,11 @@ public:
   ::grpc::Status GetDigitalPullUpPullDownStates(::grpc::ServerContext* context, const GetDigitalPullUpPullDownStatesRequest* request, GetDigitalPullUpPullDownStatesResponse* response) override;
   ::grpc::Status GetDisconnectedCDAQSyncPorts(::grpc::ServerContext* context, const GetDisconnectedCDAQSyncPortsRequest* request, GetDisconnectedCDAQSyncPortsResponse* response) override;
   ::grpc::Status GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response) override;
+  ::grpc::Status GetExportedSignalAttributeBool(::grpc::ServerContext* context, const GetExportedSignalAttributeBoolRequest* request, GetExportedSignalAttributeBoolResponse* response) override;
+  ::grpc::Status GetExportedSignalAttributeDouble(::grpc::ServerContext* context, const GetExportedSignalAttributeDoubleRequest* request, GetExportedSignalAttributeDoubleResponse* response) override;
+  ::grpc::Status GetExportedSignalAttributeInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeInt32Request* request, GetExportedSignalAttributeInt32Response* response) override;
+  ::grpc::Status GetExportedSignalAttributeString(::grpc::ServerContext* context, const GetExportedSignalAttributeStringRequest* request, GetExportedSignalAttributeStringResponse* response) override;
+  ::grpc::Status GetExportedSignalAttributeUInt32(::grpc::ServerContext* context, const GetExportedSignalAttributeUInt32Request* request, GetExportedSignalAttributeUInt32Response* response) override;
   ::grpc::Status GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response) override;
   ::grpc::Status GetFirstSampClkWhen(::grpc::ServerContext* context, const GetFirstSampClkWhenRequest* request, GetFirstSampClkWhenResponse* response) override;
   ::grpc::Status GetFirstSampTimestampVal(::grpc::ServerContext* context, const GetFirstSampTimestampValRequest* request, GetFirstSampTimestampValResponse* response) override;
@@ -263,6 +268,7 @@ public:
   ::grpc::Status ResetBufferAttribute(::grpc::ServerContext* context, const ResetBufferAttributeRequest* request, ResetBufferAttributeResponse* response) override;
   ::grpc::Status ResetChanAttribute(::grpc::ServerContext* context, const ResetChanAttributeRequest* request, ResetChanAttributeResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
+  ::grpc::Status ResetExportedSignalAttribute(::grpc::ServerContext* context, const ResetExportedSignalAttributeRequest* request, ResetExportedSignalAttributeResponse* response) override;
   ::grpc::Status ResetReadAttribute(::grpc::ServerContext* context, const ResetReadAttributeRequest* request, ResetReadAttributeResponse* response) override;
   ::grpc::Status ResetTimingAttribute(::grpc::ServerContext* context, const ResetTimingAttributeRequest* request, ResetTimingAttributeResponse* response) override;
   ::grpc::Status ResetTimingAttributeEx(::grpc::ServerContext* context, const ResetTimingAttributeExRequest* request, ResetTimingAttributeExResponse* response) override;
@@ -287,6 +293,11 @@ public:
   ::grpc::Status SetDigitalLogicFamilyPowerUpState(::grpc::ServerContext* context, const SetDigitalLogicFamilyPowerUpStateRequest* request, SetDigitalLogicFamilyPowerUpStateResponse* response) override;
   ::grpc::Status SetDigitalPowerUpStates(::grpc::ServerContext* context, const SetDigitalPowerUpStatesRequest* request, SetDigitalPowerUpStatesResponse* response) override;
   ::grpc::Status SetDigitalPullUpPullDownStates(::grpc::ServerContext* context, const SetDigitalPullUpPullDownStatesRequest* request, SetDigitalPullUpPullDownStatesResponse* response) override;
+  ::grpc::Status SetExportedSignalAttributeBool(::grpc::ServerContext* context, const SetExportedSignalAttributeBoolRequest* request, SetExportedSignalAttributeBoolResponse* response) override;
+  ::grpc::Status SetExportedSignalAttributeDouble(::grpc::ServerContext* context, const SetExportedSignalAttributeDoubleRequest* request, SetExportedSignalAttributeDoubleResponse* response) override;
+  ::grpc::Status SetExportedSignalAttributeInt32(::grpc::ServerContext* context, const SetExportedSignalAttributeInt32Request* request, SetExportedSignalAttributeInt32Response* response) override;
+  ::grpc::Status SetExportedSignalAttributeString(::grpc::ServerContext* context, const SetExportedSignalAttributeStringRequest* request, SetExportedSignalAttributeStringResponse* response) override;
+  ::grpc::Status SetExportedSignalAttributeUInt32(::grpc::ServerContext* context, const SetExportedSignalAttributeUInt32Request* request, SetExportedSignalAttributeUInt32Response* response) override;
   ::grpc::Status SetFirstSampClkWhen(::grpc::ServerContext* context, const SetFirstSampClkWhenRequest* request, SetFirstSampClkWhenResponse* response) override;
   ::grpc::Status SetReadAttributeBool(::grpc::ServerContext* context, const SetReadAttributeBoolRequest* request, SetReadAttributeBoolResponse* response) override;
   ::grpc::Status SetReadAttributeDouble(::grpc::ServerContext* context, const SetReadAttributeDoubleRequest* request, SetReadAttributeDoubleResponse* response) override;

@@ -173,6 +173,11 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetDigitalPullUpPullDownStates = reinterpret_cast<GetDigitalPullUpPullDownStatesPtr>(shared_library_.get_function_pointer("DAQmxGetDigitalPullUpPullDownStates"));
   function_pointers_.GetDisconnectedCDAQSyncPorts = reinterpret_cast<GetDisconnectedCDAQSyncPortsPtr>(shared_library_.get_function_pointer("DAQmxGetDisconnectedCDAQSyncPorts"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("DAQmxGetErrorString"));
+  function_pointers_.GetExportedSignalAttributeBool = reinterpret_cast<GetExportedSignalAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetExportedSignalAttribute"));
+  function_pointers_.GetExportedSignalAttributeDouble = reinterpret_cast<GetExportedSignalAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetExportedSignalAttribute"));
+  function_pointers_.GetExportedSignalAttributeInt32 = reinterpret_cast<GetExportedSignalAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetExportedSignalAttribute"));
+  function_pointers_.GetExportedSignalAttributeString = reinterpret_cast<GetExportedSignalAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetExportedSignalAttribute"));
+  function_pointers_.GetExportedSignalAttributeUInt32 = reinterpret_cast<GetExportedSignalAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetExportedSignalAttribute"));
   function_pointers_.GetExtendedErrorInfo = reinterpret_cast<GetExtendedErrorInfoPtr>(shared_library_.get_function_pointer("DAQmxGetExtendedErrorInfo"));
   function_pointers_.GetFirstSampClkWhen = reinterpret_cast<GetFirstSampClkWhenPtr>(shared_library_.get_function_pointer("DAQmxGetFirstSampClkWhen"));
   function_pointers_.GetFirstSampTimestampVal = reinterpret_cast<GetFirstSampTimestampValPtr>(shared_library_.get_function_pointer("DAQmxGetFirstSampTimestampVal"));
@@ -256,6 +261,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ResetBufferAttribute = reinterpret_cast<ResetBufferAttributePtr>(shared_library_.get_function_pointer("DAQmxResetBufferAttribute"));
   function_pointers_.ResetChanAttribute = reinterpret_cast<ResetChanAttributePtr>(shared_library_.get_function_pointer("DAQmxResetChanAttribute"));
   function_pointers_.ResetDevice = reinterpret_cast<ResetDevicePtr>(shared_library_.get_function_pointer("DAQmxResetDevice"));
+  function_pointers_.ResetExportedSignalAttribute = reinterpret_cast<ResetExportedSignalAttributePtr>(shared_library_.get_function_pointer("DAQmxResetExportedSignalAttribute"));
   function_pointers_.ResetReadAttribute = reinterpret_cast<ResetReadAttributePtr>(shared_library_.get_function_pointer("DAQmxResetReadAttribute"));
   function_pointers_.ResetTimingAttribute = reinterpret_cast<ResetTimingAttributePtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttribute"));
   function_pointers_.ResetTimingAttributeEx = reinterpret_cast<ResetTimingAttributeExPtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttributeEx"));
@@ -280,6 +286,11 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetDigitalLogicFamilyPowerUpState = reinterpret_cast<SetDigitalLogicFamilyPowerUpStatePtr>(shared_library_.get_function_pointer("DAQmxSetDigitalLogicFamilyPowerUpState"));
   function_pointers_.SetDigitalPowerUpStates = reinterpret_cast<SetDigitalPowerUpStatesPtr>(shared_library_.get_function_pointer("DAQmxSetDigitalPowerUpStates"));
   function_pointers_.SetDigitalPullUpPullDownStates = reinterpret_cast<SetDigitalPullUpPullDownStatesPtr>(shared_library_.get_function_pointer("DAQmxSetDigitalPullUpPullDownStates"));
+  function_pointers_.SetExportedSignalAttributeBool = reinterpret_cast<SetExportedSignalAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetExportedSignalAttribute"));
+  function_pointers_.SetExportedSignalAttributeDouble = reinterpret_cast<SetExportedSignalAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetExportedSignalAttribute"));
+  function_pointers_.SetExportedSignalAttributeInt32 = reinterpret_cast<SetExportedSignalAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetExportedSignalAttribute"));
+  function_pointers_.SetExportedSignalAttributeString = reinterpret_cast<SetExportedSignalAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetExportedSignalAttribute"));
+  function_pointers_.SetExportedSignalAttributeUInt32 = reinterpret_cast<SetExportedSignalAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetExportedSignalAttribute"));
   function_pointers_.SetFirstSampClkWhen = reinterpret_cast<SetFirstSampClkWhenPtr>(shared_library_.get_function_pointer("DAQmxSetFirstSampClkWhen"));
   function_pointers_.SetReadAttributeBool = reinterpret_cast<SetReadAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetReadAttribute"));
   function_pointers_.SetReadAttributeDouble = reinterpret_cast<SetReadAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetReadAttribute"));
@@ -2184,6 +2195,66 @@ int32 NiDAQmxLibrary::GetErrorString(int32 errorCode, char errorString[], uInt32
 #endif
 }
 
+int32 NiDAQmxLibrary::GetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetExportedSignalAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetExportedSignalAttributeBool(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size)
+{
+  if (!function_pointers_.GetExportedSignalAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetExportedSignalAttributeDouble(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size)
+{
+  if (!function_pointers_.GetExportedSignalAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetExportedSignalAttributeInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetExportedSignalAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetExportedSignalAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetExportedSignalAttributeString(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size)
+{
+  if (!function_pointers_.GetExportedSignalAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.GetExportedSignalAttributeUInt32(task, attribute, value, size);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetExtendedErrorInfo(char errorString[], uInt32 bufferSize)
 {
   if (!function_pointers_.GetExtendedErrorInfo) {
@@ -3180,6 +3251,18 @@ int32 NiDAQmxLibrary::ResetDevice(const char deviceName[])
 #endif
 }
 
+int32 NiDAQmxLibrary::ResetExportedSignalAttribute(TaskHandle task, int32 attribute)
+{
+  if (!function_pointers_.ResetExportedSignalAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxResetExportedSignalAttribute(task, attribute);
+#else
+  return function_pointers_.ResetExportedSignalAttribute(task, attribute);
+#endif
+}
+
 int32 NiDAQmxLibrary::ResetReadAttribute(TaskHandle task, int32 attribute)
 {
   if (!function_pointers_.ResetReadAttribute) {
@@ -3465,6 +3548,66 @@ int32 NiDAQmxLibrary::SetDigitalPullUpPullDownStates(const char deviceName[], co
   return DAQmxSetDigitalPullUpPullDownStates(deviceName, channelNames, state, channelNames0, state0, channelNames1, state1, channelNames2, state2, channelNames3, state3, channelNames4, state4, channelNames5, state5, channelNames6, state6, channelNames7, state7, channelNames8, state8, channelNames9, state9, channelNames10, state10, channelNames11, state11, channelNames12, state12, channelNames13, state13, channelNames14, state14, channelNames15, state15, channelNames16, state16, channelNames17, state17, channelNames18, state18, channelNames19, state19, channelNames20, state20, channelNames21, state21, channelNames22, state22, channelNames23, state23, channelNames24, state24, channelNames25, state25, channelNames26, state26, channelNames27, state27, channelNames28, state28, channelNames29, state29, channelNames30, state30, channelNames31, state31, channelNames32, state32, channelNames33, state33, channelNames34, state34, channelNames35, state35, channelNames36, state36, channelNames37, state37, channelNames38, state38, channelNames39, state39, channelNames40, state40, channelNames41, state41, channelNames42, state42, channelNames43, state43, channelNames44, state44, channelNames45, state45, channelNames46, state46, channelNames47, state47, channelNames48, state48, channelNames49, state49, channelNames50, state50, channelNames51, state51, channelNames52, state52, channelNames53, state53, channelNames54, state54, channelNames55, state55, channelNames56, state56, channelNames57, state57, channelNames58, state58, channelNames59, state59, channelNames60, state60, channelNames61, state61, channelNames62, state62, channelNames63, state63, channelNames64, state64, channelNames65, state65, channelNames66, state66, channelNames67, state67, channelNames68, state68, channelNames69, state69, channelNames70, state70, channelNames71, state71, channelNames72, state72, channelNames73, state73, channelNames74, state74, channelNames75, state75, channelNames76, state76, channelNames77, state77, channelNames78, state78, channelNames79, state79, channelNames80, state80, channelNames81, state81, channelNames82, state82, channelNames83, state83, channelNames84, state84, channelNames85, state85, channelNames86, state86, channelNames87, state87, channelNames88, state88, channelNames89, state89, channelNames90, state90, channelNames91, state91, channelNames92, state92, channelNames93, state93, channelNames94, state94, channelNames95, state95);
 #else
   return function_pointers_.SetDigitalPullUpPullDownStates(deviceName, channelNames, state, channelNames0, state0, channelNames1, state1, channelNames2, state2, channelNames3, state3, channelNames4, state4, channelNames5, state5, channelNames6, state6, channelNames7, state7, channelNames8, state8, channelNames9, state9, channelNames10, state10, channelNames11, state11, channelNames12, state12, channelNames13, state13, channelNames14, state14, channelNames15, state15, channelNames16, state16, channelNames17, state17, channelNames18, state18, channelNames19, state19, channelNames20, state20, channelNames21, state21, channelNames22, state22, channelNames23, state23, channelNames24, state24, channelNames25, state25, channelNames26, state26, channelNames27, state27, channelNames28, state28, channelNames29, state29, channelNames30, state30, channelNames31, state31, channelNames32, state32, channelNames33, state33, channelNames34, state34, channelNames35, state35, channelNames36, state36, channelNames37, state37, channelNames38, state38, channelNames39, state39, channelNames40, state40, channelNames41, state41, channelNames42, state42, channelNames43, state43, channelNames44, state44, channelNames45, state45, channelNames46, state46, channelNames47, state47, channelNames48, state48, channelNames49, state49, channelNames50, state50, channelNames51, state51, channelNames52, state52, channelNames53, state53, channelNames54, state54, channelNames55, state55, channelNames56, state56, channelNames57, state57, channelNames58, state58, channelNames59, state59, channelNames60, state60, channelNames61, state61, channelNames62, state62, channelNames63, state63, channelNames64, state64, channelNames65, state65, channelNames66, state66, channelNames67, state67, channelNames68, state68, channelNames69, state69, channelNames70, state70, channelNames71, state71, channelNames72, state72, channelNames73, state73, channelNames74, state74, channelNames75, state75, channelNames76, state76, channelNames77, state77, channelNames78, state78, channelNames79, state79, channelNames80, state80, channelNames81, state81, channelNames82, state82, channelNames83, state83, channelNames84, state84, channelNames85, state85, channelNames86, state86, channelNames87, state87, channelNames88, state88, channelNames89, state89, channelNames90, state90, channelNames91, state91, channelNames92, state92, channelNames93, state93, channelNames94, state94, channelNames95, state95);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetExportedSignalAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size)
+{
+  if (!function_pointers_.SetExportedSignalAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetExportedSignalAttributeBool(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetExportedSignalAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size)
+{
+  if (!function_pointers_.SetExportedSignalAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetExportedSignalAttributeDouble(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetExportedSignalAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size)
+{
+  if (!function_pointers_.SetExportedSignalAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetExportedSignalAttributeInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetExportedSignalAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size)
+{
+  if (!function_pointers_.SetExportedSignalAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetExportedSignalAttributeString(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetExportedSignalAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size)
+{
+  if (!function_pointers_.SetExportedSignalAttributeUInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetExportedSignalAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetExportedSignalAttribute(task, attribute, value, size);
+#else
+  return function_pointers_.SetExportedSignalAttributeUInt32(task, attribute, value, size);
 #endif
 }
 
