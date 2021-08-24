@@ -942,7 +942,7 @@ TEST_F(NiFakeNonIviServiceTests, SetColors_PassesColorsArrayToLibrary)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-TEST_F(NiFakeNonIviServiceTests, SetMappedBigNumberEnum_PassesValueToLibrary)
+TEST_F(NiFakeNonIviServiceTests, SetMappedBigAndSmallNumberEnums_PassesValuesToLibrary)
 {
   const auto BIG_NUMBER_AS_DOUBLE = 10000000000.0;
   const auto BIG_NUMBER_AS_ENUM = NumbersIncludingABigOne::NUMBERS_INCLUDING_A_BIG_ONE_10000000000;
