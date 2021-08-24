@@ -56,10 +56,9 @@ async def main():
     async def raise_if_error(response):
         if response.status != 0:
             response = await daq_service.get_error_string(
-                error_code=response.status, buffer_size=2048
+                error_code=response.status
             )
-            error_string = response.error_string.strip(" \0")
-            raise Exception(f"Error: {error_string}")
+            raise Exception(f"Error: {response.error_string}")
 
     try:
         response = await daq_service.create_task()
