@@ -222,6 +222,10 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetTrigAttributeString = reinterpret_cast<GetTrigAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
   function_pointers_.GetTrigAttributeTimestamp = reinterpret_cast<GetTrigAttributeTimestampPtr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
   function_pointers_.GetTrigAttributeUInt32 = reinterpret_cast<GetTrigAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetTrigAttribute"));
+  function_pointers_.GetWatchdogAttributeBool = reinterpret_cast<GetWatchdogAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetWatchdogAttribute"));
+  function_pointers_.GetWatchdogAttributeDouble = reinterpret_cast<GetWatchdogAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetWatchdogAttribute"));
+  function_pointers_.GetWatchdogAttributeInt32 = reinterpret_cast<GetWatchdogAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetWatchdogAttribute"));
+  function_pointers_.GetWatchdogAttributeString = reinterpret_cast<GetWatchdogAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxGetWatchdogAttribute"));
   function_pointers_.GetWriteAttributeBool = reinterpret_cast<GetWriteAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxGetWriteAttribute"));
   function_pointers_.GetWriteAttributeDouble = reinterpret_cast<GetWriteAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxGetWriteAttribute"));
   function_pointers_.GetWriteAttributeInt32 = reinterpret_cast<GetWriteAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxGetWriteAttribute"));
@@ -266,6 +270,7 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.ResetTimingAttribute = reinterpret_cast<ResetTimingAttributePtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttribute"));
   function_pointers_.ResetTimingAttributeEx = reinterpret_cast<ResetTimingAttributeExPtr>(shared_library_.get_function_pointer("DAQmxResetTimingAttributeEx"));
   function_pointers_.ResetTrigAttribute = reinterpret_cast<ResetTrigAttributePtr>(shared_library_.get_function_pointer("DAQmxResetTrigAttribute"));
+  function_pointers_.ResetWatchdogAttribute = reinterpret_cast<ResetWatchdogAttributePtr>(shared_library_.get_function_pointer("DAQmxResetWatchdogAttribute"));
   function_pointers_.ResetWriteAttribute = reinterpret_cast<ResetWriteAttributePtr>(shared_library_.get_function_pointer("DAQmxResetWriteAttribute"));
   function_pointers_.SaveGlobalChan = reinterpret_cast<SaveGlobalChanPtr>(shared_library_.get_function_pointer("DAQmxSaveGlobalChan"));
   function_pointers_.SaveScale = reinterpret_cast<SaveScalePtr>(shared_library_.get_function_pointer("DAQmxSaveScale"));
@@ -324,6 +329,10 @@ NiDAQmxLibrary::NiDAQmxLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetTrigAttributeString = reinterpret_cast<SetTrigAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
   function_pointers_.SetTrigAttributeTimestamp = reinterpret_cast<SetTrigAttributeTimestampPtr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
   function_pointers_.SetTrigAttributeUInt32 = reinterpret_cast<SetTrigAttributeUInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetTrigAttribute"));
+  function_pointers_.SetWatchdogAttributeBool = reinterpret_cast<SetWatchdogAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetWatchdogAttribute"));
+  function_pointers_.SetWatchdogAttributeDouble = reinterpret_cast<SetWatchdogAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetWatchdogAttribute"));
+  function_pointers_.SetWatchdogAttributeInt32 = reinterpret_cast<SetWatchdogAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetWatchdogAttribute"));
+  function_pointers_.SetWatchdogAttributeString = reinterpret_cast<SetWatchdogAttributeStringPtr>(shared_library_.get_function_pointer("DAQmxSetWatchdogAttribute"));
   function_pointers_.SetWriteAttributeBool = reinterpret_cast<SetWriteAttributeBoolPtr>(shared_library_.get_function_pointer("DAQmxSetWriteAttribute"));
   function_pointers_.SetWriteAttributeDouble = reinterpret_cast<SetWriteAttributeDoublePtr>(shared_library_.get_function_pointer("DAQmxSetWriteAttribute"));
   function_pointers_.SetWriteAttributeInt32 = reinterpret_cast<SetWriteAttributeInt32Ptr>(shared_library_.get_function_pointer("DAQmxSetWriteAttribute"));
@@ -2783,6 +2792,54 @@ int32 NiDAQmxLibrary::GetTrigAttributeUInt32(TaskHandle task, int32 attribute, u
 #endif
 }
 
+int32 NiDAQmxLibrary::GetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32* value, uInt32 size)
+{
+  if (!function_pointers_.GetWatchdogAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
+#else
+  return function_pointers_.GetWatchdogAttributeBool(task, lines, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64* value, uInt32 size)
+{
+  if (!function_pointers_.GetWatchdogAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
+#else
+  return function_pointers_.GetWatchdogAttributeDouble(task, lines, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32* value, uInt32 size)
+{
+  if (!function_pointers_.GetWatchdogAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
+#else
+  return function_pointers_.GetWatchdogAttributeInt32(task, lines, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::GetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, char value[], uInt32 size)
+{
+  if (!function_pointers_.GetWatchdogAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWatchdogAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxGetWatchdogAttribute(task, lines, attribute, value, size);
+#else
+  return function_pointers_.GetWatchdogAttributeString(task, lines, attribute, value, size);
+#endif
+}
+
 int32 NiDAQmxLibrary::GetWriteAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size)
 {
   if (!function_pointers_.GetWriteAttributeBool) {
@@ -3308,6 +3365,18 @@ int32 NiDAQmxLibrary::ResetTrigAttribute(TaskHandle task, int32 attribute)
   return DAQmxResetTrigAttribute(task, attribute);
 #else
   return function_pointers_.ResetTrigAttribute(task, attribute);
+#endif
+}
+
+int32 NiDAQmxLibrary::ResetWatchdogAttribute(TaskHandle task, const char lines[], int32 attribute)
+{
+  if (!function_pointers_.ResetWatchdogAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxResetWatchdogAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxResetWatchdogAttribute(task, lines, attribute);
+#else
+  return function_pointers_.ResetWatchdogAttribute(task, lines, attribute);
 #endif
 }
 
@@ -4004,6 +4073,54 @@ int32 NiDAQmxLibrary::SetTrigAttributeUInt32(TaskHandle task, int32 attribute, u
   return DAQmxSetTrigAttribute(task, attribute, value, size);
 #else
   return function_pointers_.SetTrigAttributeUInt32(task, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32 value, uInt32 size)
+{
+  if (!function_pointers_.SetWatchdogAttributeBool) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
+#else
+  return function_pointers_.SetWatchdogAttributeBool(task, lines, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64 value, uInt32 size)
+{
+  if (!function_pointers_.SetWatchdogAttributeDouble) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
+#else
+  return function_pointers_.SetWatchdogAttributeDouble(task, lines, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32 value, uInt32 size)
+{
+  if (!function_pointers_.SetWatchdogAttributeInt32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
+#else
+  return function_pointers_.SetWatchdogAttributeInt32(task, lines, attribute, value, size);
+#endif
+}
+
+int32 NiDAQmxLibrary::SetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, const char value[], uInt32 size)
+{
+  if (!function_pointers_.SetWatchdogAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxSetWatchdogAttribute.");
+  }
+#if defined(_MSC_VER)
+  return DAQmxSetWatchdogAttribute(task, lines, attribute, value, size);
+#else
+  return function_pointers_.SetWatchdogAttributeString(task, lines, attribute, value, size);
 #endif
 }
 

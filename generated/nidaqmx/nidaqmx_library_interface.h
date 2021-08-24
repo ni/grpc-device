@@ -212,6 +212,10 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetTrigAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size) = 0;
   virtual int32 GetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size) = 0;
+  virtual int32 GetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32* value, uInt32 size) = 0;
+  virtual int32 GetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64* value, uInt32 size) = 0;
+  virtual int32 GetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32* value, uInt32 size) = 0;
+  virtual int32 GetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetWriteAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size) = 0;
   virtual int32 GetWriteAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size) = 0;
   virtual int32 GetWriteAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size) = 0;
@@ -256,6 +260,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 ResetTimingAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 ResetTimingAttributeEx(TaskHandle task, const char deviceNames[], int32 attribute) = 0;
   virtual int32 ResetTrigAttribute(TaskHandle task, int32 attribute) = 0;
+  virtual int32 ResetWatchdogAttribute(TaskHandle task, const char lines[], int32 attribute) = 0;
   virtual int32 ResetWriteAttribute(TaskHandle task, int32 attribute) = 0;
   virtual int32 SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options) = 0;
   virtual int32 SaveScale(const char scaleName[], const char saveAs[], const char author[], uInt32 options) = 0;
@@ -311,6 +316,10 @@ class NiDAQmxLibraryInterface {
   virtual int32 SetTrigAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size) = 0;
   virtual int32 SetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size) = 0;
   virtual int32 SetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size) = 0;
+  virtual int32 SetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32 value, uInt32 size) = 0;
+  virtual int32 SetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64 value, uInt32 size) = 0;
+  virtual int32 SetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32 value, uInt32 size) = 0;
+  virtual int32 SetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, const char value[], uInt32 size) = 0;
   virtual int32 SetWriteAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size) = 0;
   virtual int32 SetWriteAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size) = 0;
   virtual int32 SetWriteAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size) = 0;

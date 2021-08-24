@@ -6760,6 +6760,73 @@ attributes = {
             'type': 'CVIAbsoluteTime'
         }
     },
+    'Watchdog': {
+        8611: {
+            'access': 'read-write',
+            'enum': 'TriggerType4',
+            'name': 'EXPIR_TRIG_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8612: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_WATCHDOG_EXPIR_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8613: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'DIG_EDGE_WATCHDOG_EXPIR_TRIG_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8615: {
+            'access': 'read-write',
+            'enum': 'DigitalLineState',
+            'name': 'DO_EXPIR_STATE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8616: {
+            'access': 'read',
+            'name': 'HAS_EXPIRED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8617: {
+            'access': 'read-write',
+            'name': 'TIMEOUT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12381: {
+            'access': 'read-write',
+            'name': 'EXPIR_TRIG_TRIG_ON_NETWORK_CONN_LOSS',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12382: {
+            'access': 'read-write',
+            'enum': 'WatchdogAOExpirState',
+            'name': 'AO_OUTPUT_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12383: {
+            'access': 'read-write',
+            'name': 'AO_EXPIR_STATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12384: {
+            'access': 'read-write',
+            'enum': 'WatchdogCOExpirState',
+            'name': 'CO_EXPIR_STATE',
+            'resettable': True,
+            'type': 'int32'
+        }
+    },
     'Write': {
         5203: {
             'access': 'read-write',

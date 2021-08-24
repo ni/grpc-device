@@ -4843,6 +4843,31 @@ enums = {
             }
         ]
     },
+    'WatchdogAOExpirState': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage output.'
+                },
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Current output.'
+                },
+                'name': 'CURRENT',
+                'value': 10134
+            },
+            {
+                'documentation': {
+                    'description': ' Expiration does not affect the port. Do not change the state of any lines in  the port, and do not lock the port.'
+                },
+                'name': 'NO_CHANGE',
+                'value': 10160
+            }
+        ]
+    },
     'WatchdogAOOutputType': {
         'values': [
             {

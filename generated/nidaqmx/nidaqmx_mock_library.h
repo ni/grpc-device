@@ -214,6 +214,10 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetTrigAttributeString, (TaskHandle task, int32 attribute, char value[], uInt32 size), (override));
   MOCK_METHOD(int32, GetTrigAttributeTimestamp, (TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetTrigAttributeUInt32, (TaskHandle task, int32 attribute, uInt32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetWatchdogAttributeBool, (TaskHandle task, const char lines[], int32 attribute, bool32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetWatchdogAttributeDouble, (TaskHandle task, const char lines[], int32 attribute, float64* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetWatchdogAttributeInt32, (TaskHandle task, const char lines[], int32 attribute, int32* value, uInt32 size), (override));
+  MOCK_METHOD(int32, GetWatchdogAttributeString, (TaskHandle task, const char lines[], int32 attribute, char value[], uInt32 size), (override));
   MOCK_METHOD(int32, GetWriteAttributeBool, (TaskHandle task, int32 attribute, bool32* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetWriteAttributeDouble, (TaskHandle task, int32 attribute, float64* value, uInt32 size), (override));
   MOCK_METHOD(int32, GetWriteAttributeInt32, (TaskHandle task, int32 attribute, int32* value, uInt32 size), (override));
@@ -258,6 +262,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ResetTimingAttribute, (TaskHandle task, int32 attribute), (override));
   MOCK_METHOD(int32, ResetTimingAttributeEx, (TaskHandle task, const char deviceNames[], int32 attribute), (override));
   MOCK_METHOD(int32, ResetTrigAttribute, (TaskHandle task, int32 attribute), (override));
+  MOCK_METHOD(int32, ResetWatchdogAttribute, (TaskHandle task, const char lines[], int32 attribute), (override));
   MOCK_METHOD(int32, ResetWriteAttribute, (TaskHandle task, int32 attribute), (override));
   MOCK_METHOD(int32, SaveGlobalChan, (TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options), (override));
   MOCK_METHOD(int32, SaveScale, (const char scaleName[], const char saveAs[], const char author[], uInt32 options), (override));
@@ -313,6 +318,10 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, SetTrigAttributeString, (TaskHandle task, int32 attribute, const char value[], uInt32 size), (override));
   MOCK_METHOD(int32, SetTrigAttributeTimestamp, (TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size), (override));
   MOCK_METHOD(int32, SetTrigAttributeUInt32, (TaskHandle task, int32 attribute, uInt32 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetWatchdogAttributeBool, (TaskHandle task, const char lines[], int32 attribute, bool32 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetWatchdogAttributeDouble, (TaskHandle task, const char lines[], int32 attribute, float64 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetWatchdogAttributeInt32, (TaskHandle task, const char lines[], int32 attribute, int32 value, uInt32 size), (override));
+  MOCK_METHOD(int32, SetWatchdogAttributeString, (TaskHandle task, const char lines[], int32 attribute, const char value[], uInt32 size), (override));
   MOCK_METHOD(int32, SetWriteAttributeBool, (TaskHandle task, int32 attribute, bool32 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetWriteAttributeDouble, (TaskHandle task, int32 attribute, float64 value, uInt32 size), (override));
   MOCK_METHOD(int32, SetWriteAttributeInt32, (TaskHandle task, int32 attribute, int32 value, uInt32 size), (override));

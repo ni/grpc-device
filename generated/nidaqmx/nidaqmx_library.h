@@ -219,6 +219,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetTrigAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size);
   int32 GetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size);
   int32 GetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
+  int32 GetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32* value, uInt32 size);
+  int32 GetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64* value, uInt32 size);
+  int32 GetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32* value, uInt32 size);
+  int32 GetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, char value[], uInt32 size);
   int32 GetWriteAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size);
   int32 GetWriteAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size);
   int32 GetWriteAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size);
@@ -263,6 +267,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ResetTimingAttribute(TaskHandle task, int32 attribute);
   int32 ResetTimingAttributeEx(TaskHandle task, const char deviceNames[], int32 attribute);
   int32 ResetTrigAttribute(TaskHandle task, int32 attribute);
+  int32 ResetWatchdogAttribute(TaskHandle task, const char lines[], int32 attribute);
   int32 ResetWriteAttribute(TaskHandle task, int32 attribute);
   int32 SaveGlobalChan(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options);
   int32 SaveScale(const char scaleName[], const char saveAs[], const char author[], uInt32 options);
@@ -321,6 +326,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 SetTrigAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size);
   int32 SetTrigAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size);
   int32 SetTrigAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size);
+  int32 SetWatchdogAttributeBool(TaskHandle task, const char lines[], int32 attribute, bool32 value, uInt32 size);
+  int32 SetWatchdogAttributeDouble(TaskHandle task, const char lines[], int32 attribute, float64 value, uInt32 size);
+  int32 SetWatchdogAttributeInt32(TaskHandle task, const char lines[], int32 attribute, int32 value, uInt32 size);
+  int32 SetWatchdogAttributeString(TaskHandle task, const char lines[], int32 attribute, const char value[], uInt32 size);
   int32 SetWriteAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size);
   int32 SetWriteAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size);
   int32 SetWriteAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size);
@@ -558,6 +567,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetTrigAttributeStringPtr = int32 (*)(TaskHandle task, int32 attribute, char value[], uInt32 size);
   using GetTrigAttributeTimestampPtr = int32 (*)(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size);
   using GetTrigAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
+  using GetWatchdogAttributeBoolPtr = int32 (*)(TaskHandle task, const char lines[], int32 attribute, bool32* value, uInt32 size);
+  using GetWatchdogAttributeDoublePtr = int32 (*)(TaskHandle task, const char lines[], int32 attribute, float64* value, uInt32 size);
+  using GetWatchdogAttributeInt32Ptr = int32 (*)(TaskHandle task, const char lines[], int32 attribute, int32* value, uInt32 size);
+  using GetWatchdogAttributeStringPtr = int32 (*)(TaskHandle task, const char lines[], int32 attribute, char value[], uInt32 size);
   using GetWriteAttributeBoolPtr = int32 (*)(TaskHandle task, int32 attribute, bool32* value, uInt32 size);
   using GetWriteAttributeDoublePtr = int32 (*)(TaskHandle task, int32 attribute, float64* value, uInt32 size);
   using GetWriteAttributeInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, int32* value, uInt32 size);
@@ -602,6 +615,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ResetTimingAttributePtr = int32 (*)(TaskHandle task, int32 attribute);
   using ResetTimingAttributeExPtr = int32 (*)(TaskHandle task, const char deviceNames[], int32 attribute);
   using ResetTrigAttributePtr = int32 (*)(TaskHandle task, int32 attribute);
+  using ResetWatchdogAttributePtr = int32 (*)(TaskHandle task, const char lines[], int32 attribute);
   using ResetWriteAttributePtr = int32 (*)(TaskHandle task, int32 attribute);
   using SaveGlobalChanPtr = int32 (*)(TaskHandle task, const char channelName[], const char saveAs[], const char author[], uInt32 options);
   using SaveScalePtr = int32 (*)(const char scaleName[], const char saveAs[], const char author[], uInt32 options);
@@ -660,6 +674,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using SetTrigAttributeStringPtr = int32 (*)(TaskHandle task, int32 attribute, const char value[], uInt32 size);
   using SetTrigAttributeTimestampPtr = int32 (*)(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size);
   using SetTrigAttributeUInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, uInt32 value, uInt32 size);
+  using SetWatchdogAttributeBoolPtr = int32 (*)(TaskHandle task, const char lines[], int32 attribute, bool32 value, uInt32 size);
+  using SetWatchdogAttributeDoublePtr = int32 (*)(TaskHandle task, const char lines[], int32 attribute, float64 value, uInt32 size);
+  using SetWatchdogAttributeInt32Ptr = int32 (*)(TaskHandle task, const char lines[], int32 attribute, int32 value, uInt32 size);
+  using SetWatchdogAttributeStringPtr = int32 (*)(TaskHandle task, const char lines[], int32 attribute, const char value[], uInt32 size);
   using SetWriteAttributeBoolPtr = int32 (*)(TaskHandle task, int32 attribute, bool32 value, uInt32 size);
   using SetWriteAttributeDoublePtr = int32 (*)(TaskHandle task, int32 attribute, float64 value, uInt32 size);
   using SetWriteAttributeInt32Ptr = int32 (*)(TaskHandle task, int32 attribute, int32 value, uInt32 size);
@@ -897,6 +915,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetTrigAttributeStringPtr GetTrigAttributeString;
     GetTrigAttributeTimestampPtr GetTrigAttributeTimestamp;
     GetTrigAttributeUInt32Ptr GetTrigAttributeUInt32;
+    GetWatchdogAttributeBoolPtr GetWatchdogAttributeBool;
+    GetWatchdogAttributeDoublePtr GetWatchdogAttributeDouble;
+    GetWatchdogAttributeInt32Ptr GetWatchdogAttributeInt32;
+    GetWatchdogAttributeStringPtr GetWatchdogAttributeString;
     GetWriteAttributeBoolPtr GetWriteAttributeBool;
     GetWriteAttributeDoublePtr GetWriteAttributeDouble;
     GetWriteAttributeInt32Ptr GetWriteAttributeInt32;
@@ -941,6 +963,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ResetTimingAttributePtr ResetTimingAttribute;
     ResetTimingAttributeExPtr ResetTimingAttributeEx;
     ResetTrigAttributePtr ResetTrigAttribute;
+    ResetWatchdogAttributePtr ResetWatchdogAttribute;
     ResetWriteAttributePtr ResetWriteAttribute;
     SaveGlobalChanPtr SaveGlobalChan;
     SaveScalePtr SaveScale;
@@ -999,6 +1022,10 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     SetTrigAttributeStringPtr SetTrigAttributeString;
     SetTrigAttributeTimestampPtr SetTrigAttributeTimestamp;
     SetTrigAttributeUInt32Ptr SetTrigAttributeUInt32;
+    SetWatchdogAttributeBoolPtr SetWatchdogAttributeBool;
+    SetWatchdogAttributeDoublePtr SetWatchdogAttributeDouble;
+    SetWatchdogAttributeInt32Ptr SetWatchdogAttributeInt32;
+    SetWatchdogAttributeStringPtr SetWatchdogAttributeString;
     SetWriteAttributeBoolPtr SetWriteAttributeBool;
     SetWriteAttributeDoublePtr SetWriteAttributeDouble;
     SetWriteAttributeInt32Ptr SetWriteAttributeInt32;

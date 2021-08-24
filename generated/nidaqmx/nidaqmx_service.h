@@ -229,6 +229,10 @@ public:
   ::grpc::Status GetTrigAttributeString(::grpc::ServerContext* context, const GetTrigAttributeStringRequest* request, GetTrigAttributeStringResponse* response) override;
   ::grpc::Status GetTrigAttributeTimestamp(::grpc::ServerContext* context, const GetTrigAttributeTimestampRequest* request, GetTrigAttributeTimestampResponse* response) override;
   ::grpc::Status GetTrigAttributeUInt32(::grpc::ServerContext* context, const GetTrigAttributeUInt32Request* request, GetTrigAttributeUInt32Response* response) override;
+  ::grpc::Status GetWatchdogAttributeBool(::grpc::ServerContext* context, const GetWatchdogAttributeBoolRequest* request, GetWatchdogAttributeBoolResponse* response) override;
+  ::grpc::Status GetWatchdogAttributeDouble(::grpc::ServerContext* context, const GetWatchdogAttributeDoubleRequest* request, GetWatchdogAttributeDoubleResponse* response) override;
+  ::grpc::Status GetWatchdogAttributeInt32(::grpc::ServerContext* context, const GetWatchdogAttributeInt32Request* request, GetWatchdogAttributeInt32Response* response) override;
+  ::grpc::Status GetWatchdogAttributeString(::grpc::ServerContext* context, const GetWatchdogAttributeStringRequest* request, GetWatchdogAttributeStringResponse* response) override;
   ::grpc::Status GetWriteAttributeBool(::grpc::ServerContext* context, const GetWriteAttributeBoolRequest* request, GetWriteAttributeBoolResponse* response) override;
   ::grpc::Status GetWriteAttributeDouble(::grpc::ServerContext* context, const GetWriteAttributeDoubleRequest* request, GetWriteAttributeDoubleResponse* response) override;
   ::grpc::Status GetWriteAttributeInt32(::grpc::ServerContext* context, const GetWriteAttributeInt32Request* request, GetWriteAttributeInt32Response* response) override;
@@ -273,6 +277,7 @@ public:
   ::grpc::Status ResetTimingAttribute(::grpc::ServerContext* context, const ResetTimingAttributeRequest* request, ResetTimingAttributeResponse* response) override;
   ::grpc::Status ResetTimingAttributeEx(::grpc::ServerContext* context, const ResetTimingAttributeExRequest* request, ResetTimingAttributeExResponse* response) override;
   ::grpc::Status ResetTrigAttribute(::grpc::ServerContext* context, const ResetTrigAttributeRequest* request, ResetTrigAttributeResponse* response) override;
+  ::grpc::Status ResetWatchdogAttribute(::grpc::ServerContext* context, const ResetWatchdogAttributeRequest* request, ResetWatchdogAttributeResponse* response) override;
   ::grpc::Status ResetWriteAttribute(::grpc::ServerContext* context, const ResetWriteAttributeRequest* request, ResetWriteAttributeResponse* response) override;
   ::grpc::Status SaveGlobalChan(::grpc::ServerContext* context, const SaveGlobalChanRequest* request, SaveGlobalChanResponse* response) override;
   ::grpc::Status SaveScale(::grpc::ServerContext* context, const SaveScaleRequest* request, SaveScaleResponse* response) override;
@@ -331,6 +336,10 @@ public:
   ::grpc::Status SetTrigAttributeString(::grpc::ServerContext* context, const SetTrigAttributeStringRequest* request, SetTrigAttributeStringResponse* response) override;
   ::grpc::Status SetTrigAttributeTimestamp(::grpc::ServerContext* context, const SetTrigAttributeTimestampRequest* request, SetTrigAttributeTimestampResponse* response) override;
   ::grpc::Status SetTrigAttributeUInt32(::grpc::ServerContext* context, const SetTrigAttributeUInt32Request* request, SetTrigAttributeUInt32Response* response) override;
+  ::grpc::Status SetWatchdogAttributeBool(::grpc::ServerContext* context, const SetWatchdogAttributeBoolRequest* request, SetWatchdogAttributeBoolResponse* response) override;
+  ::grpc::Status SetWatchdogAttributeDouble(::grpc::ServerContext* context, const SetWatchdogAttributeDoubleRequest* request, SetWatchdogAttributeDoubleResponse* response) override;
+  ::grpc::Status SetWatchdogAttributeInt32(::grpc::ServerContext* context, const SetWatchdogAttributeInt32Request* request, SetWatchdogAttributeInt32Response* response) override;
+  ::grpc::Status SetWatchdogAttributeString(::grpc::ServerContext* context, const SetWatchdogAttributeStringRequest* request, SetWatchdogAttributeStringResponse* response) override;
   ::grpc::Status SetWriteAttributeBool(::grpc::ServerContext* context, const SetWriteAttributeBoolRequest* request, SetWriteAttributeBoolResponse* response) override;
   ::grpc::Status SetWriteAttributeDouble(::grpc::ServerContext* context, const SetWriteAttributeDoubleRequest* request, SetWriteAttributeDoubleResponse* response) override;
   ::grpc::Status SetWriteAttributeInt32(::grpc::ServerContext* context, const SetWriteAttributeInt32Request* request, SetWriteAttributeInt32Response* response) override;
