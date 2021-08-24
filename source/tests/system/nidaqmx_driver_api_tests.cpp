@@ -993,8 +993,8 @@ class NiDAQmxDriverApiTests : public Test {
 
   GetReadAttributeInt32Response get_read_attribute_i32(ReadInt32Attributes attribute)
   {
+    ::grpc::ClientContext context;
     auto request = create_get_attribute_request<GetReadAttributeInt32Request>(attribute);
-    auto context = ::grpc::ClientContext{};
     auto response = GetReadAttributeInt32Response{};
     raise_if_error(stub()->GetReadAttributeInt32(&context, request, &response));
     return response;
@@ -1002,8 +1002,8 @@ class NiDAQmxDriverApiTests : public Test {
 
   SetReadAttributeInt32Response set_read_attribute_i32(ReadInt32Attributes attribute, ReadInt32AttributeValues value)
   {
+    ::grpc::ClientContext context;
     auto request = create_set_attribute_request<SetReadAttributeInt32Request>(attribute, value);
-    auto context = ::grpc::ClientContext{};
     auto response = SetReadAttributeInt32Response{};
     raise_if_error(stub()->SetReadAttributeInt32(&context, request, &response));
     return response;
@@ -1011,8 +1011,8 @@ class NiDAQmxDriverApiTests : public Test {
 
   SetReadAttributeStringResponse set_read_attribute_string(ReadStringAttributes attribute, const std::string& value)
   {
+    ::grpc::ClientContext context;
     auto request = create_set_attribute_request<SetReadAttributeStringRequest>(attribute, value);
-    auto context = ::grpc::ClientContext{};
     auto response = SetReadAttributeStringResponse{};
     raise_if_error(stub()->SetReadAttributeString(&context, request, &response));
     return response;
@@ -1020,8 +1020,8 @@ class NiDAQmxDriverApiTests : public Test {
 
   GetWriteAttributeDoubleResponse get_write_attribute_double(WriteDoubleAttributes attribute)
   {
+    ::grpc::ClientContext context;
     auto request = create_get_attribute_request<GetWriteAttributeDoubleRequest>(attribute);
-    auto context = ::grpc::ClientContext{};
     auto response = GetWriteAttributeDoubleResponse{};
     raise_if_error(stub()->GetWriteAttributeDouble(&context, request, &response));
     return response;
@@ -1029,8 +1029,8 @@ class NiDAQmxDriverApiTests : public Test {
 
   SetWriteAttributeDoubleResponse set_write_attribute_double(WriteDoubleAttributes attribute, double value)
   {
+    ::grpc::ClientContext context;
     auto request = create_set_attribute_request<SetWriteAttributeDoubleRequest>(attribute, value);
-    auto context = ::grpc::ClientContext{};
     auto response = SetWriteAttributeDoubleResponse{};
     raise_if_error(stub()->SetWriteAttributeDouble(&context, request, &response));
     return response;
