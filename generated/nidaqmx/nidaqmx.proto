@@ -2664,6 +2664,14 @@ enum ChannelInt32AttributeValues {
   CHANNEL_INT32_VOLTAGE_UNITS2_FROM_CUSTOM_SCALE = 10065;
 }
 
+enum ChannelDoubleAttributeValuesMapped {
+  CHANNEL_DOUBLE_MAPPED_UNSPECIFIED = 0;
+  CHANNEL_DOUBLE_IMPEDANCE1_50 = 1;
+  CHANNEL_DOUBLE_IMPEDANCE1_75 = 2;
+  CHANNEL_DOUBLE_IMPEDANCE1_1000000 = 3;
+  CHANNEL_DOUBLE_IMPEDANCE1_10000000000 = 4;
+}
+
 enum DeviceInt32AttributeValues {
   option allow_alias = true;
   DEVICE_INT32_UNSPECIFIED = 0;
@@ -6471,7 +6479,10 @@ message SetChanAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   ChannelDoubleAttributes attribute = 3;
-  double value = 4;
+  oneof value_enum {
+    ChannelDoubleAttributeValuesMapped value_mapped = 4;
+    double value_raw = 5;
+  }
 }
 
 message SetChanAttributeDoubleResponse {

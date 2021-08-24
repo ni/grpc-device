@@ -941,6 +941,24 @@ TEST_F(NiFakeNonIviServiceTests, SetColors_PassesColorsArrayToLibrary)
 
   EXPECT_EQ(kDriverSuccess, response.status());
 }
+
+TEST_F(NiFakeNonIviServiceTests, SetMappedBigNumberEnum_PassesValueToLibrary)
+{
+  const auto BIG_NUMBER_AS_DOUBLE = 10000000000.0;
+  const auto BIG_NUMBER_AS_ENUM = NumbersIncludingABigOne::NUMBERS_INCLUDING_A_BIG_ONE_10000000000;
+  const auto SMALL_NUMBER_AS_DOUBLE = static_cast<double>(int64_t(INT32_MIN) - 1);
+  const auto SMALL_NUMBER_AS_ENUM = NumbersIncludingASmallOne::NUMBERS_INCLUDING_A_SMALL_ONE_IntMinMinus1;
+  EXPECT_CALL(library_, ApplyNumbersFromEnum(BIG_NUMBER_AS_DOUBLE, SMALL_NUMBER_AS_DOUBLE))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  auto request = ApplyNumbersFromEnumRequest{};
+  request.set_numbers_with_big_mapped(BIG_NUMBER_AS_ENUM);
+  request.set_numbers_with_small_mapped(SMALL_NUMBER_AS_ENUM);
+  auto response = ApplyNumbersFromEnumResponse{};
+  service_.ApplyNumbersFromEnum(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

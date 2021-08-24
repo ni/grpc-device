@@ -18,6 +18,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   virtual ~NiFakeNonIviLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
+  int32 ApplyNumbersFromEnum(double numbersWithBig, double numbersWithSmall);
   int32 Close(FakeHandle handle);
   int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value);
   int32 GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value);
@@ -41,6 +42,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 SetColors(int32 colors[], int32 size);
 
  private:
+  using ApplyNumbersFromEnumPtr = int32 (*)(double numbersWithBig, double numbersWithSmall);
   using ClosePtr = int32 (*)(FakeHandle handle);
   using GetMarbleAttributeDoublePtr = int32 (*)(FakeHandle handle, int32 attribute, double* value);
   using GetMarbleAttributeInt32Ptr = int32 (*)(FakeHandle handle, int32 attribute, int32* value);
@@ -64,6 +66,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using SetColorsPtr = int32 (*)(int32 colors[], int32 size);
 
   typedef struct FunctionPointers {
+    ApplyNumbersFromEnumPtr ApplyNumbersFromEnum;
     ClosePtr Close;
     GetMarbleAttributeDoublePtr GetMarbleAttributeDouble;
     GetMarbleAttributeInt32Ptr GetMarbleAttributeInt32;

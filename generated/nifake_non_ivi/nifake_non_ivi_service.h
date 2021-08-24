@@ -28,6 +28,7 @@ public:
   NiFakeNonIviService(NiFakeNonIviLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
   virtual ~NiFakeNonIviService();
   
+  ::grpc::Status ApplyNumbersFromEnum(::grpc::ServerContext* context, const ApplyNumbersFromEnumRequest* request, ApplyNumbersFromEnumResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status GetMarbleAttributeDouble(::grpc::ServerContext* context, const GetMarbleAttributeDoubleRequest* request, GetMarbleAttributeDoubleResponse* response) override;
   ::grpc::Status GetMarbleAttributeInt32(::grpc::ServerContext* context, const GetMarbleAttributeInt32Request* request, GetMarbleAttributeInt32Response* response) override;
@@ -52,6 +53,10 @@ public:
 private:
   NiFakeNonIviLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  std::map<std::int32_t, std::int64_t> numbersincludingabigone_input_map_ { {0, 0},{1, 50LL},{2, 75LL},{3, 1000000LL},{4, 10000000000LL}, };
+  std::map<std::int64_t, std::int32_t> numbersincludingabigone_output_map_ { {0, 0},{50LL, 1},{75LL, 2},{1000000LL, 3},{10000000000LL, 4}, };
+  std::map<std::int32_t, std::int64_t> numbersincludingasmallone_input_map_ { {0, 0},{1, 5LL},{2, -2147483649LL}, };
+  std::map<std::int64_t, std::int32_t> numbersincludingasmallone_output_map_ { {0, 0},{5LL, 1},{-2147483649LL, 2}, };
 };
 
 } // namespace nifake_non_ivi_grpc

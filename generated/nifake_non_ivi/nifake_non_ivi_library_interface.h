@@ -15,6 +15,7 @@ class NiFakeNonIviLibraryInterface {
  public:
   virtual ~NiFakeNonIviLibraryInterface() {}
 
+  virtual int32 ApplyNumbersFromEnum(double numbersWithBig, double numbersWithSmall) = 0;
   virtual int32 Close(FakeHandle handle) = 0;
   virtual int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value) = 0;
   virtual int32 GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value) = 0;

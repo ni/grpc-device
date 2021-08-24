@@ -9729,7 +9729,26 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute = request->attribute();
-      float64 value = request->value();
+      float64 value;
+      switch (request->value_enum_case()) {
+        case nidaqmx_grpc::SetChanAttributeDoubleRequest::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = channeldoubleattributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == channeldoubleattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = static_cast<float64>(value_imap_it->second);
+          break;
+        }
+        case nidaqmx_grpc::SetChanAttributeDoubleRequest::ValueEnumCase::kValueRaw: {
+          value = static_cast<float64>(request->value_raw());
+          break;
+        }
+        case nidaqmx_grpc::SetChanAttributeDoubleRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto size = 0U;
       auto status = library_->SetChanAttributeDouble(task, channel, attribute, value, size);
       response->set_status(status);

@@ -1,3 +1,4 @@
+from typing import Any
 import common_helpers
 
 
@@ -182,47 +183,59 @@ def create_param(parameter, expand_varargs=True, repeated_parameters=None):
         return f'{type} {name}'
 
 
-def python_to_c(enum):
-    enum_value = enum["values"][0]["value"]
-    if isinstance(enum_value, float):
+def enum_values_to_c_type(enum: dict) -> str:
+    """
+    Infer the C++ type for an enum by checking the type of its first value.
+    """
+    return values_to_c_type([entry["value"] for entry in enum["values"]])
+    
+
+def values_to_c_type(values: list) -> str:
+    first_value = values[0]
+    if isinstance(first_value, float):
         return "double"
-    if isinstance(enum_value, int):
-        return "std::int32_t"
-    if isinstance(enum_value, str):
+    if isinstance(first_value, int):
+        INT32_MAX = 0x7FFFFFFF
+        INT32_MIN = -INT32_MAX - 1
+        needs_64_bits = any((not (INT32_MIN <= int(v) <= INT32_MAX) for v in values))
+        return "std::int64_t" if needs_64_bits else "std::int32_t"
+    if isinstance(first_value, str):
         return "std::string"
     return "std::int32_t"
 
 
-def format_value(value):
-    if isinstance(value, str):
-        value = f"\"{value}\""
-    if isinstance(value, float):
-        value = f"{value}f"
-    return value
+def format_value(value: Any, c_type: str) -> str:
+    if c_type == "std::string":
+        return f"\"{value}\""
+    if c_type == "double":
+        return f"{value}f"
+    if c_type == "std::int64_t":
+        return f"{value}LL"
+    return str(value)
 
 
-def get_input_lookup_values(enum_data):
+def get_input_lookup_values(enum_data: dict, enum_value_type: str) -> str:
     out_value_format = ""
     index = 1
     is_int = isinstance(enum_data["values"][0]["value"], int)
     if is_int:
         out_value_format = "{0, 0},"
     for value in enum_data["values"]:
-        formated_value = str(format_value(value["value"]))
+        formated_value = format_value(value["value"], enum_value_type)
         out_value_format = out_value_format + \
             "{" + str(index) + ", " + formated_value + "},"
         index = index+1
     return out_value_format
 
 
-def get_output_lookup_values(enum_data):
+def get_output_lookup_values(enum_data: dict, enum_value_type: str) -> str:
     out_value_format = ""
     index = 1
     is_int = isinstance(enum_data["values"][0]["value"], int)
     if is_int:
         out_value_format = "{0, 0},"
     for value in enum_data["values"]:
-        formated_value = format_value(value["value"])
+        formated_value = format_value(value["value"], enum_value_type)
         out_value_format = out_value_format + \
             "{" + str(formated_value) + ", " + str(index) + "},"
         index = index+1

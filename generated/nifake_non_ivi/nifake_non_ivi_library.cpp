@@ -21,6 +21,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   if (!loaded) {
     return;
   }
+  function_pointers_.ApplyNumbersFromEnum = reinterpret_cast<ApplyNumbersFromEnumPtr>(shared_library_.get_function_pointer("niFakeNonIvi_ApplyNumbersFromEnum"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niFakeNonIvi_Close"));
   function_pointers_.GetMarbleAttributeDouble = reinterpret_cast<GetMarbleAttributeDoublePtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetMarbleAttributeDouble"));
   function_pointers_.GetMarbleAttributeInt32 = reinterpret_cast<GetMarbleAttributeInt32Ptr>(shared_library_.get_function_pointer("niFakeNonIvi_GetMarbleAttributeInt32"));
@@ -53,6 +54,18 @@ NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
   return shared_library_.function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
+}
+
+int32 NiFakeNonIviLibrary::ApplyNumbersFromEnum(double numbersWithBig, double numbersWithSmall)
+{
+  if (!function_pointers_.ApplyNumbersFromEnum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_ApplyNumbersFromEnum.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_ApplyNumbersFromEnum(numbersWithBig, numbersWithSmall);
+#else
+  return function_pointers_.ApplyNumbersFromEnum(numbersWithBig, numbersWithSmall);
+#endif
 }
 
 int32 NiFakeNonIviLibrary::Close(FakeHandle handle)

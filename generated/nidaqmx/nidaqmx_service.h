@@ -290,6 +290,8 @@ public:
 private:
   NiDAQmxLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  std::map<std::int32_t, std::int64_t> channeldoubleattributevaluesmapped_input_map_ { {0, 0},{1, 50LL},{2, 75LL},{3, 1000000LL},{4, 10000000000LL}, };
+  std::map<std::int64_t, std::int32_t> channeldoubleattributevaluesmapped_output_map_ { {0, 0},{50LL, 1},{75LL, 2},{1000000LL, 3},{10000000000LL, 4}, };
 };
 
 } // namespace nidaqmx_grpc

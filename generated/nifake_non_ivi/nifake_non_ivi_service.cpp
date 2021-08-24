@@ -28,6 +28,63 @@ namespace nifake_non_ivi_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::ApplyNumbersFromEnum(::grpc::ServerContext* context, const ApplyNumbersFromEnumRequest* request, ApplyNumbersFromEnumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      double numbers_with_big;
+      switch (request->numbers_with_big_enum_case()) {
+        case nifake_non_ivi_grpc::ApplyNumbersFromEnumRequest::NumbersWithBigEnumCase::kNumbersWithBigMapped: {
+          auto numbers_with_big_imap_it = numbersincludingabigone_input_map_.find(request->numbers_with_big_mapped());
+          if (numbers_with_big_imap_it == numbersincludingabigone_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for numbers_with_big_mapped was not specified or out of range.");
+          }
+          numbers_with_big = static_cast<double>(numbers_with_big_imap_it->second);
+          break;
+        }
+        case nifake_non_ivi_grpc::ApplyNumbersFromEnumRequest::NumbersWithBigEnumCase::kNumbersWithBigRaw: {
+          numbers_with_big = static_cast<double>(request->numbers_with_big_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::ApplyNumbersFromEnumRequest::NumbersWithBigEnumCase::NUMBERS_WITH_BIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for numbers_with_big was not specified or out of range");
+          break;
+        }
+      }
+
+      double numbers_with_small;
+      switch (request->numbers_with_small_enum_case()) {
+        case nifake_non_ivi_grpc::ApplyNumbersFromEnumRequest::NumbersWithSmallEnumCase::kNumbersWithSmallMapped: {
+          auto numbers_with_small_imap_it = numbersincludingasmallone_input_map_.find(request->numbers_with_small_mapped());
+          if (numbers_with_small_imap_it == numbersincludingasmallone_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for numbers_with_small_mapped was not specified or out of range.");
+          }
+          numbers_with_small = static_cast<double>(numbers_with_small_imap_it->second);
+          break;
+        }
+        case nifake_non_ivi_grpc::ApplyNumbersFromEnumRequest::NumbersWithSmallEnumCase::kNumbersWithSmallRaw: {
+          numbers_with_small = static_cast<double>(request->numbers_with_small_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::ApplyNumbersFromEnumRequest::NumbersWithSmallEnumCase::NUMBERS_WITH_SMALL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for numbers_with_small was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ApplyNumbersFromEnum(numbers_with_big, numbers_with_small);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeNonIviService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {

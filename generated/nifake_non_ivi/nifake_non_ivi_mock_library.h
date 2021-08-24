@@ -17,6 +17,7 @@ namespace unit {
 
 class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInterface {
  public:
+  MOCK_METHOD(int32, ApplyNumbersFromEnum, (double numbersWithBig, double numbersWithSmall), (override));
   MOCK_METHOD(int32, Close, (FakeHandle handle), (override));
   MOCK_METHOD(int32, GetMarbleAttributeDouble, (FakeHandle handle, int32 attribute, double* value), (override));
   MOCK_METHOD(int32, GetMarbleAttributeInt32, (FakeHandle handle, int32 attribute, int32* value), (override));

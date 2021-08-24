@@ -1,5 +1,22 @@
 # -*- coding: utf-8 -*-
 functions = {
+    'ApplyNumbersFromEnum': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'enum': 'NumbersIncludingABigOne',
+                'name': 'numbersWithBig',
+                'type': 'double'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NumbersIncludingASmallOne',
+                'name': 'numbersWithSmall',
+                'type': 'double'
+            },
+        ],
+        'returns': 'int32'
+    },
     'Close': {
         'parameters': [
             {

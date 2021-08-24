@@ -35,6 +35,7 @@ attributes = {
         },
         98: {
             'access': 'read-write',
+            'enum': 'Impedance1',
             'name': 'AI_IMPEDANCE',
             'resettable': True,
             'type': 'float64'

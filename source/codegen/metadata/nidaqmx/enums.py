@@ -1921,6 +1921,39 @@ enums = {
             }
         ]
     },
+    'Impedance1': {
+        'generate-mappings': True,
+        'values': [
+            {
+                'documentation': {
+                    'description': '50 Ohms.'
+                },
+                'name': '50',
+                'value': 50
+            },
+            {
+                'documentation': {
+                    'description': '75 Ohms.'
+                },
+                'name': '75',
+                'value': 75
+            },
+            {
+                'documentation': {
+                    'description': '1 M Ohm.'
+                },
+                'name': '1000000',
+                'value': 1000000
+            },
+            {
+                'documentation': {
+                    'description': '10 G Ohm.'
+                },
+                'name': '10000000000',
+                'value': 10000000000
+            }
+        ]
+    },
     'InputDataTransferCondition': {
         'values': [
             {

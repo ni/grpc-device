@@ -84,9 +84,14 @@ def populate_grpc_types(parameters, config):
         config)
 
 
-def get_short_enum_type_name(type):
-    stripped_name = common_helpers.strip_prefix(type, "Vi")
-    return common_helpers.ensure_pascal_case(stripped_name,)
+def get_short_enum_type_name(type_name: str) -> str:
+    # MI uses driver types in enum names. DAQ uses grpc types.
+    # Currently float64->double is the only place where that conflicts for
+    # enum type names, so fix it with a one-off for DAQ.
+    SUBSTITUTIONS = {"float64": "double"}
+    type_name = SUBSTITUTIONS.get(type_name, type_name)
+    type_name = common_helpers.strip_prefix(type_name, "Vi")
+    return common_helpers.ensure_pascal_case(type_name,)
 
 
 def remove_leading_group_name(enum_value_name, group_name):
@@ -199,7 +204,7 @@ class AttributeAccessorExpander:
                 attribute_reference.attribute_group)
 
 
-def expand_attribute_function_value_param(function, enums, attribute_enums_by_type, service_class_prefix):
+def expand_attribute_function_value_param(function, enums, attribute_enums_by_type, group_name):
     """For SetAttribute and CheckAttribute APIs, update function metadata to mark value parameter as enum."""
     value_param = get_attribute_function_value_param(function)
     if not value_param:
@@ -215,8 +220,8 @@ def expand_attribute_function_value_param(function, enums, attribute_enums_by_ty
     else:
         param_type = common_helpers.get_underlying_type(value_param)
     if param_type in attribute_enums_by_type:
-        enum_name = get_attribute_values_enum_name(service_class_prefix, param_type)
-        mapped_enum_name = get_attribute_values_enum_name(service_class_prefix, param_type, is_mapped=True)
+        enum_name = get_attribute_values_enum_name(group_name, param_type)
+        mapped_enum_name = get_attribute_values_enum_name(group_name, param_type, is_mapped=True)
         enum_exists = enum_name in enums
         mapped_enum_exists = mapped_enum_name in enums
         if enum_exists:
