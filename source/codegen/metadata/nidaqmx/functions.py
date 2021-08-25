@@ -6492,7 +6492,7 @@ functions = {
                 'direction': 'out',
                 'name': 'errorString',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'bufferSize'
                 },
                 'type': 'char[]'
@@ -6511,7 +6511,7 @@ functions = {
                 'direction': 'out',
                 'name': 'errorString',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'bufferSize'
                 },
                 'type': 'char[]'

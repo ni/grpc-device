@@ -44,10 +44,9 @@ task = None
 # Raise an exception if an error was returned
 def RaiseIfError(response):
     if response.status != 0:
-        response = client.GetErrorString(nidaqmx_types.GetErrorStringRequest(
-            error_code=response.status, buffer_size=2048))
-        error_string = response.error_string.strip(' \0')
-        raise Exception(f"Error: {error_string}")
+        response = client.GetErrorString(
+            nidaqmx_types.GetErrorStringRequest(error_code=response.status))
+        raise Exception(f"Error: {response.error_string}")
 
 
 try:

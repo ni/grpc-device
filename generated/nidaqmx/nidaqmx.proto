@@ -6313,7 +6313,6 @@ message GetDisconnectedCDAQSyncPortsResponse {
 
 message GetErrorStringRequest {
   int32 error_code = 1;
-  uint32 buffer_size = 2;
 }
 
 message GetErrorStringResponse {
@@ -6322,7 +6321,6 @@ message GetErrorStringResponse {
 }
 
 message GetExtendedErrorInfoRequest {
-  uint32 buffer_size = 1;
 }
 
 message GetExtendedErrorInfoResponse {

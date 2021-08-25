@@ -59,14 +59,16 @@ ${initialize_output_params(output_parameters)}\
         status = library_->${function_name}(${service_helpers.create_args(parameters)});
         ## We cast status into ${common_helpers.camel_to_snake(size_param['cppName'])} above, so it's safe to cast
         ## back to status's type here. (we do this to avoid a compiler warning)
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(${common_helpers.camel_to_snake(size_param['cppName'])})) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(${common_helpers.camel_to_snake(size_param['cppName'])})) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
 % if output_parameters:
         if (status == 0) {
+<%block filter="common_helpers.indent(1)">\
 ${set_response_values(output_parameters)}\
+</%block>\
         }
 % endif
         return ::grpc::Status::OK;
@@ -93,7 +95,7 @@ ${initialize_output_params(scalar_output_parameters)}\
 ${initialize_output_params(array_output_parameters)}\
 </%block>\
         status = library_->${function_name}(${service_helpers.create_args(parameters)});
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }

@@ -49,9 +49,8 @@ async def main():
                 if response.status:
                     response = await client.GetErrorString(
                         nidaqmx_types.GetErrorStringRequest(
-                            error_code=response.status, buffer_size=2048))
-                    error_string = response.error_string.strip(" \0")
-                    raise Exception(f"Error: {error_string}")
+                            error_code=response.status))
+                    raise Exception(f"Error: {response.error_string}")
 
             async def raise_if_error_async(awaitable_call):
                 response = await awaitable_call
