@@ -2504,28 +2504,28 @@ enums = {
                 'documentation': {
                     'description': 'Use the onboard 100 MHz timebase.'
                 },
-                'name': '100_M_HZ_TIMEBASE',
+                'name': '100_MHZ_TIMEBASE',
                 'value': 15857
             },
             {
                 'documentation': {
                     'description': 'Use the onboard 80 MHz timebase.'
                 },
-                'name': '80_M_HZ_TIMEBASE',
+                'name': '80_MHZ_TIMEBASE',
                 'value': 14636
             },
             {
                 'documentation': {
                     'description': 'Use the onboard 20 MHz timebase.'
                 },
-                'name': '20_M_HZ_TIMEBASE',
+                'name': '20_MHZ_TIMEBASE',
                 'value': 12537
             },
             {
                 'documentation': {
                     'description': 'Use the onboard 8 MHz timebase.'
                 },
-                'name': '8_M_HZ_TIMEBASE',
+                'name': '8_MHZ_TIMEBASE',
                 'value': 16023
             }
         ]
@@ -3501,11 +3501,11 @@ enums = {
                 'value': 12484
             },
             {
-                'name': '10_M_HZ_REF_CLOCK',
+                'name': '10_MHZ_REF_CLOCK',
                 'value': 12536
             },
             {
-                'name': '20_M_HZ_TIMEBASE_CLOCK',
+                'name': '20_MHZ_TIMEBASE_CLOCK',
                 'value': 12486
             },
             {

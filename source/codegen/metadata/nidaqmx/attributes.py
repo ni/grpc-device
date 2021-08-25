@@ -4673,33 +4673,33 @@ attributes = {
         },
         5718: {
             'access': 'read-write',
-            'name': '20_M_HZ_TIMEBASE_DIVIDE_DOWN_BY_N',
+            'name': '20_MHZ_TIMEBASE_DIVIDE_DOWN_BY_N',
             'resettable': True,
             'type': 'uInt32'
         },
         5719: {
             'access': 'read-write',
-            'name': '20_M_HZ_TIMEBASE_OUTPUT_TERM',
+            'name': '20_MHZ_TIMEBASE_OUTPUT_TERM',
             'resettable': True,
             'type': 'char[]'
         },
         5720: {
             'access': 'read',
             'enum': 'Polarity2',
-            'name': '20_M_HZ_TIMEBASE_PULSE_POLARITY',
+            'name': '20_MHZ_TIMEBASE_PULSE_POLARITY',
             'resettable': False,
             'type': 'int32'
         },
         5721: {
             'access': 'read-write',
             'enum': 'DigitalWidthUnits1',
-            'name': '20_M_HZ_TIMEBASE_PULSE_WIDTH_UNITS',
+            'name': '20_MHZ_TIMEBASE_PULSE_WIDTH_UNITS',
             'resettable': True,
             'type': 'int32'
         },
         5728: {
             'access': 'read',
-            'name': '20_M_HZ_TIMEBASE_PULSE_WIDTH',
+            'name': '20_MHZ_TIMEBASE_PULSE_WIDTH',
             'resettable': False,
             'type': 'float64'
         },
@@ -4934,7 +4934,7 @@ attributes = {
         },
         8814: {
             'access': 'read-write',
-            'name': '10_M_HZ_REF_CLK_OUTPUT_TERM',
+            'name': '10_MHZ_REF_CLK_OUTPUT_TERM',
             'resettable': True,
             'type': 'char[]'
         },
