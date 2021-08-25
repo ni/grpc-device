@@ -101,7 +101,7 @@ def is_unsupported_parameter(parameter):
 
 
 def is_unsupported_size_mechanism(parameter):
-    return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'custom-code', None}
+    return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'daq-array-size-in-samps', 'custom-code', None}
 
 
 def is_unsupported_scalar_array(parameter):
@@ -112,7 +112,7 @@ def is_unsupported_enum_array(parameter):
     if is_enum(parameter):
         if is_input_parameter(parameter):
             return False
-            
+
         return not is_supported_enum_array_output_type(parameter)
     return False
 
@@ -124,7 +124,7 @@ def is_supported_enum_array_output_type(parameter):
 def is_static_castable_enum_type(parameter):
     grpc_type = get_underlying_grpc_type(parameter)
     # Note: sint32 could work here but causes issue with existing attribute output accessors
-    # because it's not wire-compatible with enum. If it's added here, we need to make sure that 
+    # because it's not wire-compatible with enum. If it's added here, we need to make sure that
     # we're handling compatibility issues on those methods.
     return grpc_type in ['int32', 'uint32']
 
@@ -213,7 +213,7 @@ def ensure_pascal_case(pascal_or_camel_string):
     match = re.fullmatch(r'^([a-z])(.*)$', pascal_or_camel_string)
     if match:
         return match[1].upper() + match[2]
-  
+
     return pascal_or_camel_string
 
 def pascal_to_snake(pascal_string):
@@ -355,6 +355,10 @@ def get_ivi_dance_with_a_twist_params(parameters):
     return (size_param, array_param, other_params)
 
 
+def is_daq_array_size_in_samps_param(parameter):
+    return get_size_mechanism(parameter) == 'daq-array-size-in-samps'
+
+
 def is_init_method(function_data):
     return function_data.get('init_method', False)
 
@@ -390,9 +394,9 @@ def indent(level):
 
 
 def filter_parameters_for_grpc_fields(parameters):
-  """Filter out the parameters that shouldn't be represented by a field on a grpc message.
-      For example, get rid of any parameters whose values should be determined from another parameter."""
-  return [p for p in parameters if p.get('include_in_proto', True)]
+    """Filter out the parameters that shouldn't be represented by a field on a grpc message.
+        For example, get rid of any parameters whose values should be determined from another parameter."""
+    return [p for p in parameters if p.get('include_in_proto', True)]
 
 
 class AttributeGroup:
@@ -447,7 +451,7 @@ def strip_suffix(s: str, suffix: str) -> str:
 
 
 def replace_prefix(s: str, prefix: str, sub: str) -> str:
-    return sub + s[len(prefix):] if s.startswith(prefix) else s 
+    return sub + s[len(prefix):] if s.startswith(prefix) else s
 
 def get_grpc_type_name_for_identifier(data_type, config):
     """

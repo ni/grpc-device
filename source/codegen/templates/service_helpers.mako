@@ -514,6 +514,23 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   size = common_helpers.get_size_expression(parameter)
 %>\
+%    if common_helpers.is_daq_array_size_in_samps_param(parameter):
+<%
+  array_size_name = common_helpers.camel_to_snake(parameter['size']['value'])
+  num_samps_per_chan_name = common_helpers.camel_to_snake(parameter['size']['numSampsPerChanName'])
+%>
+      if (${array_size_name} == 0) {
+        try {
+          auto number_of_channels = get_number_of_channels(library_, task);
+          auto num_samps_per_chan = calculate_num_samps_per_chan(library_, task, request->${num_samps_per_chan_name}());
+          ${array_size_name} = number_of_channels * ${num_samps_per_chan_name};
+        }
+        catch (nidevice_grpc::FailedStatusException<int32>& ex) {
+          response->set_status(ex.status());
+          return ::grpc::Status::OK;
+        }
+      }
+%     endif
 %     if common_helpers.is_struct(parameter) or underlying_param_type == 'ViBoolean':
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
 ## Byte arrays are leveraging a string as a buffer, so we don't need to take special consideration of the null terminator.

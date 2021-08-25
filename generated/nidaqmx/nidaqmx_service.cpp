@@ -8730,6 +8730,63 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadAnalogF64(::grpc::ServerContext* context, const ReadAnalogF64Request* request, ReadAnalogF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      float64 timeout = request->timeout();
+      int32 fill_mode;
+      switch (request->fill_mode_enum_case()) {
+        case nidaqmx_grpc::ReadAnalogF64Request::FillModeEnumCase::kFillMode: {
+          fill_mode = static_cast<int32>(request->fill_mode());
+          break;
+        }
+        case nidaqmx_grpc::ReadAnalogF64Request::FillModeEnumCase::kFillModeRaw: {
+          fill_mode = static_cast<int32>(request->fill_mode_raw());
+          break;
+        }
+        case nidaqmx_grpc::ReadAnalogF64Request::FillModeEnumCase::FILL_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fill_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      uInt32 array_size_in_samps = request->array_size_in_samps();
+      auto reserved = nullptr;
+
+      if (array_size_in_samps == 0) {
+        try {
+          auto number_of_channels = get_number_of_channels(library_, task);
+          auto num_samps_per_chan = calculate_num_samps_per_chan(library_, task, request->num_samps_per_chan());
+          array_size_in_samps = number_of_channels * num_samps_per_chan;
+        }
+        catch (nidevice_grpc::FailedStatusException<int32>& ex) {
+          response->set_status(ex.status());
+          return ::grpc::Status::OK;
+        }
+      }
+      response->mutable_read_array()->Resize(array_size_in_samps, 0);
+      float64* read_array = response->mutable_read_array()->mutable_data();
+      int32 samps_per_chan_read {};
+      auto status = library_->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_samps_per_chan_read(samps_per_chan_read);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ReadAnalogScalarF64(::grpc::ServerContext* context, const ReadAnalogScalarF64Request* request, ReadAnalogScalarF64Response* response)
   {
     if (context->IsCancelled()) {
