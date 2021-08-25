@@ -912,6 +912,35 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_OneArrayDifferentSizeFails)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  auto session_id = create_session(library, service, kTestViSession);
+  const double doubles[] = {0.2, -2.3, 4.5};
+  std::int32_t expected_size = 3;
+  EXPECT_CALL(library, MultipleArraysSameSize)
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  nifake_grpc::MultipleArraysSameSizeRequest request;
+  request.mutable_vi()->set_id(session_id);
+  for (auto i = 0; i < sizeof(doubles) / sizeof(doubles[0]); ++i) {
+    request.add_values1(doubles[i]);
+    if (i != 0) {
+      request.add_values2(doubles[i]);
+    }
+    request.add_values3(doubles[i]);
+    request.add_values4(doubles[i]);
+  }
+  nifake_grpc::MultipleArraysSameSizeResponse response;
+  ::grpc::Status status = service.MultipleArraysSameSize(&context, &request, &response);
+
+  EXPECT_EQ(::grpc::INVALID_ARGUMENT, status.error_code());
+}
+
 TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParametersAreMultipleTypes)
 {
   nidevice_grpc::SessionRepository session_repository;

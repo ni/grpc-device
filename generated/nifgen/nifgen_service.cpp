@@ -1109,6 +1109,9 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      if (request->waveform_handles_array().size() != request->loop_counts_array().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields waveform_handles_array and loop_counts_array do not match");
+      }
       ViInt32 sequence_length = static_cast<ViInt32>(request->loop_counts_array().size());
       auto waveform_handles_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->waveform_handles_array().data()));
       auto loop_counts_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->loop_counts_array().data()));
@@ -1151,6 +1154,9 @@ namespace nifgen_grpc {
         }
       }
 
+      if (request->frequency_array().size() != request->duration_array().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields frequency_array and duration_array do not match");
+      }
       ViInt32 frequency_list_length = static_cast<ViInt32>(request->duration_array().size());
       auto frequency_array = const_cast<ViReal64*>(request->frequency_array().data());
       auto duration_array = const_cast<ViReal64*>(request->duration_array().data());

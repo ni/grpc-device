@@ -3436,6 +3436,9 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto values = const_cast<ViReal64*>(request->values().data());
       auto source_delays = const_cast<ViReal64*>(request->source_delays().data());
+      if (request->values().size() != request->source_delays().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values and source_delays do not match");
+      }
       ViUInt32 size = static_cast<ViUInt32>(request->source_delays().size());
       auto status = library_->SetSequence(vi, channel_name, values, source_delays, size);
       response->set_status(status);

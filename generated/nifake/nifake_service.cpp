@@ -1086,6 +1086,9 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 output_array_size = request->output_array_size();
+      if (request->input_array_of_floats().size() != request->input_array_of_integers().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields input_array_of_floats and input_array_of_integers do not match");
+      }
       ViInt32 input_array_sizes = static_cast<ViInt32>(request->input_array_of_integers().size());
       auto input_array_of_floats = const_cast<ViReal64*>(request->input_array_of_floats().data());
       auto input_array_of_integers_request = request->input_array_of_integers();
@@ -1124,6 +1127,15 @@ namespace nifake_grpc {
       auto values2 = const_cast<ViReal64*>(request->values2().data());
       auto values3 = const_cast<ViReal64*>(request->values3().data());
       auto values4 = const_cast<ViReal64*>(request->values4().data());
+      if (request->values1().size() != request->values4().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values1 and values4 do not match");
+      }
+      if (request->values2().size() != request->values4().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values2 and values4 do not match");
+      }
+      if (request->values3().size() != request->values4().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values3 and values4 do not match");
+      }
       ViInt32 size = static_cast<ViInt32>(request->values4().size());
       auto status = library_->MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
       response->set_status(status);
