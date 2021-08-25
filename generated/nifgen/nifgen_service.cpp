@@ -15,6 +15,7 @@
 namespace nifgen_grpc {
 
   const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiFgenService::NiFgenService(NiFgenLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
@@ -1108,6 +1109,9 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      if (request->waveform_handles_array().size() != request->loop_counts_array().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields waveform_handles_array and loop_counts_array do not match");
+      }
       ViInt32 sequence_length = static_cast<ViInt32>(request->loop_counts_array().size());
       auto waveform_handles_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->waveform_handles_array().data()));
       auto loop_counts_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->loop_counts_array().data()));
@@ -1150,6 +1154,9 @@ namespace nifgen_grpc {
         }
       }
 
+      if (request->frequency_array().size() != request->duration_array().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields frequency_array and duration_array do not match");
+      }
       ViInt32 frequency_list_length = static_cast<ViInt32>(request->duration_array().size());
       auto frequency_array = const_cast<ViReal64*>(request->frequency_array().data());
       auto duration_array = const_cast<ViReal64*>(request->duration_array().data());
@@ -1699,7 +1706,7 @@ namespace nifgen_grpc {
         response->mutable_configuration()->Resize(size_in_bytes, 0);
         ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(size_in_bytes)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size_in_bytes)) {
           // buffer is now too small, try again
           continue;
         }
@@ -1923,13 +1930,13 @@ namespace nifgen_grpc {
             attribute_value.resize(array_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, (ViChar*)attribute_value.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_attribute_value(attribute_value);
+          response->set_attribute_value(attribute_value);
         }
         return ::grpc::Status::OK;
       }
@@ -1964,13 +1971,13 @@ namespace nifgen_grpc {
             channel_string.resize(buffer_size-1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_channel_string(channel_string);
+          response->set_channel_string(channel_string);
         }
         return ::grpc::Status::OK;
       }
@@ -2005,14 +2012,14 @@ namespace nifgen_grpc {
             error_description.resize(error_description_buffer_size-1);
         }
         status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(error_description_buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_error_code(error_code);
-        response->set_error_description(error_description);
+          response->set_error_code(error_code);
+          response->set_error_description(error_description);
         }
         return ::grpc::Status::OK;
       }
@@ -2120,7 +2127,7 @@ namespace nifgen_grpc {
         response->mutable_coefficients_array()->Resize(number_of_coefficients_read, 0);
         ViReal64* coefficients_array = response->mutable_coefficients_array()->mutable_data();
         status = library_->GetFIRFilterCoefficients(vi, channel_name, number_of_coefficients_read, coefficients_array, &number_of_coefficients_read);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -2184,13 +2191,13 @@ namespace nifgen_grpc {
             coercion_record.resize(buffer_size-1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_coercion_record(coercion_record);
+          response->set_coercion_record(coercion_record);
         }
         return ::grpc::Status::OK;
       }
@@ -2224,13 +2231,13 @@ namespace nifgen_grpc {
             interchange_warning.resize(buffer_size-1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_interchange_warning(interchange_warning);
+          response->set_interchange_warning(interchange_warning);
         }
         return ::grpc::Status::OK;
       }

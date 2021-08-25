@@ -15,6 +15,7 @@
 namespace nidmm_grpc {
 
   const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiDmmService::NiDmmService(NiDmmLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
@@ -1167,13 +1168,13 @@ namespace nidmm_grpc {
       
         std::string configuration(size, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size, (ViInt8*)configuration.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_configuration(configuration);
+          response->set_configuration(configuration);
         }
         return ::grpc::Status::OK;
       }
@@ -1482,13 +1483,13 @@ namespace nidmm_grpc {
             attribute_value.resize(buffer_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_attribute_value(attribute_value);
+          response->set_attribute_value(attribute_value);
         }
         return ::grpc::Status::OK;
       }
@@ -1593,13 +1594,13 @@ namespace nidmm_grpc {
             channel_string.resize(buffer_size-1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_channel_string(channel_string);
+          response->set_channel_string(channel_string);
         }
         return ::grpc::Status::OK;
       }
@@ -1658,14 +1659,14 @@ namespace nidmm_grpc {
             description.resize(buffer_size-1);
         }
         status = library_->GetError(vi, &error_code, buffer_size, (ViChar*)description.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_error_code(error_code);
-        response->set_description(description);
+          response->set_error_code(error_code);
+          response->set_description(description);
         }
         return ::grpc::Status::OK;
       }
@@ -1700,13 +1701,13 @@ namespace nidmm_grpc {
             error_message.resize(buffer_size-1);
         }
         status = library_->GetErrorMessage(vi, error_code, buffer_size, (ViChar*)error_message.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_error_message(error_message);
+          response->set_error_message(error_message);
         }
         return ::grpc::Status::OK;
       }
@@ -1825,13 +1826,13 @@ namespace nidmm_grpc {
             coercion_record.resize(buffer_size-1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_coercion_record(coercion_record);
+          response->set_coercion_record(coercion_record);
         }
         return ::grpc::Status::OK;
       }
@@ -1865,13 +1866,13 @@ namespace nidmm_grpc {
             interchange_warning.resize(buffer_size-1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_interchange_warning(interchange_warning);
+          response->set_interchange_warning(interchange_warning);
         }
         return ::grpc::Status::OK;
       }

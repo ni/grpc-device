@@ -912,6 +912,35 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_OneArrayDifferentSizeFails)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  auto session_id = create_session(library, service, kTestViSession);
+  const double doubles[] = {0.2, -2.3, 4.5};
+  std::int32_t expected_size = 3;
+  EXPECT_CALL(library, MultipleArraysSameSize)
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  nifake_grpc::MultipleArraysSameSizeRequest request;
+  request.mutable_vi()->set_id(session_id);
+  for (auto i = 0; i < sizeof(doubles) / sizeof(doubles[0]); ++i) {
+    request.add_values1(doubles[i]);
+    if (i != 0) {
+      request.add_values2(doubles[i]);
+    }
+    request.add_values3(doubles[i]);
+    request.add_values4(doubles[i]);
+  }
+  nifake_grpc::MultipleArraysSameSizeResponse response;
+  ::grpc::Status status = service.MultipleArraysSameSize(&context, &request, &response);
+
+  EXPECT_EQ(::grpc::INVALID_ARGUMENT, status.error_code());
+}
+
 TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParametersAreMultipleTypes)
 {
   nidevice_grpc::SessionRepository session_repository;
@@ -1700,6 +1729,51 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithChangingS
   // Use the value of the error here to ensure that it doesn't change.
   ::testing::Expectation first_real_call = EXPECT_CALL(library, GetAnIviDanceWithATwistArray(kTestViSession, Pointee(*a_string), expected_old_size, _, _))
                                                .WillOnce(Return(-200229));
+  // follow up call with size returned from ivi-dance-with-a-twist setup.
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArray(kTestViSession, Pointee(*a_string), expected_new_size, _, _))
+      .After(first_real_call)
+      .WillOnce(DoAll(
+          SetArrayArgument<3>(array_out, array_out + expected_new_size),
+          SetArgPointee<4>(expected_new_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAnIviDanceWithATwistArrayRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_a_string(a_string);
+  nifake_grpc::GetAnIviDanceWithATwistArrayResponse response;
+  ::grpc::Status status = service.GetAnIviDanceWithATwistArray(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(array_out, expected_new_size));
+  EXPECT_EQ(response.actual_size(), expected_new_size);
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithChangingSizesAndWarning_CallsGetAnIviDanceWithATwistArray)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
+  const char* a_string = "abc";
+  ViInt32 array_out[] = {1, 2, 3};
+  ViInt32 expected_old_size = 2;
+  ViInt32 expected_new_size = 3;
+  // ivi-dance-with-a-twist call
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArray(kTestViSession, Pointee(*a_string), 0, nullptr, _))
+      .WillOnce(DoAll(
+          SetArgPointee<4>(expected_old_size),
+          Return(kDriverSuccess)))
+      .WillOnce(DoAll(
+          SetArgPointee<4>(expected_new_size),
+          Return(kDriverSuccess)));
+  // follow up call - return that the array now needs to be bigger, so the ivi-dance
+  // call will be made again.
+  // Use the value of the warning here to ensure that it doesn't change.
+  ::testing::Expectation first_real_call = EXPECT_CALL(library, GetAnIviDanceWithATwistArray(kTestViSession, Pointee(*a_string), expected_old_size, _, _))
+                                               .WillOnce(Return(200026));
   // follow up call with size returned from ivi-dance-with-a-twist setup.
   EXPECT_CALL(library, GetAnIviDanceWithATwistArray(kTestViSession, Pointee(*a_string), expected_new_size, _, _))
       .After(first_real_call)

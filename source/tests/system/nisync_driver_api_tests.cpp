@@ -1136,6 +1136,13 @@ TEST_F(NiSyncDriver6683Test, SetTimeReferencePPS_ReturnsSuccess)
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
+
+  // Switch back to free-running to free up the PFI line.
+  viStatus = VI_SUCCESS;
+  grpcStatus = call_SetTimeReferenceFreeRunning(&viStatus);
+
+  EXPECT_TRUE(grpcStatus.ok());
+  EXPECT_EQ(VI_SUCCESS, viStatus);
 }
 
 TEST_F(NiSyncDriver6683Test, SetTimeReferencePPSWithInvalidTerminal_ReturnsError)

@@ -249,12 +249,20 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'triggerSlopeArray',
-                'type': 'const int32[]'
+                'type': 'const int32[]',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                }
             },
             {
                 'direction': 'in',
                 'name': 'triggerLevelArray',
-                'type': 'const float64[]'
+                'type': 'const float64[]',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                }
             },
             {
                 'direction': 'in',
@@ -6492,7 +6500,7 @@ functions = {
                 'direction': 'out',
                 'name': 'errorString',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'bufferSize'
                 },
                 'type': 'char[]'
@@ -6511,7 +6519,7 @@ functions = {
                 'direction': 'out',
                 'name': 'errorString',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'bufferSize'
                 },
                 'type': 'char[]'

@@ -15,6 +15,7 @@
 namespace nifake_grpc {
 
   const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiFakeService::NiFakeService(NiFakeLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
       : library_(library), session_repository_(session_repository)
@@ -323,13 +324,13 @@ namespace nifake_grpc {
       
         std::string configuration(size_in_bytes, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(size_in_bytes)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size_in_bytes)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_configuration(configuration);
+          response->set_configuration(configuration);
         }
         return ::grpc::Status::OK;
       }
@@ -458,13 +459,13 @@ namespace nifake_grpc {
             a_string.resize(buffer_size-1);
         }
         status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_a_string(a_string);
+          response->set_a_string(a_string);
         }
         return ::grpc::Status::OK;
       }
@@ -495,7 +496,7 @@ namespace nifake_grpc {
         response->mutable_array_out()->Resize(actual_size, 0);
         ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
         status = library_->GetAnIviDanceWithATwistArray(vi, a_string, actual_size, array_out, &actual_size);
-        if (status == kErrorReadBufferTooSmall) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -556,7 +557,7 @@ namespace nifake_grpc {
         response->mutable_array_out()->Resize(array_size, 0);
         ViReal64* array_out = response->mutable_array_out()->mutable_data();
         status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -747,13 +748,13 @@ namespace nifake_grpc {
             attribute_value.resize(buffer_size-1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_attribute_value(attribute_value);
+          response->set_attribute_value(attribute_value);
         }
         return ::grpc::Status::OK;
       }
@@ -1085,6 +1086,9 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 output_array_size = request->output_array_size();
+      if (request->input_array_of_floats().size() != request->input_array_of_integers().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields input_array_of_floats and input_array_of_integers do not match");
+      }
       ViInt32 input_array_sizes = static_cast<ViInt32>(request->input_array_of_integers().size());
       auto input_array_of_floats = const_cast<ViReal64*>(request->input_array_of_floats().data());
       auto input_array_of_integers_request = request->input_array_of_integers();
@@ -1123,6 +1127,15 @@ namespace nifake_grpc {
       auto values2 = const_cast<ViReal64*>(request->values2().data());
       auto values3 = const_cast<ViReal64*>(request->values3().data());
       auto values4 = const_cast<ViReal64*>(request->values4().data());
+      if (request->values1().size() != request->values4().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values1 and values4 do not match");
+      }
+      if (request->values2().size() != request->values4().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values2 and values4 do not match");
+      }
+      if (request->values3().size() != request->values4().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values3 and values4 do not match");
+      }
       ViInt32 size = static_cast<ViInt32>(request->values4().size());
       auto status = library_->MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
       response->set_status(status);
@@ -1387,24 +1400,24 @@ namespace nifake_grpc {
             a_string.resize(string_size-1);
         }
         status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
-        if (status == kErrorReadBufferTooSmall || status > static_cast<decltype(status)>(string_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(string_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
-        response->set_a_boolean(a_boolean);
-        response->set_an_int32(an_int32);
-        response->set_an_int64(an_int64);
-        response->set_an_int_enum(static_cast<nifake_grpc::Turtle>(an_int_enum));
-        response->set_an_int_enum_raw(an_int_enum);
-        response->set_a_float(a_float);
-        auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
-        if(a_float_enum_omap_it != floatenum_output_map_.end()) {
-          response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
-        }
-        response->set_a_float_enum_raw(a_float_enum);
-        response->set_a_string(a_string);
+          response->set_a_boolean(a_boolean);
+          response->set_an_int32(an_int32);
+          response->set_an_int64(an_int64);
+          response->set_an_int_enum(static_cast<nifake_grpc::Turtle>(an_int_enum));
+          response->set_an_int_enum_raw(an_int_enum);
+          response->set_a_float(a_float);
+          auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
+          if(a_float_enum_omap_it != floatenum_output_map_.end()) {
+            response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
+          }
+          response->set_a_float_enum_raw(a_float_enum);
+          response->set_a_string(a_string);
         }
         return ::grpc::Status::OK;
       }
