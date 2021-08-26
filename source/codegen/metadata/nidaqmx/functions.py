@@ -5929,6 +5929,124 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetCalInfoAttributeBool': {
+        'cname': 'DAQmxGetCalInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'CalibrationInfoAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCalInfoAttributeDouble': {
+        'cname': 'DAQmxGetCalInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'CalibrationInfoAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCalInfoAttributeString': {
+        'cname': 'DAQmxGetCalInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'CalibrationInfoAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetCalInfoAttributeUInt32': {
+        'cname': 'DAQmxGetCalInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'CalibrationInfoAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetChanAttributeBool': {
         'cname': 'DAQmxGetChanAttribute',
         'parameters': [
@@ -6513,6 +6631,153 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetExportedSignalAttributeBool': {
+        'cname': 'DAQmxGetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetExportedSignalAttributeDouble': {
+        'cname': 'DAQmxGetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetExportedSignalAttributeInt32': {
+        'cname': 'DAQmxGetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetExportedSignalAttributeString': {
+        'cname': 'DAQmxGetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetExportedSignalAttributeUInt32': {
+        'cname': 'DAQmxGetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetExtendedErrorInfo': {
         'parameters': [
             {
@@ -6645,6 +6910,457 @@ functions = {
                 'direction': 'in',
                 'name': 'bufferSize',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedChanAttributeBool': {
+        'cname': 'DAQmxGetPersistedChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedChanAttributeString': {
+        'cname': 'DAQmxGetPersistedChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedScaleAttributeBool': {
+        'cname': 'DAQmxGetPersistedScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedScaleAttributeString': {
+        'cname': 'DAQmxGetPersistedScaleAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'scaleName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedScaleAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedTaskAttributeBool': {
+        'cname': 'DAQmxGetPersistedTaskAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'taskName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedTaskAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPersistedTaskAttributeString': {
+        'cname': 'DAQmxGetPersistedTaskAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'taskName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PersistedTaskAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeBool': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeBytes': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeDouble': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeDoubleArray': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeInt32': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeInt32Array': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeString': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeUInt32': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetPhysicalChanAttributeUInt32Array': {
+        'cname': 'DAQmxGetPhysicalChanAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'physicalChannel',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'PhysicalChannelAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -6814,6 +7530,93 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'type': 'uInt64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetRealTimeAttributeBool': {
+        'cname': 'DAQmxGetRealTimeAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'RealTimeAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetRealTimeAttributeInt32': {
+        'cname': 'DAQmxGetRealTimeAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'RealTimeAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetRealTimeAttributeUInt32': {
+        'cname': 'DAQmxGetRealTimeAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'RealTimeAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
             },
             {
                 'direction': 'in',
@@ -7036,6 +7839,56 @@ functions = {
                 'direction': 'out',
                 'name': 'data',
                 'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSystemInfoAttributeString': {
+        'cname': 'DAQmxGetSystemInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'SystemAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSystemInfoAttributeUInt32': {
+        'cname': 'DAQmxGetSystemInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'SystemAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
@@ -7743,6 +8596,144 @@ functions = {
                 'direction': 'in',
                 'hardcoded_value': '0U',
                 'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetWatchdogAttributeBool': {
+        'cname': 'DAQmxGetWatchdogAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WatchdogAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetWatchdogAttributeDouble': {
+        'cname': 'DAQmxGetWatchdogAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WatchdogAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetWatchdogAttributeInt32': {
+        'cname': 'DAQmxGetWatchdogAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WatchdogAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetWatchdogAttributeString': {
+        'cname': 'DAQmxGetWatchdogAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WatchdogAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
                 'name': 'size',
                 'type': 'uInt32'
             }
@@ -9292,6 +10283,22 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ResetExportedSignalAttribute': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ResetReadAttribute': {
         'parameters': [
             {
@@ -9302,6 +10309,22 @@ functions = {
             {
                 'direction': 'in',
                 'grpc_type': 'ReadAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetRealTimeAttribute': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'RealTimeAttributes',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -9355,6 +10378,27 @@ functions = {
             {
                 'direction': 'in',
                 'grpc_type': 'TriggerAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetWatchdogAttribute': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WatchdogAttributes',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -9632,6 +10676,122 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'value',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCalInfoAttributeBool': {
+        'cname': 'DAQmxSetCalInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'CalibrationInfoAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCalInfoAttributeDouble': {
+        'cname': 'DAQmxSetCalInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'CalibrationInfoAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCalInfoAttributeString': {
+        'cname': 'DAQmxSetCalInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'CalibrationInfoAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetCalInfoAttributeUInt32': {
+        'cname': 'DAQmxSetCalInfoAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'CalibrationInfoAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
                 'type': 'uInt32'
             }
         ],
@@ -9925,6 +11085,151 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetExportedSignalAttributeBool': {
+        'cname': 'DAQmxSetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetExportedSignalAttributeDouble': {
+        'cname': 'DAQmxSetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetExportedSignalAttributeInt32': {
+        'cname': 'DAQmxSetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetExportedSignalAttributeString': {
+        'cname': 'DAQmxSetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetExportedSignalAttributeUInt32': {
+        'cname': 'DAQmxSetExportedSignalAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'ExportSignalAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetFirstSampClkWhen': {
         'parameters': [
             {
@@ -10103,6 +11408,93 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'uInt64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetRealTimeAttributeBool': {
+        'cname': 'DAQmxSetRealTimeAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'RealTimeAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetRealTimeAttributeInt32': {
+        'cname': 'DAQmxSetRealTimeAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'RealTimeAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetRealTimeAttributeUInt32': {
+        'cname': 'DAQmxSetRealTimeAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'RealTimeAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'uInt32'
             },
             {
                 'direction': 'in',
@@ -10865,6 +12257,142 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetWatchdogAttributeBool': {
+        'cname': 'DAQmxSetWatchdogAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WatchdogAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'bool32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetWatchdogAttributeDouble': {
+        'cname': 'DAQmxSetWatchdogAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WatchdogAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetWatchdogAttributeInt32': {
+        'cname': 'DAQmxSetWatchdogAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WatchdogAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetWatchdogAttributeString': {
+        'cname': 'DAQmxSetWatchdogAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'lines',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WatchdogAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'const char[]'
             },
             {
                 'direction': 'in',

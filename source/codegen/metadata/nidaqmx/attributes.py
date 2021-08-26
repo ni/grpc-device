@@ -25,6 +25,62 @@ attributes = {
             'type': 'uInt32'
         }
     },
+    'CalibrationInfo': {
+        6240: {
+            'access': 'read',
+            'name': 'SELF_CAL_SUPPORTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        6241: {
+            'access': 'read-write',
+            'name': 'CAL_USER_DEFINED_INFO',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        6244: {
+            'access': 'read',
+            'name': 'SELF_CAL_LAST_TEMP',
+            'resettable': False,
+            'type': 'float64'
+        },
+        6247: {
+            'access': 'read',
+            'name': 'EXT_CAL_LAST_TEMP',
+            'resettable': False,
+            'type': 'float64'
+        },
+        6248: {
+            'access': 'read',
+            'name': 'EXT_CAL_RECOMMENDED_INTERVAL',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        6428: {
+            'access': 'read',
+            'name': 'CAL_USER_DEFINED_INFO_MAX_SIZE',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8763: {
+            'access': 'read',
+            'name': 'CAL_DEV_TEMP',
+            'resettable': False,
+            'type': 'float64'
+        },
+        12267: {
+            'access': 'read-write',
+            'name': 'CAL_ACC_CONNECTION_COUNT',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        12268: {
+            'access': 'read',
+            'name': 'CAL_RECOMMENDED_ACC_CONNECTION_COUNT_LIMIT',
+            'resettable': False,
+            'type': 'uInt32'
+        }
+    },
     'Channel': {
         80: {
             'access': 'read',
@@ -4459,6 +4515,840 @@ attributes = {
             'type': 'char[]'
         }
     },
+    'ExportSignal': {
+        1409: {
+            'access': 'read',
+            'name': 'START_TRIG_DELAY',
+            'resettable': False,
+            'type': 'float64'
+        },
+        1412: {
+            'access': 'read-write',
+            'name': 'START_TRIG_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        1413: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'START_TRIG_PULSE_POLARITY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        1414: {
+            'access': 'read',
+            'name': 'START_TRIG_PULSE_WIDTH',
+            'resettable': False,
+            'type': 'float64'
+        },
+        1424: {
+            'access': 'read-write',
+            'name': 'REF_TRIG_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        1425: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'REF_TRIG_PULSE_POLARITY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5634: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'START_TRIG_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5641: {
+            'access': 'read-write',
+            'name': 'RDY_FOR_START_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5653: {
+            'access': 'read-write',
+            'name': 'PAUSE_TRIG_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5654: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'PAUSE_TRIG_LVL_ACTIVE_LVL',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5666: {
+            'access': 'read',
+            'enum': 'Polarity2',
+            'name': 'RDY_FOR_REF_EVENT_PULSE_POLARITY',
+            'resettable': False,
+            'type': 'int32'
+        },
+        5667: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'RDY_FOR_REF_EVENT_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5668: {
+            'access': 'read',
+            'name': 'RDY_FOR_REF_EVENT_PULSE_WIDTH',
+            'resettable': False,
+            'type': 'float64'
+        },
+        5683: {
+            'access': 'read-write',
+            'name': 'DATA_ACTIVE_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5684: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'DATA_ACTIVE_EVENT_LVL_ACTIVE_LVL',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5701: {
+            'access': 'read-write',
+            'name': 'ADV_TRIG_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5702: {
+            'access': 'read',
+            'enum': 'Polarity2',
+            'name': 'ADV_TRIG_PULSE_POLARITY',
+            'resettable': False,
+            'type': 'int32'
+        },
+        5703: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits3',
+            'name': 'ADV_TRIG_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5704: {
+            'access': 'read-write',
+            'name': 'ADV_TRIG_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5706: {
+            'access': 'read-write',
+            'name': 'ADV_CMPLT_EVENT_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        5713: {
+            'access': 'read-write',
+            'name': 'ADV_CMPLT_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5714: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'ADV_CMPLT_EVENT_PULSE_POLARITY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5715: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'ADV_CMPLT_EVENT_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5716: {
+            'access': 'read-write',
+            'name': 'ADV_CMPLT_EVENT_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        5718: {
+            'access': 'read-write',
+            'name': '20_MHZ_TIMEBASE_DIVIDE_DOWN_BY_N',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        5719: {
+            'access': 'read-write',
+            'name': '20_MHZ_TIMEBASE_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5720: {
+            'access': 'read',
+            'enum': 'Polarity2',
+            'name': '20_MHZ_TIMEBASE_PULSE_POLARITY',
+            'resettable': False,
+            'type': 'int32'
+        },
+        5721: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': '20_MHZ_TIMEBASE_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5728: {
+            'access': 'read',
+            'name': '20_MHZ_TIMEBASE_PULSE_WIDTH',
+            'resettable': False,
+            'type': 'float64'
+        },
+        5731: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5732: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'SAMP_CLK_PULSE_POLARITY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5733: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'SAMP_CLK_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5734: {
+            'access': 'read',
+            'name': 'SAMP_CLK_PULSE_WIDTH',
+            'resettable': False,
+            'type': 'float64'
+        },
+        5767: {
+            'access': 'read-write',
+            'name': 'AI_CONV_CLK_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5768: {
+            'access': 'read',
+            'enum': 'Polarity2',
+            'name': 'AI_CONV_CLK_PULSE_POLARITY',
+            'resettable': False,
+            'type': 'int32'
+        },
+        5769: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'AI_CONV_CLK_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5776: {
+            'access': 'read',
+            'name': 'AI_CONV_CLK_PULSE_WIDTH',
+            'resettable': False,
+            'type': 'float64'
+        },
+        5906: {
+            'access': 'read',
+            'enum': 'Polarity2',
+            'name': 'FREQ_OUT_CLK_PULSE_POLARITY',
+            'resettable': False,
+            'type': 'int32'
+        },
+        5907: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'FREQ_OUT_CLK_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5908: {
+            'access': 'read',
+            'name': 'FREQ_OUT_CLK_PULSE_WIDTH',
+            'resettable': False,
+            'type': 'float64'
+        },
+        5911: {
+            'access': 'read-write',
+            'name': 'CTR_OUT_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        5912: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'CTR_OUT_EVENT_PULSE_POLARITY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5913: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'CTR_OUT_EVENT_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5920: {
+            'access': 'read',
+            'name': 'CTR_OUT_EVENT_PULSE_WIDTH',
+            'resettable': False,
+            'type': 'float64'
+        },
+        5942: {
+            'access': 'read',
+            'enum': 'Polarity2',
+            'name': 'REF_CLK_PULSE_POLARITY',
+            'resettable': False,
+            'type': 'int32'
+        },
+        5943: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'REF_CLK_PULSE_WIDTH_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5944: {
+            'access': 'read',
+            'name': 'REF_CLK_PULSE_WIDTH',
+            'resettable': False,
+            'type': 'float64'
+        },
+        5955: {
+            'access': 'read-write',
+            'enum': 'ExportActions',
+            'name': 'START_TRIG_OUTPUT_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5956: {
+            'access': 'read-write',
+            'enum': 'Level1',
+            'name': 'START_TRIG_TOGGLE_INITIAL_STATE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5965: {
+            'access': 'read-write',
+            'enum': 'DigitalWidthUnits1',
+            'name': 'START_TRIG_DELAY_UNITS',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5967: {
+            'access': 'read-write',
+            'enum': 'ExportActions2',
+            'name': 'CTR_OUT_EVENT_OUTPUT_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5968: {
+            'access': 'read',
+            'enum': 'Polarity2',
+            'name': 'CTR_OUT_EVENT_LVL_POLARITY',
+            'resettable': False,
+            'type': 'int32'
+        },
+        5969: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'RDY_FOR_START_EVENT_LVL_ACTIVE_LVL',
+            'resettable': True,
+            'type': 'int32'
+        },
+        5975: {
+            'access': 'read-write',
+            'name': 'ADV_CMPLT_EVENT_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        6250: {
+            'access': 'read-write',
+            'enum': 'Level1',
+            'name': 'CTR_OUT_EVENT_TOGGLE_IDLE_STATE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6251: {
+            'access': 'read-write',
+            'enum': 'ExportActions3',
+            'name': 'SAMP_CLK_OUTPUT_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6381: {
+            'access': 'read-write',
+            'name': 'AI_HOLD_CMPLT_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        6382: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'AI_HOLD_CMPLT_EVENT_PULSE_POLARITY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        6393: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_TIMEBASE_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8599: {
+            'access': 'read-write',
+            'name': 'CHANGE_DETECT_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8609: {
+            'access': 'read-write',
+            'name': 'DIVIDED_SAMP_CLK_TIMEBASE_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8618: {
+            'access': 'read-write',
+            'name': 'WATCHDOG_EXPIRED_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8644: {
+            'access': 'read-write',
+            'name': 'SAMP_CLK_DELAY_OFFSET',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8764: {
+            'access': 'read-write',
+            'name': 'SYNC_PULSE_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8814: {
+            'access': 'read-write',
+            'name': '10_MHZ_REF_CLK_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8885: {
+            'access': 'read-write',
+            'name': 'RDY_FOR_XFER_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8886: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'RDY_FOR_XFER_EVENT_LVL_ACTIVE_LVL',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8890: {
+            'access': 'read-write',
+            'name': 'HSHK_EVENT_OUTPUT_TERM',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8891: {
+            'access': 'read-write',
+            'enum': 'ExportActions5',
+            'name': 'HSHK_EVENT_OUTPUT_BEHAVIOR',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8892: {
+            'access': 'read-write',
+            'name': 'HSHK_EVENT_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8893: {
+            'access': 'read-write',
+            'enum': 'Level1',
+            'name': 'HSHK_EVENT_INTERLOCKED_ASSERTED_LVL',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8894: {
+            'access': 'read-write',
+            'name': 'HSHK_EVENT_INTERLOCKED_ASSERT_ON_START',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8895: {
+            'access': 'read-write',
+            'name': 'HSHK_EVENT_INTERLOCKED_DEASSERT_DELAY',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8896: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'HSHK_EVENT_PULSE_POLARITY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8897: {
+            'access': 'read-write',
+            'name': 'HSHK_EVENT_PULSE_WIDTH',
+            'resettable': True,
+            'type': 'float64'
+        },
+        8963: {
+            'access': 'read-write',
+            'enum': 'Polarity2',
+            'name': 'CHANGE_DETECT_EVENT_PULSE_POLARITY',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10595: {
+            'access': 'read-write',
+            'enum': 'DeassertCondition',
+            'name': 'RDY_FOR_XFER_EVENT_DEASSERT_COND',
+            'resettable': True,
+            'type': 'int32'
+        },
+        10596: {
+            'access': 'read-write',
+            'name': 'RDY_FOR_XFER_EVENT_DEASSERT_COND_CUSTOM_THRESHOLD',
+            'resettable': True,
+            'type': 'uInt32'
+        }
+    },
+    'PersistedChannel': {
+        8911: {
+            'access': 'write',
+            'name': 'ACTIVE_CHAN',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8912: {
+            'access': 'read',
+            'name': 'AUTHOR',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8913: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_EDITING',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8914: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_DELETION',
+            'resettable': False,
+            'type': 'bool32'
+        }
+    },
+    'PersistedScale': {
+        8915: {
+            'access': 'write',
+            'name': 'ACTIVE_SCALE',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8916: {
+            'access': 'read',
+            'name': 'AUTHOR',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8917: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_EDITING',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8918: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_DELETION',
+            'resettable': False,
+            'type': 'bool32'
+        }
+    },
+    'PersistedTask': {
+        8907: {
+            'access': 'write',
+            'name': 'ACTIVE_TASK',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8908: {
+            'access': 'read',
+            'name': 'AUTHOR',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8909: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_EDITING',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8910: {
+            'access': 'read',
+            'name': 'ALLOW_INTERACTIVE_DELETION',
+            'resettable': False,
+            'type': 'bool32'
+        }
+    },
+    'PhysicalChannel': {
+        8666: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_MFG_ID',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8667: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_MODEL_NUM',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8668: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_SERIAL_NUM',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8669: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_VERSION_NUM',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        8670: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_VERSION_LETTER',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        8671: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_BIT_STREAM',
+            'resettable': False,
+            'type': 'uInt8[]'
+        },
+        8847: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_TEDS_TEMPLATE_I_DS',
+            'resettable': False,
+            'type': 'uInt32[]'
+        },
+        9026: {
+            'access': 'read',
+            'enum': 'InputTermCfg',
+            'name': 'PHYSICAL_CHAN_AI_TERM_CFGS',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        10659: {
+            'access': 'read',
+            'enum': 'OutputTermCfg',
+            'name': 'PHYSICAL_CHAN_AO_TERM_CFGS',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        10660: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DI_PORT_WIDTH',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        10661: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DI_SAMP_CLK_SUPPORTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10662: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DI_CHANGE_DETECT_SUPPORTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10663: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DO_PORT_WIDTH',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        10664: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_DO_SAMP_CLK_SUPPORTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        10782: {
+            'access': 'read-write',
+            'name': 'PHYSICAL_CHAN_AO_MANUAL_CONTROL_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        10783: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AO_MANUAL_CONTROL_AMPLITUDE',
+            'resettable': False,
+            'type': 'float64'
+        },
+        10784: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AO_MANUAL_CONTROL_FREQ',
+            'resettable': False,
+            'type': 'float64'
+        },
+        11971: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AO_MANUAL_CONTROL_SHORT_DETECTED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12247: {
+            'access': 'read',
+            'enum': 'AIMeasurementType',
+            'name': 'PHYSICAL_CHAN_AI_SUPPORTED_MEAS_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12248: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AI_INPUT_SRCS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12249: {
+            'access': 'read',
+            'enum': 'AOOutputChannelType',
+            'name': 'PHYSICAL_CHAN_AO_SUPPORTED_OUTPUT_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12250: {
+            'access': 'read',
+            'enum': 'CIMeasurementType',
+            'name': 'PHYSICAL_CHAN_CI_SUPPORTED_MEAS_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12251: {
+            'access': 'read',
+            'enum': 'COOutputType',
+            'name': 'PHYSICAL_CHAN_CO_SUPPORTED_OUTPUT_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12256: {
+            'access': 'read',
+            'enum': 'AcquisitionType',
+            'name': 'PHYSICAL_CHAN_DI_SAMP_MODES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12257: {
+            'access': 'read',
+            'enum': 'AcquisitionType',
+            'name': 'PHYSICAL_CHAN_DO_SAMP_MODES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12343: {
+            'access': 'read',
+            'enum': 'NavMeasurementType',
+            'name': 'PHYSICAL_CHAN_NAV_SUPPORTED_MEAS_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12366: {
+            'access': 'read',
+            'enum': 'AOPowerUpOutputBehavior',
+            'name': 'PHYSICAL_CHAN_AO_SUPPORTED_POWER_UP_OUTPUT_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12386: {
+            'access': 'read-write',
+            'name': 'AO_POWER_AMP_CHANNEL_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12387: {
+            'access': 'read',
+            'name': 'AO_POWER_AMP_SCALING_COEFF',
+            'resettable': False,
+            'type': 'float64[]'
+        },
+        12388: {
+            'access': 'read',
+            'name': 'AO_POWER_AMP_OVERCURRENT',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12389: {
+            'access': 'read',
+            'name': 'AO_POWER_AMP_GAIN',
+            'resettable': False,
+            'type': 'float64'
+        },
+        12390: {
+            'access': 'read',
+            'name': 'AO_POWER_AMP_OFFSET',
+            'resettable': False,
+            'type': 'float64'
+        },
+        12652: {
+            'access': 'read-write',
+            'name': 'PHYSICAL_CHAN_AI_POWER_CONTROL_VOLTAGE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12653: {
+            'access': 'read-write',
+            'name': 'PHYSICAL_CHAN_AI_POWER_CONTROL_ENABLE',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12654: {
+            'access': 'read-write',
+            'enum': 'SensorPowerType',
+            'name': 'PHYSICAL_CHAN_AI_POWER_CONTROL_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12665: {
+            'access': 'read',
+            'enum': 'SensorPowerType',
+            'name': 'PHYSICAL_CHAN_AI_SENSOR_POWER_TYPES',
+            'resettable': False,
+            'type': 'int32[]'
+        },
+        12666: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AI_SENSOR_POWER_VOLTAGE_RANGE_VALS',
+            'resettable': False,
+            'type': 'float64[]'
+        },
+        12668: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AI_SENSOR_POWER_OPEN_CHAN',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        12669: {
+            'access': 'read',
+            'name': 'PHYSICAL_CHAN_AI_SENSOR_POWER_OVERCURRENT',
+            'resettable': False,
+            'type': 'bool32'
+        }
+    },
     'Read': {
         4625: {
             'access': 'read-write',
@@ -4772,6 +5662,40 @@ attributes = {
             'type': 'char[]'
         }
     },
+    'RealTime': {
+        8941: {
+            'access': 'read-write',
+            'name': 'NUM_OF_WARMUP_ITERS',
+            'resettable': True,
+            'type': 'uInt32'
+        },
+        8942: {
+            'access': 'read-write',
+            'name': 'CONV_LATE_ERRORS_TO_WARNINGS',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8943: {
+            'access': 'read-write',
+            'enum': 'WaitMode3',
+            'name': 'WAIT_FOR_NEXT_SAMP_CLK_WAIT_MODE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8985: {
+            'access': 'read-write',
+            'name': 'REPORT_MISSED_SAMP',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        8986: {
+            'access': 'read-write',
+            'enum': 'WaitMode4',
+            'name': 'WRITE_RECOVERY_MODE',
+            'resettable': True,
+            'type': 'int32'
+        }
+    },
     'Scale': {
         4646: {
             'access': 'read-write',
@@ -4858,6 +5782,50 @@ attributes = {
             'name': 'TYPE',
             'resettable': False,
             'type': 'int32'
+        }
+    },
+    'System': {
+        4709: {
+            'access': 'read',
+            'name': 'GLOBAL_CHANS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        4710: {
+            'access': 'read',
+            'name': 'SCALES',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        4711: {
+            'access': 'read',
+            'name': 'TASKS',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        4722: {
+            'access': 'read',
+            'name': 'NIDAQ_MAJOR_VERSION',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        6435: {
+            'access': 'read',
+            'name': 'NIDAQ_MINOR_VERSION',
+            'resettable': False,
+            'type': 'uInt32'
+        },
+        6459: {
+            'access': 'read',
+            'name': 'DEV_NAMES',
+            'resettable': False,
+            'type': 'char[]'
+        },
+        12066: {
+            'access': 'read',
+            'name': 'NIDAQ_UPDATE_VERSION',
+            'resettable': False,
+            'type': 'uInt32'
         }
     },
     'Task': {
@@ -6250,6 +7218,73 @@ attributes = {
             'name': 'START_TRIG_TIMESTAMP_VAL',
             'resettable': False,
             'type': 'CVIAbsoluteTime'
+        }
+    },
+    'Watchdog': {
+        8611: {
+            'access': 'read-write',
+            'enum': 'TriggerType4',
+            'name': 'EXPIR_TRIG_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8612: {
+            'access': 'read-write',
+            'name': 'DIG_EDGE_WATCHDOG_EXPIR_TRIG_SRC',
+            'resettable': True,
+            'type': 'char[]'
+        },
+        8613: {
+            'access': 'read-write',
+            'enum': 'Edge1',
+            'name': 'DIG_EDGE_WATCHDOG_EXPIR_TRIG_EDGE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8615: {
+            'access': 'read-write',
+            'enum': 'DigitalLineState',
+            'name': 'DO_EXPIR_STATE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        8616: {
+            'access': 'read',
+            'name': 'HAS_EXPIRED',
+            'resettable': False,
+            'type': 'bool32'
+        },
+        8617: {
+            'access': 'read-write',
+            'name': 'TIMEOUT',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12381: {
+            'access': 'read-write',
+            'name': 'EXPIR_TRIG_TRIG_ON_NETWORK_CONN_LOSS',
+            'resettable': True,
+            'type': 'bool32'
+        },
+        12382: {
+            'access': 'read-write',
+            'enum': 'WatchdogAOExpirState',
+            'name': 'AO_OUTPUT_TYPE',
+            'resettable': True,
+            'type': 'int32'
+        },
+        12383: {
+            'access': 'read-write',
+            'name': 'AO_EXPIR_STATE',
+            'resettable': True,
+            'type': 'float64'
+        },
+        12384: {
+            'access': 'read-write',
+            'enum': 'WatchdogCOExpirState',
+            'name': 'CO_EXPIR_STATE',
+            'resettable': True,
+            'type': 'int32'
         }
     },
     'Write': {

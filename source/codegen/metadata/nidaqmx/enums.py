@@ -320,6 +320,31 @@ enums = {
             }
         ]
     },
+    'AOPowerUpOutputBehavior': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage output.'
+                },
+                'name': '10322',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Current output.'
+                },
+                'name': '10134',
+                'value': 10134
+            },
+            {
+                'documentation': {
+                    'description': 'High-impedance state.'
+                },
+                'name': '12527',
+                'value': 12527
+            }
+        ]
+    },
     'AccelChargeSensitivityUnits': {
         'values': [
             {
@@ -1348,6 +1373,31 @@ enums = {
             }
         ]
     },
+    'DeassertCondition': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Deassert the signal when more than half of the onboard memory of the device  fills.'
+                },
+                'name': 'ONBRD_MEM_MORE_THAN_HALF_FULL',
+                'value': 10237
+            },
+            {
+                'documentation': {
+                    'description': 'Deassert the signal when the onboard memory fills.'
+                },
+                'name': 'ONBRD_MEM_FULL',
+                'value': 10236
+            },
+            {
+                'documentation': {
+                    'description': ' Deassert the signal when the amount of space available in the onboard memory is  below the value specified with  DAQmx_Exported_RdyForXferEvent_DeassertCondCustomThreshold.'
+                },
+                'name': 'ONBRD_MEM_CUSTOM_THRESHOLD',
+                'value': 12577
+            }
+        ]
+    },
     'DigitalDriveType': {
         'values': [
             {
@@ -1697,6 +1747,76 @@ enums = {
                 },
                 'name': 'CURRENT',
                 'value': 10134
+            }
+        ]
+    },
+    'ExportActions': {
+        'values': [
+            {
+                'name': 'PULSE',
+                'value': 10265
+            },
+            {
+                'name': 'TOGGLE',
+                'value': 10307
+            },
+            {
+                'name': 'LVL',
+                'value': 10210
+            }
+        ]
+    },
+    'ExportActions2': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Send a pulse to the terminal.'
+                },
+                'name': 'PULSE',
+                'value': 10265
+            },
+            {
+                'documentation': {
+                    'description': ' Toggle the state of the terminal from low to high or from high to low.'
+                },
+                'name': 'TOGGLE',
+                'value': 10307
+            }
+        ]
+    },
+    'ExportActions3': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' The exported Sample Clock pulses at the beginning of each sample.'
+                },
+                'name': 'PULSE',
+                'value': 10265
+            },
+            {
+                'documentation': {
+                    'description': ' The exported Sample Clock goes high at the beginning of the sample and goes low  when the last AI Convert begins.'
+                },
+                'name': 'LVL',
+                'value': 10210
+            }
+        ]
+    },
+    'ExportActions5': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Handshake Event deasserts after the Handshake Trigger asserts, plus the amount  of time specified with DAQmx_Exported_HshkEvent_Interlocked_DeassertDelay.'
+                },
+                'name': 'INTERLOCKED',
+                'value': 12549
+            },
+            {
+                'documentation': {
+                    'description': ' Handshake Event pulses with the pulse width specified in  DAQmx_Exported_HshkEvent_Pulse_Width.'
+                },
+                'name': 'PULSE',
+                'value': 10265
             }
         ]
     },
@@ -2384,28 +2504,28 @@ enums = {
                 'documentation': {
                     'description': 'Use the onboard 100 MHz timebase.'
                 },
-                'name': '100_M_HZ_TIMEBASE',
+                'name': '100_MHZ_TIMEBASE',
                 'value': 15857
             },
             {
                 'documentation': {
                     'description': 'Use the onboard 80 MHz timebase.'
                 },
-                'name': '80_M_HZ_TIMEBASE',
+                'name': '80_MHZ_TIMEBASE',
                 'value': 14636
             },
             {
                 'documentation': {
                     'description': 'Use the onboard 20 MHz timebase.'
                 },
-                'name': '20_M_HZ_TIMEBASE',
+                'name': '20_MHZ_TIMEBASE',
                 'value': 12537
             },
             {
                 'documentation': {
                     'description': 'Use the onboard 8 MHz timebase.'
                 },
-                'name': '8_M_HZ_TIMEBASE',
+                'name': '8_MHZ_TIMEBASE',
                 'value': 16023
             }
         ]
@@ -3381,11 +3501,11 @@ enums = {
                 'value': 12484
             },
             {
-                'name': '10_M_HZ_REF_CLOCK',
+                'name': '10_MHZ_REF_CLOCK',
                 'value': 12536
             },
             {
-                'name': '20_M_HZ_TIMEBASE_CLOCK',
+                'name': '20_MHZ_TIMEBASE_CLOCK',
                 'value': 12486
             },
             {
@@ -4745,6 +4865,67 @@ enums = {
                 },
                 'name': 'SLEEP',
                 'value': 12547
+            }
+        ]
+    },
+    'WaitMode3': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Check for Sample Clock pulses when the system receives an interrupt service  request. This mode is the most CPU efficient, but results in lower possible  sampling rates.'
+                },
+                'name': 'WAIT_FOR_INTERRUPT',
+                'value': 12523
+            },
+            {
+                'documentation': {
+                    'description': ' Repeatedly check for Sample Clock pulses as fast as possible. This mode allows  for the highest sampling rates at the expense of CPU efficiency.'
+                },
+                'name': 'POLL',
+                'value': 12524
+            }
+        ]
+    },
+    'WaitMode4': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Attempt to recover when the system receives an interrupt service request. This  mode is the most CPU efficient and best suited for recovery at lower pulse  train frequencies.'
+                },
+                'name': 'WAIT_FOR_INTERRUPT',
+                'value': 12523
+            },
+            {
+                'documentation': {
+                    'description': ' Repeatedly attempt to recover as fast as possible. This mode has the highest  probability of recovery success at the expense of CPU efficiency.'
+                },
+                'name': 'POLL',
+                'value': 12524
+            }
+        ]
+    },
+    'WatchdogAOExpirState': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'Voltage output.'
+                },
+                'name': 'VOLTAGE',
+                'value': 10322
+            },
+            {
+                'documentation': {
+                    'description': 'Current output.'
+                },
+                'name': 'CURRENT',
+                'value': 10134
+            },
+            {
+                'documentation': {
+                    'description': ' Expiration does not affect the port. Do not change the state of any lines in  the port, and do not lock the port.'
+                },
+                'name': 'NO_CHANGE',
+                'value': 10160
             }
         ]
     },
