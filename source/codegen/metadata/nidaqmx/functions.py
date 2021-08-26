@@ -103,6 +103,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'forwardCoeffs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numForwardCoeffsIn'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -214,11 +218,19 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'triggerSlopeArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
                 'type': 'const int32[]'
             },
             {
                 'direction': 'in',
                 'name': 'triggerLevelArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -754,12 +766,20 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'expirStateArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
                 'type': 'const float64[]'
             },
             {
                 'direction': 'in',
                 'enum': 'WatchdogAOOutputType',
                 'name': 'outputTypeArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
                 'type': 'const int32[]'
             },
             {
@@ -786,6 +806,10 @@ functions = {
                 'direction': 'in',
                 'enum': 'WatchdogCOExpirState',
                 'name': 'expirStateArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
                 'type': 'const int32[]'
             },
             {
@@ -812,6 +836,10 @@ functions = {
                 'direction': 'in',
                 'enum': 'DigitalLineState',
                 'name': 'expirStateArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
                 'type': 'const int32[]'
             },
             {
@@ -1411,6 +1439,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'forwardCoeffs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numForwardCoeffs'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -1421,6 +1453,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'reverseCoeffs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numReverseCoeffs'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -1506,6 +1542,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'electricalVals',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numElectricalVals'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -1522,6 +1562,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'physicalVals',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numPhysicalVals'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -2074,6 +2118,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'forwardCoeffs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numForwardCoeffs'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -2084,6 +2132,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'reverseCoeffs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numReverseCoeffs'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -2169,6 +2221,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'electricalVals',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numElectricalVals'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -2185,6 +2241,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'physicalVals',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numPhysicalVals'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -2464,6 +2524,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'rosetteMeasTypes',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numRosetteMeasTypes'
+                },
                 'type': 'const int32[]'
             },
             {
@@ -2877,6 +2941,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'forwardCoeffs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numForwardCoeffs'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -2887,6 +2955,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'reverseCoeffs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numReverseCoeffs'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -2972,6 +3044,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'electricalVals',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numElectricalVals'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -2988,6 +3064,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'physicalVals',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numPhysicalVals'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -4452,6 +4532,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'forwardCoeffs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numForwardCoeffsIn'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -4462,6 +4546,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'reverseCoeffs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numReverseCoeffsIn'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -5495,6 +5583,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'prescaledVals',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numPrescaledValsIn'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -5505,6 +5597,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'scaledVals',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numScaledValsIn'
+                },
                 'type': 'const float64[]'
             },
             {
@@ -10888,7 +10984,7 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'len',
                     'value': 'size'
                 },
                 'type': 'const float64[]'
@@ -11553,7 +11649,7 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'len',
                     'value': 'size'
                 },
                 'type': 'const float64[]'
@@ -12108,7 +12204,7 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'len',
                     'value': 'size'
                 },
                 'type': 'const float64[]'
@@ -13520,6 +13616,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'bitStream',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
                 'type': 'const uInt8[]'
             },
             {
