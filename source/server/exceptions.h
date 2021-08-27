@@ -13,9 +13,6 @@ struct ValueOutOfRangeException : std::runtime_error {
 
 template <typename TStatus>
 struct FailedStatusException : std::runtime_error {
-  FailedStatusException<TStatus>(const char* message) : std::runtime_error(message) {}
-  FailedStatusException<TStatus>(const std::string& message) : std::runtime_error(message) {}
-  FailedStatusException<TStatus>(const FailedStatusException<TStatus>& other) : std::runtime_error(other) {}
   FailedStatusException<TStatus>(TStatus status) : std::runtime_error(""), status_(status) {}
 
   TStatus status() { return status_; }
