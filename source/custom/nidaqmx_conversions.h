@@ -102,9 +102,4 @@ inline int32 calculate_num_samps_per_chan(nidaqmx_grpc::NiDAQmxLibraryInterface*
     return num_samps_per_chan;
   }
 }
-
-inline uInt32 calculate_array_size_in_samps(nidaqmx_grpc::NiDAQmxLibraryInterface* library, TaskHandle& task)
-{
-}
-
 #endif  // NIDAQMX_CONVERSIONS
