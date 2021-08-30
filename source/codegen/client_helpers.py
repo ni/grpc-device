@@ -1,3 +1,4 @@
+from typing import List, Tuple
 import common_helpers
 import re
 from collections import namedtuple
@@ -19,7 +20,7 @@ ClientParam = namedtuple(
   ])
 
 
-def create_params(func: dict) -> list[str]:
+def create_params(func: dict) -> List[str]:
   client_params = get_client_parameters(func)
 
   param_list = [
@@ -140,7 +141,7 @@ def stub_ptr_alias():
   return "StubPtr"
 
 
-def get_client_parameters(func: dict) -> list[ClientParam]:
+def get_client_parameters(func: dict) -> List[ClientParam]:
   inputs = [
     p
     for p in func["parameters"]
@@ -155,7 +156,7 @@ def get_client_parameters(func: dict) -> list[ClientParam]:
   ]
 
 
-def split_types_from_variant(variant_type: str) -> tuple[str, str]:
+def split_types_from_variant(variant_type: str) -> Tuple[str, str]:
   match = re.match(r".*simple_variant<([^,]+), ([^>]+)>", variant_type)
   return (match[1], match[2])
 
