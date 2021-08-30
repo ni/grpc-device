@@ -56,7 +56,22 @@ namespace nifake_non_ivi_grpc {
     try {
       auto handle_grpc_session = request->handle();
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-      int32 attribute = request->attribute();
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
       double value {};
       auto status = library_->GetMarbleAttributeDouble(handle, attribute, &value);
       response->set_status(status);
@@ -80,7 +95,22 @@ namespace nifake_non_ivi_grpc {
     try {
       auto handle_grpc_session = request->handle();
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-      int32 attribute = request->attribute();
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
       int32 value {};
       auto status = library_->GetMarbleAttributeInt32(handle, attribute, &value);
       response->set_status(status);
@@ -110,7 +140,22 @@ namespace nifake_non_ivi_grpc {
     try {
       auto handle_grpc_session = request->handle();
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-      int32 attribute = request->attribute();
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
       response->mutable_value_raw()->Resize(10, 0);
       int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
       auto status = library_->GetMarbleAttributeInt32Array(handle, attribute, value);
@@ -579,7 +624,22 @@ namespace nifake_non_ivi_grpc {
     try {
       auto handle_grpc_session = request->handle();
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-      int32 attribute = request->attribute();
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ResetMarbleAttribute(handle, attribute);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -599,7 +659,22 @@ namespace nifake_non_ivi_grpc {
     try {
       auto handle_grpc_session = request->handle();
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-      int32 attribute = request->attribute();
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
       double value = request->value();
       auto status = library_->SetMarbleAttributeDouble(handle, attribute, value);
       response->set_status(status);
@@ -620,7 +695,22 @@ namespace nifake_non_ivi_grpc {
     try {
       auto handle_grpc_session = request->handle();
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-      int32 attribute = request->attribute();
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
       int32 value;
       switch (request->value_enum_case()) {
         case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::kValue: {

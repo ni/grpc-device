@@ -1671,6 +1671,13 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_ReconfigureSleepTime_UpdatesSleepTimeSuc
   EXPECT_NE(get_response.value(), initial_response.value());
 }
 
+TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
+{
+  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Scale_Lin_Slope);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni

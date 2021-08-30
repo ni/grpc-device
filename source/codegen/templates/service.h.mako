@@ -7,7 +7,7 @@ config = data['config']
 functions = data['functions']
 
 function_enums = common_helpers.get_function_enums(functions)
-enums_to_map = [e for e in function_enums if enums[e].get("generate-mappings", False)]
+enums_to_map = service_helpers.get_enums_to_map(functions, enums)
 service_class_prefix = config["service_class_prefix"]
 driver_library_interface = common_helpers.get_library_interface_type_name(config)
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")

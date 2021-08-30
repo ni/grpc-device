@@ -6869,7 +6869,10 @@ message GetAutoConfiguredCDAQSyncConnectionsResponse {
 
 message GetBufferAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  BufferUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    BufferUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetBufferAttributeUInt32Response {
@@ -6879,7 +6882,10 @@ message GetBufferAttributeUInt32Response {
 
 message GetCalInfoAttributeBoolRequest {
   string device_name = 1;
-  CalibrationInfoBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    CalibrationInfoBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetCalInfoAttributeBoolResponse {
@@ -6889,7 +6895,10 @@ message GetCalInfoAttributeBoolResponse {
 
 message GetCalInfoAttributeDoubleRequest {
   string device_name = 1;
-  CalibrationInfoDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    CalibrationInfoDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetCalInfoAttributeDoubleResponse {
@@ -6899,8 +6908,11 @@ message GetCalInfoAttributeDoubleResponse {
 
 message GetCalInfoAttributeStringRequest {
   string device_name = 1;
-  CalibrationInfoStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    CalibrationInfoStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetCalInfoAttributeStringResponse {
@@ -6910,7 +6922,10 @@ message GetCalInfoAttributeStringResponse {
 
 message GetCalInfoAttributeUInt32Request {
   string device_name = 1;
-  CalibrationInfoUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    CalibrationInfoUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetCalInfoAttributeUInt32Response {
@@ -6921,7 +6936,10 @@ message GetCalInfoAttributeUInt32Response {
 message GetChanAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelBoolAttributes attribute = 3;
+  oneof attribute_enum {
+    ChannelBoolAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetChanAttributeBoolResponse {
@@ -6932,7 +6950,10 @@ message GetChanAttributeBoolResponse {
 message GetChanAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelDoubleAttributes attribute = 3;
+  oneof attribute_enum {
+    ChannelDoubleAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetChanAttributeDoubleResponse {
@@ -6943,8 +6964,11 @@ message GetChanAttributeDoubleResponse {
 message GetChanAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelDoubleArrayAttributes attribute = 3;
-  uint32 size = 4;
+  oneof attribute_enum {
+    ChannelDoubleArrayAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  uint32 size = 5;
 }
 
 message GetChanAttributeDoubleArrayResponse {
@@ -6955,7 +6979,10 @@ message GetChanAttributeDoubleArrayResponse {
 message GetChanAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelInt32Attributes attribute = 3;
+  oneof attribute_enum {
+    ChannelInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetChanAttributeInt32Response {
@@ -6967,8 +6994,11 @@ message GetChanAttributeInt32Response {
 message GetChanAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelStringAttributes attribute = 3;
-  uint32 size = 4;
+  oneof attribute_enum {
+    ChannelStringAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  uint32 size = 5;
 }
 
 message GetChanAttributeStringResponse {
@@ -6979,7 +7009,10 @@ message GetChanAttributeStringResponse {
 message GetChanAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelUInt32Attributes attribute = 3;
+  oneof attribute_enum {
+    ChannelUInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetChanAttributeUInt32Response {
@@ -6989,7 +7022,10 @@ message GetChanAttributeUInt32Response {
 
 message GetDeviceAttributeBoolRequest {
   string device_name = 1;
-  DeviceBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    DeviceBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetDeviceAttributeBoolResponse {
@@ -6999,7 +7035,10 @@ message GetDeviceAttributeBoolResponse {
 
 message GetDeviceAttributeDoubleRequest {
   string device_name = 1;
-  DeviceDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    DeviceDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetDeviceAttributeDoubleResponse {
@@ -7009,8 +7048,11 @@ message GetDeviceAttributeDoubleResponse {
 
 message GetDeviceAttributeDoubleArrayRequest {
   string device_name = 1;
-  DeviceDoubleArrayAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    DeviceDoubleArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetDeviceAttributeDoubleArrayResponse {
@@ -7020,7 +7062,10 @@ message GetDeviceAttributeDoubleArrayResponse {
 
 message GetDeviceAttributeInt32Request {
   string device_name = 1;
-  DeviceInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    DeviceInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetDeviceAttributeInt32Response {
@@ -7031,8 +7076,11 @@ message GetDeviceAttributeInt32Response {
 
 message GetDeviceAttributeInt32ArrayRequest {
   string device_name = 1;
-  DeviceInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    DeviceInt32ArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetDeviceAttributeInt32ArrayResponse {
@@ -7043,8 +7091,11 @@ message GetDeviceAttributeInt32ArrayResponse {
 
 message GetDeviceAttributeStringRequest {
   string device_name = 1;
-  DeviceStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    DeviceStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetDeviceAttributeStringResponse {
@@ -7054,7 +7105,10 @@ message GetDeviceAttributeStringResponse {
 
 message GetDeviceAttributeUInt32Request {
   string device_name = 1;
-  DeviceUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    DeviceUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetDeviceAttributeUInt32Response {
@@ -7064,8 +7118,11 @@ message GetDeviceAttributeUInt32Response {
 
 message GetDeviceAttributeUInt32ArrayRequest {
   string device_name = 1;
-  DeviceUInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    DeviceUInt32ArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetDeviceAttributeUInt32ArrayResponse {
@@ -7122,7 +7179,10 @@ message GetErrorStringResponse {
 
 message GetExportedSignalAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  ExportSignalBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    ExportSignalBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetExportedSignalAttributeBoolResponse {
@@ -7132,7 +7192,10 @@ message GetExportedSignalAttributeBoolResponse {
 
 message GetExportedSignalAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  ExportSignalDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    ExportSignalDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetExportedSignalAttributeDoubleResponse {
@@ -7142,7 +7205,10 @@ message GetExportedSignalAttributeDoubleResponse {
 
 message GetExportedSignalAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  ExportSignalInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    ExportSignalInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetExportedSignalAttributeInt32Response {
@@ -7153,8 +7219,11 @@ message GetExportedSignalAttributeInt32Response {
 
 message GetExportedSignalAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  ExportSignalStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    ExportSignalStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetExportedSignalAttributeStringResponse {
@@ -7164,7 +7233,10 @@ message GetExportedSignalAttributeStringResponse {
 
 message GetExportedSignalAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  ExportSignalUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    ExportSignalUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetExportedSignalAttributeUInt32Response {
@@ -7233,7 +7305,10 @@ message GetNthTaskReadChannelResponse {
 
 message GetPersistedChanAttributeBoolRequest {
   string channel = 1;
-  PersistedChannelBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    PersistedChannelBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetPersistedChanAttributeBoolResponse {
@@ -7243,8 +7318,11 @@ message GetPersistedChanAttributeBoolResponse {
 
 message GetPersistedChanAttributeStringRequest {
   string channel = 1;
-  PersistedChannelStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    PersistedChannelStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetPersistedChanAttributeStringResponse {
@@ -7254,7 +7332,10 @@ message GetPersistedChanAttributeStringResponse {
 
 message GetPersistedScaleAttributeBoolRequest {
   string scale_name = 1;
-  PersistedScaleBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    PersistedScaleBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetPersistedScaleAttributeBoolResponse {
@@ -7264,8 +7345,11 @@ message GetPersistedScaleAttributeBoolResponse {
 
 message GetPersistedScaleAttributeStringRequest {
   string scale_name = 1;
-  PersistedScaleStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    PersistedScaleStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetPersistedScaleAttributeStringResponse {
@@ -7275,7 +7359,10 @@ message GetPersistedScaleAttributeStringResponse {
 
 message GetPersistedTaskAttributeBoolRequest {
   string task_name = 1;
-  PersistedTaskBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    PersistedTaskBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetPersistedTaskAttributeBoolResponse {
@@ -7285,8 +7372,11 @@ message GetPersistedTaskAttributeBoolResponse {
 
 message GetPersistedTaskAttributeStringRequest {
   string task_name = 1;
-  PersistedTaskStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    PersistedTaskStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetPersistedTaskAttributeStringResponse {
@@ -7296,7 +7386,10 @@ message GetPersistedTaskAttributeStringResponse {
 
 message GetPhysicalChanAttributeBoolRequest {
   string physical_channel = 1;
-  PhysicalChannelBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    PhysicalChannelBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetPhysicalChanAttributeBoolResponse {
@@ -7306,8 +7399,11 @@ message GetPhysicalChanAttributeBoolResponse {
 
 message GetPhysicalChanAttributeBytesRequest {
   string physical_channel = 1;
-  PhysicalChannelBytesAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    PhysicalChannelBytesAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeBytesResponse {
@@ -7317,7 +7413,10 @@ message GetPhysicalChanAttributeBytesResponse {
 
 message GetPhysicalChanAttributeDoubleRequest {
   string physical_channel = 1;
-  PhysicalChannelDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    PhysicalChannelDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetPhysicalChanAttributeDoubleResponse {
@@ -7327,8 +7426,11 @@ message GetPhysicalChanAttributeDoubleResponse {
 
 message GetPhysicalChanAttributeDoubleArrayRequest {
   string physical_channel = 1;
-  PhysicalChannelDoubleArrayAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    PhysicalChannelDoubleArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeDoubleArrayResponse {
@@ -7338,7 +7440,10 @@ message GetPhysicalChanAttributeDoubleArrayResponse {
 
 message GetPhysicalChanAttributeInt32Request {
   string physical_channel = 1;
-  PhysicalChannelInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    PhysicalChannelInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetPhysicalChanAttributeInt32Response {
@@ -7349,8 +7454,11 @@ message GetPhysicalChanAttributeInt32Response {
 
 message GetPhysicalChanAttributeInt32ArrayRequest {
   string physical_channel = 1;
-  PhysicalChannelInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    PhysicalChannelInt32ArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeInt32ArrayResponse {
@@ -7361,8 +7469,11 @@ message GetPhysicalChanAttributeInt32ArrayResponse {
 
 message GetPhysicalChanAttributeStringRequest {
   string physical_channel = 1;
-  PhysicalChannelStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    PhysicalChannelStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeStringResponse {
@@ -7372,7 +7483,10 @@ message GetPhysicalChanAttributeStringResponse {
 
 message GetPhysicalChanAttributeUInt32Request {
   string physical_channel = 1;
-  PhysicalChannelUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    PhysicalChannelUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetPhysicalChanAttributeUInt32Response {
@@ -7382,8 +7496,11 @@ message GetPhysicalChanAttributeUInt32Response {
 
 message GetPhysicalChanAttributeUInt32ArrayRequest {
   string physical_channel = 1;
-  PhysicalChannelUInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    PhysicalChannelUInt32ArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeUInt32ArrayResponse {
@@ -7393,7 +7510,10 @@ message GetPhysicalChanAttributeUInt32ArrayResponse {
 
 message GetReadAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  ReadBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    ReadBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetReadAttributeBoolResponse {
@@ -7403,7 +7523,10 @@ message GetReadAttributeBoolResponse {
 
 message GetReadAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  ReadDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    ReadDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetReadAttributeDoubleResponse {
@@ -7413,7 +7536,10 @@ message GetReadAttributeDoubleResponse {
 
 message GetReadAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  ReadInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    ReadInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetReadAttributeInt32Response {
@@ -7424,8 +7550,11 @@ message GetReadAttributeInt32Response {
 
 message GetReadAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  ReadStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    ReadStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetReadAttributeStringResponse {
@@ -7435,7 +7564,10 @@ message GetReadAttributeStringResponse {
 
 message GetReadAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  ReadUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    ReadUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetReadAttributeUInt32Response {
@@ -7445,7 +7577,10 @@ message GetReadAttributeUInt32Response {
 
 message GetReadAttributeUInt64Request {
   nidevice_grpc.Session task = 1;
-  ReadUInt64Attributes attribute = 2;
+  oneof attribute_enum {
+    ReadUInt64Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetReadAttributeUInt64Response {
@@ -7455,7 +7590,10 @@ message GetReadAttributeUInt64Response {
 
 message GetRealTimeAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  RealTimeBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    RealTimeBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetRealTimeAttributeBoolResponse {
@@ -7465,7 +7603,10 @@ message GetRealTimeAttributeBoolResponse {
 
 message GetRealTimeAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  RealTimeInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    RealTimeInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetRealTimeAttributeInt32Response {
@@ -7476,7 +7617,10 @@ message GetRealTimeAttributeInt32Response {
 
 message GetRealTimeAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  RealTimeUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    RealTimeUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetRealTimeAttributeUInt32Response {
@@ -7495,7 +7639,10 @@ message GetRefTrigTimestampValResponse {
 
 message GetScaleAttributeDoubleRequest {
   string scale_name = 1;
-  ScaleDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    ScaleDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetScaleAttributeDoubleResponse {
@@ -7505,8 +7652,11 @@ message GetScaleAttributeDoubleResponse {
 
 message GetScaleAttributeDoubleArrayRequest {
   string scale_name = 1;
-  ScaleDoubleArrayAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    ScaleDoubleArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetScaleAttributeDoubleArrayResponse {
@@ -7516,7 +7666,10 @@ message GetScaleAttributeDoubleArrayResponse {
 
 message GetScaleAttributeInt32Request {
   string scale_name = 1;
-  ScaleInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    ScaleInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetScaleAttributeInt32Response {
@@ -7527,8 +7680,11 @@ message GetScaleAttributeInt32Response {
 
 message GetScaleAttributeStringRequest {
   string scale_name = 1;
-  ScaleStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    ScaleStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetScaleAttributeStringResponse {
@@ -7577,8 +7733,11 @@ message GetSyncPulseTimeWhenResponse {
 }
 
 message GetSystemInfoAttributeStringRequest {
-  SystemStringAttributes attribute = 1;
-  uint32 size = 2;
+  oneof attribute_enum {
+    SystemStringAttributes attribute = 1;
+    int32 attribute_raw = 2;
+  }
+  uint32 size = 3;
 }
 
 message GetSystemInfoAttributeStringResponse {
@@ -7587,7 +7746,10 @@ message GetSystemInfoAttributeStringResponse {
 }
 
 message GetSystemInfoAttributeUInt32Request {
-  SystemUInt32Attributes attribute = 1;
+  oneof attribute_enum {
+    SystemUInt32Attributes attribute = 1;
+    int32 attribute_raw = 2;
+  }
 }
 
 message GetSystemInfoAttributeUInt32Response {
@@ -7597,7 +7759,10 @@ message GetSystemInfoAttributeUInt32Response {
 
 message GetTaskAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  TaskBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    TaskBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTaskAttributeBoolResponse {
@@ -7607,8 +7772,11 @@ message GetTaskAttributeBoolResponse {
 
 message GetTaskAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  TaskStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    TaskStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetTaskAttributeStringResponse {
@@ -7618,7 +7786,10 @@ message GetTaskAttributeStringResponse {
 
 message GetTaskAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  TaskUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    TaskUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTaskAttributeUInt32Response {
@@ -7628,7 +7799,10 @@ message GetTaskAttributeUInt32Response {
 
 message GetTimingAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  TimingBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    TimingBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTimingAttributeBoolResponse {
@@ -7638,7 +7812,10 @@ message GetTimingAttributeBoolResponse {
 
 message GetTimingAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  TimingDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    TimingDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTimingAttributeDoubleResponse {
@@ -7649,7 +7826,10 @@ message GetTimingAttributeDoubleResponse {
 message GetTimingAttributeExBoolRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingBoolAttributes attribute = 3;
+  oneof attribute_enum {
+    TimingBoolAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetTimingAttributeExBoolResponse {
@@ -7660,7 +7840,10 @@ message GetTimingAttributeExBoolResponse {
 message GetTimingAttributeExDoubleRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingDoubleAttributes attribute = 3;
+  oneof attribute_enum {
+    TimingDoubleAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetTimingAttributeExDoubleResponse {
@@ -7671,7 +7854,10 @@ message GetTimingAttributeExDoubleResponse {
 message GetTimingAttributeExInt32Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingInt32Attributes attribute = 3;
+  oneof attribute_enum {
+    TimingInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetTimingAttributeExInt32Response {
@@ -7683,8 +7869,11 @@ message GetTimingAttributeExInt32Response {
 message GetTimingAttributeExStringRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingStringAttributes attribute = 3;
-  uint32 size = 4;
+  oneof attribute_enum {
+    TimingStringAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  uint32 size = 5;
 }
 
 message GetTimingAttributeExStringResponse {
@@ -7695,7 +7884,10 @@ message GetTimingAttributeExStringResponse {
 message GetTimingAttributeExTimestampRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingTimestampAttributes attribute = 3;
+  oneof attribute_enum {
+    TimingTimestampAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetTimingAttributeExTimestampResponse {
@@ -7706,7 +7898,10 @@ message GetTimingAttributeExTimestampResponse {
 message GetTimingAttributeExUInt32Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingUInt32Attributes attribute = 3;
+  oneof attribute_enum {
+    TimingUInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetTimingAttributeExUInt32Response {
@@ -7716,7 +7911,10 @@ message GetTimingAttributeExUInt32Response {
 
 message GetTimingAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  TimingInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    TimingInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTimingAttributeInt32Response {
@@ -7727,8 +7925,11 @@ message GetTimingAttributeInt32Response {
 
 message GetTimingAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  TimingStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    TimingStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetTimingAttributeStringResponse {
@@ -7738,7 +7939,10 @@ message GetTimingAttributeStringResponse {
 
 message GetTimingAttributeTimestampRequest {
   nidevice_grpc.Session task = 1;
-  TimingTimestampAttributes attribute = 2;
+  oneof attribute_enum {
+    TimingTimestampAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTimingAttributeTimestampResponse {
@@ -7748,7 +7952,10 @@ message GetTimingAttributeTimestampResponse {
 
 message GetTimingAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  TimingUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    TimingUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTimingAttributeUInt32Response {
@@ -7758,7 +7965,10 @@ message GetTimingAttributeUInt32Response {
 
 message GetTrigAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  TriggerBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    TriggerBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTrigAttributeBoolResponse {
@@ -7768,7 +7978,10 @@ message GetTrigAttributeBoolResponse {
 
 message GetTrigAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  TriggerDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    TriggerDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTrigAttributeDoubleResponse {
@@ -7778,8 +7991,11 @@ message GetTrigAttributeDoubleResponse {
 
 message GetTrigAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
-  TriggerDoubleArrayAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    TriggerDoubleArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetTrigAttributeDoubleArrayResponse {
@@ -7789,7 +8005,10 @@ message GetTrigAttributeDoubleArrayResponse {
 
 message GetTrigAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  TriggerInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    TriggerInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTrigAttributeInt32Response {
@@ -7800,8 +8019,11 @@ message GetTrigAttributeInt32Response {
 
 message GetTrigAttributeInt32ArrayRequest {
   nidevice_grpc.Session task = 1;
-  TriggerInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    TriggerInt32ArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetTrigAttributeInt32ArrayResponse {
@@ -7812,8 +8034,11 @@ message GetTrigAttributeInt32ArrayResponse {
 
 message GetTrigAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  TriggerStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    TriggerStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetTrigAttributeStringResponse {
@@ -7823,7 +8048,10 @@ message GetTrigAttributeStringResponse {
 
 message GetTrigAttributeTimestampRequest {
   nidevice_grpc.Session task = 1;
-  TriggerTimestampAttributes attribute = 2;
+  oneof attribute_enum {
+    TriggerTimestampAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTrigAttributeTimestampResponse {
@@ -7833,7 +8061,10 @@ message GetTrigAttributeTimestampResponse {
 
 message GetTrigAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  TriggerUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    TriggerUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetTrigAttributeUInt32Response {
@@ -7844,7 +8075,10 @@ message GetTrigAttributeUInt32Response {
 message GetWatchdogAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
-  WatchdogBoolAttributes attribute = 3;
+  oneof attribute_enum {
+    WatchdogBoolAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetWatchdogAttributeBoolResponse {
@@ -7855,7 +8089,10 @@ message GetWatchdogAttributeBoolResponse {
 message GetWatchdogAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
-  WatchdogDoubleAttributes attribute = 3;
+  oneof attribute_enum {
+    WatchdogDoubleAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetWatchdogAttributeDoubleResponse {
@@ -7866,7 +8103,10 @@ message GetWatchdogAttributeDoubleResponse {
 message GetWatchdogAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   string lines = 2;
-  WatchdogInt32Attributes attribute = 3;
+  oneof attribute_enum {
+    WatchdogInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message GetWatchdogAttributeInt32Response {
@@ -7878,8 +8118,11 @@ message GetWatchdogAttributeInt32Response {
 message GetWatchdogAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
-  WatchdogStringAttributes attribute = 3;
-  uint32 size = 4;
+  oneof attribute_enum {
+    WatchdogStringAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  uint32 size = 5;
 }
 
 message GetWatchdogAttributeStringResponse {
@@ -7889,7 +8132,10 @@ message GetWatchdogAttributeStringResponse {
 
 message GetWriteAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  WriteBoolAttributes attribute = 2;
+  oneof attribute_enum {
+    WriteBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetWriteAttributeBoolResponse {
@@ -7899,7 +8145,10 @@ message GetWriteAttributeBoolResponse {
 
 message GetWriteAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  WriteDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    WriteDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetWriteAttributeDoubleResponse {
@@ -7909,7 +8158,10 @@ message GetWriteAttributeDoubleResponse {
 
 message GetWriteAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  WriteInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    WriteInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetWriteAttributeInt32Response {
@@ -7920,8 +8172,11 @@ message GetWriteAttributeInt32Response {
 
 message GetWriteAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  WriteStringAttributes attribute = 2;
-  uint32 size = 3;
+  oneof attribute_enum {
+    WriteStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 size = 4;
 }
 
 message GetWriteAttributeStringResponse {
@@ -7931,7 +8186,10 @@ message GetWriteAttributeStringResponse {
 
 message GetWriteAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  WriteUInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    WriteUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetWriteAttributeUInt32Response {
@@ -8368,7 +8626,10 @@ message ReserveNetworkDeviceResponse {
 
 message ResetBufferAttributeRequest {
   nidevice_grpc.Session task = 1;
-  BufferResetAttributes attribute = 2;
+  oneof attribute_enum {
+    BufferResetAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message ResetBufferAttributeResponse {
@@ -8378,7 +8639,10 @@ message ResetBufferAttributeResponse {
 message ResetChanAttributeRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelResetAttributes attribute = 3;
+  oneof attribute_enum {
+    ChannelResetAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message ResetChanAttributeResponse {
@@ -8395,7 +8659,10 @@ message ResetDeviceResponse {
 
 message ResetExportedSignalAttributeRequest {
   nidevice_grpc.Session task = 1;
-  ExportSignalResetAttributes attribute = 2;
+  oneof attribute_enum {
+    ExportSignalResetAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message ResetExportedSignalAttributeResponse {
@@ -8404,7 +8671,10 @@ message ResetExportedSignalAttributeResponse {
 
 message ResetReadAttributeRequest {
   nidevice_grpc.Session task = 1;
-  ReadResetAttributes attribute = 2;
+  oneof attribute_enum {
+    ReadResetAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message ResetReadAttributeResponse {
@@ -8413,7 +8683,10 @@ message ResetReadAttributeResponse {
 
 message ResetRealTimeAttributeRequest {
   nidevice_grpc.Session task = 1;
-  RealTimeResetAttributes attribute = 2;
+  oneof attribute_enum {
+    RealTimeResetAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message ResetRealTimeAttributeResponse {
@@ -8422,7 +8695,10 @@ message ResetRealTimeAttributeResponse {
 
 message ResetTimingAttributeRequest {
   nidevice_grpc.Session task = 1;
-  TimingResetAttributes attribute = 2;
+  oneof attribute_enum {
+    TimingResetAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message ResetTimingAttributeResponse {
@@ -8432,7 +8708,10 @@ message ResetTimingAttributeResponse {
 message ResetTimingAttributeExRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingResetAttributes attribute = 3;
+  oneof attribute_enum {
+    TimingResetAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message ResetTimingAttributeExResponse {
@@ -8441,7 +8720,10 @@ message ResetTimingAttributeExResponse {
 
 message ResetTrigAttributeRequest {
   nidevice_grpc.Session task = 1;
-  TriggerResetAttributes attribute = 2;
+  oneof attribute_enum {
+    TriggerResetAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message ResetTrigAttributeResponse {
@@ -8451,7 +8733,10 @@ message ResetTrigAttributeResponse {
 message ResetWatchdogAttributeRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
-  WatchdogResetAttributes attribute = 3;
+  oneof attribute_enum {
+    WatchdogResetAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
 }
 
 message ResetWatchdogAttributeResponse {
@@ -8460,7 +8745,10 @@ message ResetWatchdogAttributeResponse {
 
 message ResetWriteAttributeRequest {
   nidevice_grpc.Session task = 1;
-  WriteResetAttributes attribute = 2;
+  oneof attribute_enum {
+    WriteResetAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message ResetWriteAttributeResponse {
@@ -8574,8 +8862,11 @@ message SetArmStartTrigTrigWhenResponse {
 
 message SetBufferAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  BufferUInt32Attributes attribute = 2;
-  uint32 value = 3;
+  oneof attribute_enum {
+    BufferUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 value = 4;
 }
 
 message SetBufferAttributeUInt32Response {
@@ -8584,8 +8875,11 @@ message SetBufferAttributeUInt32Response {
 
 message SetCalInfoAttributeBoolRequest {
   string device_name = 1;
-  CalibrationInfoBoolAttributes attribute = 2;
-  bool value = 3;
+  oneof attribute_enum {
+    CalibrationInfoBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  bool value = 4;
 }
 
 message SetCalInfoAttributeBoolResponse {
@@ -8594,8 +8888,11 @@ message SetCalInfoAttributeBoolResponse {
 
 message SetCalInfoAttributeDoubleRequest {
   string device_name = 1;
-  CalibrationInfoDoubleAttributes attribute = 2;
-  double value = 3;
+  oneof attribute_enum {
+    CalibrationInfoDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  double value = 4;
 }
 
 message SetCalInfoAttributeDoubleResponse {
@@ -8604,8 +8901,11 @@ message SetCalInfoAttributeDoubleResponse {
 
 message SetCalInfoAttributeStringRequest {
   string device_name = 1;
-  CalibrationInfoStringAttributes attribute = 2;
-  string value = 3;
+  oneof attribute_enum {
+    CalibrationInfoStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  string value = 4;
 }
 
 message SetCalInfoAttributeStringResponse {
@@ -8614,8 +8914,11 @@ message SetCalInfoAttributeStringResponse {
 
 message SetCalInfoAttributeUInt32Request {
   string device_name = 1;
-  CalibrationInfoUInt32Attributes attribute = 2;
-  uint32 value = 3;
+  oneof attribute_enum {
+    CalibrationInfoUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 value = 4;
 }
 
 message SetCalInfoAttributeUInt32Response {
@@ -8625,8 +8928,11 @@ message SetCalInfoAttributeUInt32Response {
 message SetChanAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelBoolAttributes attribute = 3;
-  bool value = 4;
+  oneof attribute_enum {
+    ChannelBoolAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  bool value = 5;
 }
 
 message SetChanAttributeBoolResponse {
@@ -8636,8 +8942,11 @@ message SetChanAttributeBoolResponse {
 message SetChanAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelDoubleAttributes attribute = 3;
-  double value = 4;
+  oneof attribute_enum {
+    ChannelDoubleAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  double value = 5;
 }
 
 message SetChanAttributeDoubleResponse {
@@ -8647,8 +8956,11 @@ message SetChanAttributeDoubleResponse {
 message SetChanAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelDoubleArrayAttributes attribute = 3;
-  repeated double value = 4;
+  oneof attribute_enum {
+    ChannelDoubleArrayAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  repeated double value = 5;
 }
 
 message SetChanAttributeDoubleArrayResponse {
@@ -8658,10 +8970,13 @@ message SetChanAttributeDoubleArrayResponse {
 message SetChanAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelInt32Attributes attribute = 3;
+  oneof attribute_enum {
+    ChannelInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
   oneof value_enum {
-    ChannelInt32AttributeValues value = 4;
-    int32 value_raw = 5;
+    ChannelInt32AttributeValues value = 5;
+    int32 value_raw = 6;
   }
 }
 
@@ -8672,8 +8987,11 @@ message SetChanAttributeInt32Response {
 message SetChanAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelStringAttributes attribute = 3;
-  string value = 4;
+  oneof attribute_enum {
+    ChannelStringAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  string value = 5;
 }
 
 message SetChanAttributeStringResponse {
@@ -8683,8 +9001,11 @@ message SetChanAttributeStringResponse {
 message SetChanAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   string channel = 2;
-  ChannelUInt32Attributes attribute = 3;
-  uint32 value = 4;
+  oneof attribute_enum {
+    ChannelUInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  uint32 value = 5;
 }
 
 message SetChanAttributeUInt32Response {
@@ -8723,8 +9044,11 @@ message SetDigitalPullUpPullDownStatesResponse {
 
 message SetExportedSignalAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  ExportSignalBoolAttributes attribute = 2;
-  bool value = 3;
+  oneof attribute_enum {
+    ExportSignalBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  bool value = 4;
 }
 
 message SetExportedSignalAttributeBoolResponse {
@@ -8733,8 +9057,11 @@ message SetExportedSignalAttributeBoolResponse {
 
 message SetExportedSignalAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  ExportSignalDoubleAttributes attribute = 2;
-  double value = 3;
+  oneof attribute_enum {
+    ExportSignalDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  double value = 4;
 }
 
 message SetExportedSignalAttributeDoubleResponse {
@@ -8743,10 +9070,13 @@ message SetExportedSignalAttributeDoubleResponse {
 
 message SetExportedSignalAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  ExportSignalInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    ExportSignalInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
   oneof value_enum {
-    ExportSignalInt32AttributeValues value = 3;
-    int32 value_raw = 4;
+    ExportSignalInt32AttributeValues value = 4;
+    int32 value_raw = 5;
   }
 }
 
@@ -8756,8 +9086,11 @@ message SetExportedSignalAttributeInt32Response {
 
 message SetExportedSignalAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  ExportSignalStringAttributes attribute = 2;
-  string value = 3;
+  oneof attribute_enum {
+    ExportSignalStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  string value = 4;
 }
 
 message SetExportedSignalAttributeStringResponse {
@@ -8766,8 +9099,11 @@ message SetExportedSignalAttributeStringResponse {
 
 message SetExportedSignalAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  ExportSignalUInt32Attributes attribute = 2;
-  uint32 value = 3;
+  oneof attribute_enum {
+    ExportSignalUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 value = 4;
 }
 
 message SetExportedSignalAttributeUInt32Response {
@@ -8785,8 +9121,11 @@ message SetFirstSampClkWhenResponse {
 
 message SetReadAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  ReadBoolAttributes attribute = 2;
-  bool value = 3;
+  oneof attribute_enum {
+    ReadBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  bool value = 4;
 }
 
 message SetReadAttributeBoolResponse {
@@ -8795,8 +9134,11 @@ message SetReadAttributeBoolResponse {
 
 message SetReadAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  ReadDoubleAttributes attribute = 2;
-  double value = 3;
+  oneof attribute_enum {
+    ReadDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  double value = 4;
 }
 
 message SetReadAttributeDoubleResponse {
@@ -8805,10 +9147,13 @@ message SetReadAttributeDoubleResponse {
 
 message SetReadAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  ReadInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    ReadInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
   oneof value_enum {
-    ReadInt32AttributeValues value = 3;
-    int32 value_raw = 4;
+    ReadInt32AttributeValues value = 4;
+    int32 value_raw = 5;
   }
 }
 
@@ -8818,8 +9163,11 @@ message SetReadAttributeInt32Response {
 
 message SetReadAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  ReadStringAttributes attribute = 2;
-  string value = 3;
+  oneof attribute_enum {
+    ReadStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  string value = 4;
 }
 
 message SetReadAttributeStringResponse {
@@ -8828,8 +9176,11 @@ message SetReadAttributeStringResponse {
 
 message SetReadAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  ReadUInt32Attributes attribute = 2;
-  uint32 value = 3;
+  oneof attribute_enum {
+    ReadUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 value = 4;
 }
 
 message SetReadAttributeUInt32Response {
@@ -8838,8 +9189,11 @@ message SetReadAttributeUInt32Response {
 
 message SetReadAttributeUInt64Request {
   nidevice_grpc.Session task = 1;
-  ReadUInt64Attributes attribute = 2;
-  uint64 value = 3;
+  oneof attribute_enum {
+    ReadUInt64Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint64 value = 4;
 }
 
 message SetReadAttributeUInt64Response {
@@ -8848,8 +9202,11 @@ message SetReadAttributeUInt64Response {
 
 message SetRealTimeAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  RealTimeBoolAttributes attribute = 2;
-  bool value = 3;
+  oneof attribute_enum {
+    RealTimeBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  bool value = 4;
 }
 
 message SetRealTimeAttributeBoolResponse {
@@ -8858,10 +9215,13 @@ message SetRealTimeAttributeBoolResponse {
 
 message SetRealTimeAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  RealTimeInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    RealTimeInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
   oneof value_enum {
-    RealTimeInt32AttributeValues value = 3;
-    int32 value_raw = 4;
+    RealTimeInt32AttributeValues value = 4;
+    int32 value_raw = 5;
   }
 }
 
@@ -8871,8 +9231,11 @@ message SetRealTimeAttributeInt32Response {
 
 message SetRealTimeAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  RealTimeUInt32Attributes attribute = 2;
-  uint32 value = 3;
+  oneof attribute_enum {
+    RealTimeUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 value = 4;
 }
 
 message SetRealTimeAttributeUInt32Response {
@@ -8881,8 +9244,11 @@ message SetRealTimeAttributeUInt32Response {
 
 message SetScaleAttributeDoubleRequest {
   string scale_name = 1;
-  ScaleDoubleAttributes attribute = 2;
-  double value = 3;
+  oneof attribute_enum {
+    ScaleDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  double value = 4;
 }
 
 message SetScaleAttributeDoubleResponse {
@@ -8891,8 +9257,11 @@ message SetScaleAttributeDoubleResponse {
 
 message SetScaleAttributeDoubleArrayRequest {
   string scale_name = 1;
-  ScaleDoubleArrayAttributes attribute = 2;
-  repeated double value = 3;
+  oneof attribute_enum {
+    ScaleDoubleArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  repeated double value = 4;
 }
 
 message SetScaleAttributeDoubleArrayResponse {
@@ -8901,10 +9270,13 @@ message SetScaleAttributeDoubleArrayResponse {
 
 message SetScaleAttributeInt32Request {
   string scale_name = 1;
-  ScaleInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    ScaleInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
   oneof value_enum {
-    ScaleInt32AttributeValues value = 3;
-    int32 value_raw = 4;
+    ScaleInt32AttributeValues value = 4;
+    int32 value_raw = 5;
   }
 }
 
@@ -8914,8 +9286,11 @@ message SetScaleAttributeInt32Response {
 
 message SetScaleAttributeStringRequest {
   string scale_name = 1;
-  ScaleStringAttributes attribute = 2;
-  string value = 3;
+  oneof attribute_enum {
+    ScaleStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  string value = 4;
 }
 
 message SetScaleAttributeStringResponse {
@@ -8942,8 +9317,11 @@ message SetSyncPulseTimeWhenResponse {
 
 message SetTimingAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  TimingBoolAttributes attribute = 2;
-  bool value = 3;
+  oneof attribute_enum {
+    TimingBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  bool value = 4;
 }
 
 message SetTimingAttributeBoolResponse {
@@ -8952,8 +9330,11 @@ message SetTimingAttributeBoolResponse {
 
 message SetTimingAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  TimingDoubleAttributes attribute = 2;
-  double value = 3;
+  oneof attribute_enum {
+    TimingDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  double value = 4;
 }
 
 message SetTimingAttributeDoubleResponse {
@@ -8963,8 +9344,11 @@ message SetTimingAttributeDoubleResponse {
 message SetTimingAttributeExBoolRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingBoolAttributes attribute = 3;
-  bool value = 4;
+  oneof attribute_enum {
+    TimingBoolAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  bool value = 5;
 }
 
 message SetTimingAttributeExBoolResponse {
@@ -8974,8 +9358,11 @@ message SetTimingAttributeExBoolResponse {
 message SetTimingAttributeExDoubleRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingDoubleAttributes attribute = 3;
-  double value = 4;
+  oneof attribute_enum {
+    TimingDoubleAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  double value = 5;
 }
 
 message SetTimingAttributeExDoubleResponse {
@@ -8985,10 +9372,13 @@ message SetTimingAttributeExDoubleResponse {
 message SetTimingAttributeExInt32Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingInt32Attributes attribute = 3;
+  oneof attribute_enum {
+    TimingInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
   oneof value_enum {
-    TimingInt32AttributeValues value = 4;
-    int32 value_raw = 5;
+    TimingInt32AttributeValues value = 5;
+    int32 value_raw = 6;
   }
 }
 
@@ -8999,8 +9389,11 @@ message SetTimingAttributeExInt32Response {
 message SetTimingAttributeExStringRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingStringAttributes attribute = 3;
-  string value = 4;
+  oneof attribute_enum {
+    TimingStringAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  string value = 5;
 }
 
 message SetTimingAttributeExStringResponse {
@@ -9010,8 +9403,11 @@ message SetTimingAttributeExStringResponse {
 message SetTimingAttributeExTimestampRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingTimestampAttributes attribute = 3;
-  google.protobuf.Timestamp value = 4;
+  oneof attribute_enum {
+    TimingTimestampAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  google.protobuf.Timestamp value = 5;
 }
 
 message SetTimingAttributeExTimestampResponse {
@@ -9021,8 +9417,11 @@ message SetTimingAttributeExTimestampResponse {
 message SetTimingAttributeExUInt32Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
-  TimingUInt32Attributes attribute = 3;
-  uint32 value = 4;
+  oneof attribute_enum {
+    TimingUInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  uint32 value = 5;
 }
 
 message SetTimingAttributeExUInt32Response {
@@ -9031,10 +9430,13 @@ message SetTimingAttributeExUInt32Response {
 
 message SetTimingAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  TimingInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    TimingInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
   oneof value_enum {
-    TimingInt32AttributeValues value = 3;
-    int32 value_raw = 4;
+    TimingInt32AttributeValues value = 4;
+    int32 value_raw = 5;
   }
 }
 
@@ -9044,8 +9446,11 @@ message SetTimingAttributeInt32Response {
 
 message SetTimingAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  TimingStringAttributes attribute = 2;
-  string value = 3;
+  oneof attribute_enum {
+    TimingStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  string value = 4;
 }
 
 message SetTimingAttributeStringResponse {
@@ -9054,8 +9459,11 @@ message SetTimingAttributeStringResponse {
 
 message SetTimingAttributeTimestampRequest {
   nidevice_grpc.Session task = 1;
-  TimingTimestampAttributes attribute = 2;
-  google.protobuf.Timestamp value = 3;
+  oneof attribute_enum {
+    TimingTimestampAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  google.protobuf.Timestamp value = 4;
 }
 
 message SetTimingAttributeTimestampResponse {
@@ -9064,8 +9472,11 @@ message SetTimingAttributeTimestampResponse {
 
 message SetTimingAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  TimingUInt32Attributes attribute = 2;
-  uint32 value = 3;
+  oneof attribute_enum {
+    TimingUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 value = 4;
 }
 
 message SetTimingAttributeUInt32Response {
@@ -9074,8 +9485,11 @@ message SetTimingAttributeUInt32Response {
 
 message SetTrigAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  TriggerBoolAttributes attribute = 2;
-  bool value = 3;
+  oneof attribute_enum {
+    TriggerBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  bool value = 4;
 }
 
 message SetTrigAttributeBoolResponse {
@@ -9084,8 +9498,11 @@ message SetTrigAttributeBoolResponse {
 
 message SetTrigAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  TriggerDoubleAttributes attribute = 2;
-  double value = 3;
+  oneof attribute_enum {
+    TriggerDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  double value = 4;
 }
 
 message SetTrigAttributeDoubleResponse {
@@ -9094,8 +9511,11 @@ message SetTrigAttributeDoubleResponse {
 
 message SetTrigAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
-  TriggerDoubleArrayAttributes attribute = 2;
-  repeated double value = 3;
+  oneof attribute_enum {
+    TriggerDoubleArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  repeated double value = 4;
 }
 
 message SetTrigAttributeDoubleArrayResponse {
@@ -9104,10 +9524,13 @@ message SetTrigAttributeDoubleArrayResponse {
 
 message SetTrigAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  TriggerInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    TriggerInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
   oneof value_enum {
-    TriggerInt32AttributeValues value = 3;
-    int32 value_raw = 4;
+    TriggerInt32AttributeValues value = 4;
+    int32 value_raw = 5;
   }
 }
 
@@ -9117,9 +9540,12 @@ message SetTrigAttributeInt32Response {
 
 message SetTrigAttributeInt32ArrayRequest {
   nidevice_grpc.Session task = 1;
-  TriggerInt32ArrayAttributes attribute = 2;
-  repeated int32 value = 3;
-  uint32 size = 4;
+  oneof attribute_enum {
+    TriggerInt32ArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  repeated int32 value = 4;
+  uint32 size = 5;
 }
 
 message SetTrigAttributeInt32ArrayResponse {
@@ -9128,8 +9554,11 @@ message SetTrigAttributeInt32ArrayResponse {
 
 message SetTrigAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  TriggerStringAttributes attribute = 2;
-  string value = 3;
+  oneof attribute_enum {
+    TriggerStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  string value = 4;
 }
 
 message SetTrigAttributeStringResponse {
@@ -9138,8 +9567,11 @@ message SetTrigAttributeStringResponse {
 
 message SetTrigAttributeTimestampRequest {
   nidevice_grpc.Session task = 1;
-  TriggerTimestampAttributes attribute = 2;
-  google.protobuf.Timestamp value = 3;
+  oneof attribute_enum {
+    TriggerTimestampAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  google.protobuf.Timestamp value = 4;
 }
 
 message SetTrigAttributeTimestampResponse {
@@ -9148,8 +9580,11 @@ message SetTrigAttributeTimestampResponse {
 
 message SetTrigAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  TriggerUInt32Attributes attribute = 2;
-  uint32 value = 3;
+  oneof attribute_enum {
+    TriggerUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 value = 4;
 }
 
 message SetTrigAttributeUInt32Response {
@@ -9159,8 +9594,11 @@ message SetTrigAttributeUInt32Response {
 message SetWatchdogAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
-  WatchdogBoolAttributes attribute = 3;
-  bool value = 4;
+  oneof attribute_enum {
+    WatchdogBoolAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  bool value = 5;
 }
 
 message SetWatchdogAttributeBoolResponse {
@@ -9170,8 +9608,11 @@ message SetWatchdogAttributeBoolResponse {
 message SetWatchdogAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
-  WatchdogDoubleAttributes attribute = 3;
-  double value = 4;
+  oneof attribute_enum {
+    WatchdogDoubleAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  double value = 5;
 }
 
 message SetWatchdogAttributeDoubleResponse {
@@ -9181,10 +9622,13 @@ message SetWatchdogAttributeDoubleResponse {
 message SetWatchdogAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   string lines = 2;
-  WatchdogInt32Attributes attribute = 3;
+  oneof attribute_enum {
+    WatchdogInt32Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
   oneof value_enum {
-    WatchdogInt32AttributeValues value = 4;
-    int32 value_raw = 5;
+    WatchdogInt32AttributeValues value = 5;
+    int32 value_raw = 6;
   }
 }
 
@@ -9195,8 +9639,11 @@ message SetWatchdogAttributeInt32Response {
 message SetWatchdogAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
-  WatchdogStringAttributes attribute = 3;
-  string value = 4;
+  oneof attribute_enum {
+    WatchdogStringAttributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  string value = 5;
 }
 
 message SetWatchdogAttributeStringResponse {
@@ -9205,8 +9652,11 @@ message SetWatchdogAttributeStringResponse {
 
 message SetWriteAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
-  WriteBoolAttributes attribute = 2;
-  bool value = 3;
+  oneof attribute_enum {
+    WriteBoolAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  bool value = 4;
 }
 
 message SetWriteAttributeBoolResponse {
@@ -9215,8 +9665,11 @@ message SetWriteAttributeBoolResponse {
 
 message SetWriteAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
-  WriteDoubleAttributes attribute = 2;
-  double value = 3;
+  oneof attribute_enum {
+    WriteDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  double value = 4;
 }
 
 message SetWriteAttributeDoubleResponse {
@@ -9225,10 +9678,13 @@ message SetWriteAttributeDoubleResponse {
 
 message SetWriteAttributeInt32Request {
   nidevice_grpc.Session task = 1;
-  WriteInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    WriteInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
   oneof value_enum {
-    WriteInt32AttributeValues value = 3;
-    int32 value_raw = 4;
+    WriteInt32AttributeValues value = 4;
+    int32 value_raw = 5;
   }
 }
 
@@ -9238,8 +9694,11 @@ message SetWriteAttributeInt32Response {
 
 message SetWriteAttributeStringRequest {
   nidevice_grpc.Session task = 1;
-  WriteStringAttributes attribute = 2;
-  string value = 3;
+  oneof attribute_enum {
+    WriteStringAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  string value = 4;
 }
 
 message SetWriteAttributeStringResponse {
@@ -9248,8 +9707,11 @@ message SetWriteAttributeStringResponse {
 
 message SetWriteAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
-  WriteUInt32Attributes attribute = 2;
-  uint32 value = 3;
+  oneof attribute_enum {
+    WriteUInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint32 value = 4;
 }
 
 message SetWriteAttributeUInt32Response {

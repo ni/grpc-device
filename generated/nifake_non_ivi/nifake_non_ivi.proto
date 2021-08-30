@@ -94,7 +94,10 @@ message CloseResponse {
 
 message GetMarbleAttributeDoubleRequest {
   nidevice_grpc.Session handle = 1;
-  MarbleDoubleAttributes attribute = 2;
+  oneof attribute_enum {
+    MarbleDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetMarbleAttributeDoubleResponse {
@@ -104,7 +107,10 @@ message GetMarbleAttributeDoubleResponse {
 
 message GetMarbleAttributeInt32Request {
   nidevice_grpc.Session handle = 1;
-  MarbleInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    MarbleInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetMarbleAttributeInt32Response {
@@ -115,7 +121,10 @@ message GetMarbleAttributeInt32Response {
 
 message GetMarbleAttributeInt32ArrayRequest {
   nidevice_grpc.Session handle = 1;
-  MarbleInt32ArrayAttributes attribute = 2;
+  oneof attribute_enum {
+    MarbleInt32ArrayAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message GetMarbleAttributeInt32ArrayResponse {
@@ -248,7 +257,10 @@ message OutputVarArgsResponse {
 
 message ResetMarbleAttributeRequest {
   nidevice_grpc.Session handle = 1;
-  MarbleResetAttributes attribute = 2;
+  oneof attribute_enum {
+    MarbleResetAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
 }
 
 message ResetMarbleAttributeResponse {
@@ -257,8 +269,11 @@ message ResetMarbleAttributeResponse {
 
 message SetMarbleAttributeDoubleRequest {
   nidevice_grpc.Session handle = 1;
-  MarbleDoubleAttributes attribute = 2;
-  double value = 3;
+  oneof attribute_enum {
+    MarbleDoubleAttributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  double value = 4;
 }
 
 message SetMarbleAttributeDoubleResponse {
@@ -267,10 +282,13 @@ message SetMarbleAttributeDoubleResponse {
 
 message SetMarbleAttributeInt32Request {
   nidevice_grpc.Session handle = 1;
-  MarbleInt32Attributes attribute = 2;
+  oneof attribute_enum {
+    MarbleInt32Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
   oneof value_enum {
-    MarbleInt32AttributeValues value = 3;
-    int32 value_raw = 4;
+    MarbleInt32AttributeValues value = 4;
+    int32 value_raw = 5;
   }
 }
 
