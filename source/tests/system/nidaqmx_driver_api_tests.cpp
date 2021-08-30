@@ -1482,7 +1482,7 @@ TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
   auto status = get_error_string(DAQmxErrorInvalidAttributeValue, response);
 
   EXPECT_SUCCESS(status, response);
-  EXPECT_THAT(response.error_string(), StrEq("Requested value is not a supported value for this property."));
+  EXPECT_THAT(response.error_string(), HasSubstr("Requested value is not a supported value for this property."));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadBinaryI32_Succeeds)
