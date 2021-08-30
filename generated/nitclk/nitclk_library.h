@@ -35,21 +35,21 @@ class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
   ViStatus WaitUntilDone(ViUInt32 sessionCount, ViSession sessions[], ViReal64 timeout);
 
  private:
-  using ConfigureForHomogeneousTriggersPtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[]);
-  using FinishSyncPulseSenderSynchronizePtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime);
-  using GetAttributeViReal64Ptr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64* value);
-  using GetAttributeViSessionPtr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession* value);
-  using GetAttributeViStringPtr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]);
-  using GetExtendedErrorInfoPtr = ViStatus (*)(ViChar errorString[], ViUInt32 errorStringSize);
-  using InitiatePtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[]);
-  using IsDonePtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[], ViBoolean* done);
-  using SetAttributeViReal64Ptr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64 value);
-  using SetAttributeViSessionPtr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession value);
-  using SetAttributeViStringPtr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViConstString value);
-  using SetupForSyncPulseSenderSynchronizePtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime);
-  using SynchronizePtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTclkPeriod);
-  using SynchronizeToSyncPulseSenderPtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime);
-  using WaitUntilDonePtr = ViStatus (*)(ViUInt32 sessionCount, ViSession sessions[], ViReal64 timeout);
+  using ConfigureForHomogeneousTriggersPtr = decltype(&niTClk_ConfigureForHomogeneousTriggers);
+  using FinishSyncPulseSenderSynchronizePtr = decltype(&niTClk_FinishSyncPulseSenderSynchronize);
+  using GetAttributeViReal64Ptr = decltype(&niTClk_GetAttributeViReal64);
+  using GetAttributeViSessionPtr = decltype(&niTClk_GetAttributeViSession);
+  using GetAttributeViStringPtr = decltype(&niTClk_GetAttributeViString);
+  using GetExtendedErrorInfoPtr = decltype(&niTClk_GetExtendedErrorInfo);
+  using InitiatePtr = decltype(&niTClk_Initiate);
+  using IsDonePtr = decltype(&niTClk_IsDone);
+  using SetAttributeViReal64Ptr = decltype(&niTClk_SetAttributeViReal64);
+  using SetAttributeViSessionPtr = decltype(&niTClk_SetAttributeViSession);
+  using SetAttributeViStringPtr = decltype(&niTClk_SetAttributeViString);
+  using SetupForSyncPulseSenderSynchronizePtr = decltype(&niTClk_SetupForSyncPulseSenderSynchronize);
+  using SynchronizePtr = decltype(&niTClk_Synchronize);
+  using SynchronizeToSyncPulseSenderPtr = decltype(&niTClk_SynchronizeToSyncPulseSender);
+  using WaitUntilDonePtr = decltype(&niTClk_WaitUntilDone);
 
   typedef struct FunctionPointers {
     ConfigureForHomogeneousTriggersPtr ConfigureForHomogeneousTriggers;
