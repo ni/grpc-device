@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
 #include <algorithm>
+#include <cstring>
 #include <random>
 #include <stdexcept>
 
@@ -1482,7 +1483,13 @@ TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
   auto status = get_error_string(DAQmxErrorInvalidAttributeValue, response);
 
   EXPECT_SUCCESS(status, response);
-  EXPECT_THAT(response.error_string(), HasSubstr("Requested value is not a supported value for this property."));
+  const auto& error_string = response.error_string();
+  EXPECT_THAT(
+      error_string,
+      StrEq("Requested value is not a supported value for this property. The property value may be invalid because it conflicts with another property."));
+  // If we don't get the correct ivi-dance size we can get a string padded out with extra nulls.
+  // Comparing to the length of the null-terminated c_str will catch this.
+  EXPECT_EQ(error_string.length(), std::strlen(error_string.c_str()));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadBinaryI32_Succeeds)
