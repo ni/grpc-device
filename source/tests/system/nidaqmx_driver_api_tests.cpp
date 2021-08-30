@@ -1667,6 +1667,13 @@ TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
   EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
 }
 
+TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
+{
+  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Dev_AO_PhysicalChans);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
