@@ -8,11 +8,13 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
+#include "nidaqmx/nidaqmx_client.h"
 #include "nidaqmx/nidaqmx_service.h"
 
 using namespace ::testing;
 using namespace nidaqmx_grpc;
 using google::protobuf::uint32;
+namespace client = nidaqmx_grpc::experimental::client;
 
 namespace ni {
 namespace tests {
@@ -32,6 +34,8 @@ class NiDAQmxDriverApiTests : public Test {
  protected:
   const std::string DEVICE_NAME{"gRPCSystemTestDAQ"};
   const std::string ANY_DEVICE_MODEL{"[[ANY_DEVICE_MODEL]]"};
+  const std::string AI_CHANNEL{"gRPCSystemTestDAQ/ai0"};
+  const std::string AO_CHANNEL{"gRPCSystemTestDAQ/ao0"};
 
   NiDAQmxDriverApiTests()
       : device_server_(DeviceServerInterface::Singleton()),
@@ -87,11 +91,9 @@ class NiDAQmxDriverApiTests : public Test {
   {
     if (!driver_session_) return;
 
-    ::grpc::ClientContext context;
-    ClearTaskResponse response;
-    auto status = clear_task(response);
+    auto response = clear_task();
 
-    EXPECT_SUCCESS(status, response);
+    EXPECT_SUCCESS(response);
   }
 
   ::grpc::Status create_task(CreateTaskResponse& response)
@@ -101,12 +103,9 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateTask(&context, request, &response);
   }
 
-  ::grpc::Status clear_task(ClearTaskResponse& response = ThrowawayResponse<ClearTaskResponse>::response())
+  ClearTaskResponse clear_task()
   {
-    ::grpc::ClientContext context;
-    ClearTaskRequest request;
-    set_request_session_id(request);
-    return stub()->ClearTask(&context, request, &response);
+    return client::clear_task(stub(), task());
   }
 
   CreateAIVoltageChanRequest create_ai_voltage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
@@ -177,15 +176,9 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CreateDIChan(&context, request, &response);
   }
 
-  ::grpc::Status create_do_chan(CreateDOChanResponse& response = ThrowawayResponse<CreateDOChanResponse>::response())
+  CreateDOChanResponse create_do_chan(CreateDOChanResponse& response = ThrowawayResponse<CreateDOChanResponse>::response())
   {
-    ::grpc::ClientContext context;
-    CreateDOChanRequest request;
-    set_request_session_id(request);
-    request.set_lines("gRPCSystemTestDAQ/port1/line0");
-    request.set_name_to_assign_to_lines("do");
-    request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
-    return stub()->CreateDOChan(&context, request, &response);
+    return client::create_do_chan(stub(), task(), "gRPCSystemTestDAQ/port1/line0", "do", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
   }
 
   ::grpc::Status create_ci_freq_chan(CreateCIFreqChanResponse& response)
@@ -644,109 +637,6 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->AddNetworkDevice(&context, request, &response);
   }
 
-  ::grpc::Status configure_teds(ConfigureTEDSResponse& response)
-  {
-    ::grpc::ClientContext context;
-    ConfigureTEDSRequest request;
-    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
-    return stub()->ConfigureTEDS(&context, request, &response);
-  }
-
-  template <typename TRequest, typename TAttributes>
-  TRequest create_get_scale_attribute_request(const std::string& scale_name, TAttributes attribute)
-  {
-    TRequest request;
-    request.set_scale_name(scale_name);
-    request.set_attribute(attribute);
-    return request;
-  }
-
-  template <typename TRequest, typename TAttributes>
-  TRequest create_sized_get_scale_attribute_request(const std::string& scale_name, TAttributes attribute, size_t size)
-  {
-    auto request = create_get_scale_attribute_request<TRequest>(scale_name, attribute);
-    request.set_size(static_cast<int32>(size));
-    return request;
-  }
-
-  ::grpc::Status get_scale_attribute_double(const GetScaleAttributeDoubleRequest& request, GetScaleAttributeDoubleResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->GetScaleAttributeDouble(&context, request, &response);
-  }
-
-  ::grpc::Status get_scale_attribute_string(const GetScaleAttributeStringRequest& request, GetScaleAttributeStringResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->GetScaleAttributeString(&context, request, &response);
-  }
-
-  ::grpc::Status get_scale_attribute_double_array(const GetScaleAttributeDoubleArrayRequest& request, GetScaleAttributeDoubleArrayResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->GetScaleAttributeDoubleArray(&context, request, &response);
-  }
-
-  ::grpc::Status get_scale_attribute_i32(const GetScaleAttributeInt32Request& request, GetScaleAttributeInt32Response& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->GetScaleAttributeInt32(&context, request, &response);
-  }
-
-  template <typename TRequest, typename T, typename TAttributes>
-  TRequest create_set_scale_attribute_raw_request(const std::string& scale_name, TAttributes attribute, T value)
-  {
-    TRequest request;
-    request.set_scale_name(scale_name);
-    request.set_attribute(attribute);
-    request.set_value_raw(value);
-    return request;
-  }
-
-  template <typename TRequest, typename T, typename TAttributes>
-  TRequest create_set_scale_attribute_request(const std::string& scale_name, TAttributes attribute, T value)
-  {
-    TRequest request;
-    request.set_scale_name(scale_name);
-    request.set_attribute(attribute);
-    request.set_value(value);
-    return request;
-  }
-
-  SetScaleAttributeDoubleArrayRequest create_set_scale_attribute_double_array_request(const std::string& scale_name, ScaleDoubleArrayAttributes attribute, const std::vector<double>& value)
-  {
-    SetScaleAttributeDoubleArrayRequest request;
-    request.set_scale_name(scale_name);
-    request.set_attribute(attribute);
-    request.mutable_value()->CopyFrom({value.begin(), value.end()});
-    request.set_size(static_cast<int32>(value.size()));
-    return request;
-  }
-
-  ::grpc::Status set_scale_attribute_i32(const SetScaleAttributeInt32Request& request, SetScaleAttributeInt32Response& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->SetScaleAttributeInt32(&context, request, &response);
-  }
-
-  ::grpc::Status set_scale_attribute_double(const SetScaleAttributeDoubleRequest& request, SetScaleAttributeDoubleResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->SetScaleAttributeDouble(&context, request, &response);
-  }
-
-  ::grpc::Status set_scale_attribute_double_array(const SetScaleAttributeDoubleArrayRequest& request, SetScaleAttributeDoubleArrayResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->SetScaleAttributeDoubleArray(&context, request, &response);
-  }
-
-  ::grpc::Status set_scale_attribute_string(const SetScaleAttributeStringRequest& request, SetScaleAttributeStringResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->SetScaleAttributeString(&context, request, &response);
-  }
-
   ::grpc::Status wait_for_next_sample_clock(WaitForNextSampleClockResponse& response)
   {
     ::grpc::ClientContext context;
@@ -791,146 +681,6 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CfgWatchdogDOExpirStates(&context, request, &response);
   }
 
-  ::grpc::Status auto_configure_cdaq_sync_connections(AutoConfigureCDAQSyncConnectionsResponse& response)
-  {
-    ::grpc::ClientContext context;
-    AutoConfigureCDAQSyncConnectionsRequest request;
-    request.set_chassis_devices_ports(DEVICE_NAME);
-    request.set_timeout(1.0);
-    return stub()->AutoConfigureCDAQSyncConnections(&context, request, &response);
-  }
-
-  ::grpc::Status set_buffer_attribute_u32(BufferUInt32Attributes attribute, uint32 value, SetBufferAttributeUInt32Response& response)
-  {
-    ::grpc::ClientContext context;
-    SetBufferAttributeUInt32Request request;
-    set_request_session_id(request);
-    request.set_attribute(attribute);
-    request.set_value(value);
-    return stub()->SetBufferAttributeUInt32(&context, request, &response);
-  }
-
-  ::grpc::Status get_buffer_attribute_u32(BufferUInt32Attributes attribute, GetBufferAttributeUInt32Response& response)
-  {
-    ::grpc::ClientContext context;
-    GetBufferAttributeUInt32Request request;
-    set_request_session_id(request);
-    request.set_attribute(attribute);
-    return stub()->GetBufferAttributeUInt32(&context, request, &response);
-  }
-
-  ::grpc::Status reset_buffer_attribute(BufferResetAttributes attribute, ResetBufferAttributeResponse& response)
-  {
-    ::grpc::ClientContext context;
-    ResetBufferAttributeRequest request;
-    set_request_session_id(request);
-    request.set_attribute(attribute);
-    return stub()->ResetBufferAttribute(&context, request, &response);
-  }
-
-  template <typename TRequest, typename T, typename TAttributes>
-  TRequest create_set_chan_attribute_request(const std::string& channel_name, TAttributes attribute, T value)
-  {
-    TRequest request;
-    set_request_session_id(request);
-    request.set_channel(channel_name);
-    request.set_attribute(attribute);
-    request.set_value(value);
-    return request;
-  }
-
-  template <typename TRequest, typename TAttributes>
-  TRequest create_get_chan_attribute_request(const std::string& channel_name, TAttributes attribute)
-  {
-    TRequest request;
-    set_request_session_id(request);
-    request.set_channel(channel_name);
-    request.set_attribute(attribute);
-    return request;
-  }
-
-  ::grpc::Status get_chan_attribute_double(const GetChanAttributeDoubleRequest& request, GetChanAttributeDoubleResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->GetChanAttributeDouble(&context, request, &response);
-  }
-
-  ::grpc::Status set_chan_attribute_double(const SetChanAttributeDoubleRequest& request, SetChanAttributeDoubleResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->SetChanAttributeDouble(&context, request, &response);
-  }
-
-  ::grpc::Status get_chan_attribute_bool(const GetChanAttributeBoolRequest& request, GetChanAttributeBoolResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->GetChanAttributeBool(&context, request, &response);
-  }
-
-  ::grpc::Status set_chan_attribute_bool(const SetChanAttributeBoolRequest& request, SetChanAttributeBoolResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->SetChanAttributeBool(&context, request, &response);
-  }
-
-  ::grpc::Status get_chan_attribute_i32(const GetChanAttributeInt32Request& request, GetChanAttributeInt32Response& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->GetChanAttributeInt32(&context, request, &response);
-  }
-
-  ::grpc::Status set_chan_attribute_i32(const SetChanAttributeInt32Request& request, SetChanAttributeInt32Response& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->SetChanAttributeInt32(&context, request, &response);
-  }
-
-  template <typename TRequest, typename TAttributes>
-  TRequest create_get_device_attribute_request(const std::string& device_name, TAttributes attribute)
-  {
-    TRequest request;
-    request.set_device_name(device_name);
-    request.set_attribute(attribute);
-    return request;
-  }
-
-  ::grpc::Status get_device_attribute_i32_array(const GetDeviceAttributeInt32ArrayRequest& request, GetDeviceAttributeInt32ArrayResponse& response)
-  {
-    ::grpc::ClientContext context;
-    return stub()->GetDeviceAttributeInt32Array(&context, request, &response);
-  }
-
-  template <typename TRequest, typename TAttributes>
-  TRequest create_get_task_attribute_request(TAttributes attribute)
-  {
-    TRequest request;
-    set_request_session_id(request);
-    request.set_attribute(attribute);
-    return request;
-  }
-
-  ::grpc::Status get_task_attribute_bool(TaskBoolAttributes attribute, GetTaskAttributeBoolResponse& response)
-  {
-    auto request = create_get_task_attribute_request<GetTaskAttributeBoolRequest>(attribute);
-    ::grpc::ClientContext context;
-    return stub()->GetTaskAttributeBool(&context, request, &response);
-  }
-
-  ::grpc::Status get_task_attribute_u32(TaskUInt32Attributes attribute, GetTaskAttributeUInt32Response& response)
-  {
-    auto request = create_get_task_attribute_request<GetTaskAttributeUInt32Request>(attribute);
-    ::grpc::ClientContext context;
-    return stub()->GetTaskAttributeUInt32(&context, request, &response);
-  }
-
-  ::grpc::Status get_task_attribute_string(TaskStringAttributes attribute, GetTaskAttributeStringResponse& response)
-  {
-    auto request = create_get_task_attribute_request<GetTaskAttributeStringRequest>(attribute);
-    request.set_size(2048);
-    ::grpc::ClientContext context;
-    return stub()->GetTaskAttributeString(&context, request, &response);
-  }
-
   void raise_if_error(::grpc::Status status)
   {
     if (!status.ok()) {
@@ -938,106 +688,14 @@ class NiDAQmxDriverApiTests : public Test {
     }
   }
 
-  template <typename TRequest, typename TAttributes>
-  TRequest create_get_timing_attribute_request(TAttributes attribute)
-  {
-    TRequest request;
-    set_request_session_id(request);
-    request.set_attribute(attribute);
-    return request;
-  }
-
-  template <typename TRequest, typename TAttributes, typename TValue>
-  TRequest create_set_timing_attribute_request(TAttributes attribute, TValue value)
-  {
-    TRequest request = create_get_timing_attribute_request<SetTimingAttributeDoubleRequest>(attribute);
-    request.set_value(value);
-    return request;
-  }
-
-  GetTimingAttributeDoubleResponse get_timing_attribute_double(TimingDoubleAttributes attribute)
-  {
-    ::grpc::ClientContext context;
-    auto request = create_get_timing_attribute_request<GetTimingAttributeDoubleRequest>(attribute);
-    auto response = GetTimingAttributeDoubleResponse{};
-    raise_if_error(stub()->GetTimingAttributeDouble(&context, request, &response));
-    return response;
-  }
-
-  SetTimingAttributeDoubleResponse set_timing_attribute_double(TimingDoubleAttributes attribute, double value)
-  {
-    ::grpc::ClientContext context;
-    auto request = create_set_timing_attribute_request<SetTimingAttributeDoubleRequest>(attribute, value);
-    auto response = SetTimingAttributeDoubleResponse{};
-    raise_if_error(stub()->SetTimingAttributeDouble(&context, request, &response));
-    return response;
-  }
-
-  template <typename TRequest, typename TAttributes>
-  TRequest create_get_attribute_request(TAttributes attribute)
-  {
-    TRequest request;
-    set_request_session_id(request);
-    request.set_attribute(attribute);
-    return request;
-  }
-
-  template <typename TRequest, typename TAttributes, typename TValue>
-  TRequest create_set_attribute_request(TAttributes attribute, TValue value)
-  {
-    TRequest request = create_get_attribute_request<TRequest>(attribute);
-    request.set_value(value);
-    return request;
-  }
-
-  GetReadAttributeInt32Response get_read_attribute_i32(ReadInt32Attributes attribute)
-  {
-    ::grpc::ClientContext context;
-    auto request = create_get_attribute_request<GetReadAttributeInt32Request>(attribute);
-    auto response = GetReadAttributeInt32Response{};
-    raise_if_error(stub()->GetReadAttributeInt32(&context, request, &response));
-    return response;
-  }
-
-  SetReadAttributeInt32Response set_read_attribute_i32(ReadInt32Attributes attribute, ReadInt32AttributeValues value)
-  {
-    ::grpc::ClientContext context;
-    auto request = create_set_attribute_request<SetReadAttributeInt32Request>(attribute, value);
-    auto response = SetReadAttributeInt32Response{};
-    raise_if_error(stub()->SetReadAttributeInt32(&context, request, &response));
-    return response;
-  }
-
-  SetReadAttributeStringResponse set_read_attribute_string(ReadStringAttributes attribute, const std::string& value)
-  {
-    ::grpc::ClientContext context;
-    auto request = create_set_attribute_request<SetReadAttributeStringRequest>(attribute, value);
-    auto response = SetReadAttributeStringResponse{};
-    raise_if_error(stub()->SetReadAttributeString(&context, request, &response));
-    return response;
-  }
-
-  GetWriteAttributeDoubleResponse get_write_attribute_double(WriteDoubleAttributes attribute)
-  {
-    ::grpc::ClientContext context;
-    auto request = create_get_attribute_request<GetWriteAttributeDoubleRequest>(attribute);
-    auto response = GetWriteAttributeDoubleResponse{};
-    raise_if_error(stub()->GetWriteAttributeDouble(&context, request, &response));
-    return response;
-  }
-
-  SetWriteAttributeDoubleResponse set_write_attribute_double(WriteDoubleAttributes attribute, double value)
-  {
-    ::grpc::ClientContext context;
-    auto request = create_set_attribute_request<SetWriteAttributeDoubleRequest>(attribute, value);
-    auto response = SetWriteAttributeDoubleResponse{};
-    raise_if_error(stub()->SetWriteAttributeDouble(&context, request, &response));
-    return response;
-  }
-
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
+  }
+
+  const nidevice_grpc::Session& task()
+  {
+    return *driver_session_;
   }
 
   template <typename TRequest>
@@ -1066,9 +724,15 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   template <typename TResponse>
-  void EXPECT_DAQ_ERROR(int32_t expected_error, const ::grpc::Status& status, const TResponse& response)
+  void EXPECT_DAQ_ERROR(int32_t expected_error, const TResponse& response)
   {
     EXPECT_EQ(expected_error, response.status());
+  }
+
+  template <typename TResponse>
+  void EXPECT_DAQ_ERROR(int32_t expected_error, const ::grpc::Status& status, const TResponse& response)
+  {
+    EXPECT_DAQ_ERROR(expected_error, response);
     EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
   }
 
@@ -1120,10 +784,9 @@ TEST_F(NiDAQmxDriverApiTests, CreateDIChannel_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, CreateDOChannel_Succeeds)
 {
-  CreateDOChanResponse response;
-  auto status = create_do_chan(response);
+  auto response = create_do_chan();
 
-  EXPECT_SUCCESS(status, response);
+  EXPECT_SUCCESS(response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, WriteU32DigitalData_Succeeds)
@@ -1278,13 +941,12 @@ TEST_F(NiDAQmxDriverApiTests, LinearScale_GetSlopeAttribute_ReturnsInitialSlopeV
   const auto SLOPE = 0.5;
   auto scale_status = create_lin_scale(SCALE_NAME, SLOPE);
 
-  auto request = create_get_scale_attribute_request<GetScaleAttributeDoubleRequest>(
+  auto response = client::get_scale_attribute_double(
+      stub(),
       SCALE_NAME,
       ScaleDoubleAttributes::SCALE_ATTRIBUTE_LIN_SLOPE);
-  GetScaleAttributeDoubleResponse response;
-  auto status = get_scale_attribute_double(request, response);
 
-  EXPECT_SUCCESS(status, response);
+  EXPECT_SUCCESS(response);
   EXPECT_NEAR(SLOPE, response.value(), .0001);
 }
 
@@ -1293,20 +955,19 @@ TEST_F(NiDAQmxDriverApiTests, SetYInterceptAttribute_GetYInterceptAttribute_Retu
   const auto SCALE_NAME = std::string("TestScale");
   const auto Y_INTERCEPT = -3.0;
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
-  auto set_request = create_set_scale_attribute_request<SetScaleAttributeDoubleRequest>(
+  auto set_response = client::set_scale_attribute_double(
+      stub(),
       SCALE_NAME,
       ScaleDoubleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT,
       Y_INTERCEPT);
-  SetScaleAttributeDoubleResponse set_response;
-  auto set_status = set_scale_attribute_double(set_request, set_response);
-  auto request = create_get_scale_attribute_request<GetScaleAttributeDoubleRequest>(
+
+  auto response = client::get_scale_attribute_double(
+      stub(),
       SCALE_NAME,
       ScaleDoubleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT);
-  GetScaleAttributeDoubleResponse response;
-  auto status = get_scale_attribute_double(request, response);
 
-  EXPECT_SUCCESS(set_status, set_response);
-  EXPECT_SUCCESS(status, response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(response);
   EXPECT_NEAR(Y_INTERCEPT, response.value(), .0001);
 }
 
@@ -1315,21 +976,19 @@ TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribu
   const auto SCALE_NAME = std::string("TestScale");
   const auto Y_INTERCEPT = -3.0;
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
-  auto set_request = create_set_scale_attribute_request<SetScaleAttributeInt32Request>(
+  auto set_response = client::set_scale_attribute_int32(
+      stub(),
       SCALE_NAME,
       ScaleInt32Attributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS,
       ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM);
-  SetScaleAttributeInt32Response set_response;
-  auto set_status = set_scale_attribute_i32(set_request, set_response);
 
-  auto request = create_get_scale_attribute_request<GetScaleAttributeInt32Request>(
+  auto response = client::get_scale_attribute_int32(
+      stub(),
       SCALE_NAME,
       ScaleInt32Attributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS);
-  GetScaleAttributeInt32Response response;
-  auto status = get_scale_attribute_i32(request, response);
 
-  EXPECT_SUCCESS(set_status, set_response);
-  EXPECT_SUCCESS(status, response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(response);
   EXPECT_EQ(ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM, response.value());
   EXPECT_EQ(ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM, response.value_raw());
 }
@@ -1339,18 +998,16 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
   const auto SCALE_NAME = std::string("TestScale");
   const auto UNITS = std::string("Digits");
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
-  auto set_request = create_set_scale_attribute_request<SetScaleAttributeStringRequest>(
+  auto set_response = client::set_scale_attribute_string(
+      stub(),
       SCALE_NAME,
       ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS);
-  SetScaleAttributeStringResponse set_response;
-  auto set_status = set_scale_attribute_string(set_request, set_response);
 
-  auto request = create_get_scale_attribute_request<GetScaleAttributeDoubleRequest>(
+  auto response = client::get_scale_attribute_double(
+      stub(),
       SCALE_NAME,
       (ScaleDoubleAttributes)ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS);
-  GetScaleAttributeDoubleResponse response;
-  auto status = get_scale_attribute_double(request, response);
 
   EXPECT_NE(DAQmxSuccess, response.status());
   // Getting a scalar from a non-scalar field returns a positive value because that's the convention
@@ -1364,22 +1021,20 @@ TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
   const auto SCALE_NAME = std::string("TestScale");
   const auto UNITS = std::string("Battalions");
   auto scale_status = create_lin_scale(SCALE_NAME, 0.5);
-  auto set_request = create_set_scale_attribute_request<SetScaleAttributeStringRequest>(
+  auto set_response = client::set_scale_attribute_string(
+      stub(),
       SCALE_NAME,
       ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS);
-  SetScaleAttributeStringResponse set_response;
-  auto set_status = set_scale_attribute_string(set_request, set_response);
 
-  auto request = create_sized_get_scale_attribute_request<GetScaleAttributeStringRequest>(
+  auto response = client::get_scale_attribute_string(
+      stub(),
       SCALE_NAME,
       ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS.length() + 1);
-  GetScaleAttributeStringResponse response;
-  auto status = get_scale_attribute_string(request, response);
 
-  EXPECT_SUCCESS(set_status, set_response);
-  EXPECT_SUCCESS(status, response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(response);
   EXPECT_EQ(UNITS, response.value());
 }
 
@@ -1389,22 +1044,21 @@ TEST_F(NiDAQmxDriverApiTests, SetPolynomialForwardCoefficients_GetPolynomialForw
   const auto INITIAL_COEFFICIENTS = std::vector<double>{1.0, 2.0, 3.0};
   const auto COEFFICIENTS = std::vector<double>{1.0, 3.0, 8.0};
   auto scale_status = create_polynomial_scale(SCALE_NAME, INITIAL_COEFFICIENTS, INITIAL_COEFFICIENTS);
-  auto set_request = create_set_scale_attribute_double_array_request(
+  auto set_response = client::set_scale_attribute_double_array(
+      stub(),
       SCALE_NAME,
       ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
-      COEFFICIENTS);
-  SetScaleAttributeDoubleArrayResponse set_response;
-  auto set_status = set_scale_attribute_double_array(set_request, set_response);
+      COEFFICIENTS,
+      COEFFICIENTS.size());
 
-  auto request = create_sized_get_scale_attribute_request<GetScaleAttributeDoubleArrayRequest>(
+  auto response = client::get_scale_attribute_double_array(
+      stub(),
       SCALE_NAME,
       ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
       COEFFICIENTS.size());
-  GetScaleAttributeDoubleArrayResponse response;
-  auto status = get_scale_attribute_double_array(request, response);
 
-  EXPECT_SUCCESS(set_status, set_response);
-  EXPECT_SUCCESS(status, response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(response);
   auto actual = std::vector<double>{response.value().cbegin(), response.value().cend()};
   EXPECT_THAT(actual, ContainerEq(COEFFICIENTS));
 }
@@ -1482,7 +1136,7 @@ TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
   auto status = get_error_string(DAQmxErrorInvalidAttributeValue, response);
 
   EXPECT_SUCCESS(status, response);
-  EXPECT_THAT(response.error_string(), StrEq("Requested value is not a supported value for this property."));
+  EXPECT_THAT(response.error_string(), HasSubstr("Requested value is not a supported value for this property."));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadBinaryI32_Succeeds)
@@ -1764,24 +1418,24 @@ TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetwo
 
 TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDetected)
 {
-  auto response = ConfigureTEDSResponse{};
-  auto status = configure_teds(response);
+  auto response = client::configure_teds(stub(), AI_CHANNEL, "");
 
-  EXPECT_DAQ_ERROR(DAQmxErrorTEDSSensorNotDetected, status, response);
+  EXPECT_DAQ_ERROR(DAQmxErrorTEDSSensorNotDetected, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, HardwareTimedTask_WaitForNextSampleClock_Succeeds)
 {
   create_ao_voltage_chan(0.0, 10.0);
   create_ai_voltage_chan(0.0, 10.0);
-  auto cfg_request = create_cfg_samp_clk_timing_request(
+  auto cfg_response = client::cfg_samp_clk_timing(
+      stub(),
+      task(),
+      "",
       100.0,
       Edge1::EDGE1_RISING,
       AcquisitionType::ACQUISITION_TYPE_HW_TIMED_SINGLE_POINT,
       1);
-  auto cfg_response = CfgSampClkTimingResponse{};
-  auto cfg_status = cfg_samp_clk_timing(cfg_request, cfg_response);
-  EXPECT_SUCCESS(cfg_status, cfg_response);
+  EXPECT_SUCCESS(cfg_response);
 
   start_task();
   auto response = WaitForNextSampleClockResponse{};
@@ -1823,45 +1477,44 @@ TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupportedError)
 {
-  auto response = AutoConfigureCDAQSyncConnectionsResponse{};
-  auto status = auto_configure_cdaq_sync_connections(response);
+  auto response = client::auto_configure_cdaq_sync_connections(stub(), DEVICE_NAME, 1.0);
 
-  EXPECT_DAQ_ERROR(DAQmxErrorDeviceDoesNotSupportCDAQSyncConnections, status, response);
+  EXPECT_DAQ_ERROR(DAQmxErrorDeviceDoesNotSupportCDAQSyncConnections, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBufferSize)
 {
   create_di_chan();
   auto ATTRIBUTE = BufferUInt32Attributes::BUFFER_ATTRIBUTE_INPUT_BUF_SIZE;
-  auto get_response = GetBufferAttributeUInt32Response{};
-  auto set_response = SetBufferAttributeUInt32Response{};
-  auto readback_response = GetBufferAttributeUInt32Response{};
-  auto reset_response = ResetBufferAttributeResponse{};
-  auto read_after_reset_response = GetBufferAttributeUInt32Response{};
 
-  auto get_status = get_buffer_attribute_u32(
-      ATTRIBUTE,
-      get_response);
+  auto get_response = client::get_buffer_attribute_uint32(
+      stub(),
+      task(),
+      ATTRIBUTE);
   auto initial_value = get_response.value();
-  auto set_status = set_buffer_attribute_u32(
+  auto set_response = client::set_buffer_attribute_uint32(
+      stub(),
+      task(),
       ATTRIBUTE,
-      initial_value * 2,
-      set_response);
-  auto readback_status = get_buffer_attribute_u32(
-      ATTRIBUTE,
-      readback_response);
-  auto reset_status = reset_buffer_attribute(
-      BufferResetAttributes::BUFFER_RESET_ATTRIBUTE_INPUT_BUF_SIZE,
-      reset_response);
-  auto read_after_reset_status = get_buffer_attribute_u32(
-      ATTRIBUTE,
-      read_after_reset_response);
+      initial_value * 2);
+  auto readback_response = client::get_buffer_attribute_uint32(
+      stub(),
+      task(),
+      ATTRIBUTE);
+  auto reset_response = client::reset_buffer_attribute(
+      stub(),
+      task(),
+      BufferResetAttributes::BUFFER_RESET_ATTRIBUTE_INPUT_BUF_SIZE);
+  auto read_after_reset_response = client::get_buffer_attribute_uint32(
+      stub(),
+      task(),
+      ATTRIBUTE);
 
-  EXPECT_SUCCESS(get_status, get_response);
-  EXPECT_SUCCESS(set_status, set_response);
-  EXPECT_SUCCESS(readback_status, readback_response);
-  EXPECT_SUCCESS(reset_status, reset_response);
-  EXPECT_SUCCESS(read_after_reset_status, read_after_reset_response);
+  EXPECT_SUCCESS(get_response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(readback_response);
+  EXPECT_SUCCESS(reset_response);
+  EXPECT_SUCCESS(read_after_reset_response);
   EXPECT_EQ(initial_value, read_after_reset_response.value());
   EXPECT_EQ(initial_value * 2, readback_response.value());
 }
@@ -1869,15 +1522,10 @@ TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBuffer
 TEST_F(NiDAQmxDriverApiTests, GetAISupportMeasurementTypes_ResultIncludesCurrentAndVoltage)
 {
   const auto ATTRIBUTE = DeviceInt32ArrayAttributes::DEVICE_ATTRIBUTE_AI_SUPPORTED_MEAS_TYPES;
-  auto request = create_get_device_attribute_request<GetDeviceAttributeInt32ArrayRequest>(
-      DEVICE_NAME,
-      ATTRIBUTE);
-  auto response = GetDeviceAttributeInt32ArrayResponse{};
-  auto query_status = get_device_attribute_i32_array(request, response);
-  request.set_size(response.status());
-  auto status = get_device_attribute_i32_array(request, response);
+  auto response = client::get_device_attribute_int32_array(stub(), DEVICE_NAME, ATTRIBUTE, 0);
+  response = client::get_device_attribute_int32_array(stub(), DEVICE_NAME, ATTRIBUTE, response.status());
 
-  EXPECT_SUCCESS(status, response);
+  EXPECT_SUCCESS(response);
   EXPECT_THAT(response.value(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_CURRENT));
   EXPECT_THAT(response.value(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_VOLTAGE));
   EXPECT_THAT(response.value_raw(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_CURRENT));
@@ -1892,13 +1540,13 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_GetAOMax_ReturnsAOMax)
   create_ao_voltage_chan(
       create_ao_voltage_chan_request(A0_MIN, AO_MAX, CHANNEL_NAME));
 
-  auto request = create_get_chan_attribute_request<GetChanAttributeDoubleRequest>(
+  auto response = client::get_chan_attribute_double(
+      stub(),
+      task(),
       CHANNEL_NAME,
       ChannelDoubleAttributes::CHANNEL_ATTRIBUTE_AO_MAX);
-  auto response = GetChanAttributeDoubleResponse{};
-  auto status = get_chan_attribute_double(request, response);
 
-  EXPECT_SUCCESS(status, response);
+  EXPECT_SUCCESS(response);
   EXPECT_NEAR(AO_MAX, response.value(), 0.0001);
 }
 
@@ -1908,26 +1556,26 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_SetAndGetAllowConnToGround_SucceedsAndRe
   create_ao_voltage_chan(
       create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
 
-  auto initial_get_request = create_get_chan_attribute_request<GetChanAttributeBoolRequest>(
+  auto initial_get_response = client::get_chan_attribute_bool(
+      stub(),
+      task(),
       CHANNEL_NAME,
       ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
-  auto initial_get_response = GetChanAttributeBoolResponse{};
-  auto initial_get_status = get_chan_attribute_bool(initial_get_request, initial_get_response);
-  auto set_request = create_set_chan_attribute_request<SetChanAttributeBoolRequest>(
+  auto set_response = client::set_chan_attribute_bool(
+      stub(),
+      task(),
       CHANNEL_NAME,
       ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND,
       true);
-  auto set_response = SetChanAttributeBoolResponse{};
-  auto set_status = set_chan_attribute_bool(set_request, set_response);
-  auto get_request = create_get_chan_attribute_request<GetChanAttributeBoolRequest>(
+  auto get_response = client::get_chan_attribute_bool(
+      stub(),
+      task(),
       CHANNEL_NAME,
       ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
-  auto get_response = GetChanAttributeBoolResponse{};
-  auto get_status = get_chan_attribute_bool(get_request, get_response);
 
-  EXPECT_SUCCESS(initial_get_status, set_response);
-  EXPECT_SUCCESS(set_status, set_response);
-  EXPECT_SUCCESS(get_status, get_response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(get_response);
   EXPECT_FALSE(initial_get_response.value());
   EXPECT_TRUE(get_response.value());
 }
@@ -1938,35 +1586,32 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_GetAOOutputType_SucceedsAndReturnsVoltag
   create_ao_voltage_chan(
       create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
 
-  auto request = create_get_chan_attribute_request<GetChanAttributeInt32Request>(
+  auto response = client::get_chan_attribute_int32(
+      stub(),
+      task(),
       CHANNEL_NAME,
       ChannelInt32Attributes::CHANNEL_ATTRIBUTE_AO_OUTPUT_TYPE);
-  auto response = GetChanAttributeInt32Response{};
-  auto status = get_chan_attribute_i32(request, response);
 
-  EXPECT_SUCCESS(status, response);
+  EXPECT_SUCCESS(response);
   EXPECT_EQ(
       ChannelInt32AttributeValues::CHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_VOLTAGE,
       response.value());
 }
 
-TEST_F(NiDAQmxDriverApiTests, TaskWithChannel_GetTaskAttributes_ReturnsCorectResults)
+TEST_F(NiDAQmxDriverApiTests, TaskWithChannel_GetTaskAttributes_ReturnsCorrectResults)
 {
   const auto CHANNEL_NAME = "AO Channel";
   create_ao_voltage_chan(
       create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
   start_task();
 
-  auto num_chans_response = GetTaskAttributeUInt32Response{};
-  auto num_chans_status = get_task_attribute_u32(TaskUInt32Attributes::TASK_ATTRIBUTE_NUM_CHANS, num_chans_response);
-  auto channels_response = GetTaskAttributeStringResponse{};
-  auto channels_status = get_task_attribute_string(TaskStringAttributes::TASK_ATTRIBUTE_CHANNELS, channels_response);
-  auto complete_response = GetTaskAttributeBoolResponse{};
-  auto complete_status = get_task_attribute_bool(TaskBoolAttributes::TASK_ATTRIBUTE_COMPLETE, complete_response);
+  auto num_chans_response = client::get_task_attribute_uint32(stub(), task(), TaskUInt32Attributes::TASK_ATTRIBUTE_NUM_CHANS);
+  auto channels_response = client::get_task_attribute_string(stub(), task(), TaskStringAttributes::TASK_ATTRIBUTE_CHANNELS, 2048);
+  auto complete_response = client::get_task_attribute_bool(stub(), task(), TaskBoolAttributes::TASK_ATTRIBUTE_COMPLETE);
 
-  EXPECT_SUCCESS(num_chans_status, num_chans_response);
-  EXPECT_SUCCESS(channels_status, channels_response);
-  EXPECT_SUCCESS(complete_status, complete_response);
+  EXPECT_SUCCESS(num_chans_response);
+  EXPECT_SUCCESS(channels_response);
+  EXPECT_SUCCESS(complete_response);
   EXPECT_EQ(1, num_chans_response.value());
   auto stripped_channels = std::string(channels_response.value().c_str());
   EXPECT_THAT(stripped_channels, StrEq(CHANNEL_NAME));
@@ -1981,9 +1626,9 @@ TEST_F(NiDAQmxDriverApiTests, AIChannelWithSampleClock_ReconfigureRate_UpdatesRa
   auto cfg_request = create_cfg_samp_clk_timing_request(INITIAL_RATE, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 1U);
   cfg_samp_clk_timing(cfg_request);
 
-  auto initial_response = get_timing_attribute_double(TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
-  auto set_response = set_timing_attribute_double(TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE, RECONFIGURED_RATE);
-  auto get_response = get_timing_attribute_double(TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
+  auto initial_response = client::get_timing_attribute_double(stub(), task(), TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
+  auto set_response = client::set_timing_attribute_double(stub(), task(), TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE, RECONFIGURED_RATE);
+  auto get_response = client::get_timing_attribute_double(stub(), task(), TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
 
   EXPECT_SUCCESS(initial_response);
   EXPECT_SUCCESS(set_response);
@@ -1997,9 +1642,9 @@ TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureOverwrite_UpdatesOverwriteSuc
   const auto NEW_VALUE = ReadInt32AttributeValues::READ_INT32_OVERWRITE_MODE1_OVERWRITE_UNREAD_SAMPS;
   create_ai_voltage_chan(-5.0, 5.0);
 
-  auto initial_response = get_read_attribute_i32(ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE);
-  auto set_response = set_read_attribute_i32(ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE, NEW_VALUE);
-  auto get_response = get_read_attribute_i32(ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE);
+  auto initial_response = client::get_read_attribute_int32(stub(), task(), ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE);
+  auto set_response = client::set_read_attribute_int32(stub(), task(), ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE, NEW_VALUE);
+  auto get_response = client::get_read_attribute_int32(stub(), task(), ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE);
 
   EXPECT_SUCCESS(initial_response);
   EXPECT_SUCCESS(set_response);
@@ -2013,9 +1658,9 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_ReconfigureSleepTime_UpdatesSleepTimeSuc
   const auto NEW_VALUE = 100.0;
   create_ao_voltage_chan(-10.0, 10.0);
 
-  auto initial_response = get_write_attribute_double(WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME);
-  auto set_response = set_write_attribute_double(WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME, NEW_VALUE);
-  auto get_response = get_write_attribute_double(WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME);
+  auto initial_response = client::get_write_attribute_double(stub(), task(), WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME);
+  auto set_response = client::set_write_attribute_double(stub(), task(), WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME, NEW_VALUE);
+  auto get_response = client::get_write_attribute_double(stub(), task(), WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME);
 
   EXPECT_SUCCESS(initial_response);
   EXPECT_SUCCESS(set_response);
