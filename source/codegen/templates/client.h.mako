@@ -50,11 +50,9 @@ using namespace nidevice_grpc::experimental::client;
   is_streaming = common_helpers.has_streaming_response(f)
 %>\
 %   if is_streaming:
-${client_helpers.streaming_response_type(response_type)}
-${client_method_name}(${client_helpers.create_streaming_params(f)});
+${client_helpers.streaming_response_type(response_type)} ${client_method_name}(${client_helpers.create_streaming_params(f)});
 %   else:
-${response_type}
-${client_method_name}(${client_helpers.create_unary_params(f)});
+${response_type} ${client_method_name}(${client_helpers.create_unary_params(f)});
 %   endif
 % endfor
 

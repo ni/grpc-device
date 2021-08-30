@@ -22,276 +22,141 @@ using StubPtr = std::unique_ptr<NiDCPower::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
-AbortWithChannelsResponse
-abort_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-CommitWithChannelsResponse
-commit_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse
-configure_digital_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureDigitalEdgePulseTriggerWithChannelsResponse
-configure_digital_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse
-configure_digital_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse
-configure_digital_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureDigitalEdgeSourceTriggerWithChannelsResponse
-configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureDigitalEdgeStartTriggerWithChannelsResponse
-configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureOvpResponse
-configure_ovp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled, const double& limit);
-ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse
-configure_software_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ConfigureSoftwareEdgePulseTriggerWithChannelsResponse
-configure_software_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse
-configure_software_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ConfigureSoftwareEdgeShutdownTriggerWithChannelsResponse
-configure_software_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ConfigureSoftwareEdgeSourceTriggerWithChannelsResponse
-configure_software_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ConfigureSoftwareEdgeStartTriggerWithChannelsResponse
-configure_software_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ConfigureSourceModeWithChannelsResponse
-configure_source_mode_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<SourceMode, pb::int32>& source_mode);
-CreateAdvancedSequenceCommitStepWithChannelsResponse
-create_advanced_sequence_commit_step_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& set_as_active_step);
-CreateAdvancedSequenceStepWithChannelsResponse
-create_advanced_sequence_step_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& set_as_active_step);
-CreateAdvancedSequenceWithChannelsResponse
-create_advanced_sequence_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence);
-CreateAdvancedSequenceResponse
-create_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence);
-DeleteAdvancedSequenceWithChannelsResponse
-delete_advanced_sequence_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& sequence_name);
-DisablePulseTriggerWithChannelsResponse
-disable_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-DisableSequenceAdvanceTriggerWithChannelsResponse
-disable_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-DisableShutdownTriggerWithChannelsResponse
-disable_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-DisableSourceTriggerWithChannelsResponse
-disable_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-DisableStartTriggerWithChannelsResponse
-disable_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ErrorQueryResponse
-error_query(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& error_message);
-ExportSignalWithChannelsResponse
-export_signal_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal);
-InitializeWithIndependentChannelsResponse
-initialize_with_independent_channels(const StubPtr& stub, const pb::string& resource_name, const bool& reset, const pb::string& option_string);
-InitiateWithChannelsResponse
-initiate_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-InvalidateAllAttributesResponse
-invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ResetWithChannelsResponse
-reset_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-SendSoftwareEdgeTriggerWithChannelsResponse
-send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& trigger);
-WaitForEventWithChannelsResponse
-wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout);
-AbortResponse
-abort(const StubPtr& stub, const nidevice_grpc::Session& vi);
-CalSelfCalibrateResponse
-cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ClearErrorResponse
-clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ClearInterchangeWarningsResponse
-clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi);
-CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& vi);
-CommitResponse
-commit(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ConfigureApertureTimeResponse
-configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& aperture_time, const simple_variant<ApertureTimeUnits, pb::int32>& units);
-ConfigureAutoZeroResponse
-configure_auto_zero(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<AutoZero, pb::int32>& auto_zero);
-ConfigureCurrentLevelResponse
-configure_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
-ConfigureCurrentLevelRangeResponse
-configure_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
-ConfigureCurrentLimitResponse
-configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<CurrentLimitBehavior, pb::int32>& behavior, const double& limit);
-ConfigureCurrentLimitRangeResponse
-configure_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
-ConfigureDigitalEdgeMeasureTriggerResponse
-configure_digital_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureDigitalEdgePulseTriggerResponse
-configure_digital_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureDigitalEdgeSequenceAdvanceTriggerResponse
-configure_digital_edge_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureDigitalEdgeSourceTriggerResponse
-configure_digital_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureDigitalEdgeStartTriggerResponse
-configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
-ConfigureOutputEnabledResponse
-configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled);
-ConfigureOutputFunctionResponse
-configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputFunction, pb::int32>& function);
-ConfigureOutputResistanceResponse
-configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& resistance);
-ConfigurePowerLineFrequencyResponse
-configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLineFrequencies, double>& powerline_frequency);
-ConfigurePulseBiasCurrentLevelResponse
-configure_pulse_bias_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
-ConfigurePulseBiasCurrentLimitResponse
-configure_pulse_bias_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
-ConfigurePulseBiasVoltageLevelResponse
-configure_pulse_bias_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
-ConfigurePulseBiasVoltageLimitResponse
-configure_pulse_bias_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
-ConfigurePulseCurrentLevelResponse
-configure_pulse_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
-ConfigurePulseCurrentLevelRangeResponse
-configure_pulse_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
-ConfigurePulseCurrentLimitResponse
-configure_pulse_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
-ConfigurePulseCurrentLimitRangeResponse
-configure_pulse_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
-ConfigurePulseVoltageLevelResponse
-configure_pulse_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
-ConfigurePulseVoltageLevelRangeResponse
-configure_pulse_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
-ConfigurePulseVoltageLimitResponse
-configure_pulse_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
-ConfigurePulseVoltageLimitRangeResponse
-configure_pulse_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
-ConfigureSenseResponse
-configure_sense(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Sense, pb::int32>& sense);
-ConfigureSoftwareEdgeMeasureTriggerResponse
-configure_software_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ConfigureSoftwareEdgePulseTriggerResponse
-configure_software_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ConfigureSoftwareEdgeSequenceAdvanceTriggerResponse
-configure_software_edge_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ConfigureSoftwareEdgeSourceTriggerResponse
-configure_software_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ConfigureSoftwareEdgeStartTriggerResponse
-configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ConfigureSourceModeResponse
-configure_source_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SourceMode, pb::int32>& source_mode);
-ConfigureVoltageLevelResponse
-configure_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
-ConfigureVoltageLevelRangeResponse
-configure_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
-ConfigureVoltageLimitResponse
-configure_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
-ConfigureVoltageLimitRangeResponse
-configure_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
-CreateAdvancedSequenceStepResponse
-create_advanced_sequence_step(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& set_as_active_step);
-DeleteAdvancedSequenceResponse
-delete_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sequence_name);
-DisableResponse
-disable(const StubPtr& stub, const nidevice_grpc::Session& vi);
-DisablePulseTriggerResponse
-disable_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
-DisableSequenceAdvanceTriggerResponse
-disable_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
-DisableSourceTriggerResponse
-disable_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
-DisableStartTriggerResponse
-disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ErrorMessageResponse
-error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
-ExportAttributeConfigurationBufferResponse
-export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ExportAttributeConfigurationFileResponse
-export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
-ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal);
-FetchMultipleResponse
-fetch_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& timeout, const pb::int32& count);
-GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViInt64Response
-get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetChannelNameResponse
-get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index);
-GetChannelNameFromStringResponse
-get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& index);
-GetErrorResponse
-get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetExtCalLastDateAndTimeResponse
-get_ext_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetExtCalLastTempResponse
-get_ext_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetExtCalRecommendedIntervalResponse
-get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetNextCoercionRecordResponse
-get_next_coercion_record(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetNextInterchangeWarningResponse
-get_next_interchange_warning(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetSelfCalLastDateAndTimeResponse
-get_self_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetSelfCalLastTempResponse
-get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ImportAttributeConfigurationBufferResponse
-import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::uint64>& configuration);
-ImportAttributeConfigurationFileResponse
-import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
-InitializeWithChannelsResponse
-initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channels, const bool& reset, const pb::string& option_string);
-InitiateResponse
-initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
-MeasureResponse
-measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<MeasurementTypes, pb::int32>& measurement_type);
-MeasureMultipleResponse
-measure_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-QueryInComplianceResponse
-query_in_compliance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-QueryMaxCurrentLimitResponse
-query_max_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& voltage_level);
-QueryMaxVoltageLevelResponse
-query_max_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& current_limit);
-QueryMinCurrentLimitResponse
-query_min_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& voltage_level);
-QueryOutputStateResponse
-query_output_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputStates, pb::int32>& output_state);
-ReadCurrentTemperatureResponse
-read_current_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ResetResponse
-reset(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ResetDeviceResponse
-reset_device(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ResetInterchangeCheckResponse
-reset_interchange_check(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ResetWithDefaultsResponse
-reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi);
-RevisionQueryResponse
-revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
-SelfTestResponse
-self_test(const StubPtr& stub, const nidevice_grpc::Session& vi);
-SendSoftwareEdgeTriggerResponse
-send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& trigger);
-SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const bool& attribute_value);
-SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const simple_variant<NiDCPowerInt32AttributeValues, pb::int32>& attribute_value);
-SetAttributeViInt64Response
-set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const pb::int64& attribute_value_raw);
-SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const simple_variant<NiDCPowerReal64AttributeValues, double>& attribute_value);
-SetAttributeViSessionResponse
-set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const nidevice_grpc::Session& attribute_value);
-SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const pb::string& attribute_value_raw);
-SetSequenceResponse
-set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& values, const std::vector<double>& source_delays);
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
-WaitForEventResponse
-wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout);
+AbortWithChannelsResponse abort_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+CommitWithChannelsResponse commit_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse configure_digital_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureDigitalEdgePulseTriggerWithChannelsResponse configure_digital_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse configure_digital_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse configure_digital_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureDigitalEdgeSourceTriggerWithChannelsResponse configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureDigitalEdgeStartTriggerWithChannelsResponse configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureOvpResponse configure_ovp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled, const double& limit);
+ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse configure_software_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+ConfigureSoftwareEdgePulseTriggerWithChannelsResponse configure_software_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse configure_software_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+ConfigureSoftwareEdgeShutdownTriggerWithChannelsResponse configure_software_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+ConfigureSoftwareEdgeSourceTriggerWithChannelsResponse configure_software_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+ConfigureSoftwareEdgeStartTriggerWithChannelsResponse configure_software_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+ConfigureSourceModeWithChannelsResponse configure_source_mode_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<SourceMode, pb::int32>& source_mode);
+CreateAdvancedSequenceCommitStepWithChannelsResponse create_advanced_sequence_commit_step_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& set_as_active_step);
+CreateAdvancedSequenceStepWithChannelsResponse create_advanced_sequence_step_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& set_as_active_step);
+CreateAdvancedSequenceWithChannelsResponse create_advanced_sequence_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence);
+CreateAdvancedSequenceResponse create_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence);
+DeleteAdvancedSequenceWithChannelsResponse delete_advanced_sequence_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& sequence_name);
+DisablePulseTriggerWithChannelsResponse disable_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+DisableSequenceAdvanceTriggerWithChannelsResponse disable_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+DisableShutdownTriggerWithChannelsResponse disable_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+DisableSourceTriggerWithChannelsResponse disable_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+DisableStartTriggerWithChannelsResponse disable_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+ErrorQueryResponse error_query(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& error_message);
+ExportSignalWithChannelsResponse export_signal_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal);
+InitializeWithIndependentChannelsResponse initialize_with_independent_channels(const StubPtr& stub, const pb::string& resource_name, const bool& reset, const pb::string& option_string);
+InitiateWithChannelsResponse initiate_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ResetWithChannelsResponse reset_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+SendSoftwareEdgeTriggerWithChannelsResponse send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& trigger);
+WaitForEventWithChannelsResponse wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout);
+AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& vi);
+CalSelfCalibrateResponse cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+ClearErrorResponse clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ClearInterchangeWarningsResponse clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi);
+CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
+CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ConfigureApertureTimeResponse configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& aperture_time, const simple_variant<ApertureTimeUnits, pb::int32>& units);
+ConfigureAutoZeroResponse configure_auto_zero(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<AutoZero, pb::int32>& auto_zero);
+ConfigureCurrentLevelResponse configure_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
+ConfigureCurrentLevelRangeResponse configure_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
+ConfigureCurrentLimitResponse configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<CurrentLimitBehavior, pb::int32>& behavior, const double& limit);
+ConfigureCurrentLimitRangeResponse configure_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
+ConfigureDigitalEdgeMeasureTriggerResponse configure_digital_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureDigitalEdgePulseTriggerResponse configure_digital_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureDigitalEdgeSequenceAdvanceTriggerResponse configure_digital_edge_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureDigitalEdgeSourceTriggerResponse configure_digital_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureDigitalEdgeStartTriggerResponse configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureOutputEnabledResponse configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled);
+ConfigureOutputFunctionResponse configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputFunction, pb::int32>& function);
+ConfigureOutputResistanceResponse configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& resistance);
+ConfigurePowerLineFrequencyResponse configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLineFrequencies, double>& powerline_frequency);
+ConfigurePulseBiasCurrentLevelResponse configure_pulse_bias_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
+ConfigurePulseBiasCurrentLimitResponse configure_pulse_bias_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
+ConfigurePulseBiasVoltageLevelResponse configure_pulse_bias_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
+ConfigurePulseBiasVoltageLimitResponse configure_pulse_bias_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
+ConfigurePulseCurrentLevelResponse configure_pulse_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
+ConfigurePulseCurrentLevelRangeResponse configure_pulse_current_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
+ConfigurePulseCurrentLimitResponse configure_pulse_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
+ConfigurePulseCurrentLimitRangeResponse configure_pulse_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
+ConfigurePulseVoltageLevelResponse configure_pulse_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
+ConfigurePulseVoltageLevelRangeResponse configure_pulse_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
+ConfigurePulseVoltageLimitResponse configure_pulse_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
+ConfigurePulseVoltageLimitRangeResponse configure_pulse_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
+ConfigureSenseResponse configure_sense(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Sense, pb::int32>& sense);
+ConfigureSoftwareEdgeMeasureTriggerResponse configure_software_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ConfigureSoftwareEdgePulseTriggerResponse configure_software_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ConfigureSoftwareEdgeSequenceAdvanceTriggerResponse configure_software_edge_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ConfigureSoftwareEdgeSourceTriggerResponse configure_software_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ConfigureSoftwareEdgeStartTriggerResponse configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ConfigureSourceModeResponse configure_source_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SourceMode, pb::int32>& source_mode);
+ConfigureVoltageLevelResponse configure_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
+ConfigureVoltageLevelRangeResponse configure_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
+ConfigureVoltageLimitResponse configure_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
+ConfigureVoltageLimitRangeResponse configure_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
+CreateAdvancedSequenceStepResponse create_advanced_sequence_step(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& set_as_active_step);
+DeleteAdvancedSequenceResponse delete_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sequence_name);
+DisableResponse disable(const StubPtr& stub, const nidevice_grpc::Session& vi);
+DisablePulseTriggerResponse disable_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+DisableSequenceAdvanceTriggerResponse disable_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+DisableSourceTriggerResponse disable_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+DisableStartTriggerResponse disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
+ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ExportAttributeConfigurationFileResponse export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
+ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal);
+FetchMultipleResponse fetch_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& timeout, const pb::int32& count);
+GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
+GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
+GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
+GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
+GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
+GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
+GetChannelNameResponse get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index);
+GetChannelNameFromStringResponse get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& index);
+GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetExtCalLastDateAndTimeResponse get_ext_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetExtCalLastTempResponse get_ext_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetExtCalRecommendedIntervalResponse get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetNextCoercionRecordResponse get_next_coercion_record(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetNextInterchangeWarningResponse get_next_interchange_warning(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetSelfCalLastDateAndTimeResponse get_self_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetSelfCalLastTempResponse get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::uint64>& configuration);
+ImportAttributeConfigurationFileResponse import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
+InitializeWithChannelsResponse initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channels, const bool& reset, const pb::string& option_string);
+InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);
+LockSessionResponse lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
+MeasureResponse measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<MeasurementTypes, pb::int32>& measurement_type);
+MeasureMultipleResponse measure_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+QueryInComplianceResponse query_in_compliance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+QueryMaxCurrentLimitResponse query_max_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& voltage_level);
+QueryMaxVoltageLevelResponse query_max_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& current_limit);
+QueryMinCurrentLimitResponse query_min_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& voltage_level);
+QueryOutputStateResponse query_output_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputStates, pb::int32>& output_state);
+ReadCurrentTemperatureResponse read_current_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ResetResponse reset(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ResetDeviceResponse reset_device(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ResetInterchangeCheckResponse reset_interchange_check(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ResetWithDefaultsResponse reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi);
+RevisionQueryResponse revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
+SelfTestResponse self_test(const StubPtr& stub, const nidevice_grpc::Session& vi);
+SendSoftwareEdgeTriggerResponse send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& trigger);
+SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const bool& attribute_value);
+SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const simple_variant<NiDCPowerInt32AttributeValues, pb::int32>& attribute_value);
+SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const pb::int64& attribute_value_raw);
+SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const simple_variant<NiDCPowerReal64AttributeValues, double>& attribute_value);
+SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const nidevice_grpc::Session& attribute_value);
+SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const pb::string& attribute_value_raw);
+SetSequenceResponse set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& values, const std::vector<double>& source_delays);
+UnlockSessionResponse unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
+WaitForEventResponse wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout);
 
 } // namespace nidcpower_grpc::experimental::client
 

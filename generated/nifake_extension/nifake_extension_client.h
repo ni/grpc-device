@@ -22,8 +22,7 @@ using StubPtr = std::unique_ptr<NiFakeExtension::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
-AddCoolFunctionalityResponse
-add_cool_functionality(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& param);
+AddCoolFunctionalityResponse add_cool_functionality(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& param);
 
 } // namespace nifake_extension_grpc::experimental::client
 

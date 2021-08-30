@@ -22,48 +22,27 @@ using StubPtr = std::unique_ptr<NiFakeNonIvi::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
-CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& handle);
-GetMarbleAttributeDoubleResponse
-get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleDoubleAttributes& attribute);
-GetMarbleAttributeInt32Response
-get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleInt32Attributes& attribute);
-GetMarbleAttributeInt32ArrayResponse
-get_marble_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleInt32ArrayAttributes& attribute);
-InitResponse
-init(const StubPtr& stub, const pb::string& session_name);
-InitWithHandleNameAsSessionNameResponse
-init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& handle_name);
-InputArraysWithNarrowIntegerTypesResponse
-input_arrays_with_narrow_integer_types(const StubPtr& stub, const std::vector<pb::uint32>& u16_array, const std::vector<pb::int32>& i16_array, const std::vector<pb::int32>& i8_array);
-IotaWithCustomSizeResponse
-iota_with_custom_size(const StubPtr& stub, const pb::int32& size_one, const pb::int32& size_two);
-OutputArraysWithNarrowIntegerTypesResponse
-output_arrays_with_narrow_integer_types(const StubPtr& stub, const pb::int32& number_of_u16_samples, const pb::int32& number_of_i16_samples, const pb::int32& number_of_i8_samples);
-InputArrayOfBytesResponse
-input_array_of_bytes(const StubPtr& stub, const pb::string& u8_array);
-OutputArrayOfBytesResponse
-output_array_of_bytes(const StubPtr& stub, const pb::int32& number_of_u8_samples);
-std::unique_ptr<grpc::ClientReader<RegisterCallbackResponse>>
-register_callback(const StubPtr& stub, ::grpc::ClientContext& context, const pb::int32& input_data);
-std::unique_ptr<grpc::ClientReader<ReadStreamResponse>>
-read_stream(const StubPtr& stub, ::grpc::ClientContext& context, const pb::int32& start, const pb::int32& stop);
-InputTimestampResponse
-input_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& when);
-OutputTimestampResponse
-output_timestamp(const StubPtr& stub);
-InputVarArgsResponse
-input_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<StringAndEnum>& string_and_enums);
-OutputVarArgsResponse
-output_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<pb::string>& channel_names);
-ResetMarbleAttributeResponse
-reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleResetAttributes& attribute);
-SetMarbleAttributeDoubleResponse
-set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleDoubleAttributes& attribute, const double& value);
-SetMarbleAttributeInt32Response
-set_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleInt32Attributes& attribute, const simple_variant<MarbleInt32AttributeValues, pb::int32>& value);
-SetColorsResponse
-set_colors(const StubPtr& stub, const std::vector<pb::int32>& colors, const pb::int32& size);
+CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& handle);
+GetMarbleAttributeDoubleResponse get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleDoubleAttributes& attribute);
+GetMarbleAttributeInt32Response get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleInt32Attributes& attribute);
+GetMarbleAttributeInt32ArrayResponse get_marble_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleInt32ArrayAttributes& attribute);
+InitResponse init(const StubPtr& stub, const pb::string& session_name);
+InitWithHandleNameAsSessionNameResponse init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& handle_name);
+InputArraysWithNarrowIntegerTypesResponse input_arrays_with_narrow_integer_types(const StubPtr& stub, const std::vector<pb::uint32>& u16_array, const std::vector<pb::int32>& i16_array, const std::vector<pb::int32>& i8_array);
+IotaWithCustomSizeResponse iota_with_custom_size(const StubPtr& stub, const pb::int32& size_one, const pb::int32& size_two);
+OutputArraysWithNarrowIntegerTypesResponse output_arrays_with_narrow_integer_types(const StubPtr& stub, const pb::int32& number_of_u16_samples, const pb::int32& number_of_i16_samples, const pb::int32& number_of_i8_samples);
+InputArrayOfBytesResponse input_array_of_bytes(const StubPtr& stub, const pb::string& u8_array);
+OutputArrayOfBytesResponse output_array_of_bytes(const StubPtr& stub, const pb::int32& number_of_u8_samples);
+std::unique_ptr<grpc::ClientReader<RegisterCallbackResponse>> register_callback(const StubPtr& stub, ::grpc::ClientContext& context, const pb::int32& input_data);
+std::unique_ptr<grpc::ClientReader<ReadStreamResponse>> read_stream(const StubPtr& stub, ::grpc::ClientContext& context, const pb::int32& start, const pb::int32& stop);
+InputTimestampResponse input_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& when);
+OutputTimestampResponse output_timestamp(const StubPtr& stub);
+InputVarArgsResponse input_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<StringAndEnum>& string_and_enums);
+OutputVarArgsResponse output_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<pb::string>& channel_names);
+ResetMarbleAttributeResponse reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleResetAttributes& attribute);
+SetMarbleAttributeDoubleResponse set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleDoubleAttributes& attribute, const double& value);
+SetMarbleAttributeInt32Response set_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const MarbleInt32Attributes& attribute, const simple_variant<MarbleInt32AttributeValues, pb::int32>& value);
+SetColorsResponse set_colors(const StubPtr& stub, const std::vector<pb::int32>& colors, const pb::int32& size);
 
 } // namespace nifake_non_ivi_grpc::experimental::client
 
