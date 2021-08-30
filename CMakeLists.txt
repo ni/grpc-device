@@ -78,11 +78,15 @@ set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_
 # Create NI Driver APIs proto and server files
 #----------------------------------------------------------------------
 set(codegen_scripts
+  "${codegen_dir}/client_helpers.py"
   "${codegen_dir}/common_helpers.py"
   "${codegen_dir}/generate_service.py"
   "${codegen_dir}/service_helpers.py"
   "${codegen_dir}/proto_helpers.py"
   "${codegen_dir}/metadata_mutation.py"
+  "${codegen_dir}/templates/client.cpp.mako"
+  "${codegen_dir}/templates/client.h.mako"
+  "${codegen_dir}/templates/client_helpers.mako"
   "${codegen_dir}/templates/library_interface.h.mako"
   "${codegen_dir}/templates/library.cpp.mako"
   "${codegen_dir}/templates/library.h.mako"
@@ -95,6 +99,8 @@ set(codegen_scripts
 
 # Populated in the api loop below.
 set(nidriver_service_srcs "")
+set(nidriver_client_srcs "")
+
 
 foreach(api ${nidrivers})
   set(codegen_dependencies
@@ -108,6 +114,8 @@ foreach(api ${nidrivers})
     "${metadata_dir}/${api}/functions_addon.py"
     "${metadata_dir}/${api}/__init__.py")
   set(output_files
+    ${service_output_dir}/${api}/${api}_client.cpp
+    ${service_output_dir}/${api}/${api}_client.h
     ${service_output_dir}/${api}/${api}_library_interface.h
     ${service_output_dir}/${api}/${api}_library.cpp
     ${service_output_dir}/${api}/${api}_library.h
@@ -122,6 +130,9 @@ foreach(api ${nidrivers})
       "${service_output_dir}/${api}/${api}_service.cpp"
       "${service_output_dir}/${api}/${api}_library.cpp"
       "${custom_dir}/${api}_service.custom.cpp")
+    set(nidriver_client_srcs
+      ${nidriver_client_srcs}
+      "${service_output_dir}/${api}/${api}_client.cpp")
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
@@ -369,7 +380,8 @@ add_executable(SystemTestsRunner
     "source/server/syscfg_library.cpp"
     ${session_proto_srcs}
     ${session_grpc_srcs}
-    ${nidriver_service_srcs})
+    ${nidriver_service_srcs}
+    ${nidriver_client_srcs})
 
 target_link_libraries(SystemTestsRunner
     gtest
