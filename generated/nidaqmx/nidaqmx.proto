@@ -4284,7 +4284,6 @@ message AddNetworkDeviceRequest {
   string device_name = 2;
   bool attempt_reservation = 3;
   double timeout = 4;
-  uint32 device_name_out_buffer_size = 5;
 }
 
 message AddNetworkDeviceResponse {
@@ -6859,7 +6858,6 @@ message GetArmStartTrigTrigWhenResponse {
 }
 
 message GetAutoConfiguredCDAQSyncConnectionsRequest {
-  uint32 port_list_size = 1;
 }
 
 message GetAutoConfiguredCDAQSyncConnectionsResponse {
@@ -6900,7 +6898,6 @@ message GetCalInfoAttributeDoubleResponse {
 message GetCalInfoAttributeStringRequest {
   string device_name = 1;
   CalibrationInfoStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetCalInfoAttributeStringResponse {
@@ -6944,7 +6941,6 @@ message GetChanAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   ChannelDoubleArrayAttributes attribute = 3;
-  uint32 size = 4;
 }
 
 message GetChanAttributeDoubleArrayResponse {
@@ -6968,7 +6964,6 @@ message GetChanAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   ChannelStringAttributes attribute = 3;
-  uint32 size = 4;
 }
 
 message GetChanAttributeStringResponse {
@@ -7010,7 +7005,6 @@ message GetDeviceAttributeDoubleResponse {
 message GetDeviceAttributeDoubleArrayRequest {
   string device_name = 1;
   DeviceDoubleArrayAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetDeviceAttributeDoubleArrayResponse {
@@ -7032,7 +7026,6 @@ message GetDeviceAttributeInt32Response {
 message GetDeviceAttributeInt32ArrayRequest {
   string device_name = 1;
   DeviceInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetDeviceAttributeInt32ArrayResponse {
@@ -7044,7 +7037,6 @@ message GetDeviceAttributeInt32ArrayResponse {
 message GetDeviceAttributeStringRequest {
   string device_name = 1;
   DeviceStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetDeviceAttributeStringResponse {
@@ -7065,7 +7057,6 @@ message GetDeviceAttributeUInt32Response {
 message GetDeviceAttributeUInt32ArrayRequest {
   string device_name = 1;
   DeviceUInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetDeviceAttributeUInt32ArrayResponse {
@@ -7103,7 +7094,6 @@ message GetDigitalPullUpPullDownStatesResponse {
 }
 
 message GetDisconnectedCDAQSyncPortsRequest {
-  uint32 port_list_size = 1;
 }
 
 message GetDisconnectedCDAQSyncPortsResponse {
@@ -7154,7 +7144,6 @@ message GetExportedSignalAttributeInt32Response {
 message GetExportedSignalAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   ExportSignalStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetExportedSignalAttributeStringResponse {
@@ -7201,7 +7190,6 @@ message GetFirstSampTimestampValResponse {
 message GetNthTaskChannelRequest {
   nidevice_grpc.Session task = 1;
   uint32 index = 2;
-  int32 buffer_size = 3;
 }
 
 message GetNthTaskChannelResponse {
@@ -7212,7 +7200,6 @@ message GetNthTaskChannelResponse {
 message GetNthTaskDeviceRequest {
   nidevice_grpc.Session task = 1;
   uint32 index = 2;
-  int32 buffer_size = 3;
 }
 
 message GetNthTaskDeviceResponse {
@@ -7223,7 +7210,6 @@ message GetNthTaskDeviceResponse {
 message GetNthTaskReadChannelRequest {
   nidevice_grpc.Session task = 1;
   uint32 index = 2;
-  int32 buffer_size = 3;
 }
 
 message GetNthTaskReadChannelResponse {
@@ -7244,7 +7230,6 @@ message GetPersistedChanAttributeBoolResponse {
 message GetPersistedChanAttributeStringRequest {
   string channel = 1;
   PersistedChannelStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetPersistedChanAttributeStringResponse {
@@ -7265,7 +7250,6 @@ message GetPersistedScaleAttributeBoolResponse {
 message GetPersistedScaleAttributeStringRequest {
   string scale_name = 1;
   PersistedScaleStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetPersistedScaleAttributeStringResponse {
@@ -7286,7 +7270,6 @@ message GetPersistedTaskAttributeBoolResponse {
 message GetPersistedTaskAttributeStringRequest {
   string task_name = 1;
   PersistedTaskStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetPersistedTaskAttributeStringResponse {
@@ -7307,7 +7290,6 @@ message GetPhysicalChanAttributeBoolResponse {
 message GetPhysicalChanAttributeBytesRequest {
   string physical_channel = 1;
   PhysicalChannelBytesAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetPhysicalChanAttributeBytesResponse {
@@ -7328,7 +7310,6 @@ message GetPhysicalChanAttributeDoubleResponse {
 message GetPhysicalChanAttributeDoubleArrayRequest {
   string physical_channel = 1;
   PhysicalChannelDoubleArrayAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetPhysicalChanAttributeDoubleArrayResponse {
@@ -7350,7 +7331,6 @@ message GetPhysicalChanAttributeInt32Response {
 message GetPhysicalChanAttributeInt32ArrayRequest {
   string physical_channel = 1;
   PhysicalChannelInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetPhysicalChanAttributeInt32ArrayResponse {
@@ -7362,7 +7342,6 @@ message GetPhysicalChanAttributeInt32ArrayResponse {
 message GetPhysicalChanAttributeStringRequest {
   string physical_channel = 1;
   PhysicalChannelStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetPhysicalChanAttributeStringResponse {
@@ -7383,7 +7362,6 @@ message GetPhysicalChanAttributeUInt32Response {
 message GetPhysicalChanAttributeUInt32ArrayRequest {
   string physical_channel = 1;
   PhysicalChannelUInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetPhysicalChanAttributeUInt32ArrayResponse {
@@ -7425,7 +7403,6 @@ message GetReadAttributeInt32Response {
 message GetReadAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   ReadStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetReadAttributeStringResponse {
@@ -7506,7 +7483,6 @@ message GetScaleAttributeDoubleResponse {
 message GetScaleAttributeDoubleArrayRequest {
   string scale_name = 1;
   ScaleDoubleArrayAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetScaleAttributeDoubleArrayResponse {
@@ -7528,7 +7504,6 @@ message GetScaleAttributeInt32Response {
 message GetScaleAttributeStringRequest {
   string scale_name = 1;
   ScaleStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetScaleAttributeStringResponse {
@@ -7578,7 +7553,6 @@ message GetSyncPulseTimeWhenResponse {
 
 message GetSystemInfoAttributeStringRequest {
   SystemStringAttributes attribute = 1;
-  uint32 size = 2;
 }
 
 message GetSystemInfoAttributeStringResponse {
@@ -7608,7 +7582,6 @@ message GetTaskAttributeBoolResponse {
 message GetTaskAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   TaskStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetTaskAttributeStringResponse {
@@ -7684,7 +7657,6 @@ message GetTimingAttributeExStringRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   TimingStringAttributes attribute = 3;
-  uint32 size = 4;
 }
 
 message GetTimingAttributeExStringResponse {
@@ -7728,7 +7700,6 @@ message GetTimingAttributeInt32Response {
 message GetTimingAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   TimingStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetTimingAttributeStringResponse {
@@ -7779,7 +7750,6 @@ message GetTrigAttributeDoubleResponse {
 message GetTrigAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
   TriggerDoubleArrayAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetTrigAttributeDoubleArrayResponse {
@@ -7801,7 +7771,6 @@ message GetTrigAttributeInt32Response {
 message GetTrigAttributeInt32ArrayRequest {
   nidevice_grpc.Session task = 1;
   TriggerInt32ArrayAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetTrigAttributeInt32ArrayResponse {
@@ -7813,7 +7782,6 @@ message GetTrigAttributeInt32ArrayResponse {
 message GetTrigAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   TriggerStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetTrigAttributeStringResponse {
@@ -7879,7 +7847,6 @@ message GetWatchdogAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   WatchdogStringAttributes attribute = 3;
-  uint32 size = 4;
 }
 
 message GetWatchdogAttributeStringResponse {
@@ -7921,7 +7888,6 @@ message GetWriteAttributeInt32Response {
 message GetWriteAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   WriteStringAttributes attribute = 2;
-  uint32 size = 3;
 }
 
 message GetWriteAttributeStringResponse {
