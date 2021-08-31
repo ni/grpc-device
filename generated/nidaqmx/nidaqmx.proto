@@ -4313,11 +4313,10 @@ message AutoConfigureCDAQSyncConnectionsResponse {
 
 message CalculateReversePolyCoeffRequest {
   repeated double forward_coeffs = 1;
-  uint32 num_forward_coeffs_in = 2;
-  double min_val_x = 3;
-  double max_val_x = 4;
-  int32 num_points_to_compute = 5;
-  int32 reverse_poly_order = 6;
+  double min_val_x = 2;
+  double max_val_x = 3;
+  int32 num_points_to_compute = 4;
+  int32 reverse_poly_order = 5;
 }
 
 message CalculateReversePolyCoeffResponse {
@@ -4360,7 +4359,6 @@ message CfgAnlgMultiEdgeRefTrigRequest {
   repeated int32 trigger_slope_array = 3;
   repeated double trigger_level_array = 4;
   uint32 pretrigger_samples = 5;
-  uint32 array_size = 6;
 }
 
 message CfgAnlgMultiEdgeRefTrigResponse {
@@ -4634,7 +4632,6 @@ message CfgWatchdogAOExpirStatesRequest {
   string channel_names = 2;
   repeated double expir_state_array = 3;
   repeated int32 output_type_array = 4;
-  uint32 array_size = 5;
 }
 
 message CfgWatchdogAOExpirStatesResponse {
@@ -4645,7 +4642,6 @@ message CfgWatchdogCOExpirStatesRequest {
   nidevice_grpc.Session task = 1;
   string channel_names = 2;
   repeated int32 expir_state_array = 3;
-  uint32 array_size = 4;
 }
 
 message CfgWatchdogCOExpirStatesResponse {
@@ -4656,7 +4652,6 @@ message CfgWatchdogDOExpirStatesRequest {
   nidevice_grpc.Session task = 1;
   string channel_names = 2;
   repeated int32 expir_state_array = 3;
-  uint32 array_size = 4;
 }
 
 message CfgWatchdogDOExpirStatesResponse {
@@ -4941,18 +4936,16 @@ message CreateAIForceBridgePolynomialChanRequest {
   double voltage_excit_val = 12;
   double nominal_bridge_resistance = 13;
   repeated double forward_coeffs = 14;
-  uint32 num_forward_coeffs = 15;
-  repeated double reverse_coeffs = 16;
-  uint32 num_reverse_coeffs = 17;
+  repeated double reverse_coeffs = 15;
   oneof electrical_units_enum {
-    BridgeElectricalUnits electrical_units = 18;
-    int32 electrical_units_raw = 19;
+    BridgeElectricalUnits electrical_units = 16;
+    int32 electrical_units_raw = 17;
   }
   oneof physical_units_enum {
-    BridgePhysicalUnits physical_units = 20;
-    int32 physical_units_raw = 21;
+    BridgePhysicalUnits physical_units = 18;
+    int32 physical_units_raw = 19;
   }
-  string custom_scale_name = 22;
+  string custom_scale_name = 20;
 }
 
 message CreateAIForceBridgePolynomialChanResponse {
@@ -4980,18 +4973,16 @@ message CreateAIForceBridgeTableChanRequest {
   double voltage_excit_val = 12;
   double nominal_bridge_resistance = 13;
   repeated double electrical_vals = 14;
-  uint32 num_electrical_vals = 15;
   oneof electrical_units_enum {
-    BridgeElectricalUnits electrical_units = 16;
-    int32 electrical_units_raw = 17;
+    BridgeElectricalUnits electrical_units = 15;
+    int32 electrical_units_raw = 16;
   }
-  repeated double physical_vals = 18;
-  uint32 num_physical_vals = 19;
+  repeated double physical_vals = 17;
   oneof physical_units_enum {
-    BridgePhysicalUnits physical_units = 20;
-    int32 physical_units_raw = 21;
+    BridgePhysicalUnits physical_units = 18;
+    int32 physical_units_raw = 19;
   }
-  string custom_scale_name = 22;
+  string custom_scale_name = 20;
 }
 
 message CreateAIForceBridgeTableChanResponse {
@@ -5220,18 +5211,16 @@ message CreateAIPressureBridgePolynomialChanRequest {
   double voltage_excit_val = 12;
   double nominal_bridge_resistance = 13;
   repeated double forward_coeffs = 14;
-  uint32 num_forward_coeffs = 15;
-  repeated double reverse_coeffs = 16;
-  uint32 num_reverse_coeffs = 17;
+  repeated double reverse_coeffs = 15;
   oneof electrical_units_enum {
-    BridgeElectricalUnits electrical_units = 18;
-    int32 electrical_units_raw = 19;
+    BridgeElectricalUnits electrical_units = 16;
+    int32 electrical_units_raw = 17;
   }
   oneof physical_units_enum {
-    BridgePhysicalUnits physical_units = 20;
-    int32 physical_units_raw = 21;
+    BridgePhysicalUnits physical_units = 18;
+    int32 physical_units_raw = 19;
   }
-  string custom_scale_name = 22;
+  string custom_scale_name = 20;
 }
 
 message CreateAIPressureBridgePolynomialChanResponse {
@@ -5259,18 +5248,16 @@ message CreateAIPressureBridgeTableChanRequest {
   double voltage_excit_val = 12;
   double nominal_bridge_resistance = 13;
   repeated double electrical_vals = 14;
-  uint32 num_electrical_vals = 15;
   oneof electrical_units_enum {
-    BridgeElectricalUnits electrical_units = 16;
-    int32 electrical_units_raw = 17;
+    BridgeElectricalUnits electrical_units = 15;
+    int32 electrical_units_raw = 16;
   }
-  repeated double physical_vals = 18;
-  uint32 num_physical_vals = 19;
+  repeated double physical_vals = 17;
   oneof physical_units_enum {
-    BridgePhysicalUnits physical_units = 20;
-    int32 physical_units_raw = 21;
+    BridgePhysicalUnits physical_units = 18;
+    int32 physical_units_raw = 19;
   }
-  string custom_scale_name = 22;
+  string custom_scale_name = 20;
 }
 
 message CreateAIPressureBridgeTableChanResponse {
@@ -5384,20 +5371,19 @@ message CreateAIRosetteStrainGageChanRequest {
   }
   double gage_orientation = 8;
   repeated int32 rosette_meas_types = 9;
-  uint32 num_rosette_meas_types = 10;
   oneof strain_config_enum {
-    StrainGageBridgeType1 strain_config = 11;
-    int32 strain_config_raw = 12;
+    StrainGageBridgeType1 strain_config = 10;
+    int32 strain_config_raw = 11;
   }
   oneof voltage_excit_source_enum {
-    ExcitationSource voltage_excit_source = 13;
-    int32 voltage_excit_source_raw = 14;
+    ExcitationSource voltage_excit_source = 12;
+    int32 voltage_excit_source_raw = 13;
   }
-  double voltage_excit_val = 15;
-  double gage_factor = 16;
-  double nominal_gage_resistance = 17;
-  double poisson_ratio = 18;
-  double lead_wire_resistance = 19;
+  double voltage_excit_val = 14;
+  double gage_factor = 15;
+  double nominal_gage_resistance = 16;
+  double poisson_ratio = 17;
+  double lead_wire_resistance = 18;
 }
 
 message CreateAIRosetteStrainGageChanResponse {
@@ -5553,18 +5539,16 @@ message CreateAITorqueBridgePolynomialChanRequest {
   double voltage_excit_val = 12;
   double nominal_bridge_resistance = 13;
   repeated double forward_coeffs = 14;
-  uint32 num_forward_coeffs = 15;
-  repeated double reverse_coeffs = 16;
-  uint32 num_reverse_coeffs = 17;
+  repeated double reverse_coeffs = 15;
   oneof electrical_units_enum {
-    BridgeElectricalUnits electrical_units = 18;
-    int32 electrical_units_raw = 19;
+    BridgeElectricalUnits electrical_units = 16;
+    int32 electrical_units_raw = 17;
   }
   oneof physical_units_enum {
-    BridgePhysicalUnits physical_units = 20;
-    int32 physical_units_raw = 21;
+    BridgePhysicalUnits physical_units = 18;
+    int32 physical_units_raw = 19;
   }
-  string custom_scale_name = 22;
+  string custom_scale_name = 20;
 }
 
 message CreateAITorqueBridgePolynomialChanResponse {
@@ -5592,18 +5576,16 @@ message CreateAITorqueBridgeTableChanRequest {
   double voltage_excit_val = 12;
   double nominal_bridge_resistance = 13;
   repeated double electrical_vals = 14;
-  uint32 num_electrical_vals = 15;
   oneof electrical_units_enum {
-    BridgeElectricalUnits electrical_units = 16;
-    int32 electrical_units_raw = 17;
+    BridgeElectricalUnits electrical_units = 15;
+    int32 electrical_units_raw = 16;
   }
-  repeated double physical_vals = 18;
-  uint32 num_physical_vals = 19;
+  repeated double physical_vals = 17;
   oneof physical_units_enum {
-    BridgePhysicalUnits physical_units = 20;
-    int32 physical_units_raw = 21;
+    BridgePhysicalUnits physical_units = 18;
+    int32 physical_units_raw = 19;
   }
-  string custom_scale_name = 22;
+  string custom_scale_name = 20;
 }
 
 message CreateAITorqueBridgeTableChanResponse {
@@ -6242,14 +6224,12 @@ message CreateMapScaleResponse {
 message CreatePolynomialScaleRequest {
   string name = 1;
   repeated double forward_coeffs = 2;
-  uint32 num_forward_coeffs_in = 3;
-  repeated double reverse_coeffs = 4;
-  uint32 num_reverse_coeffs_in = 5;
+  repeated double reverse_coeffs = 3;
   oneof pre_scaled_units_enum {
-    UnitsPreScaled pre_scaled_units = 6;
-    int32 pre_scaled_units_raw = 7;
+    UnitsPreScaled pre_scaled_units = 4;
+    int32 pre_scaled_units_raw = 5;
   }
-  string scaled_units = 8;
+  string scaled_units = 6;
 }
 
 message CreatePolynomialScaleResponse {
@@ -6699,14 +6679,12 @@ message CreateTEDSAIVoltageChanWithExcitResponse {
 message CreateTableScaleRequest {
   string name = 1;
   repeated double prescaled_vals = 2;
-  uint32 num_prescaled_vals_in = 3;
-  repeated double scaled_vals = 4;
-  uint32 num_scaled_vals_in = 5;
+  repeated double scaled_vals = 3;
   oneof pre_scaled_units_enum {
-    UnitsPreScaled pre_scaled_units = 6;
-    int32 pre_scaled_units_raw = 7;
+    UnitsPreScaled pre_scaled_units = 4;
+    int32 pre_scaled_units_raw = 5;
   }
-  string scaled_units = 8;
+  string scaled_units = 6;
 }
 
 message CreateTableScaleResponse {
@@ -8671,7 +8649,6 @@ message SetChanAttributeDoubleArrayRequest {
   string channel = 2;
   ChannelDoubleArrayAttributes attribute = 3;
   repeated double value = 4;
-  uint32 size = 5;
 }
 
 message SetChanAttributeDoubleArrayResponse {
@@ -8916,7 +8893,6 @@ message SetScaleAttributeDoubleArrayRequest {
   string scale_name = 1;
   ScaleDoubleArrayAttributes attribute = 2;
   repeated double value = 3;
-  uint32 size = 4;
 }
 
 message SetScaleAttributeDoubleArrayResponse {
@@ -9120,7 +9096,6 @@ message SetTrigAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
   TriggerDoubleArrayAttributes attribute = 2;
   repeated double value = 3;
-  uint32 size = 4;
 }
 
 message SetTrigAttributeDoubleArrayResponse {
@@ -9648,10 +9623,9 @@ message WriteRawResponse {
 message WriteToTEDSFromArrayRequest {
   string physical_channel = 1;
   bytes bit_stream = 2;
-  uint32 array_size = 3;
   oneof basic_teds_options_enum {
-    WriteBasicTEDSOptions basic_teds_options = 4;
-    int32 basic_teds_options_raw = 5;
+    WriteBasicTEDSOptions basic_teds_options = 3;
+    int32 basic_teds_options_raw = 4;
   }
 }
 

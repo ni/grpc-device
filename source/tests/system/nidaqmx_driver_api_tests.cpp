@@ -500,10 +500,8 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_name(name);
 
     request.mutable_forward_coeffs()->CopyFrom({forward_coeffs.cbegin(), forward_coeffs.cend()});
-    request.set_num_forward_coeffs_in(static_cast<int32>(forward_coeffs.size()));
 
     request.mutable_reverse_coeffs()->CopyFrom({reverse_coeffs.cbegin(), reverse_coeffs.cend()});
-    request.set_num_reverse_coeffs_in(static_cast<int32>(reverse_coeffs.size()));
 
     request.set_pre_scaled_units(UnitsPreScaled::UNITS_PRE_SCALED_VOLTS);
     return stub()->CreatePolynomialScale(&context, request, &response);
@@ -533,7 +531,6 @@ class NiDAQmxDriverApiTests : public Test {
   {
     CalculateReversePolyCoeffRequest request;
     request.mutable_forward_coeffs()->CopyFrom({forward_coeffs.cbegin(), forward_coeffs.cend()});
-    request.set_num_forward_coeffs_in(static_cast<uint32>(forward_coeffs.size()));
     request.set_min_val_x(min_val_x);
     request.set_max_val_x(max_val_x);
     request.set_num_points_to_compute(num_points_to_compute);
@@ -678,7 +675,6 @@ class NiDAQmxDriverApiTests : public Test {
         DigitalLineState::DIGITAL_LINE_STATE_HIGH,
         DigitalLineState::DIGITAL_LINE_STATE_HIGH};
     request.mutable_expir_state_array()->CopyFrom({expir_states.cbegin(), expir_states.cend()});
-    request.set_array_size(2);
     return stub()->CfgWatchdogDOExpirStates(&context, request, &response);
   }
 
@@ -1049,8 +1045,7 @@ TEST_F(NiDAQmxDriverApiTests, SetPolynomialForwardCoefficients_GetPolynomialForw
       stub(),
       SCALE_NAME,
       ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
-      COEFFICIENTS,
-      COEFFICIENTS.size());
+      COEFFICIENTS);
 
   auto response = client::get_scale_attribute_double_array(
       stub(),

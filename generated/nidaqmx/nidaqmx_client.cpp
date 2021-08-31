@@ -105,13 +105,12 @@ auto_configure_cdaq_sync_connections(const StubPtr& stub, const pb::string& chas
 }
 
 CalculateReversePolyCoeffResponse
-calculate_reverse_poly_coeff(const StubPtr& stub, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs_in, const double& min_val_x, const double& max_val_x, const pb::int32& num_points_to_compute, const pb::int32& reverse_poly_order)
+calculate_reverse_poly_coeff(const StubPtr& stub, const std::vector<double>& forward_coeffs, const double& min_val_x, const double& max_val_x, const pb::int32& num_points_to_compute, const pb::int32& reverse_poly_order)
 {
   ::grpc::ClientContext context;
 
   auto request = CalculateReversePolyCoeffRequest{};
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs_in(num_forward_coeffs_in);
   request.set_min_val_x(min_val_x);
   request.set_max_val_x(max_val_x);
   request.set_num_points_to_compute(num_points_to_compute);
@@ -179,7 +178,7 @@ cfg_anlg_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 CfgAnlgMultiEdgeRefTrigResponse
-cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_sources, const std::vector<pb::int32>& trigger_slope_array, const std::vector<double>& trigger_level_array, const pb::uint32& pretrigger_samples, const pb::uint32& array_size)
+cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_sources, const std::vector<pb::int32>& trigger_slope_array, const std::vector<double>& trigger_level_array, const pb::uint32& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -189,7 +188,6 @@ cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& 
   copy_array(trigger_slope_array, request.mutable_trigger_slope_array());
   copy_array(trigger_level_array, request.mutable_trigger_level_array());
   request.set_pretrigger_samples(pretrigger_samples);
-  request.set_array_size(array_size);
 
   auto response = CfgAnlgMultiEdgeRefTrigResponse{};
 
@@ -686,7 +684,7 @@ cfg_time_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, con
 }
 
 CfgWatchdogAOExpirStatesResponse
-cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<double>& expir_state_array, const std::vector<pb::int32>& output_type_array, const pb::uint32& array_size)
+cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<double>& expir_state_array, const std::vector<pb::int32>& output_type_array)
 {
   ::grpc::ClientContext context;
 
@@ -695,7 +693,6 @@ cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
   request.set_channel_names(channel_names);
   copy_array(expir_state_array, request.mutable_expir_state_array());
   copy_array(output_type_array, request.mutable_output_type_array());
-  request.set_array_size(array_size);
 
   auto response = CfgWatchdogAOExpirStatesResponse{};
 
@@ -706,7 +703,7 @@ cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 CfgWatchdogCOExpirStatesResponse
-cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array, const pb::uint32& array_size)
+cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array)
 {
   ::grpc::ClientContext context;
 
@@ -714,7 +711,6 @@ cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
   request.mutable_task()->CopyFrom(task);
   request.set_channel_names(channel_names);
   copy_array(expir_state_array, request.mutable_expir_state_array());
-  request.set_array_size(array_size);
 
   auto response = CfgWatchdogCOExpirStatesResponse{};
 
@@ -725,7 +721,7 @@ cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 CfgWatchdogDOExpirStatesResponse
-cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array, const pb::uint32& array_size)
+cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array)
 {
   ::grpc::ClientContext context;
 
@@ -733,7 +729,6 @@ cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
   request.mutable_task()->CopyFrom(task);
   request.set_channel_names(channel_names);
   copy_array(expir_state_array, request.mutable_expir_state_array());
-  request.set_array_size(array_size);
 
   auto response = CfgWatchdogDOExpirStatesResponse{};
 
@@ -1209,7 +1204,7 @@ create_ai_current_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateAIForceBridgePolynomialChanResponse
-create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs, const std::vector<double>& reverse_coeffs, const pb::uint32& num_reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1246,9 +1241,7 @@ create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc:
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs(num_forward_coeffs);
   copy_array(reverse_coeffs, request.mutable_reverse_coeffs());
-  request.set_num_reverse_coeffs(num_reverse_coeffs);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -1276,7 +1269,7 @@ create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc:
 }
 
 CreateAIForceBridgeTableChanResponse
-create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const pb::uint32& num_electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const pb::uint32& num_physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1313,7 +1306,6 @@ create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Sess
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(electrical_vals, request.mutable_electrical_vals());
-  request.set_num_electrical_vals(num_electrical_vals);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -1323,7 +1315,6 @@ create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Sess
     request.set_electrical_units_raw(*electrical_units_raw_ptr);
   }
   copy_array(physical_vals, request.mutable_physical_vals());
-  request.set_num_physical_vals(num_physical_vals);
   const auto physical_units_ptr = physical_units.get_if<BridgePhysicalUnits>();
   const auto physical_units_raw_ptr = physical_units.get_if<pb::int32>();
   if (physical_units_ptr) {
@@ -1692,7 +1683,7 @@ create_ai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 CreateAIPressureBridgePolynomialChanResponse
-create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs, const std::vector<double>& reverse_coeffs, const pb::uint32& num_reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1729,9 +1720,7 @@ create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_gr
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs(num_forward_coeffs);
   copy_array(reverse_coeffs, request.mutable_reverse_coeffs());
-  request.set_num_reverse_coeffs(num_reverse_coeffs);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -1759,7 +1748,7 @@ create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_gr
 }
 
 CreateAIPressureBridgeTableChanResponse
-create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const pb::uint32& num_electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const pb::uint32& num_physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1796,7 +1785,6 @@ create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::S
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(electrical_vals, request.mutable_electrical_vals());
-  request.set_num_electrical_vals(num_electrical_vals);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -1806,7 +1794,6 @@ create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::S
     request.set_electrical_units_raw(*electrical_units_raw_ptr);
   }
   copy_array(physical_vals, request.mutable_physical_vals());
-  request.set_num_physical_vals(num_physical_vals);
   const auto physical_units_ptr = physical_units.get_if<BridgePhysicalUnits>();
   const auto physical_units_raw_ptr = physical_units.get_if<pb::int32>();
   if (physical_units_ptr) {
@@ -1993,7 +1980,7 @@ create_ai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateAIRosetteStrainGageChanResponse
-create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainGageRosetteType, pb::int32>& rosette_type, const double& gage_orientation, const std::vector<pb::int32>& rosette_meas_types, const pb::uint32& num_rosette_meas_types, const simple_variant<StrainGageBridgeType1, pb::int32>& strain_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& gage_factor, const double& nominal_gage_resistance, const double& poisson_ratio, const double& lead_wire_resistance)
+create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainGageRosetteType, pb::int32>& rosette_type, const double& gage_orientation, const std::vector<pb::int32>& rosette_meas_types, const simple_variant<StrainGageBridgeType1, pb::int32>& strain_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& gage_factor, const double& nominal_gage_resistance, const double& poisson_ratio, const double& lead_wire_resistance)
 {
   ::grpc::ClientContext context;
 
@@ -2013,7 +2000,6 @@ create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Ses
   }
   request.set_gage_orientation(gage_orientation);
   copy_array(rosette_meas_types, request.mutable_rosette_meas_types());
-  request.set_num_rosette_meas_types(num_rosette_meas_types);
   const auto strain_config_ptr = strain_config.get_if<StrainGageBridgeType1>();
   const auto strain_config_raw_ptr = strain_config.get_if<pb::int32>();
   if (strain_config_ptr) {
@@ -2265,7 +2251,7 @@ create_ai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateAITorqueBridgePolynomialChanResponse
-create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs, const std::vector<double>& reverse_coeffs, const pb::uint32& num_reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2302,9 +2288,7 @@ create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs(num_forward_coeffs);
   copy_array(reverse_coeffs, request.mutable_reverse_coeffs());
-  request.set_num_reverse_coeffs(num_reverse_coeffs);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -2332,7 +2316,7 @@ create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc
 }
 
 CreateAITorqueBridgeTableChanResponse
-create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const pb::uint32& num_electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const pb::uint32& num_physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2369,7 +2353,6 @@ create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Ses
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(electrical_vals, request.mutable_electrical_vals());
-  request.set_num_electrical_vals(num_electrical_vals);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -2379,7 +2362,6 @@ create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Ses
     request.set_electrical_units_raw(*electrical_units_raw_ptr);
   }
   copy_array(physical_vals, request.mutable_physical_vals());
-  request.set_num_physical_vals(num_physical_vals);
   const auto physical_units_ptr = physical_units.get_if<BridgePhysicalUnits>();
   const auto physical_units_raw_ptr = physical_units.get_if<pb::int32>();
   if (physical_units_ptr) {
@@ -3500,16 +3482,14 @@ create_map_scale(const StubPtr& stub, const pb::string& name, const double& pres
 }
 
 CreatePolynomialScaleResponse
-create_polynomial_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs_in, const std::vector<double>& reverse_coeffs, const pb::uint32& num_reverse_coeffs_in, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
+create_polynomial_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
 {
   ::grpc::ClientContext context;
 
   auto request = CreatePolynomialScaleRequest{};
   request.set_name(name);
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs_in(num_forward_coeffs_in);
   copy_array(reverse_coeffs, request.mutable_reverse_coeffs());
-  request.set_num_reverse_coeffs_in(num_reverse_coeffs_in);
   const auto pre_scaled_units_ptr = pre_scaled_units.get_if<UnitsPreScaled>();
   const auto pre_scaled_units_raw_ptr = pre_scaled_units.get_if<pb::int32>();
   if (pre_scaled_units_ptr) {
@@ -4301,16 +4281,14 @@ create_tedsai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::
 }
 
 CreateTableScaleResponse
-create_table_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& prescaled_vals, const pb::uint32& num_prescaled_vals_in, const std::vector<double>& scaled_vals, const pb::uint32& num_scaled_vals_in, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
+create_table_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& prescaled_vals, const std::vector<double>& scaled_vals, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
 {
   ::grpc::ClientContext context;
 
   auto request = CreateTableScaleRequest{};
   request.set_name(name);
   copy_array(prescaled_vals, request.mutable_prescaled_vals());
-  request.set_num_prescaled_vals_in(num_prescaled_vals_in);
   copy_array(scaled_vals, request.mutable_scaled_vals());
-  request.set_num_scaled_vals_in(num_scaled_vals_in);
   const auto pre_scaled_units_ptr = pre_scaled_units.get_if<UnitsPreScaled>();
   const auto pre_scaled_units_raw_ptr = pre_scaled_units.get_if<pb::int32>();
   if (pre_scaled_units_ptr) {
@@ -4652,6 +4630,75 @@ get_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
   return response;
 }
 
+GetCalInfoAttributeBoolResponse
+get_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoBoolAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetCalInfoAttributeBoolRequest{};
+  request.set_device_name(device_name);
+  request.set_attribute(attribute);
+
+  auto response = GetCalInfoAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->GetCalInfoAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+GetCalInfoAttributeDoubleResponse
+get_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoDoubleAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetCalInfoAttributeDoubleRequest{};
+  request.set_device_name(device_name);
+  request.set_attribute(attribute);
+
+  auto response = GetCalInfoAttributeDoubleResponse{};
+
+  raise_if_error(
+      stub->GetCalInfoAttributeDouble(&context, request, &response));
+
+  return response;
+}
+
+GetCalInfoAttributeStringResponse
+get_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoStringAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetCalInfoAttributeStringRequest{};
+  request.set_device_name(device_name);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetCalInfoAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetCalInfoAttributeString(&context, request, &response));
+
+  return response;
+}
+
+GetCalInfoAttributeUInt32Response
+get_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoUInt32Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetCalInfoAttributeUInt32Request{};
+  request.set_device_name(device_name);
+  request.set_attribute(attribute);
+
+  auto response = GetCalInfoAttributeUInt32Response{};
+
+  raise_if_error(
+      stub->GetCalInfoAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
 GetChanAttributeBoolResponse
 get_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelBoolAttributes& attribute)
 {
@@ -4984,6 +5031,92 @@ get_error_string(const StubPtr& stub, const pb::int32& error_code)
   return response;
 }
 
+GetExportedSignalAttributeBoolResponse
+get_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalBoolAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetExportedSignalAttributeBoolRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = GetExportedSignalAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->GetExportedSignalAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+GetExportedSignalAttributeDoubleResponse
+get_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalDoubleAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetExportedSignalAttributeDoubleRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = GetExportedSignalAttributeDoubleResponse{};
+
+  raise_if_error(
+      stub->GetExportedSignalAttributeDouble(&context, request, &response));
+
+  return response;
+}
+
+GetExportedSignalAttributeInt32Response
+get_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalInt32Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetExportedSignalAttributeInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = GetExportedSignalAttributeInt32Response{};
+
+  raise_if_error(
+      stub->GetExportedSignalAttributeInt32(&context, request, &response));
+
+  return response;
+}
+
+GetExportedSignalAttributeStringResponse
+get_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalStringAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetExportedSignalAttributeStringRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetExportedSignalAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetExportedSignalAttributeString(&context, request, &response));
+
+  return response;
+}
+
+GetExportedSignalAttributeUInt32Response
+get_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalUInt32Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetExportedSignalAttributeUInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = GetExportedSignalAttributeUInt32Response{};
+
+  raise_if_error(
+      stub->GetExportedSignalAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
 GetExtendedErrorInfoResponse
 get_extended_error_info(const StubPtr& stub)
 {
@@ -5081,6 +5214,269 @@ get_nth_task_read_channel(const StubPtr& stub, const nidevice_grpc::Session& tas
 
   raise_if_error(
       stub->GetNthTaskReadChannel(&context, request, &response));
+
+  return response;
+}
+
+GetPersistedChanAttributeBoolResponse
+get_persisted_chan_attribute_bool(const StubPtr& stub, const pb::string& channel, const PersistedChannelBoolAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPersistedChanAttributeBoolRequest{};
+  request.set_channel(channel);
+  request.set_attribute(attribute);
+
+  auto response = GetPersistedChanAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->GetPersistedChanAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+GetPersistedChanAttributeStringResponse
+get_persisted_chan_attribute_string(const StubPtr& stub, const pb::string& channel, const PersistedChannelStringAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPersistedChanAttributeStringRequest{};
+  request.set_channel(channel);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetPersistedChanAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetPersistedChanAttributeString(&context, request, &response));
+
+  return response;
+}
+
+GetPersistedScaleAttributeBoolResponse
+get_persisted_scale_attribute_bool(const StubPtr& stub, const pb::string& scale_name, const PersistedScaleBoolAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPersistedScaleAttributeBoolRequest{};
+  request.set_scale_name(scale_name);
+  request.set_attribute(attribute);
+
+  auto response = GetPersistedScaleAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->GetPersistedScaleAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+GetPersistedScaleAttributeStringResponse
+get_persisted_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const PersistedScaleStringAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPersistedScaleAttributeStringRequest{};
+  request.set_scale_name(scale_name);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetPersistedScaleAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetPersistedScaleAttributeString(&context, request, &response));
+
+  return response;
+}
+
+GetPersistedTaskAttributeBoolResponse
+get_persisted_task_attribute_bool(const StubPtr& stub, const pb::string& task_name, const PersistedTaskBoolAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPersistedTaskAttributeBoolRequest{};
+  request.set_task_name(task_name);
+  request.set_attribute(attribute);
+
+  auto response = GetPersistedTaskAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->GetPersistedTaskAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+GetPersistedTaskAttributeStringResponse
+get_persisted_task_attribute_string(const StubPtr& stub, const pb::string& task_name, const PersistedTaskStringAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPersistedTaskAttributeStringRequest{};
+  request.set_task_name(task_name);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetPersistedTaskAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetPersistedTaskAttributeString(&context, request, &response));
+
+  return response;
+}
+
+GetPhysicalChanAttributeBoolResponse
+get_physical_chan_attribute_bool(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelBoolAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPhysicalChanAttributeBoolRequest{};
+  request.set_physical_channel(physical_channel);
+  request.set_attribute(attribute);
+
+  auto response = GetPhysicalChanAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->GetPhysicalChanAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+GetPhysicalChanAttributeBytesResponse
+get_physical_chan_attribute_bytes(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelBytesAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPhysicalChanAttributeBytesRequest{};
+  request.set_physical_channel(physical_channel);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetPhysicalChanAttributeBytesResponse{};
+
+  raise_if_error(
+      stub->GetPhysicalChanAttributeBytes(&context, request, &response));
+
+  return response;
+}
+
+GetPhysicalChanAttributeDoubleResponse
+get_physical_chan_attribute_double(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelDoubleAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPhysicalChanAttributeDoubleRequest{};
+  request.set_physical_channel(physical_channel);
+  request.set_attribute(attribute);
+
+  auto response = GetPhysicalChanAttributeDoubleResponse{};
+
+  raise_if_error(
+      stub->GetPhysicalChanAttributeDouble(&context, request, &response));
+
+  return response;
+}
+
+GetPhysicalChanAttributeDoubleArrayResponse
+get_physical_chan_attribute_double_array(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelDoubleArrayAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPhysicalChanAttributeDoubleArrayRequest{};
+  request.set_physical_channel(physical_channel);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetPhysicalChanAttributeDoubleArrayResponse{};
+
+  raise_if_error(
+      stub->GetPhysicalChanAttributeDoubleArray(&context, request, &response));
+
+  return response;
+}
+
+GetPhysicalChanAttributeInt32Response
+get_physical_chan_attribute_int32(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelInt32Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPhysicalChanAttributeInt32Request{};
+  request.set_physical_channel(physical_channel);
+  request.set_attribute(attribute);
+
+  auto response = GetPhysicalChanAttributeInt32Response{};
+
+  raise_if_error(
+      stub->GetPhysicalChanAttributeInt32(&context, request, &response));
+
+  return response;
+}
+
+GetPhysicalChanAttributeInt32ArrayResponse
+get_physical_chan_attribute_int32_array(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelInt32ArrayAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPhysicalChanAttributeInt32ArrayRequest{};
+  request.set_physical_channel(physical_channel);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetPhysicalChanAttributeInt32ArrayResponse{};
+
+  raise_if_error(
+      stub->GetPhysicalChanAttributeInt32Array(&context, request, &response));
+
+  return response;
+}
+
+GetPhysicalChanAttributeStringResponse
+get_physical_chan_attribute_string(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelStringAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPhysicalChanAttributeStringRequest{};
+  request.set_physical_channel(physical_channel);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetPhysicalChanAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetPhysicalChanAttributeString(&context, request, &response));
+
+  return response;
+}
+
+GetPhysicalChanAttributeUInt32Response
+get_physical_chan_attribute_uint32(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelUInt32Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPhysicalChanAttributeUInt32Request{};
+  request.set_physical_channel(physical_channel);
+  request.set_attribute(attribute);
+
+  auto response = GetPhysicalChanAttributeUInt32Response{};
+
+  raise_if_error(
+      stub->GetPhysicalChanAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
+GetPhysicalChanAttributeUInt32ArrayResponse
+get_physical_chan_attribute_uint32_array(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelUInt32ArrayAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPhysicalChanAttributeUInt32ArrayRequest{};
+  request.set_physical_channel(physical_channel);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetPhysicalChanAttributeUInt32ArrayResponse{};
+
+  raise_if_error(
+      stub->GetPhysicalChanAttributeUInt32Array(&context, request, &response));
 
   return response;
 }
@@ -5184,6 +5580,57 @@ get_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& tas
 
   raise_if_error(
       stub->GetReadAttributeUInt64(&context, request, &response));
+
+  return response;
+}
+
+GetRealTimeAttributeBoolResponse
+get_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeBoolAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetRealTimeAttributeBoolRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = GetRealTimeAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->GetRealTimeAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+GetRealTimeAttributeInt32Response
+get_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeInt32Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetRealTimeAttributeInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = GetRealTimeAttributeInt32Response{};
+
+  raise_if_error(
+      stub->GetRealTimeAttributeInt32(&context, request, &response));
+
+  return response;
+}
+
+GetRealTimeAttributeUInt32Response
+get_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeUInt32Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetRealTimeAttributeUInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = GetRealTimeAttributeUInt32Response{};
+
+  raise_if_error(
+      stub->GetRealTimeAttributeUInt32(&context, request, &response));
 
   return response;
 }
@@ -5334,6 +5781,39 @@ get_sync_pulse_time_when(const StubPtr& stub, const nidevice_grpc::Session& task
 
   raise_if_error(
       stub->GetSyncPulseTimeWhen(&context, request, &response));
+
+  return response;
+}
+
+GetSystemInfoAttributeStringResponse
+get_system_info_attribute_string(const StubPtr& stub, const SystemStringAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSystemInfoAttributeStringRequest{};
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetSystemInfoAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetSystemInfoAttributeString(&context, request, &response));
+
+  return response;
+}
+
+GetSystemInfoAttributeUInt32Response
+get_system_info_attribute_uint32(const StubPtr& stub, const SystemUInt32Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSystemInfoAttributeUInt32Request{};
+  request.set_attribute(attribute);
+
+  auto response = GetSystemInfoAttributeUInt32Response{};
+
+  raise_if_error(
+      stub->GetSystemInfoAttributeUInt32(&context, request, &response));
 
   return response;
 }
@@ -5737,6 +6217,79 @@ get_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 
   raise_if_error(
       stub->GetTrigAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
+GetWatchdogAttributeBoolResponse
+get_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogBoolAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetWatchdogAttributeBoolRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_lines(lines);
+  request.set_attribute(attribute);
+
+  auto response = GetWatchdogAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->GetWatchdogAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+GetWatchdogAttributeDoubleResponse
+get_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogDoubleAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetWatchdogAttributeDoubleRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_lines(lines);
+  request.set_attribute(attribute);
+
+  auto response = GetWatchdogAttributeDoubleResponse{};
+
+  raise_if_error(
+      stub->GetWatchdogAttributeDouble(&context, request, &response));
+
+  return response;
+}
+
+GetWatchdogAttributeInt32Response
+get_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogInt32Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetWatchdogAttributeInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_lines(lines);
+  request.set_attribute(attribute);
+
+  auto response = GetWatchdogAttributeInt32Response{};
+
+  raise_if_error(
+      stub->GetWatchdogAttributeInt32(&context, request, &response));
+
+  return response;
+}
+
+GetWatchdogAttributeStringResponse
+get_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogStringAttributes& attribute, const pb::uint32& size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetWatchdogAttributeStringRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_lines(lines);
+  request.set_attribute(attribute);
+  request.set_size(size);
+
+  auto response = GetWatchdogAttributeStringResponse{};
+
+  raise_if_error(
+      stub->GetWatchdogAttributeString(&context, request, &response));
 
   return response;
 }
@@ -6541,6 +7094,23 @@ reset_device(const StubPtr& stub, const pb::string& device_name)
   return response;
 }
 
+ResetExportedSignalAttributeResponse
+reset_exported_signal_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalResetAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ResetExportedSignalAttributeRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = ResetExportedSignalAttributeResponse{};
+
+  raise_if_error(
+      stub->ResetExportedSignalAttribute(&context, request, &response));
+
+  return response;
+}
+
 ResetReadAttributeResponse
 reset_read_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadResetAttributes& attribute)
 {
@@ -6554,6 +7124,23 @@ reset_read_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, co
 
   raise_if_error(
       stub->ResetReadAttribute(&context, request, &response));
+
+  return response;
+}
+
+ResetRealTimeAttributeResponse
+reset_real_time_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeResetAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ResetRealTimeAttributeRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = ResetRealTimeAttributeResponse{};
+
+  raise_if_error(
+      stub->ResetRealTimeAttribute(&context, request, &response));
 
   return response;
 }
@@ -6606,6 +7193,24 @@ reset_trig_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, co
 
   raise_if_error(
       stub->ResetTrigAttribute(&context, request, &response));
+
+  return response;
+}
+
+ResetWatchdogAttributeResponse
+reset_watchdog_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogResetAttributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ResetWatchdogAttributeRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_lines(lines);
+  request.set_attribute(attribute);
+
+  auto response = ResetWatchdogAttributeResponse{};
+
+  raise_if_error(
+      stub->ResetWatchdogAttribute(&context, request, &response));
 
   return response;
 }
@@ -6834,6 +7439,78 @@ set_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
   return response;
 }
 
+SetCalInfoAttributeBoolResponse
+set_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoBoolAttributes& attribute, const bool& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetCalInfoAttributeBoolRequest{};
+  request.set_device_name(device_name);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetCalInfoAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->SetCalInfoAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+SetCalInfoAttributeDoubleResponse
+set_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoDoubleAttributes& attribute, const double& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetCalInfoAttributeDoubleRequest{};
+  request.set_device_name(device_name);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetCalInfoAttributeDoubleResponse{};
+
+  raise_if_error(
+      stub->SetCalInfoAttributeDouble(&context, request, &response));
+
+  return response;
+}
+
+SetCalInfoAttributeStringResponse
+set_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoStringAttributes& attribute, const pb::string& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetCalInfoAttributeStringRequest{};
+  request.set_device_name(device_name);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetCalInfoAttributeStringResponse{};
+
+  raise_if_error(
+      stub->SetCalInfoAttributeString(&context, request, &response));
+
+  return response;
+}
+
+SetCalInfoAttributeUInt32Response
+set_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoUInt32Attributes& attribute, const pb::uint32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetCalInfoAttributeUInt32Request{};
+  request.set_device_name(device_name);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetCalInfoAttributeUInt32Response{};
+
+  raise_if_error(
+      stub->SetCalInfoAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
 SetChanAttributeBoolResponse
 set_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelBoolAttributes& attribute, const bool& value)
 {
@@ -6873,7 +7550,7 @@ set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetChanAttributeDoubleArrayResponse
-set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelDoubleArrayAttributes& attribute, const std::vector<double>& value, const pb::uint32& size)
+set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelDoubleArrayAttributes& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -6882,7 +7559,6 @@ set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
   request.set_channel(channel);
   request.set_attribute(attribute);
   copy_array(value, request.mutable_value());
-  request.set_size(size);
 
   auto response = SetChanAttributeDoubleArrayResponse{};
 
@@ -7010,6 +7686,103 @@ set_digital_pull_up_pull_down_states(const StubPtr& stub, const pb::string& devi
 
   raise_if_error(
       stub->SetDigitalPullUpPullDownStates(&context, request, &response));
+
+  return response;
+}
+
+SetExportedSignalAttributeBoolResponse
+set_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalBoolAttributes& attribute, const bool& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetExportedSignalAttributeBoolRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetExportedSignalAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->SetExportedSignalAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+SetExportedSignalAttributeDoubleResponse
+set_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalDoubleAttributes& attribute, const double& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetExportedSignalAttributeDoubleRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetExportedSignalAttributeDoubleResponse{};
+
+  raise_if_error(
+      stub->SetExportedSignalAttributeDouble(&context, request, &response));
+
+  return response;
+}
+
+SetExportedSignalAttributeInt32Response
+set_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalInt32Attributes& attribute, const simple_variant<ExportSignalInt32AttributeValues, pb::int32>& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetExportedSignalAttributeInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  const auto value_ptr = value.get_if<ExportSignalInt32AttributeValues>();
+  const auto value_raw_ptr = value.get_if<pb::int32>();
+  if (value_ptr) {
+    request.set_value(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
+
+  auto response = SetExportedSignalAttributeInt32Response{};
+
+  raise_if_error(
+      stub->SetExportedSignalAttributeInt32(&context, request, &response));
+
+  return response;
+}
+
+SetExportedSignalAttributeStringResponse
+set_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalStringAttributes& attribute, const pb::string& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetExportedSignalAttributeStringRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetExportedSignalAttributeStringResponse{};
+
+  raise_if_error(
+      stub->SetExportedSignalAttributeString(&context, request, &response));
+
+  return response;
+}
+
+SetExportedSignalAttributeUInt32Response
+set_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalUInt32Attributes& attribute, const pb::uint32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetExportedSignalAttributeUInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetExportedSignalAttributeUInt32Response{};
+
+  raise_if_error(
+      stub->SetExportedSignalAttributeUInt32(&context, request, &response));
 
   return response;
 }
@@ -7146,6 +7919,67 @@ set_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& tas
   return response;
 }
 
+SetRealTimeAttributeBoolResponse
+set_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeBoolAttributes& attribute, const bool& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetRealTimeAttributeBoolRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetRealTimeAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->SetRealTimeAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+SetRealTimeAttributeInt32Response
+set_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeInt32Attributes& attribute, const simple_variant<RealTimeInt32AttributeValues, pb::int32>& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetRealTimeAttributeInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  const auto value_ptr = value.get_if<RealTimeInt32AttributeValues>();
+  const auto value_raw_ptr = value.get_if<pb::int32>();
+  if (value_ptr) {
+    request.set_value(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
+
+  auto response = SetRealTimeAttributeInt32Response{};
+
+  raise_if_error(
+      stub->SetRealTimeAttributeInt32(&context, request, &response));
+
+  return response;
+}
+
+SetRealTimeAttributeUInt32Response
+set_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeUInt32Attributes& attribute, const pb::uint32& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetRealTimeAttributeUInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetRealTimeAttributeUInt32Response{};
+
+  raise_if_error(
+      stub->SetRealTimeAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
 SetScaleAttributeDoubleResponse
 set_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, const ScaleDoubleAttributes& attribute, const double& value)
 {
@@ -7165,7 +7999,7 @@ set_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, co
 }
 
 SetScaleAttributeDoubleArrayResponse
-set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const ScaleDoubleArrayAttributes& attribute, const std::vector<double>& value, const pb::uint32& size)
+set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const ScaleDoubleArrayAttributes& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -7173,7 +8007,6 @@ set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_na
   request.set_scale_name(scale_name);
   request.set_attribute(attribute);
   copy_array(value, request.mutable_value());
-  request.set_size(size);
 
   auto response = SetScaleAttributeDoubleArrayResponse{};
 
@@ -7533,7 +8366,7 @@ set_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetTrigAttributeDoubleArrayResponse
-set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerDoubleArrayAttributes& attribute, const std::vector<double>& value, const pb::uint32& size)
+set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerDoubleArrayAttributes& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -7541,7 +8374,6 @@ set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
   request.mutable_task()->CopyFrom(task);
   request.set_attribute(attribute);
   copy_array(value, request.mutable_value());
-  request.set_size(size);
 
   auto response = SetTrigAttributeDoubleArrayResponse{};
 
@@ -7645,6 +8477,89 @@ set_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 
   raise_if_error(
       stub->SetTrigAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
+SetWatchdogAttributeBoolResponse
+set_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogBoolAttributes& attribute, const bool& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetWatchdogAttributeBoolRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_lines(lines);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetWatchdogAttributeBoolResponse{};
+
+  raise_if_error(
+      stub->SetWatchdogAttributeBool(&context, request, &response));
+
+  return response;
+}
+
+SetWatchdogAttributeDoubleResponse
+set_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogDoubleAttributes& attribute, const double& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetWatchdogAttributeDoubleRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_lines(lines);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetWatchdogAttributeDoubleResponse{};
+
+  raise_if_error(
+      stub->SetWatchdogAttributeDouble(&context, request, &response));
+
+  return response;
+}
+
+SetWatchdogAttributeInt32Response
+set_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogInt32Attributes& attribute, const simple_variant<WatchdogInt32AttributeValues, pb::int32>& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetWatchdogAttributeInt32Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_lines(lines);
+  request.set_attribute(attribute);
+  const auto value_ptr = value.get_if<WatchdogInt32AttributeValues>();
+  const auto value_raw_ptr = value.get_if<pb::int32>();
+  if (value_ptr) {
+    request.set_value(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
+
+  auto response = SetWatchdogAttributeInt32Response{};
+
+  raise_if_error(
+      stub->SetWatchdogAttributeInt32(&context, request, &response));
+
+  return response;
+}
+
+SetWatchdogAttributeStringResponse
+set_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogStringAttributes& attribute, const pb::string& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetWatchdogAttributeStringRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_lines(lines);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetWatchdogAttributeStringResponse{};
+
+  raise_if_error(
+      stub->SetWatchdogAttributeString(&context, request, &response));
 
   return response;
 }
@@ -8368,14 +9283,13 @@ write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int
 }
 
 WriteToTEDSFromArrayResponse
-write_to_teds_from_array(const StubPtr& stub, const pb::string& physical_channel, const pb::string& bit_stream, const pb::uint32& array_size, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options)
+write_to_teds_from_array(const StubPtr& stub, const pb::string& physical_channel, const pb::string& bit_stream, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options)
 {
   ::grpc::ClientContext context;
 
   auto request = WriteToTEDSFromArrayRequest{};
   request.set_physical_channel(physical_channel);
   request.set_bit_stream(bit_stream);
-  request.set_array_size(array_size);
   const auto basic_teds_options_ptr = basic_teds_options.get_if<WriteBasicTEDSOptions>();
   const auto basic_teds_options_raw_ptr = basic_teds_options.get_if<pb::int32>();
   if (basic_teds_options_ptr) {
