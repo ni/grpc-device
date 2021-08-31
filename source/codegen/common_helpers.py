@@ -109,11 +109,14 @@ def is_unsupported_parameter(parameter):
 # - ivi-dance: This is a two-step process. On the first call, pass in NULL, and the function will return
 #              how big the array should be (instead of an error as usual). Then, the service creates an array
 #              of that size and passes it in. Should only be used for output arrays. The size of the array
-#              (which is still passed in) is specified in the 'value' member.
+#              (which is still passed in) is specified in the 'value' member. Note that it is possible that the
+#              second call will return a "buffer too small" error (if the underlying value in the driver has changed
+#              size between calls), in which case the "dance" will start again by passing NULL.
 # - ivi-dance-with-a-twist: This is similar to ivi-dance, but the size is returned in an output parameter that
 #                           is specified in the 'value_twist' member. Should only be used for output arrays. The size
 #                           of the array is specified in the 'value' member. This mechanism is necessary if there
-#                           are multiple output arrays (so ivi-dance won't work).
+#                           are multiple output arrays (so ivi-dance won't work). Similar to ivi-dance, this will loop
+#                           around if a "buffer too small" error is returned on the second call.
 # - passed-in: The array's size is passed in in a separate parameter, which is specified in the 'value' member.
 #              Should only be used for output arrays (otherwise you can just use 'len').
 # - custom-code: The array's size is determined by the C++ code in the 'value' member.
