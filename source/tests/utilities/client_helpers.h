@@ -49,7 +49,7 @@ class simple_variant {
 inline void raise_if_error(const ::grpc::Status& status)
 {
   if (!status.ok()) {
-    throw new std::runtime_error(status.error_message());
+    throw std::runtime_error(status.error_message());
   }
 }
 
