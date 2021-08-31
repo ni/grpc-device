@@ -241,10 +241,12 @@ public:
   ::grpc::Status GetTimingAttributeExString(::grpc::ServerContext* context, const GetTimingAttributeExStringRequest* request, GetTimingAttributeExStringResponse* response) override;
   ::grpc::Status GetTimingAttributeExTimestamp(::grpc::ServerContext* context, const GetTimingAttributeExTimestampRequest* request, GetTimingAttributeExTimestampResponse* response) override;
   ::grpc::Status GetTimingAttributeExUInt32(::grpc::ServerContext* context, const GetTimingAttributeExUInt32Request* request, GetTimingAttributeExUInt32Response* response) override;
+  ::grpc::Status GetTimingAttributeExUInt64(::grpc::ServerContext* context, const GetTimingAttributeExUInt64Request* request, GetTimingAttributeExUInt64Response* response) override;
   ::grpc::Status GetTimingAttributeInt32(::grpc::ServerContext* context, const GetTimingAttributeInt32Request* request, GetTimingAttributeInt32Response* response) override;
   ::grpc::Status GetTimingAttributeString(::grpc::ServerContext* context, const GetTimingAttributeStringRequest* request, GetTimingAttributeStringResponse* response) override;
   ::grpc::Status GetTimingAttributeTimestamp(::grpc::ServerContext* context, const GetTimingAttributeTimestampRequest* request, GetTimingAttributeTimestampResponse* response) override;
   ::grpc::Status GetTimingAttributeUInt32(::grpc::ServerContext* context, const GetTimingAttributeUInt32Request* request, GetTimingAttributeUInt32Response* response) override;
+  ::grpc::Status GetTimingAttributeUInt64(::grpc::ServerContext* context, const GetTimingAttributeUInt64Request* request, GetTimingAttributeUInt64Response* response) override;
   ::grpc::Status GetTrigAttributeBool(::grpc::ServerContext* context, const GetTrigAttributeBoolRequest* request, GetTrigAttributeBoolResponse* response) override;
   ::grpc::Status GetTrigAttributeDouble(::grpc::ServerContext* context, const GetTrigAttributeDoubleRequest* request, GetTrigAttributeDoubleResponse* response) override;
   ::grpc::Status GetTrigAttributeDoubleArray(::grpc::ServerContext* context, const GetTrigAttributeDoubleArrayRequest* request, GetTrigAttributeDoubleArrayResponse* response) override;
@@ -262,6 +264,7 @@ public:
   ::grpc::Status GetWriteAttributeInt32(::grpc::ServerContext* context, const GetWriteAttributeInt32Request* request, GetWriteAttributeInt32Response* response) override;
   ::grpc::Status GetWriteAttributeString(::grpc::ServerContext* context, const GetWriteAttributeStringRequest* request, GetWriteAttributeStringResponse* response) override;
   ::grpc::Status GetWriteAttributeUInt32(::grpc::ServerContext* context, const GetWriteAttributeUInt32Request* request, GetWriteAttributeUInt32Response* response) override;
+  ::grpc::Status GetWriteAttributeUInt64(::grpc::ServerContext* context, const GetWriteAttributeUInt64Request* request, GetWriteAttributeUInt64Response* response) override;
   ::grpc::Status IsTaskDone(::grpc::ServerContext* context, const IsTaskDoneRequest* request, IsTaskDoneResponse* response) override;
   ::grpc::Status LoadTask(::grpc::ServerContext* context, const LoadTaskRequest* request, LoadTaskResponse* response) override;
   ::grpc::Status ReadAnalogF64(::grpc::ServerContext* context, const ReadAnalogF64Request* request, ReadAnalogF64Response* response) override;
@@ -356,10 +359,12 @@ public:
   ::grpc::Status SetTimingAttributeExString(::grpc::ServerContext* context, const SetTimingAttributeExStringRequest* request, SetTimingAttributeExStringResponse* response) override;
   ::grpc::Status SetTimingAttributeExTimestamp(::grpc::ServerContext* context, const SetTimingAttributeExTimestampRequest* request, SetTimingAttributeExTimestampResponse* response) override;
   ::grpc::Status SetTimingAttributeExUInt32(::grpc::ServerContext* context, const SetTimingAttributeExUInt32Request* request, SetTimingAttributeExUInt32Response* response) override;
+  ::grpc::Status SetTimingAttributeExUInt64(::grpc::ServerContext* context, const SetTimingAttributeExUInt64Request* request, SetTimingAttributeExUInt64Response* response) override;
   ::grpc::Status SetTimingAttributeInt32(::grpc::ServerContext* context, const SetTimingAttributeInt32Request* request, SetTimingAttributeInt32Response* response) override;
   ::grpc::Status SetTimingAttributeString(::grpc::ServerContext* context, const SetTimingAttributeStringRequest* request, SetTimingAttributeStringResponse* response) override;
   ::grpc::Status SetTimingAttributeTimestamp(::grpc::ServerContext* context, const SetTimingAttributeTimestampRequest* request, SetTimingAttributeTimestampResponse* response) override;
   ::grpc::Status SetTimingAttributeUInt32(::grpc::ServerContext* context, const SetTimingAttributeUInt32Request* request, SetTimingAttributeUInt32Response* response) override;
+  ::grpc::Status SetTimingAttributeUInt64(::grpc::ServerContext* context, const SetTimingAttributeUInt64Request* request, SetTimingAttributeUInt64Response* response) override;
   ::grpc::Status SetTrigAttributeBool(::grpc::ServerContext* context, const SetTrigAttributeBoolRequest* request, SetTrigAttributeBoolResponse* response) override;
   ::grpc::Status SetTrigAttributeDouble(::grpc::ServerContext* context, const SetTrigAttributeDoubleRequest* request, SetTrigAttributeDoubleResponse* response) override;
   ::grpc::Status SetTrigAttributeDoubleArray(::grpc::ServerContext* context, const SetTrigAttributeDoubleArrayRequest* request, SetTrigAttributeDoubleArrayResponse* response) override;
@@ -377,6 +382,7 @@ public:
   ::grpc::Status SetWriteAttributeInt32(::grpc::ServerContext* context, const SetWriteAttributeInt32Request* request, SetWriteAttributeInt32Response* response) override;
   ::grpc::Status SetWriteAttributeString(::grpc::ServerContext* context, const SetWriteAttributeStringRequest* request, SetWriteAttributeStringResponse* response) override;
   ::grpc::Status SetWriteAttributeUInt32(::grpc::ServerContext* context, const SetWriteAttributeUInt32Request* request, SetWriteAttributeUInt32Response* response) override;
+  ::grpc::Status SetWriteAttributeUInt64(::grpc::ServerContext* context, const SetWriteAttributeUInt64Request* request, SetWriteAttributeUInt64Response* response) override;
   ::grpc::Status StartNewFile(::grpc::ServerContext* context, const StartNewFileRequest* request, StartNewFileResponse* response) override;
   ::grpc::Status StartTask(::grpc::ServerContext* context, const StartTaskRequest* request, StartTaskResponse* response) override;
   ::grpc::Status StopTask(::grpc::ServerContext* context, const StopTaskRequest* request, StopTaskResponse* response) override;

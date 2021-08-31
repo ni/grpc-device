@@ -224,10 +224,12 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime* value, uInt32 size) = 0;
   virtual int32 GetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32* value, uInt32 size) = 0;
+  virtual int32 GetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64* value, uInt32 size) = 0;
   virtual int32 GetTimingAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size) = 0;
   virtual int32 GetTimingAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size) = 0;
   virtual int32 GetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size) = 0;
+  virtual int32 GetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size) = 0;
   virtual int32 GetTrigAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size) = 0;
   virtual int32 GetTrigAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size) = 0;
   virtual int32 GetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, float64 value[], uInt32 size) = 0;
@@ -245,6 +247,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetWriteAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size) = 0;
   virtual int32 GetWriteAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size) = 0;
+  virtual int32 GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size) = 0;
   virtual int32 IsTaskDone(TaskHandle task, bool32* isTaskDone) = 0;
   virtual int32 LoadTask(const char sessionName[], TaskHandle* task) = 0;
   virtual int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) = 0;
@@ -336,10 +339,12 @@ class NiDAQmxLibraryInterface {
   virtual int32 SetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, const char value[], uInt32 size) = 0;
   virtual int32 SetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime value, uInt32 size) = 0;
   virtual int32 SetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32 value, uInt32 size) = 0;
+  virtual int32 SetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64 value, uInt32 size) = 0;
   virtual int32 SetTimingAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size) = 0;
   virtual int32 SetTimingAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size) = 0;
   virtual int32 SetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size) = 0;
   virtual int32 SetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size) = 0;
+  virtual int32 SetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size) = 0;
   virtual int32 SetTrigAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size) = 0;
   virtual int32 SetTrigAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size) = 0;
   virtual int32 SetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, const float64 value[], uInt32 size) = 0;
@@ -357,6 +362,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 SetWriteAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size) = 0;
   virtual int32 SetWriteAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size) = 0;
   virtual int32 SetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size) = 0;
+  virtual int32 SetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size) = 0;
   virtual int32 StartNewFile(TaskHandle task, const char filePath[]) = 0;
   virtual int32 StartTask(TaskHandle task) = 0;
   virtual int32 StopTask(TaskHandle task) = 0;

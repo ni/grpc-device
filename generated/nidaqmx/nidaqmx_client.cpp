@@ -6013,6 +6013,24 @@ get_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+GetTimingAttributeExUInt64Response
+get_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingUInt64Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetTimingAttributeExUInt64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_device_names(device_names);
+  request.set_attribute(attribute);
+
+  auto response = GetTimingAttributeExUInt64Response{};
+
+  raise_if_error(
+      stub->GetTimingAttributeExUInt64(&context, request, &response));
+
+  return response;
+}
+
 GetTimingAttributeInt32Response
 get_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingInt32Attributes& attribute)
 {
@@ -6078,6 +6096,23 @@ get_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
 
   raise_if_error(
       stub->GetTimingAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
+GetTimingAttributeUInt64Response
+get_timing_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingUInt64Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetTimingAttributeUInt64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = GetTimingAttributeUInt64Response{};
+
+  raise_if_error(
+      stub->GetTimingAttributeUInt64(&context, request, &response));
 
   return response;
 }
@@ -6376,6 +6411,23 @@ get_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& ta
 
   raise_if_error(
       stub->GetWriteAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
+GetWriteAttributeUInt64Response
+get_write_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteUInt64Attributes& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetWriteAttributeUInt64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+
+  auto response = GetWriteAttributeUInt64Response{};
+
+  raise_if_error(
+      stub->GetWriteAttributeUInt64(&context, request, &response));
 
   return response;
 }
@@ -8250,6 +8302,25 @@ set_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+SetTimingAttributeExUInt64Response
+set_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingUInt64Attributes& attribute, const pb::uint64& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetTimingAttributeExUInt64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_device_names(device_names);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetTimingAttributeExUInt64Response{};
+
+  raise_if_error(
+      stub->SetTimingAttributeExUInt64(&context, request, &response));
+
+  return response;
+}
+
 SetTimingAttributeInt32Response
 set_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingInt32Attributes& attribute, const simple_variant<TimingInt32AttributeValues, pb::int32>& value)
 {
@@ -8325,6 +8396,24 @@ set_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
 
   raise_if_error(
       stub->SetTimingAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
+SetTimingAttributeUInt64Response
+set_timing_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingUInt64Attributes& attribute, const pb::uint64& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetTimingAttributeUInt64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetTimingAttributeUInt64Response{};
+
+  raise_if_error(
+      stub->SetTimingAttributeUInt64(&context, request, &response));
 
   return response;
 }
@@ -8409,7 +8498,7 @@ set_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetTrigAttributeInt32ArrayResponse
-set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerInt32ArrayAttributes& attribute, const std::vector<pb::int32>& value, const pb::uint32& size)
+set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerInt32ArrayAttributes& attribute, const std::vector<pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
@@ -8417,7 +8506,6 @@ set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session
   request.mutable_task()->CopyFrom(task);
   request.set_attribute(attribute);
   copy_array(value, request.mutable_value());
-  request.set_size(size);
 
   auto response = SetTrigAttributeInt32ArrayResponse{};
 
@@ -8657,6 +8745,24 @@ set_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& ta
 
   raise_if_error(
       stub->SetWriteAttributeUInt32(&context, request, &response));
+
+  return response;
+}
+
+SetWriteAttributeUInt64Response
+set_write_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteUInt64Attributes& attribute, const pb::uint64& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetWriteAttributeUInt64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_attribute(attribute);
+  request.set_value(value);
+
+  auto response = SetWriteAttributeUInt64Response{};
+
+  raise_if_error(
+      stub->SetWriteAttributeUInt64(&context, request, &response));
 
   return response;
 }

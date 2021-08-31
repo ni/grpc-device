@@ -5367,7 +5367,7 @@ attributes = {
             'access': 'read',
             'name': 'CURR_READ_POS',
             'resettable': False,
-            'type': 'float64'
+            'type': 'uInt64'
         },
         4643: {
             'access': 'read',
@@ -5404,7 +5404,7 @@ attributes = {
             'access': 'read',
             'name': 'TOTAL_SAMP_PER_CHAN_ACQUIRED',
             'resettable': False,
-            'type': 'float64'
+            'type': 'uInt64'
         },
         8564: {
             'access': 'read',
@@ -5910,7 +5910,7 @@ attributes = {
             'access': 'read-write',
             'name': 'SAMP_QUANT_SAMP_PER_CHAN',
             'resettable': True,
-            'type': 'float64'
+            'type': 'uInt64'
         },
         4885: {
             'access': 'read-write',
@@ -7299,7 +7299,7 @@ attributes = {
             'access': 'read',
             'name': 'CURR_WRITE_POS',
             'resettable': False,
-            'type': 'float64'
+            'type': 'uInt64'
         },
         5216: {
             'access': 'read',
@@ -7324,7 +7324,7 @@ attributes = {
             'access': 'read',
             'name': 'TOTAL_SAMP_PER_CHAN_GENERATED',
             'resettable': False,
-            'type': 'float64'
+            'type': 'uInt64'
         },
         8573: {
             'access': 'read',
