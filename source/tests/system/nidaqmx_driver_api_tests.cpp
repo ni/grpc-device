@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
 #include <algorithm>
+#include <cstring>
 #include <random>
 #include <stdexcept>
 
@@ -499,10 +500,8 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_name(name);
 
     request.mutable_forward_coeffs()->CopyFrom({forward_coeffs.cbegin(), forward_coeffs.cend()});
-    request.set_num_forward_coeffs_in(static_cast<int32>(forward_coeffs.size()));
 
     request.mutable_reverse_coeffs()->CopyFrom({reverse_coeffs.cbegin(), reverse_coeffs.cend()});
-    request.set_num_reverse_coeffs_in(static_cast<int32>(reverse_coeffs.size()));
 
     request.set_pre_scaled_units(UnitsPreScaled::UNITS_PRE_SCALED_VOLTS);
     return stub()->CreatePolynomialScale(&context, request, &response);
@@ -532,7 +531,6 @@ class NiDAQmxDriverApiTests : public Test {
   {
     CalculateReversePolyCoeffRequest request;
     request.mutable_forward_coeffs()->CopyFrom({forward_coeffs.cbegin(), forward_coeffs.cend()});
-    request.set_num_forward_coeffs_in(static_cast<uint32>(forward_coeffs.size()));
     request.set_min_val_x(min_val_x);
     request.set_max_val_x(max_val_x);
     request.set_num_points_to_compute(num_points_to_compute);
@@ -677,7 +675,6 @@ class NiDAQmxDriverApiTests : public Test {
         DigitalLineState::DIGITAL_LINE_STATE_HIGH,
         DigitalLineState::DIGITAL_LINE_STATE_HIGH};
     request.mutable_expir_state_array()->CopyFrom({expir_states.cbegin(), expir_states.cend()});
-    request.set_array_size(2);
     return stub()->CfgWatchdogDOExpirStates(&context, request, &response);
   }
 
@@ -1048,8 +1045,7 @@ TEST_F(NiDAQmxDriverApiTests, SetPolynomialForwardCoefficients_GetPolynomialForw
       stub(),
       SCALE_NAME,
       ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
-      COEFFICIENTS,
-      COEFFICIENTS.size());
+      COEFFICIENTS);
 
   auto response = client::get_scale_attribute_double_array(
       stub(),
@@ -1136,7 +1132,13 @@ TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
   auto status = get_error_string(DAQmxErrorInvalidAttributeValue, response);
 
   EXPECT_SUCCESS(status, response);
-  EXPECT_THAT(response.error_string(), HasSubstr("Requested value is not a supported value for this property."));
+  const auto& error_string = response.error_string();
+  EXPECT_THAT(
+      error_string,
+      StrEq("Requested value is not a supported value for this property. The property value may be invalid because it conflicts with another property."));
+  // If we don't get the correct ivi-dance size we can get a string padded out with extra nulls.
+  // Comparing to the length of the null-terminated c_str will catch this.
+  EXPECT_EQ(error_string.length(), std::strlen(error_string.c_str()));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadBinaryI32_Succeeds)

@@ -148,7 +148,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto forward_coeffs = const_cast<const float64*>(request->forward_coeffs().data());
-      uInt32 num_forward_coeffs_in = request->num_forward_coeffs_in();
+      uInt32 num_forward_coeffs_in = static_cast<uInt32>(request->forward_coeffs().size());
       float64 min_val_x = request->min_val_x();
       float64 max_val_x = request->max_val_x();
       int32 num_points_to_compute = request->num_points_to_compute();
@@ -255,7 +255,10 @@ namespace nidaqmx_grpc {
       auto trigger_slope_array = reinterpret_cast<const int32*>(request->trigger_slope_array().data());
       auto trigger_level_array = const_cast<const float64*>(request->trigger_level_array().data());
       uInt32 pretrigger_samples = request->pretrigger_samples();
-      uInt32 array_size = request->array_size();
+      if (request->trigger_slope_array().size() != request->trigger_level_array().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields trigger_slope_array and trigger_level_array do not match");
+      }
+      uInt32 array_size = static_cast<uInt32>(request->trigger_level_array().size());
       auto status = library_->CfgAnlgMultiEdgeRefTrig(task, trigger_sources, trigger_slope_array, trigger_level_array, pretrigger_samples, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1003,7 +1006,10 @@ namespace nidaqmx_grpc {
         [](auto x) { return x; });
       auto output_type_array = output_type_array_vector.data();
 
-      uInt32 array_size = request->array_size();
+      if (request->expir_state_array().size() != request->output_type_array().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields expir_state_array and output_type_array do not match");
+      }
+      uInt32 array_size = static_cast<uInt32>(request->output_type_array().size());
       auto status = library_->CfgWatchdogAOExpirStates(task, channel_names, expir_state_array, output_type_array, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1033,7 +1039,7 @@ namespace nidaqmx_grpc {
         [](auto x) { return x; });
       auto expir_state_array = expir_state_array_vector.data();
 
-      uInt32 array_size = request->array_size();
+      uInt32 array_size = static_cast<uInt32>(request->expir_state_array().size());
       auto status = library_->CfgWatchdogCOExpirStates(task, channel_names, expir_state_array, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1063,7 +1069,7 @@ namespace nidaqmx_grpc {
         [](auto x) { return x; });
       auto expir_state_array = expir_state_array_vector.data();
 
-      uInt32 array_size = request->array_size();
+      uInt32 array_size = static_cast<uInt32>(request->expir_state_array().size());
       auto status = library_->CfgWatchdogDOExpirStates(task, channel_names, expir_state_array, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1848,9 +1854,9 @@ namespace nidaqmx_grpc {
       float64 voltage_excit_val = request->voltage_excit_val();
       float64 nominal_bridge_resistance = request->nominal_bridge_resistance();
       auto forward_coeffs = const_cast<const float64*>(request->forward_coeffs().data());
-      uInt32 num_forward_coeffs = request->num_forward_coeffs();
+      uInt32 num_forward_coeffs = static_cast<uInt32>(request->forward_coeffs().size());
       auto reverse_coeffs = const_cast<const float64*>(request->reverse_coeffs().data());
-      uInt32 num_reverse_coeffs = request->num_reverse_coeffs();
+      uInt32 num_reverse_coeffs = static_cast<uInt32>(request->reverse_coeffs().size());
       int32 electrical_units;
       switch (request->electrical_units_enum_case()) {
         case nidaqmx_grpc::CreateAIForceBridgePolynomialChanRequest::ElectricalUnitsEnumCase::kElectricalUnits: {
@@ -1958,7 +1964,7 @@ namespace nidaqmx_grpc {
       float64 voltage_excit_val = request->voltage_excit_val();
       float64 nominal_bridge_resistance = request->nominal_bridge_resistance();
       auto electrical_vals = const_cast<const float64*>(request->electrical_vals().data());
-      uInt32 num_electrical_vals = request->num_electrical_vals();
+      uInt32 num_electrical_vals = static_cast<uInt32>(request->electrical_vals().size());
       int32 electrical_units;
       switch (request->electrical_units_enum_case()) {
         case nidaqmx_grpc::CreateAIForceBridgeTableChanRequest::ElectricalUnitsEnumCase::kElectricalUnits: {
@@ -1976,7 +1982,7 @@ namespace nidaqmx_grpc {
       }
 
       auto physical_vals = const_cast<const float64*>(request->physical_vals().data());
-      uInt32 num_physical_vals = request->num_physical_vals();
+      uInt32 num_physical_vals = static_cast<uInt32>(request->physical_vals().size());
       int32 physical_units;
       switch (request->physical_units_enum_case()) {
         case nidaqmx_grpc::CreateAIForceBridgeTableChanRequest::PhysicalUnitsEnumCase::kPhysicalUnits: {
@@ -2622,9 +2628,9 @@ namespace nidaqmx_grpc {
       float64 voltage_excit_val = request->voltage_excit_val();
       float64 nominal_bridge_resistance = request->nominal_bridge_resistance();
       auto forward_coeffs = const_cast<const float64*>(request->forward_coeffs().data());
-      uInt32 num_forward_coeffs = request->num_forward_coeffs();
+      uInt32 num_forward_coeffs = static_cast<uInt32>(request->forward_coeffs().size());
       auto reverse_coeffs = const_cast<const float64*>(request->reverse_coeffs().data());
-      uInt32 num_reverse_coeffs = request->num_reverse_coeffs();
+      uInt32 num_reverse_coeffs = static_cast<uInt32>(request->reverse_coeffs().size());
       int32 electrical_units;
       switch (request->electrical_units_enum_case()) {
         case nidaqmx_grpc::CreateAIPressureBridgePolynomialChanRequest::ElectricalUnitsEnumCase::kElectricalUnits: {
@@ -2732,7 +2738,7 @@ namespace nidaqmx_grpc {
       float64 voltage_excit_val = request->voltage_excit_val();
       float64 nominal_bridge_resistance = request->nominal_bridge_resistance();
       auto electrical_vals = const_cast<const float64*>(request->electrical_vals().data());
-      uInt32 num_electrical_vals = request->num_electrical_vals();
+      uInt32 num_electrical_vals = static_cast<uInt32>(request->electrical_vals().size());
       int32 electrical_units;
       switch (request->electrical_units_enum_case()) {
         case nidaqmx_grpc::CreateAIPressureBridgeTableChanRequest::ElectricalUnitsEnumCase::kElectricalUnits: {
@@ -2750,7 +2756,7 @@ namespace nidaqmx_grpc {
       }
 
       auto physical_vals = const_cast<const float64*>(request->physical_vals().data());
-      uInt32 num_physical_vals = request->num_physical_vals();
+      uInt32 num_physical_vals = static_cast<uInt32>(request->physical_vals().size());
       int32 physical_units;
       switch (request->physical_units_enum_case()) {
         case nidaqmx_grpc::CreateAIPressureBridgeTableChanRequest::PhysicalUnitsEnumCase::kPhysicalUnits: {
@@ -3081,7 +3087,7 @@ namespace nidaqmx_grpc {
 
       float64 gage_orientation = request->gage_orientation();
       auto rosette_meas_types = reinterpret_cast<const int32*>(request->rosette_meas_types().data());
-      uInt32 num_rosette_meas_types = request->num_rosette_meas_types();
+      uInt32 num_rosette_meas_types = static_cast<uInt32>(request->rosette_meas_types().size());
       int32 strain_config;
       switch (request->strain_config_enum_case()) {
         case nidaqmx_grpc::CreateAIRosetteStrainGageChanRequest::StrainConfigEnumCase::kStrainConfig: {
@@ -3532,9 +3538,9 @@ namespace nidaqmx_grpc {
       float64 voltage_excit_val = request->voltage_excit_val();
       float64 nominal_bridge_resistance = request->nominal_bridge_resistance();
       auto forward_coeffs = const_cast<const float64*>(request->forward_coeffs().data());
-      uInt32 num_forward_coeffs = request->num_forward_coeffs();
+      uInt32 num_forward_coeffs = static_cast<uInt32>(request->forward_coeffs().size());
       auto reverse_coeffs = const_cast<const float64*>(request->reverse_coeffs().data());
-      uInt32 num_reverse_coeffs = request->num_reverse_coeffs();
+      uInt32 num_reverse_coeffs = static_cast<uInt32>(request->reverse_coeffs().size());
       int32 electrical_units;
       switch (request->electrical_units_enum_case()) {
         case nidaqmx_grpc::CreateAITorqueBridgePolynomialChanRequest::ElectricalUnitsEnumCase::kElectricalUnits: {
@@ -3642,7 +3648,7 @@ namespace nidaqmx_grpc {
       float64 voltage_excit_val = request->voltage_excit_val();
       float64 nominal_bridge_resistance = request->nominal_bridge_resistance();
       auto electrical_vals = const_cast<const float64*>(request->electrical_vals().data());
-      uInt32 num_electrical_vals = request->num_electrical_vals();
+      uInt32 num_electrical_vals = static_cast<uInt32>(request->electrical_vals().size());
       int32 electrical_units;
       switch (request->electrical_units_enum_case()) {
         case nidaqmx_grpc::CreateAITorqueBridgeTableChanRequest::ElectricalUnitsEnumCase::kElectricalUnits: {
@@ -3660,7 +3666,7 @@ namespace nidaqmx_grpc {
       }
 
       auto physical_vals = const_cast<const float64*>(request->physical_vals().data());
-      uInt32 num_physical_vals = request->num_physical_vals();
+      uInt32 num_physical_vals = static_cast<uInt32>(request->physical_vals().size());
       int32 physical_units;
       switch (request->physical_units_enum_case()) {
         case nidaqmx_grpc::CreateAITorqueBridgeTableChanRequest::PhysicalUnitsEnumCase::kPhysicalUnits: {
@@ -5350,9 +5356,9 @@ namespace nidaqmx_grpc {
     try {
       auto name = request->name().c_str();
       auto forward_coeffs = const_cast<const float64*>(request->forward_coeffs().data());
-      uInt32 num_forward_coeffs_in = request->num_forward_coeffs_in();
+      uInt32 num_forward_coeffs_in = static_cast<uInt32>(request->forward_coeffs().size());
       auto reverse_coeffs = const_cast<const float64*>(request->reverse_coeffs().data());
-      uInt32 num_reverse_coeffs_in = request->num_reverse_coeffs_in();
+      uInt32 num_reverse_coeffs_in = static_cast<uInt32>(request->reverse_coeffs().size());
       int32 pre_scaled_units;
       switch (request->pre_scaled_units_enum_case()) {
         case nidaqmx_grpc::CreatePolynomialScaleRequest::PreScaledUnitsEnumCase::kPreScaledUnits: {
@@ -6591,9 +6597,9 @@ namespace nidaqmx_grpc {
     try {
       auto name = request->name().c_str();
       auto prescaled_vals = const_cast<const float64*>(request->prescaled_vals().data());
-      uInt32 num_prescaled_vals_in = request->num_prescaled_vals_in();
+      uInt32 num_prescaled_vals_in = static_cast<uInt32>(request->prescaled_vals().size());
       auto scaled_vals = const_cast<const float64*>(request->scaled_vals().data());
-      uInt32 num_scaled_vals_in = request->num_scaled_vals_in();
+      uInt32 num_scaled_vals_in = static_cast<uInt32>(request->scaled_vals().size());
       int32 pre_scaled_units;
       switch (request->pre_scaled_units_enum_case()) {
         case nidaqmx_grpc::CreateTableScaleRequest::PreScaledUnitsEnumCase::kPreScaledUnits: {
@@ -11739,7 +11745,7 @@ namespace nidaqmx_grpc {
       auto channel = request->channel().c_str();
       int32 attribute = request->attribute();
       auto value = const_cast<const float64*>(request->value().data());
-      uInt32 size = request->size();
+      uInt32 size = static_cast<uInt32>(request->value().size());
       auto status = library_->SetChanAttributeDoubleArray(task, channel, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -12348,7 +12354,7 @@ namespace nidaqmx_grpc {
       auto scale_name = request->scale_name().c_str();
       int32 attribute = request->attribute();
       auto value = const_cast<const float64*>(request->value().data());
-      uInt32 size = request->size();
+      uInt32 size = static_cast<uInt32>(request->value().size());
       auto status = library_->SetScaleAttributeDoubleArray(scale_name, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -12811,7 +12817,7 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       int32 attribute = request->attribute();
       auto value = const_cast<const float64*>(request->value().data());
-      uInt32 size = request->size();
+      uInt32 size = static_cast<uInt32>(request->value().size());
       auto status = library_->SetTrigAttributeDoubleArray(task, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -14138,7 +14144,7 @@ namespace nidaqmx_grpc {
     try {
       auto physical_channel = request->physical_channel().c_str();
       const uInt8* bit_stream = (const uInt8*)request->bit_stream().c_str();
-      uInt32 array_size = request->array_size();
+      uInt32 array_size = static_cast<uInt32>(request->bit_stream().size());
       int32 basic_teds_options;
       switch (request->basic_teds_options_enum_case()) {
         case nidaqmx_grpc::WriteToTEDSFromArrayRequest::BasicTedsOptionsEnumCase::kBasicTedsOptions: {

@@ -105,13 +105,12 @@ auto_configure_cdaq_sync_connections(const StubPtr& stub, const pb::string& chas
 }
 
 CalculateReversePolyCoeffResponse
-calculate_reverse_poly_coeff(const StubPtr& stub, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs_in, const double& min_val_x, const double& max_val_x, const pb::int32& num_points_to_compute, const pb::int32& reverse_poly_order)
+calculate_reverse_poly_coeff(const StubPtr& stub, const std::vector<double>& forward_coeffs, const double& min_val_x, const double& max_val_x, const pb::int32& num_points_to_compute, const pb::int32& reverse_poly_order)
 {
   ::grpc::ClientContext context;
 
   auto request = CalculateReversePolyCoeffRequest{};
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs_in(num_forward_coeffs_in);
   request.set_min_val_x(min_val_x);
   request.set_max_val_x(max_val_x);
   request.set_num_points_to_compute(num_points_to_compute);
@@ -179,7 +178,7 @@ cfg_anlg_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 CfgAnlgMultiEdgeRefTrigResponse
-cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_sources, const std::vector<pb::int32>& trigger_slope_array, const std::vector<double>& trigger_level_array, const pb::uint32& pretrigger_samples, const pb::uint32& array_size)
+cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& trigger_sources, const std::vector<pb::int32>& trigger_slope_array, const std::vector<double>& trigger_level_array, const pb::uint32& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -189,7 +188,6 @@ cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& 
   copy_array(trigger_slope_array, request.mutable_trigger_slope_array());
   copy_array(trigger_level_array, request.mutable_trigger_level_array());
   request.set_pretrigger_samples(pretrigger_samples);
-  request.set_array_size(array_size);
 
   auto response = CfgAnlgMultiEdgeRefTrigResponse{};
 
@@ -686,7 +684,7 @@ cfg_time_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, con
 }
 
 CfgWatchdogAOExpirStatesResponse
-cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<double>& expir_state_array, const std::vector<pb::int32>& output_type_array, const pb::uint32& array_size)
+cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<double>& expir_state_array, const std::vector<pb::int32>& output_type_array)
 {
   ::grpc::ClientContext context;
 
@@ -695,7 +693,6 @@ cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
   request.set_channel_names(channel_names);
   copy_array(expir_state_array, request.mutable_expir_state_array());
   copy_array(output_type_array, request.mutable_output_type_array());
-  request.set_array_size(array_size);
 
   auto response = CfgWatchdogAOExpirStatesResponse{};
 
@@ -706,7 +703,7 @@ cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 CfgWatchdogCOExpirStatesResponse
-cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array, const pb::uint32& array_size)
+cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array)
 {
   ::grpc::ClientContext context;
 
@@ -714,7 +711,6 @@ cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
   request.mutable_task()->CopyFrom(task);
   request.set_channel_names(channel_names);
   copy_array(expir_state_array, request.mutable_expir_state_array());
-  request.set_array_size(array_size);
 
   auto response = CfgWatchdogCOExpirStatesResponse{};
 
@@ -725,7 +721,7 @@ cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 CfgWatchdogDOExpirStatesResponse
-cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array, const pb::uint32& array_size)
+cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_names, const std::vector<pb::int32>& expir_state_array)
 {
   ::grpc::ClientContext context;
 
@@ -733,7 +729,6 @@ cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
   request.mutable_task()->CopyFrom(task);
   request.set_channel_names(channel_names);
   copy_array(expir_state_array, request.mutable_expir_state_array());
-  request.set_array_size(array_size);
 
   auto response = CfgWatchdogDOExpirStatesResponse{};
 
@@ -1209,7 +1204,7 @@ create_ai_current_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateAIForceBridgePolynomialChanResponse
-create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs, const std::vector<double>& reverse_coeffs, const pb::uint32& num_reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1246,9 +1241,7 @@ create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc:
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs(num_forward_coeffs);
   copy_array(reverse_coeffs, request.mutable_reverse_coeffs());
-  request.set_num_reverse_coeffs(num_reverse_coeffs);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -1276,7 +1269,7 @@ create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc:
 }
 
 CreateAIForceBridgeTableChanResponse
-create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const pb::uint32& num_electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const pb::uint32& num_physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<ForceUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1313,7 +1306,6 @@ create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Sess
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(electrical_vals, request.mutable_electrical_vals());
-  request.set_num_electrical_vals(num_electrical_vals);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -1323,7 +1315,6 @@ create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Sess
     request.set_electrical_units_raw(*electrical_units_raw_ptr);
   }
   copy_array(physical_vals, request.mutable_physical_vals());
-  request.set_num_physical_vals(num_physical_vals);
   const auto physical_units_ptr = physical_units.get_if<BridgePhysicalUnits>();
   const auto physical_units_raw_ptr = physical_units.get_if<pb::int32>();
   if (physical_units_ptr) {
@@ -1692,7 +1683,7 @@ create_ai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 CreateAIPressureBridgePolynomialChanResponse
-create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs, const std::vector<double>& reverse_coeffs, const pb::uint32& num_reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1729,9 +1720,7 @@ create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_gr
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs(num_forward_coeffs);
   copy_array(reverse_coeffs, request.mutable_reverse_coeffs());
-  request.set_num_reverse_coeffs(num_reverse_coeffs);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -1759,7 +1748,7 @@ create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_gr
 }
 
 CreateAIPressureBridgeTableChanResponse
-create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const pb::uint32& num_electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const pb::uint32& num_physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<PressureUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -1796,7 +1785,6 @@ create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::S
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(electrical_vals, request.mutable_electrical_vals());
-  request.set_num_electrical_vals(num_electrical_vals);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -1806,7 +1794,6 @@ create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::S
     request.set_electrical_units_raw(*electrical_units_raw_ptr);
   }
   copy_array(physical_vals, request.mutable_physical_vals());
-  request.set_num_physical_vals(num_physical_vals);
   const auto physical_units_ptr = physical_units.get_if<BridgePhysicalUnits>();
   const auto physical_units_raw_ptr = physical_units.get_if<pb::int32>();
   if (physical_units_ptr) {
@@ -1993,7 +1980,7 @@ create_ai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 CreateAIRosetteStrainGageChanResponse
-create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainGageRosetteType, pb::int32>& rosette_type, const double& gage_orientation, const std::vector<pb::int32>& rosette_meas_types, const pb::uint32& num_rosette_meas_types, const simple_variant<StrainGageBridgeType1, pb::int32>& strain_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& gage_factor, const double& nominal_gage_resistance, const double& poisson_ratio, const double& lead_wire_resistance)
+create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<StrainGageRosetteType, pb::int32>& rosette_type, const double& gage_orientation, const std::vector<pb::int32>& rosette_meas_types, const simple_variant<StrainGageBridgeType1, pb::int32>& strain_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& gage_factor, const double& nominal_gage_resistance, const double& poisson_ratio, const double& lead_wire_resistance)
 {
   ::grpc::ClientContext context;
 
@@ -2013,7 +2000,6 @@ create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Ses
   }
   request.set_gage_orientation(gage_orientation);
   copy_array(rosette_meas_types, request.mutable_rosette_meas_types());
-  request.set_num_rosette_meas_types(num_rosette_meas_types);
   const auto strain_config_ptr = strain_config.get_if<StrainGageBridgeType1>();
   const auto strain_config_raw_ptr = strain_config.get_if<pb::int32>();
   if (strain_config_ptr) {
@@ -2265,7 +2251,7 @@ create_ai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 CreateAITorqueBridgePolynomialChanResponse
-create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs, const std::vector<double>& reverse_coeffs, const pb::uint32& num_reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2302,9 +2288,7 @@ create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs(num_forward_coeffs);
   copy_array(reverse_coeffs, request.mutable_reverse_coeffs());
-  request.set_num_reverse_coeffs(num_reverse_coeffs);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -2332,7 +2316,7 @@ create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc
 }
 
 CreateAITorqueBridgeTableChanResponse
-create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const pb::uint32& num_electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const pb::uint32& num_physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
+create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& physical_channel, const pb::string& name_to_assign_to_channel, const double& min_val, const double& max_val, const simple_variant<TorqueUnits, pb::int32>& units, const simple_variant<BridgeConfiguration1, pb::int32>& bridge_config, const simple_variant<ExcitationSource, pb::int32>& voltage_excit_source, const double& voltage_excit_val, const double& nominal_bridge_resistance, const std::vector<double>& electrical_vals, const simple_variant<BridgeElectricalUnits, pb::int32>& electrical_units, const std::vector<double>& physical_vals, const simple_variant<BridgePhysicalUnits, pb::int32>& physical_units, const pb::string& custom_scale_name)
 {
   ::grpc::ClientContext context;
 
@@ -2369,7 +2353,6 @@ create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Ses
   request.set_voltage_excit_val(voltage_excit_val);
   request.set_nominal_bridge_resistance(nominal_bridge_resistance);
   copy_array(electrical_vals, request.mutable_electrical_vals());
-  request.set_num_electrical_vals(num_electrical_vals);
   const auto electrical_units_ptr = electrical_units.get_if<BridgeElectricalUnits>();
   const auto electrical_units_raw_ptr = electrical_units.get_if<pb::int32>();
   if (electrical_units_ptr) {
@@ -2379,7 +2362,6 @@ create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Ses
     request.set_electrical_units_raw(*electrical_units_raw_ptr);
   }
   copy_array(physical_vals, request.mutable_physical_vals());
-  request.set_num_physical_vals(num_physical_vals);
   const auto physical_units_ptr = physical_units.get_if<BridgePhysicalUnits>();
   const auto physical_units_raw_ptr = physical_units.get_if<pb::int32>();
   if (physical_units_ptr) {
@@ -3500,16 +3482,14 @@ create_map_scale(const StubPtr& stub, const pb::string& name, const double& pres
 }
 
 CreatePolynomialScaleResponse
-create_polynomial_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& forward_coeffs, const pb::uint32& num_forward_coeffs_in, const std::vector<double>& reverse_coeffs, const pb::uint32& num_reverse_coeffs_in, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
+create_polynomial_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& forward_coeffs, const std::vector<double>& reverse_coeffs, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
 {
   ::grpc::ClientContext context;
 
   auto request = CreatePolynomialScaleRequest{};
   request.set_name(name);
   copy_array(forward_coeffs, request.mutable_forward_coeffs());
-  request.set_num_forward_coeffs_in(num_forward_coeffs_in);
   copy_array(reverse_coeffs, request.mutable_reverse_coeffs());
-  request.set_num_reverse_coeffs_in(num_reverse_coeffs_in);
   const auto pre_scaled_units_ptr = pre_scaled_units.get_if<UnitsPreScaled>();
   const auto pre_scaled_units_raw_ptr = pre_scaled_units.get_if<pb::int32>();
   if (pre_scaled_units_ptr) {
@@ -4301,16 +4281,14 @@ create_tedsai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::
 }
 
 CreateTableScaleResponse
-create_table_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& prescaled_vals, const pb::uint32& num_prescaled_vals_in, const std::vector<double>& scaled_vals, const pb::uint32& num_scaled_vals_in, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
+create_table_scale(const StubPtr& stub, const pb::string& name, const std::vector<double>& prescaled_vals, const std::vector<double>& scaled_vals, const simple_variant<UnitsPreScaled, pb::int32>& pre_scaled_units, const pb::string& scaled_units)
 {
   ::grpc::ClientContext context;
 
   auto request = CreateTableScaleRequest{};
   request.set_name(name);
   copy_array(prescaled_vals, request.mutable_prescaled_vals());
-  request.set_num_prescaled_vals_in(num_prescaled_vals_in);
   copy_array(scaled_vals, request.mutable_scaled_vals());
-  request.set_num_scaled_vals_in(num_scaled_vals_in);
   const auto pre_scaled_units_ptr = pre_scaled_units.get_if<UnitsPreScaled>();
   const auto pre_scaled_units_raw_ptr = pre_scaled_units.get_if<pb::int32>();
   if (pre_scaled_units_ptr) {
@@ -7572,7 +7550,7 @@ set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetChanAttributeDoubleArrayResponse
-set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelDoubleArrayAttributes& attribute, const std::vector<double>& value, const pb::uint32& size)
+set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelDoubleArrayAttributes& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -7581,7 +7559,6 @@ set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
   request.set_channel(channel);
   request.set_attribute(attribute);
   copy_array(value, request.mutable_value());
-  request.set_size(size);
 
   auto response = SetChanAttributeDoubleArrayResponse{};
 
@@ -8022,7 +7999,7 @@ set_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, co
 }
 
 SetScaleAttributeDoubleArrayResponse
-set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const ScaleDoubleArrayAttributes& attribute, const std::vector<double>& value, const pb::uint32& size)
+set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const ScaleDoubleArrayAttributes& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -8030,7 +8007,6 @@ set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_na
   request.set_scale_name(scale_name);
   request.set_attribute(attribute);
   copy_array(value, request.mutable_value());
-  request.set_size(size);
 
   auto response = SetScaleAttributeDoubleArrayResponse{};
 
@@ -8390,7 +8366,7 @@ set_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetTrigAttributeDoubleArrayResponse
-set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerDoubleArrayAttributes& attribute, const std::vector<double>& value, const pb::uint32& size)
+set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerDoubleArrayAttributes& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -8398,7 +8374,6 @@ set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
   request.mutable_task()->CopyFrom(task);
   request.set_attribute(attribute);
   copy_array(value, request.mutable_value());
-  request.set_size(size);
 
   auto response = SetTrigAttributeDoubleArrayResponse{};
 
@@ -9308,14 +9283,13 @@ write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int
 }
 
 WriteToTEDSFromArrayResponse
-write_to_teds_from_array(const StubPtr& stub, const pb::string& physical_channel, const pb::string& bit_stream, const pb::uint32& array_size, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options)
+write_to_teds_from_array(const StubPtr& stub, const pb::string& physical_channel, const pb::string& bit_stream, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options)
 {
   ::grpc::ClientContext context;
 
   auto request = WriteToTEDSFromArrayRequest{};
   request.set_physical_channel(physical_channel);
   request.set_bit_stream(bit_stream);
-  request.set_array_size(array_size);
   const auto basic_teds_options_ptr = basic_teds_options.get_if<WriteBasicTEDSOptions>();
   const auto basic_teds_options_raw_ptr = basic_teds_options.get_if<pb::int32>();
   if (basic_teds_options_ptr) {
