@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nidcpower/nidcpower_client.h"
 #include "nidcpower/nidcpower_service.h"
 
 namespace ni {
@@ -9,7 +8,6 @@ namespace tests {
 namespace system {
 
 namespace dcpower = nidcpower_grpc;
-namespace client = nidcpower_grpc::experimental::client;
 
 const int kInvalidRsrc = -1074118656;
 const int kInvalidDCPowerSession = -1074130544;
@@ -89,7 +87,7 @@ class NiDCPowerSessionTest : public ::testing::Test {
 // To support testing with older versions: skip tests for InitializeWithIndependentChannels if
 // it returns an unsupported status.
 #define GTEST_SKIP_IF_UNSUPPORTED(status) \
-  if (status.error_code() == ::grpc::NOT_FOUND) GTEST_SKIP() << "UNSUPPORTED";
+  if (status.error_code() == ::grpc::NOT_FOUND) GTEST_SKIP() << "Function not supported.";
 
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
 {
