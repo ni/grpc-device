@@ -100,7 +100,24 @@ def is_unsupported_parameter(parameter):
         or is_unsupported_scalar_array(parameter)
 
 
-def is_unsupported_size_mechanism(parameter):
+# These are the mechanisms that are used to specify the size of arrays/strings. Here's what they mean:
+# - fixed: the array is of a constant size. The size is specified in the 'value' member.
+# - len: the array's length needs to be passed into the function. The parameter to pass it in is specified
+#        in the 'value' member. Should only be used for input arrays. Multiple input arrays can use this
+#        mechanism with the same 'value' member - in that case, the service will enforce that those arrays
+#        are all the same length.
+# - ivi-dance: This is a two-step process. On the first call, pass in NULL, and the function will return
+#              how big the array should be (instead of an error as usual). Then, the service creates an array
+#              of that size and passes it in. Should only be used for output arrays. The size of the array
+#              (which is still passed in) is specified in the 'value' member.
+# - ivi-dance-with-a-twist: This is similar to ivi-dance, but the size is returned in an output parameter that
+#                           is specified in the 'value_twist' member. Should only be used for output arrays. The size
+#                           of the array is specified in the 'value' member. This mechanism is necessary if there
+#                           are multiple output arrays (so ivi-dance won't work).
+# - passed-in: The array's size is passed in in a separate parameter, which is specified in the 'value' member.
+#              Should only be used for output arrays (otherwise you can just use 'len').
+# - custom-code: The array's size is determined by the C++ code in the 'value' member.
+def is_unsupported_size_mechanism(parameter) -> bool:
     return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'custom-code', None}
 
 
