@@ -17,8 +17,11 @@ namespace nisync_grpc {
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
-  NiSyncService::NiSyncService(NiSyncLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
-      : library_(library), session_repository_(session_repository)
+  NiSyncService::NiSyncService(
+      NiSyncLibraryInterface* library,
+      ResourceRepositorySharedPtr session_repository, 
+      const nidevice_grpc::FeatureToggles& feature_toggles)
+      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
 
@@ -1659,5 +1662,16 @@ namespace nisync_grpc {
     }
   }
 
+  bool NiSyncService::is_enabled()
+  {
+    return feature_toggles_.is_enabled;
+  }
+
+  NiSyncService::NiSyncFeatureToggles::NiSyncFeatureToggles(
+    const nidevice_grpc::FeatureToggles& feature_toggles)
+    : is_enabled(
+        feature_toggles.is_feature_enabled("nisync", CodeReadiness::kRelease))
+  {
+  }
 } // namespace nisync_grpc
 

@@ -1,3 +1,4 @@
+from typing import Dict, List
 import common_helpers
 
 
@@ -304,3 +305,22 @@ def get_callback_method_parameters(function_data):
 
 def create_param_type_list(parameters):
     return ', '.join([p['type'] for p in parameters])
+
+
+def get_feature_toggles(config: dict) -> Dict[str, str]:
+    return config.get('feature_toggles', {})
+
+
+def get_toggle_member_name(fully_qualified_toggle_name: str) -> str:
+    toggle_name = fully_qualified_toggle_name.split('.')[-1]
+    return f'is_{toggle_name}_enabled'
+
+
+def get_driver_service_readiness(config: dict) -> str:
+    readiness = config.get('code_readiness', 'Release')
+    return to_cpp_readiness(readiness)
+
+
+def to_cpp_readiness(user_readiness: str) -> str:
+    return f'CodeReadiness::k{user_readiness}'
+    

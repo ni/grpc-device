@@ -21,8 +21,11 @@ namespace nidaqmx_grpc {
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
-  NiDAQmxService::NiDAQmxService(NiDAQmxLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
-      : library_(library), session_repository_(session_repository)
+  NiDAQmxService::NiDAQmxService(
+      NiDAQmxLibraryInterface* library,
+      ResourceRepositorySharedPtr session_repository, 
+      const nidevice_grpc::FeatureToggles& feature_toggles)
+      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
 
@@ -14647,5 +14650,18 @@ namespace nidaqmx_grpc {
     }
   }
 
+  bool NiDAQmxService::is_enabled()
+  {
+    return feature_toggles_.is_enabled;
+  }
+
+  NiDAQmxService::NiDAQmxFeatureToggles::NiDAQmxFeatureToggles(
+    const nidevice_grpc::FeatureToggles& feature_toggles)
+    : is_enabled(
+        feature_toggles.is_feature_enabled("nidaqmx", CodeReadiness::kNextRelease)),
+    is_allow_undefined_attributes_enabled(
+        feature_toggles.is_feature_enabled("nidaqmx.allow_undefined_attributes", CodeReadiness::kPrototype))
+  {
+  }
 } // namespace nidaqmx_grpc
 

@@ -17,8 +17,11 @@ namespace nifake_grpc {
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
-  NiFakeService::NiFakeService(NiFakeLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
-      : library_(library), session_repository_(session_repository)
+  NiFakeService::NiFakeService(
+      NiFakeLibraryInterface* library,
+      ResourceRepositorySharedPtr session_repository, 
+      const nidevice_grpc::FeatureToggles& feature_toggles)
+      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
 
@@ -1668,5 +1671,16 @@ namespace nifake_grpc {
     }
   }
 
+  bool NiFakeService::is_enabled()
+  {
+    return feature_toggles_.is_enabled;
+  }
+
+  NiFakeService::NiFakeFeatureToggles::NiFakeFeatureToggles(
+    const nidevice_grpc::FeatureToggles& feature_toggles)
+    : is_enabled(
+        feature_toggles.is_feature_enabled("nifake", CodeReadiness::kRelease))
+  {
+  }
 } // namespace nifake_grpc
 

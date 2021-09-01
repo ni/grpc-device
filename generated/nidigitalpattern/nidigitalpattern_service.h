@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
@@ -25,7 +26,10 @@ class NiDigitalService final : public NiDigital::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
-  NiDigitalService(NiDigitalLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
+  NiDigitalService(
+    NiDigitalLibraryInterface* library,
+    ResourceRepositorySharedPtr session_repository,
+    const nidevice_grpc::FeatureToggles& feature_toggles = {});
   virtual ~NiDigitalService();
   
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
@@ -160,12 +164,24 @@ public:
   ::grpc::Status WriteSourceWaveformDataFromFileTDMS(::grpc::ServerContext* context, const WriteSourceWaveformDataFromFileTDMSRequest* request, WriteSourceWaveformDataFromFileTDMSResponse* response) override;
   ::grpc::Status WriteStatic(::grpc::ServerContext* context, const WriteStaticRequest* request, WriteStaticResponse* response) override;
   ::grpc::Status WriteSourceWaveformSiteUniqueU32(::grpc::ServerContext* context, const WriteSourceWaveformSiteUniqueU32Request* request, WriteSourceWaveformSiteUniqueU32Response* response) override;
+
+  bool is_enabled();
 private:
   NiDigitalLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
   template <typename TEnum>
   void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);
+
+  struct NiDigitalFeatureToggles
+  {
+    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+    NiDigitalFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
+
+    bool is_enabled;
+  };
+
+  NiDigitalFeatureToggles feature_toggles_;
 };
 
 } // namespace nidigitalpattern_grpc

@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
@@ -25,7 +26,10 @@ class NiDCPowerService final : public NiDCPower::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
-  NiDCPowerService(NiDCPowerLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
+  NiDCPowerService(
+    NiDCPowerLibraryInterface* library,
+    ResourceRepositorySharedPtr session_repository,
+    const nidevice_grpc::FeatureToggles& feature_toggles = {});
   virtual ~NiDCPowerService();
   
   ::grpc::Status AbortWithChannels(::grpc::ServerContext* context, const AbortWithChannelsRequest* request, AbortWithChannelsResponse* response) override;
@@ -163,10 +167,22 @@ public:
   ::grpc::Status SetSequence(::grpc::ServerContext* context, const SetSequenceRequest* request, SetSequenceResponse* response) override;
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
   ::grpc::Status WaitForEvent(::grpc::ServerContext* context, const WaitForEventRequest* request, WaitForEventResponse* response) override;
+
+  bool is_enabled();
 private:
   NiDCPowerLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
+
+  struct NiDCPowerFeatureToggles
+  {
+    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+    NiDCPowerFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
+
+    bool is_enabled;
+  };
+
+  NiDCPowerFeatureToggles feature_toggles_;
 };
 
 } // namespace nidcpower_grpc

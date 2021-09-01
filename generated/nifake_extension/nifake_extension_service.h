@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
@@ -25,13 +26,28 @@ class NiFakeExtensionService final : public NiFakeExtension::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
-  NiFakeExtensionService(NiFakeExtensionLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
+  NiFakeExtensionService(
+    NiFakeExtensionLibraryInterface* library,
+    ResourceRepositorySharedPtr session_repository,
+    const nidevice_grpc::FeatureToggles& feature_toggles = {});
   virtual ~NiFakeExtensionService();
   
   ::grpc::Status AddCoolFunctionality(::grpc::ServerContext* context, const AddCoolFunctionalityRequest* request, AddCoolFunctionalityResponse* response) override;
+
+  bool is_enabled();
 private:
   NiFakeExtensionLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+
+  struct NiFakeExtensionFeatureToggles
+  {
+    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+    NiFakeExtensionFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
+
+    bool is_enabled;
+  };
+
+  NiFakeExtensionFeatureToggles feature_toggles_;
 };
 
 } // namespace nifake_extension_grpc
