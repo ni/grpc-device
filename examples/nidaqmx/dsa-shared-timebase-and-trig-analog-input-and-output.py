@@ -116,12 +116,12 @@ leader_input_task = None
 leader_output_task = None
 follower_input_task = None
 follower_output_task = None
-num_leader_written = 0
-num_follower_written = 0
+num_leader_samples_written = 0
+num_follower_samples_written = 0
 
 
 async def main():
-    global client, leader_input_task, leader_output_task, follower_input_task, follower_output_task, num_leader_written, num_follower_written
+    global client, leader_input_task, leader_output_task, follower_input_task, follower_output_task, num_leader_samples_written, num_follower_samples_written
     async with grpc.aio.insecure_channel(f"{server_address}:{server_port}") as channel:
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
@@ -270,11 +270,11 @@ async def main():
             (follower_write_data, phase) = generate_sinewave(250, 1.0, 0.02, phase)
 
             # DAQmx Write code
-            num_leader_written = (await raise_if_error_async(client.WriteAnalogF64(nidaqmx_types.WriteAnalogF64Request(
+            num_leader_samples_written = (await raise_if_error_async(client.WriteAnalogF64(nidaqmx_types.WriteAnalogF64Request(
                 task=leader_output_task, num_samps_per_chan=250, auto_start=False, timeout=10.0,
                 data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL, write_array=leader_write_data
             )))).samps_per_chan_written
-            num_follower_written = (await raise_if_error_async(client.WriteAnalogF64(nidaqmx_types.WriteAnalogF64Request(
+            num_follower_samples_written = (await raise_if_error_async(client.WriteAnalogF64(nidaqmx_types.WriteAnalogF64Request(
                 task=follower_output_task, num_samps_per_chan=250, auto_start=False, timeout=10.0,
                 data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL, write_array=follower_write_data
             )))).samps_per_chan_written
@@ -308,7 +308,7 @@ async def main():
             await raise_if_error_async(client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_input_task)))
 
             async def read_data():
-                global num_leader_written, num_follower_written
+                global num_leader_samples_written, num_follower_samples_written
                 async for every_n_samples_response in every_n_samples_stream:
                     await raise_if_error(every_n_samples_response)
                     leader_response: nidaqmx_types.ReadAnalogF64Response = await raise_if_error_async(
@@ -319,7 +319,7 @@ async def main():
                                 timeout=10.0,
                                 fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
                                 array_size_in_samps=2000)))
-                    num_leader_written += leader_response.samps_per_chan_read
+                    num_leader_samples_written += leader_response.samps_per_chan_read
                     follower_response: nidaqmx_types.ReadAnalogF64Response = await raise_if_error_async(
                         client.ReadAnalogF64(
                             nidaqmx_types.ReadAnalogF64Request(
@@ -328,10 +328,10 @@ async def main():
                                 timeout=10.0,
                                 fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
                                 array_size_in_samps=2000)))
-                    num_follower_written += follower_response.samps_per_chan_read
+                    num_follower_samples_written += follower_response.samps_per_chan_read
 
                     print(
-                        f"\t{leader_response.samps_per_chan_read}\t{follower_response.samps_per_chan_read}\t\t{num_leader_written}\t{num_follower_written}")
+                        f"\t{leader_response.samps_per_chan_read}\t{follower_response.samps_per_chan_read}\t\t{num_leader_samples_written}\t{num_follower_samples_written}")
 
             async def wait_for_done(done_event_stream):
                 async for done_response in done_event_stream:
