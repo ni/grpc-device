@@ -123,6 +123,7 @@ config = {
         'CVIAbsoluteTime': 'google.protobuf.Timestamp'
     },
     'split_attributes_by_type': True,
+    'supports_raw_attributes': True,
     'driver_name': 'NI-DAQMX',
     'extra_errors_used': [
     ],

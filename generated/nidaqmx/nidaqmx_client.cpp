@@ -4612,13 +4612,20 @@ get_auto_configured_cdaq_sync_connections(const StubPtr& stub)
 }
 
 GetBufferAttributeUInt32Response
-get_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const BufferUInt32Attributes& attribute)
+get_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<BufferUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetBufferAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<BufferUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetBufferAttributeUInt32Response{};
 
@@ -4629,13 +4636,20 @@ get_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 GetCalInfoAttributeBoolResponse
-get_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoBoolAttributes& attribute)
+get_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetCalInfoAttributeBoolRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<CalibrationInfoBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetCalInfoAttributeBoolResponse{};
 
@@ -4646,13 +4660,20 @@ get_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, 
 }
 
 GetCalInfoAttributeDoubleResponse
-get_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoDoubleAttributes& attribute)
+get_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetCalInfoAttributeDoubleRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<CalibrationInfoDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetCalInfoAttributeDoubleResponse{};
 
@@ -4663,13 +4684,20 @@ get_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name
 }
 
 GetCalInfoAttributeStringResponse
-get_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoStringAttributes& attribute)
+get_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetCalInfoAttributeStringRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<CalibrationInfoStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetCalInfoAttributeStringResponse{};
 
@@ -4680,13 +4708,20 @@ get_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name
 }
 
 GetCalInfoAttributeUInt32Response
-get_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoUInt32Attributes& attribute)
+get_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetCalInfoAttributeUInt32Request{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<CalibrationInfoUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetCalInfoAttributeUInt32Response{};
 
@@ -4697,14 +4732,21 @@ get_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name
 }
 
 GetChanAttributeBoolResponse
-get_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelBoolAttributes& attribute)
+get_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetChanAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetChanAttributeBoolResponse{};
 
@@ -4715,14 +4757,21 @@ get_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 GetChanAttributeDoubleResponse
-get_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelDoubleAttributes& attribute)
+get_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetChanAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetChanAttributeDoubleResponse{};
 
@@ -4733,14 +4782,21 @@ get_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetChanAttributeDoubleArrayResponse
-get_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelDoubleArrayAttributes& attribute)
+get_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelDoubleArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetChanAttributeDoubleArrayRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelDoubleArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetChanAttributeDoubleArrayResponse{};
 
@@ -4751,14 +4807,21 @@ get_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 GetChanAttributeInt32Response
-get_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelInt32Attributes& attribute)
+get_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetChanAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetChanAttributeInt32Response{};
 
@@ -4769,14 +4832,21 @@ get_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 GetChanAttributeStringResponse
-get_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelStringAttributes& attribute)
+get_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetChanAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetChanAttributeStringResponse{};
 
@@ -4787,14 +4857,21 @@ get_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetChanAttributeUInt32Response
-get_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelUInt32Attributes& attribute)
+get_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetChanAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetChanAttributeUInt32Response{};
 
@@ -4805,13 +4882,20 @@ get_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetDeviceAttributeBoolResponse
-get_device_attribute_bool(const StubPtr& stub, const pb::string& device_name, const DeviceBoolAttributes& attribute)
+get_device_attribute_bool(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeviceAttributeBoolRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<DeviceBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetDeviceAttributeBoolResponse{};
 
@@ -4822,13 +4906,20 @@ get_device_attribute_bool(const StubPtr& stub, const pb::string& device_name, co
 }
 
 GetDeviceAttributeDoubleResponse
-get_device_attribute_double(const StubPtr& stub, const pb::string& device_name, const DeviceDoubleAttributes& attribute)
+get_device_attribute_double(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeviceAttributeDoubleRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<DeviceDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetDeviceAttributeDoubleResponse{};
 
@@ -4839,13 +4930,20 @@ get_device_attribute_double(const StubPtr& stub, const pb::string& device_name, 
 }
 
 GetDeviceAttributeDoubleArrayResponse
-get_device_attribute_double_array(const StubPtr& stub, const pb::string& device_name, const DeviceDoubleArrayAttributes& attribute)
+get_device_attribute_double_array(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceDoubleArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeviceAttributeDoubleArrayRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<DeviceDoubleArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetDeviceAttributeDoubleArrayResponse{};
 
@@ -4856,13 +4954,20 @@ get_device_attribute_double_array(const StubPtr& stub, const pb::string& device_
 }
 
 GetDeviceAttributeInt32Response
-get_device_attribute_int32(const StubPtr& stub, const pb::string& device_name, const DeviceInt32Attributes& attribute)
+get_device_attribute_int32(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeviceAttributeInt32Request{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<DeviceInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetDeviceAttributeInt32Response{};
 
@@ -4873,13 +4978,20 @@ get_device_attribute_int32(const StubPtr& stub, const pb::string& device_name, c
 }
 
 GetDeviceAttributeInt32ArrayResponse
-get_device_attribute_int32_array(const StubPtr& stub, const pb::string& device_name, const DeviceInt32ArrayAttributes& attribute)
+get_device_attribute_int32_array(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceInt32ArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeviceAttributeInt32ArrayRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<DeviceInt32ArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetDeviceAttributeInt32ArrayResponse{};
 
@@ -4890,13 +5002,20 @@ get_device_attribute_int32_array(const StubPtr& stub, const pb::string& device_n
 }
 
 GetDeviceAttributeStringResponse
-get_device_attribute_string(const StubPtr& stub, const pb::string& device_name, const DeviceStringAttributes& attribute)
+get_device_attribute_string(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeviceAttributeStringRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<DeviceStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetDeviceAttributeStringResponse{};
 
@@ -4907,13 +5026,20 @@ get_device_attribute_string(const StubPtr& stub, const pb::string& device_name, 
 }
 
 GetDeviceAttributeUInt32Response
-get_device_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const DeviceUInt32Attributes& attribute)
+get_device_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeviceAttributeUInt32Request{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<DeviceUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetDeviceAttributeUInt32Response{};
 
@@ -4924,13 +5050,20 @@ get_device_attribute_uint32(const StubPtr& stub, const pb::string& device_name, 
 }
 
 GetDeviceAttributeUInt32ArrayResponse
-get_device_attribute_uint32_array(const StubPtr& stub, const pb::string& device_name, const DeviceUInt32ArrayAttributes& attribute)
+get_device_attribute_uint32_array(const StubPtr& stub, const pb::string& device_name, const simple_variant<DeviceUInt32ArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeviceAttributeUInt32ArrayRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<DeviceUInt32ArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetDeviceAttributeUInt32ArrayResponse{};
 
@@ -5022,13 +5155,20 @@ get_error_string(const StubPtr& stub, const pb::int32& error_code)
 }
 
 GetExportedSignalAttributeBoolResponse
-get_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalBoolAttributes& attribute)
+get_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetExportedSignalAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetExportedSignalAttributeBoolResponse{};
 
@@ -5039,13 +5179,20 @@ get_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 GetExportedSignalAttributeDoubleResponse
-get_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalDoubleAttributes& attribute)
+get_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetExportedSignalAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetExportedSignalAttributeDoubleResponse{};
 
@@ -5056,13 +5203,20 @@ get_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::S
 }
 
 GetExportedSignalAttributeInt32Response
-get_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalInt32Attributes& attribute)
+get_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetExportedSignalAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetExportedSignalAttributeInt32Response{};
 
@@ -5073,13 +5227,20 @@ get_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 GetExportedSignalAttributeStringResponse
-get_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalStringAttributes& attribute)
+get_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetExportedSignalAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetExportedSignalAttributeStringResponse{};
 
@@ -5090,13 +5251,20 @@ get_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::S
 }
 
 GetExportedSignalAttributeUInt32Response
-get_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalUInt32Attributes& attribute)
+get_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetExportedSignalAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetExportedSignalAttributeUInt32Response{};
 
@@ -5205,13 +5373,20 @@ get_nth_task_read_channel(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetPersistedChanAttributeBoolResponse
-get_persisted_chan_attribute_bool(const StubPtr& stub, const pb::string& channel, const PersistedChannelBoolAttributes& attribute)
+get_persisted_chan_attribute_bool(const StubPtr& stub, const pb::string& channel, const simple_variant<PersistedChannelBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPersistedChanAttributeBoolRequest{};
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PersistedChannelBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPersistedChanAttributeBoolResponse{};
 
@@ -5222,13 +5397,20 @@ get_persisted_chan_attribute_bool(const StubPtr& stub, const pb::string& channel
 }
 
 GetPersistedChanAttributeStringResponse
-get_persisted_chan_attribute_string(const StubPtr& stub, const pb::string& channel, const PersistedChannelStringAttributes& attribute)
+get_persisted_chan_attribute_string(const StubPtr& stub, const pb::string& channel, const simple_variant<PersistedChannelStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPersistedChanAttributeStringRequest{};
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PersistedChannelStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPersistedChanAttributeStringResponse{};
 
@@ -5239,13 +5421,20 @@ get_persisted_chan_attribute_string(const StubPtr& stub, const pb::string& chann
 }
 
 GetPersistedScaleAttributeBoolResponse
-get_persisted_scale_attribute_bool(const StubPtr& stub, const pb::string& scale_name, const PersistedScaleBoolAttributes& attribute)
+get_persisted_scale_attribute_bool(const StubPtr& stub, const pb::string& scale_name, const simple_variant<PersistedScaleBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPersistedScaleAttributeBoolRequest{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PersistedScaleBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPersistedScaleAttributeBoolResponse{};
 
@@ -5256,13 +5445,20 @@ get_persisted_scale_attribute_bool(const StubPtr& stub, const pb::string& scale_
 }
 
 GetPersistedScaleAttributeStringResponse
-get_persisted_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const PersistedScaleStringAttributes& attribute)
+get_persisted_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const simple_variant<PersistedScaleStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPersistedScaleAttributeStringRequest{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PersistedScaleStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPersistedScaleAttributeStringResponse{};
 
@@ -5273,13 +5469,20 @@ get_persisted_scale_attribute_string(const StubPtr& stub, const pb::string& scal
 }
 
 GetPersistedTaskAttributeBoolResponse
-get_persisted_task_attribute_bool(const StubPtr& stub, const pb::string& task_name, const PersistedTaskBoolAttributes& attribute)
+get_persisted_task_attribute_bool(const StubPtr& stub, const pb::string& task_name, const simple_variant<PersistedTaskBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPersistedTaskAttributeBoolRequest{};
   request.set_task_name(task_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PersistedTaskBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPersistedTaskAttributeBoolResponse{};
 
@@ -5290,13 +5493,20 @@ get_persisted_task_attribute_bool(const StubPtr& stub, const pb::string& task_na
 }
 
 GetPersistedTaskAttributeStringResponse
-get_persisted_task_attribute_string(const StubPtr& stub, const pb::string& task_name, const PersistedTaskStringAttributes& attribute)
+get_persisted_task_attribute_string(const StubPtr& stub, const pb::string& task_name, const simple_variant<PersistedTaskStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPersistedTaskAttributeStringRequest{};
   request.set_task_name(task_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PersistedTaskStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPersistedTaskAttributeStringResponse{};
 
@@ -5307,13 +5517,20 @@ get_persisted_task_attribute_string(const StubPtr& stub, const pb::string& task_
 }
 
 GetPhysicalChanAttributeBoolResponse
-get_physical_chan_attribute_bool(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelBoolAttributes& attribute)
+get_physical_chan_attribute_bool(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPhysicalChanAttributeBoolRequest{};
   request.set_physical_channel(physical_channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PhysicalChannelBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPhysicalChanAttributeBoolResponse{};
 
@@ -5324,13 +5541,20 @@ get_physical_chan_attribute_bool(const StubPtr& stub, const pb::string& physical
 }
 
 GetPhysicalChanAttributeBytesResponse
-get_physical_chan_attribute_bytes(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelBytesAttributes& attribute)
+get_physical_chan_attribute_bytes(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelBytesAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPhysicalChanAttributeBytesRequest{};
   request.set_physical_channel(physical_channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PhysicalChannelBytesAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPhysicalChanAttributeBytesResponse{};
 
@@ -5341,13 +5565,20 @@ get_physical_chan_attribute_bytes(const StubPtr& stub, const pb::string& physica
 }
 
 GetPhysicalChanAttributeDoubleResponse
-get_physical_chan_attribute_double(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelDoubleAttributes& attribute)
+get_physical_chan_attribute_double(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPhysicalChanAttributeDoubleRequest{};
   request.set_physical_channel(physical_channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PhysicalChannelDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPhysicalChanAttributeDoubleResponse{};
 
@@ -5358,13 +5589,20 @@ get_physical_chan_attribute_double(const StubPtr& stub, const pb::string& physic
 }
 
 GetPhysicalChanAttributeDoubleArrayResponse
-get_physical_chan_attribute_double_array(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelDoubleArrayAttributes& attribute)
+get_physical_chan_attribute_double_array(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelDoubleArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPhysicalChanAttributeDoubleArrayRequest{};
   request.set_physical_channel(physical_channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PhysicalChannelDoubleArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPhysicalChanAttributeDoubleArrayResponse{};
 
@@ -5375,13 +5613,20 @@ get_physical_chan_attribute_double_array(const StubPtr& stub, const pb::string& 
 }
 
 GetPhysicalChanAttributeInt32Response
-get_physical_chan_attribute_int32(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelInt32Attributes& attribute)
+get_physical_chan_attribute_int32(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPhysicalChanAttributeInt32Request{};
   request.set_physical_channel(physical_channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PhysicalChannelInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPhysicalChanAttributeInt32Response{};
 
@@ -5392,13 +5637,20 @@ get_physical_chan_attribute_int32(const StubPtr& stub, const pb::string& physica
 }
 
 GetPhysicalChanAttributeInt32ArrayResponse
-get_physical_chan_attribute_int32_array(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelInt32ArrayAttributes& attribute)
+get_physical_chan_attribute_int32_array(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelInt32ArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPhysicalChanAttributeInt32ArrayRequest{};
   request.set_physical_channel(physical_channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PhysicalChannelInt32ArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPhysicalChanAttributeInt32ArrayResponse{};
 
@@ -5409,13 +5661,20 @@ get_physical_chan_attribute_int32_array(const StubPtr& stub, const pb::string& p
 }
 
 GetPhysicalChanAttributeStringResponse
-get_physical_chan_attribute_string(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelStringAttributes& attribute)
+get_physical_chan_attribute_string(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPhysicalChanAttributeStringRequest{};
   request.set_physical_channel(physical_channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PhysicalChannelStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPhysicalChanAttributeStringResponse{};
 
@@ -5426,13 +5685,20 @@ get_physical_chan_attribute_string(const StubPtr& stub, const pb::string& physic
 }
 
 GetPhysicalChanAttributeUInt32Response
-get_physical_chan_attribute_uint32(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelUInt32Attributes& attribute)
+get_physical_chan_attribute_uint32(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPhysicalChanAttributeUInt32Request{};
   request.set_physical_channel(physical_channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PhysicalChannelUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPhysicalChanAttributeUInt32Response{};
 
@@ -5443,13 +5709,20 @@ get_physical_chan_attribute_uint32(const StubPtr& stub, const pb::string& physic
 }
 
 GetPhysicalChanAttributeUInt32ArrayResponse
-get_physical_chan_attribute_uint32_array(const StubPtr& stub, const pb::string& physical_channel, const PhysicalChannelUInt32ArrayAttributes& attribute)
+get_physical_chan_attribute_uint32_array(const StubPtr& stub, const pb::string& physical_channel, const simple_variant<PhysicalChannelUInt32ArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPhysicalChanAttributeUInt32ArrayRequest{};
   request.set_physical_channel(physical_channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<PhysicalChannelUInt32ArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetPhysicalChanAttributeUInt32ArrayResponse{};
 
@@ -5460,13 +5733,20 @@ get_physical_chan_attribute_uint32_array(const StubPtr& stub, const pb::string& 
 }
 
 GetReadAttributeBoolResponse
-get_read_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadBoolAttributes& attribute)
+get_read_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetReadAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetReadAttributeBoolResponse{};
 
@@ -5477,13 +5757,20 @@ get_read_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 GetReadAttributeDoubleResponse
-get_read_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadDoubleAttributes& attribute)
+get_read_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetReadAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetReadAttributeDoubleResponse{};
 
@@ -5494,13 +5781,20 @@ get_read_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetReadAttributeInt32Response
-get_read_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadInt32Attributes& attribute)
+get_read_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetReadAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetReadAttributeInt32Response{};
 
@@ -5511,13 +5805,20 @@ get_read_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 GetReadAttributeStringResponse
-get_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadStringAttributes& attribute)
+get_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetReadAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetReadAttributeStringResponse{};
 
@@ -5528,13 +5829,20 @@ get_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetReadAttributeUInt32Response
-get_read_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadUInt32Attributes& attribute)
+get_read_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetReadAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetReadAttributeUInt32Response{};
 
@@ -5545,13 +5853,20 @@ get_read_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetReadAttributeUInt64Response
-get_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadUInt64Attributes& attribute)
+get_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadUInt64Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetReadAttributeUInt64Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadUInt64Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetReadAttributeUInt64Response{};
 
@@ -5562,13 +5877,20 @@ get_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetRealTimeAttributeBoolResponse
-get_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeBoolAttributes& attribute)
+get_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<RealTimeBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetRealTimeAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<RealTimeBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetRealTimeAttributeBoolResponse{};
 
@@ -5579,13 +5901,20 @@ get_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetRealTimeAttributeInt32Response
-get_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeInt32Attributes& attribute)
+get_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<RealTimeInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetRealTimeAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<RealTimeInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetRealTimeAttributeInt32Response{};
 
@@ -5596,13 +5925,20 @@ get_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 GetRealTimeAttributeUInt32Response
-get_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeUInt32Attributes& attribute)
+get_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<RealTimeUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetRealTimeAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<RealTimeUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetRealTimeAttributeUInt32Response{};
 
@@ -5629,13 +5965,20 @@ get_ref_trig_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 GetScaleAttributeDoubleResponse
-get_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, const ScaleDoubleAttributes& attribute)
+get_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetScaleAttributeDoubleRequest{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ScaleDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetScaleAttributeDoubleResponse{};
 
@@ -5646,13 +5989,20 @@ get_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, co
 }
 
 GetScaleAttributeDoubleArrayResponse
-get_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const ScaleDoubleArrayAttributes& attribute)
+get_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleDoubleArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetScaleAttributeDoubleArrayRequest{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ScaleDoubleArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetScaleAttributeDoubleArrayResponse{};
 
@@ -5663,13 +6013,20 @@ get_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_na
 }
 
 GetScaleAttributeInt32Response
-get_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, const ScaleInt32Attributes& attribute)
+get_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetScaleAttributeInt32Request{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ScaleInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetScaleAttributeInt32Response{};
 
@@ -5680,13 +6037,20 @@ get_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, con
 }
 
 GetScaleAttributeStringResponse
-get_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const ScaleStringAttributes& attribute)
+get_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetScaleAttributeStringRequest{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ScaleStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetScaleAttributeStringResponse{};
 
@@ -5761,12 +6125,19 @@ get_sync_pulse_time_when(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 GetSystemInfoAttributeStringResponse
-get_system_info_attribute_string(const StubPtr& stub, const SystemStringAttributes& attribute)
+get_system_info_attribute_string(const StubPtr& stub, const simple_variant<SystemStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetSystemInfoAttributeStringRequest{};
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<SystemStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetSystemInfoAttributeStringResponse{};
 
@@ -5777,12 +6148,19 @@ get_system_info_attribute_string(const StubPtr& stub, const SystemStringAttribut
 }
 
 GetSystemInfoAttributeUInt32Response
-get_system_info_attribute_uint32(const StubPtr& stub, const SystemUInt32Attributes& attribute)
+get_system_info_attribute_uint32(const StubPtr& stub, const simple_variant<SystemUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetSystemInfoAttributeUInt32Request{};
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<SystemUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetSystemInfoAttributeUInt32Response{};
 
@@ -5793,13 +6171,20 @@ get_system_info_attribute_uint32(const StubPtr& stub, const SystemUInt32Attribut
 }
 
 GetTaskAttributeBoolResponse
-get_task_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const TaskBoolAttributes& attribute)
+get_task_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TaskBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTaskAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TaskBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTaskAttributeBoolResponse{};
 
@@ -5810,13 +6195,20 @@ get_task_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 GetTaskAttributeStringResponse
-get_task_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const TaskStringAttributes& attribute)
+get_task_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TaskStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTaskAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TaskStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTaskAttributeStringResponse{};
 
@@ -5827,13 +6219,20 @@ get_task_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetTaskAttributeUInt32Response
-get_task_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const TaskUInt32Attributes& attribute)
+get_task_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TaskUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTaskAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TaskUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTaskAttributeUInt32Response{};
 
@@ -5844,13 +6243,20 @@ get_task_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetTimingAttributeBoolResponse
-get_timing_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingBoolAttributes& attribute)
+get_timing_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeBoolResponse{};
 
@@ -5861,13 +6267,20 @@ get_timing_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetTimingAttributeDoubleResponse
-get_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingDoubleAttributes& attribute)
+get_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeDoubleResponse{};
 
@@ -5878,14 +6291,21 @@ get_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 GetTimingAttributeExBoolResponse
-get_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingBoolAttributes& attribute)
+get_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeExBoolRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeExBoolResponse{};
 
@@ -5896,14 +6316,21 @@ get_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetTimingAttributeExDoubleResponse
-get_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingDoubleAttributes& attribute)
+get_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeExDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeExDoubleResponse{};
 
@@ -5914,14 +6341,21 @@ get_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetTimingAttributeExInt32Response
-get_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingInt32Attributes& attribute)
+get_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeExInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeExInt32Response{};
 
@@ -5932,14 +6366,21 @@ get_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 GetTimingAttributeExStringResponse
-get_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingStringAttributes& attribute)
+get_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeExStringRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeExStringResponse{};
 
@@ -5950,14 +6391,21 @@ get_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetTimingAttributeExTimestampResponse
-get_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingTimestampAttributes& attribute)
+get_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingTimestampAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeExTimestampRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingTimestampAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeExTimestampResponse{};
 
@@ -5968,14 +6416,21 @@ get_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 GetTimingAttributeExUInt32Response
-get_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingUInt32Attributes& attribute)
+get_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeExUInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeExUInt32Response{};
 
@@ -5986,13 +6441,20 @@ get_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetTimingAttributeInt32Response
-get_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingInt32Attributes& attribute)
+get_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeInt32Response{};
 
@@ -6003,13 +6465,20 @@ get_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 GetTimingAttributeStringResponse
-get_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingStringAttributes& attribute)
+get_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeStringResponse{};
 
@@ -6020,13 +6489,20 @@ get_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 GetTimingAttributeTimestampResponse
-get_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingTimestampAttributes& attribute)
+get_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingTimestampAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeTimestampRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingTimestampAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeTimestampResponse{};
 
@@ -6037,13 +6513,20 @@ get_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetTimingAttributeUInt32Response
-get_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingUInt32Attributes& attribute)
+get_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTimingAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTimingAttributeUInt32Response{};
 
@@ -6054,13 +6537,20 @@ get_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 GetTrigAttributeBoolResponse
-get_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerBoolAttributes& attribute)
+get_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTrigAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTrigAttributeBoolResponse{};
 
@@ -6071,13 +6561,20 @@ get_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 GetTrigAttributeDoubleResponse
-get_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerDoubleAttributes& attribute)
+get_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTrigAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTrigAttributeDoubleResponse{};
 
@@ -6088,13 +6585,20 @@ get_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetTrigAttributeDoubleArrayResponse
-get_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerDoubleArrayAttributes& attribute)
+get_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerDoubleArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTrigAttributeDoubleArrayRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerDoubleArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTrigAttributeDoubleArrayResponse{};
 
@@ -6105,13 +6609,20 @@ get_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 GetTrigAttributeInt32Response
-get_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerInt32Attributes& attribute)
+get_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTrigAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTrigAttributeInt32Response{};
 
@@ -6122,13 +6633,20 @@ get_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 GetTrigAttributeInt32ArrayResponse
-get_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerInt32ArrayAttributes& attribute)
+get_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerInt32ArrayAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTrigAttributeInt32ArrayRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerInt32ArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTrigAttributeInt32ArrayResponse{};
 
@@ -6139,13 +6657,20 @@ get_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetTrigAttributeStringResponse
-get_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerStringAttributes& attribute)
+get_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTrigAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTrigAttributeStringResponse{};
 
@@ -6156,13 +6681,20 @@ get_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetTrigAttributeTimestampResponse
-get_trig_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerTimestampAttributes& attribute)
+get_trig_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerTimestampAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTrigAttributeTimestampRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerTimestampAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTrigAttributeTimestampResponse{};
 
@@ -6173,13 +6705,20 @@ get_trig_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetTrigAttributeUInt32Response
-get_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerUInt32Attributes& attribute)
+get_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetTrigAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetTrigAttributeUInt32Response{};
 
@@ -6190,14 +6729,21 @@ get_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetWatchdogAttributeBoolResponse
-get_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogBoolAttributes& attribute)
+get_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetWatchdogAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_lines(lines);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WatchdogBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetWatchdogAttributeBoolResponse{};
 
@@ -6208,14 +6754,21 @@ get_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 GetWatchdogAttributeDoubleResponse
-get_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogDoubleAttributes& attribute)
+get_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetWatchdogAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_lines(lines);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WatchdogDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetWatchdogAttributeDoubleResponse{};
 
@@ -6226,14 +6779,21 @@ get_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 GetWatchdogAttributeInt32Response
-get_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogInt32Attributes& attribute)
+get_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetWatchdogAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_lines(lines);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WatchdogInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetWatchdogAttributeInt32Response{};
 
@@ -6244,14 +6804,21 @@ get_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 GetWatchdogAttributeStringResponse
-get_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogStringAttributes& attribute)
+get_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetWatchdogAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_lines(lines);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WatchdogStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetWatchdogAttributeStringResponse{};
 
@@ -6262,13 +6829,20 @@ get_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 GetWriteAttributeBoolResponse
-get_write_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteBoolAttributes& attribute)
+get_write_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteBoolAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetWriteAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetWriteAttributeBoolResponse{};
 
@@ -6279,13 +6853,20 @@ get_write_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 GetWriteAttributeDoubleResponse
-get_write_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteDoubleAttributes& attribute)
+get_write_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteDoubleAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetWriteAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetWriteAttributeDoubleResponse{};
 
@@ -6296,13 +6877,20 @@ get_write_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 GetWriteAttributeInt32Response
-get_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteInt32Attributes& attribute)
+get_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetWriteAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetWriteAttributeInt32Response{};
 
@@ -6313,13 +6901,20 @@ get_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 GetWriteAttributeStringResponse
-get_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteStringAttributes& attribute)
+get_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteStringAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetWriteAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetWriteAttributeStringResponse{};
 
@@ -6330,13 +6925,20 @@ get_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 GetWriteAttributeUInt32Response
-get_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteUInt32Attributes& attribute)
+get_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteUInt32Attributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetWriteAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = GetWriteAttributeUInt32Response{};
 
@@ -7010,13 +7612,20 @@ reserve_network_device(const StubPtr& stub, const pb::string& device_name, const
 }
 
 ResetBufferAttributeResponse
-reset_buffer_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const BufferResetAttributes& attribute)
+reset_buffer_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<BufferResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetBufferAttributeRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<BufferResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetBufferAttributeResponse{};
 
@@ -7027,14 +7636,21 @@ reset_buffer_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 ResetChanAttributeResponse
-reset_chan_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelResetAttributes& attribute)
+reset_chan_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetChanAttributeRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetChanAttributeResponse{};
 
@@ -7061,13 +7677,20 @@ reset_device(const StubPtr& stub, const pb::string& device_name)
 }
 
 ResetExportedSignalAttributeResponse
-reset_exported_signal_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalResetAttributes& attribute)
+reset_exported_signal_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetExportedSignalAttributeRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetExportedSignalAttributeResponse{};
 
@@ -7078,13 +7701,20 @@ reset_exported_signal_attribute(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 ResetReadAttributeResponse
-reset_read_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadResetAttributes& attribute)
+reset_read_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetReadAttributeRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetReadAttributeResponse{};
 
@@ -7095,13 +7725,20 @@ reset_read_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, co
 }
 
 ResetRealTimeAttributeResponse
-reset_real_time_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeResetAttributes& attribute)
+reset_real_time_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<RealTimeResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetRealTimeAttributeRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<RealTimeResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetRealTimeAttributeResponse{};
 
@@ -7112,13 +7749,20 @@ reset_real_time_attribute(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 ResetTimingAttributeResponse
-reset_timing_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingResetAttributes& attribute)
+reset_timing_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetTimingAttributeRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetTimingAttributeResponse{};
 
@@ -7129,14 +7773,21 @@ reset_timing_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 ResetTimingAttributeExResponse
-reset_timing_attribute_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingResetAttributes& attribute)
+reset_timing_attribute_ex(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetTimingAttributeExRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetTimingAttributeExResponse{};
 
@@ -7147,13 +7798,20 @@ reset_timing_attribute_ex(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 ResetTrigAttributeResponse
-reset_trig_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerResetAttributes& attribute)
+reset_trig_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetTrigAttributeRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetTrigAttributeResponse{};
 
@@ -7164,14 +7822,21 @@ reset_trig_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, co
 }
 
 ResetWatchdogAttributeResponse
-reset_watchdog_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogResetAttributes& attribute)
+reset_watchdog_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetWatchdogAttributeRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_lines(lines);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WatchdogResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetWatchdogAttributeResponse{};
 
@@ -7182,13 +7847,20 @@ reset_watchdog_attribute(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 ResetWriteAttributeResponse
-reset_write_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteResetAttributes& attribute)
+reset_write_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteResetAttributes, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetWriteAttributeRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteResetAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
 
   auto response = ResetWriteAttributeResponse{};
 
@@ -7388,13 +8060,20 @@ set_arm_start_trig_trig_when(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SetBufferAttributeUInt32Response
-set_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const BufferUInt32Attributes& attribute, const pb::uint32& value)
+set_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<BufferUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetBufferAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<BufferUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetBufferAttributeUInt32Response{};
@@ -7406,13 +8085,20 @@ set_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 SetCalInfoAttributeBoolResponse
-set_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoBoolAttributes& attribute, const bool& value)
+set_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetCalInfoAttributeBoolRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<CalibrationInfoBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetCalInfoAttributeBoolResponse{};
@@ -7424,13 +8110,20 @@ set_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, 
 }
 
 SetCalInfoAttributeDoubleResponse
-set_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoDoubleAttributes& attribute, const double& value)
+set_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetCalInfoAttributeDoubleRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<CalibrationInfoDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetCalInfoAttributeDoubleResponse{};
@@ -7442,13 +8135,20 @@ set_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name
 }
 
 SetCalInfoAttributeStringResponse
-set_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoStringAttributes& attribute, const pb::string& value)
+set_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetCalInfoAttributeStringRequest{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<CalibrationInfoStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetCalInfoAttributeStringResponse{};
@@ -7460,13 +8160,20 @@ set_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name
 }
 
 SetCalInfoAttributeUInt32Response
-set_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const CalibrationInfoUInt32Attributes& attribute, const pb::uint32& value)
+set_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetCalInfoAttributeUInt32Request{};
   request.set_device_name(device_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<CalibrationInfoUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetCalInfoAttributeUInt32Response{};
@@ -7478,14 +8185,21 @@ set_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name
 }
 
 SetChanAttributeBoolResponse
-set_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelBoolAttributes& attribute, const bool& value)
+set_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetChanAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetChanAttributeBoolResponse{};
@@ -7497,14 +8211,21 @@ set_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 SetChanAttributeDoubleResponse
-set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelDoubleAttributes& attribute, const double& value)
+set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetChanAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetChanAttributeDoubleResponse{};
@@ -7516,14 +8237,21 @@ set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetChanAttributeDoubleArrayResponse
-set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelDoubleArrayAttributes& attribute, const std::vector<double>& value)
+set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelDoubleArrayAttributes, pb::int32>& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetChanAttributeDoubleArrayRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelDoubleArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   copy_array(value, request.mutable_value());
 
   auto response = SetChanAttributeDoubleArrayResponse{};
@@ -7535,14 +8263,21 @@ set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 SetChanAttributeInt32Response
-set_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelInt32Attributes& attribute, const simple_variant<ChannelInt32AttributeValues, pb::int32>& value)
+set_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelInt32Attributes, pb::int32>& attribute, const simple_variant<ChannelInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetChanAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<ChannelInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -7561,14 +8296,21 @@ set_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetChanAttributeStringResponse
-set_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelStringAttributes& attribute, const pb::string& value)
+set_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetChanAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetChanAttributeStringResponse{};
@@ -7580,14 +8322,21 @@ set_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetChanAttributeUInt32Response
-set_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const ChannelUInt32Attributes& attribute, const pb::uint32& value)
+set_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel, const simple_variant<ChannelUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetChanAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_channel(channel);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ChannelUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetChanAttributeUInt32Response{};
@@ -7657,13 +8406,20 @@ set_digital_pull_up_pull_down_states(const StubPtr& stub, const pb::string& devi
 }
 
 SetExportedSignalAttributeBoolResponse
-set_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalBoolAttributes& attribute, const bool& value)
+set_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetExportedSignalAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetExportedSignalAttributeBoolResponse{};
@@ -7675,13 +8431,20 @@ set_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 SetExportedSignalAttributeDoubleResponse
-set_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalDoubleAttributes& attribute, const double& value)
+set_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetExportedSignalAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetExportedSignalAttributeDoubleResponse{};
@@ -7693,13 +8456,20 @@ set_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::S
 }
 
 SetExportedSignalAttributeInt32Response
-set_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalInt32Attributes& attribute, const simple_variant<ExportSignalInt32AttributeValues, pb::int32>& value)
+set_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalInt32Attributes, pb::int32>& attribute, const simple_variant<ExportSignalInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetExportedSignalAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<ExportSignalInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -7718,13 +8488,20 @@ set_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 SetExportedSignalAttributeStringResponse
-set_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalStringAttributes& attribute, const pb::string& value)
+set_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetExportedSignalAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetExportedSignalAttributeStringResponse{};
@@ -7736,13 +8513,20 @@ set_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::S
 }
 
 SetExportedSignalAttributeUInt32Response
-set_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const ExportSignalUInt32Attributes& attribute, const pb::uint32& value)
+set_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetExportedSignalAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ExportSignalUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetExportedSignalAttributeUInt32Response{};
@@ -7771,13 +8555,20 @@ set_first_samp_clk_when(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 SetReadAttributeBoolResponse
-set_read_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadBoolAttributes& attribute, const bool& value)
+set_read_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetReadAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetReadAttributeBoolResponse{};
@@ -7789,13 +8580,20 @@ set_read_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 SetReadAttributeDoubleResponse
-set_read_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadDoubleAttributes& attribute, const double& value)
+set_read_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetReadAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetReadAttributeDoubleResponse{};
@@ -7807,13 +8605,20 @@ set_read_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetReadAttributeInt32Response
-set_read_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadInt32Attributes& attribute, const simple_variant<ReadInt32AttributeValues, pb::int32>& value)
+set_read_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadInt32Attributes, pb::int32>& attribute, const simple_variant<ReadInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetReadAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<ReadInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -7832,13 +8637,20 @@ set_read_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetReadAttributeStringResponse
-set_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadStringAttributes& attribute, const pb::string& value)
+set_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetReadAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetReadAttributeStringResponse{};
@@ -7850,13 +8662,20 @@ set_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetReadAttributeUInt32Response
-set_read_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadUInt32Attributes& attribute, const pb::uint32& value)
+set_read_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetReadAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetReadAttributeUInt32Response{};
@@ -7868,13 +8687,20 @@ set_read_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetReadAttributeUInt64Response
-set_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const ReadUInt64Attributes& attribute, const pb::uint64& value)
+set_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ReadUInt64Attributes, pb::int32>& attribute, const pb::uint64& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetReadAttributeUInt64Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ReadUInt64Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetReadAttributeUInt64Response{};
@@ -7886,13 +8712,20 @@ set_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetRealTimeAttributeBoolResponse
-set_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeBoolAttributes& attribute, const bool& value)
+set_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<RealTimeBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetRealTimeAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<RealTimeBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetRealTimeAttributeBoolResponse{};
@@ -7904,13 +8737,20 @@ set_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SetRealTimeAttributeInt32Response
-set_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeInt32Attributes& attribute, const simple_variant<RealTimeInt32AttributeValues, pb::int32>& value)
+set_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<RealTimeInt32Attributes, pb::int32>& attribute, const simple_variant<RealTimeInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetRealTimeAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<RealTimeInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<RealTimeInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -7929,13 +8769,20 @@ set_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SetRealTimeAttributeUInt32Response
-set_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const RealTimeUInt32Attributes& attribute, const pb::uint32& value)
+set_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<RealTimeUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetRealTimeAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<RealTimeUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetRealTimeAttributeUInt32Response{};
@@ -7947,13 +8794,20 @@ set_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetScaleAttributeDoubleResponse
-set_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, const ScaleDoubleAttributes& attribute, const double& value)
+set_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetScaleAttributeDoubleRequest{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ScaleDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetScaleAttributeDoubleResponse{};
@@ -7965,13 +8819,20 @@ set_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, co
 }
 
 SetScaleAttributeDoubleArrayResponse
-set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const ScaleDoubleArrayAttributes& attribute, const std::vector<double>& value)
+set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleDoubleArrayAttributes, pb::int32>& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetScaleAttributeDoubleArrayRequest{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ScaleDoubleArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   copy_array(value, request.mutable_value());
 
   auto response = SetScaleAttributeDoubleArrayResponse{};
@@ -7983,13 +8844,20 @@ set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_na
 }
 
 SetScaleAttributeInt32Response
-set_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, const ScaleInt32Attributes& attribute, const simple_variant<ScaleInt32AttributeValues, pb::int32>& value)
+set_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleInt32Attributes, pb::int32>& attribute, const simple_variant<ScaleInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetScaleAttributeInt32Request{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ScaleInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<ScaleInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -8008,13 +8876,20 @@ set_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, con
 }
 
 SetScaleAttributeStringResponse
-set_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const ScaleStringAttributes& attribute, const pb::string& value)
+set_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, const simple_variant<ScaleStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetScaleAttributeStringRequest{};
   request.set_scale_name(scale_name);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<ScaleStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetScaleAttributeStringResponse{};
@@ -8060,13 +8935,20 @@ set_sync_pulse_time_when(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetTimingAttributeBoolResponse
-set_timing_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingBoolAttributes& attribute, const bool& value)
+set_timing_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTimingAttributeBoolResponse{};
@@ -8078,13 +8960,20 @@ set_timing_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetTimingAttributeDoubleResponse
-set_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingDoubleAttributes& attribute, const double& value)
+set_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTimingAttributeDoubleResponse{};
@@ -8096,14 +8985,21 @@ set_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 SetTimingAttributeExBoolResponse
-set_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingBoolAttributes& attribute, const bool& value)
+set_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeExBoolRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTimingAttributeExBoolResponse{};
@@ -8115,14 +9011,21 @@ set_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SetTimingAttributeExDoubleResponse
-set_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingDoubleAttributes& attribute, const double& value)
+set_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeExDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTimingAttributeExDoubleResponse{};
@@ -8134,14 +9037,21 @@ set_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetTimingAttributeExInt32Response
-set_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingInt32Attributes& attribute, const simple_variant<TimingInt32AttributeValues, pb::int32>& value)
+set_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingInt32Attributes, pb::int32>& attribute, const simple_variant<TimingInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeExInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<TimingInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -8160,14 +9070,21 @@ set_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SetTimingAttributeExStringResponse
-set_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingStringAttributes& attribute, const pb::string& value)
+set_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeExStringRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTimingAttributeExStringResponse{};
@@ -8179,14 +9096,21 @@ set_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetTimingAttributeExTimestampResponse
-set_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingTimestampAttributes& attribute, const google::protobuf::Timestamp& value)
+set_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingTimestampAttributes, pb::int32>& attribute, const google::protobuf::Timestamp& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeExTimestampRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingTimestampAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.mutable_value()->CopyFrom(value);
 
   auto response = SetTimingAttributeExTimestampResponse{};
@@ -8198,14 +9122,21 @@ set_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 SetTimingAttributeExUInt32Response
-set_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const TimingUInt32Attributes& attribute, const pb::uint32& value)
+set_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeExUInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_device_names(device_names);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTimingAttributeExUInt32Response{};
@@ -8217,13 +9148,20 @@ set_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetTimingAttributeInt32Response
-set_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingInt32Attributes& attribute, const simple_variant<TimingInt32AttributeValues, pb::int32>& value)
+set_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingInt32Attributes, pb::int32>& attribute, const simple_variant<TimingInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<TimingInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -8242,13 +9180,20 @@ set_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 SetTimingAttributeStringResponse
-set_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingStringAttributes& attribute, const pb::string& value)
+set_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTimingAttributeStringResponse{};
@@ -8260,13 +9205,20 @@ set_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 SetTimingAttributeTimestampResponse
-set_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingTimestampAttributes& attribute, const google::protobuf::Timestamp& value)
+set_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingTimestampAttributes, pb::int32>& attribute, const google::protobuf::Timestamp& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeTimestampRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingTimestampAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.mutable_value()->CopyFrom(value);
 
   auto response = SetTimingAttributeTimestampResponse{};
@@ -8278,13 +9230,20 @@ set_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetTimingAttributeUInt32Response
-set_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const TimingUInt32Attributes& attribute, const pb::uint32& value)
+set_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTimingAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TimingUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTimingAttributeUInt32Response{};
@@ -8296,13 +9255,20 @@ set_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 SetTrigAttributeBoolResponse
-set_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerBoolAttributes& attribute, const bool& value)
+set_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTrigAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTrigAttributeBoolResponse{};
@@ -8314,13 +9280,20 @@ set_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
 }
 
 SetTrigAttributeDoubleResponse
-set_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerDoubleAttributes& attribute, const double& value)
+set_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTrigAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTrigAttributeDoubleResponse{};
@@ -8332,13 +9305,20 @@ set_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetTrigAttributeDoubleArrayResponse
-set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerDoubleArrayAttributes& attribute, const std::vector<double>& value)
+set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerDoubleArrayAttributes, pb::int32>& attribute, const std::vector<double>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTrigAttributeDoubleArrayRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerDoubleArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   copy_array(value, request.mutable_value());
 
   auto response = SetTrigAttributeDoubleArrayResponse{};
@@ -8350,13 +9330,20 @@ set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 SetTrigAttributeInt32Response
-set_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerInt32Attributes& attribute, const simple_variant<TriggerInt32AttributeValues, pb::int32>& value)
+set_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerInt32Attributes, pb::int32>& attribute, const simple_variant<TriggerInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTrigAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<TriggerInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -8375,13 +9362,20 @@ set_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetTrigAttributeInt32ArrayResponse
-set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerInt32ArrayAttributes& attribute, const std::vector<pb::int32>& value, const pb::uint32& size)
+set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerInt32ArrayAttributes, pb::int32>& attribute, const std::vector<pb::int32>& value, const pb::uint32& size)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTrigAttributeInt32ArrayRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerInt32ArrayAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   copy_array(value, request.mutable_value());
   request.set_size(size);
 
@@ -8394,13 +9388,20 @@ set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SetTrigAttributeStringResponse
-set_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerStringAttributes& attribute, const pb::string& value)
+set_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTrigAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTrigAttributeStringResponse{};
@@ -8412,13 +9413,20 @@ set_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetTrigAttributeTimestampResponse
-set_trig_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerTimestampAttributes& attribute, const google::protobuf::Timestamp& value)
+set_trig_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerTimestampAttributes, pb::int32>& attribute, const google::protobuf::Timestamp& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTrigAttributeTimestampRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerTimestampAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.mutable_value()->CopyFrom(value);
 
   auto response = SetTrigAttributeTimestampResponse{};
@@ -8430,13 +9438,20 @@ set_trig_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SetTrigAttributeUInt32Response
-set_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const TriggerUInt32Attributes& attribute, const pb::uint32& value)
+set_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetTrigAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<TriggerUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetTrigAttributeUInt32Response{};
@@ -8448,14 +9463,21 @@ set_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetWatchdogAttributeBoolResponse
-set_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogBoolAttributes& attribute, const bool& value)
+set_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetWatchdogAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_lines(lines);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WatchdogBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetWatchdogAttributeBoolResponse{};
@@ -8467,14 +9489,21 @@ set_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& t
 }
 
 SetWatchdogAttributeDoubleResponse
-set_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogDoubleAttributes& attribute, const double& value)
+set_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetWatchdogAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_lines(lines);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WatchdogDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetWatchdogAttributeDoubleResponse{};
@@ -8486,14 +9515,21 @@ set_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SetWatchdogAttributeInt32Response
-set_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogInt32Attributes& attribute, const simple_variant<WatchdogInt32AttributeValues, pb::int32>& value)
+set_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogInt32Attributes, pb::int32>& attribute, const simple_variant<WatchdogInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetWatchdogAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
   request.set_lines(lines);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WatchdogInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<WatchdogInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -8512,14 +9548,21 @@ set_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 SetWatchdogAttributeStringResponse
-set_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const WatchdogStringAttributes& attribute, const pb::string& value)
+set_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& lines, const simple_variant<WatchdogStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetWatchdogAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
   request.set_lines(lines);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WatchdogStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetWatchdogAttributeStringResponse{};
@@ -8531,13 +9574,20 @@ set_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SetWriteAttributeBoolResponse
-set_write_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteBoolAttributes& attribute, const bool& value)
+set_write_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteBoolAttributes, pb::int32>& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetWriteAttributeBoolRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteBoolAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetWriteAttributeBoolResponse{};
@@ -8549,13 +9599,20 @@ set_write_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task
 }
 
 SetWriteAttributeDoubleResponse
-set_write_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteDoubleAttributes& attribute, const double& value)
+set_write_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteDoubleAttributes, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetWriteAttributeDoubleRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteDoubleAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetWriteAttributeDoubleResponse{};
@@ -8567,13 +9624,20 @@ set_write_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 SetWriteAttributeInt32Response
-set_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteInt32Attributes& attribute, const simple_variant<WriteInt32AttributeValues, pb::int32>& value)
+set_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteInt32Attributes, pb::int32>& attribute, const simple_variant<WriteInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetWriteAttributeInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   const auto value_ptr = value.get_if<WriteInt32AttributeValues>();
   const auto value_raw_ptr = value.get_if<pb::int32>();
   if (value_ptr) {
@@ -8592,13 +9656,20 @@ set_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& tas
 }
 
 SetWriteAttributeStringResponse
-set_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteStringAttributes& attribute, const pb::string& value)
+set_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteStringAttributes, pb::int32>& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetWriteAttributeStringRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteStringAttributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetWriteAttributeStringResponse{};
@@ -8610,13 +9681,20 @@ set_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& ta
 }
 
 SetWriteAttributeUInt32Response
-set_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const WriteUInt32Attributes& attribute, const pb::uint32& value)
+set_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteUInt32Attributes, pb::int32>& attribute, const pb::uint32& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetWriteAttributeUInt32Request{};
   request.mutable_task()->CopyFrom(task);
-  request.set_attribute(attribute);
+  const auto attribute_ptr = attribute.get_if<WriteUInt32Attributes>();
+  const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
+  if (attribute_ptr) {
+    request.set_attribute(*attribute_ptr);
+  }
+  else if (attribute_raw_ptr) {
+    request.set_attribute_raw(*attribute_raw_ptr);
+  }
   request.set_value(value);
 
   auto response = SetWriteAttributeUInt32Response{};

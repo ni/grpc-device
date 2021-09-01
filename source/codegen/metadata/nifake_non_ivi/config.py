@@ -43,6 +43,7 @@ config = {
         'CallbackPtr': 'void'
     },
     'split_attributes_by_type': True,
+    'supports_raw_attributes': True,
     'library_info': {
         'Linux': {
             '64bit': {
