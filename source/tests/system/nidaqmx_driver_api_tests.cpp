@@ -369,7 +369,6 @@ class NiDAQmxDriverApiTests : public Test {
     GetNthTaskDeviceRequest request;
     set_request_session_id(request);
     request.set_index(index);
-    request.set_buffer_size(256);
 
     return stub()->GetNthTaskDevice(&context, request, &response);
   }
@@ -631,7 +630,6 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     AddNetworkDeviceRequest request;
     request.set_ip_address(ip_address);
-    request.set_device_name_out_buffer_size(1024);
     return stub()->AddNetworkDevice(&context, request, &response);
   }
 
@@ -1027,8 +1025,7 @@ TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
   auto response = client::get_scale_attribute_string(
       stub(),
       SCALE_NAME,
-      ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
-      UNITS.length() + 1);
+      ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS);
 
   EXPECT_SUCCESS(set_response);
   EXPECT_SUCCESS(response);
@@ -1050,8 +1047,7 @@ TEST_F(NiDAQmxDriverApiTests, SetPolynomialForwardCoefficients_GetPolynomialForw
   auto response = client::get_scale_attribute_double_array(
       stub(),
       SCALE_NAME,
-      ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
-      COEFFICIENTS.size());
+      ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF);
 
   EXPECT_SUCCESS(set_response);
   EXPECT_SUCCESS(response);
@@ -1101,8 +1097,7 @@ TEST_F(NiDAQmxDriverApiTests, TaskWithAOChannel_GetNthTaskDevice_ReturnsDeviceFo
   auto status = get_nth_task_device(1, nth_device_response);
 
   EXPECT_SUCCESS(status, nth_device_response);
-  auto trimmed_string = std::string(nth_device_response.buffer().c_str());
-  EXPECT_EQ(DEVICE_NAME, trimmed_string);
+  EXPECT_EQ(DEVICE_NAME, nth_device_response.buffer());
 }
 
 TEST_F(NiDAQmxDriverApiTests, RunningTask_StopWithTaskControl_TaskIsDone)
@@ -1524,8 +1519,7 @@ TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBuffer
 TEST_F(NiDAQmxDriverApiTests, GetAISupportMeasurementTypes_ResultIncludesCurrentAndVoltage)
 {
   const auto ATTRIBUTE = DeviceInt32ArrayAttributes::DEVICE_ATTRIBUTE_AI_SUPPORTED_MEAS_TYPES;
-  auto response = client::get_device_attribute_int32_array(stub(), DEVICE_NAME, ATTRIBUTE, 0);
-  response = client::get_device_attribute_int32_array(stub(), DEVICE_NAME, ATTRIBUTE, response.status());
+  auto response = client::get_device_attribute_int32_array(stub(), DEVICE_NAME, ATTRIBUTE);
 
   EXPECT_SUCCESS(response);
   EXPECT_THAT(response.value(), Contains(DeviceInt32AttributeValues::DEVICE_INT32_AI_MEASUREMENT_TYPE_CURRENT));
@@ -1608,15 +1602,14 @@ TEST_F(NiDAQmxDriverApiTests, TaskWithChannel_GetTaskAttributes_ReturnsCorrectRe
   start_task();
 
   auto num_chans_response = client::get_task_attribute_uint32(stub(), task(), TaskUInt32Attributes::TASK_ATTRIBUTE_NUM_CHANS);
-  auto channels_response = client::get_task_attribute_string(stub(), task(), TaskStringAttributes::TASK_ATTRIBUTE_CHANNELS, 2048);
+  auto channels_response = client::get_task_attribute_string(stub(), task(), TaskStringAttributes::TASK_ATTRIBUTE_CHANNELS);
   auto complete_response = client::get_task_attribute_bool(stub(), task(), TaskBoolAttributes::TASK_ATTRIBUTE_COMPLETE);
 
   EXPECT_SUCCESS(num_chans_response);
   EXPECT_SUCCESS(channels_response);
   EXPECT_SUCCESS(complete_response);
   EXPECT_EQ(1, num_chans_response.value());
-  auto stripped_channels = std::string(channels_response.value().c_str());
-  EXPECT_THAT(stripped_channels, StrEq(CHANNEL_NAME));
+  EXPECT_EQ(CHANNEL_NAME, channels_response.value());
   EXPECT_FALSE(complete_response.value());
 }
 
