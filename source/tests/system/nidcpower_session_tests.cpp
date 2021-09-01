@@ -83,11 +83,18 @@ class NiDCPowerSessionTest : public ::testing::Test {
   std::unique_ptr<dcpower::NiDCPower::Stub> nidcpower_stub_;
 };
 
+// InitializeWithIndependentChannels was added in dcpower 20.7.
+// To support testing with older versions: skip tests for InitializeWithIndependentChannels if
+// it returns an unsupported status.
+#define GTEST_SKIP_IF_UNSUPPORTED(status) \
+  if (status.error_code() == ::grpc::NOT_FOUND) GTEST_SKIP() << "Function not supported.";
+
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
 {
   dcpower::InitializeWithIndependentChannelsResponse response;
-  ::grpc::Status status = call_initialize_with_independent_channels(kTestRsrc, kOptionsString, kTestSession, &response);
+  auto status = call_initialize_with_independent_channels(kTestRsrc, kOptionsString, kTestSession, &response);
 
+  GTEST_SKIP_IF_UNSUPPORTED(status);
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
@@ -98,6 +105,7 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
   dcpower::InitializeWithIndependentChannelsResponse response;
   ::grpc::Status status = call_initialize_with_independent_channels(kTestRsrc, kOptionsString, "", &response);
 
+  GTEST_SKIP_IF_UNSUPPORTED(status);
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
@@ -116,14 +124,16 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   dcpower::InitializeWithIndependentChannelsResponse initialize_response;
-  call_initialize_with_independent_channels(kTestRsrc, kOptionsString, kTestSession, &initialize_response);
+  auto status = call_initialize_with_independent_channels(kTestRsrc, kOptionsString, kTestSession, &initialize_response);
+  GTEST_SKIP_IF_UNSUPPORTED(status);
+  EXPECT_TRUE(status.ok());
   nidevice_grpc::Session session = initialize_response.vi();
 
   ::grpc::ClientContext context;
   dcpower::CloseRequest close_request;
   close_request.mutable_vi()->set_id(session.id());
   dcpower::CloseResponse close_response;
-  ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
+  status = GetStub()->Close(&context, close_request, &close_response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, close_response.status());
@@ -132,7 +142,7 @@ TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession
 TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(NULL);
+  session.set_id(0UL);
 
   ::grpc::ClientContext context;
   dcpower::CloseRequest request;
