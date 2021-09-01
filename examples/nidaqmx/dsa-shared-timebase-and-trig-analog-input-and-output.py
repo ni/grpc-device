@@ -1,3 +1,88 @@
+# This example configures a total of four tasks on two PXI Dynamic Signal Acquistion (DSA) devices.
+# Each device runs a task for analog input and another for analog output. This example illustrates
+# continuous analog input and output operations.
+#
+# Instructions for Running:
+#    1. Select which type of Synchronization method you want to use.
+#    2. Select the physical channel to correspond to where your
+#       signal is input on the DAQ device.
+#    3. Enter the minimum and maximum expected voltage for the input
+#       and output operations on each device.
+#    Note: For optimal accuracy, match the input range to the
+#          expected voltage level of the measured signal (for input)
+#          and generated signal (for output).
+#    4. Set the number of samples to acquire per channel. This
+#       parameter determines how many points will be read and
+#       generated with each iteration.
+#    5. Set the rate of the acquisition and generation. The same
+#       sampling rate is employed for input and output operations on
+#       each device.
+#    Note: The sampling rate should be at least 2.2 times the maximum
+#          frequency component of the signal being acquired on analog
+#          input and the signal being generated on analog output.
+#          Frequency components beyond about 0.47 times the sampling
+#          rate will be eliminated by the alias and imaging
+#          protection on the DSA device.
+#
+# Steps:
+#    1. Create a task.
+#    2. Create an analog input and output channel for both the leader
+#       and follower devices.
+#    3. Set timing parameters for a continuous acquisition. The
+#       sample rate and block size are set to the same values for
+#       each device.
+#    4. There are two types of synchronization available on DSA
+#       devices. The first method shares the Sample Clock Timebase
+#       across the PXI_Star bus. It also uses the Sync Pulse which is
+#       shared across the PXI_Trig / RTSI bus. The second method uses
+#       the Sync Pulse in conjunction with the PXI Reference clock 10
+#       on the PXI backplane.
+#    5. Call the Get Terminal Name with Device Prefix utility
+#       function. This will take a Task and a terminal and create a
+#       properly formatted device + terminal name. This signal is
+#       then used as an output generation trigger on the leader as
+#       well as and acquisition start trigger and generation start
+#       trigger on the follower. The signal is shared along the PXI_Trig
+#       / RTSI bus.
+#    6. Synthesize a standard sine waveform and load this data into
+#       the output RAM buffer for each device.
+#    7. Call the Start function to start the acquisition.
+#    8. Read all of the data continuously. The 'Samples per Channel'
+#       control will specify how many samples per channel are read
+#       each time. If either device reports an error or the user
+#       presses Enter, the acquisition will stop.
+#    9. Call the Clear Task function to clear the task.
+#    10. Display an error if any.
+#
+# I/O Connections Overview:
+#    Make sure your signal input and output terminals matches the
+#    Physical Channel I/O controls.
+#
+#    It is important to ensure that your PXI chassis has been
+#    properly configured in MAX. If your chassis has not been
+#    configured in software before running the example, your devices may
+#    fail to synchronize properly.
+#
+#
+# The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
+# C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
+#
+# Getting Started:
+#
+# To run this example, install "NI-DAQmx Driver" on the server machine.
+# Link: https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html
+#
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+#
+# This example requires physical hardware.
+#
+# Running from command line:
+#
+# Server machine's IP address, port number, leader_device, and follower_device can be passed as separate command line arguments.
+#   > python dsa-shared-timebase-and-trig-analog-input-and-output.py <server_address> <port_number> <leader_device> <follower_device>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with
+# "Dev1" as the leader device and "Dev2" as the follower device.
 import asyncio
 import grpc
 import math
@@ -76,6 +161,7 @@ async def main():
                 await raise_if_error(response)
                 return response
 
+            # DAQmx Configure Tasks code
             response: nidaqmx_types.CreateTaskResponse = await raise_if_error_async(
                 client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="Leader input task")))
             leader_input_task = response.task
@@ -126,6 +212,7 @@ async def main():
                 sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS, samps_per_chan=1000
             )))
 
+            # DAQmx Clock Synchronization code
             if synchronization_type_is_reference_clock:
                 # Note: Not all DSA devices support reference clock synchronization. Refer to
                 # your hardware device manual for further information on whether this method
@@ -167,6 +254,7 @@ async def main():
                 task=follower_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
                 value=sync_pulse_source)))
 
+            # DAQmx Configure Start Trigger code
             start_trigger = await get_terminal_name_with_dev_prefix(task=leader_input_task, terminal_name="ai/StartTrigger")
             await raise_if_error_async(client.CfgDigEdgeStartTrig(nidaqmx_types.CfgDigEdgeStartTrigRequest(
                 task=leader_output_task, trigger_source=start_trigger, trigger_edge=nidaqmx_types.EDGE1_RISING
@@ -181,6 +269,7 @@ async def main():
             (leader_write_data, phase) = generate_sinewave(250, 1.0, 0.02, 0.0)
             (follower_write_data, phase) = generate_sinewave(250, 1.0, 0.02, phase)
 
+            # DAQmx Write code
             num_leader_written = (await raise_if_error_async(client.WriteAnalogF64(nidaqmx_types.WriteAnalogF64Request(
                 task=leader_output_task, num_samps_per_chan=250, auto_start=False, timeout=10.0,
                 data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL, write_array=leader_write_data
@@ -211,6 +300,7 @@ async def main():
             for done_event_stream in done_event_stream_list:
                 await done_event_stream.initial_metadata()
 
+            # DAQmx Start code
             await raise_if_error_async(client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_output_task)))
             await raise_if_error_async(client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_input_task)))
             await raise_if_error_async(client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_output_task)))
