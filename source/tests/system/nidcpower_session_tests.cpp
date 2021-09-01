@@ -142,7 +142,7 @@ TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession
 TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(NULL);
+  session.set_id(0UL);
 
   ::grpc::ClientContext context;
   dcpower::CloseRequest request;

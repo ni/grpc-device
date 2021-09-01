@@ -432,7 +432,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViString_GetAttributeViStringReturnsS
   GTEST_SKIP_IF_LEGACY();
   const char* channel_name = "0";
   const dcpower::NiDCPowerAttributes attribute_to_set = dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_EXPORTED_START_TRIGGER_OUTPUT_TERMINAL;
-  const ViString expected_value = "/Dev1/PXI_Trig0";
+  const char* expected_value = "/Dev1/PXI_Trig0";
   ::grpc::ClientContext context;
   dcpower::SetAttributeViStringRequest request;
   request.mutable_vi()->set_id(GetSessionId());
