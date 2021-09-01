@@ -21,20 +21,17 @@ if len(sys.argv) >= 3:
     server_port = sys.argv[2]
 if len(sys.argv) >= 4:
     leader_input_channel = sys.argv[3]
-#TODO - other channels
+# TODO - other channels
 
-# Create a gRPC channel + client.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
-client = grpc_nidaqmx.NiDAQmxStub(channel)
+client = None
+leader_input_task = None
+leader_output_task = None
+follower_input_task = None
+follower_output_task = None
 
 
 async def main():
-    client = None
-    leader_input_task = None
-    leader_output_task = None
-    follower_input_task = None
-    follower_output_task = None
-
+    global client, leader_input_task, leader_output_task
     async with grpc.aio.insecure_channel(f"{server_address}:{server_port}") as channel:
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
@@ -45,10 +42,9 @@ async def main():
                 )))
                 num_devices = num_devices_response.value
                 for i in range(num_devices):
-                    #TODO - remove buffer_size when other change goes in
                     # devices are 1-indexed, so use i + 1 here
                     device = (await raise_if_error_async(client.GetNthTaskDevice(nidaqmx_types.GetNthTaskDeviceRequest(
-                        task=task, index=i + 1, buffer_size=256
+                        task=task, index=i + 1
                     )))).buffer
                     device_category = (await raise_if_error_async(client.GetDeviceAttributeInt32(nidaqmx_types.GetDeviceAttributeInt32Request(
                         device_name=device, attribute=nidaqmx_types.DEVICE_ATTRIBUTE_PRODUCT_CATEGORY
@@ -75,7 +71,7 @@ async def main():
                 await raise_if_error(response)
                 return response
 
-            response = await raise_if_error_async(
+            response: nidaqmx_types.CreateTaskResponse = await raise_if_error_async(
                 client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="Leader input task")))
             leader_input_task = response.task
             await raise_if_error_async(client.CreateAIVoltageChan(nidaqmx_types.CreateAIVoltageChanRequest(
@@ -87,11 +83,12 @@ async def main():
                 task=leader_input_task, rate=10000, active_edge=nidaqmx_types.EDGE1_RISING,
                 sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS, samps_per_chan=1000
             )))
+            print(leader_input_channel)
 
-            response: nidaqmx_types.CreateTaskResponse = (
-                await raise_if_error_async(
-                    client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="Leader output task"))))
+            response = await raise_if_error_async(
+                client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="Leader output task")))
             leader_output_task = response.task
+            print(leader_output_channel)
             await raise_if_error_async(client.CreateAOVoltageChan(nidaqmx_types.CreateAOVoltageChanRequest(
                 task=leader_output_task, physical_channel=leader_output_channel,
                 min_val=-10.0, max_val=10.0, units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
@@ -108,14 +105,18 @@ async def main():
                 await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
                     task=leader_input_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_REF_CLK_SRC,
                     value="PXI_Clk10")))
+                await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
+                    task=leader_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_REF_CLK_SRC,
+                    value="PXI_Clk10")))
             else:
                 # Sample clock
                 # Note: If you are using PXI DSA devices, the leader device must reside in PXI Slot 2.
-                timebase_source = await get_terminal_name_with_dev_prefix(task=leader_input_task, terminal_name="SampleClockTimebase")
-                await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                    task=leader_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
-                    value=timebase_source)))
-
+                pass
+                # timebase_source = await get_terminal_name_with_dev_prefix(task=leader_input_task, terminal_name="SampleClockTimebase")
+                # await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
+                #    task=leader_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
+                #    value=timebase_source)))
+#
             start_trigger = await get_terminal_name_with_dev_prefix(task=leader_input_task, terminal_name="ai/StartTrigger")
             await raise_if_error_async(client.CfgDigEdgeStartTrig(nidaqmx_types.CfgDigEdgeStartTrigRequest(
                 task=leader_output_task, trigger_source=start_trigger, trigger_edge=nidaqmx_types.EDGE1_RISING
@@ -174,12 +175,28 @@ async def main():
             print(f"{error_message}")
 
         finally:
-            if client and leader_input_task:
-                await client.StopTask(nidaqmx_types.StopTaskRequest(task=leader_input_task))
-                await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=leader_input_task))
+            await cleanup()
 
 
-## Run main
-futures = [main()]
-loop = asyncio.get_event_loop()
-loop.run_until_complete(asyncio.wait(futures))
+async def cleanup():
+    global client, leader_input_task, leader_output_task
+    if client:
+        if leader_input_task:
+            await client.StopTask(nidaqmx_types.StopTaskRequest(task=leader_input_task))
+            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=leader_input_task))
+            leader_input_task = None
+        if leader_output_task:
+            await client.StopTask(nidaqmx_types.StopTaskRequest(task=leader_output_task))
+            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=leader_output_task))
+            leader_output_task = None
+
+
+# Run main
+try:
+    futures = [main()]
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(asyncio.wait(futures))
+finally:
+    cleanup_future = [cleanup()]
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(asyncio.wait(cleanup_future))
