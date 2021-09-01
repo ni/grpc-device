@@ -411,12 +411,14 @@ def indent(level):
 
 def trim_trailing_comma():
     """For use as a mako filter.
-        Returns a function that removes the last comma from a block of text (preserves newlines)."""
+        Returns a function that removes the last comma from a block of text (preserves newlines).
+        Consider this as an alternative to str.join when it allows preserving context in the mako file."""
     def trim_trailing_comma_impl(text: str) -> str:
         i = text.rfind(",")
         return text[:i] + text[i+1:]
     
     return lambda text: trim_trailing_comma_impl(text)
+
 
 def filter_parameters_for_grpc_fields(parameters):
   """Filter out the parameters that shouldn't be represented by a field on a grpc message.
