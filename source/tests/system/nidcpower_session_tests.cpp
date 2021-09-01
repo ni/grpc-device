@@ -95,6 +95,7 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDr
   auto status = call_initialize_with_independent_channels(kTestRsrc, kOptionsString, kTestSession, &response);
 
   GTEST_SKIP_IF_UNSUPPORTED(status);
+  EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
 }
@@ -105,6 +106,7 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
   ::grpc::Status status = call_initialize_with_independent_channels(kTestRsrc, kOptionsString, "", &response);
 
   GTEST_SKIP_IF_UNSUPPORTED(status);
+  EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
 }
@@ -124,6 +126,7 @@ TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession
   dcpower::InitializeWithIndependentChannelsResponse initialize_response;
   auto status = call_initialize_with_independent_channels(kTestRsrc, kOptionsString, kTestSession, &initialize_response);
   GTEST_SKIP_IF_UNSUPPORTED(status);
+  EXPECT_TRUE(status.ok());
   nidevice_grpc::Session session = initialize_response.vi();
 
   ::grpc::ClientContext context;

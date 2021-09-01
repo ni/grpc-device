@@ -46,24 +46,28 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
 
   void initialize_driver_session()
   {
+    const auto DEVICE = "FakeDevice";
+    const auto OPTIONS = "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe";
     try {
       auto independent_response = client::initialize_with_independent_channels(
           GetStub(),
-          "FakeDevice",
+          DEVICE,
           false,
-          "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe");
+          OPTIONS);
+
+      ASSERT_EQ(kdcpowerDriverApiSuccess, independent_response.status());
       driver_session_ = std::make_unique<nidevice_grpc::Session>(independent_response.vi());
     }
     catch (std::runtime_error&) {
       auto legacy_response = client::initialize_with_channels(
           GetStub(),
-          "FakeDevice",
+          DEVICE,
           "0",
           false,
-          "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe");
+          OPTIONS);
 
-      driver_session_ = std::make_unique<nidevice_grpc::Session>(legacy_response.vi());
       ASSERT_EQ(kdcpowerDriverApiSuccess, legacy_response.status());
+      driver_session_ = std::make_unique<nidevice_grpc::Session>(legacy_response.vi());
       is_legacy_session_ = true;
     }
   }
