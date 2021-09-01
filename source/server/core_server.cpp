@@ -130,10 +130,9 @@ static void RunServer(const ServerConfiguration& config)
   nidaqmx_grpc::NiDAQmxLibrary nidaqmx_library;
   using DAQmxResourceRepository = nidevice_grpc::SessionResourceRepository<TaskHandle>;
   auto daq_resource_repository = std::make_shared<DAQmxResourceRepository>(&session_repository);
-  nidaqmx_grpc::NiDAQmxService nidaqmx_service(&nidaqmx_library, daq_resource_repository);
+  nidaqmx_grpc::NiDAQmxService nidaqmx_service(&nidaqmx_library, daq_resource_repository, config.feature_toggles);
 
-  auto daq_feature_state = config.feature_toggles.get_feature_state("nidaqmx");
-  if (daq_feature_state == FeatureState::kEnabled) {
+  if (nidaqmx_service.is_enabled()) {
     builder.RegisterService(&nidaqmx_service);
   }
 
