@@ -684,7 +684,7 @@ namespace nifake_non_ivi_grpc {
   NiFakeNonIviService::NiFakeNonIviFeatureToggles::NiFakeNonIviFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nifake_non_ivi", CodeReadiness::kRelease))
+        feature_toggles.is_feature_enabled("nifake_non_ivi", CodeReadiness::kNextRelease))
   {
   }
 } // namespace nifake_non_ivi_grpc

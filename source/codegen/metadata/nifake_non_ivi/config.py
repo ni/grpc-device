@@ -42,6 +42,7 @@ config = {
         'myUInt8[]': 'bytes',
         'CallbackPtr': 'void'
     },
+    'code_readiness': 'NextRelease',
     'split_attributes_by_type': True,
     'library_info': {
         'Linux': {
