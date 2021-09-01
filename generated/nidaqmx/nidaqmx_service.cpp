@@ -14659,7 +14659,7 @@ namespace nidaqmx_grpc {
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nidaqmx", CodeReadiness::kNextRelease)),
-    is_allow_undefined_attributes_enabled(
+      is_allow_undefined_attributes_enabled(
         feature_toggles.is_feature_enabled("nidaqmx.allow_undefined_attributes", CodeReadiness::kPrototype))
   {
   }

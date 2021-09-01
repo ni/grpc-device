@@ -194,7 +194,7 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
     : is_enabled(
         feature_toggles.is_feature_enabled("${config["module_name"]}", ${service_helpers.get_driver_service_readiness(config)})),
 % for toggle, readiness in feature_toggles.items():
-    ${service_helpers.get_toggle_member_name(toggle)}(
+      ${service_helpers.get_toggle_member_name(toggle)}(
         feature_toggles.is_feature_enabled("${toggle}", ${service_helpers.to_cpp_readiness(readiness)})),
 % endfor
 </%block>\
