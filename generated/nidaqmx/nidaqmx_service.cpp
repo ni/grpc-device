@@ -80,17 +80,30 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       bool32 attempt_reservation = request->attempt_reservation();
       float64 timeout = request->timeout();
-      uInt32 device_name_out_buffer_size = request->device_name_out_buffer_size();
-      std::string device_name_out;
-      if (device_name_out_buffer_size > 0) {
-          device_name_out.resize(device_name_out_buffer_size-1);
+
+      while (true) {
+        auto status = library_->AddNetworkDevice(ip_address, device_name, attempt_reservation, timeout, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 device_name_out_buffer_size = status;
+      
+        std::string device_name_out;
+        if (device_name_out_buffer_size > 0) {
+            device_name_out.resize(device_name_out_buffer_size-1);
+        }
+        status = library_->AddNetworkDevice(ip_address, device_name, attempt_reservation, timeout, (char*)device_name_out.data(), device_name_out_buffer_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(device_name_out_buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_device_name_out(device_name_out);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->AddNetworkDevice(ip_address, device_name, attempt_reservation, timeout, (char*)device_name_out.data(), device_name_out_buffer_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_device_name_out(device_name_out);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -7096,17 +7109,30 @@ namespace nidaqmx_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      uInt32 port_list_size = request->port_list_size();
-      std::string port_list;
-      if (port_list_size > 0) {
-          port_list.resize(port_list_size-1);
+
+      while (true) {
+        auto status = library_->GetAutoConfiguredCDAQSyncConnections(nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 port_list_size = status;
+      
+        std::string port_list;
+        if (port_list_size > 0) {
+            port_list.resize(port_list_size-1);
+        }
+        status = library_->GetAutoConfiguredCDAQSyncConnections((char*)port_list.data(), port_list_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(port_list_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_port_list(port_list);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetAutoConfiguredCDAQSyncConnections((char*)port_list.data(), port_list_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_port_list(port_list);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -7255,17 +7281,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetCalInfoAttributeString(device_name, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetCalInfoAttributeString(device_name, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetCalInfoAttributeString(device_name, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -7420,14 +7459,27 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value()->Resize(size, 0);
-      float64* value = response->mutable_value()->mutable_data();
-      auto status = library_->GetChanAttributeDoubleArray(task, channel, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
+
+      while (true) {
+        auto status = library_->GetChanAttributeDoubleArray(task, channel, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value()->Resize(size, 0);
+        float64* value = response->mutable_value()->mutable_data();
+        status = library_->GetChanAttributeDoubleArray(task, channel, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -7508,17 +7560,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetChanAttributeString(task, channel, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetChanAttributeString(task, channel, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetChanAttributeString(task, channel, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -7669,14 +7734,27 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value()->Resize(size, 0);
-      float64* value = response->mutable_value()->mutable_data();
-      auto status = library_->GetDeviceAttributeDoubleArray(device_name, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
+
+      while (true) {
+        auto status = library_->GetDeviceAttributeDoubleArray(device_name, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value()->Resize(size, 0);
+        float64* value = response->mutable_value()->mutable_data();
+        status = library_->GetDeviceAttributeDoubleArray(device_name, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -7753,28 +7831,41 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value_raw()->Resize(size, 0);
-      int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
-      auto status = library_->GetDeviceAttributeInt32Array(device_name, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::DeviceInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::DeviceInt32AttributeValues>(valid_enum_value);
-        };
-        response->mutable_value()->Clear();
-        response->mutable_value()->Reserve(size);
-        std::transform(
-          response->value_raw().begin(),
-          response->value_raw().end(),
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-          [&](auto x) { 
-              return checked_convert_value(x);
-          });
+
+      while (true) {
+        auto status = library_->GetDeviceAttributeInt32Array(device_name, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value_raw()->Resize(size, 0);
+        int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
+        status = library_->GetDeviceAttributeInt32Array(device_name, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          auto checked_convert_value = [](auto raw_value) {
+            bool raw_value_is_valid = nidaqmx_grpc::DeviceInt32AttributeValues_IsValid(raw_value);
+            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+            return static_cast<nidaqmx_grpc::DeviceInt32AttributeValues>(valid_enum_value);
+          };
+          response->mutable_value()->Clear();
+          response->mutable_value()->Reserve(size);
+          std::transform(
+            response->value_raw().begin(),
+            response->value_raw().end(),
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+            [&](auto x) { 
+                return checked_convert_value(x);
+            });
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -7806,17 +7897,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetDeviceAttributeString(device_name, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetDeviceAttributeString(device_name, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetDeviceAttributeString(device_name, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -7887,14 +7991,27 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value()->Resize(size, 0);
-      uInt32* value = reinterpret_cast<uInt32*>(response->mutable_value()->mutable_data());
-      auto status = library_->GetDeviceAttributeUInt32Array(device_name, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
+
+      while (true) {
+        auto status = library_->GetDeviceAttributeUInt32Array(device_name, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value()->Resize(size, 0);
+        uInt32* value = reinterpret_cast<uInt32*>(response->mutable_value()->mutable_data());
+        status = library_->GetDeviceAttributeUInt32Array(device_name, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8021,17 +8138,30 @@ namespace nidaqmx_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      uInt32 port_list_size = request->port_list_size();
-      std::string port_list;
-      if (port_list_size > 0) {
-          port_list.resize(port_list_size-1);
+
+      while (true) {
+        auto status = library_->GetDisconnectedCDAQSyncPorts(nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 port_list_size = status;
+      
+        std::string port_list;
+        if (port_list_size > 0) {
+            port_list.resize(port_list_size-1);
+        }
+        status = library_->GetDisconnectedCDAQSyncPorts((char*)port_list.data(), port_list_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(port_list_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_port_list(port_list);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetDisconnectedCDAQSyncPorts((char*)port_list.data(), port_list_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_port_list(port_list);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8229,17 +8359,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetExportedSignalAttributeString(task, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetExportedSignalAttributeString(task, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetExportedSignalAttributeString(task, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8381,17 +8524,30 @@ namespace nidaqmx_grpc {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       uInt32 index = request->index();
-      int32 buffer_size = request->buffer_size();
-      std::string buffer;
-      if (buffer_size > 0) {
-          buffer.resize(buffer_size-1);
+
+      while (true) {
+        auto status = library_->GetNthTaskChannel(task, index, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 buffer_size = status;
+      
+        std::string buffer;
+        if (buffer_size > 0) {
+            buffer.resize(buffer_size-1);
+        }
+        status = library_->GetNthTaskChannel(task, index, (char*)buffer.data(), buffer_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_buffer(buffer);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetNthTaskChannel(task, index, (char*)buffer.data(), buffer_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_buffer(buffer);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8409,17 +8565,30 @@ namespace nidaqmx_grpc {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       uInt32 index = request->index();
-      int32 buffer_size = request->buffer_size();
-      std::string buffer;
-      if (buffer_size > 0) {
-          buffer.resize(buffer_size-1);
+
+      while (true) {
+        auto status = library_->GetNthTaskDevice(task, index, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 buffer_size = status;
+      
+        std::string buffer;
+        if (buffer_size > 0) {
+            buffer.resize(buffer_size-1);
+        }
+        status = library_->GetNthTaskDevice(task, index, (char*)buffer.data(), buffer_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_buffer(buffer);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetNthTaskDevice(task, index, (char*)buffer.data(), buffer_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_buffer(buffer);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8437,17 +8606,30 @@ namespace nidaqmx_grpc {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       uInt32 index = request->index();
-      int32 buffer_size = request->buffer_size();
-      std::string buffer;
-      if (buffer_size > 0) {
-          buffer.resize(buffer_size-1);
+
+      while (true) {
+        auto status = library_->GetNthTaskReadChannel(task, index, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 buffer_size = status;
+      
+        std::string buffer;
+        if (buffer_size > 0) {
+            buffer.resize(buffer_size-1);
+        }
+        status = library_->GetNthTaskReadChannel(task, index, (char*)buffer.data(), buffer_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_buffer(buffer);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetNthTaskReadChannel(task, index, (char*)buffer.data(), buffer_size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_buffer(buffer);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8518,17 +8700,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetPersistedChanAttributeString(channel, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetPersistedChanAttributeString(channel, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetPersistedChanAttributeString(channel, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8599,17 +8794,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetPersistedScaleAttributeString(scale_name, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetPersistedScaleAttributeString(scale_name, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetPersistedScaleAttributeString(scale_name, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8680,17 +8888,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetPersistedTaskAttributeString(task_name, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetPersistedTaskAttributeString(task_name, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetPersistedTaskAttributeString(task_name, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8761,14 +8982,27 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value(size, '\0');
-      auto status = library_->GetPhysicalChanAttributeBytes(physical_channel, attribute, (uInt8*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
+
+      while (true) {
+        auto status = library_->GetPhysicalChanAttributeBytes(physical_channel, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value(size, '\0');
+        status = library_->GetPhysicalChanAttributeBytes(physical_channel, attribute, (uInt8*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8839,14 +9073,27 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value()->Resize(size, 0);
-      float64* value = response->mutable_value()->mutable_data();
-      auto status = library_->GetPhysicalChanAttributeDoubleArray(physical_channel, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
+
+      while (true) {
+        auto status = library_->GetPhysicalChanAttributeDoubleArray(physical_channel, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value()->Resize(size, 0);
+        float64* value = response->mutable_value()->mutable_data();
+        status = library_->GetPhysicalChanAttributeDoubleArray(physical_channel, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8923,28 +9170,41 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value_raw()->Resize(size, 0);
-      int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
-      auto status = library_->GetPhysicalChanAttributeInt32Array(physical_channel, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::PhysicalChannelInt32AttributeValues>(valid_enum_value);
-        };
-        response->mutable_value()->Clear();
-        response->mutable_value()->Reserve(size);
-        std::transform(
-          response->value_raw().begin(),
-          response->value_raw().end(),
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-          [&](auto x) { 
-              return checked_convert_value(x);
-          });
+
+      while (true) {
+        auto status = library_->GetPhysicalChanAttributeInt32Array(physical_channel, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value_raw()->Resize(size, 0);
+        int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
+        status = library_->GetPhysicalChanAttributeInt32Array(physical_channel, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          auto checked_convert_value = [](auto raw_value) {
+            bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
+            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+            return static_cast<nidaqmx_grpc::PhysicalChannelInt32AttributeValues>(valid_enum_value);
+          };
+          response->mutable_value()->Clear();
+          response->mutable_value()->Reserve(size);
+          std::transform(
+            response->value_raw().begin(),
+            response->value_raw().end(),
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+            [&](auto x) { 
+                return checked_convert_value(x);
+            });
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -8976,17 +9236,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetPhysicalChanAttributeString(physical_channel, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetPhysicalChanAttributeString(physical_channel, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetPhysicalChanAttributeString(physical_channel, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -9057,14 +9330,27 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value()->Resize(size, 0);
-      uInt32* value = reinterpret_cast<uInt32*>(response->mutable_value()->mutable_data());
-      auto status = library_->GetPhysicalChanAttributeUInt32Array(physical_channel, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
+
+      while (true) {
+        auto status = library_->GetPhysicalChanAttributeUInt32Array(physical_channel, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value()->Resize(size, 0);
+        uInt32* value = reinterpret_cast<uInt32*>(response->mutable_value()->mutable_data());
+        status = library_->GetPhysicalChanAttributeUInt32Array(physical_channel, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -9223,17 +9509,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetReadAttributeString(task, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetReadAttributeString(task, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetReadAttributeString(task, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -9533,14 +9832,27 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value()->Resize(size, 0);
-      float64* value = response->mutable_value()->mutable_data();
-      auto status = library_->GetScaleAttributeDoubleArray(scale_name, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
+
+      while (true) {
+        auto status = library_->GetScaleAttributeDoubleArray(scale_name, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value()->Resize(size, 0);
+        float64* value = response->mutable_value()->mutable_data();
+        status = library_->GetScaleAttributeDoubleArray(scale_name, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -9617,17 +9929,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetScaleAttributeString(scale_name, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetScaleAttributeString(scale_name, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetScaleAttributeString(scale_name, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -9757,17 +10082,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetSystemInfoAttributeString(attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetSystemInfoAttributeString(attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetSystemInfoAttributeString(attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -9878,17 +10216,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetTaskAttributeString(task, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetTaskAttributeString(task, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetTaskAttributeString(task, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -10171,17 +10522,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetTimingAttributeExString(task, device_names, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetTimingAttributeExString(task, device_names, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetTimingAttributeExString(task, device_names, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -10342,17 +10706,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetTimingAttributeString(task, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetTimingAttributeString(task, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetTimingAttributeString(task, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -10545,14 +10922,27 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value()->Resize(size, 0);
-      float64* value = response->mutable_value()->mutable_data();
-      auto status = library_->GetTrigAttributeDoubleArray(task, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
+
+      while (true) {
+        auto status = library_->GetTrigAttributeDoubleArray(task, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value()->Resize(size, 0);
+        float64* value = response->mutable_value()->mutable_data();
+        status = library_->GetTrigAttributeDoubleArray(task, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -10631,28 +11021,41 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      response->mutable_value_raw()->Resize(size, 0);
-      int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
-      auto status = library_->GetTrigAttributeInt32Array(task, attribute, value, size);
-      response->set_status(status);
-      if (status == 0) {
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::TriggerInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::TriggerInt32AttributeValues>(valid_enum_value);
-        };
-        response->mutable_value()->Clear();
-        response->mutable_value()->Reserve(size);
-        std::transform(
-          response->value_raw().begin(),
-          response->value_raw().end(),
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-          [&](auto x) { 
-              return checked_convert_value(x);
-          });
+
+      while (true) {
+        auto status = library_->GetTrigAttributeInt32Array(task, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        response->mutable_value_raw()->Resize(size, 0);
+        int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
+        status = library_->GetTrigAttributeInt32Array(task, attribute, value, size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          auto checked_convert_value = [](auto raw_value) {
+            bool raw_value_is_valid = nidaqmx_grpc::TriggerInt32AttributeValues_IsValid(raw_value);
+            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+            return static_cast<nidaqmx_grpc::TriggerInt32AttributeValues>(valid_enum_value);
+          };
+          response->mutable_value()->Clear();
+          response->mutable_value()->Reserve(size);
+          std::transform(
+            response->value_raw().begin(),
+            response->value_raw().end(),
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+            [&](auto x) { 
+                return checked_convert_value(x);
+            });
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -10685,17 +11088,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetTrigAttributeString(task, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetTrigAttributeString(task, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetTrigAttributeString(task, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -10938,17 +11354,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetWatchdogAttributeString(task, lines, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetWatchdogAttributeString(task, lines, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetWatchdogAttributeString(task, lines, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -11107,17 +11536,30 @@ namespace nidaqmx_grpc {
         }
       }
 
-      uInt32 size = request->size();
-      std::string value;
-      if (size > 0) {
-          value.resize(size-1);
+
+      while (true) {
+        auto status = library_->GetWriteAttributeString(task, attribute, nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+      
+        std::string value;
+        if (size > 0) {
+            value.resize(size-1);
+        }
+        status = library_->GetWriteAttributeString(task, attribute, (char*)value.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetWriteAttributeString(task, attribute, (char*)value.data(), size);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_value(value);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

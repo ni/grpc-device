@@ -4284,7 +4284,6 @@ message AddNetworkDeviceRequest {
   string device_name = 2;
   bool attempt_reservation = 3;
   double timeout = 4;
-  uint32 device_name_out_buffer_size = 5;
 }
 
 message AddNetworkDeviceResponse {
@@ -6859,7 +6858,6 @@ message GetArmStartTrigTrigWhenResponse {
 }
 
 message GetAutoConfiguredCDAQSyncConnectionsRequest {
-  uint32 port_list_size = 1;
 }
 
 message GetAutoConfiguredCDAQSyncConnectionsResponse {
@@ -6912,7 +6910,6 @@ message GetCalInfoAttributeStringRequest {
     CalibrationInfoStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetCalInfoAttributeStringResponse {
@@ -6968,7 +6965,6 @@ message GetChanAttributeDoubleArrayRequest {
     ChannelDoubleArrayAttributes attribute = 3;
     int32 attribute_raw = 4;
   }
-  uint32 size = 5;
 }
 
 message GetChanAttributeDoubleArrayResponse {
@@ -6998,7 +6994,6 @@ message GetChanAttributeStringRequest {
     ChannelStringAttributes attribute = 3;
     int32 attribute_raw = 4;
   }
-  uint32 size = 5;
 }
 
 message GetChanAttributeStringResponse {
@@ -7052,7 +7047,6 @@ message GetDeviceAttributeDoubleArrayRequest {
     DeviceDoubleArrayAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetDeviceAttributeDoubleArrayResponse {
@@ -7080,7 +7074,6 @@ message GetDeviceAttributeInt32ArrayRequest {
     DeviceInt32ArrayAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetDeviceAttributeInt32ArrayResponse {
@@ -7095,7 +7088,6 @@ message GetDeviceAttributeStringRequest {
     DeviceStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetDeviceAttributeStringResponse {
@@ -7122,7 +7114,6 @@ message GetDeviceAttributeUInt32ArrayRequest {
     DeviceUInt32ArrayAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetDeviceAttributeUInt32ArrayResponse {
@@ -7160,7 +7151,6 @@ message GetDigitalPullUpPullDownStatesResponse {
 }
 
 message GetDisconnectedCDAQSyncPortsRequest {
-  uint32 port_list_size = 1;
 }
 
 message GetDisconnectedCDAQSyncPortsResponse {
@@ -7223,7 +7213,6 @@ message GetExportedSignalAttributeStringRequest {
     ExportSignalStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetExportedSignalAttributeStringResponse {
@@ -7273,7 +7262,6 @@ message GetFirstSampTimestampValResponse {
 message GetNthTaskChannelRequest {
   nidevice_grpc.Session task = 1;
   uint32 index = 2;
-  int32 buffer_size = 3;
 }
 
 message GetNthTaskChannelResponse {
@@ -7284,7 +7272,6 @@ message GetNthTaskChannelResponse {
 message GetNthTaskDeviceRequest {
   nidevice_grpc.Session task = 1;
   uint32 index = 2;
-  int32 buffer_size = 3;
 }
 
 message GetNthTaskDeviceResponse {
@@ -7295,7 +7282,6 @@ message GetNthTaskDeviceResponse {
 message GetNthTaskReadChannelRequest {
   nidevice_grpc.Session task = 1;
   uint32 index = 2;
-  int32 buffer_size = 3;
 }
 
 message GetNthTaskReadChannelResponse {
@@ -7322,7 +7308,6 @@ message GetPersistedChanAttributeStringRequest {
     PersistedChannelStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetPersistedChanAttributeStringResponse {
@@ -7349,7 +7334,6 @@ message GetPersistedScaleAttributeStringRequest {
     PersistedScaleStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetPersistedScaleAttributeStringResponse {
@@ -7376,7 +7360,6 @@ message GetPersistedTaskAttributeStringRequest {
     PersistedTaskStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetPersistedTaskAttributeStringResponse {
@@ -7403,7 +7386,6 @@ message GetPhysicalChanAttributeBytesRequest {
     PhysicalChannelBytesAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeBytesResponse {
@@ -7430,7 +7412,6 @@ message GetPhysicalChanAttributeDoubleArrayRequest {
     PhysicalChannelDoubleArrayAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeDoubleArrayResponse {
@@ -7458,7 +7439,6 @@ message GetPhysicalChanAttributeInt32ArrayRequest {
     PhysicalChannelInt32ArrayAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeInt32ArrayResponse {
@@ -7473,7 +7453,6 @@ message GetPhysicalChanAttributeStringRequest {
     PhysicalChannelStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeStringResponse {
@@ -7500,7 +7479,6 @@ message GetPhysicalChanAttributeUInt32ArrayRequest {
     PhysicalChannelUInt32ArrayAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetPhysicalChanAttributeUInt32ArrayResponse {
@@ -7554,7 +7532,6 @@ message GetReadAttributeStringRequest {
     ReadStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetReadAttributeStringResponse {
@@ -7656,7 +7633,6 @@ message GetScaleAttributeDoubleArrayRequest {
     ScaleDoubleArrayAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetScaleAttributeDoubleArrayResponse {
@@ -7684,7 +7660,6 @@ message GetScaleAttributeStringRequest {
     ScaleStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetScaleAttributeStringResponse {
@@ -7737,7 +7712,6 @@ message GetSystemInfoAttributeStringRequest {
     SystemStringAttributes attribute = 1;
     int32 attribute_raw = 2;
   }
-  uint32 size = 3;
 }
 
 message GetSystemInfoAttributeStringResponse {
@@ -7776,7 +7750,6 @@ message GetTaskAttributeStringRequest {
     TaskStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetTaskAttributeStringResponse {
@@ -7873,7 +7846,6 @@ message GetTimingAttributeExStringRequest {
     TimingStringAttributes attribute = 3;
     int32 attribute_raw = 4;
   }
-  uint32 size = 5;
 }
 
 message GetTimingAttributeExStringResponse {
@@ -7929,7 +7901,6 @@ message GetTimingAttributeStringRequest {
     TimingStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetTimingAttributeStringResponse {
@@ -7995,7 +7966,6 @@ message GetTrigAttributeDoubleArrayRequest {
     TriggerDoubleArrayAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetTrigAttributeDoubleArrayResponse {
@@ -8023,7 +7993,6 @@ message GetTrigAttributeInt32ArrayRequest {
     TriggerInt32ArrayAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetTrigAttributeInt32ArrayResponse {
@@ -8038,7 +8007,6 @@ message GetTrigAttributeStringRequest {
     TriggerStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetTrigAttributeStringResponse {
@@ -8122,7 +8090,6 @@ message GetWatchdogAttributeStringRequest {
     WatchdogStringAttributes attribute = 3;
     int32 attribute_raw = 4;
   }
-  uint32 size = 5;
 }
 
 message GetWatchdogAttributeStringResponse {
@@ -8176,7 +8143,6 @@ message GetWriteAttributeStringRequest {
     WriteStringAttributes attribute = 2;
     int32 attribute_raw = 3;
   }
-  uint32 size = 4;
 }
 
 message GetWriteAttributeStringResponse {

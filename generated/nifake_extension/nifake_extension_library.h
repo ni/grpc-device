@@ -21,7 +21,7 @@ class NiFakeExtensionLibrary : public nifake_extension_grpc::NiFakeExtensionLibr
   ViStatus AddCoolFunctionality(ViSession vi, ViInt32 param);
 
  private:
-  using AddCoolFunctionalityPtr = ViStatus (*)(ViSession vi, ViInt32 param);
+  using AddCoolFunctionalityPtr = decltype(&niFakeExtension_AddCoolFunctionality);
 
   typedef struct FunctionPointers {
     AddCoolFunctionalityPtr AddCoolFunctionality;
