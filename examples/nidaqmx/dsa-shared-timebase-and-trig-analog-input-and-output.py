@@ -28,10 +28,11 @@ leader_input_task = None
 leader_output_task = None
 follower_input_task = None
 follower_output_task = None
+num_leader_written = 0
 
 
 async def main():
-    global client, leader_input_task, leader_output_task
+    global client, leader_input_task, leader_output_task, num_leader_written
     async with grpc.aio.insecure_channel(f"{server_address}:{server_port}") as channel:
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
@@ -111,6 +112,7 @@ async def main():
             else:
                 # Sample clock
                 # Note: If you are using PXI DSA devices, the leader device must reside in PXI Slot 2.
+                #TODO
                 pass
                 # timebase_source = await get_terminal_name_with_dev_prefix(task=leader_input_task, terminal_name="SampleClockTimebase")
                 # await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
@@ -146,17 +148,21 @@ async def main():
             await raise_if_error_async(client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_input_task)))
 
             async def read_data():
+                global num_leader_written
                 async for every_n_samples_response in every_n_samples_stream:
                     await raise_if_error(every_n_samples_response)
                     read_response: nidaqmx_types.ReadAnalogF64Response = await raise_if_error_async(
                         client.ReadAnalogF64(
                             nidaqmx_types.ReadAnalogF64Request(
                                 task=leader_input_task,
-                                num_samps_per_chan=100,
+                                num_samps_per_chan=2000,
+                                timeout=10.0,
                                 fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                array_size_in_samps=100)))
+                                array_size_in_samps=2000)))
+                    num_leader_written += read_response.samps_per_chan_read
 
-                    print("Read Data:", read_response.read_array[:10])
+                    print(
+                        f"\t{read_response.samps_per_chan_read}\tFollower\t\t{num_leader_written}\tFollower")
 
             async def wait_for_done():
                 async for done_response in done_event_stream:
@@ -164,7 +170,14 @@ async def main():
                     done_event_stream.cancel()
                     await raise_if_error(done_response)
 
-            await asyncio.gather(read_data(), wait_for_done())
+            async def wait_for_input():
+                loop = asyncio.get_event_loop()
+                await loop.run_in_executor(None, sys.stdin.readline)
+                raise Exception("Enter pressed, quitting")
+
+            print("Acquiring samples continuously. Press Enter to interrupt")
+            print("\nRead:\tLeader\tFollower\tTotal:\tLeader\tFollower")
+            await asyncio.gather(read_data(), wait_for_done(), wait_for_input())
 
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
