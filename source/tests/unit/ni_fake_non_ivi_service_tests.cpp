@@ -90,9 +90,6 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
   {
   }
 
-  // NiFakeNonIviServiceTests()
-  //     : NiFakeNonIviServiceTests(nidevice_grpc::FeatureToggles{}) {}
-
   virtual ~NiFakeNonIviServiceTests() {}
 
   uint32_t init(const std::string& session_name, FakeHandle handle)

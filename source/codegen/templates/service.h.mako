@@ -24,9 +24,6 @@ has_async_functions = any(async_functions)
 base_class_name = f"{service_class_prefix}::Service"
 for async_function in async_functions.keys():
   base_class_name = f"{service_class_prefix}::WithCallbackMethod_{async_function}<{base_class_name}>"
-
-feature_toggle_class_name = f"{service_class_prefix}FeatureToggles"
-feature_toggles = service_helpers.get_feature_toggles(config)
 %>\
 
 //---------------------------------------------------------------------
@@ -113,7 +110,7 @@ private:
     ${service_class_prefix}FeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
 
     bool is_enabled;
-% for toggle in feature_toggles:
+% for toggle in service_helpers.get_feature_toggles(config):
     bool ${service_helpers.get_toggle_member_name(toggle)};
 % endfor
   };
