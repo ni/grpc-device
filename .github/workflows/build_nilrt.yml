@@ -84,7 +84,7 @@ jobs:
       shell: cmake -P {0}
       run: |
         execute_process(
-          COMMAND cmake --build $ENV{GITHUB_WORKSPACE}/third_party/grpc/build
+          COMMAND cmake --build $ENV{GITHUB_WORKSPACE}/third_party/grpc/build -j 2
           RESULT_VARIABLE result
           OUTPUT_VARIABLE output
           ERROR_VARIABLE output
