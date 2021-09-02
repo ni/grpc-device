@@ -61,8 +61,7 @@ try:
         terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
         min_val=-10.0,
         max_val=10.0,
-        units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS
-    )))
+        units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS)))
 
     RaiseIfError(client.CfgSampClkTiming(nidaqmx_types.CfgSampClkTimingRequest(
         task=task,
@@ -73,10 +72,16 @@ try:
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
+    response = client.GetTaskAttributeUInt32(
+        nidaqmx_types.GetTaskAttributeUInt32Request(
+            task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS))
+    RaiseIfError(response)
+    number_of_channels = response.value
+
     response = client.ReadAnalogF64(nidaqmx_types.ReadAnalogF64Request(
         task=task,
         num_samps_per_chan=1000,
-        array_size_in_samps=1000,
+        array_size_in_samps=number_of_channels * 1000,
         fill_mode=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
         timeout=10.0))
     RaiseIfError(response)
