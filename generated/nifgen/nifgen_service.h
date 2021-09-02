@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
@@ -25,7 +26,10 @@ class NiFgenService final : public NiFgen::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
-  NiFgenService(NiFgenLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
+  NiFgenService(
+    NiFgenLibraryInterface* library,
+    ResourceRepositorySharedPtr session_repository,
+    const nidevice_grpc::FeatureToggles& feature_toggles = {});
   virtual ~NiFgenService();
   
   ::grpc::Status AbortGeneration(::grpc::ServerContext* context, const AbortGenerationRequest* request, AbortGenerationResponse* response) override;
@@ -161,6 +165,8 @@ public:
   ::grpc::Status WriteWaveformComplexF64(::grpc::ServerContext* context, const WriteWaveformComplexF64Request* request, WriteWaveformComplexF64Response* response) override;
   ::grpc::Status WriteNamedWaveformComplexF64(::grpc::ServerContext* context, const WriteNamedWaveformComplexF64Request* request, WriteNamedWaveformComplexF64Response* response) override;
   ::grpc::Status WriteNamedWaveformComplexI16(::grpc::ServerContext* context, const WriteNamedWaveformComplexI16Request* request, WriteNamedWaveformComplexI16Response* response) override;
+
+  bool is_enabled();
 private:
   NiFgenLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
@@ -168,6 +174,16 @@ private:
   void Copy(const google::protobuf::RepeatedPtrField<nifgen_grpc::NIComplexNumber>& input, std::vector<NIComplexNumber_struct>* output);
   NIComplexI16_struct ConvertMessage(const nifgen_grpc::NIComplexInt32& input);
   void Copy(const google::protobuf::RepeatedPtrField<nifgen_grpc::NIComplexInt32>& input, std::vector<NIComplexI16_struct>* output);
+
+  struct NiFgenFeatureToggles
+  {
+    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+    NiFgenFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
+
+    bool is_enabled;
+  };
+
+  NiFgenFeatureToggles feature_toggles_;
 };
 
 } // namespace nifgen_grpc

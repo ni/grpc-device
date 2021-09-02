@@ -55,8 +55,11 @@ namespace ${config["namespace_component"]}_grpc {
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
 % endif
-  ${service_class_prefix}Service::${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, ResourceRepositorySharedPtr session_repository)
-      : library_(library), session_repository_(session_repository)
+  ${service_class_prefix}Service::${service_class_prefix}Service(
+      ${service_class_prefix}LibraryInterface* library,
+      ResourceRepositorySharedPtr session_repository, 
+      const nidevice_grpc::FeatureToggles& feature_toggles)
+      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
 
@@ -177,5 +180,25 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
 % endif
 
 % endfor
+  bool ${service_class_prefix}Service::is_enabled()
+  {
+    return feature_toggles_.is_enabled;
+  }
+
+<%
+  feature_toggles = service_helpers.get_feature_toggles(config)
+%>\
+  ${service_class_prefix}Service::${service_class_prefix}FeatureToggles::${service_class_prefix}FeatureToggles(
+    const nidevice_grpc::FeatureToggles& feature_toggles)
+<%block filter="common_helpers.trim_trailing_comma()">\
+    : is_enabled(
+        feature_toggles.is_feature_enabled("${config["module_name"]}", ${service_helpers.get_driver_service_readiness(config)})),
+% for toggle, readiness in feature_toggles.items():
+      ${service_helpers.get_toggle_member_name(toggle)}(
+        feature_toggles.is_feature_enabled("${toggle}", ${service_helpers.to_cpp_readiness(readiness)})),
+% endfor
+</%block>\
+  {
+  }
 } // namespace ${config["namespace_component"]}_grpc
 

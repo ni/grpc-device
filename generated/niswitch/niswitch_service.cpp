@@ -17,8 +17,11 @@ namespace niswitch_grpc {
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
-  NiSwitchService::NiSwitchService(NiSwitchLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
-      : library_(library), session_repository_(session_repository)
+  NiSwitchService::NiSwitchService(
+      NiSwitchLibraryInterface* library,
+      ResourceRepositorySharedPtr session_repository, 
+      const nidevice_grpc::FeatureToggles& feature_toggles)
+      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
 
@@ -1705,5 +1708,16 @@ namespace niswitch_grpc {
     }
   }
 
+  bool NiSwitchService::is_enabled()
+  {
+    return feature_toggles_.is_enabled;
+  }
+
+  NiSwitchService::NiSwitchFeatureToggles::NiSwitchFeatureToggles(
+    const nidevice_grpc::FeatureToggles& feature_toggles)
+    : is_enabled(
+        feature_toggles.is_feature_enabled("niswitch", CodeReadiness::kRelease))
+  {
+  }
 } // namespace niswitch_grpc
 

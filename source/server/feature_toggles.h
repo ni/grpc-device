@@ -13,9 +13,17 @@ class FeatureToggles {
     kEnabled,
     kUnspecified
   };
+  enum class CodeReadiness {
+    kRelease,
+    kNextRelease,
+    kIncomplete,
+    kPrototype
+  };
+
   FeatureToggles() {}
   FeatureToggles(FeatureToggleConfigurationMap&& map) : map_(map) {}
   FeatureState get_feature_state(const std::string& feature_name) const;
+  bool is_feature_enabled(const std::string& feature_name, CodeReadiness feature_readiness) const;
 
  private:
   FeatureToggleConfigurationMap map_;

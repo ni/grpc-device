@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
@@ -25,7 +26,10 @@ class NiDAQmxService final : public NiDAQmx::WithCallbackMethod_RegisterSignalEv
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<TaskHandle>>;
 
-  NiDAQmxService(NiDAQmxLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
+  NiDAQmxService(
+    NiDAQmxLibraryInterface* library,
+    ResourceRepositorySharedPtr session_repository,
+    const nidevice_grpc::FeatureToggles& feature_toggles = {});
   virtual ~NiDAQmxService();
   
   ::grpc::Status AddCDAQSyncConnection(::grpc::ServerContext* context, const AddCDAQSyncConnectionRequest* request, AddCDAQSyncConnectionResponse* response) override;
@@ -412,9 +416,22 @@ public:
   ::grpc::Status WriteRaw(::grpc::ServerContext* context, const WriteRawRequest* request, WriteRawResponse* response) override;
   ::grpc::Status WriteToTEDSFromArray(::grpc::ServerContext* context, const WriteToTEDSFromArrayRequest* request, WriteToTEDSFromArrayResponse* response) override;
   ::grpc::Status WriteToTEDSFromFile(::grpc::ServerContext* context, const WriteToTEDSFromFileRequest* request, WriteToTEDSFromFileResponse* response) override;
+
+  bool is_enabled();
 private:
   NiDAQmxLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+
+  struct NiDAQmxFeatureToggles
+  {
+    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+    NiDAQmxFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
+
+    bool is_enabled;
+    bool is_allow_undefined_attributes_enabled;
+  };
+
+  NiDAQmxFeatureToggles feature_toggles_;
 };
 
 } // namespace nidaqmx_grpc

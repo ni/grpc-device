@@ -17,8 +17,11 @@
 
 namespace nifake_non_ivi_grpc {
 
-  NiFakeNonIviService::NiFakeNonIviService(NiFakeNonIviLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
-      : library_(library), session_repository_(session_repository)
+  NiFakeNonIviService::NiFakeNonIviService(
+      NiFakeNonIviLibraryInterface* library,
+      ResourceRepositorySharedPtr session_repository, 
+      const nidevice_grpc::FeatureToggles& feature_toggles)
+      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
 
@@ -71,6 +74,8 @@ namespace nifake_non_ivi_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       double value {};
       auto status = library_->GetMarbleAttributeDouble(handle, attribute, &value);
@@ -110,6 +115,8 @@ namespace nifake_non_ivi_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value {};
       auto status = library_->GetMarbleAttributeInt32(handle, attribute, &value);
@@ -155,6 +162,8 @@ namespace nifake_non_ivi_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32ArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       response->mutable_value_raw()->Resize(10, 0);
       int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
@@ -639,6 +648,8 @@ namespace nifake_non_ivi_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nifake_non_ivi_grpc::MarbleResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetMarbleAttribute(handle, attribute);
       response->set_status(status);
@@ -674,6 +685,8 @@ namespace nifake_non_ivi_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       double value = request->value();
       auto status = library_->SetMarbleAttributeDouble(handle, attribute, value);
@@ -710,6 +723,8 @@ namespace nifake_non_ivi_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -763,5 +778,16 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  bool NiFakeNonIviService::is_enabled()
+  {
+    return feature_toggles_.is_enabled;
+  }
+
+  NiFakeNonIviService::NiFakeNonIviFeatureToggles::NiFakeNonIviFeatureToggles(
+    const nidevice_grpc::FeatureToggles& feature_toggles)
+    : is_enabled(
+        feature_toggles.is_feature_enabled("nifake_non_ivi", CodeReadiness::kNextRelease))
+  {
+  }
 } // namespace nifake_non_ivi_grpc
 

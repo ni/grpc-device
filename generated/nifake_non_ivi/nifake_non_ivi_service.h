@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
@@ -25,7 +26,10 @@ class NiFakeNonIviService final : public NiFakeNonIvi::WithCallbackMethod_ReadSt
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeHandle>>;
 
-  NiFakeNonIviService(NiFakeNonIviLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
+  NiFakeNonIviService(
+    NiFakeNonIviLibraryInterface* library,
+    ResourceRepositorySharedPtr session_repository,
+    const nidevice_grpc::FeatureToggles& feature_toggles = {});
   virtual ~NiFakeNonIviService();
   
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
@@ -49,9 +53,21 @@ public:
   ::grpc::Status SetMarbleAttributeDouble(::grpc::ServerContext* context, const SetMarbleAttributeDoubleRequest* request, SetMarbleAttributeDoubleResponse* response) override;
   ::grpc::Status SetMarbleAttributeInt32(::grpc::ServerContext* context, const SetMarbleAttributeInt32Request* request, SetMarbleAttributeInt32Response* response) override;
   ::grpc::Status SetColors(::grpc::ServerContext* context, const SetColorsRequest* request, SetColorsResponse* response) override;
+
+  bool is_enabled();
 private:
   NiFakeNonIviLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+
+  struct NiFakeNonIviFeatureToggles
+  {
+    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+    NiFakeNonIviFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
+
+    bool is_enabled;
+  };
+
+  NiFakeNonIviFeatureToggles feature_toggles_;
 };
 
 } // namespace nifake_non_ivi_grpc
