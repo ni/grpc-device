@@ -581,3 +581,7 @@ def get_grpc_type(data_type, config):
 
 def get_split_attributes_by_type(config):
     return config.get('split_attributes_by_type', False)
+
+
+def supports_raw_attributes(config: dict) -> bool:
+    return config.get('supports_raw_attributes', False)

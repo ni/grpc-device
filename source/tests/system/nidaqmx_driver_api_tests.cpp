@@ -330,28 +330,6 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->ReadDigitalU8(&context, request, &response);
   }
 
-  ::grpc::Status read_binary_i32(int32 samples_to_read, ReadBinaryI32Response& response)
-  {
-    ::grpc::ClientContext context;
-    ReadBinaryI32Request request;
-    set_request_session_id(request);
-    request.set_num_samps_per_chan(samples_to_read);
-    request.set_array_size_in_samps(samples_to_read);
-    request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
-    return stub()->ReadBinaryI32(&context, request, &response);
-  }
-
-  ::grpc::Status read_binary_i16(int32 samples_to_read, ReadBinaryI16Response& response)
-  {
-    ::grpc::ClientContext context;
-    ReadBinaryI16Request request;
-    set_request_session_id(request);
-    request.set_num_samps_per_chan(samples_to_read);
-    request.set_array_size_in_samps(samples_to_read);
-    request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
-    return stub()->ReadBinaryI16(&context, request, &response);
-  }
-
   ::grpc::Status write_binary_i16(const std::vector<int16>& data, WriteBinaryI16Response& response)
   {
     ::grpc::ClientContext context;
@@ -1004,11 +982,7 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
       SCALE_NAME,
       (ScaleDoubleAttributes)ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS);
 
-  EXPECT_NE(DAQmxSuccess, response.status());
-  // Getting a scalar from a non-scalar field returns a positive value because that's the convention
-  // when you pass in zero for the size (returns the size).
-  // The key result here is: don't crash.
-  EXPECT_GT(response.status(), 0);
+  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
@@ -1141,12 +1115,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadBinaryI32_Succeeds)
   create_ai_voltage_chan(-5.0, 5.0);
   start_task();
 
-  ReadBinaryI32Response response;
   const auto NUM_SAMPS = 4;
-  auto status = read_binary_i32(NUM_SAMPS, response);
+  auto response = client::read_binary_i32(
+      stub(),
+      task(),
+      NUM_SAMPS,
+      10.0,
+      GroupBy::GROUP_BY_GROUP_BY_CHANNEL,
+      NUM_SAMPS);
   stop_task();
 
-  EXPECT_SUCCESS(status, response);
   EXPECT_EQ(NUM_SAMPS, response.samps_per_chan_read());
 }
 
@@ -1167,12 +1145,16 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ReadBinaryI16_Succeeds)
   create_ai_voltage_chan(-5.0, 5.0);
 
   start_task();
-  ReadBinaryI16Response response;
   const auto NUM_SAMPS = 10;
-  auto status = read_binary_i16(NUM_SAMPS, response);
+  auto response = client::read_binary_i16(
+      stub(),
+      task(),
+      NUM_SAMPS,
+      10.0,
+      GroupBy::GROUP_BY_GROUP_BY_CHANNEL,
+      NUM_SAMPS);
   stop_task();
 
-  EXPECT_SUCCESS(status, response);
   EXPECT_EQ(NUM_SAMPS, response.samps_per_chan_read());
 }
 
@@ -1662,6 +1644,20 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_ReconfigureSleepTime_UpdatesSleepTimeSuc
   EXPECT_SUCCESS(get_response);
   EXPECT_NEAR(NEW_VALUE, get_response.value(), .0001);
   EXPECT_NE(get_response.value(), initial_response.value());
+}
+
+TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
+{
+  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Scale_Lin_Slope);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
+{
+  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Dev_AO_PhysicalChans);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
 }
 
 }  // namespace system

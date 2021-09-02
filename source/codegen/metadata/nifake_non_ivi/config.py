@@ -44,6 +44,7 @@ config = {
     },
     'code_readiness': 'NextRelease',
     'split_attributes_by_type': True,
+    'supports_raw_attributes': True,
     'library_info': {
         'Linux': {
             '64bit': {
