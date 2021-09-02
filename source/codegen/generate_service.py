@@ -4,9 +4,7 @@ import argparse
 import importlib
 import importlib.util
 import mako.template
-import pathlib
 import metadata_mutation
-import common_helpers
 from mako.lookup import TemplateLookup
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
@@ -21,9 +19,31 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
   os.makedirs(output_dir, exist_ok=True)
   template_lookup = TemplateLookup(directories = template_directory + "/")
   template = mako.template.Template(filename=template_file_path, lookup=template_lookup)
-  f=open(output_file_path, "w+", newline="")
-  f.write(template.render(data=metadata))
-  f.close()
+  write_if_changed(
+    output_file_path,
+    template.render(data=metadata))
+
+
+def read_file_contents(output_file_path: str) -> str:
+  try:
+    with open(output_file_path, "r", newline="") as f:
+      return f.read()
+  except FileNotFoundError:
+    return ""
+
+
+def write_if_changed(output_file_path: str, new_contents: str) -> None:
+  """Write new_contents to output_file_path if new_contents != the contents
+  of output_file_path.
+
+  This prevents downstream recompiles when codegen runs but does not change
+  a given file.
+  """
+  old_contents = read_file_contents(output_file_path)
+  if old_contents != new_contents:
+    with open(output_file_path, "w+", newline="") as f:
+        f.write(new_contents)
+
 
 def mutate_metadata(metadata):
   config = metadata["config"]

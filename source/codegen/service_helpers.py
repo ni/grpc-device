@@ -304,3 +304,21 @@ def get_callback_method_parameters(function_data):
 
 def create_param_type_list(parameters):
     return ', '.join([p['type'] for p in parameters])
+
+
+def get_enums_to_map(functions: dict, enums: dict) -> dict:
+    def get_enum_or_default(enum_name: str) -> dict:
+        # Enums that are added during metadata mutation (like attributes)
+        # may not be in the enum dictionary. Assume they don't generate-mappings.
+        return enums.get(enum_name, {})
+    
+    def should_generate_mappings(enum_name: str) -> bool:
+        enum = get_enum_or_default(enum_name)
+        return enum.get("generate-mappings", False)
+
+    function_enums = common_helpers.get_function_enums(functions)
+    return [
+        e 
+        for e in function_enums 
+        if should_generate_mappings(e)
+    ]

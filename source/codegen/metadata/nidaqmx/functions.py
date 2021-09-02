@@ -50,7 +50,7 @@ functions = {
                 'direction': 'out',
                 'name': 'deviceNameOut',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'deviceNameOutBufferSize'
                 },
                 'type': 'char[]'
@@ -5990,7 +5990,7 @@ functions = {
                 'direction': 'out',
                 'name': 'portList',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'portListSize'
                 },
                 'type': 'char[]'
@@ -6101,7 +6101,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -6234,7 +6234,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'float64[]'
@@ -6304,7 +6304,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -6427,7 +6427,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'float64[]'
@@ -6487,7 +6487,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'int32[]'
@@ -6518,7 +6518,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -6578,7 +6578,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'uInt32[]'
@@ -6690,7 +6690,7 @@ functions = {
                 'direction': 'out',
                 'name': 'portList',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'portListSize'
                 },
                 'type': 'char[]'
@@ -6832,7 +6832,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -6939,7 +6939,7 @@ functions = {
                 'direction': 'out',
                 'name': 'buffer',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'bufferSize'
                 },
                 'type': 'char[]'
@@ -6968,7 +6968,7 @@ functions = {
                 'direction': 'out',
                 'name': 'buffer',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'bufferSize'
                 },
                 'type': 'char[]'
@@ -6997,7 +6997,7 @@ functions = {
                 'direction': 'out',
                 'name': 'buffer',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'bufferSize'
                 },
                 'type': 'char[]'
@@ -7057,7 +7057,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -7117,7 +7117,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -7177,7 +7177,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -7237,7 +7237,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'uInt8[]'
@@ -7297,7 +7297,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'float64[]'
@@ -7357,7 +7357,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'int32[]'
@@ -7388,7 +7388,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -7448,7 +7448,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'uInt32[]'
@@ -7566,7 +7566,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -7786,7 +7786,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'float64[]'
@@ -7846,7 +7846,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -7952,7 +7952,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -8036,7 +8036,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -8261,7 +8261,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -8423,7 +8423,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -8599,7 +8599,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'float64[]'
@@ -8659,7 +8659,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'int32[]'
@@ -8690,7 +8690,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -8886,7 +8886,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'
@@ -9004,7 +9004,7 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
                 'type': 'char[]'

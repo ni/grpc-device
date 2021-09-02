@@ -187,8 +187,12 @@ class AttributeAccessorExpander:
                 sub_group = common_helpers.get_grpc_type_name_for_identifier(
                     value_param['type'],
                     self._config)
-            attribute_param['grpc_type'] = common_helpers.get_attribute_enum_name(group, sub_group)
-        
+            if common_helpers.supports_raw_attributes(self._config):
+                attribute_param['enum'] = common_helpers.get_attribute_enum_name(group, sub_group)
+                attribute_param['grpc_type'] = 'int32'
+            else:
+                attribute_param['grpc_type'] = common_helpers.get_attribute_enum_name(group, sub_group)
+
 
     def expand_attribute_value_params(self, func):
         parameters = func["parameters"]

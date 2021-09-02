@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
+#include "nidcpower/nidcpower_client.h"
 #include "nidcpower/nidcpower_service.h"
 
 namespace ni {
@@ -8,6 +9,7 @@ namespace tests {
 namespace system {
 
 namespace dcpower = nidcpower_grpc;
+namespace client = nidcpower_grpc::experimental::client;
 
 const int kdcpowerDriverApiSuccess = 0;
 
@@ -44,19 +46,35 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
 
   void initialize_driver_session()
   {
-    ::grpc::ClientContext context;
-    dcpower::InitializeWithIndependentChannelsRequest request;
-    request.set_resource_name("FakeDevice");
-    request.set_option_string("Simulate=1, DriverSetup=Model:4147; BoardType:PXIe");
-    request.set_session_name("");
-    request.set_reset(false);
-    dcpower::InitializeWithIndependentChannelsResponse response;
+    const auto DEVICE = "FakeDevice";
+    const auto OPTIONS = "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe";
+    try {
+      auto independent_response = client::initialize_with_independent_channels(
+          GetStub(),
+          DEVICE,
+          false,
+          OPTIONS);
 
-    ::grpc::Status status = GetStub()->InitializeWithIndependentChannels(&context, request, &response);
-    driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
+      ASSERT_EQ(kdcpowerDriverApiSuccess, independent_response.status());
+      driver_session_ = std::make_unique<nidevice_grpc::Session>(independent_response.vi());
+    }
+    catch (std::runtime_error&) {
+      auto legacy_response = client::initialize_with_channels(
+          GetStub(),
+          DEVICE,
+          "0",
+          false,
+          OPTIONS);
 
-    ASSERT_TRUE(status.ok());
-    ASSERT_EQ(kdcpowerDriverApiSuccess, response.status());
+      ASSERT_EQ(kdcpowerDriverApiSuccess, legacy_response.status());
+      driver_session_ = std::make_unique<nidevice_grpc::Session>(legacy_response.vi());
+      is_legacy_session_ = true;
+    }
+  }
+
+  bool is_legacy_session()
+  {
+    return is_legacy_session_;
   }
 
   void initiate()
@@ -300,7 +318,14 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<dcpower::NiDCPower::Stub> nidcpower_stub_;
+  bool is_legacy_session_{false};
 };
+
+// Some tests don't work with the legacy InitializeWithChannels API
+// because of differences in how channels are configured OR because they
+// test features of the independent channel API.
+#define GTEST_SKIP_IF_LEGACY() \
+  if (is_legacy_session()) GTEST_SKIP() << "Test not supported with legacy session API.";
 
 TEST_F(NiDCPowerDriverApiTest, PerformSelfTest_CompletesSuccessfuly)
 {
@@ -350,6 +375,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViInt32_GetAttributeViInt32ReturnsSam
 
 TEST_F(NiDCPowerDriverApiTest, SetAttributeViReal64_GetAttributeViReal64ReturnsSameValue)
 {
+  GTEST_SKIP_IF_LEGACY();
   const char* channel_name = "0";
   // Attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_WHEN' must be set to 'MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE'
   // before setting attribute 'NIDCPOWER_ATTRIBUTE_SOURCE_DELAY'.
@@ -376,6 +402,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViReal64_GetAttributeViReal64ReturnsS
 
 TEST_F(NiDCPowerDriverApiTest, SetAttributeViBoolean_GetAttributeViBooleanReturnsSameValue)
 {
+  GTEST_SKIP_IF_LEGACY();
   const char* channel_name = "0";
   // Attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_WHEN' must be set to 'MEASURE_WHEN_NIDCPOWER_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE'
   // before setting attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH_IS_FINITE'.
@@ -402,9 +429,10 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViBoolean_GetAttributeViBooleanReturn
 
 TEST_F(NiDCPowerDriverApiTest, SetAttributeViString_GetAttributeViStringReturnsSameValue)
 {
+  GTEST_SKIP_IF_LEGACY();
   const char* channel_name = "0";
   const dcpower::NiDCPowerAttributes attribute_to_set = dcpower::NiDCPowerAttributes::NIDCPOWER_ATTRIBUTE_EXPORTED_START_TRIGGER_OUTPUT_TERMINAL;
-  const ViString expected_value = "/Dev1/PXI_Trig0";
+  const char* expected_value = "/Dev1/PXI_Trig0";
   ::grpc::ClientContext context;
   dcpower::SetAttributeViStringRequest request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -486,6 +514,7 @@ TEST_F(NiDCPowerDriverApiTest, SetMeasureWhenAndInitiate_MeasureMultiple_Returns
 
 TEST_F(NiDCPowerDriverApiTest, SetMeasureWhenAndInitiate_FetchMultiple_FetchesSuccessfully)
 {
+  GTEST_SKIP_IF_LEGACY();
   const char* channel_name = "0";
   // Attribute 'NIDCPOWER_ATTRIBUTE_MEASURE_WHEN' must be set before calling FetchMultiple
   set_int32_attribute(
@@ -502,6 +531,7 @@ TEST_F(NiDCPowerDriverApiTest, SetMeasureWhenAndInitiate_FetchMultiple_FetchesSu
 
 TEST_F(NiDCPowerDriverApiTest, VoltageLevelConfiguredAndExportedToBuffer_ResetAndImportConfigurationFromBuffer_ConfigurationIsImportedSuccessfully)
 {
+  GTEST_SKIP_IF_LEGACY();
   const char* channel_name = "0";
   auto expected_output_function = dcpower::OutputFunction::OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_VOLTAGE;
   auto expected_voltage_level = 3.0;

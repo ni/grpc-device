@@ -41,27 +41,27 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 SetColors(int32 colors[], int32 size);
 
  private:
-  using ClosePtr = int32 (*)(FakeHandle handle);
-  using GetMarbleAttributeDoublePtr = int32 (*)(FakeHandle handle, int32 attribute, double* value);
-  using GetMarbleAttributeInt32Ptr = int32 (*)(FakeHandle handle, int32 attribute, int32* value);
-  using GetMarbleAttributeInt32ArrayPtr = int32 (*)(FakeHandle handle, int32 attribute, int32 value[]);
-  using InitPtr = int32 (*)(const char sessionName[], FakeHandle* handle);
-  using InitWithHandleNameAsSessionNamePtr = int32 (*)(const char handleName[], FakeHandle* handle);
-  using InputArraysWithNarrowIntegerTypesPtr = int32 (*)(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
-  using IotaWithCustomSizePtr = int32 (*)(int32 sizeOne, int32 sizeTwo, int32 data[]);
-  using OutputArraysWithNarrowIntegerTypesPtr = int32 (*)(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[]);
-  using InputArrayOfBytesPtr = int32 (*)(const myUInt8 u8Array[]);
-  using OutputArrayOfBytesPtr = int32 (*)(int32 numberOfU8Samples, myUInt8 u8Data[]);
-  using RegisterCallbackPtr = int32 (*)(myInt16 inputData, CallbackPtr callbackFunction, void* callbackData);
-  using ReadStreamPtr = int32 (*)(int32 start, int32 stop, int32* value);
-  using InputTimestampPtr = int32 (*)(CVIAbsoluteTime when);
-  using OutputTimestampPtr = int32 (*)(CVIAbsoluteTime* when);
-  using InputVarArgsPtr = int32 (*)(const char inputName[], const char channelName[], int32 color, double powerUpState, ...);
-  using OutputVarArgsPtr = int32 (*)(const char inputName[], const char channelName[], int32* color, ...);
-  using ResetMarbleAttributePtr = int32 (*)(FakeHandle handle, int32 attribute);
-  using SetMarbleAttributeDoublePtr = int32 (*)(FakeHandle handle, int32 attribute, double value);
-  using SetMarbleAttributeInt32Ptr = int32 (*)(FakeHandle handle, int32 attribute, int32 value);
-  using SetColorsPtr = int32 (*)(int32 colors[], int32 size);
+  using ClosePtr = decltype(&niFakeNonIvi_Close);
+  using GetMarbleAttributeDoublePtr = decltype(&niFakeNonIvi_GetMarbleAttributeDouble);
+  using GetMarbleAttributeInt32Ptr = decltype(&niFakeNonIvi_GetMarbleAttributeInt32);
+  using GetMarbleAttributeInt32ArrayPtr = decltype(&niFakeNonIvi_GetMarbleAttributeInt32Array);
+  using InitPtr = decltype(&niFakeNonIvi_Init);
+  using InitWithHandleNameAsSessionNamePtr = decltype(&niFakeNonIvi_InitWithHandleNameAsSessionName);
+  using InputArraysWithNarrowIntegerTypesPtr = decltype(&niFakeNonIvi_InputArraysWithNarrowIntegerTypes);
+  using IotaWithCustomSizePtr = decltype(&niFakeNonIvi_IotaWithCustomSize);
+  using OutputArraysWithNarrowIntegerTypesPtr = decltype(&niFakeNonIvi_OutputArraysWithNarrowIntegerTypes);
+  using InputArrayOfBytesPtr = decltype(&niFakeNonIvi_InputArrayOfBytes);
+  using OutputArrayOfBytesPtr = decltype(&niFakeNonIvi_OutputArrayOfBytes);
+  using RegisterCallbackPtr = decltype(&niFakeNonIvi_RegisterCallback);
+  using ReadStreamPtr = decltype(&niFakeNonIvi_ReadStream);
+  using InputTimestampPtr = decltype(&niFakeNonIvi_InputTimestamp);
+  using OutputTimestampPtr = decltype(&niFakeNonIvi_OutputTimestamp);
+  using InputVarArgsPtr = decltype(&niFakeNonIvi_InputVarArgs);
+  using OutputVarArgsPtr = decltype(&niFakeNonIvi_OutputVarArgs);
+  using ResetMarbleAttributePtr = decltype(&niFakeNonIvi_ResetMarbleAttribute);
+  using SetMarbleAttributeDoublePtr = decltype(&niFakeNonIvi_SetMarbleAttributeDouble);
+  using SetMarbleAttributeInt32Ptr = decltype(&niFakeNonIvi_SetMarbleAttributeInt32);
+  using SetColorsPtr = decltype(&niFakeNonIvi_SetColors);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
