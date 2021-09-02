@@ -1004,11 +1004,7 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
       SCALE_NAME,
       (ScaleDoubleAttributes)ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS);
 
-  EXPECT_NE(DAQmxSuccess, response.status());
-  // Getting a scalar from a non-scalar field returns a positive value because that's the convention
-  // when you pass in zero for the size (returns the size).
-  // The key result here is: don't crash.
-  EXPECT_GT(response.status(), 0);
+  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
@@ -1667,6 +1663,13 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_ReconfigureSleepTime_UpdatesSleepTimeSuc
 TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
 {
   auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Scale_Lin_Slope);
+
+  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
+}
+
+TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
+{
+  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Dev_AO_PhysicalChans);
 
   EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
 }

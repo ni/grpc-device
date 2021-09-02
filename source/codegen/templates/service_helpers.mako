@@ -380,6 +380,10 @@ ${initialize_standard_input_param(function_name, parameter)}
           break;
         }
       }
+% if parameter.get("raw_attribute", False):
+      auto ${parameter_name}_is_valid = ${namespace_prefix}${parameter["enum"]}_IsValid(${parameter_name});
+      ${parameter_name} = ${parameter_name}_is_valid ? ${parameter_name} : 0;
+%endif
 </%def>
 
 ## Initialize an input parameter that is determined by the 'len' size mechanism.

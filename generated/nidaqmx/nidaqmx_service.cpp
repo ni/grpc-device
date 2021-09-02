@@ -7164,6 +7164,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::BufferUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value {};
       auto status = library_->GetBufferAttributeUInt32(task, attribute, &value);
@@ -7202,6 +7204,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -7241,6 +7245,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -7280,6 +7286,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -7335,6 +7343,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -7376,6 +7386,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -7417,6 +7429,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -7458,6 +7472,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -7512,6 +7528,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -7559,6 +7577,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -7616,6 +7636,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -7655,6 +7677,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::DeviceBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -7694,6 +7718,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::DeviceDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -7733,6 +7759,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::DeviceDoubleArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -7785,6 +7813,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::DeviceInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -7830,6 +7860,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::DeviceInt32ArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -7896,6 +7928,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::DeviceStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -7951,6 +7985,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::DeviceUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -7990,6 +8026,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::DeviceUInt32ArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -8232,6 +8270,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -8272,6 +8312,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -8312,6 +8354,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -8358,6 +8402,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -8414,6 +8460,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -8660,6 +8708,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PersistedChannelBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -8699,6 +8749,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PersistedChannelStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -8754,6 +8806,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PersistedScaleBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -8793,6 +8847,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PersistedScaleStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -8848,6 +8904,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PersistedTaskBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -8887,6 +8945,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PersistedTaskStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -8942,6 +9002,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -8981,6 +9043,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelBytesAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -9033,6 +9097,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -9072,6 +9138,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelDoubleArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -9124,6 +9192,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -9169,6 +9239,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelInt32ArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -9235,6 +9307,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -9290,6 +9364,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -9329,6 +9405,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelUInt32ArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -9382,6 +9460,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -9422,6 +9502,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -9462,6 +9544,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -9508,6 +9592,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -9564,6 +9650,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -9604,6 +9692,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt64 value {};
@@ -9644,6 +9734,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::RealTimeBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -9684,6 +9776,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::RealTimeInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -9730,6 +9824,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::RealTimeUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -9792,6 +9888,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -9831,6 +9929,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -9883,6 +9983,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ScaleInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -9928,6 +10030,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ScaleStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -10081,6 +10185,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::SystemStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -10135,6 +10241,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::SystemUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -10175,6 +10283,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TaskBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -10215,6 +10325,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TaskStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -10271,6 +10383,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TaskUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -10311,6 +10425,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -10351,6 +10467,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -10392,6 +10510,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -10433,6 +10553,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -10474,6 +10596,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -10521,6 +10645,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -10578,6 +10704,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       CVIAbsoluteTime value {};
@@ -10619,6 +10747,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -10659,6 +10789,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -10705,6 +10837,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -10761,6 +10895,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       CVIAbsoluteTime value {};
@@ -10801,6 +10937,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -10841,6 +10979,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -10881,6 +11021,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -10921,6 +11063,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -10974,6 +11118,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -11020,6 +11166,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerInt32ArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -11087,6 +11235,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -11143,6 +11293,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerTimestampAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       CVIAbsoluteTime value {};
@@ -11183,6 +11335,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -11224,6 +11378,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WatchdogBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -11265,6 +11421,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WatchdogDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -11306,6 +11464,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WatchdogInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -11353,6 +11513,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WatchdogStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -11409,6 +11571,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       bool32 value {};
@@ -11449,6 +11613,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       float64 value {};
@@ -11489,6 +11655,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       int32 value {};
@@ -11535,6 +11703,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
 
       while (true) {
@@ -11591,6 +11761,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt32 value {};
@@ -12856,6 +13028,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::BufferResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetBufferAttribute(task, attribute);
       response->set_status(status);
@@ -12892,6 +13066,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetChanAttribute(task, channel, attribute);
       response->set_status(status);
@@ -12945,6 +13121,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetExportedSignalAttribute(task, attribute);
       response->set_status(status);
@@ -12980,6 +13158,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetReadAttribute(task, attribute);
       response->set_status(status);
@@ -13015,6 +13195,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::RealTimeResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetRealTimeAttribute(task, attribute);
       response->set_status(status);
@@ -13050,6 +13232,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetTimingAttribute(task, attribute);
       response->set_status(status);
@@ -13086,6 +13270,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetTimingAttributeEx(task, device_names, attribute);
       response->set_status(status);
@@ -13121,6 +13307,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetTrigAttribute(task, attribute);
       response->set_status(status);
@@ -13157,6 +13345,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WatchdogResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetWatchdogAttribute(task, lines, attribute);
       response->set_status(status);
@@ -13192,6 +13382,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteResetAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto status = library_->ResetWriteAttribute(task, attribute);
       response->set_status(status);
@@ -13488,6 +13680,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::BufferUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto status = library_->SetBufferAttributeUInt32(task, attribute, value);
@@ -13523,6 +13717,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -13559,6 +13755,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -13595,6 +13793,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -13631,6 +13831,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto size = 0U;
@@ -13669,6 +13871,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -13707,6 +13911,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -13745,6 +13951,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = const_cast<const float64*>(request->value().data());
       uInt32 size = static_cast<uInt32>(request->value().size());
@@ -13783,6 +13991,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -13836,6 +14046,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -13874,6 +14086,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ChannelUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto size = 0U;
@@ -14021,6 +14235,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -14058,6 +14274,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -14095,6 +14313,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -14147,6 +14367,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -14184,6 +14406,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ExportSignalUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto size = 0U;
@@ -14241,6 +14465,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -14278,6 +14504,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -14315,6 +14543,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -14367,6 +14597,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -14404,6 +14636,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto size = 0U;
@@ -14441,6 +14675,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ReadUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt64 value = request->value();
       auto size = 0U;
@@ -14478,6 +14714,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::RealTimeBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -14515,6 +14753,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::RealTimeInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -14567,6 +14807,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::RealTimeUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto size = 0U;
@@ -14603,6 +14845,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -14639,6 +14883,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = const_cast<const float64*>(request->value().data());
       uInt32 size = static_cast<uInt32>(request->value().size());
@@ -14675,6 +14921,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ScaleInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -14726,6 +14974,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::ScaleStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -14803,6 +15053,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -14840,6 +15092,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -14878,6 +15132,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -14916,6 +15172,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -14954,6 +15212,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -15007,6 +15267,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -15045,6 +15307,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       CVIAbsoluteTime value = convert_from_grpc<CVIAbsoluteTime>(request->value());
       auto size = 0U;
@@ -15083,6 +15347,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto size = 0U;
@@ -15120,6 +15386,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -15172,6 +15440,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -15209,6 +15479,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       CVIAbsoluteTime value = convert_from_grpc<CVIAbsoluteTime>(request->value());
       auto size = 0U;
@@ -15246,6 +15518,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto size = 0U;
@@ -15283,6 +15557,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -15320,6 +15596,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -15357,6 +15635,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = const_cast<const float64*>(request->value().data());
       uInt32 size = static_cast<uInt32>(request->value().size());
@@ -15394,6 +15674,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -15446,6 +15728,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerInt32ArrayAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = reinterpret_cast<const int32*>(request->value().data());
       uInt32 size = request->size();
@@ -15483,6 +15767,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -15520,6 +15806,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerTimestampAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       CVIAbsoluteTime value = convert_from_grpc<CVIAbsoluteTime>(request->value());
       auto size = 0U;
@@ -15557,6 +15845,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TriggerUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto size = 0U;
@@ -15595,6 +15885,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WatchdogBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -15633,6 +15925,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WatchdogDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -15671,6 +15965,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WatchdogInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -15724,6 +16020,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WatchdogStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -15761,6 +16059,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteBoolAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       bool32 value = request->value();
       auto size = 0U;
@@ -15798,6 +16098,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteDoubleAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       float64 value = request->value();
       auto size = 0U;
@@ -15835,6 +16137,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       int32 value;
       switch (request->value_enum_case()) {
@@ -15887,6 +16191,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteStringAttributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto value = request->value().c_str();
       auto size = 0U;
@@ -15924,6 +16230,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteUInt32Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt32 value = request->value();
       auto size = 0U;

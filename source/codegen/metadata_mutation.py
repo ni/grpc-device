@@ -190,6 +190,7 @@ class AttributeAccessorExpander:
             if common_helpers.supports_raw_attributes(self._config):
                 attribute_param['enum'] = common_helpers.get_attribute_enum_name(group, sub_group)
                 attribute_param['grpc_type'] = 'int32'
+                attribute_param['raw_attribute'] = True
             else:
                 attribute_param['grpc_type'] = common_helpers.get_attribute_enum_name(group, sub_group)
 
