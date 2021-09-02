@@ -4,8 +4,8 @@
 #
 # Instructions for Running:
 #    1. Select which type of Synchronization method you want to use.
-#    2. Select the physical channel to correspond to where your
-#       signal is input on the DAQ device.
+#    2. Select the physical channel corresponding to the input signal
+#       on the DAQ device.
 #    3. Enter the minimum and maximum expected voltage for the input
 #       and output operations on each device.
 #    Note: For optimal accuracy, match the input range to the
