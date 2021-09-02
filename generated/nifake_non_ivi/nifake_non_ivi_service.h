@@ -65,6 +65,7 @@ private:
     NiFakeNonIviFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
 
     bool is_enabled;
+    bool is_allow_undefined_attributes_enabled;
   };
 
   NiFakeNonIviFeatureToggles feature_toggles_;
