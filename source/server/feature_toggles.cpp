@@ -11,4 +11,17 @@ FeatureToggles::FeatureState FeatureToggles::get_feature_state(const std::string
   }
   return FeatureState::kUnspecified;
 }
+
+bool FeatureToggles::is_feature_enabled(
+    const std::string& feature_name,
+    FeatureToggles::CodeReadiness feature_readiness) const
+{
+  auto toggle_state = get_feature_state(feature_name);
+  switch (feature_readiness) {
+    case CodeReadiness::kRelease:
+      return toggle_state != FeatureState::kDisabled;
+    default:
+      return toggle_state == FeatureState::kEnabled;
+  }
+}
 }  // namespace nidevice_grpc

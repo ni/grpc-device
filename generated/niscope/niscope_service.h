@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
@@ -25,7 +26,10 @@ class NiScopeService final : public NiScope::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
-  NiScopeService(NiScopeLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
+  NiScopeService(
+    NiScopeLibraryInterface* library,
+    ResourceRepositorySharedPtr session_repository,
+    const nidevice_grpc::FeatureToggles& feature_toggles = {});
   virtual ~NiScopeService();
   
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
@@ -118,6 +122,8 @@ public:
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
+
+  bool is_enabled();
 private:
   NiScopeLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
@@ -129,6 +135,16 @@ private:
   void Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexNumber>* output);
   void Copy(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output);
   void Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexInt32>* output);
+
+  struct NiScopeFeatureToggles
+  {
+    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+    NiScopeFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
+
+    bool is_enabled;
+  };
+
+  NiScopeFeatureToggles feature_toggles_;
 };
 
 } // namespace niscope_grpc

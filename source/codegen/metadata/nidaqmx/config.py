@@ -124,6 +124,10 @@ config = {
     },
     'split_attributes_by_type': True,
     'supports_raw_attributes': True,
+    'code_readiness': 'NextRelease',
+    'feature_toggles': {
+        'nidaqmx.allow_undefined_attributes': 'Prototype' 
+    },
     'driver_name': 'NI-DAQMX',
     'extra_errors_used': [
     ],

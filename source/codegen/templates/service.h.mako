@@ -40,6 +40,7 @@ for async_function in async_functions.keys():
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
@@ -52,7 +53,10 @@ class ${service_class_prefix}Service final : public ${base_class_name} {
 public:
   using ResourceRepositorySharedPtr = ${resource_repository_ptr};
 
-  ${service_class_prefix}Service(${service_class_prefix}LibraryInterface* library, ResourceRepositorySharedPtr session_repository);
+  ${service_class_prefix}Service(
+    ${service_class_prefix}LibraryInterface* library,
+    ResourceRepositorySharedPtr session_repository,
+    const nidevice_grpc::FeatureToggles& feature_toggles = {});
   virtual ~${service_class_prefix}Service();
   
 % for function in common_helpers.filter_proto_rpc_functions(functions):
@@ -68,6 +72,8 @@ public:
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${request_type}* request, ${response_type}* response) override;
 % endif
 % endfor
+
+  bool is_enabled();
 private:
   ${driver_library_interface}* library_;
   ResourceRepositorySharedPtr session_repository_;
@@ -97,6 +103,19 @@ private:
   std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${service_helpers.get_input_lookup_values(enums[enum])} };
   std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };
 % endfor
+
+  struct ${service_class_prefix}FeatureToggles
+  {
+    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+    ${service_class_prefix}FeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
+
+    bool is_enabled;
+% for toggle in service_helpers.get_feature_toggles(config):
+    bool ${service_helpers.get_toggle_member_name(toggle)};
+% endfor
+  };
+
+  ${service_class_prefix}FeatureToggles feature_toggles_;
 };
 
 } // namespace ${config["namespace_component"]}_grpc

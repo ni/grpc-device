@@ -8,6 +8,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
 using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigFile_ParseAddress_ReturnsDefaultLocalAddressAndPort)
@@ -360,6 +361,8 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMissingRootCertFile_ParseRoot
   }
 }
 
+const auto ALL_READINESS = {CodeReadiness::kRelease, CodeReadiness::kNextRelease, CodeReadiness::kIncomplete, CodeReadiness::kPrototype};
+
 TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureToggles_FeatureIsEnabled)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
@@ -373,6 +376,9 @@ TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureTo
   auto features = server_config_parser.parse_feature_toggles();
 
   EXPECT_EQ(FeatureState::kEnabled, features.get_feature_state("feature"));
+  for (auto readiness : ALL_READINESS) {
+    EXPECT_TRUE(features.is_feature_enabled("feature", readiness));
+  }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureToggles_SomeOtherFeatureIsUnspecified)
@@ -403,6 +409,9 @@ TEST(ServerConfigurationParserTests, JsonConfigWithDisabledFeature_ParseFeatureT
   auto features = server_config_parser.parse_feature_toggles();
 
   EXPECT_EQ(FeatureState::kDisabled, features.get_feature_state("feature"));
+  for (auto readiness : ALL_READINESS) {
+    EXPECT_FALSE(features.is_feature_enabled("feature", readiness));
+  }
 }
 
 TEST(ServerConfigurationParserTests, JsonConfigWithMultipleFeaturesWithDifferentEnabledState_ParseFeatureToggles_FeaturesAreEnabledAndDisabled)
@@ -459,7 +468,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithFeatureTogglesAsArray_ParseFe
       nidevice_grpc::ServerConfigurationParser::InvalidFeatureToggleException);
 }
 
-TEST(ServerConfigurationParserTests, JsonConfigWithNoFeatureToggles_ParseFeatureToggles_ReturnsValidFeatureToggles)
+TEST(ServerConfigurationParserTests, JsonConfigWithNoFeatureToggles_ParseFeatureToggles_ReturnsValidFeatureTogglesWithCorrectDefaults)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({})");
   nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
@@ -467,7 +476,12 @@ TEST(ServerConfigurationParserTests, JsonConfigWithNoFeatureToggles_ParseFeature
   auto features = server_config_parser.parse_feature_toggles();
 
   EXPECT_EQ(FeatureState::kUnspecified, features.get_feature_state("dummy_feature"));
+  EXPECT_TRUE(features.is_feature_enabled("cool_release_feature", CodeReadiness::kRelease));
+  EXPECT_FALSE(features.is_feature_enabled("cool_unreleased_feature", CodeReadiness::kNextRelease));
+  EXPECT_FALSE(features.is_feature_enabled("enigmatic_incomplete_feature", CodeReadiness::kIncomplete));
+  EXPECT_FALSE(features.is_feature_enabled("scary_prototype_feature", CodeReadiness::kPrototype));
 }
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

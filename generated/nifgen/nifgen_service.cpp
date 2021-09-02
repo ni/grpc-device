@@ -17,8 +17,11 @@ namespace nifgen_grpc {
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
-  NiFgenService::NiFgenService(NiFgenLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
-      : library_(library), session_repository_(session_repository)
+  NiFgenService::NiFgenService(
+      NiFgenLibraryInterface* library,
+      ResourceRepositorySharedPtr session_repository, 
+      const nidevice_grpc::FeatureToggles& feature_toggles)
+      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
 
@@ -3494,5 +3497,16 @@ namespace nifgen_grpc {
     }
   }
 
+  bool NiFgenService::is_enabled()
+  {
+    return feature_toggles_.is_enabled;
+  }
+
+  NiFgenService::NiFgenFeatureToggles::NiFgenFeatureToggles(
+    const nidevice_grpc::FeatureToggles& feature_toggles)
+    : is_enabled(
+        feature_toggles.is_feature_enabled("nifgen", CodeReadiness::kRelease))
+  {
+  }
 } // namespace nifgen_grpc
 

@@ -75,18 +75,18 @@ MATCHER_P(CVIAbsoluteTimeEq, lhs, "")
 }
 
 class NiFakeNonIviServiceTests : public ::testing::Test {
- protected:
+ public:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
   nidevice_grpc::SessionRepository session_repository_;
   std::shared_ptr<FakeResourceRepository> resource_repository_;
   NiFakeNonIviMockLibrary library_;
   NiFakeNonIviService service_;
 
-  NiFakeNonIviServiceTests()
+  NiFakeNonIviServiceTests(const nidevice_grpc::FeatureToggles& feature_toggles = {})
       : session_repository_(),
         resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
         library_(),
-        service_(&library_, resource_repository_)
+        service_(&library_, resource_repository_, feature_toggles)
   {
   }
 
@@ -973,6 +973,25 @@ TEST_F(NiFakeNonIviServiceTests, SetColors_PassesColorsArrayToLibrary)
 
   EXPECT_EQ(kDriverSuccess, response.status());
 }
+
+struct NiFakeNonIviServiceEnabledToggleTests : public NiFakeNonIviServiceTests {
+  NiFakeNonIviServiceEnabledToggleTests()
+      : NiFakeNonIviServiceTests(
+            nidevice_grpc::FeatureToggles({{"nifake_non_ivi", true}}))
+  {
+  }
+};
+
+TEST_F(NiFakeNonIviServiceEnabledToggleTests, UnreleasedServiceWithToggleEnabled_IsEnabled_ReturnsTrue)
+{
+  EXPECT_TRUE(service_.is_enabled());
+}
+
+TEST_F(NiFakeNonIviServiceTests, UnreleasedServiceWithNoToggles_IsEnabled_ReturnsFalse)
+{
+  EXPECT_FALSE(service_.is_enabled());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
 #include <server/exceptions.h>
@@ -25,7 +26,10 @@ class NiSwitchService final : public NiSwitch::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
-  NiSwitchService(NiSwitchLibraryInterface* library, ResourceRepositorySharedPtr session_repository);
+  NiSwitchService(
+    NiSwitchLibraryInterface* library,
+    ResourceRepositorySharedPtr session_repository,
+    const nidevice_grpc::FeatureToggles& feature_toggles = {});
   virtual ~NiSwitchService();
   
   ::grpc::Status AbortScan(::grpc::ServerContext* context, const AbortScanRequest* request, AbortScanResponse* response) override;
@@ -90,9 +94,21 @@ public:
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
   ::grpc::Status WaitForDebounce(::grpc::ServerContext* context, const WaitForDebounceRequest* request, WaitForDebounceResponse* response) override;
   ::grpc::Status WaitForScanComplete(::grpc::ServerContext* context, const WaitForScanCompleteRequest* request, WaitForScanCompleteResponse* response) override;
+
+  bool is_enabled();
 private:
   NiSwitchLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+
+  struct NiSwitchFeatureToggles
+  {
+    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+    NiSwitchFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
+
+    bool is_enabled;
+  };
+
+  NiSwitchFeatureToggles feature_toggles_;
 };
 
 } // namespace niswitch_grpc

@@ -14,8 +14,11 @@
 
 namespace nifake_extension_grpc {
 
-  NiFakeExtensionService::NiFakeExtensionService(NiFakeExtensionLibraryInterface* library, ResourceRepositorySharedPtr session_repository)
-      : library_(library), session_repository_(session_repository)
+  NiFakeExtensionService::NiFakeExtensionService(
+      NiFakeExtensionLibraryInterface* library,
+      ResourceRepositorySharedPtr session_repository, 
+      const nidevice_grpc::FeatureToggles& feature_toggles)
+      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
 
@@ -43,5 +46,16 @@ namespace nifake_extension_grpc {
     }
   }
 
+  bool NiFakeExtensionService::is_enabled()
+  {
+    return feature_toggles_.is_enabled;
+  }
+
+  NiFakeExtensionService::NiFakeExtensionFeatureToggles::NiFakeExtensionFeatureToggles(
+    const nidevice_grpc::FeatureToggles& feature_toggles)
+    : is_enabled(
+        feature_toggles.is_feature_enabled("nifake_extension", CodeReadiness::kRelease))
+  {
+  }
 } // namespace nifake_extension_grpc
 
