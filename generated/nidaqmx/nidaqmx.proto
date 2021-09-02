@@ -230,10 +230,12 @@ service NiDAQmx {
   rpc GetTimingAttributeExString(GetTimingAttributeExStringRequest) returns (GetTimingAttributeExStringResponse);
   rpc GetTimingAttributeExTimestamp(GetTimingAttributeExTimestampRequest) returns (GetTimingAttributeExTimestampResponse);
   rpc GetTimingAttributeExUInt32(GetTimingAttributeExUInt32Request) returns (GetTimingAttributeExUInt32Response);
+  rpc GetTimingAttributeExUInt64(GetTimingAttributeExUInt64Request) returns (GetTimingAttributeExUInt64Response);
   rpc GetTimingAttributeInt32(GetTimingAttributeInt32Request) returns (GetTimingAttributeInt32Response);
   rpc GetTimingAttributeString(GetTimingAttributeStringRequest) returns (GetTimingAttributeStringResponse);
   rpc GetTimingAttributeTimestamp(GetTimingAttributeTimestampRequest) returns (GetTimingAttributeTimestampResponse);
   rpc GetTimingAttributeUInt32(GetTimingAttributeUInt32Request) returns (GetTimingAttributeUInt32Response);
+  rpc GetTimingAttributeUInt64(GetTimingAttributeUInt64Request) returns (GetTimingAttributeUInt64Response);
   rpc GetTrigAttributeBool(GetTrigAttributeBoolRequest) returns (GetTrigAttributeBoolResponse);
   rpc GetTrigAttributeDouble(GetTrigAttributeDoubleRequest) returns (GetTrigAttributeDoubleResponse);
   rpc GetTrigAttributeDoubleArray(GetTrigAttributeDoubleArrayRequest) returns (GetTrigAttributeDoubleArrayResponse);
@@ -251,6 +253,7 @@ service NiDAQmx {
   rpc GetWriteAttributeInt32(GetWriteAttributeInt32Request) returns (GetWriteAttributeInt32Response);
   rpc GetWriteAttributeString(GetWriteAttributeStringRequest) returns (GetWriteAttributeStringResponse);
   rpc GetWriteAttributeUInt32(GetWriteAttributeUInt32Request) returns (GetWriteAttributeUInt32Response);
+  rpc GetWriteAttributeUInt64(GetWriteAttributeUInt64Request) returns (GetWriteAttributeUInt64Response);
   rpc IsTaskDone(IsTaskDoneRequest) returns (IsTaskDoneResponse);
   rpc LoadTask(LoadTaskRequest) returns (LoadTaskResponse);
   rpc ReadAnalogF64(ReadAnalogF64Request) returns (ReadAnalogF64Response);
@@ -345,10 +348,12 @@ service NiDAQmx {
   rpc SetTimingAttributeExString(SetTimingAttributeExStringRequest) returns (SetTimingAttributeExStringResponse);
   rpc SetTimingAttributeExTimestamp(SetTimingAttributeExTimestampRequest) returns (SetTimingAttributeExTimestampResponse);
   rpc SetTimingAttributeExUInt32(SetTimingAttributeExUInt32Request) returns (SetTimingAttributeExUInt32Response);
+  rpc SetTimingAttributeExUInt64(SetTimingAttributeExUInt64Request) returns (SetTimingAttributeExUInt64Response);
   rpc SetTimingAttributeInt32(SetTimingAttributeInt32Request) returns (SetTimingAttributeInt32Response);
   rpc SetTimingAttributeString(SetTimingAttributeStringRequest) returns (SetTimingAttributeStringResponse);
   rpc SetTimingAttributeTimestamp(SetTimingAttributeTimestampRequest) returns (SetTimingAttributeTimestampResponse);
   rpc SetTimingAttributeUInt32(SetTimingAttributeUInt32Request) returns (SetTimingAttributeUInt32Response);
+  rpc SetTimingAttributeUInt64(SetTimingAttributeUInt64Request) returns (SetTimingAttributeUInt64Response);
   rpc SetTrigAttributeBool(SetTrigAttributeBoolRequest) returns (SetTrigAttributeBoolResponse);
   rpc SetTrigAttributeDouble(SetTrigAttributeDoubleRequest) returns (SetTrigAttributeDoubleResponse);
   rpc SetTrigAttributeDoubleArray(SetTrigAttributeDoubleArrayRequest) returns (SetTrigAttributeDoubleArrayResponse);
@@ -366,6 +371,7 @@ service NiDAQmx {
   rpc SetWriteAttributeInt32(SetWriteAttributeInt32Request) returns (SetWriteAttributeInt32Response);
   rpc SetWriteAttributeString(SetWriteAttributeStringRequest) returns (SetWriteAttributeStringResponse);
   rpc SetWriteAttributeUInt32(SetWriteAttributeUInt32Request) returns (SetWriteAttributeUInt32Response);
+  rpc SetWriteAttributeUInt64(SetWriteAttributeUInt64Request) returns (SetWriteAttributeUInt64Response);
   rpc StartNewFile(StartNewFileRequest) returns (StartNewFileResponse);
   rpc StartTask(StartTaskRequest) returns (StartTaskResponse);
   rpc StopTask(StopTaskRequest) returns (StopTaskResponse);
@@ -2088,11 +2094,12 @@ enum ReadBoolAttributes {
   READ_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS_EXIST = 12690;
 }
 
-enum ReadDoubleAttributes {
-  READ_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
+enum ReadUInt64Attributes {
+  READ_UINT64_ATTRIBUTE_UNSPECIFIED = 0;
   READ_ATTRIBUTE_CURR_READ_POS = 4641;
   READ_ATTRIBUTE_TOTAL_SAMP_PER_CHAN_ACQUIRED = 6442;
-  READ_ATTRIBUTE_SLEEP_TIME = 8880;
+  READ_ATTRIBUTE_LOGGING_FILE_PREALLOCATION_SIZE = 12230;
+  READ_ATTRIBUTE_LOGGING_SAMPS_PER_FILE = 12260;
 }
 
 enum ReadUInt32Attributes {
@@ -2125,10 +2132,9 @@ enum ReadStringAttributes {
   READ_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS = 12691;
 }
 
-enum ReadUInt64Attributes {
-  READ_UINT64_ATTRIBUTE_UNSPECIFIED = 0;
-  READ_ATTRIBUTE_LOGGING_FILE_PREALLOCATION_SIZE = 12230;
-  READ_ATTRIBUTE_LOGGING_SAMPS_PER_FILE = 12260;
+enum ReadDoubleAttributes {
+  READ_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
+  READ_ATTRIBUTE_SLEEP_TIME = 8880;
 }
 
 enum RealTimeUInt32Attributes {
@@ -2304,7 +2310,6 @@ enum TimingResetAttributes {
 enum TimingDoubleAttributes {
   TIMING_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_RATE = 4867;
-  TIMING_ATTRIBUTE_SAMP_QUANT_SAMP_PER_CHAN = 4880;
   TIMING_ATTRIBUTE_REF_CLK_RATE = 4885;
   TIMING_ATTRIBUTE_DELAY_FROM_SAMP_CLK_DELAY = 4887;
   TIMING_ATTRIBUTE_SAMP_CLK_RATE = 4932;
@@ -2348,6 +2353,11 @@ enum TimingStringAttributes {
   TIMING_ATTRIBUTE_SAMP_CLK_TERM = 12059;
   TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_TERM = 12060;
   TIMING_ATTRIBUTE_SYNC_PULSE_TERM = 12165;
+}
+
+enum TimingUInt64Attributes {
+  TIMING_UINT64_ATTRIBUTE_UNSPECIFIED = 0;
+  TIMING_ATTRIBUTE_SAMP_QUANT_SAMP_PER_CHAN = 4880;
 }
 
 enum TimingBoolAttributes {
@@ -2757,11 +2767,10 @@ enum WriteResetAttributes {
   WRITE_RESET_ATTRIBUTE_NEXT_WRITE_IS_LAST = 10604;
 }
 
-enum WriteDoubleAttributes {
-  WRITE_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
+enum WriteUInt64Attributes {
+  WRITE_UINT64_ATTRIBUTE_UNSPECIFIED = 0;
   WRITE_ATTRIBUTE_CURR_WRITE_POS = 5208;
   WRITE_ATTRIBUTE_TOTAL_SAMP_PER_CHAN_GENERATED = 6443;
-  WRITE_ATTRIBUTE_SLEEP_TIME = 8882;
 }
 
 enum WriteUInt32Attributes {
@@ -2770,6 +2779,11 @@ enum WriteUInt32Attributes {
   WRITE_ATTRIBUTE_RAW_DATA_WIDTH = 8573;
   WRITE_ATTRIBUTE_NUM_CHANS = 8574;
   WRITE_ATTRIBUTE_DIGITAL_LINES_BYTES_PER_CHAN = 8575;
+}
+
+enum WriteDoubleAttributes {
+  WRITE_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
+  WRITE_ATTRIBUTE_SLEEP_TIME = 8882;
 }
 
 enum WriteBoolAttributes {
@@ -7881,6 +7895,20 @@ message GetTimingAttributeExUInt32Response {
   uint32 value = 2;
 }
 
+message GetTimingAttributeExUInt64Request {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  oneof attribute_enum {
+    TimingUInt64Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+}
+
+message GetTimingAttributeExUInt64Response {
+  int32 status = 1;
+  uint64 value = 2;
+}
+
 message GetTimingAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
@@ -7932,6 +7960,19 @@ message GetTimingAttributeUInt32Request {
 message GetTimingAttributeUInt32Response {
   int32 status = 1;
   uint32 value = 2;
+}
+
+message GetTimingAttributeUInt64Request {
+  nidevice_grpc.Session task = 1;
+  oneof attribute_enum {
+    TimingUInt64Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+}
+
+message GetTimingAttributeUInt64Response {
+  int32 status = 1;
+  uint64 value = 2;
 }
 
 message GetTrigAttributeBoolRequest {
@@ -8161,6 +8202,19 @@ message GetWriteAttributeUInt32Request {
 message GetWriteAttributeUInt32Response {
   int32 status = 1;
   uint32 value = 2;
+}
+
+message GetWriteAttributeUInt64Request {
+  nidevice_grpc.Session task = 1;
+  oneof attribute_enum {
+    WriteUInt64Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+}
+
+message GetWriteAttributeUInt64Response {
+  int32 status = 1;
+  uint64 value = 2;
 }
 
 message IsTaskDoneRequest {
@@ -9394,6 +9448,20 @@ message SetTimingAttributeExUInt32Response {
   int32 status = 1;
 }
 
+message SetTimingAttributeExUInt64Request {
+  nidevice_grpc.Session task = 1;
+  string device_names = 2;
+  oneof attribute_enum {
+    TimingUInt64Attributes attribute = 3;
+    int32 attribute_raw = 4;
+  }
+  uint64 value = 5;
+}
+
+message SetTimingAttributeExUInt64Response {
+  int32 status = 1;
+}
+
 message SetTimingAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
@@ -9446,6 +9514,19 @@ message SetTimingAttributeUInt32Request {
 }
 
 message SetTimingAttributeUInt32Response {
+  int32 status = 1;
+}
+
+message SetTimingAttributeUInt64Request {
+  nidevice_grpc.Session task = 1;
+  oneof attribute_enum {
+    TimingUInt64Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint64 value = 4;
+}
+
+message SetTimingAttributeUInt64Response {
   int32 status = 1;
 }
 
@@ -9511,7 +9592,6 @@ message SetTrigAttributeInt32ArrayRequest {
     int32 attribute_raw = 3;
   }
   repeated int32 value = 4;
-  uint32 size = 5;
 }
 
 message SetTrigAttributeInt32ArrayResponse {
@@ -9681,6 +9761,19 @@ message SetWriteAttributeUInt32Request {
 }
 
 message SetWriteAttributeUInt32Response {
+  int32 status = 1;
+}
+
+message SetWriteAttributeUInt64Request {
+  nidevice_grpc.Session task = 1;
+  oneof attribute_enum {
+    WriteUInt64Attributes attribute = 2;
+    int32 attribute_raw = 3;
+  }
+  uint64 value = 4;
+}
+
+message SetWriteAttributeUInt64Response {
   int32 status = 1;
 }
 

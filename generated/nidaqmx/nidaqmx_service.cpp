@@ -10769,6 +10769,49 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetTimingAttributeExUInt64(::grpc::ServerContext* context, const GetTimingAttributeExUInt64Request* request, GetTimingAttributeExUInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto device_names = request->device_names().c_str();
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nidaqmx_grpc::GetTimingAttributeExUInt64Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nidaqmx_grpc::GetTimingAttributeExUInt64Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nidaqmx_grpc::GetTimingAttributeExUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
+
+      auto size = 0U;
+      uInt64 value {};
+      auto status = library_->GetTimingAttributeExUInt64(task, device_names, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetTimingAttributeInt32(::grpc::ServerContext* context, const GetTimingAttributeInt32Request* request, GetTimingAttributeInt32Response* response)
   {
     if (context->IsCancelled()) {
@@ -10946,6 +10989,48 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       uInt32 value {};
       auto status = library_->GetTimingAttributeUInt32(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetTimingAttributeUInt64(::grpc::ServerContext* context, const GetTimingAttributeUInt64Request* request, GetTimingAttributeUInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
+
+      auto size = 0U;
+      uInt64 value {};
+      auto status = library_->GetTimingAttributeUInt64(task, attribute, &value, size);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -11770,6 +11855,48 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       uInt32 value {};
       auto status = library_->GetWriteAttributeUInt32(task, attribute, &value, size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetWriteAttributeUInt64(::grpc::ServerContext* context, const GetWriteAttributeUInt64Request* request, GetWriteAttributeUInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+      auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
+
+      auto size = 0U;
+      uInt64 value {};
+      auto status = library_->GetWriteAttributeUInt64(task, attribute, &value, size);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -15366,6 +15493,46 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetTimingAttributeExUInt64(::grpc::ServerContext* context, const SetTimingAttributeExUInt64Request* request, SetTimingAttributeExUInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      auto device_names = request->device_names().c_str();
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nidaqmx_grpc::SetTimingAttributeExUInt64Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nidaqmx_grpc::SetTimingAttributeExUInt64Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nidaqmx_grpc::SetTimingAttributeExUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
+
+      uInt64 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetTimingAttributeExUInt64(task, device_names, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::SetTimingAttributeInt32(::grpc::ServerContext* context, const SetTimingAttributeInt32Request* request, SetTimingAttributeInt32Response* response)
   {
     if (context->IsCancelled()) {
@@ -15527,6 +15694,45 @@ namespace nidaqmx_grpc {
       uInt32 value = request->value();
       auto size = 0U;
       auto status = library_->SetTimingAttributeUInt32(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetTimingAttributeUInt64(::grpc::ServerContext* context, const SetTimingAttributeUInt64Request* request, SetTimingAttributeUInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
+
+      uInt64 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetTimingAttributeUInt64(task, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -15735,7 +15941,7 @@ namespace nidaqmx_grpc {
       attribute = attribute_is_valid ? attribute : 0;
 
       auto value = reinterpret_cast<const int32*>(request->value().data());
-      uInt32 size = request->size();
+      uInt32 size = static_cast<uInt32>(request->value().size());
       auto status = library_->SetTrigAttributeInt32Array(task, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -16239,6 +16445,45 @@ namespace nidaqmx_grpc {
       uInt32 value = request->value();
       auto size = 0U;
       auto status = library_->SetWriteAttributeUInt32(task, attribute, value, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::SetWriteAttributeUInt64(::grpc::ServerContext* context, const SetWriteAttributeUInt64Request* request, SetWriteAttributeUInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          break;
+        }
+        case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          break;
+        }
+        case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+      auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
+
+      uInt64 value = request->value();
+      auto size = 0U;
+      auto status = library_->SetWriteAttributeUInt64(task, attribute, value, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

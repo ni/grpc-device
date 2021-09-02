@@ -231,10 +231,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, char value[], uInt32 size);
   int32 GetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime* value, uInt32 size);
   int32 GetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32* value, uInt32 size);
+  int32 GetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64* value, uInt32 size);
   int32 GetTimingAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size);
   int32 GetTimingAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size);
   int32 GetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime* value, uInt32 size);
   int32 GetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
+  int32 GetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size);
   int32 GetTrigAttributeBool(TaskHandle task, int32 attribute, bool32* value, uInt32 size);
   int32 GetTrigAttributeDouble(TaskHandle task, int32 attribute, float64* value, uInt32 size);
   int32 GetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, float64 value[], uInt32 size);
@@ -252,6 +254,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetWriteAttributeInt32(TaskHandle task, int32 attribute, int32* value, uInt32 size);
   int32 GetWriteAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size);
   int32 GetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value, uInt32 size);
+  int32 GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value, uInt32 size);
   int32 IsTaskDone(TaskHandle task, bool32* isTaskDone);
   int32 LoadTask(const char sessionName[], TaskHandle* task);
   int32 ReadAnalogF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved);
@@ -346,10 +349,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 SetTimingAttributeExString(TaskHandle task, const char deviceNames[], int32 attribute, const char value[], uInt32 size);
   int32 SetTimingAttributeExTimestamp(TaskHandle task, const char deviceNames[], int32 attribute, CVIAbsoluteTime value, uInt32 size);
   int32 SetTimingAttributeExUInt32(TaskHandle task, const char deviceNames[], int32 attribute, uInt32 value, uInt32 size);
+  int32 SetTimingAttributeExUInt64(TaskHandle task, const char deviceNames[], int32 attribute, uInt64 value, uInt32 size);
   int32 SetTimingAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size);
   int32 SetTimingAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size);
   int32 SetTimingAttributeTimestamp(TaskHandle task, int32 attribute, CVIAbsoluteTime value, uInt32 size);
   int32 SetTimingAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size);
+  int32 SetTimingAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size);
   int32 SetTrigAttributeBool(TaskHandle task, int32 attribute, bool32 value, uInt32 size);
   int32 SetTrigAttributeDouble(TaskHandle task, int32 attribute, float64 value, uInt32 size);
   int32 SetTrigAttributeDoubleArray(TaskHandle task, int32 attribute, const float64 value[], uInt32 size);
@@ -367,6 +372,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 SetWriteAttributeInt32(TaskHandle task, int32 attribute, int32 value, uInt32 size);
   int32 SetWriteAttributeString(TaskHandle task, int32 attribute, const char value[], uInt32 size);
   int32 SetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value, uInt32 size);
+  int32 SetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64 value, uInt32 size);
   int32 StartNewFile(TaskHandle task, const char filePath[]);
   int32 StartTask(TaskHandle task);
   int32 StopTask(TaskHandle task);
@@ -611,10 +617,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetTimingAttributeExStringPtr = decltype(&DAQmxGetTimingAttributeEx);
   using GetTimingAttributeExTimestampPtr = decltype(&DAQmxGetTimingAttributeEx);
   using GetTimingAttributeExUInt32Ptr = decltype(&DAQmxGetTimingAttributeEx);
+  using GetTimingAttributeExUInt64Ptr = decltype(&DAQmxGetTimingAttributeEx);
   using GetTimingAttributeInt32Ptr = decltype(&DAQmxGetTimingAttribute);
   using GetTimingAttributeStringPtr = decltype(&DAQmxGetTimingAttribute);
   using GetTimingAttributeTimestampPtr = decltype(&DAQmxGetTimingAttribute);
   using GetTimingAttributeUInt32Ptr = decltype(&DAQmxGetTimingAttribute);
+  using GetTimingAttributeUInt64Ptr = decltype(&DAQmxGetTimingAttribute);
   using GetTrigAttributeBoolPtr = decltype(&DAQmxGetTrigAttribute);
   using GetTrigAttributeDoublePtr = decltype(&DAQmxGetTrigAttribute);
   using GetTrigAttributeDoubleArrayPtr = decltype(&DAQmxGetTrigAttribute);
@@ -632,6 +640,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetWriteAttributeInt32Ptr = decltype(&DAQmxGetWriteAttribute);
   using GetWriteAttributeStringPtr = decltype(&DAQmxGetWriteAttribute);
   using GetWriteAttributeUInt32Ptr = decltype(&DAQmxGetWriteAttribute);
+  using GetWriteAttributeUInt64Ptr = decltype(&DAQmxGetWriteAttribute);
   using IsTaskDonePtr = decltype(&DAQmxIsTaskDone);
   using LoadTaskPtr = decltype(&DAQmxLoadTask);
   using ReadAnalogF64Ptr = decltype(&DAQmxReadAnalogF64);
@@ -726,10 +735,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using SetTimingAttributeExStringPtr = decltype(&DAQmxSetTimingAttributeEx);
   using SetTimingAttributeExTimestampPtr = decltype(&DAQmxSetTimingAttributeEx);
   using SetTimingAttributeExUInt32Ptr = decltype(&DAQmxSetTimingAttributeEx);
+  using SetTimingAttributeExUInt64Ptr = decltype(&DAQmxSetTimingAttributeEx);
   using SetTimingAttributeInt32Ptr = decltype(&DAQmxSetTimingAttribute);
   using SetTimingAttributeStringPtr = decltype(&DAQmxSetTimingAttribute);
   using SetTimingAttributeTimestampPtr = decltype(&DAQmxSetTimingAttribute);
   using SetTimingAttributeUInt32Ptr = decltype(&DAQmxSetTimingAttribute);
+  using SetTimingAttributeUInt64Ptr = decltype(&DAQmxSetTimingAttribute);
   using SetTrigAttributeBoolPtr = decltype(&DAQmxSetTrigAttribute);
   using SetTrigAttributeDoublePtr = decltype(&DAQmxSetTrigAttribute);
   using SetTrigAttributeDoubleArrayPtr = decltype(&DAQmxSetTrigAttribute);
@@ -747,6 +758,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using SetWriteAttributeInt32Ptr = decltype(&DAQmxSetWriteAttribute);
   using SetWriteAttributeStringPtr = decltype(&DAQmxSetWriteAttribute);
   using SetWriteAttributeUInt32Ptr = decltype(&DAQmxSetWriteAttribute);
+  using SetWriteAttributeUInt64Ptr = decltype(&DAQmxSetWriteAttribute);
   using StartNewFilePtr = decltype(&DAQmxStartNewFile);
   using StartTaskPtr = decltype(&DAQmxStartTask);
   using StopTaskPtr = decltype(&DAQmxStopTask);
@@ -991,10 +1003,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetTimingAttributeExStringPtr GetTimingAttributeExString;
     GetTimingAttributeExTimestampPtr GetTimingAttributeExTimestamp;
     GetTimingAttributeExUInt32Ptr GetTimingAttributeExUInt32;
+    GetTimingAttributeExUInt64Ptr GetTimingAttributeExUInt64;
     GetTimingAttributeInt32Ptr GetTimingAttributeInt32;
     GetTimingAttributeStringPtr GetTimingAttributeString;
     GetTimingAttributeTimestampPtr GetTimingAttributeTimestamp;
     GetTimingAttributeUInt32Ptr GetTimingAttributeUInt32;
+    GetTimingAttributeUInt64Ptr GetTimingAttributeUInt64;
     GetTrigAttributeBoolPtr GetTrigAttributeBool;
     GetTrigAttributeDoublePtr GetTrigAttributeDouble;
     GetTrigAttributeDoubleArrayPtr GetTrigAttributeDoubleArray;
@@ -1012,6 +1026,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetWriteAttributeInt32Ptr GetWriteAttributeInt32;
     GetWriteAttributeStringPtr GetWriteAttributeString;
     GetWriteAttributeUInt32Ptr GetWriteAttributeUInt32;
+    GetWriteAttributeUInt64Ptr GetWriteAttributeUInt64;
     IsTaskDonePtr IsTaskDone;
     LoadTaskPtr LoadTask;
     ReadAnalogF64Ptr ReadAnalogF64;
@@ -1106,10 +1121,12 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     SetTimingAttributeExStringPtr SetTimingAttributeExString;
     SetTimingAttributeExTimestampPtr SetTimingAttributeExTimestamp;
     SetTimingAttributeExUInt32Ptr SetTimingAttributeExUInt32;
+    SetTimingAttributeExUInt64Ptr SetTimingAttributeExUInt64;
     SetTimingAttributeInt32Ptr SetTimingAttributeInt32;
     SetTimingAttributeStringPtr SetTimingAttributeString;
     SetTimingAttributeTimestampPtr SetTimingAttributeTimestamp;
     SetTimingAttributeUInt32Ptr SetTimingAttributeUInt32;
+    SetTimingAttributeUInt64Ptr SetTimingAttributeUInt64;
     SetTrigAttributeBoolPtr SetTrigAttributeBool;
     SetTrigAttributeDoublePtr SetTrigAttributeDouble;
     SetTrigAttributeDoubleArrayPtr SetTrigAttributeDoubleArray;
@@ -1127,6 +1144,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     SetWriteAttributeInt32Ptr SetWriteAttributeInt32;
     SetWriteAttributeStringPtr SetWriteAttributeString;
     SetWriteAttributeUInt32Ptr SetWriteAttributeUInt32;
+    SetWriteAttributeUInt64Ptr SetWriteAttributeUInt64;
     StartNewFilePtr StartNewFile;
     StartTaskPtr StartTask;
     StopTaskPtr StopTask;

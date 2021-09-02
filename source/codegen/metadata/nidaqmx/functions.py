@@ -261,20 +261,20 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'triggerSlopeArray',
-                'type': 'const int32[]',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
-                }
+                },
+                'type': 'const int32[]'
             },
             {
                 'direction': 'in',
                 'name': 'triggerLevelArray',
-                'type': 'const float64[]',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
-                }
+                },
+                'type': 'const float64[]'
             },
             {
                 'direction': 'in',
@@ -8342,6 +8342,40 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetTimingAttributeExUInt64': {
+        'cname': 'DAQmxGetTimingAttributeEx',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'deviceNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TimingAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetTimingAttributeInt32': {
         'cname': 'DAQmxGetTimingAttribute',
         'parameters': [
@@ -8449,6 +8483,35 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetTimingAttributeUInt64': {
+        'cname': 'DAQmxGetTimingAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TimingAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt64'
             },
             {
                 'direction': 'in',
@@ -8972,6 +9035,35 @@ functions = {
                 'direction': 'out',
                 'name': 'value',
                 'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetWriteAttributeUInt64': {
+        'cname': 'DAQmxGetWriteAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WriteAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'uInt64'
             },
             {
                 'direction': 'in',
@@ -12012,6 +12104,40 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetTimingAttributeExUInt64': {
+        'cname': 'DAQmxSetTimingAttributeEx',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'deviceNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TimingAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'uInt64'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetTimingAttributeInt32': {
         'cname': 'DAQmxSetTimingAttribute',
         'parameters': [
@@ -12117,6 +12243,35 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetTimingAttributeUInt64': {
+        'cname': 'DAQmxSetTimingAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'TimingAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'uInt64'
             },
             {
                 'direction': 'in',
@@ -12264,7 +12419,7 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'len',
                     'value': 'size'
                 },
                 'type': 'const int32[]'
@@ -12634,6 +12789,35 @@ functions = {
                 'direction': 'in',
                 'name': 'value',
                 'type': 'uInt32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0U',
+                'include_in_proto': False,
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetWriteAttributeUInt64': {
+        'cname': 'DAQmxSetWriteAttribute',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'WriteAttributes',
+                'name': 'attribute',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'uInt64'
             },
             {
                 'direction': 'in',

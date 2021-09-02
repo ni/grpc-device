@@ -235,10 +235,12 @@ GetTimingAttributeExInt32Response get_timing_attribute_ex_int32(const StubPtr& s
 GetTimingAttributeExStringResponse get_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingStringAttributes, pb::int32>& attribute);
 GetTimingAttributeExTimestampResponse get_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingTimestampAttributes, pb::int32>& attribute);
 GetTimingAttributeExUInt32Response get_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt32Attributes, pb::int32>& attribute);
+GetTimingAttributeExUInt64Response get_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt64Attributes, pb::int32>& attribute);
 GetTimingAttributeInt32Response get_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingInt32Attributes, pb::int32>& attribute);
 GetTimingAttributeStringResponse get_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingStringAttributes, pb::int32>& attribute);
 GetTimingAttributeTimestampResponse get_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingTimestampAttributes, pb::int32>& attribute);
 GetTimingAttributeUInt32Response get_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingUInt32Attributes, pb::int32>& attribute);
+GetTimingAttributeUInt64Response get_timing_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingUInt64Attributes, pb::int32>& attribute);
 GetTrigAttributeBoolResponse get_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerBoolAttributes, pb::int32>& attribute);
 GetTrigAttributeDoubleResponse get_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerDoubleAttributes, pb::int32>& attribute);
 GetTrigAttributeDoubleArrayResponse get_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerDoubleArrayAttributes, pb::int32>& attribute);
@@ -256,6 +258,7 @@ GetWriteAttributeDoubleResponse get_write_attribute_double(const StubPtr& stub, 
 GetWriteAttributeInt32Response get_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteInt32Attributes, pb::int32>& attribute);
 GetWriteAttributeStringResponse get_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteStringAttributes, pb::int32>& attribute);
 GetWriteAttributeUInt32Response get_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteUInt32Attributes, pb::int32>& attribute);
+GetWriteAttributeUInt64Response get_write_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteUInt64Attributes, pb::int32>& attribute);
 IsTaskDoneResponse is_task_done(const StubPtr& stub, const nidevice_grpc::Session& task);
 LoadTaskResponse load_task(const StubPtr& stub, const pb::string& session_name);
 ReadAnalogF64Response read_analog_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps);
@@ -350,15 +353,17 @@ SetTimingAttributeExInt32Response set_timing_attribute_ex_int32(const StubPtr& s
 SetTimingAttributeExStringResponse set_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingStringAttributes, pb::int32>& attribute, const pb::string& value);
 SetTimingAttributeExTimestampResponse set_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingTimestampAttributes, pb::int32>& attribute, const google::protobuf::Timestamp& value);
 SetTimingAttributeExUInt32Response set_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt32Attributes, pb::int32>& attribute, const pb::uint32& value);
+SetTimingAttributeExUInt64Response set_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& device_names, const simple_variant<TimingUInt64Attributes, pb::int32>& attribute, const pb::uint64& value);
 SetTimingAttributeInt32Response set_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingInt32Attributes, pb::int32>& attribute, const simple_variant<TimingInt32AttributeValues, pb::int32>& value);
 SetTimingAttributeStringResponse set_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingStringAttributes, pb::int32>& attribute, const pb::string& value);
 SetTimingAttributeTimestampResponse set_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingTimestampAttributes, pb::int32>& attribute, const google::protobuf::Timestamp& value);
 SetTimingAttributeUInt32Response set_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingUInt32Attributes, pb::int32>& attribute, const pb::uint32& value);
+SetTimingAttributeUInt64Response set_timing_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TimingUInt64Attributes, pb::int32>& attribute, const pb::uint64& value);
 SetTrigAttributeBoolResponse set_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerBoolAttributes, pb::int32>& attribute, const bool& value);
 SetTrigAttributeDoubleResponse set_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerDoubleAttributes, pb::int32>& attribute, const double& value);
 SetTrigAttributeDoubleArrayResponse set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerDoubleArrayAttributes, pb::int32>& attribute, const std::vector<double>& value);
 SetTrigAttributeInt32Response set_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerInt32Attributes, pb::int32>& attribute, const simple_variant<TriggerInt32AttributeValues, pb::int32>& value);
-SetTrigAttributeInt32ArrayResponse set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerInt32ArrayAttributes, pb::int32>& attribute, const std::vector<pb::int32>& value, const pb::uint32& size);
+SetTrigAttributeInt32ArrayResponse set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerInt32ArrayAttributes, pb::int32>& attribute, const std::vector<pb::int32>& value);
 SetTrigAttributeStringResponse set_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerStringAttributes, pb::int32>& attribute, const pb::string& value);
 SetTrigAttributeTimestampResponse set_trig_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerTimestampAttributes, pb::int32>& attribute, const google::protobuf::Timestamp& value);
 SetTrigAttributeUInt32Response set_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<TriggerUInt32Attributes, pb::int32>& attribute, const pb::uint32& value);
@@ -371,6 +376,7 @@ SetWriteAttributeDoubleResponse set_write_attribute_double(const StubPtr& stub, 
 SetWriteAttributeInt32Response set_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteInt32Attributes, pb::int32>& attribute, const simple_variant<WriteInt32AttributeValues, pb::int32>& value);
 SetWriteAttributeStringResponse set_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteStringAttributes, pb::int32>& attribute, const pb::string& value);
 SetWriteAttributeUInt32Response set_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteUInt32Attributes, pb::int32>& attribute, const pb::uint32& value);
+SetWriteAttributeUInt64Response set_write_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<WriteUInt64Attributes, pb::int32>& attribute, const pb::uint64& value);
 StartNewFileResponse start_new_file(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& file_path);
 StartTaskResponse start_task(const StubPtr& stub, const nidevice_grpc::Session& task);
 StopTaskResponse stop_task(const StubPtr& stub, const nidevice_grpc::Session& task);

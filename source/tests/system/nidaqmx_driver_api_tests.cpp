@@ -1646,6 +1646,33 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_ReconfigureSleepTime_UpdatesSleepTimeSuc
   EXPECT_NE(get_response.value(), initial_response.value());
 }
 
+TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureSampQuantSampsPerChan_UpdatesSampQuantSampsPerChanSuccessfully)
+{
+  const auto SAMPS_PER_CHAN_ATTRIBUTE = TimingUInt64Attributes::TIMING_ATTRIBUTE_SAMP_QUANT_SAMP_PER_CHAN;
+  const auto RECONFIGURED_SAMPS_PER_CHAN = 2000ULL;
+  create_ai_voltage_chan(-10.0, 10.0);
+
+  auto initial_response = client::get_timing_attribute_uint64(
+      stub(),
+      task(),
+      SAMPS_PER_CHAN_ATTRIBUTE);
+  auto set_response = client::set_timing_attribute_uint64(
+      stub(),
+      task(),
+      SAMPS_PER_CHAN_ATTRIBUTE,
+      RECONFIGURED_SAMPS_PER_CHAN);
+  auto get_response = client::get_timing_attribute_uint64(
+      stub(),
+      task(),
+      SAMPS_PER_CHAN_ATTRIBUTE);
+
+  EXPECT_SUCCESS(initial_response);
+  EXPECT_SUCCESS(set_response);
+  EXPECT_SUCCESS(get_response);
+  EXPECT_EQ(1000ULL, initial_response.value());
+  EXPECT_EQ(RECONFIGURED_SAMPS_PER_CHAN, get_response.value());
+}
+
 TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
 {
   auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Scale_Lin_Slope);
