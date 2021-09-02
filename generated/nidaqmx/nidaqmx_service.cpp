@@ -10793,6 +10793,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt64 value {};
@@ -11023,6 +11025,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt64 value {};
@@ -11887,6 +11891,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt64 value {};
@@ -15511,6 +15517,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt64 value = request->value();
       auto size = 0U;
@@ -15719,6 +15727,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt64 value = request->value();
       auto size = 0U;
@@ -16468,6 +16478,8 @@ namespace nidaqmx_grpc {
           break;
         }
       }
+      auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute);
+      attribute = attribute_is_valid ? attribute : 0;
 
       uInt64 value = request->value();
       auto size = 0U;
