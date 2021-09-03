@@ -85,7 +85,9 @@ try:
         fill_mode=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
         timeout=10.0))
     RaiseIfError(response)
-    print(f"Acquired {response.samps_per_chan_read} samples")
+    print(
+        f"Acquired {len(response.read_array)} samples",
+        f"({response.samps_per_chan_read} samples per channel)")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
