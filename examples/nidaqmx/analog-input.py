@@ -72,6 +72,8 @@ try:
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
+    # Get the number of channels. This may be greater than 1 if the physical_channel
+    # parameter is a list or range of channels.
     response = client.GetTaskAttributeUInt32(
         nidaqmx_types.GetTaskAttributeUInt32Request(
             task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS))
