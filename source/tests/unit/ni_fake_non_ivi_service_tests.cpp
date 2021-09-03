@@ -963,7 +963,7 @@ struct NiFakeNonIviServiceAllowUndefinedAttributesTests : public NiFakeNonIviSer
   }
 };
 
-TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ServiceWithAllowUndefinedAttributes_SetMarbleAttributeRawWithInvalidAttribute_PassesZeroAttributeToLibrary)
+TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ServiceWithAllowUndefinedAttributes_SetMarbleAttributeRawWithInvalidAttribute_PassesRawAttributeToLibrary)
 {
   const auto RAW_ATTRIBUTE = 9999;
   const auto DOUBLE_VALUE = 1.234;
