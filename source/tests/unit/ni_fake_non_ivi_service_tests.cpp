@@ -955,6 +955,30 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeRawWithInvalidAttribute_Passe
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+struct NiFakeNonIviServiceAllowUndefinedAttributesTests : public NiFakeNonIviServiceTests {
+  NiFakeNonIviServiceAllowUndefinedAttributesTests()
+      : NiFakeNonIviServiceTests(
+            nidevice_grpc::FeatureToggles({{"nifake_non_ivi.allow_undefined_attributes", true}}))
+  {
+  }
+};
+
+TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ServiceWithAllowUndefinedAttributes_SetMarbleAttributeRawWithInvalidAttribute_PassesRawAttributeToLibrary)
+{
+  const auto RAW_ATTRIBUTE = 9999;
+  const auto DOUBLE_VALUE = 1.234;
+  EXPECT_CALL(library_, SetMarbleAttributeDouble(_, RAW_ATTRIBUTE, DOUBLE_VALUE))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  SetMarbleAttributeDoubleRequest request;
+  request.set_attribute_raw(RAW_ATTRIBUTE);
+  request.set_value(DOUBLE_VALUE);
+  SetMarbleAttributeDoubleResponse response;
+  service_.SetMarbleAttributeDouble(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
 TEST_F(NiFakeNonIviServiceTests, SetColors_PassesColorsArrayToLibrary)
 {
   const auto COLORS = std::vector<BeautifulColor>{

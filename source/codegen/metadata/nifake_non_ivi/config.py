@@ -43,6 +43,9 @@ config = {
         'CallbackPtr': 'void'
     },
     'code_readiness': 'NextRelease',
+    'feature_toggles': {
+        'nifake_non_ivi.allow_undefined_attributes': 'Prototype' 
+    },
     'split_attributes_by_type': True,
     'supports_raw_attributes': True,
     'library_info': {

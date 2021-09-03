@@ -339,7 +339,10 @@ ${initialize_standard_input_param(function_name, parameter)}
     mapped_request_snippet = f'request->{field_name}_mapped()'
   if has_unmapped_enum:
     enum_request_snippet = f'request->{field_name}()'
+    check_enum_is_valid = f"{namespace_prefix}{parameter['enum']}_IsValid({parameter_name})"
+
   raw_request_snippet = f'request->{field_name}_raw()'
+  validate_attribute_enum = parameter.get("raw_attribute", False)
 %>\
       ${parameter['type']} ${parameter_name};
       switch (request->${field_name}_enum_case()) {
@@ -349,6 +352,13 @@ ${initialize_standard_input_param(function_name, parameter)}
           ${parameter_name} = const_cast<${parameter['type']}>((${enum_request_snippet}).c_str());
 %   else:
           ${parameter_name} = static_cast<${parameter['type']}>(${enum_request_snippet});
+%   endif
+%   if validate_attribute_enum: 
+## "raw" attributes always validate non-raw enum values before passing to driver
+## this can be important if (a) the driver can't handle all validation scenarios
+## and (b) the caller passes/casts an invalid enum value.
+## Non-raw attributes allow the driver to handle validation.
+          ${parameter_name} = ${check_enum_is_valid} ? ${parameter_name} : 0;
 %   endif
           break;
         }
@@ -373,6 +383,10 @@ ${initialize_standard_input_param(function_name, parameter)}
 % else:
           ${parameter_name} = static_cast<${parameter['type']}>(${raw_request_snippet});
 % endif
+% if validate_attribute_enum: # raw validation can be overriden with a toggle.
+          auto ${parameter_name}_is_valid = ${check_enum_is_valid} || feature_toggles_.is_allow_undefined_attributes_enabled;
+          ${parameter_name} = ${parameter_name}_is_valid ? ${parameter_name} : 0;
+% endif
           break;
         }
         case ${one_of_case_prefix}::${field_name.upper()}_ENUM_NOT_SET: {
@@ -380,10 +394,6 @@ ${initialize_standard_input_param(function_name, parameter)}
           break;
         }
       }
-% if parameter.get("raw_attribute", False):
-      auto ${parameter_name}_is_valid = ${namespace_prefix}${parameter["enum"]}_IsValid(${parameter_name});
-      ${parameter_name} = ${parameter_name}_is_valid ? ${parameter_name} : 0;
-%endif
 </%def>
 
 ## Initialize an input parameter that is determined by the 'len' size mechanism.
