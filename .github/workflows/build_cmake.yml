@@ -25,13 +25,17 @@ jobs:
             name: "Windows Build", artifact: "Windows.tar.xz",
             os: windows-latest,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
-            cmake_platform: "-A x64"
+            cmake_platform: "-A x64",
+            # On msvc, the -j flag does not help build times and causes intermittent
+            # file permission errors.
+            cmake_number_of_jobs: ""
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
             os: ubuntu-16.04,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
-            cmake_platform: ""
+            cmake_platform: "",
+            cmake_number_of_jobs: "-j 2"
           }
 
     steps:
@@ -81,7 +85,7 @@ jobs:
       shell: cmake -P {0}
       run: |
         execute_process(
-          COMMAND cmake --build build --config $ENV{BUILD_TYPE} -j 2
+          COMMAND cmake --build build --config $ENV{BUILD_TYPE} ${{ matrix.config.cmake_number_of_jobs }}
           RESULT_VARIABLE result
           OUTPUT_VARIABLE output
           ERROR_VARIABLE output
