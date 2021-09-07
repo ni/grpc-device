@@ -26,8 +26,8 @@
 #
 # Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
 #   > python analog-input-betterproto.py <server_address> <port_number> <physical_channel_name>
+# To acquire data from multiple channels, pass in a list or range of channels (i.e., Dev1/ai0:3).
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "Dev1/ai0" as the physical channel name
-
 import asyncio
 from nidevice import nidaqmx_grpc
 import sys
@@ -87,17 +87,25 @@ async def main():
         )
 
         await raise_if_error(await daq_service.start_task(task=task))
+        
+        response = await daq_service.get_task_attribute_u_int32(
+            task=task,
+            attribute_raw=nidaqmx_grpc.TaskUInt32Attributes.TASK_ATTRIBUTE_NUM_CHANS)
+        await raise_if_error(response)
+        number_of_channels = response.value
 
         response = await daq_service.read_analog_f64(
             task=task,
             num_samps_per_chan=100,
-            array_size_in_samps=100,
+            array_size_in_samps=number_of_channels * 100,
             fill_mode_raw=nidaqmx_grpc.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
             timeout=10.0,
         )
         await raise_if_error(response)
 
-        print(f"Acquired {response.samps_per_chan_read} samples.")
+        print(
+            f"Acquired {len(response.read_array)} samples.",
+            f"({response.samps_per_chan_read} samples per channel)")
         print(f"First 5 samples: {response.read_array[:5]}")
     except GRPCError as e:
         if e.status.name == "UNIMPLEMENTED":

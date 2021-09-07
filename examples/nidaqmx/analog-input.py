@@ -17,7 +17,8 @@
 #
 # Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
 #   > python analog-input.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "Dev1/ai0" as the physical channel name
+# To acquire data from multiple channels, pass in a list or range of channels (i.e., Dev1/ai0:3).
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "Dev1/ai0" as the physical channel name.
 import grpc
 import sys
 
