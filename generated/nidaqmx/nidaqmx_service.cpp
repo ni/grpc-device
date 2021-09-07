@@ -10847,10 +10847,13 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeExUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
+          attribute = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeExUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeExUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
@@ -10858,8 +10861,6 @@ namespace nidaqmx_grpc {
           break;
         }
       }
-      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
-      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt64 value {};
@@ -11083,10 +11084,13 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
+          attribute = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
@@ -11094,8 +11098,6 @@ namespace nidaqmx_grpc {
           break;
         }
       }
-      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
-      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt64 value {};
@@ -11966,10 +11968,13 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
+          attribute = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
@@ -11977,8 +11982,6 @@ namespace nidaqmx_grpc {
           break;
         }
       }
-      auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute);
-      attribute = attribute_is_valid ? attribute : 0;
 
       auto size = 0U;
       uInt64 value {};
@@ -15639,10 +15642,13 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeExUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
+          attribute = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeExUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeExUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
@@ -15650,8 +15656,6 @@ namespace nidaqmx_grpc {
           break;
         }
       }
-      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
-      attribute = attribute_is_valid ? attribute : 0;
 
       uInt64 value = request->value();
       auto size = 0U;
@@ -15853,10 +15857,13 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
+          attribute = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
@@ -15864,8 +15871,6 @@ namespace nidaqmx_grpc {
           break;
         }
       }
-      auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attributes_IsValid(attribute);
-      attribute = attribute_is_valid ? attribute : 0;
 
       uInt64 value = request->value();
       auto size = 0U;
@@ -16621,10 +16626,13 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
+          attribute = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
@@ -16632,8 +16640,6 @@ namespace nidaqmx_grpc {
           break;
         }
       }
-      auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attributes_IsValid(attribute);
-      attribute = attribute_is_valid ? attribute : 0;
 
       uInt64 value = request->value();
       auto size = 0U;
