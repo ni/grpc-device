@@ -17,6 +17,7 @@
 #
 # Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
 #   > python analog-input-every-n-samples.py <server_address> <port_number> <physical_channel_name>
+# To acquire data from multiple channels, pass in a list or range of channels (i.e., Dev1/ai0:3).
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "Dev1/ai0" as the physical channel name
 import asyncio
 import grpc
@@ -96,6 +97,13 @@ async def main():
 
             await raise_if_error_async(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
+            response = await raise_if_error_async(
+                client.GetTaskAttributeUInt32(
+                    nidaqmx_types.GetTaskAttributeUInt32Request(
+                        task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS)))
+
+            number_of_channels = response.value
+
             async def read_data():
                 async for every_n_samples_response in every_n_samples_stream:
                     await raise_if_error(every_n_samples_response)
@@ -105,8 +113,11 @@ async def main():
                                 task=task,
                                 num_samps_per_chan=100,
                                 fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                array_size_in_samps=100)))
+                                array_size_in_samps=number_of_channels * 100)))
 
+                    print(
+                        f"Acquired {len(read_response.read_array)} samples",
+                        f"({read_response.samps_per_chan_read} samples per channel)")
                     print("Read Data:", read_response.read_array[:10])
 
             async def wait_for_done():

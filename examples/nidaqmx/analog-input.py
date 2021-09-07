@@ -17,7 +17,8 @@
 #
 # Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
 #   > python analog-input.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "Dev1/ai0" as the physical channel name
+# To acquire data from multiple channels, pass in a list or range of channels (i.e., Dev1/ai0:3).
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "Dev1/ai0" as the physical channel name.
 import grpc
 import sys
 
@@ -61,8 +62,7 @@ try:
         terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
         min_val=-10.0,
         max_val=10.0,
-        units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS
-    )))
+        units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS)))
 
     RaiseIfError(client.CfgSampClkTiming(nidaqmx_types.CfgSampClkTimingRequest(
         task=task,
@@ -73,14 +73,24 @@ try:
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
+    # Get the number of channels. This may be greater than 1 if the physical_channel
+    # parameter is a list or range of channels.
+    response = client.GetTaskAttributeUInt32(
+        nidaqmx_types.GetTaskAttributeUInt32Request(
+            task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS))
+    RaiseIfError(response)
+    number_of_channels = response.value
+
     response = client.ReadAnalogF64(nidaqmx_types.ReadAnalogF64Request(
         task=task,
         num_samps_per_chan=1000,
-        array_size_in_samps=1000,
+        array_size_in_samps=number_of_channels * 1000,
         fill_mode=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
         timeout=10.0))
     RaiseIfError(response)
-    print(f"Acquired {response.samps_per_chan_read} samples")
+    print(
+        f"Acquired {len(response.read_array)} samples",
+        f"({response.samps_per_chan_read} samples per channel)")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
