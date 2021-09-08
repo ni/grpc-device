@@ -963,7 +963,7 @@ struct NiFakeNonIviServiceAllowUndefinedAttributesTests : public NiFakeNonIviSer
   }
 };
 
-TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ServiceWithAllowUndefinedAttributes_SetMarbleAttributeRawWithInvalidAttribute_PassesRawAttributeToLibrary)
+TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, SetMarbleAttributeRawWithInvalidAttribute_PassesRawAttributeToLibrary)
 {
   const auto RAW_ATTRIBUTE = 9999;
   const auto DOUBLE_VALUE = 1.234;
@@ -975,6 +975,78 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ServiceWithAllowUndefin
   request.set_value(DOUBLE_VALUE);
   SetMarbleAttributeDoubleResponse response;
   service_.SetMarbleAttributeDouble(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, SetMarbleAttributeWithTypeCastedInvalidAttribute_PassesZeroAttributeToLibrary)
+{
+  const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleDoubleAttributes>(9999);
+  const auto DOUBLE_VALUE = 1.234;
+  EXPECT_CALL(library_, SetMarbleAttributeDouble(_, 0, DOUBLE_VALUE))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  SetMarbleAttributeDoubleRequest request;
+  request.set_attribute(CASTED_INVALID_ATTRIBUTE);
+  request.set_value(DOUBLE_VALUE);
+  SetMarbleAttributeDoubleResponse response;
+  service_.SetMarbleAttributeDouble(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, GetMarbleAttributeRawWithInvalidAttribute_PassesRawAttributeToLibrary)
+{
+  const auto RAW_ATTRIBUTE = 9999;
+  EXPECT_CALL(library_, GetMarbleAttributeDouble(_, RAW_ATTRIBUTE, _))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  GetMarbleAttributeDoubleRequest request;
+  request.set_attribute_raw(RAW_ATTRIBUTE);
+  GetMarbleAttributeDoubleResponse response;
+  service_.GetMarbleAttributeDouble(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, GetMarbleAttributeWithTypeCastedInvalidAttribute_PassesZeroAttributeToLibrary)
+{
+  const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleDoubleAttributes>(9999);
+  EXPECT_CALL(library_, GetMarbleAttributeDouble(_, 0, _))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  GetMarbleAttributeDoubleRequest request;
+  request.set_attribute(CASTED_INVALID_ATTRIBUTE);
+  GetMarbleAttributeDoubleResponse response;
+  service_.GetMarbleAttributeDouble(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ResetMarbleAttributeRawWithInvalidAttribute_PassesRawAttributeToLibrary)
+{
+  const auto RAW_ATTRIBUTE = 9999;
+  EXPECT_CALL(library_, ResetMarbleAttribute(_, RAW_ATTRIBUTE))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  ResetMarbleAttributeRequest request;
+  request.set_attribute_raw(RAW_ATTRIBUTE);
+  ResetMarbleAttributeResponse response;
+  service_.ResetMarbleAttribute(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ResetMarbleAttributeWithTypeCastedInvalidAttribute_PassesZeroAttributeToLibrary)
+{
+  const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleResetAttributes>(9999);
+  EXPECT_CALL(library_, ResetMarbleAttribute(_, 0))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  ResetMarbleAttributeRequest request;
+  request.set_attribute(CASTED_INVALID_ATTRIBUTE);
+  ResetMarbleAttributeResponse response;
+  service_.ResetMarbleAttribute(&context, &request, &response);
 
   EXPECT_EQ(kDriverSuccess, response.status());
 }
