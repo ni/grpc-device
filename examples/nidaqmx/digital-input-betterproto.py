@@ -11,6 +11,9 @@
 # For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
+# Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
+# Link: https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
+#
 # This example uses the "betterproto" protocol buffers / gRPC library
 #   betterproto produces a more idiomatic version of the gRPC API
 #   for more information see: https://github.com/danielgtaylor/python-betterproto
