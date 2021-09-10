@@ -75,6 +75,9 @@
 # For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
+# Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
+# Link: https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
+#
 # This example requires physical hardware.
 #
 # Running from command line:
