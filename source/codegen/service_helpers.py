@@ -75,8 +75,6 @@ def create_args(parameters):
             result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
         elif parameter['type'] in {"ViBoolean[]", "ViSession[]", "ViInt16[]"}:
             result = f'{result}{parameter_name}.data(), '
-        elif parameter.get('is_size_param', False) and is_twist_mechanism:
-            result = f'{result}{twist_value_name}, '
         elif 'callback_params' in parameter:
             result = f'{result}CallbackRouter::handle_callback, '
         elif 'callback_token' in parameter:
@@ -110,13 +108,14 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
     for parameter in parameters:
         name = common_helpers.camel_to_snake(parameter['cppName'])
         is_array = common_helpers.is_array(parameter['type'])
-        if parameter.get('is_size_param', False):
-            result = f'{result}0, '
-        elif common_helpers.is_output_parameter(parameter):
+        if common_helpers.is_output_parameter(parameter):
             if is_array:
                 result = f'{result}nullptr, '
             else:
+                # Pass the twist output param by pointer.
                 result = result + f'&{name}' + ', '
+        elif parameter.get('is_size_param', False):
+            result = f'{result}0, '
         else:
             result = result + common_helpers.camel_to_snake(name) + ', '
     return result[:-2]

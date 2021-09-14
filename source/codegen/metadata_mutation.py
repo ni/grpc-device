@@ -55,7 +55,10 @@ def mark_non_proto_params(parameters):
         mechanism = common_helpers.get_size_mechanism(param)
         if mechanism in {'len', 'ivi-dance', 'ivi-dance-with-a-twist'}:
             size_param = get_size_param(param, parameters)
-            size_param['include_in_proto'] = False
+            if size_param['direction'] == 'in':
+                # Output size_params can still be included in the proto
+                # as information.
+                size_param['include_in_proto'] = False
             if mechanism == 'len':
                 if 'determine_size_from' not in size_param:
                     size_param['determine_size_from'] = []

@@ -59,6 +59,7 @@ service NiFake {
   rpc ParametersAreMultipleTypes(ParametersAreMultipleTypesRequest) returns (ParametersAreMultipleTypesResponse);
   rpc PoorlyNamedSimpleFunction(PoorlyNamedSimpleFunctionRequest) returns (PoorlyNamedSimpleFunctionResponse);
   rpc Read(ReadRequest) returns (ReadResponse);
+  rpc ReadDataWithInOutIviTwist(ReadDataWithInOutIviTwistRequest) returns (ReadDataWithInOutIviTwistResponse);
   rpc ReadFromChannel(ReadFromChannelRequest) returns (ReadFromChannelResponse);
   rpc ReturnANumberAndAString(ReturnANumberAndAStringRequest) returns (ReturnANumberAndAStringResponse);
   rpc ReturnDurationInSeconds(ReturnDurationInSecondsRequest) returns (ReturnDurationInSecondsResponse);
@@ -594,6 +595,15 @@ message ReadRequest {
 message ReadResponse {
   int32 status = 1;
   double reading = 2;
+}
+
+message ReadDataWithInOutIviTwistRequest {
+}
+
+message ReadDataWithInOutIviTwistResponse {
+  int32 status = 1;
+  repeated sint32 data = 2;
+  sint32 buffer_size = 3;
 }
 
 message ReadFromChannelRequest {

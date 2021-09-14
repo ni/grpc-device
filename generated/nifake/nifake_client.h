@@ -65,6 +65,7 @@ OneInputFunctionResponse one_input_function(const StubPtr& stub, const nidevice_
 ParametersAreMultipleTypesResponse parameters_are_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& a_boolean, const pb::int32& an_int32, const pb::int64& an_int64, const simple_variant<Turtle, pb::int32>& an_int_enum, const double& a_float, const double& a_float_enum, const pb::string& a_string);
 PoorlyNamedSimpleFunctionResponse poorly_named_simple_function(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReadResponse read(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& maximum_time);
+ReadDataWithInOutIviTwistResponse read_data_with_in_out_ivi_twist(const StubPtr& stub);
 ReadFromChannelResponse read_from_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& maximum_time);
 ReturnANumberAndAStringResponse return_a_number_and_a_string(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReturnDurationInSecondsResponse return_duration_in_seconds(const StubPtr& stub, const nidevice_grpc::Session& vi);

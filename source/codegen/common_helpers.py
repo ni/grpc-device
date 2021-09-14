@@ -1,5 +1,6 @@
 import re
 from collections import defaultdict, namedtuple
+from typing import List
 
 
 def is_output_parameter(parameter):
@@ -311,6 +312,10 @@ def get_size_expression(parameter):
         return camel_to_snake(parameter['size']['value'])
 
 
+def get_param_cpp_name(parameter: dict) -> str:
+    return camel_to_snake(parameter["name"])
+
+
 def is_ivi_dance_array_param(parameter):
     return get_size_mechanism(parameter) == 'ivi-dance'
 
@@ -365,14 +370,28 @@ def has_ivi_dance_with_a_twist_param(parameters):
     return any(is_ivi_dance_array_with_a_twist_param(p) for p in parameters)
 
 
+def get_param_with_name(parameters: List[dict], name: str) -> dict:
+    matched_params = (
+        p
+        for p in parameters
+        if p['name'] == name
+    )
+    return next(matched_params)
+
+
 def get_ivi_dance_with_a_twist_params(parameters):
     array_param = next(
-        (p for p in parameters if is_ivi_dance_array_with_a_twist_param(p)), None)
-    size_param = next(
-        p for p in parameters if p['name'] == array_param['size']['value']) if array_param else None
-    other_params = (p for p in parameters if p !=
-                    array_param and p != size_param)
-    return (size_param, array_param, other_params)
+        (p for p in parameters if is_ivi_dance_array_with_a_twist_param(p)))
+
+    size_param = get_param_with_name(parameters, array_param['size']['value'])
+    twist_param = get_param_with_name(parameters, array_param['size']['value_twist'])
+
+    other_params = (
+        p 
+        for p in parameters 
+        if p not in [array_param, size_param, twist_param]
+    )
+    return (size_param, twist_param, array_param, other_params)
 
 
 def is_init_method(function_data):

@@ -1390,7 +1390,8 @@ namespace nidigitalpattern_grpc {
         }
         response->mutable_data()->Resize(actual_num_waveforms, 0);
         ViUInt32* data = reinterpret_cast<ViUInt32*>(response->mutable_data()->mutable_data());
-        status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, actual_num_waveforms, data, &actual_num_waveforms, &actual_samples_per_waveform);
+        auto data_buffer_size = actual_num_waveforms;
+        status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, data_buffer_size, data, &actual_num_waveforms, &actual_samples_per_waveform);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1465,7 +1466,8 @@ namespace nidigitalpattern_grpc {
         std::string expected_pin_states(actual_num_pin_data, '\0');
         std::string actual_pin_states(actual_num_pin_data, '\0');
         std::vector<ViBoolean> per_pin_pass_fail(actual_num_pin_data, ViBoolean());
-        status = library_->FetchHistoryRAMCyclePinData(vi, site, pin_list, sample_index, dut_cycle_index, actual_num_pin_data, (ViUInt8*)expected_pin_states.data(), (ViUInt8*)actual_pin_states.data(), per_pin_pass_fail.data(), &actual_num_pin_data);
+        auto pin_data_buffer_size = actual_num_pin_data;
+        status = library_->FetchHistoryRAMCyclePinData(vi, site, pin_list, sample_index, dut_cycle_index, pin_data_buffer_size, (ViUInt8*)expected_pin_states.data(), (ViUInt8*)actual_pin_states.data(), per_pin_pass_fail.data(), &actual_num_pin_data);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1588,7 +1590,8 @@ namespace nidigitalpattern_grpc {
         }
         response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
         ViReal64* frequencies = response->mutable_frequencies()->mutable_data();
-        status = library_->FrequencyCounterMeasureFrequency(vi, channel_list, actual_num_frequencies, frequencies, &actual_num_frequencies);
+        auto frequencies_buffer_size = actual_num_frequencies;
+        status = library_->FrequencyCounterMeasureFrequency(vi, channel_list, frequencies_buffer_size, frequencies, &actual_num_frequencies);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1917,7 +1920,8 @@ namespace nidigitalpattern_grpc {
         }
         response->mutable_failure_count()->Resize(actual_num_read, 0);
         ViInt64* failure_count = response->mutable_failure_count()->mutable_data();
-        status = library_->GetFailCount(vi, channel_list, actual_num_read, failure_count, &actual_num_read);
+        auto buffer_size = actual_num_read;
+        status = library_->GetFailCount(vi, channel_list, buffer_size, failure_count, &actual_num_read);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1978,7 +1982,8 @@ namespace nidigitalpattern_grpc {
         }
         response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
         ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
-        status = library_->GetPatternPinIndexes(vi, start_label, actual_num_pins, pin_indexes, &actual_num_pins);
+        auto pin_indexes_buffer_size = actual_num_pins;
+        status = library_->GetPatternPinIndexes(vi, start_label, pin_indexes_buffer_size, pin_indexes, &actual_num_pins);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2142,7 +2147,8 @@ namespace nidigitalpattern_grpc {
         ViInt32* site_numbers = reinterpret_cast<ViInt32*>(response->mutable_site_numbers()->mutable_data());
         response->mutable_channel_indexes()->Resize(actual_num_values, 0);
         ViInt32* channel_indexes = reinterpret_cast<ViInt32*>(response->mutable_channel_indexes()->mutable_data());
-        status = library_->GetPinResultsPinInformation(vi, channel_list, actual_num_values, pin_indexes, site_numbers, channel_indexes, &actual_num_values);
+        auto buffer_size = actual_num_values;
+        status = library_->GetPinResultsPinInformation(vi, channel_list, buffer_size, pin_indexes, site_numbers, channel_indexes, &actual_num_values);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2178,7 +2184,8 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         std::vector<ViBoolean> pass_fail(actual_num_sites, ViBoolean());
-        status = library_->GetSitePassFail(vi, site_list, actual_num_sites, pass_fail.data(), &actual_num_sites);
+        auto pass_fail_buffer_size = actual_num_sites;
+        status = library_->GetSitePassFail(vi, site_list, pass_fail_buffer_size, pass_fail.data(), &actual_num_sites);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2232,7 +2239,8 @@ namespace nidigitalpattern_grpc {
         }
         response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
         ViInt32* site_numbers = reinterpret_cast<ViInt32*>(response->mutable_site_numbers()->mutable_data());
-        status = library_->GetSiteResultsSiteNumbers(vi, site_list, site_result_type, actual_num_site_numbers, site_numbers, &actual_num_site_numbers);
+        auto site_numbers_buffer_size = actual_num_site_numbers;
+        status = library_->GetSiteResultsSiteNumbers(vi, site_list, site_result_type, site_numbers_buffer_size, site_numbers, &actual_num_site_numbers);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2934,7 +2942,8 @@ namespace nidigitalpattern_grpc {
         }
         response->mutable_measurements()->Resize(actual_num_read, 0);
         ViReal64* measurements = response->mutable_measurements()->mutable_data();
-        status = library_->PPMUMeasure(vi, channel_list, measurement_type, actual_num_read, measurements, &actual_num_read);
+        auto buffer_size = actual_num_read;
+        status = library_->PPMUMeasure(vi, channel_list, measurement_type, buffer_size, measurements, &actual_num_read);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3038,7 +3047,8 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         std::string data(actual_num_read, '\0');
-        status = library_->ReadStatic(vi, channel_list, actual_num_read, (ViUInt8*)data.data(), &actual_num_read);
+        auto buffer_size = actual_num_read;
+        status = library_->ReadStatic(vi, channel_list, buffer_size, (ViUInt8*)data.data(), &actual_num_read);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3401,7 +3411,8 @@ namespace nidigitalpattern_grpc {
         }
         response->mutable_offsets()->Resize(actual_num_offsets, 0);
         ViReal64* offsets = response->mutable_offsets()->mutable_data();
-        status = library_->TDR(vi, channel_list, apply_offsets, actual_num_offsets, offsets, &actual_num_offsets);
+        auto offsets_buffer_size = actual_num_offsets;
+        status = library_->TDR(vi, channel_list, apply_offsets, offsets_buffer_size, offsets, &actual_num_offsets);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
