@@ -24,6 +24,7 @@ NiRFSGLibrary::NiRFSGLibrary() : shared_library_(kLibraryName)
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niRFSG_init"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niRFSG_close"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niRFSG_InitWithOptions"));
+  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niRFSG_error_message"));
 }
 
 NiRFSGLibrary::~NiRFSGLibrary()
@@ -70,6 +71,18 @@ ViStatus NiRFSGLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, 
   return niRFSG_InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
 #else
   return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
+#endif
+}
+
+ViStatus NiRFSGLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
+{
+  if (!function_pointers_.ErrorMessage) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_error_message.");
+  }
+#if defined(_MSC_VER)
+  return niRFSG_error_message(vi, errorCode, errorMessage);
+#else
+  return function_pointers_.ErrorMessage(vi, errorCode, errorMessage);
 #endif
 }
 

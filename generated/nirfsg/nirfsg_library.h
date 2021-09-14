@@ -21,16 +21,19 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi);
   ViStatus Close(ViSession vi);
   ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
+  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
 
  private:
   using InitPtr = decltype(&niRFSG_init);
   using ClosePtr = decltype(&niRFSG_close);
   using InitWithOptionsPtr = decltype(&niRFSG_InitWithOptions);
+  using ErrorMessagePtr = decltype(&niRFSG_error_message);
 
   typedef struct FunctionPointers {
     InitPtr Init;
     ClosePtr Close;
     InitWithOptionsPtr InitWithOptions;
+    ErrorMessagePtr ErrorMessage;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

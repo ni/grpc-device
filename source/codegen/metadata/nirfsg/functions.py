@@ -30,7 +30,6 @@ functions = {
     },
     "Close": {
         "cname": "niRFSG_close",
-        "codegen_method": "public",
         "parameters": [
             {
                 "direction": "in",
@@ -42,7 +41,6 @@ functions = {
     },
     "InitWithOptions": {
         "init_method": True,
-        "codegen_method": "public",
         "parameters": [
             {
                 "direction": "in",
@@ -72,5 +70,29 @@ functions = {
         ],
         "returns": "ViStatus",
     },
-
+    'ErrorMessage': {
+        'cname': 'niRFSG_error_message',
+        'parameters': [
+            {
+                'name': 'vi',
+                'direction': 'in',
+                'type': 'ViSession'
+            },
+            {
+                'name': 'errorCode',
+                'direction': 'in',
+                'type': 'ViStatus'
+            },
+            {
+                'name': 'errorMessage',
+                'direction': 'out',
+                'type': 'ViChar[]',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                }
+            }
+        ],
+        'returns': 'ViStatus'
+    },
 }

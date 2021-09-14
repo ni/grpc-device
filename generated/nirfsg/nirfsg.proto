@@ -19,6 +19,7 @@ service NiRFSG {
   rpc Init(InitRequest) returns (InitResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
+  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
 }
 
 enum NiRFSGAttributes {
@@ -56,5 +57,15 @@ message InitWithOptionsRequest {
 message InitWithOptionsResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
+}
+
+message ErrorMessageRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 error_code = 2;
+}
+
+message ErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
 }
 

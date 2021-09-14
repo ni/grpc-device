@@ -18,6 +18,7 @@ class NiRFSGLibraryInterface {
   virtual ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi) = 0;
   virtual ViStatus Close(ViSession vi) = 0;
   virtual ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
+  virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
 };
 
 }  // namespace nirfsg_grpc
