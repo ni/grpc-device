@@ -768,6 +768,21 @@ read(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& maximu
   return response;
 }
 
+ReadDataWithInOutIviTwistResponse
+read_data_with_in_out_ivi_twist(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadDataWithInOutIviTwistRequest{};
+
+  auto response = ReadDataWithInOutIviTwistResponse{};
+
+  raise_if_error(
+      stub->ReadDataWithInOutIviTwist(&context, request, &response));
+
+  return response;
+}
+
 ReadFromChannelResponse
 read_from_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& maximum_time)
 {

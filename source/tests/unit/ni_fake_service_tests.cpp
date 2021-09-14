@@ -6,6 +6,7 @@
 #include <nifake_extension/nifake_extension_service.h>
 #include <server/session_repository.h>
 
+#include <array>
 #include <iostream>
 #include <string>
 
@@ -23,6 +24,8 @@ using ::testing::StrEq;
 namespace ni {
 namespace tests {
 namespace unit {
+
+using namespace nifake_grpc;
 
 using ::testing::_;
 using ::testing::AllOf;
@@ -1948,6 +1951,49 @@ TEST(NiFakeServiceTests, NiFakeService_CallMethodWithReservedPassNullParam_Passe
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+struct FakeServiceHolder {
+  FakeServiceHolder()
+      : session_repository(),
+        library(),
+        resource_repository(std::make_shared<FakeResourceRepository>(&session_repository)),
+        service(&library, resource_repository)
+  {
+  }
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  std::shared_ptr<FakeResourceRepository> resource_repository;
+  nifake_grpc::NiFakeService service;
+  grpc::ServerContext context;
+};
+
+// "In/Out" ivi-dance-with-a-twist is when the "value_twist" output is also the "value" input,
+// I.e., it's a single in/out param instead of a separate input and output.
+TEST(NiFakeServiceTests, FakeService_ReadDataWithInOutIviTwist_DoesTwistAndReturnsCorrectData)
+{
+  const auto BUFFER_SIZE = 10;
+  ::google::protobuf::int32 DATA[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  FakeServiceHolder service_holder;
+  // First call expects pointer-to-zero and sets the size.
+  EXPECT_CALL(service_holder.library, ReadDataWithInOutIviTwist(nullptr, Pointee(0)))
+      .WillOnce(
+          DoAll(
+              SetArgPointee<1>(BUFFER_SIZE),
+              Return(kDriverSuccess)));
+  // Second call expects pointer-to-size and sets the output data.
+  EXPECT_CALL(service_holder.library, ReadDataWithInOutIviTwist(_, Pointee(BUFFER_SIZE)))
+      .WillOnce(
+          DoAll(
+              SetArrayArgument<0>(DATA, DATA + BUFFER_SIZE),
+              Return(kDriverSuccess)));
+
+  auto request = ReadDataWithInOutIviTwistRequest{};
+  auto response = ReadDataWithInOutIviTwistResponse{};
+  service_holder.service.ReadDataWithInOutIviTwist(&service_holder.context, &request, &response);
+
+  EXPECT_EQ(0, response.status());
+  EXPECT_THAT(response.data(), ElementsAreArray(DATA, BUFFER_SIZE));
 }
 
 }  // namespace unit

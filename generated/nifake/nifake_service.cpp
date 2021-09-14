@@ -498,7 +498,8 @@ namespace nifake_grpc {
         }
         response->mutable_array_out()->Resize(actual_size, 0);
         ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
-        status = library_->GetAnIviDanceWithATwistArray(vi, a_string, actual_size, array_out, &actual_size);
+        auto buffer_size = actual_size;
+        status = library_->GetAnIviDanceWithATwistArray(vi, a_string, buffer_size, array_out, &actual_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1267,6 +1268,40 @@ namespace nifake_grpc {
         response->set_reading(reading);
       }
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::ReadDataWithInOutIviTwist(::grpc::ServerContext* context, const ReadDataWithInOutIviTwistRequest* request, ReadDataWithInOutIviTwistResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViInt32 buffer_size {};
+      while (true) {
+        auto status = library_->ReadDataWithInOutIviTwist(nullptr, &buffer_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_data()->Resize(buffer_size, 0);
+        ViInt32* data = reinterpret_cast<ViInt32*>(response->mutable_data()->mutable_data());
+        status = library_->ReadDataWithInOutIviTwist(data, &buffer_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_buffer_size(buffer_size);
+        }
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

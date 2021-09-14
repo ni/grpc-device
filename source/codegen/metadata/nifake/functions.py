@@ -1886,6 +1886,26 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ReadDataWithInOutIviTwist': {
+        'parameters': [
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'bufferSize'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'name': 'bufferSize',
+                'direction': 'out',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ReadFromChannel': {
         'codegen_method': 'public',
         'documentation': {

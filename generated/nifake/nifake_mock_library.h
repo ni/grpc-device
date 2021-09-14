@@ -62,6 +62,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, ParametersAreMultipleTypes, (ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString), (override));
   MOCK_METHOD(ViStatus, PoorlyNamedSimpleFunction, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, Read, (ViSession vi, ViReal64 maximumTime, ViReal64* reading), (override));
+  MOCK_METHOD(ViStatus, ReadDataWithInOutIviTwist, (ViInt32 data[], ViInt32* bufferSize), (override));
   MOCK_METHOD(ViStatus, ReadFromChannel, (ViSession vi, ViConstString channelName, ViInt32 maximumTime, ViReal64* reading), (override));
   MOCK_METHOD(ViStatus, ReturnANumberAndAString, (ViSession vi, ViInt16* aNumber, ViChar aString[256]), (override));
   MOCK_METHOD(ViStatus, ReturnDurationInSeconds, (ViSession vi, ViReal64* timedelta), (override));

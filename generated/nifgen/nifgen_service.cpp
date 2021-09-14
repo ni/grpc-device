@@ -2129,7 +2129,8 @@ namespace nifgen_grpc {
         }
         response->mutable_coefficients_array()->Resize(number_of_coefficients_read, 0);
         ViReal64* coefficients_array = response->mutable_coefficients_array()->mutable_data();
-        status = library_->GetFIRFilterCoefficients(vi, channel_name, number_of_coefficients_read, coefficients_array, &number_of_coefficients_read);
+        auto array_size = number_of_coefficients_read;
+        status = library_->GetFIRFilterCoefficients(vi, channel_name, array_size, coefficients_array, &number_of_coefficients_read);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;

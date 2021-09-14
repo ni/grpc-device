@@ -66,6 +66,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.ParametersAreMultipleTypes = reinterpret_cast<ParametersAreMultipleTypesPtr>(shared_library_.get_function_pointer("niFake_ParametersAreMultipleTypes"));
   function_pointers_.PoorlyNamedSimpleFunction = reinterpret_cast<PoorlyNamedSimpleFunctionPtr>(shared_library_.get_function_pointer("niFake_PoorlyNamedSimpleFunction"));
   function_pointers_.Read = reinterpret_cast<ReadPtr>(shared_library_.get_function_pointer("niFake_Read"));
+  function_pointers_.ReadDataWithInOutIviTwist = reinterpret_cast<ReadDataWithInOutIviTwistPtr>(shared_library_.get_function_pointer("niFake_ReadDataWithInOutIviTwist"));
   function_pointers_.ReadFromChannel = reinterpret_cast<ReadFromChannelPtr>(shared_library_.get_function_pointer("niFake_ReadFromChannel"));
   function_pointers_.ReturnANumberAndAString = reinterpret_cast<ReturnANumberAndAStringPtr>(shared_library_.get_function_pointer("niFake_ReturnANumberAndAString"));
   function_pointers_.ReturnDurationInSeconds = reinterpret_cast<ReturnDurationInSecondsPtr>(shared_library_.get_function_pointer("niFake_ReturnDurationInSeconds"));
@@ -630,6 +631,18 @@ ViStatus NiFakeLibrary::Read(ViSession vi, ViReal64 maximumTime, ViReal64* readi
   return niFake_Read(vi, maximumTime, reading);
 #else
   return function_pointers_.Read(vi, maximumTime, reading);
+#endif
+}
+
+ViStatus NiFakeLibrary::ReadDataWithInOutIviTwist(ViInt32 data[], ViInt32* bufferSize)
+{
+  if (!function_pointers_.ReadDataWithInOutIviTwist) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_ReadDataWithInOutIviTwist.");
+  }
+#if defined(_MSC_VER)
+  return niFake_ReadDataWithInOutIviTwist(data, bufferSize);
+#else
+  return function_pointers_.ReadDataWithInOutIviTwist(data, bufferSize);
 #endif
 }
 
