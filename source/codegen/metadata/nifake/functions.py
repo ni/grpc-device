@@ -193,6 +193,25 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'CreateConfigurationList': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'numberOfListAttributes',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'listAttributeIds',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfListAttributes'
+                },
+                'type': 'ViAttr[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'DoubleAllTheNums': {
         'documentation': {
             'description': 'Test for buffer with converter'

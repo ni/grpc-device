@@ -25,6 +25,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   ViStatus BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]);
   ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved);
+  ViStatus CreateConfigurationList(ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]);
   ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]);
   ViStatus EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]);
   ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle);
@@ -95,6 +96,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using BoolArrayOutputFunctionPtr = decltype(&niFake_BoolArrayOutputFunction);
   using BoolArrayInputFunctionPtr = decltype(&niFake_BoolArrayInputFunction);
   using CommandWithReservedParamPtr = decltype(&niFake_CommandWithReservedParam);
+  using CreateConfigurationListPtr = decltype(&niFake_CreateConfigurationList);
   using DoubleAllTheNumsPtr = decltype(&niFake_DoubleAllTheNums);
   using EnumArrayOutputFunctionPtr = decltype(&niFake_EnumArrayOutputFunction);
   using EnumInputFunctionWithDefaultsPtr = decltype(&niFake_EnumInputFunctionWithDefaults);
@@ -165,6 +167,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     BoolArrayOutputFunctionPtr BoolArrayOutputFunction;
     BoolArrayInputFunctionPtr BoolArrayInputFunction;
     CommandWithReservedParamPtr CommandWithReservedParam;
+    CreateConfigurationListPtr CreateConfigurationList;
     DoubleAllTheNumsPtr DoubleAllTheNums;
     EnumArrayOutputFunctionPtr EnumArrayOutputFunction;
     EnumInputFunctionWithDefaultsPtr EnumInputFunctionWithDefaults;

@@ -23,6 +23,7 @@ service NiFake {
   rpc BoolArrayOutputFunction(BoolArrayOutputFunctionRequest) returns (BoolArrayOutputFunctionResponse);
   rpc BoolArrayInputFunction(BoolArrayInputFunctionRequest) returns (BoolArrayInputFunctionResponse);
   rpc CommandWithReservedParam(CommandWithReservedParamRequest) returns (CommandWithReservedParamResponse);
+  rpc CreateConfigurationList(CreateConfigurationListRequest) returns (CreateConfigurationListResponse);
   rpc DoubleAllTheNums(DoubleAllTheNumsRequest) returns (DoubleAllTheNumsResponse);
   rpc EnumArrayOutputFunction(EnumArrayOutputFunctionRequest) returns (EnumArrayOutputFunctionResponse);
   rpc EnumInputFunctionWithDefaults(EnumInputFunctionWithDefaultsRequest) returns (EnumInputFunctionWithDefaultsResponse);
@@ -211,6 +212,14 @@ message CommandWithReservedParamRequest {
 }
 
 message CommandWithReservedParamResponse {
+  int32 status = 1;
+}
+
+message CreateConfigurationListRequest {
+  repeated NiFakeAttributes list_attribute_ids = 1;
+}
+
+message CreateConfigurationListResponse {
   int32 status = 1;
 }
 
