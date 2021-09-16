@@ -8,7 +8,7 @@
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nicaiu.dll";
 #else
-static const char* kLibraryName = "libnidaqmx.so";
+static const char* kLibraryName = "libnidaqmx.so.1";
 #endif
 
 namespace nidaqmx_grpc {
