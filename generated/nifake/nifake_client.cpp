@@ -135,6 +135,22 @@ command_with_reserved_param(const StubPtr& stub, const nidevice_grpc::Session& v
   return response;
 }
 
+CreateConfigurationListResponse
+create_configuration_list(const StubPtr& stub, const std::vector<NiFakeAttributes>& list_attribute_ids)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateConfigurationListRequest{};
+  copy_array(list_attribute_ids, request.mutable_list_attribute_ids());
+
+  auto response = CreateConfigurationListResponse{};
+
+  raise_if_error(
+      stub->CreateConfigurationList(&context, request, &response));
+
+  return response;
+}
+
 DoubleAllTheNumsResponse
 double_all_the_nums(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& numbers)
 {

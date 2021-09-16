@@ -1996,6 +1996,22 @@ TEST(NiFakeServiceTests, FakeService_ReadDataWithInOutIviTwist_DoesTwistAndRetur
   EXPECT_THAT(response.data(), ElementsAreArray(DATA, BUFFER_SIZE));
 }
 
+TEST(NiFakeServiceTests, FakeService_CreateConfigurationList_PassesAttributeArray)
+{
+  const auto ATTRIBUTES = std::vector<NiFakeAttributes>{NiFakeAttributes::NIFAKE_ATTRIBUTE_READ_WRITE_BOOL, NiFakeAttributes::NIFAKE_ATTRIBUTE_READ_WRITE_COLOR};
+  FakeServiceHolder service_holder;
+  EXPECT_CALL(service_holder.library, CreateConfigurationList(_, _))
+      .With(Args<1, 0>(ElementsAreArray(ATTRIBUTES.data(), ATTRIBUTES.size())))
+      .WillOnce(Return(kDriverSuccess));
+
+  auto request = CreateConfigurationListRequest{};
+  request.mutable_list_attribute_ids()->CopyFrom({ATTRIBUTES.cbegin(), ATTRIBUTES.cend()});
+  auto response = CreateConfigurationListResponse{};
+  service_holder.service.CreateConfigurationList(&service_holder.context, &request, &response);
+
+  EXPECT_EQ(0, response.status());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

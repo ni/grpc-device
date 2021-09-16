@@ -29,6 +29,7 @@ AcceptViUInt32ArrayResponse accept_vi_uint32_array(const StubPtr& stub, const ni
 BoolArrayOutputFunctionResponse bool_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 BoolArrayInputFunctionResponse bool_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements, const std::vector<bool>& an_array);
 CommandWithReservedParamResponse command_with_reserved_param(const StubPtr& stub, const nidevice_grpc::Session& vi);
+CreateConfigurationListResponse create_configuration_list(const StubPtr& stub, const std::vector<NiFakeAttributes>& list_attribute_ids);
 DoubleAllTheNumsResponse double_all_the_nums(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& numbers);
 EnumArrayOutputFunctionResponse enum_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 EnumInputFunctionWithDefaultsResponse enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Turtle, pb::int32>& a_turtle);
