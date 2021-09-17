@@ -137,7 +137,8 @@ config = {
         'Linux': {
             '64bit': {
                 'name': 'nidaqmx',
-                'type': 'cdll'
+                'type': 'cdll',
+                'abi_version': '1'
             }
         },
         'Windows': {
