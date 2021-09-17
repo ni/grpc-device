@@ -32,7 +32,7 @@ jobs:
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
-            os: ubuntu-16.04,
+            os: ubuntu-18.04,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "",
             cmake_number_of_jobs: "-j 2"
@@ -116,7 +116,7 @@ jobs:
     - name: Tar Linux Server Binaries
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       run: >-
-        tar -cvzf ni-grpc-device-server-linux-glibc2_23-x64.tar.gz
+        tar -cvzf ni-grpc-device-server-linux-glibc2_27-x64.tar.gz
         -C ${GITHUB_WORKSPACE}/build
         ni_grpc_device_server
         server_config.json
@@ -128,14 +128,14 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
-        name: ni-grpc-device-server-linux-glibc2_23-x64
-        path: ni-grpc-device-server-linux-glibc2_23-x64.tar.gz
+        name: ni-grpc-device-server-linux-glibc2_27-x64
+        path: ni-grpc-device-server-linux-glibc2_27-x64.tar.gz
         retention-days: 5
 
     - name: Tar Linux Test Binaries
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       run: >-
-        tar -cvzf ni-grpc-device-tests-linux-glibc2_23-x64.tar.gz
+        tar -cvzf ni-grpc-device-tests-linux-glibc2_27-x64.tar.gz
         -C ${GITHUB_WORKSPACE}/build
         certs/
         IntegrationTestsRunner
@@ -151,8 +151,8 @@ jobs:
       uses: actions/upload-artifact@v2
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
-        name: ni-grpc-device-tests-linux-glibc2_23-x64
-        path: ni-grpc-device-tests-linux-glibc2_23-x64.tar.gz
+        name: ni-grpc-device-tests-linux-glibc2_27-x64
+        path: ni-grpc-device-tests-linux-glibc2_27-x64.tar.gz
         retention-days: 5
 
     - name: Stage Linux Client Files
