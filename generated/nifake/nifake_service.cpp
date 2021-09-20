@@ -525,6 +525,7 @@ namespace nifake_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_array_out()->Resize(actual_size, 0);
           response->set_actual_size(actual_size);
         }
         return ::grpc::Status::OK;
@@ -1317,6 +1318,7 @@ namespace nifake_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_data()->Resize(buffer_size, 0);
           response->set_buffer_size(buffer_size);
         }
         return ::grpc::Status::OK;
