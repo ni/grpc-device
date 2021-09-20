@@ -249,12 +249,9 @@ def get_attribute_values_enum_name(group_name, type, is_mapped=False):
 def add_enum(enum_name, enum_values, enums, enum_value_prefix, is_mapped=False):
     if not enum_values:
         return
-    numeric_values = enum_values.values()
-    allow_alias = (0 in numeric_values) or (len(numeric_values) != len(set(numeric_values)))
     values = [{"name": name, "value": enum_values[name]} for name in enum_values]
     new_enum = {
         'enum-value-prefix': enum_value_prefix,
-        'allow-alias': allow_alias,
         'generate-mappings': is_mapped,
         'values': values
     }

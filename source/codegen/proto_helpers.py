@@ -1,12 +1,11 @@
 import common_helpers
 
-def should_allow_alias(enums):
-  if enums.get("generate-mappings", False):
+def should_allow_alias(enum):
+  if enum.get("generate-mappings", False):
     return False
-  for value in enums["values"]:
-    if value["value"] == 0:
-      return True
-  return False
+  enum_values = [e["value"] for e in enum["values"]]
+  return (0 in enum_values) or (len(enum_values) != len(set(enum_values)))
+
 
 def generate_parameter_field_number(parameter, used_indexes, field_name_suffix=""):
   """Get unique field number for field corresponding to this parameter in proto file.
@@ -24,7 +23,7 @@ def get_enum_definitions(enums_to_define, enums):
   enum_definitions = {}
   for enum_name in (e for e in enums if e in enums_to_define):
     enum = enums[enum_name]
-    allow_alias = enum.get("allow-alias", should_allow_alias(enum))
+    allow_alias = should_allow_alias(enum)
     enum_value_prefix = enum.get("enum-value-prefix", common_helpers.pascal_to_snake(enum_name).upper())
     if enum.get("generate-mappings", False):
       values = [{"name": f"{enum_value_prefix}_{value['name']}", "value": index + 1} for index, value in enumerate(enum["values"])]

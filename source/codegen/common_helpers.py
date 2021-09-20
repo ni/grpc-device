@@ -604,3 +604,18 @@ def get_split_attributes_by_type(config):
 
 def supports_raw_attributes(config: dict) -> bool:
     return config.get('supports_raw_attributes', False)
+
+
+def get_enum_value_cpp_type(enum: dict) -> str:
+    """Uses the python datatype of the first value in the enum to
+    infer the C++ type.
+    
+    Used for mapped enums."""
+    enum_value = enum["values"][0]["value"]
+    if isinstance(enum_value, float):
+        return "double"
+    if isinstance(enum_value, int):
+        return "std::int32_t"
+    if isinstance(enum_value, str):
+        return "std::string"
+    return "std::int32_t"

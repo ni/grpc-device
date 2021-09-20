@@ -63,7 +63,7 @@ InitWithVarArgsResponse init_with_var_args(const StubPtr& stub, const pb::string
 MultipleArrayTypesResponse multiple_array_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& output_array_size, const std::vector<double>& input_array_of_floats, const std::vector<pb::int32>& input_array_of_integers);
 MultipleArraysSameSizeResponse multiple_arrays_same_size(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& values1, const std::vector<double>& values2, const std::vector<double>& values3, const std::vector<double>& values4);
 OneInputFunctionResponse one_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& a_number);
-ParametersAreMultipleTypesResponse parameters_are_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& a_boolean, const pb::int32& an_int32, const pb::int64& an_int64, const simple_variant<Turtle, pb::int32>& an_int_enum, const double& a_float, const double& a_float_enum, const pb::string& a_string);
+ParametersAreMultipleTypesResponse parameters_are_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& a_boolean, const pb::int32& an_int32, const pb::int64& an_int64, const simple_variant<Turtle, pb::int32>& an_int_enum, const double& a_float, const simple_variant<FloatEnum, double>& a_float_enum, const pb::string& a_string);
 PoorlyNamedSimpleFunctionResponse poorly_named_simple_function(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReadResponse read(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& maximum_time);
 ReadDataWithInOutIviTwistResponse read_data_with_in_out_ivi_twist(const StubPtr& stub);
@@ -73,7 +73,7 @@ ReturnDurationInSecondsResponse return_duration_in_seconds(const StubPtr& stub, 
 ReturnListOfDurationsInSecondsResponse return_list_of_durations_in_seconds(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 ReturnMultipleTypesResponse return_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_size);
 SetCustomTypeArrayResponse set_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<FakeCustomStruct>& cs);
-StringValuedEnumInputFunctionWithDefaultsResponse string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& a_mobile_os_name);
+StringValuedEnumInputFunctionWithDefaultsResponse string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<MobileOSNames, std::string>& a_mobile_os_name);
 TwoInputFunctionResponse two_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& a_number, const pb::string& a_string);
 Use64BitNumberResponse use64_bit_number(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int64& input);
 WriteWaveformResponse write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& waveform);

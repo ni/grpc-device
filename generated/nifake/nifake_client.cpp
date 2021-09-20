@@ -722,7 +722,7 @@ one_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 }
 
 ParametersAreMultipleTypesResponse
-parameters_are_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& a_boolean, const pb::int32& an_int32, const pb::int64& an_int64, const simple_variant<Turtle, pb::int32>& an_int_enum, const double& a_float, const double& a_float_enum, const pb::string& a_string)
+parameters_are_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& a_boolean, const pb::int32& an_int32, const pb::int64& an_int64, const simple_variant<Turtle, pb::int32>& an_int_enum, const double& a_float, const simple_variant<FloatEnum, double>& a_float_enum, const pb::string& a_string)
 {
   ::grpc::ClientContext context;
 
@@ -740,7 +740,14 @@ parameters_are_multiple_types(const StubPtr& stub, const nidevice_grpc::Session&
     request.set_an_int_enum_raw(*an_int_enum_raw_ptr);
   }
   request.set_a_float(a_float);
-  request.set_a_float_enum(a_float_enum);
+  const auto a_float_enum_ptr = a_float_enum.get_if<FloatEnum>();
+  const auto a_float_enum_raw_ptr = a_float_enum.get_if<double>();
+  if (a_float_enum_ptr) {
+    request.set_a_float_enum_mapped(*a_float_enum_ptr);
+  }
+  else if (a_float_enum_raw_ptr) {
+    request.set_a_float_enum_raw(*a_float_enum_raw_ptr);
+  }
   request.set_a_string(a_string);
 
   auto response = ParametersAreMultipleTypesResponse{};
@@ -901,13 +908,20 @@ set_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 StringValuedEnumInputFunctionWithDefaultsResponse
-string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& a_mobile_os_name)
+string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<MobileOSNames, std::string>& a_mobile_os_name)
 {
   ::grpc::ClientContext context;
 
   auto request = StringValuedEnumInputFunctionWithDefaultsRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_a_mobile_os_name(a_mobile_os_name);
+  const auto a_mobile_os_name_ptr = a_mobile_os_name.get_if<MobileOSNames>();
+  const auto a_mobile_os_name_raw_ptr = a_mobile_os_name.get_if<std::string>();
+  if (a_mobile_os_name_ptr) {
+    request.set_a_mobile_os_name_mapped(*a_mobile_os_name_ptr);
+  }
+  else if (a_mobile_os_name_raw_ptr) {
+    request.set_a_mobile_os_name_raw(*a_mobile_os_name_raw_ptr);
+  }
 
   auto response = StringValuedEnumInputFunctionWithDefaultsResponse{};
 
