@@ -1157,6 +1157,41 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetDeembeddingSparameters': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'sparameters',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'sparametersArraySize',
+                    'value_twist': 'numberOfSparameters'
+                },
+                'type': 'NIComplexNumber[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sparametersArraySize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfSparameters',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfPorts',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetError': {
         'parameters': [
             {

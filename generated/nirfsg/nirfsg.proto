@@ -75,6 +75,7 @@ service NiRFSG {
   rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
+  rpc GetDeembeddingSparameters(GetDeembeddingSparametersRequest) returns (GetDeembeddingSparametersResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetExternalCalibrationLastDateAndTime(GetExternalCalibrationLastDateAndTimeRequest) returns (GetExternalCalibrationLastDateAndTimeResponse);
   rpc GetSelfCalibrationDateAndTime(GetSelfCalibrationDateAndTimeRequest) returns (GetSelfCalibrationDateAndTimeResponse);
@@ -297,6 +298,10 @@ enum SignalIdentifier {
   SIGNAL_IDENTIFIER_MARKER3 = 9;
 }
 
+message NIComplexNumber {
+  double real = 1;
+  double imaginary = 2;
+}
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -930,6 +935,17 @@ message GetChannelNameRequest {
 message GetChannelNameResponse {
   int32 status = 1;
   string name = 2;
+}
+
+message GetDeembeddingSparametersRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetDeembeddingSparametersResponse {
+  int32 status = 1;
+  repeated NIComplexNumber sparameters = 2;
+  sint32 number_of_sparameters = 3;
+  sint32 number_of_ports = 4;
 }
 
 message GetErrorRequest {

@@ -80,6 +80,7 @@ NiRFSGLibrary::NiRFSGLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niRFSG_GetAttributeViSession"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niRFSG_GetAttributeViString"));
   function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niRFSG_GetChannelName"));
+  function_pointers_.GetDeembeddingSparameters = reinterpret_cast<GetDeembeddingSparametersPtr>(shared_library_.get_function_pointer("niRFSG_GetDeembeddingSparameters"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niRFSG_GetError"));
   function_pointers_.GetExternalCalibrationLastDateAndTime = reinterpret_cast<GetExternalCalibrationLastDateAndTimePtr>(shared_library_.get_function_pointer("niRFSG_GetExternalCalibrationLastDateAndTime"));
   function_pointers_.GetSelfCalibrationDateAndTime = reinterpret_cast<GetSelfCalibrationDateAndTimePtr>(shared_library_.get_function_pointer("niRFSG_GetSelfCalibrationDateAndTime"));
@@ -847,6 +848,18 @@ ViStatus NiRFSGLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 buff
   return niRFSG_GetChannelName(vi, index, bufferSize, name);
 #else
   return function_pointers_.GetChannelName(vi, index, bufferSize, name);
+#endif
+}
+
+ViStatus NiRFSGLibrary::GetDeembeddingSparameters(ViSession vi, NIComplexNumber sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts)
+{
+  if (!function_pointers_.GetDeembeddingSparameters) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetDeembeddingSparameters.");
+  }
+#if defined(_MSC_VER)
+  return niRFSG_GetDeembeddingSparameters(vi, sparameters, sparametersArraySize, numberOfSparameters, numberOfPorts);
+#else
+  return function_pointers_.GetDeembeddingSparameters(vi, sparameters, sparametersArraySize, numberOfSparameters, numberOfPorts);
 #endif
 }
 

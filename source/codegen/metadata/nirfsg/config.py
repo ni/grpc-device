@@ -14,6 +14,19 @@ config = {
         'task': 'generation'
     },
     'custom_types': [
+        {
+            'name': 'NIComplexNumber',
+            'fields': [
+                {
+                    'type': 'double',
+                    'name': 'real',
+                },
+                {
+                    'type': 'double',
+                    'name': 'imaginary',
+                }
+            ]
+        },
     ],
     'additional_headers': [],
     'code_readiness': 'NextRelease',
