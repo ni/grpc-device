@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 import common_helpers
 
 
@@ -313,7 +313,7 @@ def to_cpp_readiness(user_readiness: str) -> str:
     return f'CodeReadiness::k{user_readiness}'
     
 
-def get_enums_to_map(functions: dict, enums: dict) -> dict:
+def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
     def get_enum_or_default(enum_name: str) -> dict:
         # Enums that are added during metadata mutation (like attributes)
         # may not be in the enum dictionary. Assume they don't generate-mappings.
