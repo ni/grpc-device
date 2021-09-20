@@ -173,6 +173,16 @@ jobs:
         path: ni-grpc-device-client.tar.gz
         retention-days: 5
 
+    - name: Upload Windows Server Information Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
+      with:
+        name: ni-grpc-device-server-windows-x64
+        path: |
+          LICENSE
+          ThirdPartyNotices.txt
+        retention-days: 5
+
     - name: Upload Windows Server Binaries Artifact
       uses: actions/upload-artifact@v2
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
@@ -181,8 +191,6 @@ jobs:
         path: |
           build/Release/ni_grpc_device_server.exe
           build/Release/server_config.json
-          LICENSE
-          ThirdPartyNotices.txt
         retention-days: 5
 
     - name: Upload Windows Test Binaries Artifact
