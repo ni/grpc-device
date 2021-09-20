@@ -10,6 +10,7 @@ For more detailed information on the server and API design refer to the [wiki](h
 
 |NI Driver|Minimum Version Tested (Windows)|Minimum Version Tested (Linux) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Minimum Version Tested (Linux RT)|
 | :------------------------ | :------| :------------ | :------------ |
+| NI-DAQmx                  | 21.0.0 | 21.0.0        | 21.0.0        |
 | NI-DCPOWER                | 20.6.0 | 20.1.0        | 20.7.0        |
 | NI-DIGITAL PATTERN DRIVER | 20.6.0 | Not Supported | Not Supported |
 | NI-DMM                    | 20.0.0 | 20.1.0        | 20.5.0        |
