@@ -17681,7 +17681,7 @@ namespace nidaqmx_grpc {
   NiDAQmxService::NiDAQmxFeatureToggles::NiDAQmxFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nidaqmx", CodeReadiness::kNextRelease)),
+        feature_toggles.is_feature_enabled("nidaqmx", CodeReadiness::kRelease)),
       is_allow_undefined_attributes_enabled(
         feature_toggles.is_feature_enabled("nidaqmx.allow_undefined_attributes", CodeReadiness::kPrototype))
   {
