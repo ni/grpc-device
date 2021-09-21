@@ -98,7 +98,7 @@ private:
 % endif
 % for enum in enums_to_map:
 <%
-  enum_value = service_helpers.python_to_c(enums[enum])
+  enum_value = common_helpers.get_enum_value_cpp_type(enums[enum])
 %>\
   std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${service_helpers.get_input_lookup_values(enums[enum])} };
   std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };

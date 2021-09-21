@@ -9,7 +9,8 @@ class ParamMechanism(Enum):
   BASIC = 0
   ARRAY = 1
   ENUM = 2
-  COPY = 3
+  MAPPED_ENUM = 3
+  COPY = 4
 
 ClientParam = namedtuple(
   "ClientParam", 
@@ -20,8 +21,7 @@ ClientParam = namedtuple(
   ])
 
 
-def create_params(func: dict) -> List[str]:
-  client_params = get_client_parameters(func)
+def to_parameter_list(client_params: List[ClientParam]) -> List[str]:
 
   param_list = [
     f"{p.type} {p.name}"
@@ -35,17 +35,18 @@ def stub_param() -> str:
   return f"const {stub_ptr_alias()}& stub"
 
 
-def create_streaming_params(func: dict) -> str:
-  params = create_params(func)
+def create_streaming_params(client_params: List[ClientParam]) -> str:
+  params = to_parameter_list(client_params)
   client_context_param = "::grpc::ClientContext& context"
   params = [stub_param()] + [client_context_param] + params
   return str.join(", ", params)
 
 
-def create_unary_params(func: dict) -> str:
-  params = create_params(func)
+def create_unary_params(client_params: List[ClientParam]) -> str:
+  params = to_parameter_list(client_params)
   params = [stub_param()] + params
   return str.join(", ", params)
+
 
 PROTOBUF_PRIM_TYPES = ["bool", "double", "float"]
 
@@ -79,7 +80,7 @@ def protobuf_namespace_alias() -> str:
   return "pb"
 
 
-def get_cpp_client_param_type(param: dict) -> str:
+def get_cpp_client_param_type(param: dict, enums: dict) -> str:
   grpc_type = param["grpc_type"]
 
   if is_grpc_array(param):
@@ -89,12 +90,15 @@ def get_cpp_client_param_type(param: dict) -> str:
 
 
   if "enum" in param:
-    enum_less_param = deepcopy(param)
-    enum_less_param.pop("enum")
     base_type = get_cpp_type_for_protobuf_type(grpc_type)
     if base_type:
       return f"simple_variant<{param['enum']}, {base_type}>"
     return param["enum"]
+
+  if "mapped-enum" in param:
+    enum = param["mapped-enum"]
+    base_type = common_helpers.get_enum_value_cpp_type(enums[enum])
+    return f"simple_variant<{enum}, {base_type}>"
 
   return get_cpp_type_for_protobuf_type(grpc_type)
 
@@ -119,14 +123,16 @@ def get_param_mechanism(param: dict) -> ParamMechanism:
     return ParamMechanism.ARRAY
   if "enum" in param:
     return ParamMechanism.ENUM
+  if "mapped-enum" in param:
+    return ParamMechanism.MAPPED_ENUM
   if is_basic_type(param["grpc_type"]):
     return ParamMechanism.BASIC
   return ParamMechanism.COPY
 
 
-def create_client_param(param: dict) -> ClientParam:
+def create_client_param(param: dict, enums: dict) -> ClientParam:
   name = common_helpers.camel_to_snake(param["name"])
-  param_type = get_cpp_client_param_type(param)
+  param_type = get_cpp_client_param_type(param, enums)
   param_type = const_ref_t(param_type)
   param_mechanism = get_param_mechanism(param)
 
@@ -141,7 +147,7 @@ def stub_ptr_alias():
   return "StubPtr"
 
 
-def get_client_parameters(func: dict) -> List[ClientParam]:
+def get_client_parameters(func: dict, enums: dict) -> List[ClientParam]:
   inputs = [
     p
     for p in func["parameters"]
@@ -151,7 +157,7 @@ def get_client_parameters(func: dict) -> List[ClientParam]:
   inputs = common_helpers.filter_parameters_for_grpc_fields(inputs)
 
   return [
-    create_client_param(p)
+    create_client_param(p, enums)
     for p in inputs
   ]
 
