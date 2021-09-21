@@ -1398,6 +1398,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_data()->Resize(actual_num_waveforms, 0);
           response->set_actual_num_waveforms(actual_num_waveforms);
           response->set_actual_samples_per_waveform(actual_samples_per_waveform);
         }
@@ -1479,6 +1480,7 @@ namespace nidigitalpattern_grpc {
           CopyBytesToEnums(actual_pin_states, response->mutable_actual_pin_states());
           response->set_actual_pin_states_raw(actual_pin_states);
           Copy(per_pin_pass_fail, response->mutable_per_pin_pass_fail());
+          response->mutable_per_pin_pass_fail()->Resize(actual_num_pin_data, 0);
           response->set_actual_num_pin_data(actual_num_pin_data);
         }
         return ::grpc::Status::OK;
@@ -1598,6 +1600,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
           response->set_actual_num_frequencies(actual_num_frequencies);
         }
         return ::grpc::Status::OK;
@@ -1928,6 +1931,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_failure_count()->Resize(actual_num_read, 0);
           response->set_actual_num_read(actual_num_read);
         }
         return ::grpc::Status::OK;
@@ -1990,6 +1994,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
           response->set_actual_num_pins(actual_num_pins);
         }
         return ::grpc::Status::OK;
@@ -2155,6 +2160,9 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_pin_indexes()->Resize(actual_num_values, 0);
+          response->mutable_site_numbers()->Resize(actual_num_values, 0);
+          response->mutable_channel_indexes()->Resize(actual_num_values, 0);
           response->set_actual_num_values(actual_num_values);
         }
         return ::grpc::Status::OK;
@@ -2193,6 +2201,7 @@ namespace nidigitalpattern_grpc {
         response->set_status(status);
         if (status == 0) {
           Copy(pass_fail, response->mutable_pass_fail());
+          response->mutable_pass_fail()->Resize(actual_num_sites, 0);
           response->set_actual_num_sites(actual_num_sites);
         }
         return ::grpc::Status::OK;
@@ -2247,6 +2256,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
           response->set_actual_num_site_numbers(actual_num_site_numbers);
         }
         return ::grpc::Status::OK;
@@ -2950,6 +2960,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_measurements()->Resize(actual_num_read, 0);
           response->set_actual_num_read(actual_num_read);
         }
         return ::grpc::Status::OK;
@@ -3419,6 +3430,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_offsets()->Resize(actual_num_offsets, 0);
           response->set_actual_num_offsets(actual_num_offsets);
         }
         return ::grpc::Status::OK;

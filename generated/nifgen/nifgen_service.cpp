@@ -2137,6 +2137,7 @@ namespace nifgen_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_coefficients_array()->Resize(number_of_coefficients_read, 0);
           response->set_number_of_coefficients_read(number_of_coefficients_read);
         }
         return ::grpc::Status::OK;

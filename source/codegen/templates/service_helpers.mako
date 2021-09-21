@@ -664,6 +664,10 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 %     elif common_helpers.is_struct(parameter) or parameter['type'] == 'ViBoolean[]':
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 %     endif
+%     if common_helpers.is_ivi_dance_array_with_a_twist_param(parameter):
+## This code doesn't handle all parameter types, see what initialize_output_params() does for that.
+        response->mutable_${parameter_name}()->Resize(${common_helpers.camel_to_snake(parameter['size']['value_twist'])}, 0);
+%     endif
 %   elif parameter['type'] == 'ViSession':
         auto session_id = session_repository_->resolve_session_id(${parameter_name});
         response->mutable_${parameter_name}()->set_id(session_id);
