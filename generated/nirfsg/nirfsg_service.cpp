@@ -29,6 +29,21 @@ namespace nirfsg_grpc {
   {
   }
 
+  void NiRFSGService::Copy(const NIComplexNumber& input, nirfsg_grpc::NIComplexNumber* output) 
+  {
+    output->set_real(input.real);
+    output->set_imaginary(input.imaginary);
+  }
+
+  void NiRFSGService::Copy(const std::vector<NIComplexNumber>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output) 
+  {
+    for (auto item : input) {
+      auto message = new nirfsg_grpc::NIComplexNumber();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiRFSGService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
@@ -1702,24 +1717,24 @@ namespace nirfsg_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 number_of_sparameters{};
-      ViInt32 number_of_ports{};
+      ViInt32 number_of_sparameters {};
+      ViInt32 number_of_ports {};
       while (true) {
         auto status = library_->GetDeembeddingSparameters(vi, nullptr, 0, &number_of_sparameters, &number_of_ports);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_sparameters()->Resize(number_of_sparameters, 0);
-        NIComplexNumber* sparameters = response->mutable_sparameters()->mutable_data();
+        std::vector<NIComplexNumber> sparameters(number_of_sparameters, NIComplexNumber());
         auto sparameters_array_size = number_of_sparameters;
-        status = library_->GetDeembeddingSparameters(vi, sparameters, sparameters_array_size, &number_of_sparameters, &number_of_ports);
+        status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
+          Copy(sparameters, response->mutable_sparameters());
           response->set_number_of_sparameters(number_of_sparameters);
           response->set_number_of_ports(number_of_ports);
         }

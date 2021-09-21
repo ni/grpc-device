@@ -146,6 +146,8 @@ public:
 private:
   NiRFSGLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  void Copy(const NIComplexNumber& input, nirfsg_grpc::NIComplexNumber* output);
+  void Copy(const std::vector<NIComplexNumber>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output);
   std::map<std::int32_t, std::string> attrpxichassisclk10rangetable_input_map_ { {1, "None"},{2, "OnboardClock"},{3, "RefIn"}, };
   std::map<std::string, std::int32_t> attrpxichassisclk10rangetable_output_map_ { {"None", 1},{"OnboardClock", 2},{"RefIn", 3}, };
   std::map<std::int32_t, std::string> attrrefclocksourcerangetable_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_CLK"},{4, "ClkIn"},{5, "RefIn2"},{6, "PXI_ClkMaster"}, };
