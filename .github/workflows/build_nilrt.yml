@@ -25,6 +25,13 @@ jobs:
       with:
         access_token: ${{ github.token }}
 
+    # If 2 large cpp files are compiled in parallel, we can run out of memory.
+    # Increase swap space to protect against this.
+    - name: Set Swap Space
+      uses: pierotofy/set-swap-space@49819abfb41bd9b44fb781159c033dba90353a7c
+      with:
+        swap-size-gb: 8
+
     - name: Checkout Repo
       uses: actions/checkout@v2
 
