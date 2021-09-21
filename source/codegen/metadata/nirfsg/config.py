@@ -11,15 +11,13 @@ config = {
     'context_manager_name': {
         'abort_function': 'Abort',
         'initiate_function': 'Initiate',
-        # TODO?
-        'task': 'acquisition'
+        'task': 'generation'
     },
     'custom_types': [
     ],
     'additional_headers': [],
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-RFSG',
-    # TODO?
     'extra_errors_used': [
     ],
     'init_function': 'InitWithOptions',
