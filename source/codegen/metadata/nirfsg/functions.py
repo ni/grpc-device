@@ -1172,7 +1172,7 @@ functions = {
                     'value': 'sparametersArraySize',
                     'value_twist': 'numberOfSparameters'
                 },
-                'type': 'struct NIComplexNumber[]',
+                'type': 'struct NIComplexNumber_struct[]',
                 'grpc_type': 'repeated NIComplexNumber'
             },
             {

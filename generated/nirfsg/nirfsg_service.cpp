@@ -29,13 +29,13 @@ namespace nirfsg_grpc {
   {
   }
 
-  void NiRFSGService::Copy(const NIComplexNumber& input, nirfsg_grpc::NIComplexNumber* output) 
+  void NiRFSGService::Copy(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output) 
   {
     output->set_real(input.real);
     output->set_imaginary(input.imaginary);
   }
 
-  void NiRFSGService::Copy(const std::vector<NIComplexNumber>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output) 
+  void NiRFSGService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output) 
   {
     for (auto item : input) {
       auto message = new nirfsg_grpc::NIComplexNumber();
@@ -1725,7 +1725,7 @@ namespace nirfsg_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        std::vector<NIComplexNumber> sparameters(number_of_sparameters, NIComplexNumber());
+        std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
         auto sparameters_array_size = number_of_sparameters;
         status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
@@ -1735,6 +1735,13 @@ namespace nirfsg_grpc {
         response->set_status(status);
         if (status == 0) {
           Copy(sparameters, response->mutable_sparameters());
+          {
+            auto shrunk_size = number_of_sparameters;
+            auto current_size = response->mutable_sparameters()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
           response->set_number_of_sparameters(number_of_sparameters);
           response->set_number_of_ports(number_of_ports);
         }

@@ -851,7 +851,7 @@ ViStatus NiRFSGLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 buff
 #endif
 }
 
-ViStatus NiRFSGLibrary::GetDeembeddingSparameters(ViSession vi, NIComplexNumber sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts)
+ViStatus NiRFSGLibrary::GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts)
 {
   if (!function_pointers_.GetDeembeddingSparameters) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetDeembeddingSparameters.");

@@ -15,14 +15,15 @@ config = {
     },
     'custom_types': [
         {
-            'name': 'NIComplexNumber',
+            'name': 'NIComplexNumber_struct',
+            'grpc_name': 'NIComplexNumber',
             'fields': [
                 {
-                    'type': 'double',
+                    'type': 'ViReal64',
                     'name': 'real',
                 },
                 {
-                    'type': 'double',
+                    'type': 'ViReal64',
                     'name': 'imaginary',
                 }
             ]
