@@ -25,13 +25,6 @@ jobs:
       with:
         access_token: ${{ github.token }}
 
-    # If 2 large cpp files are compiled in parallel, we can run out of memory.
-    # Increase swap space to protect against this.
-    - name: Set Swap Space
-      uses: pierotofy/set-swap-space@49819abfb41bd9b44fb781159c033dba90353a7c
-      with:
-        swap-size-gb: 8
-
     - name: Checkout Repo
       uses: actions/checkout@v2
 
@@ -91,7 +84,7 @@ jobs:
       shell: cmake -P {0}
       run: |
         execute_process(
-          COMMAND cmake --build $ENV{GITHUB_WORKSPACE}/third_party/grpc/build -j 2
+          COMMAND cmake --build $ENV{GITHUB_WORKSPACE}/third_party/grpc/build
           RESULT_VARIABLE result
           OUTPUT_VARIABLE output
           ERROR_VARIABLE output
@@ -128,7 +121,7 @@ jobs:
       shell: cmake -P {0}
       run: |
         execute_process(
-          COMMAND cmake --build build --config $ENV{BUILD_TYPE} -j 2
+          COMMAND cmake --build build --config $ENV{BUILD_TYPE}
           RESULT_VARIABLE result
           OUTPUT_VARIABLE output
           ERROR_VARIABLE output
