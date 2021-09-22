@@ -538,6 +538,81 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAnIviDanceWithATwistByteArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistByteArrayRequest* request, GetAnIviDanceWithATwistByteArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViInt32 actual_size {};
+      while (true) {
+        auto status = library_->GetAnIviDanceWithATwistByteArray(0, nullptr, &actual_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string array_out(actual_size, '\0');
+        auto buffer_size = actual_size;
+        status = library_->GetAnIviDanceWithATwistByteArray(buffer_size, (ViInt8*)array_out.data(), &actual_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_array_out(array_out);
+          response->mutable_array_out()->resize(actual_size);
+          response->set_actual_size(actual_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAnIviDanceWithATwistString(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringRequest* request, GetAnIviDanceWithATwistStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViInt32 actual_size {};
+      while (true) {
+        auto status = library_->GetAnIviDanceWithATwistString(0, nullptr, &actual_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string array_out;
+        if (actual_size > 0) {
+            array_out.resize(actual_size-1);
+        }
+        auto buffer_size = actual_size;
+        status = library_->GetAnIviDanceWithATwistString(buffer_size, (ViChar*)array_out.data(), &actual_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_array_out(array_out);
+          response->mutable_array_out()->resize(actual_size-1);
+          response->set_actual_size(actual_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetArraySizeForCustomCode(::grpc::ServerContext* context, const GetArraySizeForCustomCodeRequest* request, GetArraySizeForCustomCodeResponse* response)
   {
     if (context->IsCancelled()) {

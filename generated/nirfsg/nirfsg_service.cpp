@@ -1983,7 +1983,7 @@ namespace nirfsg_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_data(data);
-          response->mutable_data()->Resize(actual_data_size, 0);
+          response->mutable_data()->resize(actual_data_size);
           response->set_actual_data_size(actual_data_size);
         }
         return ::grpc::Status::OK;
