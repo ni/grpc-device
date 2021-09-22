@@ -23,7 +23,6 @@ functions = {
                 "name": "vi",
                 "direction": "out",
                 "type": "ViSession",
-                "xxgrpc_type": "nidevice_grpc.Session"
             }
         ],
         "returns": "ViStatus"
