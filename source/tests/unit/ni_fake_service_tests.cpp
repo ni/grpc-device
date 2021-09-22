@@ -1796,7 +1796,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistByteArrayWithSmall
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   std::uint32_t session_id = create_session(library, service, kTestViSession);
-  const auto DATA = std::vector{'a', 'b'};
+  const auto DATA = std::vector<char>{'a', 'b'};
   const auto NEW_SIZE = static_cast<ViInt32>(DATA.size());
   const auto OLD_SIZE = NEW_SIZE + 1;
   // ivi-dance-with-a-twist call
