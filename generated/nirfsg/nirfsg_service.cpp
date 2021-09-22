@@ -14,6 +14,9 @@
 
 namespace nirfsg_grpc {
 
+  const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
+
   NiRFSGService::NiRFSGService(
       NiRFSGLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
@@ -80,6 +83,48 @@ namespace nirfsg_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+
+      while (true) {
+        auto status = library_->GetError(vi, nullptr, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 error_description_buffer_size = status;
+      
+        ViStatus error_code {};
+        std::string error_description;
+        if (error_description_buffer_size > 0) {
+            error_description.resize(error_description_buffer_size-1);
+        }
+        status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_error_code(error_code);
+          response->set_error_description(error_description);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFSGService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
   {
     if (context->IsCancelled()) {
@@ -103,30 +148,6 @@ namespace nirfsg_grpc {
       response->set_status(status);
       if (status == 0) {
         response->mutable_vi()->set_id(session_id);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSGService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViStatus error_code = request->error_code();
-      std::string error_message(256 - 1, '\0');
-      auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_error_message(error_message);
       }
       return ::grpc::Status::OK;
     }

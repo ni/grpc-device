@@ -20,20 +20,20 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi);
   ViStatus Close(ViSession vi);
+  ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
   ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
-  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
 
  private:
   using InitPtr = decltype(&niRFSG_init);
   using ClosePtr = decltype(&niRFSG_close);
+  using GetErrorPtr = decltype(&niRFSG_GetError);
   using InitWithOptionsPtr = decltype(&niRFSG_InitWithOptions);
-  using ErrorMessagePtr = decltype(&niRFSG_error_message);
 
   typedef struct FunctionPointers {
     InitPtr Init;
     ClosePtr Close;
+    GetErrorPtr GetError;
     InitWithOptionsPtr InitWithOptions;
-    ErrorMessagePtr ErrorMessage;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

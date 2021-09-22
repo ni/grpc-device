@@ -39,6 +39,35 @@ functions = {
         ],
         "returns": "ViStatus",
     },
+    'GetError': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorCode',
+                'type': 'ViStatus'
+            },
+            {
+                'direction': 'in',
+                'name': 'errorDescriptionBufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorDescription',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'errorDescriptionBufferSize'
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     "InitWithOptions": {
         "init_method": True,
         "parameters": [
@@ -69,30 +98,5 @@ functions = {
             }
         ],
         "returns": "ViStatus",
-    },
-    'ErrorMessage': {
-        'cname': 'niRFSG_error_message',
-        'parameters': [
-            {
-                'name': 'vi',
-                'direction': 'in',
-                'type': 'ViSession'
-            },
-            {
-                'name': 'errorCode',
-                'direction': 'in',
-                'type': 'ViStatus'
-            },
-            {
-                'name': 'errorMessage',
-                'direction': 'out',
-                'type': 'ViChar[]',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                }
-            }
-        ],
-        'returns': 'ViStatus'
     },
 }

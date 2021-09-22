@@ -19,8 +19,8 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, Close, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
-  MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
 };
 
 }  // namespace unit

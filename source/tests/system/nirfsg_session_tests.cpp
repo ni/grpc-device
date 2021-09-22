@@ -12,7 +12,6 @@ namespace rfsg = nirfsg_grpc;
 const int kInvalidRsrc = -200220;
 const int kInvalidRFSGSession = -1074130544;
 const char* kRFSGErrorResourceNotFoundMessage = "Device identifier is invalid.";
-const char* kInvalidRFSGSessionMessage = "IVI: (Hex 0xBFFA1190) The session handle is not valid.";
 const char* kRFSGTestRsrc = "FakeDevice";
 const char* kRFSGOptionsString = "Simulate=1, DriverSetup=Model:5652; BoardType:PXI";
 const char* kRFSGTestSession = "SessionName";
@@ -51,13 +50,13 @@ class NiRFSGSessionTest : public ::testing::Test {
   void expect_error_string(nidevice_grpc::Session& session, google::protobuf::int32 error_code, const char* expected_error_string)
   {
     ::grpc::ClientContext context;
-    rfsg::ErrorMessageRequest error_request;
+    rfsg::GetErrorRequest error_request;
     error_request.mutable_vi()->set_id(session.id());
-    error_request.set_error_code(error_code);
-    rfsg::ErrorMessageResponse error_response;
-    ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
+    rfsg::GetErrorResponse error_response;
+    ::grpc::Status status = GetStub()->GetError(&context, error_request, &error_response);
     EXPECT_TRUE(status.ok());
-    EXPECT_STREQ(expected_error_string, error_response.error_message().c_str());
+    EXPECT_STREQ(expected_error_string, error_response.error_description().c_str());
+    EXPECT_EQ(error_code, error_response.error_code());
   }
 
  private:
@@ -134,7 +133,6 @@ TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kInvalidRFSGSession, response.status());
-  expect_error_string(session, response.status(), kInvalidRFSGSessionMessage);
 }
 
 }  // namespace system

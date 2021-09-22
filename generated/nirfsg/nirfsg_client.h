@@ -24,8 +24,8 @@ using namespace nidevice_grpc::experimental::client;
 
 InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string);
-ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
 
 } // namespace nirfsg_grpc::experimental::client
 

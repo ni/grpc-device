@@ -51,6 +51,22 @@ close(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+GetErrorResponse
+get_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetErrorRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetErrorResponse{};
+
+  raise_if_error(
+      stub->GetError(&context, request, &response));
+
+  return response;
+}
+
 InitWithOptionsResponse
 init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string)
 {
@@ -66,23 +82,6 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
 
   raise_if_error(
       stub->InitWithOptions(&context, request, &response));
-
-  return response;
-}
-
-ErrorMessageResponse
-error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ErrorMessageRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_error_code(error_code);
-
-  auto response = ErrorMessageResponse{};
-
-  raise_if_error(
-      stub->ErrorMessage(&context, request, &response));
 
   return response;
 }
