@@ -14,6 +14,19 @@ using namespace ::testing;
 
 const int krfsgDriverApiSuccess = 0;
 
+template <typename TResponse>
+void EXPECT_SUCCESS(const TResponse& response)
+{
+  EXPECT_EQ(krfsgDriverApiSuccess, response.status());
+}
+
+template <typename TResponse>
+void EXPECT_SUCCESS(const ::grpc::Status& status, const TResponse& response)
+{
+  EXPECT_SUCCESS(response);
+  EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
+}
+
 class NiRFSGDriverApiTests : public ::testing::Test {
  protected:
   NiRFSGDriverApiTests()
@@ -31,17 +44,18 @@ class NiRFSGDriverApiTests : public ::testing::Test {
 
   void TearDown() override
   {
-    close_driver_session();
+    auto response = client::close(stub(), session());
+    EXPECT_SUCCESS(response);
   }
 
-  std::unique_ptr<rfsg::NiRFSG::Stub>& GetStub()
+  std::unique_ptr<rfsg::NiRFSG::Stub>& stub()
   {
     return nirfsg_stub_;
   }
 
-  int GetSessionId()
+  const nidevice_grpc::Session& session()
   {
-    return driver_session_->id();
+    return *driver_session_;
   }
 
   void initialize_driver_session()
@@ -49,7 +63,7 @@ class NiRFSGDriverApiTests : public ::testing::Test {
     const auto DEVICE = "FakeDevice";
     const auto OPTIONS = "Simulate=1, DriverSetup=Model:5652; BoardType:PXI";
     auto response = client::init_with_options(
-        GetStub(),
+        stub(),
         DEVICE,
         false,
         false,
@@ -59,70 +73,24 @@ class NiRFSGDriverApiTests : public ::testing::Test {
     driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
   }
 
-  void close_driver_session()
-  {
-    ::grpc::ClientContext context;
-    rfsg::CloseRequest request;
-    request.mutable_vi()->set_id(driver_session_->id());
-    rfsg::CloseResponse response;
-
-    ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-    EXPECT_TRUE(status.ok());
-    EXPECT_EQ(krfsgDriverApiSuccess, response.status());
-  }
-
-  ::grpc::Status self_test(rfsg::SelfTestResponse& response)
-  {
-    ::grpc::ClientContext context;
-    rfsg::SelfTestRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
-    return GetStub()->SelfTest(&context, request, &response);
-  }
-
-  ::grpc::Status reset(rfsg::ResetResponse& response)
-  {
-    ::grpc::ClientContext context;
-    rfsg::ResetRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
-    return GetStub()->Reset(&context, request, &response);
-  }
-
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<rfsg::NiRFSG::Stub> nirfsg_stub_;
 };
 
-template <typename TResponse>
-void EXPECT_SUCCESS(const TResponse& response)
-{
-  EXPECT_EQ(krfsgDriverApiSuccess, response.status());
-}
-
-template <typename TResponse>
-void EXPECT_SUCCESS(const ::grpc::Status& status, const TResponse& response)
-{
-  EXPECT_SUCCESS(response);
-  EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
-}
-
 TEST_F(NiRFSGDriverApiTests, PerformSelfTest_Succeeds)
 {
-  rfsg::SelfTestResponse response;
-  auto status = self_test(response);
-
-  EXPECT_SUCCESS(status, response);
+  auto response = client::self_test(stub(), session());
+  EXPECT_SUCCESS(response);
   EXPECT_EQ(0, response.self_test_result());
   EXPECT_STREQ("Passed", response.self_test_message().c_str());
 }
 
 TEST_F(NiRFSGDriverApiTests, PerformReset_Succeeds)
 {
-  rfsg::ResetResponse response;
-  auto status = reset(response);
-
-  EXPECT_SUCCESS(status, response);
+  auto response = client::reset(stub(), session());
+  EXPECT_SUCCESS(response);
   EXPECT_EQ(0, response.status());
 }
 }  // namespace system
