@@ -339,6 +339,36 @@ get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const ni
   return response;
 }
 
+GetAnIviDanceWithATwistByteArrayResponse
+get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAnIviDanceWithATwistByteArrayRequest{};
+
+  auto response = GetAnIviDanceWithATwistByteArrayResponse{};
+
+  raise_if_error(
+      stub->GetAnIviDanceWithATwistByteArray(&context, request, &response));
+
+  return response;
+}
+
+GetAnIviDanceWithATwistStringResponse
+get_an_ivi_dance_with_a_twist_string(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAnIviDanceWithATwistStringRequest{};
+
+  auto response = GetAnIviDanceWithATwistStringResponse{};
+
+  raise_if_error(
+      stub->GetAnIviDanceWithATwistString(&context, request, &response));
+
+  return response;
+}
+
 GetArraySizeForCustomCodeResponse
 get_array_size_for_custom_code(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {

@@ -8,6 +8,8 @@
 #include <nidmm/nidmm_service.h>
 #include <nifgen/nifgen_library.h>
 #include <nifgen/nifgen_service.h>
+#include <nirfsg/nirfsg_library.h>
+#include <nirfsg/nirfsg_service.h>
 #include <niscope/niscope_library.h>
 #include <niscope/niscope_service.h>
 #include <niswitch/niswitch_library.h>
@@ -122,6 +124,10 @@ static void RunServer(const ServerConfiguration& config)
   nidcpower_grpc::NiDCPowerLibrary nidcpower_library;
   nidcpower_grpc::NiDCPowerService nidcpower_service(&nidcpower_library, mi_shared_resource_repository);
   builder.RegisterService(&nidcpower_service);
+
+  nirfsg_grpc::NiRFSGLibrary nirfsg_library;
+  nirfsg_grpc::NiRFSGService nirfsg_service(&nirfsg_library, mi_shared_resource_repository);
+  builder.RegisterService(&nirfsg_service);
 
   nifgen_grpc::NiFgenLibrary nifgen_library;
   nifgen_grpc::NiFgenService nifgen_service(&nifgen_library, mi_shared_resource_repository);
