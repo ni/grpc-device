@@ -10,7 +10,7 @@
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['grpc_type'] == 'nidevice_grpc.Session'), None)
   resource_handle_type = session_output_param['type']
-  session_output_var_name = session_output_param['cppName']
+  session_output_var_name = common_helpers.camel_to_snake(session_output_param['cppName'])
   close_function_call = function_data['custom_close'] if 'custom_close' in function_data else f"{config['close_function']}(id)"
 
   explicit_session_params = (common_helpers.camel_to_snake(param['cppName']) for param in parameters if param.get('is_session_name', False))
