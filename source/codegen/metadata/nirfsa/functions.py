@@ -1,11 +1,1767 @@
-# -*- coding: utf-8 -*-
-# This file is generated from NI-RFSA API metadata version 21.0.0
 functions = {
+    'Abort': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CalAdjustCalTonePower': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurement',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CalAdjustDeviceGain': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequency',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'gain',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CalAdjustDownconverterGain': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequency',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'gain',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CalAdjustIFAttenuationCalibration': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'IfFilterTable',
+                'name': 'ifFilter',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfAttenuators',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attenuatorSettings',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfAttenuators'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurement',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CalAdjustIFResponseCalibration': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'IfFilterTable',
+                'name': 'ifFilter',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'rfFrequency',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'bandWidth',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfMeasurements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurements',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfMeasurements'
+                },
+                'type': 'ViReal64[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CalSetTemperature': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'temperature',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ChangeExtCalPassword': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'oldPassword',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'newPassword',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CheckAcquisitionStatus': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'isDone',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ClearError': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ClearSelfCalibrateRange': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'Close': {
         'cname': 'niRFSA_close',
         'parameters': [
             {
                 'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CloseCalibrationStep': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CloseExternalAlignmentStep': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'Commit': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureAcquisitionType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AcquisitionTypeRangeTable',
+                'name': 'acquisitionType',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureDeembeddingTableInterpolationLinear': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'port',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'LinearInterpolationFormat',
+                'name': 'format',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureDeembeddingTableInterpolationNearest': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'port',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureDeembeddingTableInterpolationSpline': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'port',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureDigitalEdgeAdvanceTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalEdgeTriggerSource',
+                'name': 'source',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalEdgeRangeTable',
+                'name': 'edge',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureDigitalEdgeRefTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalEdgeTriggerSource',
+                'name': 'source',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalEdgeRangeTable',
+                'name': 'edge',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'pretriggerSamples',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureDigitalEdgeStartTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalEdgeTriggerSource',
+                'name': 'source',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DigitalEdgeRangeTable',
+                'name': 'edge',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureIQCarrierFrequency': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'carrierFrequency',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureIQPowerEdgeRefTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '"0"',
+                'name': 'source',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'level',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AnalogSlopeRangeTable',
+                'name': 'slope',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'pretriggerSamples',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureIQRate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'iqRate',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureNumberOfRecords': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfRecordsIsFinite',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfRecords',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureNumberOfSamples': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamplesIsFinite',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'in',
+                'name': 'samplesPerRecord',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigurePXIChassisClk10': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PxiChassisClk10SourceRangeTable',
+                'name': 'pxiClk10Source',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureRefClock': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'RefClockSourceRangeTable',
+                'name': 'clockSource',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'refClockRate',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureReferenceLevel': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'referenceLevel',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureResolutionBandwidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'resolutionBandwidth',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureSoftwareEdgeAdvanceTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureSoftwareEdgeRefTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'pretriggerSamples',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureSoftwareEdgeStartTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureSpectrumFrequencyCenterSpan': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'centerFrequency',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'span',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureSpectrumFrequencyStartStop': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'startFrequency',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'stopFrequency',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CreateConfigurationList': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'listName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfListAttributes',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'listAttributeIDs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfListAttributes'
+                },
+                'type': 'ViAttr[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'setAsActiveList',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CreateConfigurationListStep': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'setAsActiveStep',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CreateDeembeddingSparameterTableS2PFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'port',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 's2pFilePath',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SparameterOrientation',
+                'name': 'sparameterOrientation',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'DeleteAllDeembeddingTables': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'DeleteConfigurationList': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'listName',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'DeleteDeembeddingTable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'port',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'Disable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'DisableAdvanceTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'DisableRefTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'DisableStartTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'EnableSessionAccess': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'enable',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ErrorMessage': {
+        'cname': 'niRFSA_error_message',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'statusCode',
+                'type': 'ViStatus'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ErrorQuery': {
+        'cname': 'niRFSA_error_query',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorCode',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ExportSignal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Signal',
+                'name': 'signal',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'signalIdentifier',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ExportTerminalRangeTable',
+                'name': 'outputTerminal',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ExtCalStoreBaselineForSelfCalibration': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'password',
+                'type': 'ViString'
+            },
+            {
+                'direction': 'in',
+                'name': 'selfCalibrationStep',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ExternalAlignmentAdjustPreselector': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfCoefficients',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'coefficients',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfCoefficients'
+                },
+                'type': 'ViReal64[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeViBoolean': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeViInt32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeViInt64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeViReal64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeViString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufSize'
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetCalUserDefinedInfo': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'info',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetCalUserDefinedInfoMaxSize': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'infoSize',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetDeviceResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DeviceResponse',
+                'name': 'responseType',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'frequencies',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'numberOfFrequencies'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'magnitudeResponse',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'numberOfFrequencies'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'phaseResponse',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'numberOfFrequencies'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfFrequencies',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetError': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorCode',
+                'type': 'ViStatus'
+            },
+            {
+                'direction': 'in',
+                'name': 'errorDescriptionBufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorDescription',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'errorDescriptionBufferSize'
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetExtCalLastDateAndTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'year',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'month',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'day',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'hour',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'minute',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetExtCalLastTemp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'temperature',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetExtCalRecommendedInterval': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'months',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetFetchBacklog': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordNumber',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'out',
+                'name': 'backlog',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetFrequencyResponse': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'frequencies',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'numberOfFrequencies'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'magnitudeResponse',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'numberOfFrequencies'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'phaseResponse',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'numberOfFrequencies'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfFrequencies',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetGainReferenceCalBaseline': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'gainReferenceCalConstants',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'numberOfGainReferenceCalConstants'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfGainReferenceCalConstants',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'gainReferenceCalConstants'
+                },
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetNumberOfSpectralLines': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfSpectralLines',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetRelayName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'index',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'name',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'bufferSize'
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetRelayOperationsCount': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'out',
+                'name': 'operationsCount',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'bufferSize'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetSelfCalLastDateAndTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'selfCalibrationStep',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'out',
+                'name': 'year',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'month',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'day',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'hour',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'minute',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetSelfCalLastTemp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'selfCalibrationStep',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'out',
+                'name': 'temp',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetStreamEndpointHandle': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'streamEndpoint',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'out',
+                'name': 'writerHandle',
+                'type': 'ViUInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetTerminalName': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Signal',
+                'name': 'signal',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'signalIdentifier',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'terminalName',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetUserData': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'identifier',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualDataSize'
+                },
+                'type': 'ViInt8[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualDataSize',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'Init': {
+        'cname': 'niRFSA_init',
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'ViRsrc'
+            },
+            {
+                'direction': 'in',
+                'name': 'idQuery',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'in',
+                'name': 'reset',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'out',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'InitExtCal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'ViRsrc'
+            },
+            {
+                'direction': 'in',
+                'name': 'password',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'optionString',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'out',
                 'name': 'vi',
                 'type': 'ViSession'
             }
@@ -43,4 +1799,503 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'InitializeExternalAlignment': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'ViRsrc'
+            },
+            {
+                'direction': 'in',
+                'name': 'optionString',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'out',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'Initiate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'InvalidateAllAttributes': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'IsSelfCalValid': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'selfCalValid',
+                'type': 'ViBoolean'
+            },
+            {
+                'direction': 'out',
+                'name': 'validSteps',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'LockSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'callerHasLock',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'PerformThermalCorrection': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'Reset': {
+        'cname': 'niRFSA_reset',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ResetAttribute': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ResetDevice': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ResetWithDefaults': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ResetWithOptions': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'stepsToOmit',
+                'type': 'ViUInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'RevisionQuery': {
+        'cname': 'niRFSA_revision_query',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'driverRev',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'instrRev',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SelfCal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SelfCalibrate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'stepsToOmit',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SelfCalibrateRange': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'stepsToOmit',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'minFrequency',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxFrequency',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'minReferenceLevel',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maxReferenceLevel',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SelfTest': {
+        'cname': 'niRFSA_self_test',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'testResult',
+                'type': 'ViInt16'
+            },
+            {
+                'direction': 'out',
+                'name': 'testMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SendSoftwareEdgeTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Signal',
+                'name': 'trigger',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'triggerIdentifier',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetAttributeViBoolean': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetAttributeViInt32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetAttributeViInt64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetAttributeViReal64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetAttributeViString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'value',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetCalUserDefinedInfo': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'info',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetUserData': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'identifier',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'UnlockSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'callerHasLock',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    }
 }
