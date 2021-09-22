@@ -34,6 +34,7 @@ service NiFake {
   rpc GetAStringOfFixedMaximumSize(GetAStringOfFixedMaximumSizeRequest) returns (GetAStringOfFixedMaximumSizeResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
   rpc GetAnIviDanceWithATwistArray(GetAnIviDanceWithATwistArrayRequest) returns (GetAnIviDanceWithATwistArrayResponse);
+  rpc GetAnIviDanceWithATwistArrayOfCustomType(GetAnIviDanceWithATwistArrayOfCustomTypeRequest) returns (GetAnIviDanceWithATwistArrayOfCustomTypeResponse);
   rpc GetArraySizeForCustomCode(GetArraySizeForCustomCodeRequest) returns (GetArraySizeForCustomCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
   rpc GetArrayViUInt8WithEnum(GetArrayViUInt8WithEnumRequest) returns (GetArrayViUInt8WithEnumResponse);
@@ -319,6 +320,16 @@ message GetAnIviDanceWithATwistArrayRequest {
 message GetAnIviDanceWithATwistArrayResponse {
   int32 status = 1;
   repeated sint32 array_out = 2;
+  sint32 actual_size = 3;
+}
+
+message GetAnIviDanceWithATwistArrayOfCustomTypeRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetAnIviDanceWithATwistArrayOfCustomTypeResponse {
+  int32 status = 1;
+  repeated FakeCustomStruct array_out = 2;
   sint32 actual_size = 3;
 }
 

@@ -36,6 +36,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]);
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   ViStatus GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
+  ViStatus GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize);
   ViStatus GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut);
   ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]);
   ViStatus GetArrayViUInt8WithEnum(ViSession vi, ViInt32 arrayLen, ViUInt8 uInt8EnumArray[]);
@@ -107,6 +108,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetAStringOfFixedMaximumSizePtr = decltype(&niFake_GetAStringOfFixedMaximumSize);
   using GetAnIviDanceStringPtr = decltype(&niFake_GetAnIviDanceString);
   using GetAnIviDanceWithATwistArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistArray);
+  using GetAnIviDanceWithATwistArrayOfCustomTypePtr = decltype(&niFake_GetAnIviDanceWithATwistArrayOfCustomType);
   using GetArraySizeForCustomCodePtr = decltype(&niFake_GetArraySizeForCustomCode);
   using GetArrayUsingIviDancePtr = decltype(&niFake_GetArrayUsingIviDance);
   using GetArrayViUInt8WithEnumPtr = decltype(&niFake_GetArrayViUInt8WithEnum);
@@ -178,6 +180,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetAStringOfFixedMaximumSizePtr GetAStringOfFixedMaximumSize;
     GetAnIviDanceStringPtr GetAnIviDanceString;
     GetAnIviDanceWithATwistArrayPtr GetAnIviDanceWithATwistArray;
+    GetAnIviDanceWithATwistArrayOfCustomTypePtr GetAnIviDanceWithATwistArrayOfCustomType;
     GetArraySizeForCustomCodePtr GetArraySizeForCustomCode;
     GetArrayUsingIviDancePtr GetArrayUsingIviDance;
     GetArrayViUInt8WithEnumPtr GetArrayViUInt8WithEnum;

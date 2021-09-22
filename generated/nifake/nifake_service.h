@@ -50,6 +50,7 @@ public:
   ::grpc::Status GetAStringOfFixedMaximumSize(::grpc::ServerContext* context, const GetAStringOfFixedMaximumSizeRequest* request, GetAStringOfFixedMaximumSizeResponse* response) override;
   ::grpc::Status GetAnIviDanceString(::grpc::ServerContext* context, const GetAnIviDanceStringRequest* request, GetAnIviDanceStringResponse* response) override;
   ::grpc::Status GetAnIviDanceWithATwistArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayRequest* request, GetAnIviDanceWithATwistArrayResponse* response) override;
+  ::grpc::Status GetAnIviDanceWithATwistArrayOfCustomType(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayOfCustomTypeRequest* request, GetAnIviDanceWithATwistArrayOfCustomTypeResponse* response) override;
   ::grpc::Status GetArraySizeForCustomCode(::grpc::ServerContext* context, const GetArraySizeForCustomCodeRequest* request, GetArraySizeForCustomCodeResponse* response) override;
   ::grpc::Status GetArrayUsingIviDance(::grpc::ServerContext* context, const GetArrayUsingIviDanceRequest* request, GetArrayUsingIviDanceResponse* response) override;
   ::grpc::Status GetArrayViUInt8WithEnum(::grpc::ServerContext* context, const GetArrayViUInt8WithEnumRequest* request, GetArrayViUInt8WithEnumResponse* response) override;
