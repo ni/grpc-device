@@ -665,8 +665,17 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
         Copy(${parameter_name}, response->mutable_${parameter_name}());
 %     endif
 %     if common_helpers.is_ivi_dance_array_with_a_twist_param(parameter):
-## This code doesn't handle all parameter types, see what initialize_output_params() does for that.
-        response->mutable_${parameter_name}()->Resize(${common_helpers.camel_to_snake(parameter['size']['value_twist'])}, 0);
+<%
+  actual_size_param_name = common_helpers.camel_to_snake(parameter['size']['value_twist'])
+%>\
+%       if parameter['grpc_type'] == 'bytes':
+        response->mutable_${parameter_name}()->resize(${actual_size_param_name});
+%       elif common_helpers.is_string_arg(parameter):
+        response->mutable_${parameter_name}()->resize(${actual_size_param_name}-1);
+%       else:
+## This code doesn't handle all parameter types (i.e., enums), see what initialize_output_params() does for that.
+        response->mutable_${parameter_name}()->Resize(${actual_size_param_name}, 0);
+%       endif
 %     endif
 %   elif parameter['type'] == 'ViSession':
         auto session_id = session_repository_->resolve_session_id(${parameter_name});

@@ -34,6 +34,8 @@ service NiFake {
   rpc GetAStringOfFixedMaximumSize(GetAStringOfFixedMaximumSizeRequest) returns (GetAStringOfFixedMaximumSizeResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
   rpc GetAnIviDanceWithATwistArray(GetAnIviDanceWithATwistArrayRequest) returns (GetAnIviDanceWithATwistArrayResponse);
+  rpc GetAnIviDanceWithATwistByteArray(GetAnIviDanceWithATwistByteArrayRequest) returns (GetAnIviDanceWithATwistByteArrayResponse);
+  rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringRequest) returns (GetAnIviDanceWithATwistStringResponse);
   rpc GetArraySizeForCustomCode(GetArraySizeForCustomCodeRequest) returns (GetArraySizeForCustomCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
   rpc GetArrayViUInt8WithEnum(GetArrayViUInt8WithEnumRequest) returns (GetArrayViUInt8WithEnumResponse);
@@ -319,6 +321,24 @@ message GetAnIviDanceWithATwistArrayRequest {
 message GetAnIviDanceWithATwistArrayResponse {
   int32 status = 1;
   repeated sint32 array_out = 2;
+  sint32 actual_size = 3;
+}
+
+message GetAnIviDanceWithATwistByteArrayRequest {
+}
+
+message GetAnIviDanceWithATwistByteArrayResponse {
+  int32 status = 1;
+  bytes array_out = 2;
+  sint32 actual_size = 3;
+}
+
+message GetAnIviDanceWithATwistStringRequest {
+}
+
+message GetAnIviDanceWithATwistStringResponse {
+  int32 status = 1;
+  string array_out = 2;
   sint32 actual_size = 3;
 }
 

@@ -613,6 +613,56 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetAnIviDanceWithATwistByteArray': {
+        'parameters': [
+            {
+                'name': 'bufferSize',
+                'direction': 'in',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'arrayOut',
+                'direction': 'out',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualSize'
+                },
+                'type': 'ViInt8[]'
+            },
+            {
+                'name': 'actualSize',
+                'direction': 'out',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+        'GetAnIviDanceWithATwistString': {
+        'parameters': [
+            {
+                'name': 'bufferSize',
+                'direction': 'in',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'arrayOut',
+                'direction': 'out',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualSize'
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'name': 'actualSize',
+                'direction': 'out',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetArrayForCustomCodeCustomType': {
         'codegen_method': 'no',
         'documentation': {
