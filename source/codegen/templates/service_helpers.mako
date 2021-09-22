@@ -10,7 +10,7 @@
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['grpc_type'] == 'nidevice_grpc.Session'), None)
   resource_handle_type = session_output_param['type']
-  session_output_var_name = session_output_param['cppName']
+  session_output_var_name = common_helpers.camel_to_snake(session_output_param['cppName'])
   close_function_call = function_data['custom_close'] if 'custom_close' in function_data else f"{config['close_function']}(id)"
 
   explicit_session_params = (common_helpers.camel_to_snake(param['cppName']) for param in parameters if param.get('is_session_name', False))
@@ -666,7 +666,19 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 %     endif
 %     if common_helpers.is_ivi_dance_array_with_a_twist_param(parameter):
 ## This code doesn't handle all parameter types, see what initialize_output_params() does for that.
+%       if common_helpers.is_struct(parameter):
+        {
+          auto shrunk_size = ${common_helpers.camel_to_snake(parameter['size']['value_twist'])};
+          auto current_size = response->mutable_${parameter_name}()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_${parameter_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+%       elif common_helpers.is_string_arg(parameter):
+        response->mutable_${parameter_name}()->resize(${common_helpers.camel_to_snake(parameter['size']['value_twist'])}, 0);
+%       else:
         response->mutable_${parameter_name}()->Resize(${common_helpers.camel_to_snake(parameter['size']['value_twist'])}, 0);
+%       endif
 %     endif
 %   elif parameter['type'] == 'ViSession':
         auto session_id = session_repository_->resolve_session_id(${parameter_name});
