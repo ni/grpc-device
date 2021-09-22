@@ -10,6 +10,8 @@
 #include <nifgen/nifgen_service.h>
 #include <nirfsa/nirfsa_library.h>
 #include <nirfsa/nirfsa_service.h>
+#include <nirfsg/nirfsg_library.h>
+#include <nirfsg/nirfsg_service.h>
 #include <niscope/niscope_library.h>
 #include <niscope/niscope_service.h>
 #include <niswitch/niswitch_library.h>
@@ -57,6 +59,8 @@ class DeviceServer : public DeviceServerInterface {
   nidigitalpattern_grpc::NiDigitalService nidigital_service_;
   nifgen_grpc::NiFgenLibrary nifgen_library_;
   nifgen_grpc::NiFgenService nifgen_service_;
+  nirfsg_grpc::NiRFSGLibrary nirfsg_library_;
+  nirfsg_grpc::NiRFSGService nirfsg_service_;
   nitclk_grpc::NiTClkLibrary nitclk_library_;
   nitclk_grpc::NiTClkService nitclk_service_;
   nidaqmx_grpc::NiDAQmxLibrary nidaqmx_library_;
@@ -86,6 +90,8 @@ DeviceServer::DeviceServer()
       nidigital_service_(&nidigital_library_, mi_shared_resource_repository_),
       nifgen_library_(),
       nifgen_service_(&nifgen_library_, mi_shared_resource_repository_),
+      nirfsg_library_(),
+      nirfsg_service_(&nirfsg_library_, mi_shared_resource_repository_),
       nitclk_library_(),
       nitclk_service_(&nitclk_library_, mi_shared_resource_repository_),
       nidaqmx_library_(),
@@ -101,6 +107,7 @@ DeviceServer::DeviceServer()
   builder.RegisterService(&nidcpower_service_);
   builder.RegisterService(&nidigital_service_);
   builder.RegisterService(&nifgen_service_);
+  builder.RegisterService(&nirfsg_service_);
   builder.RegisterService(&nitclk_service_);
   builder.RegisterService(&nidaqmx_service_);
   builder.RegisterService(&nirfsa_service_);
