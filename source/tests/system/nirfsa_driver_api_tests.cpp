@@ -181,6 +181,48 @@ TEST_F(NiRFSADriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
   EXPECT_EQ(NIRFSA_VAL_REF_OUT_STR, get_response.value());
 }
 
+TEST_F(NiRFSADriverApiTests, ReconfigureFFTWindowType_UpdatesFFTWindowSuccessfully)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  auto initial_response = client::get_attribute_vi_int32(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE);
+  auto set_response = client::set_attribute_vi_int32(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE,
+      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_RANGE_TABLE_BLACKMAN);
+  auto get_response = client::get_attribute_vi_int32(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE);
+
+  EXPECT_SUCCESS(session, initial_response);
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_NE(initial_response.value(), get_response.value());
+  EXPECT_EQ(
+      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_RANGE_TABLE_BLACKMAN,
+      get_response.value());
+}
+
+TEST_F(NiRFSADriverApiTests, ExportSignal_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  auto response = client::export_signal(
+      stub(),
+      session,
+      Signal::SIGNAL_START_TRIGGER,
+      "",
+      ExportTerminalRangeTable::EXPORT_TERMINAL_RANGE_TABLE_REF_OUT_STR);
+
+  EXPECT_SUCCESS(session, response);
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
