@@ -124,6 +124,25 @@ TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedIQ_Succeeds)
   EXPECT_SUCCESS(session, configure_iq_rate);
 }
 
+TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedSpectrum_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  auto configure_clock = client::configure_ref_clock(stub(), session, std::string("OnboardClock"), 10e6);
+  auto configure_reference_level = client::configure_reference_level(stub(), session, "", 0);
+  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_SPECTRUM);
+  auto configure_frequency_start_stop = client::configure_spectrum_frequency_start_stop(stub(), session, "", 990e6, 1010e6);
+  auto configure_resolution_bandwidth = client::configure_resolution_bandwidth(stub(), session, "", 10e3);
+  auto number_of_spectral_lines = client::get_number_of_spectral_lines(stub(), session, "");
+
+  EXPECT_SUCCESS(session, configure_clock);
+  EXPECT_SUCCESS(session, configure_reference_level);
+  EXPECT_SUCCESS(session, configure_acquisition_type);
+  EXPECT_SUCCESS(session, configure_frequency_start_stop);
+  EXPECT_SUCCESS(session, configure_resolution_bandwidth);
+  EXPECT_SUCCESS(session, number_of_spectral_lines);
+  EXPECT_EQ(4974, number_of_spectral_lines.number_of_spectral_lines());
+}
+
 TEST_F(NiRFSADriverApiTests, GetDeviceResponse_ReturnsResponseData)
 {
   auto session = init_session(stub(), PXI_5663E);
