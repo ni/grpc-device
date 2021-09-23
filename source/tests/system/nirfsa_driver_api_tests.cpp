@@ -223,6 +223,88 @@ TEST_F(NiRFSADriverApiTests, ExportSignal_Succeeds)
   EXPECT_SUCCESS(session, response);
 }
 
+TEST_F(NiRFSADriverApiTests, DisableFractionalResampling_FractionalResamplingIsDisabled)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  auto initial_response = client::get_attribute_vi_boolean(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_ENABLE_FRACTIONAL_RESAMPLING);
+  auto set_response = client::set_attribute_vi_boolean(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_ENABLE_FRACTIONAL_RESAMPLING,
+      false);
+  auto get_response = client::get_attribute_vi_boolean(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_ENABLE_FRACTIONAL_RESAMPLING);
+
+  EXPECT_SUCCESS(session, initial_response);
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_NE(initial_response.value(), get_response.value());
+  EXPECT_FALSE(get_response.value());
+}
+
+TEST_F(NiRFSADriverApiTests, ReconfigureIQRate_UpdatesIQRateSuccessfully)
+{
+  auto NEW_RATE = 1.2e6;
+  auto session = init_session(stub(), PXI_5663E);
+  auto initial_response = client::get_attribute_vi_real64(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_IQ_RATE);
+  auto set_response = client::set_attribute_vi_real64(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_IQ_RATE,
+      NEW_RATE);
+  auto get_response = client::get_attribute_vi_real64(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_IQ_RATE);
+
+  EXPECT_SUCCESS(session, initial_response);
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_NE(initial_response.value(), get_response.value());
+  EXPECT_NEAR(NEW_RATE, get_response.value(), .0001);
+}
+
+TEST_F(NiRFSADriverApiTests, ReconfigureFetchOffset_UpdatesFetchOffsetSuccessfully)
+{
+  const auto NEW_OFFSET = 100ULL;
+  auto session = init_session(stub(), PXI_5663E);
+  auto initial_response = client::get_attribute_vi_int64(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FETCH_OFFSET);
+  auto set_response = client::set_attribute_vi_int64(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FETCH_OFFSET,
+      NEW_OFFSET);
+  auto get_response = client::get_attribute_vi_int64(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FETCH_OFFSET);
+
+  EXPECT_SUCCESS(session, initial_response);
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_NE(initial_response.value(), get_response.value());
+  EXPECT_EQ(NEW_OFFSET, get_response.value());
+}
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
