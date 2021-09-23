@@ -10,7 +10,10 @@ namespace system {
 
 namespace rfsg = nirfsg_grpc;
 namespace client = nirfsg_grpc::experimental::client;
+namespace pb = google::protobuf;
 using namespace ::testing;
+
+const auto PXI_5652 = "5652";
 
 const int krfsgDriverApiSuccess = 0;
 
@@ -18,13 +21,6 @@ template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
 {
   EXPECT_EQ(krfsgDriverApiSuccess, response.status());
-}
-
-template <typename TResponse>
-void EXPECT_SUCCESS(const ::grpc::Status& status, const TResponse& response)
-{
-  EXPECT_SUCCESS(response);
-  EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
 }
 
 class NiRFSGDriverApiTests : public ::testing::Test {
@@ -37,15 +33,9 @@ class NiRFSGDriverApiTests : public ::testing::Test {
   }
   virtual ~NiRFSGDriverApiTests() {}
 
-  void SetUp() override
-  {
-    initialize_driver_session();
-  }
-
   void TearDown() override
   {
-    auto response = client::close(stub(), session());
-    EXPECT_SUCCESS(response);
+    device_server_->ResetServer();
   }
 
   std::unique_ptr<rfsg::NiRFSG::Stub>& stub()
@@ -53,44 +43,52 @@ class NiRFSGDriverApiTests : public ::testing::Test {
     return nirfsg_stub_;
   }
 
-  const nidevice_grpc::Session& session()
+  void check_error(const nidevice_grpc::Session& session)
   {
-    return *driver_session_;
+    auto response = client::get_error(stub(), session);
+    EXPECT_EQ("", std::string(response.error_description().c_str()));
   }
 
-  void initialize_driver_session()
+  template <typename TResponse>
+  void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
   {
-    const auto DEVICE = "FakeDevice";
-    const auto OPTIONS = "Simulate=1, DriverSetup=Model:5652; BoardType:PXI";
-    auto response = client::init_with_options(
-        stub(),
-        DEVICE,
-        false,
-        false,
-        OPTIONS);
-
-    ASSERT_EQ(krfsgDriverApiSuccess, response.status());
-    driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
+    ni::tests::system::EXPECT_SUCCESS(response);
+    check_error(session);
   }
 
  private:
   DeviceServerInterface* device_server_;
-  std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<rfsg::NiRFSG::Stub> nirfsg_stub_;
 };
 
+rfsg::InitWithOptionsResponse init(const client::StubPtr& stub, const std::string& model)
+{
+  auto options = std::string("Simulate=1, DriverSetup=Model:") + model;
+  return client::init_with_options(stub, "FakeDevice", false, false, options);
+}
+
+nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model)
+{
+  auto response = init(stub, model);
+  auto session = response.vi();
+  EXPECT_SUCCESS(response);
+  return session;
+}
+
 TEST_F(NiRFSGDriverApiTests, PerformSelfTest_Succeeds)
 {
-  auto response = client::self_test(stub(), session());
-  EXPECT_SUCCESS(response);
+  auto session = init_session(stub(), PXI_5652);
+  auto response = client::self_test(stub(), session);
+  EXPECT_SUCCESS(session, response);
   EXPECT_EQ(0, response.self_test_result());
   EXPECT_STREQ("Passed", response.self_test_message().c_str());
 }
 
 TEST_F(NiRFSGDriverApiTests, PerformReset_Succeeds)
 {
-  auto response = client::reset(stub(), session());
-  EXPECT_SUCCESS(response);
+  auto session = init_session(stub(), PXI_5652);
+  auto response = client::reset(stub(), session);
+  EXPECT_SUCCESS(session, response);
   EXPECT_EQ(0, response.status());
 }
 }  // namespace system
