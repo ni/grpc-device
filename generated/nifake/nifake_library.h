@@ -36,6 +36,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]);
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   ViStatus GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
+  ViStatus GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize);
   ViStatus GetAnIviDanceWithATwistByteArray(ViInt32 bufferSize, ViInt8 arrayOut[], ViInt32* actualSize);
   ViStatus GetAnIviDanceWithATwistString(ViInt32 bufferSize, ViChar arrayOut[], ViInt32* actualSize);
   ViStatus GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut);
@@ -109,6 +110,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetAStringOfFixedMaximumSizePtr = decltype(&niFake_GetAStringOfFixedMaximumSize);
   using GetAnIviDanceStringPtr = decltype(&niFake_GetAnIviDanceString);
   using GetAnIviDanceWithATwistArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistArray);
+  using GetAnIviDanceWithATwistArrayOfCustomTypePtr = decltype(&niFake_GetAnIviDanceWithATwistArrayOfCustomType);
   using GetAnIviDanceWithATwistByteArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistByteArray);
   using GetAnIviDanceWithATwistStringPtr = decltype(&niFake_GetAnIviDanceWithATwistString);
   using GetArraySizeForCustomCodePtr = decltype(&niFake_GetArraySizeForCustomCode);
@@ -182,6 +184,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetAStringOfFixedMaximumSizePtr GetAStringOfFixedMaximumSize;
     GetAnIviDanceStringPtr GetAnIviDanceString;
     GetAnIviDanceWithATwistArrayPtr GetAnIviDanceWithATwistArray;
+    GetAnIviDanceWithATwistArrayOfCustomTypePtr GetAnIviDanceWithATwistArrayOfCustomType;
     GetAnIviDanceWithATwistByteArrayPtr GetAnIviDanceWithATwistByteArray;
     GetAnIviDanceWithATwistStringPtr GetAnIviDanceWithATwistString;
     GetArraySizeForCustomCodePtr GetArraySizeForCustomCode;

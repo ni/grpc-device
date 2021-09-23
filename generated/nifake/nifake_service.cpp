@@ -538,6 +538,50 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAnIviDanceWithATwistArrayOfCustomType(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayOfCustomTypeRequest* request, GetAnIviDanceWithATwistArrayOfCustomTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 actual_size {};
+      while (true) {
+        auto status = library_->GetAnIviDanceWithATwistArrayOfCustomType(vi, 0, nullptr, &actual_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<CustomStruct> array_out(actual_size, CustomStruct());
+        auto buffer_size = actual_size;
+        status = library_->GetAnIviDanceWithATwistArrayOfCustomType(vi, buffer_size, array_out.data(), &actual_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          Copy(array_out, response->mutable_array_out());
+          {
+            auto shrunk_size = actual_size;
+            auto current_size = response->mutable_array_out()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_array_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_size(actual_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAnIviDanceWithATwistByteArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistByteArrayRequest* request, GetAnIviDanceWithATwistByteArrayResponse* response)
   {
     if (context->IsCancelled()) {

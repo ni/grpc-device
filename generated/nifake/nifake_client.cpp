@@ -323,6 +323,22 @@ get_an_ivi_dance_with_a_twist_array(const StubPtr& stub, const nidevice_grpc::Se
   return response;
 }
 
+GetAnIviDanceWithATwistArrayOfCustomTypeResponse
+get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAnIviDanceWithATwistArrayOfCustomTypeRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetAnIviDanceWithATwistArrayOfCustomTypeResponse{};
+
+  raise_if_error(
+      stub->GetAnIviDanceWithATwistArrayOfCustomType(&context, request, &response));
+
+  return response;
+}
+
 GetAnIviDanceWithATwistByteArrayResponse
 get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub)
 {
