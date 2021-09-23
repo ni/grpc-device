@@ -15,6 +15,7 @@ namespace pb = google::protobuf;
 namespace ni {
 namespace tests {
 namespace system {
+namespace {
 
 const auto PXI_5663E = "5663E";
 const auto PXI_5603 = "5603";
@@ -23,6 +24,12 @@ template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
 {
   EXPECT_EQ(VI_SUCCESS, response.status());
+}
+
+template <typename TResponse>
+void EXPECT_RFSA_ERROR(pb::int32 expected_error, const TResponse& response)
+{
+  EXPECT_EQ(expected_error, response.status());
 }
 
 class NiRFSADriverApiTests : public Test {
@@ -51,11 +58,24 @@ class NiRFSADriverApiTests : public Test {
     EXPECT_EQ("", std::string(response.error_description().c_str()));
   }
 
+  void clear_error(const nidevice_grpc::Session& session)
+  {
+    auto response = client::clear_error(stub(), session);
+    ni::tests::system::EXPECT_SUCCESS(response);
+  }
+
   template <typename TResponse>
   void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
   {
     ni::tests::system::EXPECT_SUCCESS(response);
     check_error(session);
+  }
+
+  template <typename TResponse>
+  void EXPECT_RFSA_ERROR(pb::int32 expected_error, const nidevice_grpc::Session& session, const TResponse& response)
+  {
+    ni::tests::system::EXPECT_RFSA_ERROR(expected_error, response);
+    clear_error(session);
   }
 
  private:
@@ -305,6 +325,36 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFetchOffset_UpdatesFetchOffsetSuccessful
   EXPECT_NE(initial_response.value(), get_response.value());
   EXPECT_EQ(NEW_OFFSET, get_response.value());
 }
+
+TEST_F(NiRFSADriverApiTests, CreateConfigurationList_Succeeds)
+{
+  const auto LIST_NAME = "MyList";
+  auto session = init_session(stub(), PXI_5663E);
+  auto response = client::create_configuration_list(
+      stub(),
+      session,
+      LIST_NAME,
+      {NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttributes::NIRFSA_ATTRIBUTE_DEVICE_INSTANTANEOUS_BANDWIDTH},
+      true);
+
+  EXPECT_SUCCESS(session, response);
+}
+
+TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_ReportsError)
+{
+  const auto LIST_NAME = "MyList";
+  auto session = init_session(stub(), PXI_5663E);
+  auto response = client::create_configuration_list(
+      stub(),
+      session,
+      LIST_NAME,
+      {NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttributes::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
+      true);
+
+  EXPECT_RFSA_ERROR(IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED, session, response);
+}
+
+}  // namespace
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
