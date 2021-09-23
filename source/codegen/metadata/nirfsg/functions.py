@@ -783,7 +783,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'sparameterTableSize'
                 },
-                'type': 'NIComplexNumber_struct[]'
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -1233,7 +1233,7 @@ functions = {
                     'value': 'sparametersArraySize',
                     'value_twist': 'numberOfSparameters'
                 },
-                'type': 'NIComplexNumber_struct[]'
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -2385,7 +2385,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
                 },
-                'type': 'NIComplexNumberF32_struct[]'
+                'type': 'struct NIComplexNumberF32_struct[]'
             },
             {
                 'direction': 'in',
@@ -2420,7 +2420,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
                 },
-                'type': 'NIComplexNumber_struct[]'
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -2455,7 +2455,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
                 },
-                'type': 'NIComplexI16_struct[]'
+                'type': 'struct NIComplexI16_struct[]'
             }
         ],
         'returns': 'ViStatus'

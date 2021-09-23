@@ -150,6 +150,14 @@ public:
 private:
   NiRFSGLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  void Copy(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output);
+  void Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output);
+  NIComplexNumber_struct ConvertMessage(const nirfsg_grpc::NIComplexNumber& input);
+  void Copy(const google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>& input, std::vector<NIComplexNumber_struct>* output);
+  NIComplexNumberF32_struct ConvertMessage(const nirfsg_grpc::NIComplexNumberF32& input);
+  void Copy(const google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumberF32>& input, std::vector<NIComplexNumberF32_struct>* output);
+  NIComplexI16_struct ConvertMessage(const nirfsg_grpc::NIComplexI16& input);
+  void Copy(const google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexI16>& input, std::vector<NIComplexI16_struct>* output);
   std::map<std::int32_t, std::string> attrpxichassisclk10rangetable_input_map_ { {1, "None"},{2, "OnboardClock"},{3, "RefIn"}, };
   std::map<std::string, std::int32_t> attrpxichassisclk10rangetable_output_map_ { {"None", 1},{"OnboardClock", 2},{"RefIn", 3}, };
   std::map<std::int32_t, std::string> attrrefclocksourcerangetable_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_CLK"},{4, "ClkIn"},{5, "RefIn2"},{6, "PXI_ClkMaster"}, };
