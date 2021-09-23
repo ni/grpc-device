@@ -744,6 +744,66 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'CreateDeembeddingSparameterTableArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'port',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequencies',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'frequenciesSize'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequenciesSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated NIComplexNumber',
+                'name': 'sparameterTable',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'sparameterTableSize'
+                },
+                'type': 'NIComplexNumber_struct[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sparameterTableSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfPorts',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SParameterOrientation',
+                'name': 'sparameterOrientation',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'CreateDeembeddingSparameterTableS2PFile': {
         'parameters': [
             {
@@ -1166,14 +1226,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'repeated NIComplexNumber',
                 'name': 'sparameters',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'sparametersArraySize',
                     'value_twist': 'numberOfSparameters'
                 },
-                'type': 'struct NIComplexNumber_struct[]',
-                'grpc_type': 'repeated NIComplexNumber'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -2296,6 +2356,106 @@ functions = {
                 'direction': 'in',
                 'name': 'moreDataPending',
                 'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'WriteArbWaveformComplexF32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamples',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated NIComplexNumberF32',
+                'name': 'wfmData',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfSamples'
+                },
+                'type': 'NIComplexNumberF32_struct[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'moreDataPending',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'WriteArbWaveformComplexF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamples',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated NIComplexNumber',
+                'name': 'wfmData',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfSamples'
+                },
+                'type': 'NIComplexNumber_struct[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'moreDataPending',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'WriteArbWaveformComplexI16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamples',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated NIComplexI16',
+                'name': 'wfmData',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfSamples'
+                },
+                'type': 'NIComplexI16_struct[]'
             }
         ],
         'returns': 'ViStatus'

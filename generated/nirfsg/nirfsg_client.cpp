@@ -813,6 +813,35 @@ create_configuration_list_step(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+CreateDeembeddingSparameterTableArrayResponse
+create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const std::vector<double>& frequencies, const std::vector<NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& sparameter_orientation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateDeembeddingSparameterTableArrayRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_port(port);
+  request.set_table_name(table_name);
+  copy_array(frequencies, request.mutable_frequencies());
+  copy_array(sparameter_table, request.mutable_sparameter_table());
+  request.set_number_of_ports(number_of_ports);
+  const auto sparameter_orientation_ptr = sparameter_orientation.get_if<SParameterOrientation>();
+  const auto sparameter_orientation_raw_ptr = sparameter_orientation.get_if<pb::int32>();
+  if (sparameter_orientation_ptr) {
+    request.set_sparameter_orientation(*sparameter_orientation_ptr);
+  }
+  else if (sparameter_orientation_raw_ptr) {
+    request.set_sparameter_orientation_raw(*sparameter_orientation_raw_ptr);
+  }
+
+  auto response = CreateDeembeddingSparameterTableArrayResponse{};
+
+  raise_if_error(
+      stub->CreateDeembeddingSparameterTableArray(&context, request, &response));
+
+  return response;
+}
+
 CreateDeembeddingSparameterTableS2PFileResponse
 create_deembedding_sparameter_table_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const pb::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& sparameter_orientation)
 {
@@ -2057,6 +2086,62 @@ write_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 
   raise_if_error(
       stub->WriteArbWaveform(&context, request, &response));
+
+  return response;
+}
+
+WriteArbWaveformComplexF32Response
+write_arb_waveform_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<NIComplexNumberF32>& wfm_data, const bool& more_data_pending)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArbWaveformComplexF32Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_waveform_name(waveform_name);
+  copy_array(wfm_data, request.mutable_wfm_data());
+  request.set_more_data_pending(more_data_pending);
+
+  auto response = WriteArbWaveformComplexF32Response{};
+
+  raise_if_error(
+      stub->WriteArbWaveformComplexF32(&context, request, &response));
+
+  return response;
+}
+
+WriteArbWaveformComplexF64Response
+write_arb_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<NIComplexNumber>& wfm_data, const bool& more_data_pending)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArbWaveformComplexF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_waveform_name(waveform_name);
+  copy_array(wfm_data, request.mutable_wfm_data());
+  request.set_more_data_pending(more_data_pending);
+
+  auto response = WriteArbWaveformComplexF64Response{};
+
+  raise_if_error(
+      stub->WriteArbWaveformComplexF64(&context, request, &response));
+
+  return response;
+}
+
+WriteArbWaveformComplexI16Response
+write_arb_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<NIComplexI16>& wfm_data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArbWaveformComplexI16Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_waveform_name(waveform_name);
+  copy_array(wfm_data, request.mutable_wfm_data());
+
+  auto response = WriteArbWaveformComplexI16Response{};
+
+  raise_if_error(
+      stub->WriteArbWaveformComplexI16(&context, request, &response));
 
   return response;
 }

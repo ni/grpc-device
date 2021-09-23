@@ -71,6 +71,7 @@ public:
   ::grpc::Status ConfigureUpconverterPLLSettlingTime(::grpc::ServerContext* context, const ConfigureUpconverterPLLSettlingTimeRequest* request, ConfigureUpconverterPLLSettlingTimeResponse* response) override;
   ::grpc::Status CreateConfigurationList(::grpc::ServerContext* context, const CreateConfigurationListRequest* request, CreateConfigurationListResponse* response) override;
   ::grpc::Status CreateConfigurationListStep(::grpc::ServerContext* context, const CreateConfigurationListStepRequest* request, CreateConfigurationListStepResponse* response) override;
+  ::grpc::Status CreateDeembeddingSparameterTableArray(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableArrayRequest* request, CreateDeembeddingSparameterTableArrayResponse* response) override;
   ::grpc::Status CreateDeembeddingSparameterTableS2PFile(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableS2PFileRequest* request, CreateDeembeddingSparameterTableS2PFileResponse* response) override;
   ::grpc::Status DeleteAllDeembeddingTables(::grpc::ServerContext* context, const DeleteAllDeembeddingTablesRequest* request, DeleteAllDeembeddingTablesResponse* response) override;
   ::grpc::Status DeleteConfigurationList(::grpc::ServerContext* context, const DeleteConfigurationListRequest* request, DeleteConfigurationListResponse* response) override;
@@ -138,6 +139,9 @@ public:
   ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
   ::grpc::Status WaitUntilSettled(::grpc::ServerContext* context, const WaitUntilSettledRequest* request, WaitUntilSettledResponse* response) override;
   ::grpc::Status WriteArbWaveform(::grpc::ServerContext* context, const WriteArbWaveformRequest* request, WriteArbWaveformResponse* response) override;
+  ::grpc::Status WriteArbWaveformComplexF32(::grpc::ServerContext* context, const WriteArbWaveformComplexF32Request* request, WriteArbWaveformComplexF32Response* response) override;
+  ::grpc::Status WriteArbWaveformComplexF64(::grpc::ServerContext* context, const WriteArbWaveformComplexF64Request* request, WriteArbWaveformComplexF64Response* response) override;
+  ::grpc::Status WriteArbWaveformComplexI16(::grpc::ServerContext* context, const WriteArbWaveformComplexI16Request* request, WriteArbWaveformComplexI16Response* response) override;
   ::grpc::Status WriteArbWaveformF32(::grpc::ServerContext* context, const WriteArbWaveformF32Request* request, WriteArbWaveformF32Response* response) override;
   ::grpc::Status WriteP2PEndpointI16(::grpc::ServerContext* context, const WriteP2PEndpointI16Request* request, WriteP2PEndpointI16Response* response) override;
   ::grpc::Status WriteScript(::grpc::ServerContext* context, const WriteScriptRequest* request, WriteScriptResponse* response) override;
@@ -146,8 +150,6 @@ public:
 private:
   NiRFSGLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-  void Copy(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output);
-  void Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output);
   std::map<std::int32_t, std::string> attrpxichassisclk10rangetable_input_map_ { {1, "None"},{2, "OnboardClock"},{3, "RefIn"}, };
   std::map<std::string, std::int32_t> attrpxichassisclk10rangetable_output_map_ { {"None", 1},{"OnboardClock", 2},{"RefIn", 3}, };
   std::map<std::int32_t, std::string> attrrefclocksourcerangetable_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_CLK"},{4, "ClkIn"},{5, "RefIn2"},{6, "PXI_ClkMaster"}, };

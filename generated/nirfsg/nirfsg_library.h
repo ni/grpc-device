@@ -57,6 +57,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ViStatus ConfigureUpconverterPLLSettlingTime(ViSession vi, ViReal64 pllSettlingTime, ViBoolean ensurePLLLocked, ViInt32 reservedForFutureUse);
   ViStatus CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfAttributes, ViAttr configurationListAttributes[], ViBoolean setAsActiveList);
   ViStatus CreateConfigurationListStep(ViSession vi, ViBoolean setAsActiveStep);
+  ViStatus CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation);
   ViStatus CreateDeembeddingSparameterTableS2PFile(ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation);
   ViStatus DeleteAllDeembeddingTables(ViSession vi);
   ViStatus DeleteConfigurationList(ViSession vi, ViConstString listName);
@@ -124,6 +125,9 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus WaitUntilSettled(ViSession vi, ViInt32 maxTimeMilliseconds);
   ViStatus WriteArbWaveform(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal64 iData[], ViReal64 qData[], ViBoolean moreDataPending);
+  ViStatus WriteArbWaveformComplexF32(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumberF32_struct wfmData[], ViBoolean moreDataPending);
+  ViStatus WriteArbWaveformComplexF64(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumber_struct wfmData[], ViBoolean moreDataPending);
+  ViStatus WriteArbWaveformComplexI16(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexI16_struct wfmData[]);
   ViStatus WriteArbWaveformF32(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal32 iData[], ViReal32 qData[], ViBoolean moreDataPending);
   ViStatus WriteP2PEndpointI16(ViSession vi, ViConstString streamEndpoint, ViInt32 numberOfSamples, ViInt16 endpointData[]);
   ViStatus WriteScript(ViSession vi, ViConstString script);
@@ -168,6 +172,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using ConfigureUpconverterPLLSettlingTimePtr = decltype(&niRFSG_ConfigureUpconverterPLLSettlingTime);
   using CreateConfigurationListPtr = decltype(&niRFSG_CreateConfigurationList);
   using CreateConfigurationListStepPtr = decltype(&niRFSG_CreateConfigurationListStep);
+  using CreateDeembeddingSparameterTableArrayPtr = decltype(&niRFSG_CreateDeembeddingSparameterTableArray);
   using CreateDeembeddingSparameterTableS2PFilePtr = decltype(&niRFSG_CreateDeembeddingSparameterTableS2PFile);
   using DeleteAllDeembeddingTablesPtr = decltype(&niRFSG_DeleteAllDeembeddingTables);
   using DeleteConfigurationListPtr = decltype(&niRFSG_DeleteConfigurationList);
@@ -235,6 +240,9 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using UnlockSessionPtr = decltype(&niRFSG_UnlockSession);
   using WaitUntilSettledPtr = decltype(&niRFSG_WaitUntilSettled);
   using WriteArbWaveformPtr = decltype(&niRFSG_WriteArbWaveform);
+  using WriteArbWaveformComplexF32Ptr = decltype(&niRFSG_WriteArbWaveformComplexF32);
+  using WriteArbWaveformComplexF64Ptr = decltype(&niRFSG_WriteArbWaveformComplexF64);
+  using WriteArbWaveformComplexI16Ptr = decltype(&niRFSG_WriteArbWaveformComplexI16);
   using WriteArbWaveformF32Ptr = decltype(&niRFSG_WriteArbWaveformF32);
   using WriteP2PEndpointI16Ptr = decltype(&niRFSG_WriteP2PEndpointI16);
   using WriteScriptPtr = decltype(&niRFSG_WriteScript);
@@ -279,6 +287,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
     ConfigureUpconverterPLLSettlingTimePtr ConfigureUpconverterPLLSettlingTime;
     CreateConfigurationListPtr CreateConfigurationList;
     CreateConfigurationListStepPtr CreateConfigurationListStep;
+    CreateDeembeddingSparameterTableArrayPtr CreateDeembeddingSparameterTableArray;
     CreateDeembeddingSparameterTableS2PFilePtr CreateDeembeddingSparameterTableS2PFile;
     DeleteAllDeembeddingTablesPtr DeleteAllDeembeddingTables;
     DeleteConfigurationListPtr DeleteConfigurationList;
@@ -346,6 +355,9 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
     UnlockSessionPtr UnlockSession;
     WaitUntilSettledPtr WaitUntilSettled;
     WriteArbWaveformPtr WriteArbWaveform;
+    WriteArbWaveformComplexF32Ptr WriteArbWaveformComplexF32;
+    WriteArbWaveformComplexF64Ptr WriteArbWaveformComplexF64;
+    WriteArbWaveformComplexI16Ptr WriteArbWaveformComplexI16;
     WriteArbWaveformF32Ptr WriteArbWaveformF32;
     WriteP2PEndpointI16Ptr WriteP2PEndpointI16;
     WriteScriptPtr WriteScript;

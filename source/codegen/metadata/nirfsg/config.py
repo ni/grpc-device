@@ -28,6 +28,34 @@ config = {
                 }
             ]
         },
+        {
+            'name': 'NIComplexNumberF32_struct',
+            'grpc_name': 'NIComplexNumberF32',
+            'fields': [
+                {
+                    'type': 'ViReal32',
+                    'name': 'real',
+                },
+                {
+                    'type': 'ViReal32',
+                    'name': 'imaginary',
+                }
+            ]
+        },
+        {
+            'name': 'NIComplexI16_struct',
+            'grpc_name': 'NIComplexI16',
+            'fields': [
+                {
+                    'type': 'ViInt16',
+                    'name': 'real',
+                },
+                {
+                    'type': 'ViInt16',
+                    'name': 'imaginary',
+                }
+            ]
+        },
     ],
     'additional_headers': [],
     'code_readiness': 'NextRelease',

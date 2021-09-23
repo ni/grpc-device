@@ -60,6 +60,7 @@ NiRFSGLibrary::NiRFSGLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureUpconverterPLLSettlingTime = reinterpret_cast<ConfigureUpconverterPLLSettlingTimePtr>(shared_library_.get_function_pointer("niRFSG_ConfigureUpconverterPLLSettlingTime"));
   function_pointers_.CreateConfigurationList = reinterpret_cast<CreateConfigurationListPtr>(shared_library_.get_function_pointer("niRFSG_CreateConfigurationList"));
   function_pointers_.CreateConfigurationListStep = reinterpret_cast<CreateConfigurationListStepPtr>(shared_library_.get_function_pointer("niRFSG_CreateConfigurationListStep"));
+  function_pointers_.CreateDeembeddingSparameterTableArray = reinterpret_cast<CreateDeembeddingSparameterTableArrayPtr>(shared_library_.get_function_pointer("niRFSG_CreateDeembeddingSparameterTableArray"));
   function_pointers_.CreateDeembeddingSparameterTableS2PFile = reinterpret_cast<CreateDeembeddingSparameterTableS2PFilePtr>(shared_library_.get_function_pointer("niRFSG_CreateDeembeddingSparameterTableS2PFile"));
   function_pointers_.DeleteAllDeembeddingTables = reinterpret_cast<DeleteAllDeembeddingTablesPtr>(shared_library_.get_function_pointer("niRFSG_DeleteAllDeembeddingTables"));
   function_pointers_.DeleteConfigurationList = reinterpret_cast<DeleteConfigurationListPtr>(shared_library_.get_function_pointer("niRFSG_DeleteConfigurationList"));
@@ -127,6 +128,9 @@ NiRFSGLibrary::NiRFSGLibrary() : shared_library_(kLibraryName)
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niRFSG_UnlockSession"));
   function_pointers_.WaitUntilSettled = reinterpret_cast<WaitUntilSettledPtr>(shared_library_.get_function_pointer("niRFSG_WaitUntilSettled"));
   function_pointers_.WriteArbWaveform = reinterpret_cast<WriteArbWaveformPtr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveform"));
+  function_pointers_.WriteArbWaveformComplexF32 = reinterpret_cast<WriteArbWaveformComplexF32Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformComplexF32"));
+  function_pointers_.WriteArbWaveformComplexF64 = reinterpret_cast<WriteArbWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformComplexF64"));
+  function_pointers_.WriteArbWaveformComplexI16 = reinterpret_cast<WriteArbWaveformComplexI16Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformComplexI16"));
   function_pointers_.WriteArbWaveformF32 = reinterpret_cast<WriteArbWaveformF32Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformF32"));
   function_pointers_.WriteP2PEndpointI16 = reinterpret_cast<WriteP2PEndpointI16Ptr>(shared_library_.get_function_pointer("niRFSG_WriteP2PEndpointI16"));
   function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_.get_function_pointer("niRFSG_WriteScript"));
@@ -608,6 +612,18 @@ ViStatus NiRFSGLibrary::CreateConfigurationListStep(ViSession vi, ViBoolean setA
   return niRFSG_CreateConfigurationListStep(vi, setAsActiveStep);
 #else
   return function_pointers_.CreateConfigurationListStep(vi, setAsActiveStep);
+#endif
+}
+
+ViStatus NiRFSGLibrary::CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation)
+{
+  if (!function_pointers_.CreateDeembeddingSparameterTableArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CreateDeembeddingSparameterTableArray.");
+  }
+#if defined(_MSC_VER)
+  return niRFSG_CreateDeembeddingSparameterTableArray(vi, port, tableName, frequencies, frequenciesSize, sparameterTable, sparameterTableSize, numberOfPorts, sparameterOrientation);
+#else
+  return function_pointers_.CreateDeembeddingSparameterTableArray(vi, port, tableName, frequencies, frequenciesSize, sparameterTable, sparameterTableSize, numberOfPorts, sparameterOrientation);
 #endif
 }
 
@@ -1412,6 +1428,42 @@ ViStatus NiRFSGLibrary::WriteArbWaveform(ViSession vi, ViConstString waveformNam
   return niRFSG_WriteArbWaveform(vi, waveformName, numberOfSamples, iData, qData, moreDataPending);
 #else
   return function_pointers_.WriteArbWaveform(vi, waveformName, numberOfSamples, iData, qData, moreDataPending);
+#endif
+}
+
+ViStatus NiRFSGLibrary::WriteArbWaveformComplexF32(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumberF32_struct wfmData[], ViBoolean moreDataPending)
+{
+  if (!function_pointers_.WriteArbWaveformComplexF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteArbWaveformComplexF32.");
+  }
+#if defined(_MSC_VER)
+  return niRFSG_WriteArbWaveformComplexF32(vi, waveformName, numberOfSamples, wfmData, moreDataPending);
+#else
+  return function_pointers_.WriteArbWaveformComplexF32(vi, waveformName, numberOfSamples, wfmData, moreDataPending);
+#endif
+}
+
+ViStatus NiRFSGLibrary::WriteArbWaveformComplexF64(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumber_struct wfmData[], ViBoolean moreDataPending)
+{
+  if (!function_pointers_.WriteArbWaveformComplexF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteArbWaveformComplexF64.");
+  }
+#if defined(_MSC_VER)
+  return niRFSG_WriteArbWaveformComplexF64(vi, waveformName, numberOfSamples, wfmData, moreDataPending);
+#else
+  return function_pointers_.WriteArbWaveformComplexF64(vi, waveformName, numberOfSamples, wfmData, moreDataPending);
+#endif
+}
+
+ViStatus NiRFSGLibrary::WriteArbWaveformComplexI16(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexI16_struct wfmData[])
+{
+  if (!function_pointers_.WriteArbWaveformComplexI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteArbWaveformComplexI16.");
+  }
+#if defined(_MSC_VER)
+  return niRFSG_WriteArbWaveformComplexI16(vi, waveformName, numberOfSamples, wfmData);
+#else
+  return function_pointers_.WriteArbWaveformComplexI16(vi, waveformName, numberOfSamples, wfmData);
 #endif
 }
 

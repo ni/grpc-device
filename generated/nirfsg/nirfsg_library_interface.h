@@ -54,6 +54,7 @@ class NiRFSGLibraryInterface {
   virtual ViStatus ConfigureUpconverterPLLSettlingTime(ViSession vi, ViReal64 pllSettlingTime, ViBoolean ensurePLLLocked, ViInt32 reservedForFutureUse) = 0;
   virtual ViStatus CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfAttributes, ViAttr configurationListAttributes[], ViBoolean setAsActiveList) = 0;
   virtual ViStatus CreateConfigurationListStep(ViSession vi, ViBoolean setAsActiveStep) = 0;
+  virtual ViStatus CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation) = 0;
   virtual ViStatus CreateDeembeddingSparameterTableS2PFile(ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation) = 0;
   virtual ViStatus DeleteAllDeembeddingTables(ViSession vi) = 0;
   virtual ViStatus DeleteConfigurationList(ViSession vi, ViConstString listName) = 0;
@@ -121,6 +122,9 @@ class NiRFSGLibraryInterface {
   virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus WaitUntilSettled(ViSession vi, ViInt32 maxTimeMilliseconds) = 0;
   virtual ViStatus WriteArbWaveform(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal64 iData[], ViReal64 qData[], ViBoolean moreDataPending) = 0;
+  virtual ViStatus WriteArbWaveformComplexF32(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumberF32_struct wfmData[], ViBoolean moreDataPending) = 0;
+  virtual ViStatus WriteArbWaveformComplexF64(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumber_struct wfmData[], ViBoolean moreDataPending) = 0;
+  virtual ViStatus WriteArbWaveformComplexI16(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexI16_struct wfmData[]) = 0;
   virtual ViStatus WriteArbWaveformF32(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal32 iData[], ViReal32 qData[], ViBoolean moreDataPending) = 0;
   virtual ViStatus WriteP2PEndpointI16(ViSession vi, ViConstString streamEndpoint, ViInt32 numberOfSamples, ViInt16 endpointData[]) = 0;
   virtual ViStatus WriteScript(ViSession vi, ViConstString script) = 0;

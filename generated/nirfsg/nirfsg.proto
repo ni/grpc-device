@@ -55,6 +55,7 @@ service NiRFSG {
   rpc ConfigureUpconverterPLLSettlingTime(ConfigureUpconverterPLLSettlingTimeRequest) returns (ConfigureUpconverterPLLSettlingTimeResponse);
   rpc CreateConfigurationList(CreateConfigurationListRequest) returns (CreateConfigurationListResponse);
   rpc CreateConfigurationListStep(CreateConfigurationListStepRequest) returns (CreateConfigurationListStepResponse);
+  rpc CreateDeembeddingSparameterTableArray(CreateDeembeddingSparameterTableArrayRequest) returns (CreateDeembeddingSparameterTableArrayResponse);
   rpc CreateDeembeddingSparameterTableS2PFile(CreateDeembeddingSparameterTableS2PFileRequest) returns (CreateDeembeddingSparameterTableS2PFileResponse);
   rpc DeleteAllDeembeddingTables(DeleteAllDeembeddingTablesRequest) returns (DeleteAllDeembeddingTablesResponse);
   rpc DeleteConfigurationList(DeleteConfigurationListRequest) returns (DeleteConfigurationListResponse);
@@ -122,6 +123,9 @@ service NiRFSG {
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitUntilSettled(WaitUntilSettledRequest) returns (WaitUntilSettledResponse);
   rpc WriteArbWaveform(WriteArbWaveformRequest) returns (WriteArbWaveformResponse);
+  rpc WriteArbWaveformComplexF32(WriteArbWaveformComplexF32Request) returns (WriteArbWaveformComplexF32Response);
+  rpc WriteArbWaveformComplexF64(WriteArbWaveformComplexF64Request) returns (WriteArbWaveformComplexF64Response);
+  rpc WriteArbWaveformComplexI16(WriteArbWaveformComplexI16Request) returns (WriteArbWaveformComplexI16Response);
   rpc WriteArbWaveformF32(WriteArbWaveformF32Request) returns (WriteArbWaveformF32Response);
   rpc WriteP2PEndpointI16(WriteP2PEndpointI16Request) returns (WriteP2PEndpointI16Response);
   rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
@@ -301,6 +305,14 @@ enum SignalIdentifier {
 message NIComplexNumber {
   double real = 1;
   double imaginary = 2;
+}
+message NIComplexNumberF32 {
+  float real = 1;
+  float imaginary = 2;
+}
+message NIComplexI16 {
+  sint32 real = 1;
+  sint32 imaginary = 2;
 }
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
@@ -723,6 +735,23 @@ message CreateConfigurationListStepRequest {
 }
 
 message CreateConfigurationListStepResponse {
+  int32 status = 1;
+}
+
+message CreateDeembeddingSparameterTableArrayRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+  repeated double frequencies = 4;
+  repeated NIComplexNumber sparameter_table = 5;
+  sint32 number_of_ports = 6;
+  oneof sparameter_orientation_enum {
+    SParameterOrientation sparameter_orientation = 7;
+    sint32 sparameter_orientation_raw = 8;
+  }
+}
+
+message CreateDeembeddingSparameterTableArrayResponse {
   int32 status = 1;
 }
 
@@ -1439,6 +1468,38 @@ message WriteArbWaveformRequest {
 }
 
 message WriteArbWaveformResponse {
+  int32 status = 1;
+}
+
+message WriteArbWaveformComplexF32Request {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+  repeated NIComplexNumberF32 wfm_data = 3;
+  bool more_data_pending = 4;
+}
+
+message WriteArbWaveformComplexF32Response {
+  int32 status = 1;
+}
+
+message WriteArbWaveformComplexF64Request {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+  repeated NIComplexNumber wfm_data = 3;
+  bool more_data_pending = 4;
+}
+
+message WriteArbWaveformComplexF64Response {
+  int32 status = 1;
+}
+
+message WriteArbWaveformComplexI16Request {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+  repeated NIComplexI16 wfm_data = 3;
+}
+
+message WriteArbWaveformComplexI16Response {
   int32 status = 1;
 }
 
