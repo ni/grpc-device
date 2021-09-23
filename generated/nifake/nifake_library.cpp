@@ -39,6 +39,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAStringOfFixedMaximumSize = reinterpret_cast<GetAStringOfFixedMaximumSizePtr>(shared_library_.get_function_pointer("niFake_GetAStringOfFixedMaximumSize"));
   function_pointers_.GetAnIviDanceString = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceString"));
   function_pointers_.GetAnIviDanceWithATwistArray = reinterpret_cast<GetAnIviDanceWithATwistArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArray"));
+  function_pointers_.GetAnIviDanceWithATwistArrayOfCustomType = reinterpret_cast<GetAnIviDanceWithATwistArrayOfCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArrayOfCustomType"));
   function_pointers_.GetAnIviDanceWithATwistByteArray = reinterpret_cast<GetAnIviDanceWithATwistByteArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistByteArray"));
   function_pointers_.GetAnIviDanceWithATwistString = reinterpret_cast<GetAnIviDanceWithATwistStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistString"));
   function_pointers_.GetArraySizeForCustomCode = reinterpret_cast<GetArraySizeForCustomCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForCustomCode"));
@@ -318,6 +319,18 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArray(ViSession vi, ViConstString
   return niFake_GetAnIviDanceWithATwistArray(vi, aString, bufferSize, arrayOut, actualSize);
 #else
   return function_pointers_.GetAnIviDanceWithATwistArray(vi, aString, bufferSize, arrayOut, actualSize);
+#endif
+}
+
+ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize)
+{
+  if (!function_pointers_.GetAnIviDanceWithATwistArrayOfCustomType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceWithATwistArrayOfCustomType.");
+  }
+#if defined(_MSC_VER)
+  return niFake_GetAnIviDanceWithATwistArrayOfCustomType(vi, bufferSize, arrayOut, actualSize);
+#else
+  return function_pointers_.GetAnIviDanceWithATwistArrayOfCustomType(vi, bufferSize, arrayOut, actualSize);
 #endif
 }
 

@@ -40,6 +40,7 @@ GetANumberResponse get_a_number(const StubPtr& stub, const nidevice_grpc::Sessio
 GetAStringOfFixedMaximumSizeResponse get_a_string_of_fixed_maximum_size(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceStringResponse get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceWithATwistArrayResponse get_an_ivi_dance_with_a_twist_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& a_string);
+GetAnIviDanceWithATwistArrayOfCustomTypeResponse get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceWithATwistByteArrayResponse get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub);
 GetAnIviDanceWithATwistStringResponse get_an_ivi_dance_with_a_twist_string(const StubPtr& stub);
 GetArraySizeForCustomCodeResponse get_array_size_for_custom_code(const StubPtr& stub, const nidevice_grpc::Session& vi);
