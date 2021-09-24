@@ -331,6 +331,8 @@ def get_buffer_size_expression(parameter: dict) -> str:
     for strings (which is in the size reported by driver APIs).
     """
     size_mechanism = get_size_mechanism(parameter)
+    if 'size' not in parameter:
+        raise Exception("No size for parameter " + parameter["name"])
     if size_mechanism == 'fixed':
         return parameter['size']['value']
     elif size_mechanism == 'ivi-dance-with-a-twist':

@@ -19,6 +19,11 @@ bool operator==(const CustomStruct& first, const CustomStruct& second)
   return first.structInt == second.structInt && first.structDouble == second.structDouble;
 }
 
+bool operator==(const nifake_grpc::FakeCustomStruct& first, const CustomStruct& second)
+{
+  return first.struct_int() == second.structInt && first.struct_double() == second.structDouble;
+}
+
 using ::testing::StrEq;
 
 namespace ni {
@@ -1956,6 +1961,117 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithChangingS
   request.set_a_string(a_string);
   nifake_grpc::GetAnIviDanceWithATwistArrayResponse response;
   ::grpc::Status status = service.GetAnIviDanceWithATwistArray(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(array_out, expected_new_size));
+  EXPECT_EQ(response.actual_size(), expected_new_size);
+}
+
+//Test for ivi-dance-with-a-twist mechanism
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomType_CallsGetAnIviDanceWithATwistArrayOfCustomType)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
+  CustomStruct array_out[] = {{-1, -2.0}, {0, 0.5}, {70000, 32768.0}};
+  ViInt32 expected_size = 3;
+  // ivi-dance-with-a-twist call
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayOfCustomType(kTestViSession, 0, nullptr, _))
+      .WillOnce(DoAll(
+          SetArgPointee<3>(expected_size),
+          Return(kDriverSuccess)));
+  // follow up call with size returned from ivi-dance-with-a-twist setup.
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayOfCustomType(kTestViSession, expected_size, _, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<2>(array_out, array_out + expected_size),
+          SetArgPointee<3>(expected_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAnIviDanceWithATwistArrayOfCustomTypeRequest request;
+  request.mutable_vi()->set_id(session_id);
+  nifake_grpc::GetAnIviDanceWithATwistArrayOfCustomTypeResponse response;
+  ::grpc::Status status = service.GetAnIviDanceWithATwistArrayOfCustomType(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(array_out, expected_size));
+  EXPECT_EQ(response.actual_size(), expected_size);
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomTypeWithBiggerSizes_CallsGetAnIviDanceWithATwistArrayOfCustomType)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
+  CustomStruct array_out[] = {{-1, -2.0}, {0, 0.5}, {70000, 32768.0}};
+  ViInt32 expected_old_size = 2;
+  ViInt32 expected_new_size = 3;
+  // ivi-dance-with-a-twist call
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayOfCustomType(kTestViSession, 0, nullptr, _))
+      .WillOnce(DoAll(
+          SetArgPointee<3>(expected_old_size),
+          Return(kDriverSuccess)))
+      .WillOnce(DoAll(
+          SetArgPointee<3>(expected_new_size),
+          Return(kDriverSuccess)));
+  // follow up call - return that the array now needs to be bigger, so the ivi-dance
+  // call will be made again.
+  // Use the value of the error here to ensure that it doesn't change.
+  ::testing::Expectation first_real_call = EXPECT_CALL(library, GetAnIviDanceWithATwistArrayOfCustomType(kTestViSession, expected_old_size, _, _))
+                                               .WillOnce(Return(-200229));
+  // follow up call with size returned from ivi-dance-with-a-twist setup.
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayOfCustomType(kTestViSession, expected_new_size, _, _))
+      .After(first_real_call)
+      .WillOnce(DoAll(
+          SetArrayArgument<2>(array_out, array_out + expected_new_size),
+          SetArgPointee<3>(expected_new_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAnIviDanceWithATwistArrayOfCustomTypeRequest request;
+  request.mutable_vi()->set_id(session_id);
+  nifake_grpc::GetAnIviDanceWithATwistArrayOfCustomTypeResponse response;
+  ::grpc::Status status = service.GetAnIviDanceWithATwistArrayOfCustomType(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(array_out, expected_new_size));
+  EXPECT_EQ(response.actual_size(), expected_new_size);
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomTypeWithSmallerSizes_CallsGetAnIviDanceWithATwistArrayOfCustomType)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
+  CustomStruct array_out[] = {{-1, -2.0}, {0, 0.5}};
+  ViInt32 expected_old_size = 3;
+  ViInt32 expected_new_size = 2;
+  // ivi-dance-with-a-twist call
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayOfCustomType(kTestViSession, 0, nullptr, _))
+      .WillOnce(DoAll(
+          SetArgPointee<3>(expected_old_size),
+          Return(kDriverSuccess)));
+  // follow up call - return that the array now needs to be smaller.
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayOfCustomType(kTestViSession, expected_old_size, _, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<2>(array_out, array_out + expected_new_size),
+          SetArgPointee<3>(expected_new_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAnIviDanceWithATwistArrayOfCustomTypeRequest request;
+  request.mutable_vi()->set_id(session_id);
+  nifake_grpc::GetAnIviDanceWithATwistArrayOfCustomTypeResponse response;
+  ::grpc::Status status = service.GetAnIviDanceWithATwistArrayOfCustomType(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());

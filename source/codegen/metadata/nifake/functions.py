@@ -613,6 +613,37 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetAnIviDanceWithATwistArrayOfCustomType': {
+        'parameters': [
+            {
+                'name': 'vi',
+                'direction': 'in',
+                'type': 'ViSession'
+            },
+            {
+                'name': 'bufferSize',
+                'direction': 'in',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'arrayOut',
+                'direction': 'out',
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated FakeCustomStruct',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualSize'
+                }
+            },
+            {
+                'name': 'actualSize',
+                'direction': 'out',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAnIviDanceWithATwistByteArray': {
         'parameters': [
             {
