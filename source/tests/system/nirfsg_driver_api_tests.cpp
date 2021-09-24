@@ -116,6 +116,34 @@ TEST_F(NiRFSGDriverApiTests, ConfigureDigitalEdgeStartTrigger_Succeeds)
 
   EXPECT_SUCCESS(session, response);
 }
+
+TEST_F(NiRFSGDriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefClockSuccessfully)
+{
+  auto session = init_session(stub(), PXI_5652);
+  auto initial_response = client::get_attribute_vi_string(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::
+          NiRFSGAttributes::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
+  auto set_response = client::set_attribute_vi_string(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL,
+      NiRFSAStringAttributeValuesMapped::NIRFSA_STRING_REF_CLOCK_OUT_TERMINAL_RANGE_TABLE_REF_OUT_STR);
+  auto get_response = client::get_attribute_vi_string(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
+
+  EXPECT_SUCCESS(session, initial_response);
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_NE(initial_response.value(), get_response.value());
+  EXPECT_EQ(NIRFSA_VAL_REF_OUT_STR, get_response.value());
+}
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
