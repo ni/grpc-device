@@ -32,29 +32,342 @@ namespace nirfsg_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFSGService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
+  ::grpc::Status NiRFSGService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViBoolean id_query = request->id_query();
-      ViBoolean reset = request->reset();
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
 
-      auto init_lambda = [&] () {
-        ViSession vi;
-        int status = library_->Init(resource_name, id_query, reset, &vi);
-        return std::make_tuple(status, vi);
-      };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::AllocateArbWaveform(::grpc::ServerContext* context, const AllocateArbWaveformRequest* request, AllocateArbWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto waveform_name = request->waveform_name().c_str();
+      ViInt32 size_in_samples = request->size_in_samples();
+      auto status = library_->AllocateArbWaveform(vi, waveform_name, size_in_samples);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViBoolean value = request->value();
+      auto status = library_->CheckAttributeViBoolean(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckAttributeViInt32(::grpc::ServerContext* context, const CheckAttributeViInt32Request* request, CheckAttributeViInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViInt32 value = request->value_raw();
+      auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckAttributeViInt64(::grpc::ServerContext* context, const CheckAttributeViInt64Request* request, CheckAttributeViInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViInt64 value = request->value_raw();
+      auto status = library_->CheckAttributeViInt64(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckAttributeViReal64(::grpc::ServerContext* context, const CheckAttributeViReal64Request* request, CheckAttributeViReal64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViReal64 value = request->value_raw();
+      auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckAttributeViSession(::grpc::ServerContext* context, const CheckAttributeViSessionRequest* request, CheckAttributeViSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      auto value_grpc_session = request->value();
+      ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
+      auto status = library_->CheckAttributeViSession(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckAttributeViString(::grpc::ServerContext* context, const CheckAttributeViStringRequest* request, CheckAttributeViStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      auto value = request->value_raw().c_str();
+      auto status = library_->CheckAttributeViString(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckGenerationStatus(::grpc::ServerContext* context, const CheckGenerationStatusRequest* request, CheckGenerationStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean is_done {};
+      auto status = library_->CheckGenerationStatus(vi, &is_done);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_vi()->set_id(session_id);
+        response->set_is_done(is_done);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckIfConfigurationListExists(::grpc::ServerContext* context, const CheckIfConfigurationListExistsRequest* request, CheckIfConfigurationListExistsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto list_name = request->list_name().c_str();
+      ViBoolean list_exists {};
+      auto status = library_->CheckIfConfigurationListExists(vi, list_name, &list_exists);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_list_exists(list_exists);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckIfScriptExists(::grpc::ServerContext* context, const CheckIfScriptExistsRequest* request, CheckIfScriptExistsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto script_name = request->script_name().c_str();
+      ViBoolean script_exists {};
+      auto status = library_->CheckIfScriptExists(vi, script_name, &script_exists);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_script_exists(script_exists);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CheckIfWaveformExists(::grpc::ServerContext* context, const CheckIfWaveformExistsRequest* request, CheckIfWaveformExistsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto waveform_name = request->waveform_name().c_str();
+      ViBoolean waveform_exists {};
+      auto status = library_->CheckIfWaveformExists(vi, waveform_name, &waveform_exists);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_waveform_exists(waveform_exists);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ClearAllArbWaveforms(::grpc::ServerContext* context, const ClearAllArbWaveformsRequest* request, ClearAllArbWaveformsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ClearAllArbWaveforms(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ClearArbWaveform(::grpc::ServerContext* context, const ClearArbWaveformRequest* request, ClearArbWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto name = request->name().c_str();
+      auto status = library_->ClearArbWaveform(vi, name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ClearError(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ClearSelfCalibrateRange(::grpc::ServerContext* context, const ClearSelfCalibrateRangeRequest* request, ClearSelfCalibrateRangeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ClearSelfCalibrateRange(vi);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -76,6 +389,1304 @@ namespace nirfsg_grpc {
       auto status = library_->Close(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Commit(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureDeembeddingTableInterpolationLinear(::grpc::ServerContext* context, const ConfigureDeembeddingTableInterpolationLinearRequest* request, ConfigureDeembeddingTableInterpolationLinearResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto port = request->port().c_str();
+      auto table_name = request->table_name().c_str();
+      ViInt32 format;
+      switch (request->format_enum_case()) {
+        case nirfsg_grpc::ConfigureDeembeddingTableInterpolationLinearRequest::FormatEnumCase::kFormat: {
+          format = static_cast<ViInt32>(request->format());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDeembeddingTableInterpolationLinearRequest::FormatEnumCase::kFormatRaw: {
+          format = static_cast<ViInt32>(request->format_raw());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDeembeddingTableInterpolationLinearRequest::FormatEnumCase::FORMAT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for format was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigureDeembeddingTableInterpolationLinear(vi, port, table_name, format);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureDeembeddingTableInterpolationNearest(::grpc::ServerContext* context, const ConfigureDeembeddingTableInterpolationNearestRequest* request, ConfigureDeembeddingTableInterpolationNearestResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto port = request->port().c_str();
+      auto table_name = request->table_name().c_str();
+      auto status = library_->ConfigureDeembeddingTableInterpolationNearest(vi, port, table_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureDeembeddingTableInterpolationSpline(::grpc::ServerContext* context, const ConfigureDeembeddingTableInterpolationSplineRequest* request, ConfigureDeembeddingTableInterpolationSplineResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto port = request->port().c_str();
+      auto table_name = request->table_name().c_str();
+      auto status = library_->ConfigureDeembeddingTableInterpolationSpline(vi, port, table_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureDigitalEdgeConfigurationListStepTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeConfigurationListStepTriggerRequest* request, ConfigureDigitalEdgeConfigurationListStepTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString source;
+      switch (request->source_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalEdgeConfigurationListStepTriggerRequest::SourceEnumCase::kSourceMapped: {
+          auto source_imap_it = digitaledgeconfigurationliststeptriggersource_input_map_.find(request->source_mapped());
+          if (source_imap_it == digitaledgeconfigurationliststeptriggersource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
+          }
+          source = const_cast<ViConstString>((source_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeConfigurationListStepTriggerRequest::SourceEnumCase::kSourceRaw: {
+          source = const_cast<ViConstString>(request->source_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeConfigurationListStepTriggerRequest::SourceEnumCase::SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalEdgeConfigurationListStepTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeConfigurationListStepTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeConfigurationListStepTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigureDigitalEdgeConfigurationListStepTrigger(vi, source, edge);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureDigitalEdgeScriptTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeScriptTriggerRequest* request, ConfigureDigitalEdgeScriptTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString trigger_id;
+      switch (request->trigger_id_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::TriggerIdEnumCase::kTriggerIdMapped: {
+          auto trigger_id_imap_it = digitaledgescripttriggeridentifier_input_map_.find(request->trigger_id_mapped());
+          if (trigger_id_imap_it == digitaledgescripttriggeridentifier_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_id_mapped was not specified or out of range.");
+          }
+          trigger_id = const_cast<ViConstString>((trigger_id_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::TriggerIdEnumCase::kTriggerIdRaw: {
+          trigger_id = const_cast<ViConstString>(request->trigger_id_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::TriggerIdEnumCase::TRIGGER_ID_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_id was not specified or out of range");
+          break;
+        }
+      }
+
+      ViConstString source;
+      switch (request->source_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::SourceEnumCase::kSourceMapped: {
+          auto source_imap_it = attrtriggersourcerangetable_input_map_.find(request->source_mapped());
+          if (source_imap_it == attrtriggersourcerangetable_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
+          }
+          source = const_cast<ViConstString>((source_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::SourceEnumCase::kSourceRaw: {
+          source = const_cast<ViConstString>(request->source_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::SourceEnumCase::SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigureDigitalEdgeScriptTrigger(vi, trigger_id, source, edge);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureDigitalEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerRequest* request, ConfigureDigitalEdgeStartTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString source;
+      switch (request->source_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalEdgeStartTriggerRequest::SourceEnumCase::kSourceMapped: {
+          auto source_imap_it = attrtriggersourcerangetable_input_map_.find(request->source_mapped());
+          if (source_imap_it == attrtriggersourcerangetable_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
+          }
+          source = const_cast<ViConstString>((source_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeStartTriggerRequest::SourceEnumCase::kSourceRaw: {
+          source = const_cast<ViConstString>(request->source_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeStartTriggerRequest::SourceEnumCase::SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigureDigitalEdgeStartTrigger(vi, source, edge);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureDigitalLevelScriptTrigger(::grpc::ServerContext* context, const ConfigureDigitalLevelScriptTriggerRequest* request, ConfigureDigitalLevelScriptTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString trigger_id;
+      switch (request->trigger_id_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::TriggerIdEnumCase::kTriggerIdMapped: {
+          auto trigger_id_imap_it = digitaledgescripttriggeridentifier_input_map_.find(request->trigger_id_mapped());
+          if (trigger_id_imap_it == digitaledgescripttriggeridentifier_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_id_mapped was not specified or out of range.");
+          }
+          trigger_id = const_cast<ViConstString>((trigger_id_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::TriggerIdEnumCase::kTriggerIdRaw: {
+          trigger_id = const_cast<ViConstString>(request->trigger_id_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::TriggerIdEnumCase::TRIGGER_ID_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_id was not specified or out of range");
+          break;
+        }
+      }
+
+      ViConstString source;
+      switch (request->source_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::SourceEnumCase::kSourceMapped: {
+          auto source_imap_it = attrtriggersourcerangetable_input_map_.find(request->source_mapped());
+          if (source_imap_it == attrtriggersourcerangetable_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
+          }
+          source = const_cast<ViConstString>((source_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::SourceEnumCase::kSourceRaw: {
+          source = const_cast<ViConstString>(request->source_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::SourceEnumCase::SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 level;
+      switch (request->level_enum_case()) {
+        case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::LevelEnumCase::kLevel: {
+          level = static_cast<ViInt32>(request->level());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::LevelEnumCase::kLevelRaw: {
+          level = static_cast<ViInt32>(request->level_raw());
+          break;
+        }
+        case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::LevelEnumCase::LEVEL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for level was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigureDigitalLevelScriptTrigger(vi, trigger_id, source, level);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureDigitalModulationUserDefinedWaveform(::grpc::ServerContext* context, const ConfigureDigitalModulationUserDefinedWaveformRequest* request, ConfigureDigitalModulationUserDefinedWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 number_of_samples = static_cast<ViInt32>(request->user_defined_waveform().size());
+      ViInt8* user_defined_waveform = (ViInt8*)request->user_defined_waveform().c_str();
+      auto status = library_->ConfigureDigitalModulationUserDefinedWaveform(vi, number_of_samples, user_defined_waveform);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureGenerationMode(::grpc::ServerContext* context, const ConfigureGenerationModeRequest* request, ConfigureGenerationModeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 generation_mode;
+      switch (request->generation_mode_enum_case()) {
+        case nirfsg_grpc::ConfigureGenerationModeRequest::GenerationModeEnumCase::kGenerationMode: {
+          generation_mode = static_cast<ViInt32>(request->generation_mode());
+          break;
+        }
+        case nirfsg_grpc::ConfigureGenerationModeRequest::GenerationModeEnumCase::kGenerationModeRaw: {
+          generation_mode = static_cast<ViInt32>(request->generation_mode_raw());
+          break;
+        }
+        case nirfsg_grpc::ConfigureGenerationModeRequest::GenerationModeEnumCase::GENERATION_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for generation_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigureGenerationMode(vi, generation_mode);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureOutputEnabled(::grpc::ServerContext* context, const ConfigureOutputEnabledRequest* request, ConfigureOutputEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean output_enabled = request->output_enabled();
+      auto status = library_->ConfigureOutputEnabled(vi, output_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureP2PEndpointFullnessStartTrigger(::grpc::ServerContext* context, const ConfigureP2PEndpointFullnessStartTriggerRequest* request, ConfigureP2PEndpointFullnessStartTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt64 p2p_endpoint_fullness_level = request->p2p_endpoint_fullness_level();
+      auto status = library_->ConfigureP2PEndpointFullnessStartTrigger(vi, p2p_endpoint_fullness_level);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigurePXIChassisClk10(::grpc::ServerContext* context, const ConfigurePXIChassisClk10Request* request, ConfigurePXIChassisClk10Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString pxi_clk10_source;
+      switch (request->pxi_clk10_source_enum_case()) {
+        case nirfsg_grpc::ConfigurePXIChassisClk10Request::PxiClk10SourceEnumCase::kPxiClk10SourceMapped: {
+          auto pxi_clk10_source_imap_it = attrpxichassisclk10rangetable_input_map_.find(request->pxi_clk10_source_mapped());
+          if (pxi_clk10_source_imap_it == attrpxichassisclk10rangetable_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for pxi_clk10_source_mapped was not specified or out of range.");
+          }
+          pxi_clk10_source = const_cast<ViConstString>((pxi_clk10_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigurePXIChassisClk10Request::PxiClk10SourceEnumCase::kPxiClk10SourceRaw: {
+          pxi_clk10_source = const_cast<ViConstString>(request->pxi_clk10_source_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigurePXIChassisClk10Request::PxiClk10SourceEnumCase::PXI_CLK10_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for pxi_clk10_source was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigurePXIChassisClk10(vi, pxi_clk10_source);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigurePowerLevelType(::grpc::ServerContext* context, const ConfigurePowerLevelTypeRequest* request, ConfigurePowerLevelTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 power_level_type;
+      switch (request->power_level_type_enum_case()) {
+        case nirfsg_grpc::ConfigurePowerLevelTypeRequest::PowerLevelTypeEnumCase::kPowerLevelType: {
+          power_level_type = static_cast<ViInt32>(request->power_level_type());
+          break;
+        }
+        case nirfsg_grpc::ConfigurePowerLevelTypeRequest::PowerLevelTypeEnumCase::kPowerLevelTypeRaw: {
+          power_level_type = static_cast<ViInt32>(request->power_level_type_raw());
+          break;
+        }
+        case nirfsg_grpc::ConfigurePowerLevelTypeRequest::PowerLevelTypeEnumCase::POWER_LEVEL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for power_level_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigurePowerLevelType(vi, power_level_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureRF(::grpc::ServerContext* context, const ConfigureRFRequest* request, ConfigureRFResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViReal64 frequency = request->frequency();
+      ViReal64 power_level = request->power_level();
+      auto status = library_->ConfigureRF(vi, frequency, power_level);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureRefClock(::grpc::ServerContext* context, const ConfigureRefClockRequest* request, ConfigureRefClockResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString ref_clock_source;
+      switch (request->ref_clock_source_enum_case()) {
+        case nirfsg_grpc::ConfigureRefClockRequest::RefClockSourceEnumCase::kRefClockSourceMapped: {
+          auto ref_clock_source_imap_it = attrrefclocksourcerangetable_input_map_.find(request->ref_clock_source_mapped());
+          if (ref_clock_source_imap_it == attrrefclocksourcerangetable_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ref_clock_source_mapped was not specified or out of range.");
+          }
+          ref_clock_source = const_cast<ViConstString>((ref_clock_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureRefClockRequest::RefClockSourceEnumCase::kRefClockSourceRaw: {
+          ref_clock_source = const_cast<ViConstString>(request->ref_clock_source_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureRefClockRequest::RefClockSourceEnumCase::REF_CLOCK_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ref_clock_source was not specified or out of range");
+          break;
+        }
+      }
+
+      ViReal64 ref_clock_rate = request->ref_clock_rate();
+      auto status = library_->ConfigureRefClock(vi, ref_clock_source, ref_clock_rate);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureSignalBandwidth(::grpc::ServerContext* context, const ConfigureSignalBandwidthRequest* request, ConfigureSignalBandwidthResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViReal64 signal_bandwidth = request->signal_bandwidth();
+      auto status = library_->ConfigureSignalBandwidth(vi, signal_bandwidth);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureSoftwareScriptTrigger(::grpc::ServerContext* context, const ConfigureSoftwareScriptTriggerRequest* request, ConfigureSoftwareScriptTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString trigger_id;
+      switch (request->trigger_id_enum_case()) {
+        case nirfsg_grpc::ConfigureSoftwareScriptTriggerRequest::TriggerIdEnumCase::kTriggerIdMapped: {
+          auto trigger_id_imap_it = digitaledgescripttriggeridentifier_input_map_.find(request->trigger_id_mapped());
+          if (trigger_id_imap_it == digitaledgescripttriggeridentifier_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_id_mapped was not specified or out of range.");
+          }
+          trigger_id = const_cast<ViConstString>((trigger_id_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureSoftwareScriptTriggerRequest::TriggerIdEnumCase::kTriggerIdRaw: {
+          trigger_id = const_cast<ViConstString>(request->trigger_id_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ConfigureSoftwareScriptTriggerRequest::TriggerIdEnumCase::TRIGGER_ID_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_id was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ConfigureSoftwareScriptTrigger(vi, trigger_id);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureSoftwareStartTrigger(::grpc::ServerContext* context, const ConfigureSoftwareStartTriggerRequest* request, ConfigureSoftwareStartTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ConfigureSoftwareStartTrigger(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ConfigureUpconverterPLLSettlingTime(::grpc::ServerContext* context, const ConfigureUpconverterPLLSettlingTimeRequest* request, ConfigureUpconverterPLLSettlingTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViReal64 pll_settling_time = request->pll_settling_time();
+      ViBoolean ensure_pll_locked = request->ensure_pll_locked();
+      ViInt32 reserved_for_future_use = request->reserved_for_future_use();
+      auto status = library_->ConfigureUpconverterPLLSettlingTime(vi, pll_settling_time, ensure_pll_locked, reserved_for_future_use);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CreateConfigurationList(::grpc::ServerContext* context, const CreateConfigurationListRequest* request, CreateConfigurationListResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto list_name = request->list_name().c_str();
+      ViInt32 number_of_attributes = static_cast<ViInt32>(request->configuration_list_attributes().size());
+      auto configuration_list_attributes = const_cast<ViAttr*>(reinterpret_cast<const ViAttr*>(request->configuration_list_attributes().data()));
+      ViBoolean set_as_active_list = request->set_as_active_list();
+      auto status = library_->CreateConfigurationList(vi, list_name, number_of_attributes, configuration_list_attributes, set_as_active_list);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CreateConfigurationListStep(::grpc::ServerContext* context, const CreateConfigurationListStepRequest* request, CreateConfigurationListStepResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean set_as_active_step = request->set_as_active_step();
+      auto status = library_->CreateConfigurationListStep(vi, set_as_active_step);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CreateDeembeddingSparameterTableS2PFile(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableS2PFileRequest* request, CreateDeembeddingSparameterTableS2PFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto port = request->port().c_str();
+      auto table_name = request->table_name().c_str();
+      auto s2p_file_path = request->s2p_file_path().c_str();
+      ViInt32 sparameter_orientation;
+      switch (request->sparameter_orientation_enum_case()) {
+        case nirfsg_grpc::CreateDeembeddingSparameterTableS2PFileRequest::SparameterOrientationEnumCase::kSparameterOrientation: {
+          sparameter_orientation = static_cast<ViInt32>(request->sparameter_orientation());
+          break;
+        }
+        case nirfsg_grpc::CreateDeembeddingSparameterTableS2PFileRequest::SparameterOrientationEnumCase::kSparameterOrientationRaw: {
+          sparameter_orientation = static_cast<ViInt32>(request->sparameter_orientation_raw());
+          break;
+        }
+        case nirfsg_grpc::CreateDeembeddingSparameterTableS2PFileRequest::SparameterOrientationEnumCase::SPARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sparameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CreateDeembeddingSparameterTableS2PFile(vi, port, table_name, s2p_file_path, sparameter_orientation);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::DeleteAllDeembeddingTables(::grpc::ServerContext* context, const DeleteAllDeembeddingTablesRequest* request, DeleteAllDeembeddingTablesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->DeleteAllDeembeddingTables(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::DeleteConfigurationList(::grpc::ServerContext* context, const DeleteConfigurationListRequest* request, DeleteConfigurationListResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto list_name = request->list_name().c_str();
+      auto status = library_->DeleteConfigurationList(vi, list_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::DeleteDeembeddingTable(::grpc::ServerContext* context, const DeleteDeembeddingTableRequest* request, DeleteDeembeddingTableResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto port = request->port().c_str();
+      auto table_name = request->table_name().c_str();
+      auto status = library_->DeleteDeembeddingTable(vi, port, table_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::DeleteScript(::grpc::ServerContext* context, const DeleteScriptRequest* request, DeleteScriptResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto script_name = request->script_name().c_str();
+      auto status = library_->DeleteScript(vi, script_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Disable(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::DisableAllModulation(::grpc::ServerContext* context, const DisableAllModulationRequest* request, DisableAllModulationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->DisableAllModulation(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::DisableConfigurationListStepTrigger(::grpc::ServerContext* context, const DisableConfigurationListStepTriggerRequest* request, DisableConfigurationListStepTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->DisableConfigurationListStepTrigger(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::DisableScriptTrigger(::grpc::ServerContext* context, const DisableScriptTriggerRequest* request, DisableScriptTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViConstString trigger_id;
+      switch (request->trigger_id_enum_case()) {
+        case nirfsg_grpc::DisableScriptTriggerRequest::TriggerIdEnumCase::kTriggerIdMapped: {
+          auto trigger_id_imap_it = digitaledgescripttriggeridentifier_input_map_.find(request->trigger_id_mapped());
+          if (trigger_id_imap_it == digitaledgescripttriggeridentifier_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_id_mapped was not specified or out of range.");
+          }
+          trigger_id = const_cast<ViConstString>((trigger_id_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::DisableScriptTriggerRequest::TriggerIdEnumCase::kTriggerIdRaw: {
+          trigger_id = const_cast<ViConstString>(request->trigger_id_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::DisableScriptTriggerRequest::TriggerIdEnumCase::TRIGGER_ID_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_id was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->DisableScriptTrigger(vi, trigger_id);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->DisableStartTrigger(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViStatus error_code = request->error_code();
+      std::string error_message(256 - 1, '\0');
+      auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_error_message(error_message);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 error_code {};
+      std::string error_message(256 - 1, '\0');
+      auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_error_code(error_code);
+        response->set_error_message(error_message);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 signal;
+      switch (request->signal_enum_case()) {
+        case nirfsg_grpc::ExportSignalRequest::SignalEnumCase::kSignal: {
+          signal = static_cast<ViInt32>(request->signal());
+          break;
+        }
+        case nirfsg_grpc::ExportSignalRequest::SignalEnumCase::kSignalRaw: {
+          signal = static_cast<ViInt32>(request->signal_raw());
+          break;
+        }
+        case nirfsg_grpc::ExportSignalRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
+          break;
+        }
+      }
+
+      ViConstString signal_identifier;
+      switch (request->signal_identifier_enum_case()) {
+        case nirfsg_grpc::ExportSignalRequest::SignalIdentifierEnumCase::kSignalIdentifierMapped: {
+          auto signal_identifier_imap_it = signalidentifier_input_map_.find(request->signal_identifier_mapped());
+          if (signal_identifier_imap_it == signalidentifier_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_identifier_mapped was not specified or out of range.");
+          }
+          signal_identifier = const_cast<ViConstString>((signal_identifier_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ExportSignalRequest::SignalIdentifierEnumCase::kSignalIdentifierRaw: {
+          signal_identifier = const_cast<ViConstString>(request->signal_identifier_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ExportSignalRequest::SignalIdentifierEnumCase::SIGNAL_IDENTIFIER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_identifier was not specified or out of range");
+          break;
+        }
+      }
+
+      ViConstString output_terminal;
+      switch (request->output_terminal_enum_case()) {
+        case nirfsg_grpc::ExportSignalRequest::OutputTerminalEnumCase::kOutputTerminalMapped: {
+          auto output_terminal_imap_it = outputsignal_input_map_.find(request->output_terminal_mapped());
+          if (output_terminal_imap_it == outputsignal_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_terminal_mapped was not specified or out of range.");
+          }
+          output_terminal = const_cast<ViConstString>((output_terminal_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::ExportSignalRequest::OutputTerminalEnumCase::kOutputTerminalRaw: {
+          output_terminal = const_cast<ViConstString>(request->output_terminal_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::ExportSignalRequest::OutputTerminalEnumCase::OUTPUT_TERMINAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_terminal was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViBoolean value {};
+      auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute, &value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViInt32 value {};
+      auto status = library_->GetAttributeViInt32(vi, channel_name, attribute, &value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViInt64 value {};
+      auto status = library_->GetAttributeViInt64(vi, channel_name, attribute, &value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViReal64 value {};
+      auto status = library_->GetAttributeViReal64(vi, channel_name, attribute, &value);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_value(value);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetAttributeViSession(::grpc::ServerContext* context, const GetAttributeViSessionRequest* request, GetAttributeViSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViSession value {};
+      auto status = library_->GetAttributeViSession(vi, channel_name, attribute, &value);
+      response->set_status(status);
+      if (status == 0) {
+        auto session_id = session_repository_->resolve_session_id(value);
+        response->mutable_value()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+
+      while (true) {
+        auto status = library_->GetAttributeViString(vi, channel_name, attribute, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buf_size = status;
+      
+        std::string value;
+        if (buf_size > 0) {
+            value.resize(buf_size - 1);
+        }
+        status = library_->GetAttributeViString(vi, channel_name, attribute, buf_size, (ViChar*)value.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buf_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_value(value);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 index = request->index();
+
+      while (true) {
+        auto status = library_->GetChannelName(vi, index, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string name;
+        if (buffer_size > 0) {
+            name.resize(buffer_size - 1);
+        }
+        status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)name.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_name(name);
+        }
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -126,6 +1737,415 @@ namespace nirfsg_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetExternalCalibrationLastDateAndTime(::grpc::ServerContext* context, const GetExternalCalibrationLastDateAndTimeRequest* request, GetExternalCalibrationLastDateAndTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 year {};
+      ViInt32 month {};
+      ViInt32 day {};
+      ViInt32 hour {};
+      ViInt32 minute {};
+      ViInt32 second {};
+      auto status = library_->GetExternalCalibrationLastDateAndTime(vi, &year, &month, &day, &hour, &minute, &second);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_year(year);
+        response->set_month(month);
+        response->set_day(day);
+        response->set_hour(hour);
+        response->set_minute(minute);
+        response->set_second(second);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetSelfCalibrationDateAndTime(::grpc::ServerContext* context, const GetSelfCalibrationDateAndTimeRequest* request, GetSelfCalibrationDateAndTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 module;
+      switch (request->module_enum_case()) {
+        case nirfsg_grpc::GetSelfCalibrationDateAndTimeRequest::ModuleEnumCase::kModule: {
+          module = static_cast<ViInt32>(request->module());
+          break;
+        }
+        case nirfsg_grpc::GetSelfCalibrationDateAndTimeRequest::ModuleEnumCase::kModuleRaw: {
+          module = static_cast<ViInt32>(request->module_raw());
+          break;
+        }
+        case nirfsg_grpc::GetSelfCalibrationDateAndTimeRequest::ModuleEnumCase::MODULE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for module was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 year {};
+      ViInt32 month {};
+      ViInt32 day {};
+      ViInt32 hour {};
+      ViInt32 minute {};
+      ViInt32 second {};
+      auto status = library_->GetSelfCalibrationDateAndTime(vi, module, &year, &month, &day, &hour, &minute, &second);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_year(year);
+        response->set_month(month);
+        response->set_day(day);
+        response->set_hour(hour);
+        response->set_minute(minute);
+        response->set_second(second);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetSelfCalibrationTemperature(::grpc::ServerContext* context, const GetSelfCalibrationTemperatureRequest* request, GetSelfCalibrationTemperatureResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 module;
+      switch (request->module_enum_case()) {
+        case nirfsg_grpc::GetSelfCalibrationTemperatureRequest::ModuleEnumCase::kModule: {
+          module = static_cast<ViInt32>(request->module());
+          break;
+        }
+        case nirfsg_grpc::GetSelfCalibrationTemperatureRequest::ModuleEnumCase::kModuleRaw: {
+          module = static_cast<ViInt32>(request->module_raw());
+          break;
+        }
+        case nirfsg_grpc::GetSelfCalibrationTemperatureRequest::ModuleEnumCase::MODULE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for module was not specified or out of range");
+          break;
+        }
+      }
+
+      ViReal64 temperature {};
+      auto status = library_->GetSelfCalibrationTemperature(vi, module, &temperature);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_temperature(temperature);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetStreamEndpointHandle(::grpc::ServerContext* context, const GetStreamEndpointHandleRequest* request, GetStreamEndpointHandleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto stream_endpoint = request->stream_endpoint().c_str();
+      ViUInt32 reader_handle {};
+      auto status = library_->GetStreamEndpointHandle(vi, stream_endpoint, &reader_handle);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_reader_handle(reader_handle);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetTerminalName(::grpc::ServerContext* context, const GetTerminalNameRequest* request, GetTerminalNameResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 signal;
+      switch (request->signal_enum_case()) {
+        case nirfsg_grpc::GetTerminalNameRequest::SignalEnumCase::kSignal: {
+          signal = static_cast<ViInt32>(request->signal());
+          break;
+        }
+        case nirfsg_grpc::GetTerminalNameRequest::SignalEnumCase::kSignalRaw: {
+          signal = static_cast<ViInt32>(request->signal_raw());
+          break;
+        }
+        case nirfsg_grpc::GetTerminalNameRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
+          break;
+        }
+      }
+
+      ViConstString signal_identifier;
+      switch (request->signal_identifier_enum_case()) {
+        case nirfsg_grpc::GetTerminalNameRequest::SignalIdentifierEnumCase::kSignalIdentifierMapped: {
+          auto signal_identifier_imap_it = signalidentifier_input_map_.find(request->signal_identifier_mapped());
+          if (signal_identifier_imap_it == signalidentifier_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_identifier_mapped was not specified or out of range.");
+          }
+          signal_identifier = const_cast<ViConstString>((signal_identifier_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::GetTerminalNameRequest::SignalIdentifierEnumCase::kSignalIdentifierRaw: {
+          signal_identifier = const_cast<ViConstString>(request->signal_identifier_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::GetTerminalNameRequest::SignalIdentifierEnumCase::SIGNAL_IDENTIFIER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_identifier was not specified or out of range");
+          break;
+        }
+      }
+
+
+      while (true) {
+        auto status = library_->GetTerminalName(vi, signal, signal_identifier, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 buffer_size = status;
+      
+        std::string terminal_name;
+        if (buffer_size > 0) {
+            terminal_name.resize(buffer_size - 1);
+        }
+        status = library_->GetTerminalName(vi, signal, signal_identifier, buffer_size, (ViChar*)terminal_name.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_terminal_name(terminal_name);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetUserData(::grpc::ServerContext* context, const GetUserDataRequest* request, GetUserDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto identifier = request->identifier().c_str();
+      ViInt32 actual_data_size {};
+      while (true) {
+        auto status = library_->GetUserData(vi, identifier, 0, nullptr, &actual_data_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string data(actual_data_size, '\0');
+        auto buffer_size = actual_data_size;
+        status = library_->GetUserData(vi, identifier, buffer_size, (ViInt8*)data.data(), &actual_data_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_data(data);
+          response->mutable_data()->resize(actual_data_size);
+          response->set_actual_data_size(actual_data_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetWaveformBurstStartLocations(::grpc::ServerContext* context, const GetWaveformBurstStartLocationsRequest* request, GetWaveformBurstStartLocationsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 required_size {};
+      while (true) {
+        auto status = library_->GetWaveformBurstStartLocations(vi, channel_name, 0, nullptr, &required_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_locations()->Resize(required_size, 0);
+        ViReal64* locations = response->mutable_locations()->mutable_data();
+        auto number_of_locations = required_size;
+        status = library_->GetWaveformBurstStartLocations(vi, channel_name, number_of_locations, locations, &required_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->mutable_locations()->Resize(required_size, 0);
+          response->set_required_size(required_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetWaveformBurstStopLocations(::grpc::ServerContext* context, const GetWaveformBurstStopLocationsRequest* request, GetWaveformBurstStopLocationsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 required_size {};
+      while (true) {
+        auto status = library_->GetWaveformBurstStopLocations(vi, channel_name, 0, nullptr, &required_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_locations()->Resize(required_size, 0);
+        ViReal64* locations = response->mutable_locations()->mutable_data();
+        auto number_of_locations = required_size;
+        status = library_->GetWaveformBurstStopLocations(vi, channel_name, number_of_locations, locations, &required_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->mutable_locations()->Resize(required_size, 0);
+          response->set_required_size(required_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetWaveformMarkerEventLocations(::grpc::ServerContext* context, const GetWaveformMarkerEventLocationsRequest* request, GetWaveformMarkerEventLocationsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 required_size {};
+      while (true) {
+        auto status = library_->GetWaveformMarkerEventLocations(vi, channel_name, 0, nullptr, &required_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_locations()->Resize(required_size, 0);
+        ViReal64* locations = response->mutable_locations()->mutable_data();
+        auto number_of_locations = required_size;
+        status = library_->GetWaveformMarkerEventLocations(vi, channel_name, number_of_locations, locations, &required_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->mutable_locations()->Resize(required_size, 0);
+          response->set_required_size(required_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      ViBoolean id_query = request->id_query();
+      ViBoolean reset_device = request->reset_device();
+
+      auto init_lambda = [&] () {
+        ViSession new_vi;
+        int status = library_->Init(resource_name, id_query, reset_device, &new_vi);
+        return std::make_tuple(status, new_vi);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_new_vi()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFSGService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
   {
     if (context->IsCancelled()) {
@@ -150,6 +2170,867 @@ namespace nirfsg_grpc {
       if (status == 0) {
         response->mutable_vi()->set_id(session_id);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Initiate(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->InvalidateAllAttributes(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::LoadConfigurationsFromFile(::grpc::ServerContext* context, const LoadConfigurationsFromFileRequest* request, LoadConfigurationsFromFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      auto file_path = request->file_path().c_str();
+      auto status = library_->LoadConfigurationsFromFile(vi, channel_name, file_path);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean caller_has_lock {};
+      auto status = library_->LockSession(vi, &caller_has_lock);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_caller_has_lock(caller_has_lock);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::PerformPowerSearch(::grpc::ServerContext* context, const PerformPowerSearchRequest* request, PerformPowerSearchResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->PerformPowerSearch(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::PerformThermalCorrection(::grpc::ServerContext* context, const PerformThermalCorrectionRequest* request, PerformThermalCorrectionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->PerformThermalCorrection(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::QueryArbWaveformCapabilities(::grpc::ServerContext* context, const QueryArbWaveformCapabilitiesRequest* request, QueryArbWaveformCapabilitiesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 max_number_waveforms {};
+      ViInt32 waveform_quantum {};
+      ViInt32 min_waveform_size {};
+      ViInt32 max_waveform_size {};
+      auto status = library_->QueryArbWaveformCapabilities(vi, &max_number_waveforms, &waveform_quantum, &min_waveform_size, &max_waveform_size);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_max_number_waveforms(max_number_waveforms);
+        response->set_waveform_quantum(waveform_quantum);
+        response->set_min_waveform_size(min_waveform_size);
+        response->set_max_waveform_size(max_waveform_size);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ReadAndDownloadWaveformFromFileTDMS(::grpc::ServerContext* context, const ReadAndDownloadWaveformFromFileTDMSRequest* request, ReadAndDownloadWaveformFromFileTDMSResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto waveform_name = request->waveform_name().c_str();
+      auto file_path = request->file_path().c_str();
+      ViUInt32 waveform_index = request->waveform_index();
+      auto status = library_->ReadAndDownloadWaveformFromFileTDMS(vi, waveform_name, file_path, waveform_index);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Reset(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+      auto status = library_->ResetAttribute(vi, channel_name, attribute_id);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ResetDevice(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ResetWithDefaults(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::ResetWithOptions(::grpc::ServerContext* context, const ResetWithOptionsRequest* request, ResetWithOptionsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViUInt64 steps_to_omit = request->steps_to_omit();
+      auto status = library_->ResetWithOptions(vi, steps_to_omit);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      std::string instrument_driver_revision(256 - 1, '\0');
+      std::string firmware_revision(256 - 1, '\0');
+      auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_instrument_driver_revision(instrument_driver_revision);
+        response->set_firmware_revision(firmware_revision);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SaveConfigurationsToFile(::grpc::ServerContext* context, const SaveConfigurationsToFileRequest* request, SaveConfigurationsToFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      auto file_path = request->file_path().c_str();
+      auto status = library_->SaveConfigurationsToFile(vi, channel_name, file_path);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SelectArbWaveform(::grpc::ServerContext* context, const SelectArbWaveformRequest* request, SelectArbWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto name = request->name().c_str();
+      auto status = library_->SelectArbWaveform(vi, name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SelfCal(::grpc::ServerContext* context, const SelfCalRequest* request, SelfCalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->SelfCal(vi);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SelfCalibrateRange(::grpc::ServerContext* context, const SelfCalibrateRangeRequest* request, SelfCalibrateRangeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt64 steps_to_omit = request->steps_to_omit();
+      ViReal64 min_frequency = request->min_frequency();
+      ViReal64 max_frequency = request->max_frequency();
+      ViReal64 min_power_level = request->min_power_level();
+      ViReal64 max_power_level = request->max_power_level();
+      auto status = library_->SelfCalibrateRange(vi, steps_to_omit, min_frequency, max_frequency, min_power_level, max_power_level);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt16 self_test_result {};
+      std::string self_test_message(256 - 1, '\0');
+      auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
+      response->set_status(status);
+      if (status == 0) {
+        response->set_self_test_result(self_test_result);
+        response->set_self_test_message(self_test_message);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 trigger;
+      switch (request->trigger_enum_case()) {
+        case nirfsg_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTrigger: {
+          trigger = static_cast<ViInt32>(request->trigger());
+          break;
+        }
+        case nirfsg_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTriggerRaw: {
+          trigger = static_cast<ViInt32>(request->trigger_raw());
+          break;
+        }
+        case nirfsg_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger was not specified or out of range");
+          break;
+        }
+      }
+
+      ViConstString trigger_identifier;
+      switch (request->trigger_identifier_enum_case()) {
+        case nirfsg_grpc::SendSoftwareEdgeTriggerRequest::TriggerIdentifierEnumCase::kTriggerIdentifierMapped: {
+          auto trigger_identifier_imap_it = signalidentifier_input_map_.find(request->trigger_identifier_mapped());
+          if (trigger_identifier_imap_it == signalidentifier_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_identifier_mapped was not specified or out of range.");
+          }
+          trigger_identifier = const_cast<ViConstString>((trigger_identifier_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::SendSoftwareEdgeTriggerRequest::TriggerIdentifierEnumCase::kTriggerIdentifierRaw: {
+          trigger_identifier = const_cast<ViConstString>(request->trigger_identifier_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::SendSoftwareEdgeTriggerRequest::TriggerIdentifierEnumCase::TRIGGER_IDENTIFIER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_identifier was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SendSoftwareEdgeTrigger(vi, trigger, trigger_identifier);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetArbWaveformNextWritePosition(::grpc::ServerContext* context, const SetArbWaveformNextWritePositionRequest* request, SetArbWaveformNextWritePositionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto waveform_name = request->waveform_name().c_str();
+      ViInt32 relative_to;
+      switch (request->relative_to_enum_case()) {
+        case nirfsg_grpc::SetArbWaveformNextWritePositionRequest::RelativeToEnumCase::kRelativeTo: {
+          relative_to = static_cast<ViInt32>(request->relative_to());
+          break;
+        }
+        case nirfsg_grpc::SetArbWaveformNextWritePositionRequest::RelativeToEnumCase::kRelativeToRaw: {
+          relative_to = static_cast<ViInt32>(request->relative_to_raw());
+          break;
+        }
+        case nirfsg_grpc::SetArbWaveformNextWritePositionRequest::RelativeToEnumCase::RELATIVE_TO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for relative_to was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 offset = request->offset();
+      auto status = library_->SetArbWaveformNextWritePosition(vi, waveform_name, relative_to, offset);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViBoolean value = request->value();
+      auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViInt32 value = request->value_raw();
+      auto status = library_->SetAttributeViInt32(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetAttributeViInt64(::grpc::ServerContext* context, const SetAttributeViInt64Request* request, SetAttributeViInt64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViInt64 value = request->value_raw();
+      auto status = library_->SetAttributeViInt64(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      ViReal64 value = request->value_raw();
+      auto status = library_->SetAttributeViReal64(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      auto value_grpc_session = request->value();
+      ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
+      auto status = library_->SetAttributeViSession(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute = request->attribute();
+      auto value = request->value_raw().c_str();
+      auto status = library_->SetAttributeViString(vi, channel_name, attribute, value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetUserData(::grpc::ServerContext* context, const SetUserDataRequest* request, SetUserDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto identifier = request->identifier().c_str();
+      ViInt32 buffer_size = static_cast<ViInt32>(request->data().size());
+      ViInt8* data = (ViInt8*)request->data().c_str();
+      auto status = library_->SetUserData(vi, identifier, buffer_size, data);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetWaveformBurstStartLocations(::grpc::ServerContext* context, const SetWaveformBurstStartLocationsRequest* request, SetWaveformBurstStartLocationsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 number_of_locations = static_cast<ViInt32>(request->locations().size());
+      auto locations = const_cast<ViReal64*>(request->locations().data());
+      auto status = library_->SetWaveformBurstStartLocations(vi, channel_name, number_of_locations, locations);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetWaveformBurstStopLocations(::grpc::ServerContext* context, const SetWaveformBurstStopLocationsRequest* request, SetWaveformBurstStopLocationsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 number_of_locations = static_cast<ViInt32>(request->locations().size());
+      auto locations = const_cast<ViReal64*>(request->locations().data());
+      auto status = library_->SetWaveformBurstStopLocations(vi, channel_name, number_of_locations, locations);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::SetWaveformMarkerEventLocations(::grpc::ServerContext* context, const SetWaveformMarkerEventLocationsRequest* request, SetWaveformMarkerEventLocationsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 number_of_locations = static_cast<ViInt32>(request->locations().size());
+      auto locations = const_cast<ViReal64*>(request->locations().data());
+      auto status = library_->SetWaveformMarkerEventLocations(vi, channel_name, number_of_locations, locations);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean caller_has_lock {};
+      auto status = library_->UnlockSession(vi, &caller_has_lock);
+      response->set_status(status);
+      if (status == 0) {
+        response->set_caller_has_lock(caller_has_lock);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::WaitUntilSettled(::grpc::ServerContext* context, const WaitUntilSettledRequest* request, WaitUntilSettledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 max_time_milliseconds = request->max_time_milliseconds();
+      auto status = library_->WaitUntilSettled(vi, max_time_milliseconds);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::WriteArbWaveform(::grpc::ServerContext* context, const WriteArbWaveformRequest* request, WriteArbWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto waveform_name = request->waveform_name().c_str();
+      if (request->i_data().size() != request->q_data().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i_data and q_data do not match");
+      }
+      ViInt32 number_of_samples = static_cast<ViInt32>(request->q_data().size());
+      auto i_data = const_cast<ViReal64*>(request->i_data().data());
+      auto q_data = const_cast<ViReal64*>(request->q_data().data());
+      ViBoolean more_data_pending = request->more_data_pending();
+      auto status = library_->WriteArbWaveform(vi, waveform_name, number_of_samples, i_data, q_data, more_data_pending);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::WriteArbWaveformF32(::grpc::ServerContext* context, const WriteArbWaveformF32Request* request, WriteArbWaveformF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto waveform_name = request->waveform_name().c_str();
+      if (request->i_data().size() != request->q_data().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i_data and q_data do not match");
+      }
+      ViInt32 number_of_samples = static_cast<ViInt32>(request->q_data().size());
+      auto i_data = const_cast<ViReal32*>(request->i_data().data());
+      auto q_data = const_cast<ViReal32*>(request->q_data().data());
+      ViBoolean more_data_pending = request->more_data_pending();
+      auto status = library_->WriteArbWaveformF32(vi, waveform_name, number_of_samples, i_data, q_data, more_data_pending);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::WriteP2PEndpointI16(::grpc::ServerContext* context, const WriteP2PEndpointI16Request* request, WriteP2PEndpointI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto stream_endpoint = request->stream_endpoint().c_str();
+      ViInt32 number_of_samples = static_cast<ViInt32>(request->endpoint_data().size());
+      auto endpoint_data_request = request->endpoint_data();
+      std::vector<ViInt16> endpoint_data;
+      std::transform(
+        endpoint_data_request.begin(),
+        endpoint_data_request.end(),
+        std::back_inserter(endpoint_data),
+        [](auto x) { return (ViInt16)x; }); 
+      auto status = library_->WriteP2PEndpointI16(vi, stream_endpoint, number_of_samples, endpoint_data.data());
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::WriteScript(::grpc::ServerContext* context, const WriteScriptRequest* request, WriteScriptResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto script = request->script().c_str();
+      auto status = library_->WriteScript(vi, script);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

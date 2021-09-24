@@ -16,26 +16,441 @@ package nirfsg_grpc;
 import "session.proto";
 
 service NiRFSG {
-  rpc Init(InitRequest) returns (InitResponse);
+  rpc Abort(AbortRequest) returns (AbortResponse);
+  rpc AllocateArbWaveform(AllocateArbWaveformRequest) returns (AllocateArbWaveformResponse);
+  rpc CheckAttributeViBoolean(CheckAttributeViBooleanRequest) returns (CheckAttributeViBooleanResponse);
+  rpc CheckAttributeViInt32(CheckAttributeViInt32Request) returns (CheckAttributeViInt32Response);
+  rpc CheckAttributeViInt64(CheckAttributeViInt64Request) returns (CheckAttributeViInt64Response);
+  rpc CheckAttributeViReal64(CheckAttributeViReal64Request) returns (CheckAttributeViReal64Response);
+  rpc CheckAttributeViSession(CheckAttributeViSessionRequest) returns (CheckAttributeViSessionResponse);
+  rpc CheckAttributeViString(CheckAttributeViStringRequest) returns (CheckAttributeViStringResponse);
+  rpc CheckGenerationStatus(CheckGenerationStatusRequest) returns (CheckGenerationStatusResponse);
+  rpc CheckIfConfigurationListExists(CheckIfConfigurationListExistsRequest) returns (CheckIfConfigurationListExistsResponse);
+  rpc CheckIfScriptExists(CheckIfScriptExistsRequest) returns (CheckIfScriptExistsResponse);
+  rpc CheckIfWaveformExists(CheckIfWaveformExistsRequest) returns (CheckIfWaveformExistsResponse);
+  rpc ClearAllArbWaveforms(ClearAllArbWaveformsRequest) returns (ClearAllArbWaveformsResponse);
+  rpc ClearArbWaveform(ClearArbWaveformRequest) returns (ClearArbWaveformResponse);
+  rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
+  rpc ClearSelfCalibrateRange(ClearSelfCalibrateRangeRequest) returns (ClearSelfCalibrateRangeResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc Commit(CommitRequest) returns (CommitResponse);
+  rpc ConfigureDeembeddingTableInterpolationLinear(ConfigureDeembeddingTableInterpolationLinearRequest) returns (ConfigureDeembeddingTableInterpolationLinearResponse);
+  rpc ConfigureDeembeddingTableInterpolationNearest(ConfigureDeembeddingTableInterpolationNearestRequest) returns (ConfigureDeembeddingTableInterpolationNearestResponse);
+  rpc ConfigureDeembeddingTableInterpolationSpline(ConfigureDeembeddingTableInterpolationSplineRequest) returns (ConfigureDeembeddingTableInterpolationSplineResponse);
+  rpc ConfigureDigitalEdgeConfigurationListStepTrigger(ConfigureDigitalEdgeConfigurationListStepTriggerRequest) returns (ConfigureDigitalEdgeConfigurationListStepTriggerResponse);
+  rpc ConfigureDigitalEdgeScriptTrigger(ConfigureDigitalEdgeScriptTriggerRequest) returns (ConfigureDigitalEdgeScriptTriggerResponse);
+  rpc ConfigureDigitalEdgeStartTrigger(ConfigureDigitalEdgeStartTriggerRequest) returns (ConfigureDigitalEdgeStartTriggerResponse);
+  rpc ConfigureDigitalLevelScriptTrigger(ConfigureDigitalLevelScriptTriggerRequest) returns (ConfigureDigitalLevelScriptTriggerResponse);
+  rpc ConfigureDigitalModulationUserDefinedWaveform(ConfigureDigitalModulationUserDefinedWaveformRequest) returns (ConfigureDigitalModulationUserDefinedWaveformResponse);
+  rpc ConfigureGenerationMode(ConfigureGenerationModeRequest) returns (ConfigureGenerationModeResponse);
+  rpc ConfigureOutputEnabled(ConfigureOutputEnabledRequest) returns (ConfigureOutputEnabledResponse);
+  rpc ConfigureP2PEndpointFullnessStartTrigger(ConfigureP2PEndpointFullnessStartTriggerRequest) returns (ConfigureP2PEndpointFullnessStartTriggerResponse);
+  rpc ConfigurePXIChassisClk10(ConfigurePXIChassisClk10Request) returns (ConfigurePXIChassisClk10Response);
+  rpc ConfigurePowerLevelType(ConfigurePowerLevelTypeRequest) returns (ConfigurePowerLevelTypeResponse);
+  rpc ConfigureRF(ConfigureRFRequest) returns (ConfigureRFResponse);
+  rpc ConfigureRefClock(ConfigureRefClockRequest) returns (ConfigureRefClockResponse);
+  rpc ConfigureSignalBandwidth(ConfigureSignalBandwidthRequest) returns (ConfigureSignalBandwidthResponse);
+  rpc ConfigureSoftwareScriptTrigger(ConfigureSoftwareScriptTriggerRequest) returns (ConfigureSoftwareScriptTriggerResponse);
+  rpc ConfigureSoftwareStartTrigger(ConfigureSoftwareStartTriggerRequest) returns (ConfigureSoftwareStartTriggerResponse);
+  rpc ConfigureUpconverterPLLSettlingTime(ConfigureUpconverterPLLSettlingTimeRequest) returns (ConfigureUpconverterPLLSettlingTimeResponse);
+  rpc CreateConfigurationList(CreateConfigurationListRequest) returns (CreateConfigurationListResponse);
+  rpc CreateConfigurationListStep(CreateConfigurationListStepRequest) returns (CreateConfigurationListStepResponse);
+  rpc CreateDeembeddingSparameterTableS2PFile(CreateDeembeddingSparameterTableS2PFileRequest) returns (CreateDeembeddingSparameterTableS2PFileResponse);
+  rpc DeleteAllDeembeddingTables(DeleteAllDeembeddingTablesRequest) returns (DeleteAllDeembeddingTablesResponse);
+  rpc DeleteConfigurationList(DeleteConfigurationListRequest) returns (DeleteConfigurationListResponse);
+  rpc DeleteDeembeddingTable(DeleteDeembeddingTableRequest) returns (DeleteDeembeddingTableResponse);
+  rpc DeleteScript(DeleteScriptRequest) returns (DeleteScriptResponse);
+  rpc Disable(DisableRequest) returns (DisableResponse);
+  rpc DisableAllModulation(DisableAllModulationRequest) returns (DisableAllModulationResponse);
+  rpc DisableConfigurationListStepTrigger(DisableConfigurationListStepTriggerRequest) returns (DisableConfigurationListStepTriggerResponse);
+  rpc DisableScriptTrigger(DisableScriptTriggerRequest) returns (DisableScriptTriggerResponse);
+  rpc DisableStartTrigger(DisableStartTriggerRequest) returns (DisableStartTriggerResponse);
+  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
+  rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
+  rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
+  rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
+  rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
+  rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
+  rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
+  rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
+  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
+  rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc GetExternalCalibrationLastDateAndTime(GetExternalCalibrationLastDateAndTimeRequest) returns (GetExternalCalibrationLastDateAndTimeResponse);
+  rpc GetSelfCalibrationDateAndTime(GetSelfCalibrationDateAndTimeRequest) returns (GetSelfCalibrationDateAndTimeResponse);
+  rpc GetSelfCalibrationTemperature(GetSelfCalibrationTemperatureRequest) returns (GetSelfCalibrationTemperatureResponse);
+  rpc GetStreamEndpointHandle(GetStreamEndpointHandleRequest) returns (GetStreamEndpointHandleResponse);
+  rpc GetTerminalName(GetTerminalNameRequest) returns (GetTerminalNameResponse);
+  rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
+  rpc GetWaveformBurstStartLocations(GetWaveformBurstStartLocationsRequest) returns (GetWaveformBurstStartLocationsResponse);
+  rpc GetWaveformBurstStopLocations(GetWaveformBurstStopLocationsRequest) returns (GetWaveformBurstStopLocationsResponse);
+  rpc GetWaveformMarkerEventLocations(GetWaveformMarkerEventLocationsRequest) returns (GetWaveformMarkerEventLocationsResponse);
+  rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
+  rpc Initiate(InitiateRequest) returns (InitiateResponse);
+  rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
+  rpc LoadConfigurationsFromFile(LoadConfigurationsFromFileRequest) returns (LoadConfigurationsFromFileResponse);
+  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
+  rpc PerformPowerSearch(PerformPowerSearchRequest) returns (PerformPowerSearchResponse);
+  rpc PerformThermalCorrection(PerformThermalCorrectionRequest) returns (PerformThermalCorrectionResponse);
+  rpc QueryArbWaveformCapabilities(QueryArbWaveformCapabilitiesRequest) returns (QueryArbWaveformCapabilitiesResponse);
+  rpc ReadAndDownloadWaveformFromFileTDMS(ReadAndDownloadWaveformFromFileTDMSRequest) returns (ReadAndDownloadWaveformFromFileTDMSResponse);
+  rpc Reset(ResetRequest) returns (ResetResponse);
+  rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
+  rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
+  rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
+  rpc ResetWithOptions(ResetWithOptionsRequest) returns (ResetWithOptionsResponse);
+  rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
+  rpc SaveConfigurationsToFile(SaveConfigurationsToFileRequest) returns (SaveConfigurationsToFileResponse);
+  rpc SelectArbWaveform(SelectArbWaveformRequest) returns (SelectArbWaveformResponse);
+  rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
+  rpc SelfCalibrateRange(SelfCalibrateRangeRequest) returns (SelfCalibrateRangeResponse);
+  rpc SelfTest(SelfTestRequest) returns (SelfTestResponse);
+  rpc SendSoftwareEdgeTrigger(SendSoftwareEdgeTriggerRequest) returns (SendSoftwareEdgeTriggerResponse);
+  rpc SetArbWaveformNextWritePosition(SetArbWaveformNextWritePositionRequest) returns (SetArbWaveformNextWritePositionResponse);
+  rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
+  rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
+  rpc SetAttributeViInt64(SetAttributeViInt64Request) returns (SetAttributeViInt64Response);
+  rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
+  rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
+  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
+  rpc SetUserData(SetUserDataRequest) returns (SetUserDataResponse);
+  rpc SetWaveformBurstStartLocations(SetWaveformBurstStartLocationsRequest) returns (SetWaveformBurstStartLocationsResponse);
+  rpc SetWaveformBurstStopLocations(SetWaveformBurstStopLocationsRequest) returns (SetWaveformBurstStopLocationsResponse);
+  rpc SetWaveformMarkerEventLocations(SetWaveformMarkerEventLocationsRequest) returns (SetWaveformMarkerEventLocationsResponse);
+  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
+  rpc WaitUntilSettled(WaitUntilSettledRequest) returns (WaitUntilSettledResponse);
+  rpc WriteArbWaveform(WriteArbWaveformRequest) returns (WriteArbWaveformResponse);
+  rpc WriteArbWaveformF32(WriteArbWaveformF32Request) returns (WriteArbWaveformF32Response);
+  rpc WriteP2PEndpointI16(WriteP2PEndpointI16Request) returns (WriteP2PEndpointI16Response);
+  rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
 }
 
 enum NiRFSGAttributes {
   NIRFSG_ATTRIBUTE_UNSPECIFIED = 0;
 }
 
-message InitRequest {
-  string session_name = 1;
-  string resource_name = 2;
-  bool id_query = 3;
-  bool reset = 4;
+enum AttrDigitalEdgeEdgeRangeTable {
+  option allow_alias = true;
+  ATTR_DIGITAL_EDGE_EDGE_RANGE_TABLE_UNSPECIFIED = 0;
+  ATTR_DIGITAL_EDGE_EDGE_RANGE_TABLE_RISING_EDGE = 0;
+  ATTR_DIGITAL_EDGE_EDGE_RANGE_TABLE_FALLING_EDGE = 1;
 }
 
-message InitResponse {
+enum AttrDigitalLevelActiveLevelRangeTable {
+  ATTR_DIGITAL_LEVEL_ACTIVE_LEVEL_RANGE_TABLE_UNSPECIFIED = 0;
+  ATTR_DIGITAL_LEVEL_ACTIVE_LEVEL_RANGE_TABLE_ACTIVE_HIGH = 9000;
+  ATTR_DIGITAL_LEVEL_ACTIVE_LEVEL_RANGE_TABLE_ACTIVE_LOW = 9001;
+}
+
+enum AttrGenerationModeRangeTable {
+  ATTR_GENERATION_MODE_RANGE_TABLE_UNSPECIFIED = 0;
+  ATTR_GENERATION_MODE_RANGE_TABLE_CW = 1000;
+  ATTR_GENERATION_MODE_RANGE_TABLE_ARB_WAVEFORM = 1001;
+  ATTR_GENERATION_MODE_RANGE_TABLE_SCRIPT = 1002;
+}
+
+enum AttrPXIChassisClk10RangeTable {
+  ATTR_PXI_CHASSIS_CLK10_RANGE_TABLE_UNSPECIFIED = 0;
+  ATTR_PXI_CHASSIS_CLK10_RANGE_TABLE_NONE_STR = 1;
+  ATTR_PXI_CHASSIS_CLK10_RANGE_TABLE_ONBOARD_CLOCK_STR = 2;
+  ATTR_PXI_CHASSIS_CLK10_RANGE_TABLE_REF_IN_STR = 3;
+}
+
+enum AttrPowerLevelTypeRangeTable {
+  ATTR_POWER_LEVEL_TYPE_RANGE_TABLE_UNSPECIFIED = 0;
+  ATTR_POWER_LEVEL_TYPE_RANGE_TABLE_AVERAGE_POWER = 7000;
+  ATTR_POWER_LEVEL_TYPE_RANGE_TABLE_PEAK_POWER = 7001;
+}
+
+enum AttrRefClockSourceRangeTable {
+  ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_UNSPECIFIED = 0;
+  ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR = 1;
+  ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_REF_IN_STR = 2;
+  ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_PXI_CLK_STR = 3;
+  ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_CLK_IN_STR = 4;
+  ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_REF_IN_2_STR = 5;
+  ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_PXI_CLK_MASTER_STR = 6;
+}
+
+enum AttrTriggerSourceRangeTable {
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_UNSPECIFIED = 0;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PFI0_STR = 1;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PFI1_STR = 2;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PFI2_STR = 3;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PFI3_STR = 4;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG0_STR = 5;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG1_STR = 6;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG2_STR = 7;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG3_STR = 8;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG4_STR = 9;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG5_STR = 10;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG6_STR = 11;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG7_STR = 12;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_STAR_STR = 13;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXIE_DSTARB_STR = 14;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_SYNC_START_TRIGGER_STR = 15;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_SYNC_SCRIPT_TRIGGER_STR = 16;
+  ATTR_TRIGGER_SOURCE_RANGE_TABLE_TRIG_IN_STR = 17;
+}
+
+enum DigitalEdgeConfigurationListStepTriggerSource {
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_UNSPECIFIED = 0;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PFI0_STR = 1;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PFI1_STR = 2;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PFI2_STR = 3;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PFI3_STR = 4;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PXI_TRIG0_STR = 5;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PXI_TRIG1_STR = 6;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PXI_TRIG2_STR = 7;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PXI_TRIG3_STR = 8;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PXI_TRIG4_STR = 9;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PXI_TRIG5_STR = 10;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PXI_TRIG6_STR = 11;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PXI_TRIG7_STR = 12;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_PXI_STAR_STR = 13;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_MARKER0_EVENT_STR = 14;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_MARKER1_EVENT_STR = 15;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_MARKER2_EVENT_STR = 16;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_MARKER3_EVENT_STR = 17;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_TIMER_EVENT_STR = 18;
+  DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE_TRIG_IN_STR = 19;
+}
+
+enum DigitalEdgeScriptTriggerIdentifier {
+  DIGITAL_EDGE_SCRIPT_TRIGGER_IDENTIFIER_UNSPECIFIED = 0;
+  DIGITAL_EDGE_SCRIPT_TRIGGER_IDENTIFIER_SCRIPT_TRIGGER0 = 1;
+  DIGITAL_EDGE_SCRIPT_TRIGGER_IDENTIFIER_SCRIPT_TRIGGER1 = 2;
+  DIGITAL_EDGE_SCRIPT_TRIGGER_IDENTIFIER_SCRIPT_TRIGGER2 = 3;
+  DIGITAL_EDGE_SCRIPT_TRIGGER_IDENTIFIER_SCRIPT_TRIGGER3 = 4;
+}
+
+enum LinearInterpolationFormat {
+  LINEAR_INTERPOLATION_FORMAT_UNSPECIFIED = 0;
+  LINEAR_INTERPOLATION_FORMAT_LINEAR_INTERPOLATION_FORMAT_REAL_AND_IMAGINARY = 26000;
+  LINEAR_INTERPOLATION_FORMAT_LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_AND_PHASE = 26001;
+  LINEAR_INTERPOLATION_FORMAT_LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_DB_AND_PHASE = 26002;
+}
+
+enum Module {
+  MODULE_UNSPECIFIED = 0;
+  MODULE_PRIMARY_MODULE = 13000;
+  MODULE_AWG = 13001;
+  MODULE_LO = 13002;
+}
+
+enum OutputSignal {
+  OUTPUT_SIGNAL_UNSPECIFIED = 0;
+  OUTPUT_SIGNAL_DO_NOT_EXPORT_STR = 1;
+  OUTPUT_SIGNAL_PFI0_STR = 2;
+  OUTPUT_SIGNAL_PFI1_STR = 3;
+  OUTPUT_SIGNAL_PFI4_STR = 4;
+  OUTPUT_SIGNAL_PFI5_STR = 5;
+  OUTPUT_SIGNAL_PXI_STAR_STR = 6;
+  OUTPUT_SIGNAL_PXI_TRIG0_STR = 7;
+  OUTPUT_SIGNAL_PXI_TRIG1_STR = 8;
+  OUTPUT_SIGNAL_PXI_TRIG2_STR = 9;
+  OUTPUT_SIGNAL_PXI_TRIG3_STR = 10;
+  OUTPUT_SIGNAL_PXI_TRIG4_STR = 11;
+  OUTPUT_SIGNAL_PXI_TRIG5_STR = 12;
+  OUTPUT_SIGNAL_PXI_TRIG6_STR = 13;
+  OUTPUT_SIGNAL_REF_OUT2_STR = 14;
+  OUTPUT_SIGNAL_REF_OUT_STR = 15;
+  OUTPUT_SIGNAL_TRIG_OUT_STR = 16;
+}
+
+enum RelativeTo {
+  RELATIVE_TO_UNSPECIFIED = 0;
+  RELATIVE_TO_START_OF_WAVEFORM = 8000;
+  RELATIVE_TO_CURRENT_POSITION = 8001;
+}
+
+enum RoutedSignal {
+  option allow_alias = true;
+  ROUTED_SIGNAL_UNSPECIFIED = 0;
+  ROUTED_SIGNAL_CONFIGURATION_LIST_STEP_TRIGGER = 6;
+  ROUTED_SIGNAL_CONFIGURATION_SETTLED_EVENT = 7;
+  ROUTED_SIGNAL_DONE_EVENT = 5;
+  ROUTED_SIGNAL_MARKER_EVENT = 2;
+  ROUTED_SIGNAL_REF_CLOCK = 3;
+  ROUTED_SIGNAL_SCRIPT_TRIGGER = 1;
+  ROUTED_SIGNAL_STARTED_EVENT = 4;
+  ROUTED_SIGNAL_START_TRIGGER = 0;
+}
+
+enum SParameterOrientation {
+  S_PARAMETER_ORIENTATION_UNSPECIFIED = 0;
+  S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 24000;
+  S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 24001;
+}
+
+enum SignalIdentifier {
+  SIGNAL_IDENTIFIER_UNSPECIFIED = 0;
+  SIGNAL_IDENTIFIER_NONE = 1;
+  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER0 = 2;
+  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER1 = 3;
+  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER2 = 4;
+  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER3 = 5;
+  SIGNAL_IDENTIFIER_MARKER0 = 6;
+  SIGNAL_IDENTIFIER_MARKER1 = 7;
+  SIGNAL_IDENTIFIER_MARKER2 = 8;
+  SIGNAL_IDENTIFIER_MARKER3 = 9;
+}
+
+message AbortRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message AbortResponse {
   int32 status = 1;
-  nidevice_grpc.Session vi = 2;
+}
+
+message AllocateArbWaveformRequest {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+  sint32 size_in_samples = 3;
+}
+
+message AllocateArbWaveformResponse {
+  int32 status = 1;
+}
+
+message CheckAttributeViBooleanRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  bool value = 4;
+}
+
+message CheckAttributeViBooleanResponse {
+  int32 status = 1;
+}
+
+message CheckAttributeViInt32Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  sint32 value_raw = 4;
+}
+
+message CheckAttributeViInt32Response {
+  int32 status = 1;
+}
+
+message CheckAttributeViInt64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  int64 value_raw = 4;
+}
+
+message CheckAttributeViInt64Response {
+  int32 status = 1;
+}
+
+message CheckAttributeViReal64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  double value_raw = 4;
+}
+
+message CheckAttributeViReal64Response {
+  int32 status = 1;
+}
+
+message CheckAttributeViSessionRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  nidevice_grpc.Session value = 4;
+}
+
+message CheckAttributeViSessionResponse {
+  int32 status = 1;
+}
+
+message CheckAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  string value_raw = 4;
+}
+
+message CheckAttributeViStringResponse {
+  int32 status = 1;
+}
+
+message CheckGenerationStatusRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CheckGenerationStatusResponse {
+  int32 status = 1;
+  bool is_done = 2;
+}
+
+message CheckIfConfigurationListExistsRequest {
+  nidevice_grpc.Session vi = 1;
+  string list_name = 2;
+}
+
+message CheckIfConfigurationListExistsResponse {
+  int32 status = 1;
+  bool list_exists = 2;
+}
+
+message CheckIfScriptExistsRequest {
+  nidevice_grpc.Session vi = 1;
+  string script_name = 2;
+}
+
+message CheckIfScriptExistsResponse {
+  int32 status = 1;
+  bool script_exists = 2;
+}
+
+message CheckIfWaveformExistsRequest {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+}
+
+message CheckIfWaveformExistsResponse {
+  int32 status = 1;
+  bool waveform_exists = 2;
+}
+
+message ClearAllArbWaveformsRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ClearAllArbWaveformsResponse {
+  int32 status = 1;
+}
+
+message ClearArbWaveformRequest {
+  nidevice_grpc.Session vi = 1;
+  string name = 2;
+}
+
+message ClearArbWaveformResponse {
+  int32 status = 1;
+}
+
+message ClearErrorRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ClearErrorResponse {
+  int32 status = 1;
+}
+
+message ClearSelfCalibrateRangeRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ClearSelfCalibrateRangeResponse {
+  int32 status = 1;
 }
 
 message CloseRequest {
@@ -46,6 +461,477 @@ message CloseResponse {
   int32 status = 1;
 }
 
+message CommitRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CommitResponse {
+  int32 status = 1;
+}
+
+message ConfigureDeembeddingTableInterpolationLinearRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+  oneof format_enum {
+    LinearInterpolationFormat format = 4;
+    sint32 format_raw = 5;
+  }
+}
+
+message ConfigureDeembeddingTableInterpolationLinearResponse {
+  int32 status = 1;
+}
+
+message ConfigureDeembeddingTableInterpolationNearestRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+}
+
+message ConfigureDeembeddingTableInterpolationNearestResponse {
+  int32 status = 1;
+}
+
+message ConfigureDeembeddingTableInterpolationSplineRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+}
+
+message ConfigureDeembeddingTableInterpolationSplineResponse {
+  int32 status = 1;
+}
+
+message ConfigureDigitalEdgeConfigurationListStepTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof source_enum {
+    DigitalEdgeConfigurationListStepTriggerSource source_mapped = 2;
+    string source_raw = 3;
+  }
+  oneof edge_enum {
+    AttrDigitalEdgeEdgeRangeTable edge = 4;
+    sint32 edge_raw = 5;
+  }
+}
+
+message ConfigureDigitalEdgeConfigurationListStepTriggerResponse {
+  int32 status = 1;
+}
+
+message ConfigureDigitalEdgeScriptTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof trigger_id_enum {
+    DigitalEdgeScriptTriggerIdentifier trigger_id_mapped = 2;
+    string trigger_id_raw = 3;
+  }
+  oneof source_enum {
+    AttrTriggerSourceRangeTable source_mapped = 4;
+    string source_raw = 5;
+  }
+  oneof edge_enum {
+    AttrDigitalEdgeEdgeRangeTable edge = 6;
+    sint32 edge_raw = 7;
+  }
+}
+
+message ConfigureDigitalEdgeScriptTriggerResponse {
+  int32 status = 1;
+}
+
+message ConfigureDigitalEdgeStartTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof source_enum {
+    AttrTriggerSourceRangeTable source_mapped = 2;
+    string source_raw = 3;
+  }
+  oneof edge_enum {
+    AttrDigitalEdgeEdgeRangeTable edge = 4;
+    sint32 edge_raw = 5;
+  }
+}
+
+message ConfigureDigitalEdgeStartTriggerResponse {
+  int32 status = 1;
+}
+
+message ConfigureDigitalLevelScriptTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof trigger_id_enum {
+    DigitalEdgeScriptTriggerIdentifier trigger_id_mapped = 2;
+    string trigger_id_raw = 3;
+  }
+  oneof source_enum {
+    AttrTriggerSourceRangeTable source_mapped = 4;
+    string source_raw = 5;
+  }
+  oneof level_enum {
+    AttrDigitalLevelActiveLevelRangeTable level = 6;
+    sint32 level_raw = 7;
+  }
+}
+
+message ConfigureDigitalLevelScriptTriggerResponse {
+  int32 status = 1;
+}
+
+message ConfigureDigitalModulationUserDefinedWaveformRequest {
+  nidevice_grpc.Session vi = 1;
+  bytes user_defined_waveform = 2;
+}
+
+message ConfigureDigitalModulationUserDefinedWaveformResponse {
+  int32 status = 1;
+}
+
+message ConfigureGenerationModeRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof generation_mode_enum {
+    AttrGenerationModeRangeTable generation_mode = 2;
+    sint32 generation_mode_raw = 3;
+  }
+}
+
+message ConfigureGenerationModeResponse {
+  int32 status = 1;
+}
+
+message ConfigureOutputEnabledRequest {
+  nidevice_grpc.Session vi = 1;
+  bool output_enabled = 2;
+}
+
+message ConfigureOutputEnabledResponse {
+  int32 status = 1;
+}
+
+message ConfigureP2PEndpointFullnessStartTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  int64 p2p_endpoint_fullness_level = 2;
+}
+
+message ConfigureP2PEndpointFullnessStartTriggerResponse {
+  int32 status = 1;
+}
+
+message ConfigurePXIChassisClk10Request {
+  nidevice_grpc.Session vi = 1;
+  oneof pxi_clk10_source_enum {
+    AttrPXIChassisClk10RangeTable pxi_clk10_source_mapped = 2;
+    string pxi_clk10_source_raw = 3;
+  }
+}
+
+message ConfigurePXIChassisClk10Response {
+  int32 status = 1;
+}
+
+message ConfigurePowerLevelTypeRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof power_level_type_enum {
+    AttrPowerLevelTypeRangeTable power_level_type = 2;
+    sint32 power_level_type_raw = 3;
+  }
+}
+
+message ConfigurePowerLevelTypeResponse {
+  int32 status = 1;
+}
+
+message ConfigureRFRequest {
+  nidevice_grpc.Session vi = 1;
+  double frequency = 2;
+  double power_level = 3;
+}
+
+message ConfigureRFResponse {
+  int32 status = 1;
+}
+
+message ConfigureRefClockRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof ref_clock_source_enum {
+    AttrRefClockSourceRangeTable ref_clock_source_mapped = 2;
+    string ref_clock_source_raw = 3;
+  }
+  double ref_clock_rate = 4;
+}
+
+message ConfigureRefClockResponse {
+  int32 status = 1;
+}
+
+message ConfigureSignalBandwidthRequest {
+  nidevice_grpc.Session vi = 1;
+  double signal_bandwidth = 2;
+}
+
+message ConfigureSignalBandwidthResponse {
+  int32 status = 1;
+}
+
+message ConfigureSoftwareScriptTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof trigger_id_enum {
+    DigitalEdgeScriptTriggerIdentifier trigger_id_mapped = 2;
+    string trigger_id_raw = 3;
+  }
+}
+
+message ConfigureSoftwareScriptTriggerResponse {
+  int32 status = 1;
+}
+
+message ConfigureSoftwareStartTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ConfigureSoftwareStartTriggerResponse {
+  int32 status = 1;
+}
+
+message ConfigureUpconverterPLLSettlingTimeRequest {
+  nidevice_grpc.Session vi = 1;
+  double pll_settling_time = 2;
+  bool ensure_pll_locked = 3;
+  sint32 reserved_for_future_use = 4;
+}
+
+message ConfigureUpconverterPLLSettlingTimeResponse {
+  int32 status = 1;
+}
+
+message CreateConfigurationListRequest {
+  nidevice_grpc.Session vi = 1;
+  string list_name = 2;
+  repeated NiRFSGAttributes configuration_list_attributes = 3;
+  bool set_as_active_list = 4;
+}
+
+message CreateConfigurationListResponse {
+  int32 status = 1;
+}
+
+message CreateConfigurationListStepRequest {
+  nidevice_grpc.Session vi = 1;
+  bool set_as_active_step = 2;
+}
+
+message CreateConfigurationListStepResponse {
+  int32 status = 1;
+}
+
+message CreateDeembeddingSparameterTableS2PFileRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+  string s2p_file_path = 4;
+  oneof sparameter_orientation_enum {
+    SParameterOrientation sparameter_orientation = 5;
+    sint32 sparameter_orientation_raw = 6;
+  }
+}
+
+message CreateDeembeddingSparameterTableS2PFileResponse {
+  int32 status = 1;
+}
+
+message DeleteAllDeembeddingTablesRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message DeleteAllDeembeddingTablesResponse {
+  int32 status = 1;
+}
+
+message DeleteConfigurationListRequest {
+  nidevice_grpc.Session vi = 1;
+  string list_name = 2;
+}
+
+message DeleteConfigurationListResponse {
+  int32 status = 1;
+}
+
+message DeleteDeembeddingTableRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+}
+
+message DeleteDeembeddingTableResponse {
+  int32 status = 1;
+}
+
+message DeleteScriptRequest {
+  nidevice_grpc.Session vi = 1;
+  string script_name = 2;
+}
+
+message DeleteScriptResponse {
+  int32 status = 1;
+}
+
+message DisableRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message DisableResponse {
+  int32 status = 1;
+}
+
+message DisableAllModulationRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message DisableAllModulationResponse {
+  int32 status = 1;
+}
+
+message DisableConfigurationListStepTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message DisableConfigurationListStepTriggerResponse {
+  int32 status = 1;
+}
+
+message DisableScriptTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof trigger_id_enum {
+    DigitalEdgeScriptTriggerIdentifier trigger_id_mapped = 2;
+    string trigger_id_raw = 3;
+  }
+}
+
+message DisableScriptTriggerResponse {
+  int32 status = 1;
+}
+
+message DisableStartTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message DisableStartTriggerResponse {
+  int32 status = 1;
+}
+
+message ErrorMessageRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 error_code = 2;
+}
+
+message ErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
+}
+
+message ErrorQueryRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ErrorQueryResponse {
+  int32 status = 1;
+  sint32 error_code = 2;
+  string error_message = 3;
+}
+
+message ExportSignalRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof signal_enum {
+    RoutedSignal signal = 2;
+    sint32 signal_raw = 3;
+  }
+  oneof signal_identifier_enum {
+    SignalIdentifier signal_identifier_mapped = 4;
+    string signal_identifier_raw = 5;
+  }
+  oneof output_terminal_enum {
+    OutputSignal output_terminal_mapped = 6;
+    string output_terminal_raw = 7;
+  }
+}
+
+message ExportSignalResponse {
+  int32 status = 1;
+}
+
+message GetAttributeViBooleanRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+}
+
+message GetAttributeViBooleanResponse {
+  int32 status = 1;
+  bool value = 2;
+}
+
+message GetAttributeViInt32Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+}
+
+message GetAttributeViInt32Response {
+  int32 status = 1;
+  sint32 value = 2;
+}
+
+message GetAttributeViInt64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+}
+
+message GetAttributeViInt64Response {
+  int32 status = 1;
+  int64 value = 2;
+}
+
+message GetAttributeViReal64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+}
+
+message GetAttributeViReal64Response {
+  int32 status = 1;
+  double value = 2;
+}
+
+message GetAttributeViSessionRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+}
+
+message GetAttributeViSessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session value = 2;
+}
+
+message GetAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+}
+
+message GetAttributeViStringResponse {
+  int32 status = 1;
+  string value = 2;
+}
+
+message GetChannelNameRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 index = 2;
+}
+
+message GetChannelNameResponse {
+  int32 status = 1;
+  string name = 2;
+}
+
 message GetErrorRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -54,6 +940,134 @@ message GetErrorResponse {
   int32 status = 1;
   sint32 error_code = 2;
   string error_description = 3;
+}
+
+message GetExternalCalibrationLastDateAndTimeRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetExternalCalibrationLastDateAndTimeResponse {
+  int32 status = 1;
+  sint32 year = 2;
+  sint32 month = 3;
+  sint32 day = 4;
+  sint32 hour = 5;
+  sint32 minute = 6;
+  sint32 second = 7;
+}
+
+message GetSelfCalibrationDateAndTimeRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof module_enum {
+    Module module = 2;
+    sint32 module_raw = 3;
+  }
+}
+
+message GetSelfCalibrationDateAndTimeResponse {
+  int32 status = 1;
+  sint32 year = 2;
+  sint32 month = 3;
+  sint32 day = 4;
+  sint32 hour = 5;
+  sint32 minute = 6;
+  sint32 second = 7;
+}
+
+message GetSelfCalibrationTemperatureRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof module_enum {
+    Module module = 2;
+    sint32 module_raw = 3;
+  }
+}
+
+message GetSelfCalibrationTemperatureResponse {
+  int32 status = 1;
+  double temperature = 2;
+}
+
+message GetStreamEndpointHandleRequest {
+  nidevice_grpc.Session vi = 1;
+  string stream_endpoint = 2;
+}
+
+message GetStreamEndpointHandleResponse {
+  int32 status = 1;
+  uint32 reader_handle = 2;
+}
+
+message GetTerminalNameRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof signal_enum {
+    RoutedSignal signal = 2;
+    sint32 signal_raw = 3;
+  }
+  oneof signal_identifier_enum {
+    SignalIdentifier signal_identifier_mapped = 4;
+    string signal_identifier_raw = 5;
+  }
+}
+
+message GetTerminalNameResponse {
+  int32 status = 1;
+  string terminal_name = 2;
+}
+
+message GetUserDataRequest {
+  nidevice_grpc.Session vi = 1;
+  string identifier = 2;
+}
+
+message GetUserDataResponse {
+  int32 status = 1;
+  bytes data = 2;
+  sint32 actual_data_size = 3;
+}
+
+message GetWaveformBurstStartLocationsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message GetWaveformBurstStartLocationsResponse {
+  int32 status = 1;
+  repeated double locations = 2;
+  sint32 required_size = 3;
+}
+
+message GetWaveformBurstStopLocationsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message GetWaveformBurstStopLocationsResponse {
+  int32 status = 1;
+  repeated double locations = 2;
+  sint32 required_size = 3;
+}
+
+message GetWaveformMarkerEventLocationsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message GetWaveformMarkerEventLocationsResponse {
+  int32 status = 1;
+  repeated double locations = 2;
+  sint32 required_size = 3;
+}
+
+message InitRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  bool id_query = 3;
+  bool reset_device = 4;
+}
+
+message InitResponse {
+  int32 status = 1;
+  nidevice_grpc.Session new_vi = 2;
 }
 
 message InitWithOptionsRequest {
@@ -67,5 +1081,379 @@ message InitWithOptionsRequest {
 message InitWithOptionsResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
+}
+
+message InitiateRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message InitiateResponse {
+  int32 status = 1;
+}
+
+message InvalidateAllAttributesRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message InvalidateAllAttributesResponse {
+  int32 status = 1;
+}
+
+message LoadConfigurationsFromFileRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string file_path = 3;
+}
+
+message LoadConfigurationsFromFileResponse {
+  int32 status = 1;
+}
+
+message LockSessionRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message LockSessionResponse {
+  int32 status = 1;
+  bool caller_has_lock = 2;
+}
+
+message PerformPowerSearchRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message PerformPowerSearchResponse {
+  int32 status = 1;
+}
+
+message PerformThermalCorrectionRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message PerformThermalCorrectionResponse {
+  int32 status = 1;
+}
+
+message QueryArbWaveformCapabilitiesRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message QueryArbWaveformCapabilitiesResponse {
+  int32 status = 1;
+  sint32 max_number_waveforms = 2;
+  sint32 waveform_quantum = 3;
+  sint32 min_waveform_size = 4;
+  sint32 max_waveform_size = 5;
+}
+
+message ReadAndDownloadWaveformFromFileTDMSRequest {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+  string file_path = 3;
+  uint32 waveform_index = 4;
+}
+
+message ReadAndDownloadWaveformFromFileTDMSResponse {
+  int32 status = 1;
+}
+
+message ResetRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ResetResponse {
+  int32 status = 1;
+}
+
+message ResetAttributeRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute_id = 3;
+}
+
+message ResetAttributeResponse {
+  int32 status = 1;
+}
+
+message ResetDeviceRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ResetDeviceResponse {
+  int32 status = 1;
+}
+
+message ResetWithDefaultsRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ResetWithDefaultsResponse {
+  int32 status = 1;
+}
+
+message ResetWithOptionsRequest {
+  nidevice_grpc.Session vi = 1;
+  uint64 steps_to_omit = 2;
+}
+
+message ResetWithOptionsResponse {
+  int32 status = 1;
+}
+
+message RevisionQueryRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message RevisionQueryResponse {
+  int32 status = 1;
+  string instrument_driver_revision = 2;
+  string firmware_revision = 3;
+}
+
+message SaveConfigurationsToFileRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string file_path = 3;
+}
+
+message SaveConfigurationsToFileResponse {
+  int32 status = 1;
+}
+
+message SelectArbWaveformRequest {
+  nidevice_grpc.Session vi = 1;
+  string name = 2;
+}
+
+message SelectArbWaveformResponse {
+  int32 status = 1;
+}
+
+message SelfCalRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SelfCalResponse {
+  int32 status = 1;
+}
+
+message SelfCalibrateRangeRequest {
+  nidevice_grpc.Session vi = 1;
+  int64 steps_to_omit = 2;
+  double min_frequency = 3;
+  double max_frequency = 4;
+  double min_power_level = 5;
+  double max_power_level = 6;
+}
+
+message SelfCalibrateRangeResponse {
+  int32 status = 1;
+}
+
+message SelfTestRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message SelfTestResponse {
+  int32 status = 1;
+  sint32 self_test_result = 2;
+  string self_test_message = 3;
+}
+
+message SendSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session vi = 1;
+  oneof trigger_enum {
+    RoutedSignal trigger = 2;
+    sint32 trigger_raw = 3;
+  }
+  oneof trigger_identifier_enum {
+    SignalIdentifier trigger_identifier_mapped = 4;
+    string trigger_identifier_raw = 5;
+  }
+}
+
+message SendSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message SetArbWaveformNextWritePositionRequest {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+  oneof relative_to_enum {
+    RelativeTo relative_to = 3;
+    sint32 relative_to_raw = 4;
+  }
+  sint32 offset = 5;
+}
+
+message SetArbWaveformNextWritePositionResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViBooleanRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  bool value = 4;
+}
+
+message SetAttributeViBooleanResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViInt32Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  sint32 value_raw = 4;
+}
+
+message SetAttributeViInt32Response {
+  int32 status = 1;
+}
+
+message SetAttributeViInt64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  int64 value_raw = 4;
+}
+
+message SetAttributeViInt64Response {
+  int32 status = 1;
+}
+
+message SetAttributeViReal64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  double value_raw = 4;
+}
+
+message SetAttributeViReal64Response {
+  int32 status = 1;
+}
+
+message SetAttributeViSessionRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  nidevice_grpc.Session value = 4;
+}
+
+message SetAttributeViSessionResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiRFSGAttributes attribute = 3;
+  string value_raw = 4;
+}
+
+message SetAttributeViStringResponse {
+  int32 status = 1;
+}
+
+message SetUserDataRequest {
+  nidevice_grpc.Session vi = 1;
+  string identifier = 2;
+  bytes data = 3;
+}
+
+message SetUserDataResponse {
+  int32 status = 1;
+}
+
+message SetWaveformBurstStartLocationsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated double locations = 3;
+}
+
+message SetWaveformBurstStartLocationsResponse {
+  int32 status = 1;
+}
+
+message SetWaveformBurstStopLocationsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated double locations = 3;
+}
+
+message SetWaveformBurstStopLocationsResponse {
+  int32 status = 1;
+}
+
+message SetWaveformMarkerEventLocationsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated double locations = 3;
+}
+
+message SetWaveformMarkerEventLocationsResponse {
+  int32 status = 1;
+}
+
+message UnlockSessionRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message UnlockSessionResponse {
+  int32 status = 1;
+  bool caller_has_lock = 2;
+}
+
+message WaitUntilSettledRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 max_time_milliseconds = 2;
+}
+
+message WaitUntilSettledResponse {
+  int32 status = 1;
+}
+
+message WriteArbWaveformRequest {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+  repeated double i_data = 3;
+  repeated double q_data = 4;
+  bool more_data_pending = 5;
+}
+
+message WriteArbWaveformResponse {
+  int32 status = 1;
+}
+
+message WriteArbWaveformF32Request {
+  nidevice_grpc.Session vi = 1;
+  string waveform_name = 2;
+  repeated float i_data = 3;
+  repeated float q_data = 4;
+  bool more_data_pending = 5;
+}
+
+message WriteArbWaveformF32Response {
+  int32 status = 1;
+}
+
+message WriteP2PEndpointI16Request {
+  nidevice_grpc.Session vi = 1;
+  string stream_endpoint = 2;
+  repeated sint32 endpoint_data = 3;
+}
+
+message WriteP2PEndpointI16Response {
+  int32 status = 1;
+}
+
+message WriteScriptRequest {
+  nidevice_grpc.Session vi = 1;
+  string script = 2;
+}
+
+message WriteScriptResponse {
+  int32 status = 1;
 }
 
