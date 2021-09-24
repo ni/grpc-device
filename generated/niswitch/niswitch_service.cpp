@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace niswitch_grpc {
 
@@ -632,7 +633,7 @@ namespace niswitch_grpc {
       
         std::string attribute_value;
         if (array_size > 0) {
-            attribute_value.resize(array_size-1);
+            attribute_value.resize(array_size - 1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, (ViChar*)attribute_value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
@@ -699,7 +700,7 @@ namespace niswitch_grpc {
       
         std::string channel_name_buffer;
         if (buffer_size > 0) {
-            channel_name_buffer.resize(buffer_size-1);
+            channel_name_buffer.resize(buffer_size - 1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_name_buffer.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -740,7 +741,7 @@ namespace niswitch_grpc {
         ViStatus code {};
         std::string description;
         if (buffer_size > 0) {
-            description.resize(buffer_size-1);
+            description.resize(buffer_size - 1);
         }
         status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -781,7 +782,7 @@ namespace niswitch_grpc {
       
         std::string coercion_record;
         if (buffer_size > 0) {
-            coercion_record.resize(buffer_size-1);
+            coercion_record.resize(buffer_size - 1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -821,7 +822,7 @@ namespace niswitch_grpc {
       
         std::string interchange_warning;
         if (buffer_size > 0) {
-            interchange_warning.resize(buffer_size-1);
+            interchange_warning.resize(buffer_size - 1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -863,7 +864,7 @@ namespace niswitch_grpc {
       
         std::string path;
         if (buffer_size > 0) {
-            path.resize(buffer_size-1);
+            path.resize(buffer_size - 1);
         }
         status = library_->GetPath(vi, channel1, channel2, buffer_size, (ViChar*)path.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -928,7 +929,7 @@ namespace niswitch_grpc {
       
         std::string relay_name_buffer;
         if (relay_name_buffer_size > 0) {
-            relay_name_buffer.resize(relay_name_buffer_size-1);
+            relay_name_buffer.resize(relay_name_buffer_size - 1);
         }
         status = library_->GetRelayName(vi, index, relay_name_buffer_size, (ViChar*)relay_name_buffer.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(relay_name_buffer_size)) {

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nirfsg_grpc {
 
@@ -103,7 +104,7 @@ namespace nirfsg_grpc {
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
-            error_description.resize(error_description_buffer_size-1);
+            error_description.resize(error_description_buffer_size - 1);
         }
         status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {

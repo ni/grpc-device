@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nidcpower_grpc {
 
@@ -2430,7 +2431,7 @@ namespace nidcpower_grpc {
       
         std::string attribute_value;
         if (buffer_size > 0) {
-            attribute_value.resize(buffer_size-1);
+            attribute_value.resize(buffer_size - 1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -2471,7 +2472,7 @@ namespace nidcpower_grpc {
       
         std::string channel_name;
         if (buffer_size > 0) {
-            channel_name.resize(buffer_size-1);
+            channel_name.resize(buffer_size - 1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_name.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -2512,7 +2513,7 @@ namespace nidcpower_grpc {
       
         std::string channel_name;
         if (buffer_size > 0) {
-            channel_name.resize(buffer_size-1);
+            channel_name.resize(buffer_size - 1);
         }
         status = library_->GetChannelNameFromString(vi, index, buffer_size, (ViChar*)channel_name.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -2553,7 +2554,7 @@ namespace nidcpower_grpc {
         ViStatus code {};
         std::string description;
         if (buffer_size > 0) {
-            description.resize(buffer_size-1);
+            description.resize(buffer_size - 1);
         }
         status = library_->GetError(vi, &code, buffer_size, (ViChar*)description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -2671,7 +2672,7 @@ namespace nidcpower_grpc {
       
         std::string coercion_record;
         if (buffer_size > 0) {
-            coercion_record.resize(buffer_size-1);
+            coercion_record.resize(buffer_size - 1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -2711,7 +2712,7 @@ namespace nidcpower_grpc {
       
         std::string interchange_warning;
         if (buffer_size > 0) {
-            interchange_warning.resize(buffer_size-1);
+            interchange_warning.resize(buffer_size - 1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nifgen_grpc {
 
@@ -1930,7 +1931,7 @@ namespace nifgen_grpc {
       
         std::string attribute_value;
         if (array_size > 0) {
-            attribute_value.resize(array_size-1);
+            attribute_value.resize(array_size - 1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, array_size, (ViChar*)attribute_value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
@@ -1971,7 +1972,7 @@ namespace nifgen_grpc {
       
         std::string channel_string;
         if (buffer_size > 0) {
-            channel_string.resize(buffer_size-1);
+            channel_string.resize(buffer_size - 1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -2012,7 +2013,7 @@ namespace nifgen_grpc {
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
-            error_description.resize(error_description_buffer_size-1);
+            error_description.resize(error_description_buffer_size - 1);
         }
         status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
@@ -2193,7 +2194,7 @@ namespace nifgen_grpc {
       
         std::string coercion_record;
         if (buffer_size > 0) {
-            coercion_record.resize(buffer_size-1);
+            coercion_record.resize(buffer_size - 1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -2233,7 +2234,7 @@ namespace nifgen_grpc {
       
         std::string interchange_warning;
         if (buffer_size > 0) {
-            interchange_warning.resize(buffer_size-1);
+            interchange_warning.resize(buffer_size - 1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {

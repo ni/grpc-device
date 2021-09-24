@@ -1858,6 +1858,66 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistStringWithSmallerS
   EXPECT_EQ(response.actual_size(), NEW_SIZE);
 }
 
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistStrlenBug_ReturnsCorrectString)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const auto DATA = std::string("abcdef");
+  // Oops forgot the +1!
+  const auto SIZE = static_cast<ViInt32>(DATA.size());
+  EXPECT_CALL(library, GetAnIviDanceWithATwistStringStrlenBug(0, nullptr, _))
+      .WillOnce(DoAll(
+          SetArgPointee<2>(SIZE),
+          Return(kDriverSuccess)));
+  EXPECT_CALL(library, GetAnIviDanceWithATwistStringStrlenBug(SIZE, _, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<1>(DATA.c_str(), DATA.c_str() + SIZE + 1),
+          SetArgPointee<2>(SIZE),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAnIviDanceWithATwistStringStrlenBugRequest request;
+  nifake_grpc::GetAnIviDanceWithATwistStringStrlenBugResponse response;
+  ::grpc::Status status = service.GetAnIviDanceWithATwistStringStrlenBug(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(DATA, response.string_out());
+  EXPECT_EQ(response.actual_size(), SIZE);
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistStrlenBugIsFixed_ReturnsCorrectString)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const auto DATA = std::string("abcdef");
+  // Someone fixed the bug to add the null terminator!
+  const auto SIZE = static_cast<ViInt32>(DATA.size() + 1);
+  EXPECT_CALL(library, GetAnIviDanceWithATwistStringStrlenBug(0, nullptr, _))
+      .WillOnce(DoAll(
+          SetArgPointee<2>(SIZE),
+          Return(kDriverSuccess)));
+  EXPECT_CALL(library, GetAnIviDanceWithATwistStringStrlenBug(SIZE, _, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<1>(DATA.c_str(), DATA.c_str() + SIZE + 1),
+          SetArgPointee<2>(SIZE),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAnIviDanceWithATwistStringStrlenBugRequest request;
+  nifake_grpc::GetAnIviDanceWithATwistStringStrlenBugResponse response;
+  ::grpc::Status status = service.GetAnIviDanceWithATwistStringStrlenBug(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(DATA, response.string_out());
+  EXPECT_EQ(response.actual_size(), SIZE);
+}
+
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithChangingSizesAndWarning_CallsGetAnIviDanceWithATwistArray)
 {
   nidevice_grpc::SessionRepository session_repository;

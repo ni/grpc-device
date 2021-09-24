@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nidigitalpattern_grpc {
 
@@ -1760,7 +1761,7 @@ namespace nidigitalpattern_grpc {
       
         std::string value;
         if (buffer_size > 0) {
-            value.resize(buffer_size-1);
+            value.resize(buffer_size - 1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute, buffer_size, (ViChar*)value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1801,7 +1802,7 @@ namespace nidigitalpattern_grpc {
       
         std::string name;
         if (name_buffer_size > 0) {
-            name.resize(name_buffer_size-1);
+            name.resize(name_buffer_size - 1);
         }
         status = library_->GetChannelName(vi, index, name_buffer_size, (ViChar*)name.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(name_buffer_size)) {
@@ -1842,7 +1843,7 @@ namespace nidigitalpattern_grpc {
       
         std::string names;
         if (name_buffer_size > 0) {
-            names.resize(name_buffer_size-1);
+            names.resize(name_buffer_size - 1);
         }
         status = library_->GetChannelNameFromString(vi, indices, name_buffer_size, (ViChar*)names.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(name_buffer_size)) {
@@ -1883,7 +1884,7 @@ namespace nidigitalpattern_grpc {
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
-            error_description.resize(error_description_buffer_size-1);
+            error_description.resize(error_description_buffer_size - 1);
         }
         status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
@@ -2027,7 +2028,7 @@ namespace nidigitalpattern_grpc {
       
         std::string name;
         if (name_buffer_size > 0) {
-            name.resize(name_buffer_size-1);
+            name.resize(name_buffer_size - 1);
         }
         status = library_->GetPatternName(vi, pattern_index, name_buffer_size, (ViChar*)name.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(name_buffer_size)) {
@@ -2068,7 +2069,7 @@ namespace nidigitalpattern_grpc {
       
         std::string pin_list;
         if (pin_list_buffer_size > 0) {
-            pin_list.resize(pin_list_buffer_size-1);
+            pin_list.resize(pin_list_buffer_size - 1);
         }
         status = library_->GetPatternPinList(vi, start_label, pin_list_buffer_size, (ViChar*)pin_list.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(pin_list_buffer_size)) {
@@ -2109,7 +2110,7 @@ namespace nidigitalpattern_grpc {
       
         std::string name;
         if (name_buffer_size > 0) {
-            name.resize(name_buffer_size-1);
+            name.resize(name_buffer_size - 1);
         }
         status = library_->GetPinName(vi, pin_index, name_buffer_size, (ViChar*)name.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(name_buffer_size)) {
@@ -2381,7 +2382,7 @@ namespace nidigitalpattern_grpc {
       
         std::string name;
         if (name_buffer_size > 0) {
-            name.resize(name_buffer_size-1);
+            name.resize(name_buffer_size - 1);
         }
         status = library_->GetTimeSetName(vi, time_set_index, name_buffer_size, (ViChar*)name.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(name_buffer_size)) {

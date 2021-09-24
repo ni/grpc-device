@@ -36,6 +36,7 @@ service NiFake {
   rpc GetAnIviDanceWithATwistArray(GetAnIviDanceWithATwistArrayRequest) returns (GetAnIviDanceWithATwistArrayResponse);
   rpc GetAnIviDanceWithATwistByteArray(GetAnIviDanceWithATwistByteArrayRequest) returns (GetAnIviDanceWithATwistByteArrayResponse);
   rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringRequest) returns (GetAnIviDanceWithATwistStringResponse);
+  rpc GetAnIviDanceWithATwistStringStrlenBug(GetAnIviDanceWithATwistStringStrlenBugRequest) returns (GetAnIviDanceWithATwistStringStrlenBugResponse);
   rpc GetArraySizeForCustomCode(GetArraySizeForCustomCodeRequest) returns (GetArraySizeForCustomCodeResponse);
   rpc GetArrayUsingIviDance(GetArrayUsingIviDanceRequest) returns (GetArrayUsingIviDanceResponse);
   rpc GetArrayViUInt8WithEnum(GetArrayViUInt8WithEnumRequest) returns (GetArrayViUInt8WithEnumResponse);
@@ -339,6 +340,15 @@ message GetAnIviDanceWithATwistStringRequest {
 message GetAnIviDanceWithATwistStringResponse {
   int32 status = 1;
   string array_out = 2;
+  sint32 actual_size = 3;
+}
+
+message GetAnIviDanceWithATwistStringStrlenBugRequest {
+}
+
+message GetAnIviDanceWithATwistStringStrlenBugResponse {
+  int32 status = 1;
+  string string_out = 2;
   sint32 actual_size = 3;
 }
 

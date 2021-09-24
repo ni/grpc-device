@@ -40,6 +40,7 @@ any_ivi_dance_functions = any(
 #include "${additional_header}"
 % endfor
 % endif
+#include <server/converters.h>
 % if has_async_functions:
 #include <server/callback_router.h>
 #include <server/server_reactor.h>

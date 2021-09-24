@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nitclk_grpc {
 
@@ -150,7 +151,7 @@ namespace nitclk_grpc {
       
         std::string error_string;
         if (error_string_size > 0) {
-            error_string.resize(error_string_size-1);
+            error_string.resize(error_string_size - 1);
         }
         status = library_->GetExtendedErrorInfo((ViChar*)error_string.data(), error_string_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_string_size)) {

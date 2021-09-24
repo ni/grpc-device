@@ -41,6 +41,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAnIviDanceWithATwistArray = reinterpret_cast<GetAnIviDanceWithATwistArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArray"));
   function_pointers_.GetAnIviDanceWithATwistByteArray = reinterpret_cast<GetAnIviDanceWithATwistByteArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistByteArray"));
   function_pointers_.GetAnIviDanceWithATwistString = reinterpret_cast<GetAnIviDanceWithATwistStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistString"));
+  function_pointers_.GetAnIviDanceWithATwistStringStrlenBug = reinterpret_cast<GetAnIviDanceWithATwistStringStrlenBugPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistStringStrlenBug"));
   function_pointers_.GetArraySizeForCustomCode = reinterpret_cast<GetArraySizeForCustomCodePtr>(shared_library_.get_function_pointer("niFake_GetArraySizeForCustomCode"));
   function_pointers_.GetArrayUsingIviDance = reinterpret_cast<GetArrayUsingIviDancePtr>(shared_library_.get_function_pointer("niFake_GetArrayUsingIviDance"));
   function_pointers_.GetArrayViUInt8WithEnum = reinterpret_cast<GetArrayViUInt8WithEnumPtr>(shared_library_.get_function_pointer("niFake_GetArrayViUInt8WithEnum"));
@@ -342,6 +343,18 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistString(ViInt32 bufferSize, ViChar
   return niFake_GetAnIviDanceWithATwistString(bufferSize, arrayOut, actualSize);
 #else
   return function_pointers_.GetAnIviDanceWithATwistString(bufferSize, arrayOut, actualSize);
+#endif
+}
+
+ViStatus NiFakeLibrary::GetAnIviDanceWithATwistStringStrlenBug(ViInt32 bufferSize, ViChar stringOut[], ViInt32* actualSize)
+{
+  if (!function_pointers_.GetAnIviDanceWithATwistStringStrlenBug) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceWithATwistStringStrlenBug.");
+  }
+#if defined(_MSC_VER)
+  return niFake_GetAnIviDanceWithATwistStringStrlenBug(bufferSize, stringOut, actualSize);
+#else
+  return function_pointers_.GetAnIviDanceWithATwistStringStrlenBug(bufferSize, stringOut, actualSize);
 #endif
 }
 

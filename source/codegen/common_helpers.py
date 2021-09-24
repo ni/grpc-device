@@ -65,6 +65,10 @@ def get_input_and_output_custom_types(functions):
     return (input_custom_types, output_custom_types)
 
 
+def is_null_terminated_in_c(parameter):
+    return parameter['grpc_type'] == 'string'
+
+
 def is_string_arg(parameter):
     return parameter['grpc_type'] in ['string', 'bytes']
 
@@ -302,7 +306,30 @@ def get_size_mechanism(parameter):
     return size.get('mechanism', None)
 
 
-def get_size_expression(parameter):
+def has_size_mechanism_tag(parameter: dict, tag: str) -> bool:
+    size_request = parameter.get('size', {})
+    tags = size_request.get('tags', {})
+    return tag in tags
+
+
+def has_strlen_bug(parameter: dict) -> bool:
+    """True if the parameter is a string output where the size
+    mechanism implementation has the 'strlen bug':
+        Reports strlen instead of strlen + 1 for the required
+        buffersize
+    We assume that this bug may some day be fixed, so the 
+    implementation needs to allocate the extra character but also
+    trim it off if it's an extra null.
+    """
+    return has_size_mechanism_tag(parameter, "strlen-bug")
+
+
+def get_buffer_size_expression(parameter: dict) -> str:
+    """Returns the C++ size expression for the size of the underlying
+    C API bugger for a string/array parameter.
+    Unlike get_size_expression, this will include the trailing null terminator
+    for strings (which is in the size reported by driver APIs).
+    """
     size_mechanism = get_size_mechanism(parameter)
     if size_mechanism == 'fixed':
         return parameter['size']['value']
@@ -310,6 +337,19 @@ def get_size_expression(parameter):
         return camel_to_snake(parameter['size']['value_twist'])
     else:
         return camel_to_snake(parameter['size']['value'])
+
+
+def get_size_expression(parameter: dict) -> str:
+    """"Returns the C++ size expression for sizing the C++ container type
+    for a given parameter."""
+    expression = get_buffer_size_expression(parameter)
+    if is_null_terminated_in_c(parameter):
+        # if the C API reports strlen instead of size:
+        # Don't subtract one for the null terminator, the API already did!
+        if has_strlen_bug(parameter):
+            return expression
+        return f"{expression} - 1"
+    return expression
 
 
 def get_param_cpp_name(parameter: dict) -> str:
