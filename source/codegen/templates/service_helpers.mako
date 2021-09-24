@@ -672,6 +672,16 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
         response->mutable_${parameter_name}()->resize(${actual_size_param_name});
 %       elif common_helpers.is_string_arg(parameter):
         response->mutable_${parameter_name}()->resize(${actual_size_param_name}-1);
+%       elif common_helpers.is_struct(parameter):
+##        RepeatedPtrField doesn't support Resize(), so use DeleteSubrange()
+##        to delete any extra elements.
+        {
+          auto shrunk_size = ${actual_size_param_name};
+          auto current_size = response->mutable_${parameter_name}()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_${parameter_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }        
 %       else:
 ## This code doesn't handle all parameter types (i.e., enums), see what initialize_output_params() does for that.
         response->mutable_${parameter_name}()->Resize(${actual_size_param_name}, 0);

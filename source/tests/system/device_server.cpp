@@ -8,6 +8,8 @@
 #include <nidigitalpattern/nidigitalpattern_service.h>
 #include <nifgen/nifgen_library.h>
 #include <nifgen/nifgen_service.h>
+#include <nirfsa/nirfsa_library.h>
+#include <nirfsa/nirfsa_service.h>
 #include <nirfsg/nirfsg_library.h>
 #include <nirfsg/nirfsg_service.h>
 #include <niscope/niscope_library.h>
@@ -63,6 +65,8 @@ class DeviceServer : public DeviceServerInterface {
   nitclk_grpc::NiTClkService nitclk_service_;
   nidaqmx_grpc::NiDAQmxLibrary nidaqmx_library_;
   nidaqmx_grpc::NiDAQmxService nidaqmx_service_;
+  nirfsa_grpc::NiRFSALibrary nirfsa_library_;
+  nirfsa_grpc::NiRFSAService nirfsa_service_;
 
   std::unique_ptr<::grpc::Server> server_;
   std::shared_ptr<::grpc::Channel> channel_;
@@ -91,7 +95,9 @@ DeviceServer::DeviceServer()
       nitclk_library_(),
       nitclk_service_(&nitclk_library_, mi_shared_resource_repository_),
       nidaqmx_library_(),
-      nidaqmx_service_(&nidaqmx_library_, std::make_shared<DAQmxResourceRepository>(&session_repository_))
+      nidaqmx_service_(&nidaqmx_library_, std::make_shared<DAQmxResourceRepository>(&session_repository_)),
+      nirfsa_library_(),
+      nirfsa_service_(&nirfsa_library_, mi_shared_resource_repository_)
 {
   grpc::ServerBuilder builder;
   builder.RegisterService(&core_service_);
@@ -104,6 +110,7 @@ DeviceServer::DeviceServer()
   builder.RegisterService(&nirfsg_service_);
   builder.RegisterService(&nitclk_service_);
   builder.RegisterService(&nidaqmx_service_);
+  builder.RegisterService(&nirfsa_service_);
   server_ = builder.BuildAndStart();
 }
 

@@ -8,6 +8,8 @@
 #include <nidmm/nidmm_service.h>
 #include <nifgen/nifgen_library.h>
 #include <nifgen/nifgen_service.h>
+#include <nirfsa/nirfsa_library.h>
+#include <nirfsa/nirfsa_service.h>
 #include <nirfsg/nirfsg_library.h>
 #include <nirfsg/nirfsg_service.h>
 #include <niscope/niscope_library.h>
@@ -140,6 +142,13 @@ static void RunServer(const ServerConfiguration& config)
 
   if (nidaqmx_service.is_enabled()) {
     builder.RegisterService(&nidaqmx_service);
+  }
+
+  nirfsa_grpc::NiRFSALibrary nirfsa_library;
+  nirfsa_grpc::NiRFSAService nirfsa_service(&nirfsa_library, mi_shared_resource_repository, config.feature_toggles);
+
+  if (nirfsa_service.is_enabled()) {
+    builder.RegisterService(&nirfsa_service);
   }
 
   // Assemble the server.
