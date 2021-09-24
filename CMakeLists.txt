@@ -8,13 +8,14 @@ if (CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
 endif()
 
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 if(NOT CMAKE_CROSSCOMPILING OR _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
-  add_subdirectory(${CMAKE_SOURCE_DIR}/third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
+  add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
 endif()
 include(ImportGrpc)
 include(GenerateServices)
 include(GenerateGrpcSources)
+
 #----------------------------------------------------------------------
 # Use C++17 (needed for shared_mutex support on Linux)
 #----------------------------------------------------------------------
