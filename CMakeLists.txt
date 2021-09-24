@@ -7,34 +7,14 @@ if (CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
   set(CMAKE_SYSTEM_PROCESSOR "amd64")
 endif()
 
-#----------------------------------------------------------------------
-# Use the grpc targets directly from this build, only when not cross-compiling.
-#----------------------------------------------------------------------
-if(CMAKE_CROSSCOMPILING)
-  find_program(_PROTOBUF_PROTOC protoc)
-  find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
 
-  if(NOT _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
-    find_package(gRPC REQUIRED)
-    find_library(_REFLECTION grpc++_reflection)
-    find_library(_GRPC_GRPCPP grpc++)
-    find_library(_PROTOBUF_LIBPROTOBUF protobuf)
-  else()
-    add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
-    set(_REFLECTION grpc++_reflection)
-    set(_GRPC_GRPCPP grpc++)
-    set(_PROTOBUF_LIBPROTOBUF libprotobuf)
-  endif()
-
-else()
-  add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
-  set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
-  set(_REFLECTION grpc++_reflection)
-  set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
-  set(_GRPC_GRPCPP grpc++)
-  set(_PROTOBUF_LIBPROTOBUF libprotobuf)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+if(NOT CMAKE_CROSSCOMPILING OR _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
+  add_subdirectory(${CMAKE_SOURCE_DIR}/third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
 endif()
-
+include(ImportGrpc)
+include(GenerateServices)
+include(GenerateGrpcSources)
 #----------------------------------------------------------------------
 # Use C++17 (needed for shared_mutex support on Linux)
 #----------------------------------------------------------------------
@@ -123,7 +103,6 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/${api}_service.cpp
     ${service_output_dir}/${api}/${api}_service.h)
-  set(gen_command COMMAND ${Python3_EXECUTABLE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (NOT api MATCHES "^nifake.*")
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
@@ -134,10 +113,11 @@ foreach(api ${nidrivers})
       ${nidriver_client_srcs}
       "${service_output_dir}/${api}/${api}_client.cpp")
   endif()
-  add_custom_command(OUTPUT ${output_files}
-    ${gen_command}
-    COMMENT "Generating proto file and service for ${api}"
-    DEPENDS ${codegen_dependencies} ${codegen_scripts})
+  GenerateServices(
+    ${api}
+    ${codegen_dependencies}
+    ${output_files}
+  )
 endforeach()
 
 #----------------------------------------------------------------------
@@ -145,24 +125,6 @@ endforeach()
 #----------------------------------------------------------------------
 get_filename_component(session_proto "source/protobuf/session.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
-
-#----------------------------------------------------------------------
-# Generate sources from proto files
-#----------------------------------------------------------------------
-function(GenerateGrpcSources proto_file proto_path proto_srcs proto_hdrs grpc_srcs grpc_hdrs)
-  get_filename_component(proto_out_path "${proto_srcs}" PATH)
-  add_custom_command(
-    OUTPUT "${proto_srcs}" "${proto_hdrs}" "${grpc_srcs}" "${grpc_hdrs}"
-    COMMAND ${_PROTOBUF_PROTOC}
-    ARGS --grpc_out "${proto_out_path}"
-      --cpp_out "${proto_out_path}"
-      -I "${proto_path}"
-      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
-      -I ${CMAKE_SOURCE_DIR}/source/protobuf
-      --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-      "${proto_file}"
-    DEPENDS "${proto_file}" "${session_proto}")
-endfunction()
 
 set(session_proto_srcs "${proto_srcs_dir}/session.pb.cc")
 set(session_proto_hdrs "${proto_srcs_dir}/session.pb.h")
