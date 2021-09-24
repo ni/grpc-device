@@ -29,13 +29,13 @@ namespace nirfsg_grpc {
   {
   }
 
-  void NiRFSGService::Copy(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output)
+  void NiRFSGService::Copy(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output) 
   {
     output->set_real(input.real);
     output->set_imaginary(input.imaginary);
   }
 
-  void NiRFSGService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output)
+  void NiRFSGService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output) 
   {
     for (auto item : input) {
       auto message = new nirfsg_grpc::NIComplexNumber();
@@ -44,9 +44,9 @@ namespace nirfsg_grpc {
     }
   }
 
-  NIComplexNumber_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexNumber& input)
+   NIComplexNumber_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexNumber& input) 
   {
-    NIComplexNumber_struct* output = new NIComplexNumber_struct();
+    NIComplexNumber_struct* output = new NIComplexNumber_struct();  
     output->real = input.real();
     output->imaginary = input.imaginary();
     return *output;
@@ -61,9 +61,9 @@ namespace nirfsg_grpc {
         [&](nirfsg_grpc::NIComplexNumber x) { return ConvertMessage(x); });
   }
 
-  NIComplexNumberF32_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexNumberF32& input)
+   NIComplexNumberF32_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexNumberF32& input) 
   {
-    NIComplexNumberF32_struct* output = new NIComplexNumberF32_struct();
+    NIComplexNumberF32_struct* output = new NIComplexNumberF32_struct();  
     output->real = input.real();
     output->imaginary = input.imaginary();
     return *output;
@@ -78,9 +78,9 @@ namespace nirfsg_grpc {
         [&](nirfsg_grpc::NIComplexNumberF32 x) { return ConvertMessage(x); });
   }
 
-  NIComplexI16_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexI16& input)
+   NIComplexI16_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexI16& input) 
   {
-    NIComplexI16_struct* output = new NIComplexI16_struct();
+    NIComplexI16_struct* output = new NIComplexI16_struct();  
     output->real = input.real();
     output->imaginary = input.imaginary();
     return *output;
@@ -169,7 +169,22 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViInt32 value = request->value_raw();
+      ViInt32 value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::CheckAttributeViInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<ViInt32>(request->value());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<ViInt32>(request->value_raw());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -213,7 +228,22 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViReal64 value = request->value_raw();
+      ViReal64 value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValue: {
+          value = static_cast<ViReal64>(request->value());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<ViReal64>(request->value_raw());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -258,7 +288,26 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      auto value = request->value_raw().c_str();
+      ViConstString value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::CheckAttributeViStringRequest::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = nirfsgstringattributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == nirfsgstringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = const_cast<ViConstString>((value_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViStringRequest::ValueEnumCase::kValueRaw: {
+          value = const_cast<ViConstString>(request->value_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViStringRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CheckAttributeViString(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1836,7 +1885,7 @@ namespace nirfsg_grpc {
             if (shrunk_size != current_size) {
               response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }
+          }        
           response->set_number_of_sparameters(number_of_sparameters);
           response->set_number_of_ports(number_of_ports);
         }
@@ -2861,7 +2910,22 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViInt32 value = request->value_raw();
+      ViInt32 value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::SetAttributeViInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<ViInt32>(request->value());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<ViInt32>(request->value_raw());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2905,7 +2969,22 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViReal64 value = request->value_raw();
+      ViReal64 value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::kValue: {
+          value = static_cast<ViReal64>(request->value());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<ViReal64>(request->value_raw());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2950,7 +3029,26 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      auto value = request->value_raw().c_str();
+      ViConstString value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::SetAttributeViStringRequest::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = nirfsgstringattributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == nirfsgstringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = const_cast<ViConstString>((value_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViStringRequest::ValueEnumCase::kValueRaw: {
+          value = const_cast<ViConstString>(request->value_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViStringRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViString(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;

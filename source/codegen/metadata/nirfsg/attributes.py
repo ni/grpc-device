@@ -293,7 +293,7 @@ attributes = {
     1150017: {
         'access': 'read only',
         'documentation': {
-            'description': ' Returns the device temperature. If the NI-RFSG session is controlling  multiple devices, this attribute returns the temperature of the primary  NI RF device.  The NI-RFSG session is opened using the primary RF device name. \n \n Serial signals between the sensor and the system control unit could  modulate the signal being generated, thus causing phase spurs. After the device  thoroughly warms up, its temperature varies only slightly (less than 1 degree Celsius)  and slowly, and it is not necessary to constantly poll this temperature sensor.  Refer to the thermal management topic appropriate to your device in the  NI RF Signal Generators Help for more information about device temperature. \n PXIe-5644/5645/5646, PXIe-5820/5840/5841: If you query this attribute during RF  list mode, list steps may take longer to complete during list execution. \n PXIe-5830/5831: To use this attribute, you must first set the channelName parameter of the niRFSG_SetAttributeViReal64 function  to using the appropriate string for your instrument configuration. Refer to the NI-RFSG C Function Reference for more information about  the applicable string to use for your instrument configuration. \n\n Units: desgrees Celsius (°C) \n \n'
+            'description': ' Returns the device temperature. If the NI-RFSG session is controlling  multiple devices, this attribute returns the temperature of the primary  NI RF device.  The NI-RFSG session is opened using the primary RF device name. \n \n Serial signals between the sensor and the system control unit could  modulate the signal being generated, thus causing phase spurs. After the device  thoroughly warms up, its temperature varies only slightly (less than 1 degree Celsius)  and slowly, and it is not necessary to constantly poll this temperature sensor.  Refer to the thermal management topic appropriate to your device in the  NI RF Signal Generators Help for more information about device temperature. \n PXIe-5644/5645/5646, PXIe-5820/5840/5841: If you query this attribute during RF  list mode, list steps may take longer to complete during list execution. \n PXIe-5830/5831: To use this attribute, you must first set the channelName parameter of the niRFSG_SetAttributeViReal64 function  to using the appropriate string for your instrument configuration. Refer to the NI-RFSG C Function Reference for more information about  the applicable string to use for your instrument configuration. \n\n Units: desgrees Celsius (Â°C) \n \n'
         },
         'name': 'DEVICE_TEMPERATURE',
         'type': 'ViReal64'
@@ -354,7 +354,7 @@ attributes = {
     1150024: {
         'access': 'read-write',
         'documentation': {
-            'description': ' Specifies the phase of the RF output signal. Use this attribute  to align the phase of the RF output with the phase of the RF output of  another device, as long as the two devices are phase-coherent. \n \n Units: degrees (º) \n \n'
+            'description': ' Specifies the phase of the RF output signal. Use this attribute  to align the phase of the RF output with the phase of the RF output of  another device, as long as the two devices are phase-coherent. \n \n Units: degrees (Â°) \n \n'
         },
         'name': 'PHASE_OFFSET',
         'type': 'ViReal64'
@@ -694,7 +694,7 @@ attributes = {
     1150068: {
         'access': 'read only',
         'documentation': {
-            'description': ' Returns the AWG module temperature in degrees Celsius. \n PXIe-5820/5840/5841: If you query this attribute during RF list mode, list steps may  take longer to complete during list execution. \n \n Units: degrees Celsius (°C) \n \n'
+            'description': ' Returns the AWG module temperature in degrees Celsius. \n PXIe-5820/5840/5841: If you query this attribute during RF list mode, list steps may  take longer to complete during list execution. \n \n Units: degrees Celsius (Â°C) \n \n'
         },
         'name': 'ARB_TEMPERATURE',
         'type': 'ViReal64'
@@ -742,7 +742,7 @@ attributes = {
     1150075: {
         'access': 'read only',
         'documentation': {
-            'description': ' Returns the LO module temperature in degrees Celsius. \n PXIe-5840/5841: If you query this attribute during RF list mode, list steps may take longer to complete during list execution. \n \n Units: degrees Celsius (°C) \n \n'
+            'description': ' Returns the LO module temperature in degrees Celsius. \n PXIe-5840/5841: If you query this attribute during RF list mode, list steps may take longer to complete during list execution. \n \n Units: degrees Celsius (Â°C) \n \n'
         },
         'name': 'LO_TEMPERATURE',
         'type': 'ViReal64'
@@ -918,7 +918,7 @@ attributes = {
     1150104: {
         'access': 'read-write',
         'documentation': {
-            'description': ' Specifies the temperature, in degrees Celsius, to use for adjusting the device settings  to correct for temperature changes. If you set this attribute, NI-RFSG uses the value  you specify and therefore no longer uses the actual device temperature as the correction  temperature. If you do not set this attribute, NI-RFSG checks the current device temperature  in the Committed state and automatically sets the value of this attribute.\n \n to be used every time, regardless of the temperature variation. In these cases,  it is good to ensure that the temperature does not vary too much. \n \n PXIe-5820/5830/5831/5840/5841: This attribute is read only. \n \n Units: degrees Celsius (°C) \n \n',
+            'description': ' Specifies the temperature, in degrees Celsius, to use for adjusting the device settings  to correct for temperature changes. If you set this attribute, NI-RFSG uses the value  you specify and therefore no longer uses the actual device temperature as the correction  temperature. If you do not set this attribute, NI-RFSG checks the current device temperature  in the Committed state and automatically sets the value of this attribute.\n \n to be used every time, regardless of the temperature variation. In these cases,  it is good to ensure that the temperature does not vary too much. \n \n PXIe-5820/5830/5831/5840/5841: This attribute is read only. \n \n Units: degrees Celsius (Â°C) \n \n',
             'note': ' Use this attribute only when your application requires the same settings '
         },
         'name': 'CORRECTION_TEMPERATURE',
@@ -1207,7 +1207,7 @@ attributes = {
     1150151: {
         'access': 'read-write',
         'documentation': {
-            'description': ' Specifies the step size, in hertz, for tuning the local oscillator (LO) phase-locked loop (PLL). \n \n When the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute is enabled, the specified step size  affects the fractional spur performance of the device. When the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED  attribute is disabled, the specified step size affects the phase noise performance of the device. \n \n The valid values for this attribute depend on the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute.  PXIe-5644/5645/5646—If you disable the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute, the specified value is  coerced to the nearest valid value. \n \n PXIe-5840/5841—If you disable the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute, the specified value is  coerced to the nearest valid value that is less than or equal to the desired step size. \n \n'
+            'description': ' Specifies the step size, in hertz, for tuning the local oscillator (LO) phase-locked loop (PLL). \n \n When the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute is enabled, the specified step size  affects the fractional spur performance of the device. When the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED  attribute is disabled, the specified step size affects the phase noise performance of the device. \n \n The valid values for this attribute depend on the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute.  PXIe-5644/5645/5646ï¿½If you disable the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute, the specified value is  coerced to the nearest valid value. \n \n PXIe-5840/5841ï¿½If you disable the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute, the specified value is  coerced to the nearest valid value that is less than or equal to the desired step size. \n \n'
         },
         'name': 'LO_FREQUENCY_STEP_SIZE',
         'type': 'ViReal64'
@@ -1368,7 +1368,7 @@ attributes = {
     1150182: {
         'access': 'read only',
         'documentation': {
-            'description': ' Returns the amplitude extender module temperature in degrees Celsius. \n \n Units: degrees Celsius (°C) \n \n'
+            'description': ' Returns the amplitude extender module temperature in degrees Celsius. \n \n Units: degrees Celsius (Â°C) \n \n'
         },
         'name': 'AE_TEMPERATURE',
         'type': 'ViReal64'
@@ -1516,7 +1516,7 @@ attributes = {
     1150211: {
         'access': 'read only',
         'documentation': {
-            'description': ' Returns the FPGA temperature in degrees Celsius. \n \n Serial signals between the sensor and the system control unit can  potentially modulate the signal being generated, thus causing phase spurs.  After the device thoroughly warms up, its temperature varies only slightly  (less than 1 degree Celsius) and slowly, and it is not necessary to  constantly poll this temperature sensor. \n Units: desgrees Celsius (°C) \n \n',
+            'description': ' Returns the FPGA temperature in degrees Celsius. \n \n Serial signals between the sensor and the system control unit can  potentially modulate the signal being generated, thus causing phase spurs.  After the device thoroughly warms up, its temperature varies only slightly  (less than 1 degree Celsius) and slowly, and it is not necessary to  constantly poll this temperature sensor. \n Units: desgrees Celsius (Â°C) \n \n',
             'note': ' If you query this attribute during RF list mode, list steps may take longer to complete during list execution. \n'
         },
         'name': 'FPGA_TEMPERATURE',
@@ -1684,7 +1684,7 @@ attributes = {
     1150264: {
         'access': 'read-write',
         'documentation': {
-            'description': ' Specifies the bandwidth of the arbitrary signal. This value must be less than or equal to (0.8 × I/Q rate). \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841\n'
+            'description': ' Specifies the bandwidth of the arbitrary signal. This value must be less than or equal to (0.8 ï¿½ I/Q rate). \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841\n'
         },
         'name': 'WAVEFORM_SIGNAL_BANDWIDTH',
         'type': 'ViReal64'
@@ -1872,7 +1872,7 @@ attributes = {
     1250452: {
         'access': 'read-write',
         'documentation': {
-            'description': ' This attribute specifies the I/Q rate of the arbitrary waveform.  The I/Q rate is coerced to a value the hardware can achieve.  Read this value back after setting it to see what the actual  I/Q rate is. NI-RFSG internally uses an FIR filter with flat  response up to (0.4 × IQ rate). Given a desired signal with  the maximum frequency content f, sample the signal at  an I/Q rate greater than or equal to (f/0.4). \n \n This attribute applies only when the NIRFSG_ATTR_GENERATION_MODE  attribute is set to NIRFSG_VAL_ARB_WAVEFORM or NIRFSG_VAL_SCRIPT. \n \n Use this attribute to associate an I/Q rate with a waveform.  Refer to the Assigning Properties or Attributes to a Waveform topic of  the NI RF Signal Generators Help for more information about assigning an I/Q rate to a waveform. \n'
+            'description': ' This attribute specifies the I/Q rate of the arbitrary waveform.  The I/Q rate is coerced to a value the hardware can achieve.  Read this value back after setting it to see what the actual  I/Q rate is. NI-RFSG internally uses an FIR filter with flat  response up to (0.4 ï¿½ IQ rate). Given a desired signal with  the maximum frequency content f, sample the signal at  an I/Q rate greater than or equal to (f/0.4). \n \n This attribute applies only when the NIRFSG_ATTR_GENERATION_MODE  attribute is set to NIRFSG_VAL_ARB_WAVEFORM or NIRFSG_VAL_SCRIPT. \n \n Use this attribute to associate an I/Q rate with a waveform.  Refer to the Assigning Properties or Attributes to a Waveform topic of  the NI RF Signal Generators Help for more information about assigning an I/Q rate to a waveform. \n'
         },
         'name': 'IQ_RATE',
         'type': 'ViReal64'
