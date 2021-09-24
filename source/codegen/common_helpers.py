@@ -349,7 +349,7 @@ def get_size_expression(parameter: dict) -> str:
         # if the C API reports strlen instead of size:
         # Don't subtract one for the null terminator, the API already did!
         if has_strlen_bug(parameter):
-            return expression
+            return f"{expression} /* Workaround: strlen-bug */"
         return f"{expression} - 1"
     return expression
 

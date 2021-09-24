@@ -673,7 +673,7 @@ namespace nifake_grpc {
         }
         std::string string_out;
         if (actual_size > 0) {
-            string_out.resize(actual_size);
+            string_out.resize(actual_size /* Workaround: strlen-bug */);
         }
         auto buffer_size = actual_size;
         status = library_->GetAnIviDanceWithATwistStringStrlenBug(buffer_size, (ViChar*)string_out.data(), &actual_size);
