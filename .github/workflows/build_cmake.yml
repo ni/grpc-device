@@ -26,16 +26,12 @@ jobs:
             os: windows-latest,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "-A x64",
-            # On msvc, the -j flag does not help build times and causes intermittent
-            # file permission errors.
-            cmake_number_of_jobs: ""
           }
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
             os: ubuntu-18.04,
             build_type: "Release", cc: "gcc-9", cxx: "g++-9",
             cmake_platform: "",
-            cmake_number_of_jobs: "-j 2",
             glibc_version: "2_27"
           }
 
@@ -86,7 +82,7 @@ jobs:
       shell: cmake -P {0}
       run: |
         execute_process(
-          COMMAND cmake --build build --config $ENV{BUILD_TYPE} ${{ matrix.config.cmake_number_of_jobs }}
+          COMMAND cmake --build build --config $ENV{BUILD_TYPE}
           RESULT_VARIABLE result
           OUTPUT_VARIABLE output
           ERROR_VARIABLE output
