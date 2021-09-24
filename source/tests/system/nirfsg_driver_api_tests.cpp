@@ -175,15 +175,70 @@ TEST_F(NiRFSGDriverApiTests, SetAutomaticThermalCorrection_UpdatesSuccessfully)
 
 TEST_F(NiRFSGDriverApiTests, ExportSignal_Succeeds)
 {
-  auto session = init_session(stub(), PXI_5652);
+  auto session = init_session(stub(), PXI_5841);
   auto response = client::export_signal(
       stub(),
       session,
-      SignalIdentifier::SIGNAL_IDENTIFIER_MARKER0,
-      "",
-      AttrExportTerminalRangeTable::EXPORT_TERMINAL_RANGE_TABLE_REF_OUT_STR);
+      RoutedSignal::ROUTED_SIGNAL_START_TRIGGER,
+      std::string(""),
+      OutputSignal::OUTPUT_SIGNAL_PFI0_STR);
 
   EXPECT_SUCCESS(session, response);
+}
+
+TEST_F(NiRFSGDriverApiTests, DisableIQImpairment_IQImpairmentIsDisabled)
+{
+  auto session = init_session(stub(), PXI_5841);
+  auto initial_response = client::get_attribute_vi_boolean(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_IMPAIRMENT_ENABLED);
+  auto set_response = client::set_attribute_vi_boolean(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_IMPAIRMENT_ENABLED,
+      false);
+  auto get_response = client::get_attribute_vi_boolean(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_IMPAIRMENT_ENABLED);
+
+  EXPECT_SUCCESS(session, initial_response);
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_NE(initial_response.value(), get_response.value());
+  EXPECT_FALSE(get_response.value());
+}
+
+TEST_F(NiRFSGDriverApiTests, ReconfigureIQRate_UpdatesIQRateSuccessfully)
+{
+  auto NEW_RATE = 1.2e6;
+  auto session = init_session(stub(), PXI_5841);
+  auto initial_response = client::get_attribute_vi_real64(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_RATE);
+  auto set_response = client::set_attribute_vi_real64(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_RATE,
+      NEW_RATE);
+  auto get_response = client::get_attribute_vi_real64(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_RATE);
+
+  EXPECT_SUCCESS(session, initial_response);
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_NE(initial_response.value(), get_response.value());
+  EXPECT_NEAR(NEW_RATE, get_response.value(), .0001);
 }
 }  // namespace system
 }  // namespace tests
