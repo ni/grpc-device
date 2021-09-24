@@ -4,16 +4,17 @@
 #include "nirfsg/nirfsg_client.h"
 #include "nirfsg/nirfsg_service.h"
 
-namespace ni {
-namespace tests {
-namespace system {
-
-namespace rfsg = nirfsg_grpc;
+using namespace nirfsg_grpc;
 namespace client = nirfsg_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
 
+namespace ni {
+namespace tests {
+namespace system {
+
 const auto PXI_5652 = "5652";
+const auto PXI_5841 = "5841";
 
 const int krfsgDriverApiSuccess = 0;
 
@@ -27,7 +28,7 @@ class NiRFSGDriverApiTests : public ::testing::Test {
  protected:
   NiRFSGDriverApiTests()
       : device_server_(DeviceServerInterface::Singleton()),
-        nirfsg_stub_(rfsg::NiRFSG::NewStub(device_server_->InProcessChannel()))
+        nirfsg_stub_(NiRFSG::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
@@ -38,7 +39,7 @@ class NiRFSGDriverApiTests : public ::testing::Test {
     device_server_->ResetServer();
   }
 
-  std::unique_ptr<rfsg::NiRFSG::Stub>& stub()
+  std::unique_ptr<NiRFSG::Stub>& stub()
   {
     return nirfsg_stub_;
   }
@@ -58,10 +59,10 @@ class NiRFSGDriverApiTests : public ::testing::Test {
 
  private:
   DeviceServerInterface* device_server_;
-  std::unique_ptr<rfsg::NiRFSG::Stub> nirfsg_stub_;
+  std::unique_ptr<NiRFSG::Stub> nirfsg_stub_;
 };
 
-rfsg::InitWithOptionsResponse init(const client::StubPtr& stub, const std::string& model)
+InitWithOptionsResponse init(const client::StubPtr& stub, const std::string& model)
 {
   auto options = std::string("Simulate=1, DriverSetup=Model:") + model;
   return client::init_with_options(stub, "FakeDevice", false, false, options);
@@ -90,6 +91,30 @@ TEST_F(NiRFSGDriverApiTests, PerformReset_Succeeds)
   auto response = client::reset(stub(), session);
   EXPECT_SUCCESS(session, response);
   EXPECT_EQ(0, response.status());
+}
+
+TEST_F(NiRFSGDriverApiTests, ConfigureGettingStartedSingleToneGeneration_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5652);
+  auto configure_clock = client::configure_ref_clock(stub(), session, AttrRefClockSourceRangeTable::ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
+  auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
+  auto configure_generation_mode = client::configure_generation_mode(stub(), session, AttrGenerationModeRangeTable::ATTR_GENERATION_MODE_RANGE_TABLE_CW);
+
+  EXPECT_SUCCESS(session, configure_clock);
+  EXPECT_SUCCESS(session, configure_rf);
+  EXPECT_SUCCESS(session, configure_generation_mode);
+}
+
+TEST_F(NiRFSGDriverApiTests, ConfigureDigitalEdgeStartTrigger_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5841);
+  auto response = client::configure_digital_edge_start_trigger(
+      stub(),
+      session,
+      AttrTriggerSourceRangeTable::ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG0_STR,
+      AttrDigitalEdgeEdgeRangeTable::ATTR_DIGITAL_EDGE_EDGE_RANGE_TABLE_RISING_EDGE);
+
+  EXPECT_SUCCESS(session, response);
 }
 }  // namespace system
 }  // namespace tests
