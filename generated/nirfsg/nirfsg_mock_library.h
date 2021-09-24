@@ -56,6 +56,7 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureUpconverterPLLSettlingTime, (ViSession vi, ViReal64 pllSettlingTime, ViBoolean ensurePLLLocked, ViInt32 reservedForFutureUse), (override));
   MOCK_METHOD(ViStatus, CreateConfigurationList, (ViSession vi, ViConstString listName, ViInt32 numberOfAttributes, ViAttr configurationListAttributes[], ViBoolean setAsActiveList), (override));
   MOCK_METHOD(ViStatus, CreateConfigurationListStep, (ViSession vi, ViBoolean setAsActiveStep), (override));
+  MOCK_METHOD(ViStatus, CreateDeembeddingSparameterTableArray, (ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation), (override));
   MOCK_METHOD(ViStatus, CreateDeembeddingSparameterTableS2PFile, (ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation), (override));
   MOCK_METHOD(ViStatus, DeleteAllDeembeddingTables, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, DeleteConfigurationList, (ViSession vi, ViConstString listName), (override));
@@ -76,6 +77,7 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   MOCK_METHOD(ViStatus, GetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attribute, ViSession* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 bufSize, ViChar value[]), (override));
   MOCK_METHOD(ViStatus, GetChannelName, (ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar name[]), (override));
+  MOCK_METHOD(ViStatus, GetDeembeddingSparameters, (ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts), (override));
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]), (override));
   MOCK_METHOD(ViStatus, GetExternalCalibrationLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second), (override));
   MOCK_METHOD(ViStatus, GetSelfCalibrationDateAndTime, (ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second), (override));
@@ -122,6 +124,9 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, WaitUntilSettled, (ViSession vi, ViInt32 maxTimeMilliseconds), (override));
   MOCK_METHOD(ViStatus, WriteArbWaveform, (ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal64 iData[], ViReal64 qData[], ViBoolean moreDataPending), (override));
+  MOCK_METHOD(ViStatus, WriteArbWaveformComplexF32, (ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumberF32_struct wfmData[], ViBoolean moreDataPending), (override));
+  MOCK_METHOD(ViStatus, WriteArbWaveformComplexF64, (ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumber_struct wfmData[], ViBoolean moreDataPending), (override));
+  MOCK_METHOD(ViStatus, WriteArbWaveformComplexI16, (ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexI16_struct wfmData[]), (override));
   MOCK_METHOD(ViStatus, WriteArbWaveformF32, (ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal32 iData[], ViReal32 qData[], ViBoolean moreDataPending), (override));
   MOCK_METHOD(ViStatus, WriteP2PEndpointI16, (ViSession vi, ViConstString streamEndpoint, ViInt32 numberOfSamples, ViInt16 endpointData[]), (override));
   MOCK_METHOD(ViStatus, WriteScript, (ViSession vi, ViConstString script), (override));

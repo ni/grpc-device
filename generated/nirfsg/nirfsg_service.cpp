@@ -29,6 +29,72 @@ namespace nirfsg_grpc {
   {
   }
 
+  void NiRFSGService::Copy(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output) 
+  {
+    output->set_real(input.real);
+    output->set_imaginary(input.imaginary);
+  }
+
+  void NiRFSGService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output) 
+  {
+    for (auto item : input) {
+      auto message = new nirfsg_grpc::NIComplexNumber();
+      Copy(item, message);
+      output->AddAllocated(message);
+    }
+  }
+
+   NIComplexNumber_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexNumber& input) 
+  {
+    NIComplexNumber_struct* output = new NIComplexNumber_struct();  
+    output->real = input.real();
+    output->imaginary = input.imaginary();
+    return *output;
+  }
+
+  void NiRFSGService::Copy(const google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>& input, std::vector<NIComplexNumber_struct>* output)
+  {
+    std::transform(
+        input.begin(),
+        input.end(),
+        std::back_inserter(*output),
+        [&](nirfsg_grpc::NIComplexNumber x) { return ConvertMessage(x); });
+  }
+
+   NIComplexNumberF32_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexNumberF32& input) 
+  {
+    NIComplexNumberF32_struct* output = new NIComplexNumberF32_struct();  
+    output->real = input.real();
+    output->imaginary = input.imaginary();
+    return *output;
+  }
+
+  void NiRFSGService::Copy(const google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumberF32>& input, std::vector<NIComplexNumberF32_struct>* output)
+  {
+    std::transform(
+        input.begin(),
+        input.end(),
+        std::back_inserter(*output),
+        [&](nirfsg_grpc::NIComplexNumberF32 x) { return ConvertMessage(x); });
+  }
+
+   NIComplexI16_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexI16& input) 
+  {
+    NIComplexI16_struct* output = new NIComplexI16_struct();  
+    output->real = input.real();
+    output->imaginary = input.imaginary();
+    return *output;
+  }
+
+  void NiRFSGService::Copy(const google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexI16>& input, std::vector<NIComplexI16_struct>* output)
+  {
+    std::transform(
+        input.begin(),
+        input.end(),
+        std::back_inserter(*output),
+        [&](nirfsg_grpc::NIComplexI16 x) { return ConvertMessage(x); });
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiRFSGService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
@@ -103,7 +169,22 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViInt32 value = request->value_raw();
+      ViInt32 value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::CheckAttributeViInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<ViInt32>(request->value());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<ViInt32>(request->value_raw());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -147,7 +228,22 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViReal64 value = request->value_raw();
+      ViReal64 value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValue: {
+          value = static_cast<ViReal64>(request->value());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<ViReal64>(request->value_raw());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -192,7 +288,26 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      auto value = request->value_raw().c_str();
+      ViConstString value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::CheckAttributeViStringRequest::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = nirfsgstringattributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == nirfsgstringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = const_cast<ViConstString>((value_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViStringRequest::ValueEnumCase::kValueRaw: {
+          value = const_cast<ViConstString>(request->value_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::CheckAttributeViStringRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CheckAttributeViString(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1128,6 +1243,50 @@ namespace nirfsg_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::CreateDeembeddingSparameterTableArray(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableArrayRequest* request, CreateDeembeddingSparameterTableArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto port = request->port().c_str();
+      auto table_name = request->table_name().c_str();
+      auto frequencies = const_cast<ViReal64*>(request->frequencies().data());
+      ViInt32 frequencies_size = static_cast<ViInt32>(request->frequencies().size());
+      auto sparameter_table_request = request->sparameter_table();
+      std::vector<NIComplexNumber_struct> sparameter_table;
+      Copy(sparameter_table_request, &sparameter_table);
+      ViInt32 sparameter_table_size = static_cast<ViInt32>(request->sparameter_table().size());
+      ViInt32 number_of_ports = request->number_of_ports();
+      ViInt32 sparameter_orientation;
+      switch (request->sparameter_orientation_enum_case()) {
+        case nirfsg_grpc::CreateDeembeddingSparameterTableArrayRequest::SparameterOrientationEnumCase::kSparameterOrientation: {
+          sparameter_orientation = static_cast<ViInt32>(request->sparameter_orientation());
+          break;
+        }
+        case nirfsg_grpc::CreateDeembeddingSparameterTableArrayRequest::SparameterOrientationEnumCase::kSparameterOrientationRaw: {
+          sparameter_orientation = static_cast<ViInt32>(request->sparameter_orientation_raw());
+          break;
+        }
+        case nirfsg_grpc::CreateDeembeddingSparameterTableArrayRequest::SparameterOrientationEnumCase::SPARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sparameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CreateDeembeddingSparameterTableArray(vi, port, table_name, frequencies, frequencies_size, sparameter_table.data(), sparameter_table_size, number_of_ports, sparameter_orientation);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFSGService::CreateDeembeddingSparameterTableS2PFile(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableS2PFileRequest* request, CreateDeembeddingSparameterTableS2PFileResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1683,6 +1842,52 @@ namespace nirfsg_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_name(name);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetDeembeddingSparameters(::grpc::ServerContext* context, const GetDeembeddingSparametersRequest* request, GetDeembeddingSparametersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 number_of_sparameters {};
+      ViInt32 number_of_ports {};
+      while (true) {
+        auto status = library_->GetDeembeddingSparameters(vi, nullptr, 0, &number_of_sparameters, &number_of_ports);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
+        auto sparameters_array_size = number_of_sparameters;
+        status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          Copy(sparameters, response->mutable_sparameters());
+          {
+            auto shrunk_size = number_of_sparameters;
+            auto current_size = response->mutable_sparameters()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_number_of_sparameters(number_of_sparameters);
+          response->set_number_of_ports(number_of_ports);
         }
         return ::grpc::Status::OK;
       }
@@ -2705,7 +2910,22 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViInt32 value = request->value_raw();
+      ViInt32 value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::SetAttributeViInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<ViInt32>(request->value());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<ViInt32>(request->value_raw());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2749,7 +2969,22 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViReal64 value = request->value_raw();
+      ViReal64 value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::kValue: {
+          value = static_cast<ViReal64>(request->value());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<ViReal64>(request->value_raw());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2794,7 +3029,26 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      auto value = request->value_raw().c_str();
+      ViConstString value;
+      switch (request->value_enum_case()) {
+        case nirfsg_grpc::SetAttributeViStringRequest::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = nirfsgstringattributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == nirfsgstringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = const_cast<ViConstString>((value_imap_it->second).c_str());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViStringRequest::ValueEnumCase::kValueRaw: {
+          value = const_cast<ViConstString>(request->value_raw().c_str());
+          break;
+        }
+        case nirfsg_grpc::SetAttributeViStringRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViString(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2954,6 +3208,80 @@ namespace nirfsg_grpc {
       auto q_data = const_cast<ViReal64*>(request->q_data().data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveform(vi, waveform_name, number_of_samples, i_data, q_data, more_data_pending);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::WriteArbWaveformComplexF32(::grpc::ServerContext* context, const WriteArbWaveformComplexF32Request* request, WriteArbWaveformComplexF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto waveform_name = request->waveform_name().c_str();
+      ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
+      auto wfm_data_request = request->wfm_data();
+      std::vector<NIComplexNumberF32_struct> wfm_data;
+      Copy(wfm_data_request, &wfm_data);
+      ViBoolean more_data_pending = request->more_data_pending();
+      auto status = library_->WriteArbWaveformComplexF32(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::WriteArbWaveformComplexF64(::grpc::ServerContext* context, const WriteArbWaveformComplexF64Request* request, WriteArbWaveformComplexF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto waveform_name = request->waveform_name().c_str();
+      ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
+      auto wfm_data_request = request->wfm_data();
+      std::vector<NIComplexNumber_struct> wfm_data;
+      Copy(wfm_data_request, &wfm_data);
+      ViBoolean more_data_pending = request->more_data_pending();
+      auto status = library_->WriteArbWaveformComplexF64(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::WriteArbWaveformComplexI16(::grpc::ServerContext* context, const WriteArbWaveformComplexI16Request* request, WriteArbWaveformComplexI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto waveform_name = request->waveform_name().c_str();
+      ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
+      auto wfm_data_request = request->wfm_data();
+      std::vector<NIComplexI16_struct> wfm_data;
+      Copy(wfm_data_request, &wfm_data);
+      auto status = library_->WriteArbWaveformComplexI16(vi, waveform_name, number_of_samples, wfm_data.data());
       response->set_status(status);
       return ::grpc::Status::OK;
     }

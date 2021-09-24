@@ -14,6 +14,48 @@ config = {
         'task': 'generation'
     },
     'custom_types': [
+        {
+            'name': 'NIComplexNumber_struct',
+            'grpc_name': 'NIComplexNumber',
+            'fields': [
+                {
+                    'type': 'ViReal64',
+                    'name': 'real',
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'imaginary',
+                }
+            ]
+        },
+        {
+            'name': 'NIComplexNumberF32_struct',
+            'grpc_name': 'NIComplexNumberF32',
+            'fields': [
+                {
+                    'type': 'ViReal32',
+                    'name': 'real',
+                },
+                {
+                    'type': 'ViReal32',
+                    'name': 'imaginary',
+                }
+            ]
+        },
+        {
+            'name': 'NIComplexI16_struct',
+            'grpc_name': 'NIComplexI16',
+            'fields': [
+                {
+                    'type': 'ViInt16',
+                    'name': 'real',
+                },
+                {
+                    'type': 'ViInt16',
+                    'name': 'imaginary',
+                }
+            ]
+        },
     ],
     'additional_headers': [],
     'code_readiness': 'NextRelease',

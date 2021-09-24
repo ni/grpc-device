@@ -71,7 +71,7 @@ check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViInt32Response
-check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const pb::int32& value_raw)
+check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const simple_variant<NiRFSGInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
@@ -79,7 +79,14 @@ check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  const auto value_ptr = value.get_if<NiRFSGInt32AttributeValues>();
+  const auto value_raw_ptr = value.get_if<pb::int32>();
+  if (value_ptr) {
+    request.set_value(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = CheckAttributeViInt32Response{};
 
@@ -109,7 +116,7 @@ check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViReal64Response
-check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const double& value_raw)
+check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const simple_variant<NiRFSGReal64AttributeValues, double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -117,7 +124,14 @@ check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi,
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  const auto value_ptr = value.get_if<NiRFSGReal64AttributeValues>();
+  const auto value_raw_ptr = value.get_if<double>();
+  if (value_ptr) {
+    request.set_value(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = CheckAttributeViReal64Response{};
 
@@ -147,7 +161,7 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViStringResponse
-check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const pb::string& value_raw)
+check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const simple_variant<NiRFSGStringAttributeValuesMapped, std::string>& value)
 {
   ::grpc::ClientContext context;
 
@@ -155,7 +169,14 @@ check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi,
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  const auto value_ptr = value.get_if<NiRFSGStringAttributeValuesMapped>();
+  const auto value_raw_ptr = value.get_if<std::string>();
+  if (value_ptr) {
+    request.set_value_mapped(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = CheckAttributeViStringResponse{};
 
@@ -813,6 +834,35 @@ create_configuration_list_step(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+CreateDeembeddingSparameterTableArrayResponse
+create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const std::vector<double>& frequencies, const std::vector<NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& sparameter_orientation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateDeembeddingSparameterTableArrayRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_port(port);
+  request.set_table_name(table_name);
+  copy_array(frequencies, request.mutable_frequencies());
+  copy_array(sparameter_table, request.mutable_sparameter_table());
+  request.set_number_of_ports(number_of_ports);
+  const auto sparameter_orientation_ptr = sparameter_orientation.get_if<SParameterOrientation>();
+  const auto sparameter_orientation_raw_ptr = sparameter_orientation.get_if<pb::int32>();
+  if (sparameter_orientation_ptr) {
+    request.set_sparameter_orientation(*sparameter_orientation_ptr);
+  }
+  else if (sparameter_orientation_raw_ptr) {
+    request.set_sparameter_orientation_raw(*sparameter_orientation_raw_ptr);
+  }
+
+  auto response = CreateDeembeddingSparameterTableArrayResponse{};
+
+  raise_if_error(
+      stub->CreateDeembeddingSparameterTableArray(&context, request, &response));
+
+  return response;
+}
+
 CreateDeembeddingSparameterTableS2PFileResponse
 create_deembedding_sparameter_table_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const pb::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& sparameter_orientation)
 {
@@ -1190,6 +1240,22 @@ get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
 
   raise_if_error(
       stub->GetChannelName(&context, request, &response));
+
+  return response;
+}
+
+GetDeembeddingSparametersResponse
+get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetDeembeddingSparametersRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetDeembeddingSparametersResponse{};
+
+  raise_if_error(
+      stub->GetDeembeddingSparameters(&context, request, &response));
 
   return response;
 }
@@ -1826,7 +1892,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const pb::int32& value_raw)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const simple_variant<NiRFSGInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
@@ -1834,7 +1900,14 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  const auto value_ptr = value.get_if<NiRFSGInt32AttributeValues>();
+  const auto value_raw_ptr = value.get_if<pb::int32>();
+  if (value_ptr) {
+    request.set_value(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = SetAttributeViInt32Response{};
 
@@ -1864,7 +1937,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const double& value_raw)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const simple_variant<NiRFSGReal64AttributeValues, double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -1872,7 +1945,14 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  const auto value_ptr = value.get_if<NiRFSGReal64AttributeValues>();
+  const auto value_raw_ptr = value.get_if<double>();
+  if (value_ptr) {
+    request.set_value(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = SetAttributeViReal64Response{};
 
@@ -1902,7 +1982,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const pb::string& value_raw)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const simple_variant<NiRFSGStringAttributeValuesMapped, std::string>& value)
 {
   ::grpc::ClientContext context;
 
@@ -1910,7 +1990,14 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  const auto value_ptr = value.get_if<NiRFSGStringAttributeValuesMapped>();
+  const auto value_raw_ptr = value.get_if<std::string>();
+  if (value_ptr) {
+    request.set_value_mapped(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = SetAttributeViStringResponse{};
 
@@ -2041,6 +2128,62 @@ write_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 
   raise_if_error(
       stub->WriteArbWaveform(&context, request, &response));
+
+  return response;
+}
+
+WriteArbWaveformComplexF32Response
+write_arb_waveform_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<NIComplexNumberF32>& wfm_data, const bool& more_data_pending)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArbWaveformComplexF32Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_waveform_name(waveform_name);
+  copy_array(wfm_data, request.mutable_wfm_data());
+  request.set_more_data_pending(more_data_pending);
+
+  auto response = WriteArbWaveformComplexF32Response{};
+
+  raise_if_error(
+      stub->WriteArbWaveformComplexF32(&context, request, &response));
+
+  return response;
+}
+
+WriteArbWaveformComplexF64Response
+write_arb_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<NIComplexNumber>& wfm_data, const bool& more_data_pending)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArbWaveformComplexF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_waveform_name(waveform_name);
+  copy_array(wfm_data, request.mutable_wfm_data());
+  request.set_more_data_pending(more_data_pending);
+
+  auto response = WriteArbWaveformComplexF64Response{};
+
+  raise_if_error(
+      stub->WriteArbWaveformComplexF64(&context, request, &response));
+
+  return response;
+}
+
+WriteArbWaveformComplexI16Response
+write_arb_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<NIComplexI16>& wfm_data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteArbWaveformComplexI16Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_waveform_name(waveform_name);
+  copy_array(wfm_data, request.mutable_wfm_data());
+
+  auto response = WriteArbWaveformComplexI16Response{};
+
+  raise_if_error(
+      stub->WriteArbWaveformComplexI16(&context, request, &response));
 
   return response;
 }
