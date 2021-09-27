@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <thread>
+
 #include "device_server.h"
 #include "nirfsg/nirfsg_client.h"
 #include "nirfsg/nirfsg_service.h"
