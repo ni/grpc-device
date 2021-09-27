@@ -369,6 +369,21 @@ get_an_ivi_dance_with_a_twist_string(const StubPtr& stub)
   return response;
 }
 
+GetAnIviDanceWithATwistStringStrlenBugResponse
+get_an_ivi_dance_with_a_twist_string_strlen_bug(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAnIviDanceWithATwistStringStrlenBugRequest{};
+
+  auto response = GetAnIviDanceWithATwistStringStrlenBugResponse{};
+
+  raise_if_error(
+      stub->GetAnIviDanceWithATwistStringStrlenBug(&context, request, &response));
+
+  return response;
+}
+
 GetArraySizeForCustomCodeResponse
 get_array_size_for_custom_code(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {

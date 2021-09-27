@@ -12,6 +12,7 @@
 #include <atomic>
 #include <vector>
 #include "custom/nidaqmx_conversions.h"
+#include <server/converters.h>
 #include <server/callback_router.h>
 #include <server/server_reactor.h>
 #include "nidaqmx_library.h"
@@ -94,7 +95,7 @@ namespace nidaqmx_grpc {
       
         std::string device_name_out;
         if (device_name_out_buffer_size > 0) {
-            device_name_out.resize(device_name_out_buffer_size-1);
+            device_name_out.resize(device_name_out_buffer_size - 1);
         }
         status = library_->AddNetworkDevice(ip_address, device_name, attempt_reservation, timeout, (char*)device_name_out.data(), device_name_out_buffer_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(device_name_out_buffer_size)) {
@@ -7123,7 +7124,7 @@ namespace nidaqmx_grpc {
       
         std::string port_list;
         if (port_list_size > 0) {
-            port_list.resize(port_list_size-1);
+            port_list.resize(port_list_size - 1);
         }
         status = library_->GetAutoConfiguredCDAQSyncConnections((char*)port_list.data(), port_list_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(port_list_size)) {
@@ -7307,7 +7308,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetCalInfoAttributeString(device_name, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -7604,7 +7605,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetChanAttributeString(task, channel, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -7962,7 +7963,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetDeviceAttributeString(device_name, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -8209,7 +8210,7 @@ namespace nidaqmx_grpc {
       
         std::string port_list;
         if (port_list_size > 0) {
-            port_list.resize(port_list_size-1);
+            port_list.resize(port_list_size - 1);
         }
         status = library_->GetDisconnectedCDAQSyncPorts((char*)port_list.data(), port_list_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(port_list_size)) {
@@ -8248,7 +8249,7 @@ namespace nidaqmx_grpc {
       
         std::string error_string;
         if (buffer_size > 0) {
-            error_string.resize(buffer_size-1);
+            error_string.resize(buffer_size - 1);
         }
         status = library_->GetErrorString(error_code, (char*)error_string.data(), buffer_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -8442,7 +8443,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetExportedSignalAttributeString(task, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -8523,7 +8524,7 @@ namespace nidaqmx_grpc {
       
         std::string error_string;
         if (buffer_size > 0) {
-            error_string.resize(buffer_size-1);
+            error_string.resize(buffer_size - 1);
         }
         status = library_->GetExtendedErrorInfo((char*)error_string.data(), buffer_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -8610,7 +8611,7 @@ namespace nidaqmx_grpc {
       
         std::string buffer;
         if (buffer_size > 0) {
-            buffer.resize(buffer_size-1);
+            buffer.resize(buffer_size - 1);
         }
         status = library_->GetNthTaskChannel(task, index, (char*)buffer.data(), buffer_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -8651,7 +8652,7 @@ namespace nidaqmx_grpc {
       
         std::string buffer;
         if (buffer_size > 0) {
-            buffer.resize(buffer_size-1);
+            buffer.resize(buffer_size - 1);
         }
         status = library_->GetNthTaskDevice(task, index, (char*)buffer.data(), buffer_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -8692,7 +8693,7 @@ namespace nidaqmx_grpc {
       
         std::string buffer;
         if (buffer_size > 0) {
-            buffer.resize(buffer_size-1);
+            buffer.resize(buffer_size - 1);
         }
         status = library_->GetNthTaskReadChannel(task, index, (char*)buffer.data(), buffer_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -8792,7 +8793,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetPersistedChanAttributeString(channel, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -8892,7 +8893,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetPersistedScaleAttributeString(scale_name, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -8992,7 +8993,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetPersistedTaskAttributeString(task_name, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -9361,7 +9362,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetPhysicalChanAttributeString(physical_channel, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -9652,7 +9653,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetReadAttributeString(task, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -10099,7 +10100,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetScaleAttributeString(scale_name, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -10255,7 +10256,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetSystemInfoAttributeString(attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -10398,7 +10399,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetTaskAttributeString(task, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -10725,7 +10726,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetTimingAttributeExString(task, device_names, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -10965,7 +10966,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetTimingAttributeString(task, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -11414,7 +11415,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetTrigAttributeString(task, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -11698,7 +11699,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetWatchdogAttributeString(task, lines, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -11892,7 +11893,7 @@ namespace nidaqmx_grpc {
       
         std::string value;
         if (size > 0) {
-            value.resize(size-1);
+            value.resize(size - 1);
         }
         status = library_->GetWriteAttributeString(task, attribute, (char*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {

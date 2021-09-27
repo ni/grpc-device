@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nisync_grpc {
 
@@ -1078,7 +1079,7 @@ namespace nisync_grpc {
       
         std::string time_reference_names;
         if (buffer_size > 0) {
-            time_reference_names.resize(buffer_size-1);
+            time_reference_names.resize(buffer_size - 1);
         }
         status = library_->GetTimeReferenceNames(vi, buffer_size, (ViChar*)time_reference_names.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1195,7 +1196,7 @@ namespace nisync_grpc {
       
         std::string value;
         if (buffer_size > 0) {
-            value.resize(buffer_size-1);
+            value.resize(buffer_size - 1);
         }
         status = library_->GetAttributeViString(vi, active_item, attribute, buffer_size, (ViChar*)value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {

@@ -43,6 +43,7 @@ GetAnIviDanceWithATwistArrayResponse get_an_ivi_dance_with_a_twist_array(const S
 GetAnIviDanceWithATwistArrayOfCustomTypeResponse get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceWithATwistByteArrayResponse get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub);
 GetAnIviDanceWithATwistStringResponse get_an_ivi_dance_with_a_twist_string(const StubPtr& stub);
+GetAnIviDanceWithATwistStringStrlenBugResponse get_an_ivi_dance_with_a_twist_string_strlen_bug(const StubPtr& stub);
 GetArraySizeForCustomCodeResponse get_array_size_for_custom_code(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetArrayUsingIviDanceResponse get_array_using_ivi_dance(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetArrayViUInt8WithEnumResponse get_array_vi_uint8_with_enum(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_len);

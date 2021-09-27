@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace niscope_grpc {
 
@@ -1620,7 +1621,7 @@ namespace niscope_grpc {
       
         std::string value;
         if (buf_size > 0) {
-            value.resize(buf_size-1);
+            value.resize(buf_size - 1);
         }
         status = library_->GetAttributeViString(vi, channel_list, attribute_id, buf_size, (ViChar*)value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buf_size)) {
@@ -1661,7 +1662,7 @@ namespace niscope_grpc {
       
         std::string channel_string;
         if (buffer_size > 0) {
-            channel_string.resize(buffer_size-1);
+            channel_string.resize(buffer_size - 1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1702,7 +1703,7 @@ namespace niscope_grpc {
       
         std::string name;
         if (buffer_size > 0) {
-            name.resize(buffer_size-1);
+            name.resize(buffer_size - 1);
         }
         status = library_->GetChannelNameFromString(vi, index, buffer_size, (ViChar*)name.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1768,7 +1769,7 @@ namespace niscope_grpc {
         ViStatus error_code {};
         std::string description;
         if (buffer_size > 0) {
-            description.resize(buffer_size-1);
+            description.resize(buffer_size - 1);
         }
         status = library_->GetError(vi, &error_code, buffer_size, (ViChar*)description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1810,7 +1811,7 @@ namespace niscope_grpc {
       
         std::string error_message;
         if (buffer_size > 0) {
-            error_message.resize(buffer_size-1);
+            error_message.resize(buffer_size - 1);
         }
         status = library_->GetErrorMessage(vi, error_code, buffer_size, (ViChar*)error_message.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {

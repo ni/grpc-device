@@ -694,6 +694,32 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetAnIviDanceWithATwistStringStrlenBug': {
+        'parameters': [
+            {
+                'name': 'bufferSize',
+                'direction': 'in',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'stringOut',
+                'direction': 'out',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualSize',
+                    'tags': ['strlen-bug']
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'name': 'actualSize',
+                'direction': 'out',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetArrayForCustomCodeCustomType': {
         'codegen_method': 'no',
         'documentation': {

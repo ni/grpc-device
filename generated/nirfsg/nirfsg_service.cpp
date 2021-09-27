@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nirfsg_grpc {
 
@@ -1791,7 +1792,7 @@ namespace nirfsg_grpc {
       
         std::string value;
         if (buf_size > 0) {
-            value.resize(buf_size-1);
+            value.resize(buf_size - 1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute, buf_size, (ViChar*)value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buf_size)) {
@@ -1832,7 +1833,7 @@ namespace nirfsg_grpc {
       
         std::string name;
         if (buffer_size > 0) {
-            name.resize(buffer_size-1);
+            name.resize(buffer_size - 1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)name.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1919,7 +1920,7 @@ namespace nirfsg_grpc {
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
-            error_description.resize(error_description_buffer_size-1);
+            error_description.resize(error_description_buffer_size - 1);
         }
         status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
@@ -2141,7 +2142,7 @@ namespace nirfsg_grpc {
       
         std::string terminal_name;
         if (buffer_size > 0) {
-            terminal_name.resize(buffer_size-1);
+            terminal_name.resize(buffer_size - 1);
         }
         status = library_->GetTerminalName(vi, signal, signal_identifier, buffer_size, (ViChar*)terminal_name.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {

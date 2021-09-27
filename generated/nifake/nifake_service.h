@@ -53,6 +53,7 @@ public:
   ::grpc::Status GetAnIviDanceWithATwistArrayOfCustomType(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayOfCustomTypeRequest* request, GetAnIviDanceWithATwistArrayOfCustomTypeResponse* response) override;
   ::grpc::Status GetAnIviDanceWithATwistByteArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistByteArrayRequest* request, GetAnIviDanceWithATwistByteArrayResponse* response) override;
   ::grpc::Status GetAnIviDanceWithATwistString(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringRequest* request, GetAnIviDanceWithATwistStringResponse* response) override;
+  ::grpc::Status GetAnIviDanceWithATwistStringStrlenBug(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringStrlenBugRequest* request, GetAnIviDanceWithATwistStringStrlenBugResponse* response) override;
   ::grpc::Status GetArraySizeForCustomCode(::grpc::ServerContext* context, const GetArraySizeForCustomCodeRequest* request, GetArraySizeForCustomCodeResponse* response) override;
   ::grpc::Status GetArrayUsingIviDance(::grpc::ServerContext* context, const GetArrayUsingIviDanceRequest* request, GetArrayUsingIviDanceResponse* response) override;
   ::grpc::Status GetArrayViUInt8WithEnum(::grpc::ServerContext* context, const GetArrayViUInt8WithEnumRequest* request, GetArrayViUInt8WithEnumResponse* response) override;

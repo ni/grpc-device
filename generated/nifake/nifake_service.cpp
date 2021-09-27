@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nifake_grpc {
 
@@ -478,7 +479,7 @@ namespace nifake_grpc {
       
         std::string a_string;
         if (buffer_size > 0) {
-            a_string.resize(buffer_size-1);
+            a_string.resize(buffer_size - 1);
         }
         status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -633,7 +634,7 @@ namespace nifake_grpc {
         }
         std::string array_out;
         if (actual_size > 0) {
-            array_out.resize(actual_size-1);
+            array_out.resize(actual_size - 1);
         }
         auto buffer_size = actual_size;
         status = library_->GetAnIviDanceWithATwistString(buffer_size, (ViChar*)array_out.data(), &actual_size);
@@ -644,7 +645,46 @@ namespace nifake_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_array_out(array_out);
-          response->mutable_array_out()->resize(actual_size-1);
+          nidevice_grpc::trim_trailing_nulls(*(response->mutable_array_out()));
+          response->set_actual_size(actual_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAnIviDanceWithATwistStringStrlenBug(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringStrlenBugRequest* request, GetAnIviDanceWithATwistStringStrlenBugResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViInt32 actual_size {};
+      while (true) {
+        auto status = library_->GetAnIviDanceWithATwistStringStrlenBug(0, nullptr, &actual_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string string_out;
+        if (actual_size > 0) {
+            string_out.resize(actual_size /* Workaround: strlen-bug */);
+        }
+        auto buffer_size = actual_size;
+        status = library_->GetAnIviDanceWithATwistStringStrlenBug(buffer_size, (ViChar*)string_out.data(), &actual_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_string_out(string_out);
+          nidevice_grpc::trim_trailing_nulls(*(response->mutable_string_out()));
           response->set_actual_size(actual_size);
         }
         return ::grpc::Status::OK;
@@ -888,7 +928,7 @@ namespace nifake_grpc {
       
         std::string attribute_value;
         if (buffer_size > 0) {
-            attribute_value.resize(buffer_size-1);
+            attribute_value.resize(buffer_size - 1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1575,7 +1615,7 @@ namespace nifake_grpc {
         ViReal64* an_array = response->mutable_an_array()->mutable_data();
         std::string a_string;
         if (string_size > 0) {
-            a_string.resize(string_size-1);
+            a_string.resize(string_size - 1);
         }
         status = library_->ReturnMultipleTypes(vi, &a_boolean, &an_int32, &an_int64, &an_int_enum, &a_float, &a_float_enum, array_size, an_array, string_size, (ViChar*)a_string.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(string_size)) {

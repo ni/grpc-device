@@ -545,6 +545,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 %   elif common_helpers.is_repeated_varargs_parameter(parameter): # pass
 %   elif common_helpers.is_array(parameter['type']):
 <%
+  buffer_size = common_helpers.get_buffer_size_expression(parameter)
   size = common_helpers.get_size_expression(parameter)
 %>\
 %     if common_helpers.is_struct(parameter) or underlying_param_type == 'ViBoolean':
@@ -554,11 +555,11 @@ ${initialize_standard_input_param(function_name, parameter)}
       std::string ${parameter_name}(${size}, '\0');
 ## Driver string APIs require room in the buffer for the null terminator. We need to account for that when sizing the string.
 %     elif common_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
-      std::string ${parameter_name}(${size} - 1, '\0');
+      std::string ${parameter_name}(${size}, '\0');
 %     elif common_helpers.is_string_arg(parameter):
       std::string ${parameter_name};
-      if (${size} > 0) {
-          ${parameter_name}.resize(${size}-1);
+      if (${buffer_size} > 0) {
+          ${parameter_name}.resize(${size});
       }
 %     elif service_helpers.is_output_array_that_needs_coercion(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size});
@@ -666,17 +667,17 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 %     endif
 %     if common_helpers.is_ivi_dance_array_with_a_twist_param(parameter):
 <%
-  actual_size_param_name = common_helpers.camel_to_snake(parameter['size']['value_twist'])
+  size = common_helpers.get_size_expression(parameter)
 %>\
 %       if parameter['grpc_type'] == 'bytes':
-        response->mutable_${parameter_name}()->resize(${actual_size_param_name});
+        response->mutable_${parameter_name}()->resize(${size});
 %       elif common_helpers.is_string_arg(parameter):
-        response->mutable_${parameter_name}()->resize(${actual_size_param_name}-1);
+        nidevice_grpc::trim_trailing_nulls(*(response->mutable_${parameter_name}()));
 %       elif common_helpers.is_struct(parameter):
 ##        RepeatedPtrField doesn't support Resize(), so use DeleteSubrange()
 ##        to delete any extra elements.
         {
-          auto shrunk_size = ${actual_size_param_name};
+          auto shrunk_size = ${size};
           auto current_size = response->mutable_${parameter_name}()->size();
           if (shrunk_size != current_size) {
             response->mutable_${parameter_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
@@ -684,7 +685,7 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
         }        
 %       else:
 ## This code doesn't handle all parameter types (i.e., enums), see what initialize_output_params() does for that.
-        response->mutable_${parameter_name}()->Resize(${actual_size_param_name}, 0);
+        response->mutable_${parameter_name}()->Resize(${size}, 0);
 %       endif
 %     endif
 %   elif parameter['type'] == 'ViSession':

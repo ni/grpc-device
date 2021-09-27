@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nirfsa_grpc {
 
@@ -1532,7 +1533,7 @@ namespace nirfsa_grpc {
       
         std::string value;
         if (buf_size > 0) {
-            value.resize(buf_size-1);
+            value.resize(buf_size - 1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, buf_size, (ViChar*)value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buf_size)) {
@@ -1672,7 +1673,7 @@ namespace nirfsa_grpc {
       ViStatus error_code {};
       std::string error_description;
       if (error_description_buffer_size > 0) {
-          error_description.resize(error_description_buffer_size-1);
+          error_description.resize(error_description_buffer_size - 1);
       }
       auto status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
       response->set_status(status);
@@ -1917,7 +1918,7 @@ namespace nirfsa_grpc {
         }
         std::string name;
         if (buffer_size > 0) {
-            name.resize(buffer_size-1);
+            name.resize(buffer_size - 1);
         }
         status = library_->GetRelayName(vi, channel_list, index, (ViChar*)name.data(), &buffer_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
@@ -1927,7 +1928,7 @@ namespace nirfsa_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_name(name);
-          response->mutable_name()->resize(buffer_size-1);
+          nidevice_grpc::trim_trailing_nulls(*(response->mutable_name()));
           response->set_buffer_size(buffer_size);
         }
         return ::grpc::Status::OK;
@@ -2086,7 +2087,7 @@ namespace nirfsa_grpc {
       ViInt32 buffer_size = request->buffer_size();
       std::string terminal_name;
       if (buffer_size > 0) {
-          terminal_name.resize(buffer_size-1);
+          terminal_name.resize(buffer_size - 1);
       }
       auto status = library_->GetTerminalName(vi, signal, signal_identifier, buffer_size, (ViChar*)terminal_name.data());
       response->set_status(status);

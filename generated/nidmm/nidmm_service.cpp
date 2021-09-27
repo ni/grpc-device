@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <server/converters.h>
 
 namespace nidmm_grpc {
 
@@ -1483,7 +1484,7 @@ namespace nidmm_grpc {
       
         std::string attribute_value;
         if (buffer_size > 0) {
-            attribute_value.resize(buffer_size-1);
+            attribute_value.resize(buffer_size - 1);
         }
         status = library_->GetAttributeViString(vi, channel_name, attribute_id, buffer_size, (ViChar*)attribute_value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1594,7 +1595,7 @@ namespace nidmm_grpc {
       
         std::string channel_string;
         if (buffer_size > 0) {
-            channel_string.resize(buffer_size-1);
+            channel_string.resize(buffer_size - 1);
         }
         status = library_->GetChannelName(vi, index, buffer_size, (ViChar*)channel_string.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1659,7 +1660,7 @@ namespace nidmm_grpc {
         ViStatus error_code {};
         std::string description;
         if (buffer_size > 0) {
-            description.resize(buffer_size-1);
+            description.resize(buffer_size - 1);
         }
         status = library_->GetError(vi, &error_code, buffer_size, (ViChar*)description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1701,7 +1702,7 @@ namespace nidmm_grpc {
       
         std::string error_message;
         if (buffer_size > 0) {
-            error_message.resize(buffer_size-1);
+            error_message.resize(buffer_size - 1);
         }
         status = library_->GetErrorMessage(vi, error_code, buffer_size, (ViChar*)error_message.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1826,7 +1827,7 @@ namespace nidmm_grpc {
       
         std::string coercion_record;
         if (buffer_size > 0) {
-            coercion_record.resize(buffer_size-1);
+            coercion_record.resize(buffer_size - 1);
         }
         status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
@@ -1866,7 +1867,7 @@ namespace nidmm_grpc {
       
         std::string interchange_warning;
         if (buffer_size > 0) {
-            interchange_warning.resize(buffer_size-1);
+            interchange_warning.resize(buffer_size - 1);
         }
         status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
