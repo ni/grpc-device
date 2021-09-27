@@ -1,5 +1,5 @@
-#ifndef CONVERTERS
-#define CONVERTERS
+#ifndef NIDEVICE_GRPC_DEVICE_CONVERTERS_H
+#define NIDEVICE_GRPC_DEVICE_CONVERTERS_H
 
 #include <google/protobuf/repeated_field.h>
 
@@ -67,4 +67,4 @@ inline void convert_to_grpc(const std::vector<BoolType>& input, google::protobuf
 }  // namespace converters
 }  // namespace nidevice_grpc
 
-#endif /* CONVERTERS */
+#endif /* NIDEVICE_GRPC_DEVICE_CONVERTERS_H */
