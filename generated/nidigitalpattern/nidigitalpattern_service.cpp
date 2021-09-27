@@ -1474,8 +1474,10 @@ namespace nidigitalpattern_grpc {
         if (status == 0) {
           CopyBytesToEnums(expected_pin_states, response->mutable_expected_pin_states());
           response->set_expected_pin_states_raw(expected_pin_states);
+          response->mutable_expected_pin_states()->Resize(actual_num_pin_data, 0);
           CopyBytesToEnums(actual_pin_states, response->mutable_actual_pin_states());
           response->set_actual_pin_states_raw(actual_pin_states);
+          response->mutable_actual_pin_states()->Resize(actual_num_pin_data, 0);
           convert_to_grpc(per_pin_pass_fail, response->mutable_per_pin_pass_fail());
           response->mutable_per_pin_pass_fail()->Resize(actual_num_pin_data, 0);
           response->set_actual_num_pin_data(actual_num_pin_data);
@@ -3065,6 +3067,7 @@ namespace nidigitalpattern_grpc {
         if (status == 0) {
           CopyBytesToEnums(data, response->mutable_data());
           response->set_data_raw(data);
+          response->mutable_data()->Resize(actual_num_read, 0);
           response->set_actual_num_read(actual_num_read);
         }
         return ::grpc::Status::OK;
