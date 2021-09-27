@@ -1088,6 +1088,26 @@ TEST_F(NiFakeNonIviServiceTests, UnreleasedServiceWithNoToggles_IsEnabled_Return
   EXPECT_FALSE(service_.is_enabled());
 }
 
+TEST_F(NiFakeNonIviServiceTests, GetStructsWithCoercion_ReturnsInRangeData)
+{
+  ::grpc::ServerContext context;
+  OutputArraysWithNarrowIntegerTypesRequest request;
+  request.set_number_of_u16_samples(3);
+  OutputArraysWithNarrowIntegerTypesResponse response;
+  EXPECT_CALL(library_, OutputArraysWithNarrowIntegerTypes(_, _, _, _, _, _))
+      .WillOnce(DoAll(
+          Invoke(SetU16Data),
+          Return(kDriverSuccess)));
+
+  service_.OutputArraysWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(3, response.u16_data_size());
+  EXPECT_EQ(0, response.u16_data().Get(0));
+  EXPECT_EQ(UINT16_MAX, response.u16_data().Get(1));
+  EXPECT_EQ(16, response.u16_data().Get(2));
+  auto status = response.status();
+  EXPECT_EQ(kDriverSuccess, status);
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

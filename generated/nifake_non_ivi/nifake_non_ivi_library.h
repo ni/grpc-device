@@ -39,6 +39,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value);
   int32 SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value);
   int32 SetColors(int32 colors[3], int32 size);
+  int32 GetStructsWithCoercion(int32 numberOfStructs, StructWithCoercion_struct structs[]);
 
  private:
   using ClosePtr = decltype(&niFakeNonIvi_Close);
@@ -62,6 +63,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using SetMarbleAttributeDoublePtr = decltype(&niFakeNonIvi_SetMarbleAttributeDouble);
   using SetMarbleAttributeInt32Ptr = decltype(&niFakeNonIvi_SetMarbleAttributeInt32);
   using SetColorsPtr = decltype(&niFakeNonIvi_SetColors);
+  using GetStructsWithCoercionPtr = decltype(&niFakeNonIvi_GetStructsWithCoercion);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
@@ -85,6 +87,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     SetMarbleAttributeDoublePtr SetMarbleAttributeDouble;
     SetMarbleAttributeInt32Ptr SetMarbleAttributeInt32;
     SetColorsPtr SetColors;
+    GetStructsWithCoercionPtr GetStructsWithCoercion;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

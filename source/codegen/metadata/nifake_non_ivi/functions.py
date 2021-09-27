@@ -468,5 +468,25 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'GetStructsWithCoercion': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'numberOfStructs',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'structs',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfStructs'
+                },
+                'type': 'struct StructWithCoercion_struct[]',
+                'grpc_type': 'repeated StructWithCoercion'
+            },
+        ],
+        'returns': 'int32'
     }
 }

@@ -38,6 +38,7 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
   MOCK_METHOD(int32, SetMarbleAttributeDouble, (FakeHandle handle, int32 attribute, double value), (override));
   MOCK_METHOD(int32, SetMarbleAttributeInt32, (FakeHandle handle, int32 attribute, int32 value), (override));
   MOCK_METHOD(int32, SetColors, (int32 colors[3], int32 size), (override));
+  MOCK_METHOD(int32, GetStructsWithCoercion, (int32 numberOfStructs, StructWithCoercion_struct structs[]), (override));
 };
 
 }  // namespace unit
