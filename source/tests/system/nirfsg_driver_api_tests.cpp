@@ -9,6 +9,16 @@ namespace client = nirfsg_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
 
+namespace nirfsg_grpc {
+// Needs to be in the nirfsg_grpc namespace for googletest to find this
+// because of argument-dependent lookup - see
+// https://stackoverflow.com/questions/33371088/how-to-get-a-custom-operator-to-work-with-google-test
+bool operator==(const NIComplexNumber& first, const NIComplexNumber& second)
+{
+  return first.real() == second.real() && first.imaginary() == second.imaginary();
+}
+}  // namespace nirfsg_grpc
+
 namespace ni {
 namespace tests {
 namespace system {
@@ -93,7 +103,7 @@ TEST_F(NiRFSGDriverApiTests, PerformReset_Succeeds)
   EXPECT_EQ(0, response.status());
 }
 
-TEST_F(NiRFSGDriverApiTests, ConfigureGettingStartedSingleToneGeneration_Succeeds)
+TEST_F(NiRFSGDriverApiTests, ConfigureGettingStartedSingleToneGenerationFromExample_Succeeds)
 {
   auto session = init_session(stub(), PXI_5652);
   auto configure_clock = client::configure_ref_clock(stub(), session, AttrRefClockSourceRangeTable::ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
@@ -103,6 +113,29 @@ TEST_F(NiRFSGDriverApiTests, ConfigureGettingStartedSingleToneGeneration_Succeed
   EXPECT_SUCCESS(session, configure_clock);
   EXPECT_SUCCESS(session, configure_rf);
   EXPECT_SUCCESS(session, configure_generation_mode);
+}
+
+TEST_F(NiRFSGDriverApiTests, GenerateAndRouteReferenceClockFromExample_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5652);
+  auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
+  auto configure_generation_mode = client::configure_generation_mode(stub(), session, AttrGenerationModeRangeTable::ATTR_GENERATION_MODE_RANGE_TABLE_CW);
+  auto configure_clock = client::configure_ref_clock(stub(), session, AttrRefClockSourceRangeTable::ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
+  auto initiate = client::initiate(stub(), session);
+
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+  auto check_status = client::check_generation_status(stub(), session);
+  auto disable_output = client::configure_output_enabled(stub(), session, false);
+  auto close = client::close(stub(), session);
+
+  EXPECT_SUCCESS(session, configure_rf);
+  EXPECT_SUCCESS(session, configure_generation_mode);
+  EXPECT_SUCCESS(session, configure_clock);
+  EXPECT_SUCCESS(session, initiate);
+  EXPECT_SUCCESS(session, check_status);
+  EXPECT_SUCCESS(session, disable_output);
+  EXPECT_SUCCESS(session, close);
 }
 
 TEST_F(NiRFSGDriverApiTests, ConfigureDigitalEdgeStartTrigger_Succeeds)
@@ -267,6 +300,60 @@ TEST_F(NiRFSGDriverApiTests, SetHostDMABufferSize_UpdatesHostDMABufferSizeSucces
   EXPECT_SUCCESS(session, get_response);
   EXPECT_NE(initial_response.value(), get_response.value());
   EXPECT_EQ(NEW_VALUE, get_response.value());
+}
+
+TEST_F(NiRFSGDriverApiTests, GetDeembeddingSParameters_Empty)
+{
+  auto session = init_session(stub(), PXI_5841);
+  auto parameters = client::get_deembedding_sparameters(stub(), session);
+
+  EXPECT_SUCCESS(session, parameters);
+  EXPECT_EQ(0, parameters.number_of_sparameters());
+  EXPECT_EQ(0, parameters.sparameters_size());
+  EXPECT_EQ(0, parameters.sparameters().size());
+}
+
+TEST_F(NiRFSGDriverApiTests, SetDeembeddingSParameters_GetDeembeddingSParameters_Match)
+{
+  auto session = init_session(stub(), PXI_5841);
+  std::vector<double> frequencies = {1 * 1000 * 1000 * 1000};
+  auto parameter1 = nirfsg_grpc::NIComplexNumber();
+  parameter1.set_real(1.0);
+  parameter1.set_imaginary(-1.0);
+  auto parameter2 = nirfsg_grpc::NIComplexNumber();
+  parameter2.set_real(-0.5);
+  parameter2.set_imaginary(0.5);
+  auto parameter3 = nirfsg_grpc::NIComplexNumber();
+  parameter3.set_real(0.0);
+  parameter3.set_imaginary(1.0);
+  auto parameter4 = nirfsg_grpc::NIComplexNumber();
+  parameter4.set_real(-1.0);
+  parameter4.set_imaginary(0.0);
+  std::vector<nirfsg_grpc::NIComplexNumber> parameters = {parameter1, parameter2, parameter3, parameter4};
+  auto set_parameters = client::create_deembedding_sparameter_table_array(
+      stub(),
+      session,
+      "",
+      "table",
+      frequencies,
+      parameters,
+      2,
+      SParameterOrientation::S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT);
+  auto get_parameters = client::get_deembedding_sparameters(stub(), session);
+
+  EXPECT_SUCCESS(session, set_parameters);
+  EXPECT_SUCCESS(session, get_parameters);
+  EXPECT_EQ(2, get_parameters.number_of_ports());
+  EXPECT_EQ(4, get_parameters.sparameters_size());
+  EXPECT_EQ(4, get_parameters.sparameters().size());
+  EXPECT_EQ(parameter1, get_parameters.sparameters(0));
+  EXPECT_EQ(parameter1, get_parameters.sparameters()[0]);
+  EXPECT_EQ(parameter2, get_parameters.sparameters(1));
+  EXPECT_EQ(parameter2, get_parameters.sparameters()[1]);
+  EXPECT_EQ(parameter3, get_parameters.sparameters(2));
+  EXPECT_EQ(parameter3, get_parameters.sparameters()[2]);
+  EXPECT_EQ(parameter4, get_parameters.sparameters(3));
+  EXPECT_EQ(parameter4, get_parameters.sparameters()[3]);
 }
 }  // namespace system
 }  // namespace tests
