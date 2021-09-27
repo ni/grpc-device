@@ -240,6 +240,34 @@ TEST_F(NiRFSGDriverApiTests, ReconfigureIQRate_UpdatesIQRateSuccessfully)
   EXPECT_NE(initial_response.value(), get_response.value());
   EXPECT_NEAR(NEW_RATE, get_response.value(), .0001);
 }
+
+TEST_F(NiRFSGDriverApiTests, SetHostDMABufferSize_UpdatesHostDMABufferSizeSuccessfully)
+{
+  auto NEW_VALUE = 10 * 1024 * 1024;
+  auto session = init_session(stub(), PXI_5841);
+  auto initial_response = client::get_attribute_vi_int64(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::NIRFSG_ATTRIBUTE_HOST_DMA_BUFFER_SIZE);
+  auto set_response = client::set_attribute_vi_int64(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::NIRFSG_ATTRIBUTE_HOST_DMA_BUFFER_SIZE,
+      NEW_VALUE);
+  auto get_response = client::get_attribute_vi_int64(
+      stub(),
+      session,
+      "",
+      NiRFSGAttributes::NIRFSG_ATTRIBUTE_HOST_DMA_BUFFER_SIZE);
+
+  EXPECT_SUCCESS(session, initial_response);
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_NE(initial_response.value(), get_response.value());
+  EXPECT_EQ(NEW_VALUE, get_response.value());
+}
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
