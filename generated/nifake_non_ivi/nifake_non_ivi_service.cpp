@@ -12,11 +12,13 @@
 #include <atomic>
 #include <vector>
 #include "custom/nidaqmx_conversions.h"
-#include <server/converters.h>
 #include <server/callback_router.h>
 #include <server/server_reactor.h>
 
 namespace nifake_non_ivi_grpc {
+
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
 
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
@@ -799,4 +801,9 @@ namespace nifake_non_ivi_grpc {
   {
   }
 } // namespace nifake_non_ivi_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+} // converters
+} // nidevice_grpc
 

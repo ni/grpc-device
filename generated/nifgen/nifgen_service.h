@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/converters.h>
 #include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
@@ -170,10 +171,6 @@ public:
 private:
   NiFgenLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-  NIComplexNumber_struct ConvertMessage(const nifgen_grpc::NIComplexNumber& input);
-  void Copy(const google::protobuf::RepeatedPtrField<nifgen_grpc::NIComplexNumber>& input, std::vector<NIComplexNumber_struct>* output);
-  NIComplexI16_struct ConvertMessage(const nifgen_grpc::NIComplexInt32& input);
-  void Copy(const google::protobuf::RepeatedPtrField<nifgen_grpc::NIComplexInt32>& input, std::vector<NIComplexI16_struct>* output);
 
   struct NiFgenFeatureToggles
   {
@@ -187,5 +184,14 @@ private:
 };
 
 } // namespace nifgen_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+NIComplexNumber_struct convert_from_grpc(const nifgen_grpc::NIComplexNumber& input);
+template <>
+NIComplexI16_struct convert_from_grpc(const nifgen_grpc::NIComplexInt32& input);
+} // namespace converters
+} // namespace nidevice_grpc
 
 #endif  // NIFGEN_GRPC_SERVICE_H

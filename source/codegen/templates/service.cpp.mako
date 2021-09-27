@@ -8,8 +8,7 @@ functions = data['functions']
 service_class_prefix = config["service_class_prefix"]
 namespace_prefix = config["namespace_component"] + "_grpc::"
 module_name = config["module_name"]
-if len(config["custom_types"]) > 0:
-  custom_types = config["custom_types"]
+custom_types = common_helpers.get_custom_types(config)
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
 has_async_functions = any(service_helpers.get_async_functions(functions))
 function_names = service_helpers.filter_proto_rpc_functions_to_generate(functions)
@@ -51,6 +50,9 @@ any_ivi_dance_functions = any(
 
 namespace ${config["namespace_component"]}_grpc {
 
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
+
 % if any_ivi_dance_functions:
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -68,15 +70,6 @@ namespace ${config["namespace_component"]}_grpc {
   {
   }
 
-% if common_helpers.has_viboolean_array_param(functions):
-  void ${service_class_prefix}Service::Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output) 
-  {
-    for (auto item : input) {
-      output->Add(item != VI_FALSE);
-    }
-  }
-
-% endif
 % if common_helpers.has_enum_array_string_out_param(functions):
   template <typename TEnum>
   void ${service_class_prefix}Service::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
@@ -87,48 +80,6 @@ namespace ${config["namespace_component"]}_grpc {
     }
   }
 
-% endif
-% if 'custom_types' in locals():
-%   for custom_type in custom_types:
-% if custom_type["name"] in output_custom_types:
-  void ${service_class_prefix}Service::Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
-  {
-%     for field in custom_type["fields"]: 
-    output->set_${field["grpc_name"]}(input.${field["name"]});
-%     endfor
-  }
-
-  void ${service_class_prefix}Service::Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output) 
-  {
-    for (auto item : input) {
-      auto message = new ${namespace_prefix}${custom_type["grpc_name"]}();
-      Copy(item, message);
-      output->AddAllocated(message);
-    }
-  }
-
-% endif
-% if custom_type["name"] in input_custom_types:
-   ${custom_type["name"]} ${service_class_prefix}Service::ConvertMessage(const ${namespace_prefix}${custom_type["grpc_name"]}& input) 
-  {
-    ${custom_type["name"]}* output = new ${custom_type["name"]}();  
-%     for field in custom_type["fields"]: 
-    output->${common_helpers.pascal_to_camel(common_helpers.snake_to_pascal(field["grpc_name"]))} = input.${common_helpers.camel_to_snake(field["name"])}();
-%     endfor
-    return *output;
-  }
-
-  void ${service_class_prefix}Service::Copy(const google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>& input, std::vector<${custom_type["name"]}>* output)
-  {
-    std::transform(
-        input.begin(),
-        input.end(),
-        std::back_inserter(*output),
-        [&](${namespace_prefix}${custom_type["grpc_name"]} x) { return ConvertMessage(x); });
-  }
-
-% endif
-%   endfor
 % endif
 % for function_name in service_helpers.filter_proto_rpc_functions_to_generate(functions):
 <%
@@ -203,3 +154,34 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
   }
 } // namespace ${config["namespace_component"]}_grpc
 
+% if any(custom_types):
+namespace nidevice_grpc {
+namespace converters {
+%   for custom_type in custom_types:
+%     if custom_type["name"] in output_custom_types:
+template <>
+void convert_to_grpc(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
+{
+%       for field in custom_type["fields"]: 
+  output->set_${field["grpc_name"]}(input.${field["name"]});
+%       endfor
+}
+
+%     endif
+%     if custom_type["name"] in input_custom_types:
+template <>
+${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type["grpc_name"]}& input) 
+{
+  ${custom_type["name"]}* output = new ${custom_type["name"]}();  
+%       for field in custom_type["fields"]: 
+  output->${common_helpers.pascal_to_camel(common_helpers.snake_to_pascal(field["grpc_name"]))} = input.${common_helpers.camel_to_snake(field["name"])}();
+%       endfor
+  return *output;
+}
+
+%     endif
+%   endfor
+} // converters
+} // nidevice_grpc
+
+% endif

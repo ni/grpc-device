@@ -11,9 +11,11 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include <server/converters.h>
 
 namespace nidigitalpattern_grpc {
+
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -28,13 +30,6 @@ namespace nidigitalpattern_grpc {
 
   NiDigitalService::~NiDigitalService()
   {
-  }
-
-  void NiDigitalService::Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output) 
-  {
-    for (auto item : input) {
-      output->Add(item != VI_FALSE);
-    }
   }
 
   template <typename TEnum>
@@ -1480,7 +1475,7 @@ namespace nidigitalpattern_grpc {
           response->set_expected_pin_states_raw(expected_pin_states);
           CopyBytesToEnums(actual_pin_states, response->mutable_actual_pin_states());
           response->set_actual_pin_states_raw(actual_pin_states);
-          Copy(per_pin_pass_fail, response->mutable_per_pin_pass_fail());
+          convert_to_grpc(per_pin_pass_fail, response->mutable_per_pin_pass_fail());
           response->mutable_per_pin_pass_fail()->Resize(actual_num_pin_data, 0);
           response->set_actual_num_pin_data(actual_num_pin_data);
         }
@@ -2201,7 +2196,7 @@ namespace nidigitalpattern_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-          Copy(pass_fail, response->mutable_pass_fail());
+          convert_to_grpc(pass_fail, response->mutable_pass_fail());
           response->mutable_pass_fail()->Resize(actual_num_sites, 0);
           response->set_actual_num_sites(actual_num_sites);
         }

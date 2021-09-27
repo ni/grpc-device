@@ -11,9 +11,11 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include <server/converters.h>
 
 namespace nifgen_grpc {
+
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -28,40 +30,6 @@ namespace nifgen_grpc {
 
   NiFgenService::~NiFgenService()
   {
-  }
-
-   NIComplexNumber_struct NiFgenService::ConvertMessage(const nifgen_grpc::NIComplexNumber& input) 
-  {
-    NIComplexNumber_struct* output = new NIComplexNumber_struct();  
-    output->real = input.real();
-    output->imaginary = input.imaginary();
-    return *output;
-  }
-
-  void NiFgenService::Copy(const google::protobuf::RepeatedPtrField<nifgen_grpc::NIComplexNumber>& input, std::vector<NIComplexNumber_struct>* output)
-  {
-    std::transform(
-        input.begin(),
-        input.end(),
-        std::back_inserter(*output),
-        [&](nifgen_grpc::NIComplexNumber x) { return ConvertMessage(x); });
-  }
-
-   NIComplexI16_struct NiFgenService::ConvertMessage(const nifgen_grpc::NIComplexInt32& input) 
-  {
-    NIComplexI16_struct* output = new NIComplexI16_struct();  
-    output->real = input.real();
-    output->imaginary = input.imaginary();
-    return *output;
-  }
-
-  void NiFgenService::Copy(const google::protobuf::RepeatedPtrField<nifgen_grpc::NIComplexInt32>& input, std::vector<NIComplexI16_struct>* output)
-  {
-    std::transform(
-        input.begin(),
-        input.end(),
-        std::back_inserter(*output),
-        [&](nifgen_grpc::NIComplexInt32 x) { return ConvertMessage(x); });
   }
 
   //---------------------------------------------------------------------
@@ -1189,9 +1157,7 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViInt32 number_of_samples = static_cast<ViInt32>(request->waveform_data_array().size());
-      auto waveform_data_array_request = request->waveform_data_array();
-      std::vector<NIComplexNumber_struct> waveform_data_array;
-      Copy(waveform_data_array_request, &waveform_data_array);
+      auto waveform_data_array = convert_from_grpc<NIComplexNumber_struct>(request->waveform_data_array());
       ViInt32 waveform_handle {};
       auto status = library_->CreateWaveformComplexF64(vi, channel_name, number_of_samples, waveform_data_array.data(), &waveform_handle);
       response->set_status(status);
@@ -3289,9 +3255,7 @@ namespace nifgen_grpc {
       auto channel_name = request->channel_name().c_str();
       ViInt32 waveform_handle = request->waveform_handle();
       ViInt32 size = static_cast<ViInt32>(request->data().size());
-      auto data_request = request->data();
-      std::vector<NIComplexI16_struct> data;
-      Copy(data_request, &data);
+      auto data = convert_from_grpc<NIComplexI16_struct>(request->data());
       auto status = library_->WriteComplexBinary16Waveform(vi, channel_name, waveform_handle, size, data.data());
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3437,9 +3401,7 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViInt32 number_of_samples = static_cast<ViInt32>(request->data().size());
-      auto data_request = request->data();
-      std::vector<NIComplexNumber_struct> data;
-      Copy(data_request, &data);
+      auto data = convert_from_grpc<NIComplexNumber_struct>(request->data());
       ViInt32 waveform_handle = request->waveform_handle();
       auto status = library_->WriteWaveformComplexF64(vi, channel_name, number_of_samples, data.data(), waveform_handle);
       response->set_status(status);
@@ -3463,9 +3425,7 @@ namespace nifgen_grpc {
       auto channel_name = request->channel_name().c_str();
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 size = static_cast<ViInt32>(request->data().size());
-      auto data_request = request->data();
-      std::vector<NIComplexNumber_struct> data;
-      Copy(data_request, &data);
+      auto data = convert_from_grpc<NIComplexNumber_struct>(request->data());
       auto status = library_->WriteNamedWaveformComplexF64(vi, channel_name, waveform_name, size, data.data());
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3488,9 +3448,7 @@ namespace nifgen_grpc {
       auto channel_name = request->channel_name().c_str();
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 size = static_cast<ViInt32>(request->data().size());
-      auto data_request = request->data();
-      std::vector<NIComplexI16_struct> data;
-      Copy(data_request, &data);
+      auto data = convert_from_grpc<NIComplexI16_struct>(request->data());
       auto status = library_->WriteNamedWaveformComplexI16(vi, channel_name, waveform_name, size, data.data());
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3512,4 +3470,27 @@ namespace nifgen_grpc {
   {
   }
 } // namespace nifgen_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+NIComplexNumber_struct convert_from_grpc(const nifgen_grpc::NIComplexNumber& input) 
+{
+  NIComplexNumber_struct* output = new NIComplexNumber_struct();  
+  output->real = input.real();
+  output->imaginary = input.imaginary();
+  return *output;
+}
+
+template <>
+NIComplexI16_struct convert_from_grpc(const nifgen_grpc::NIComplexInt32& input) 
+{
+  NIComplexI16_struct* output = new NIComplexI16_struct();  
+  output->real = input.real();
+  output->imaginary = input.imaginary();
+  return *output;
+}
+
+} // converters
+} // nidevice_grpc
 

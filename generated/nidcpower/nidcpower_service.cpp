@@ -11,9 +11,11 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include <server/converters.h>
 
 namespace nidcpower_grpc {
+
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -28,13 +30,6 @@ namespace nidcpower_grpc {
 
   NiDCPowerService::~NiDCPowerService()
   {
-  }
-
-  void NiDCPowerService::Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output) 
-  {
-    for (auto item : input) {
-      output->Add(item != VI_FALSE);
-    }
   }
 
   //---------------------------------------------------------------------
@@ -2272,7 +2267,7 @@ namespace nidcpower_grpc {
       auto status = library_->FetchMultiple(vi, channel_name, timeout, count, voltage_measurements, current_measurements, in_compliance.data(), &actual_count);
       response->set_status(status);
       if (status == 0) {
-        Copy(in_compliance, response->mutable_in_compliance());
+        convert_to_grpc(in_compliance, response->mutable_in_compliance());
         response->set_actual_count(actual_count);
       }
       return ::grpc::Status::OK;

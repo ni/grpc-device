@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/converters.h>
 #include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
@@ -72,5 +73,10 @@ private:
 };
 
 } // namespace nifake_non_ivi_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+} // namespace converters
+} // namespace nidevice_grpc
 
 #endif  // NIFAKE_NON_IVI_GRPC_SERVICE_H

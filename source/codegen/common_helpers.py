@@ -661,3 +661,7 @@ def get_enum_value_cpp_type(enum: dict) -> str:
     if isinstance(enum_value, str):
         return "std::string"
     return "std::int32_t"
+
+
+def get_custom_types(config: dict) -> dict:
+    return config.get("custom_types", {})

@@ -12,8 +12,7 @@ service_class_prefix = config["service_class_prefix"]
 driver_library_interface = common_helpers.get_library_interface_type_name(config)
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")
 namespace_prefix = config["namespace_component"] + "_grpc::"
-if len(config["custom_types"]) > 0:
-  custom_types = config["custom_types"]
+custom_types = common_helpers.get_custom_types(config)
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
 resource_handle_type = config.get("resource_handle_type", "ViSession")
 resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
@@ -40,6 +39,7 @@ for async_function in async_functions.keys():
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/converters.h>
 #include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
@@ -84,18 +84,6 @@ private:
   template <typename TEnum>
   void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);
 % endif
-% if 'custom_types' in locals():
-%   for custom_type in custom_types:
-	% if custom_type["name"] in output_custom_types:
-  void Copy(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
-  void Copy(const std::vector<${custom_type["name"]}>& input, google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>* output);
-	% endif
-	% if custom_type["name"] in input_custom_types:
-  ${custom_type["name"]} ConvertMessage(const ${namespace_prefix}${custom_type["grpc_name"]}& input);
-  void Copy(const google::protobuf::RepeatedPtrField<${namespace_prefix}${custom_type["grpc_name"]}>& input, std::vector<${custom_type["name"]}>* output);
-	%endif
-%   endfor
-% endif
 % for enum in enums_to_map:
 <%
   enum_value = common_helpers.get_enum_value_cpp_type(enums[enum])
@@ -120,4 +108,21 @@ private:
 
 } // namespace ${config["namespace_component"]}_grpc
 
+% if any(custom_types):
+namespace nidevice_grpc {
+namespace converters {
+%   for custom_type in custom_types:
+	% if custom_type["name"] in output_custom_types:
+template <>
+void convert_to_grpc(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output);
+	% endif
+	% if custom_type["name"] in input_custom_types:
+template <>
+${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type["grpc_name"]}& input);
+	%endif
+%   endfor
+} // namespace converters
+} // namespace nidevice_grpc
+
+% endif
 #endif  // ${include_guard_name}

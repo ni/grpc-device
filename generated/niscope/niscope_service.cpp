@@ -11,9 +11,11 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include <server/converters.h>
 
 namespace niscope_grpc {
+
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -28,74 +30,6 @@ namespace niscope_grpc {
 
   NiScopeService::~NiScopeService()
   {
-  }
-
-  void NiScopeService::Copy(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output) 
-  {
-    output->set_absolute_initial_x(input.absoluteInitialX);
-    output->set_relative_initial_x(input.relativeInitialX);
-    output->set_x_increment(input.xIncrement);
-    output->set_actual_samples(input.actualSamples);
-    output->set_offset(input.offset);
-    output->set_gain(input.gain);
-    output->set_reserved1(input.reserved1);
-    output->set_reserved2(input.reserved2);
-  }
-
-  void NiScopeService::Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<niscope_grpc::WaveformInfo>* output) 
-  {
-    for (auto item : input) {
-      auto message = new niscope_grpc::WaveformInfo();
-      Copy(item, message);
-      output->AddAllocated(message);
-    }
-  }
-
-  void NiScopeService::Copy(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output) 
-  {
-    output->set_offset(input.offset);
-    output->set_gain(input.gain);
-    output->set_reserved1(input.reserved1);
-    output->set_reserved2(input.reserved2);
-  }
-
-  void NiScopeService::Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<niscope_grpc::CoefficientInfo>* output) 
-  {
-    for (auto item : input) {
-      auto message = new niscope_grpc::CoefficientInfo();
-      Copy(item, message);
-      output->AddAllocated(message);
-    }
-  }
-
-  void NiScopeService::Copy(const NIComplexNumber_struct& input, niscope_grpc::NIComplexNumber* output) 
-  {
-    output->set_real(input.real);
-    output->set_imaginary(input.imaginary);
-  }
-
-  void NiScopeService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexNumber>* output) 
-  {
-    for (auto item : input) {
-      auto message = new niscope_grpc::NIComplexNumber();
-      Copy(item, message);
-      output->AddAllocated(message);
-    }
-  }
-
-  void NiScopeService::Copy(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output) 
-  {
-    output->set_real(input.real);
-    output->set_imaginary(input.imaginary);
-  }
-
-  void NiScopeService::Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexInt32>* output) 
-  {
-    for (auto item : input) {
-      auto message = new niscope_grpc::NIComplexInt32();
-      Copy(item, message);
-      output->AddAllocated(message);
-    }
   }
 
   //---------------------------------------------------------------------
@@ -2453,4 +2387,45 @@ namespace niscope_grpc {
   {
   }
 } // namespace niscope_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output) 
+{
+  output->set_absolute_initial_x(input.absoluteInitialX);
+  output->set_relative_initial_x(input.relativeInitialX);
+  output->set_x_increment(input.xIncrement);
+  output->set_actual_samples(input.actualSamples);
+  output->set_offset(input.offset);
+  output->set_gain(input.gain);
+  output->set_reserved1(input.reserved1);
+  output->set_reserved2(input.reserved2);
+}
+
+template <>
+void convert_to_grpc(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output) 
+{
+  output->set_offset(input.offset);
+  output->set_gain(input.gain);
+  output->set_reserved1(input.reserved1);
+  output->set_reserved2(input.reserved2);
+}
+
+template <>
+void convert_to_grpc(const NIComplexNumber_struct& input, niscope_grpc::NIComplexNumber* output) 
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+template <>
+void convert_to_grpc(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output) 
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+} // converters
+} // nidevice_grpc
 

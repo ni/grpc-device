@@ -12,12 +12,14 @@
 #include <atomic>
 #include <vector>
 #include "custom/nidaqmx_conversions.h"
-#include <server/converters.h>
 #include <server/callback_router.h>
 #include <server/server_reactor.h>
 #include "nidaqmx_library.h"
 
 namespace nidaqmx_grpc {
+
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -17688,4 +17690,9 @@ namespace nidaqmx_grpc {
   {
   }
 } // namespace nidaqmx_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+} // converters
+} // nidevice_grpc
 
