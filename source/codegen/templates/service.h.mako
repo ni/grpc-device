@@ -108,7 +108,7 @@ private:
 
 } // namespace ${config["namespace_component"]}_grpc
 
-% if any(custom_types):
+% if any(input_custom_types) or any(output_custom_types):
 namespace nidevice_grpc {
 namespace converters {
 %   for custom_type in custom_types:

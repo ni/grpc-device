@@ -17692,8 +17692,3 @@ namespace nidaqmx_grpc {
   }
 } // namespace nidaqmx_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-} // converters
-} // nidevice_grpc
-

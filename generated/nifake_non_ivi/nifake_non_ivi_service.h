@@ -74,9 +74,4 @@ private:
 
 } // namespace nifake_non_ivi_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-} // namespace converters
-} // namespace nidevice_grpc
-
 #endif  // NIFAKE_NON_IVI_GRPC_SERVICE_H

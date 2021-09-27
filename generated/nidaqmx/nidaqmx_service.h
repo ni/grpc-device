@@ -437,9 +437,4 @@ private:
 
 } // namespace nidaqmx_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-} // namespace converters
-} // namespace nidevice_grpc
-
 #endif  // NIDAQMX_GRPC_SERVICE_H

@@ -803,8 +803,3 @@ namespace nifake_non_ivi_grpc {
   }
 } // namespace nifake_non_ivi_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-} // converters
-} // nidevice_grpc
-
