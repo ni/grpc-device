@@ -5,6 +5,7 @@ import importlib
 import importlib.util
 import mako.template
 import metadata_mutation
+import metadata_validation
 from mako.lookup import TemplateLookup
 
 
@@ -73,11 +74,14 @@ def mutate_metadata(metadata: dict):
 def generate_all(metadata_dir, gen_dir):
     sys.path.append(metadata_dir)
     init_file = os.path.join(metadata_dir, "__init__.py")
+
     spec = importlib.util.spec_from_file_location("metadata", init_file)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
 
     metadata = module.metadata
+    metadata_validation.validate_metadata(metadata)
+
     lookup = TemplateLookup(directories=metadata_dir)
     metadata["lookup"] = lookup
     mutate_metadata(metadata)

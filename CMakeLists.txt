@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.12.0)
 
 project(ni_grpc_device_server C CXX)
 
+include(CreateVirtualEnvironment.cmake)
+
 # Workaround for: https://bugs.chromium.org/p/boringssl/issues/detail?id=423
 if (CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
   set(CMAKE_SYSTEM_PROCESSOR "amd64")
@@ -43,12 +45,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 #----------------------------------------------------------------------
-# Find python3 for the build system
+# Set up virtual environment for the build system
 #----------------------------------------------------------------------
-find_package(Python3 COMPONENTS Interpreter)
-if(NOT ${Python3_FOUND})
-  message(WARNING "Python3 not found. Python3 is required for code generation.")
-endif()
+CreateVirtualEnvironment(venv
+  REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/requirements.txt
+  OUT_PYTHON_EXE PYTHON_EXE
+)
 
 #----------------------------------------------------------------------
 # Include generated *.pb.h files
@@ -84,6 +86,7 @@ set(codegen_scripts
   "${codegen_dir}/service_helpers.py"
   "${codegen_dir}/proto_helpers.py"
   "${codegen_dir}/metadata_mutation.py"
+  "${codegen_dir}/metadata_validation.py"
   "${codegen_dir}/templates/client.cpp.mako"
   "${codegen_dir}/templates/client.h.mako"
   "${codegen_dir}/templates/client_helpers.mako"
@@ -123,7 +126,7 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/${api}_service.cpp
     ${service_output_dir}/${api}/${api}_service.h)
-  set(gen_command COMMAND ${Python3_EXECUTABLE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
+  set(gen_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (NOT api MATCHES "^nifake.*")
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
@@ -137,7 +140,7 @@ foreach(api ${nidrivers})
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
     COMMENT "Generating proto file and service for ${api}"
-    DEPENDS ${codegen_dependencies} ${codegen_scripts})
+    DEPENDS ${codegen_dependencies} ${codegen_scripts} venv)
 endforeach()
 
 #----------------------------------------------------------------------
@@ -223,6 +226,7 @@ target_link_libraries(ni_grpc_device_server
    )
 
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
+add_dependencies(ni_grpc_device_server venv)
 
 if(WIN32)
   target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen niScope niRFSA niRFSG niswitch nisync niTClk)
