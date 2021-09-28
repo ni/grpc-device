@@ -55,6 +55,7 @@ public:
   ::grpc::Status SetMarbleAttributeInt32(::grpc::ServerContext* context, const SetMarbleAttributeInt32Request* request, SetMarbleAttributeInt32Response* response) override;
   ::grpc::Status SetColors(::grpc::ServerContext* context, const SetColorsRequest* request, SetColorsResponse* response) override;
   ::grpc::Status GetStructsWithCoercion(::grpc::ServerContext* context, const GetStructsWithCoercionRequest* request, GetStructsWithCoercionResponse* response) override;
+  ::grpc::Status SetStructsWithCoercion(::grpc::ServerContext* context, const SetStructsWithCoercionRequest* request, SetStructsWithCoercionResponse* response) override;
 
   bool is_enabled();
 private:
@@ -79,6 +80,8 @@ namespace nidevice_grpc {
 namespace converters {
 template <>
 void convert_to_grpc(const StructWithCoercion_struct& input, nifake_non_ivi_grpc::StructWithCoercion* output);
+template <>
+StructWithCoercion_struct convert_from_grpc(const nifake_non_ivi_grpc::StructWithCoercion& input);
 } // namespace converters
 } // namespace nidevice_grpc
 

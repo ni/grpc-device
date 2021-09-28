@@ -420,5 +420,21 @@ get_structs_with_coercion(const StubPtr& stub, const pb::int32& number_of_struct
   return response;
 }
 
+SetStructsWithCoercionResponse
+set_structs_with_coercion(const StubPtr& stub, const std::vector<StructWithCoercion>& structs)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetStructsWithCoercionRequest{};
+  copy_array(structs, request.mutable_structs());
+
+  auto response = SetStructsWithCoercionResponse{};
+
+  raise_if_error(
+      stub->SetStructsWithCoercion(&context, request, &response));
+
+  return response;
+}
+
 
 } // namespace nifake_non_ivi_grpc::experimental::client

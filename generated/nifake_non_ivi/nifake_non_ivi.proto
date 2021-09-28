@@ -39,6 +39,7 @@ service NiFakeNonIvi {
   rpc SetMarbleAttributeInt32(SetMarbleAttributeInt32Request) returns (SetMarbleAttributeInt32Response);
   rpc SetColors(SetColorsRequest) returns (SetColorsResponse);
   rpc GetStructsWithCoercion(GetStructsWithCoercionRequest) returns (GetStructsWithCoercionResponse);
+  rpc SetStructsWithCoercion(SetStructsWithCoercionRequest) returns (SetStructsWithCoercionResponse);
 }
 
 enum MarbleInt32ArrayAttributes {
@@ -318,5 +319,13 @@ message GetStructsWithCoercionRequest {
 message GetStructsWithCoercionResponse {
   int32 status = 1;
   repeated StructWithCoercion structs = 2;
+}
+
+message SetStructsWithCoercionRequest {
+  repeated StructWithCoercion structs = 1;
+}
+
+message SetStructsWithCoercionResponse {
+  int32 status = 1;
 }
 

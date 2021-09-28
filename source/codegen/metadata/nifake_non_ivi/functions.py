@@ -488,5 +488,20 @@ functions = {
             },
         ],
         'returns': 'int32'
+    },
+    'SetStructsWithCoercion': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'structs',
+                'type': 'struct StructWithCoercion_struct[]',
+                'grpc_type': 'repeated StructWithCoercion',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': '3'
+                }
+            },
+        ],
+        'returns': 'int32'
     }
 }

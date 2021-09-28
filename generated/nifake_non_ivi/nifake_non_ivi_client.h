@@ -44,6 +44,7 @@ SetMarbleAttributeDoubleResponse set_marble_attribute_double(const StubPtr& stub
 SetMarbleAttributeInt32Response set_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attributes, pb::int32>& attribute, const simple_variant<MarbleInt32AttributeValues, pb::int32>& value);
 SetColorsResponse set_colors(const StubPtr& stub, const std::vector<pb::int32>& colors, const pb::int32& size);
 GetStructsWithCoercionResponse get_structs_with_coercion(const StubPtr& stub, const pb::int32& number_of_structs);
+SetStructsWithCoercionResponse set_structs_with_coercion(const StubPtr& stub, const std::vector<StructWithCoercion>& structs);
 
 } // namespace nifake_non_ivi_grpc::experimental::client
 

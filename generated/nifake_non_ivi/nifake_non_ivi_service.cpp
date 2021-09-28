@@ -810,6 +810,24 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetStructsWithCoercion(::grpc::ServerContext* context, const SetStructsWithCoercionRequest* request, SetStructsWithCoercionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto structs = convert_from_grpc<StructWithCoercion_struct>(request->structs());
+      auto status = library_->SetStructsWithCoercion(structs.data());
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
   bool NiFakeNonIviService::is_enabled()
   {
     return feature_toggles_.is_enabled;
@@ -833,6 +851,16 @@ void convert_to_grpc(const StructWithCoercion_struct& input, nifake_non_ivi_grpc
   output->set_first(input.first);
   output->set_second(input.second);
   output->set_third(input.third);
+}
+
+template <>
+StructWithCoercion_struct convert_from_grpc(const nifake_non_ivi_grpc::StructWithCoercion& input) 
+{
+  auto output = StructWithCoercion_struct();  
+  output.first = input.first();
+  output.second = input.second();
+  output.third = input.third();
+  return output;
 }
 
 } // converters

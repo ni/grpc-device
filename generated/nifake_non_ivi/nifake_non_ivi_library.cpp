@@ -43,6 +43,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetMarbleAttributeInt32 = reinterpret_cast<SetMarbleAttributeInt32Ptr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeInt32"));
   function_pointers_.SetColors = reinterpret_cast<SetColorsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetColors"));
   function_pointers_.GetStructsWithCoercion = reinterpret_cast<GetStructsWithCoercionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetStructsWithCoercion"));
+  function_pointers_.SetStructsWithCoercion = reinterpret_cast<SetStructsWithCoercionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetStructsWithCoercion"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -317,6 +318,18 @@ int32 NiFakeNonIviLibrary::GetStructsWithCoercion(int32 numberOfStructs, StructW
   return niFakeNonIvi_GetStructsWithCoercion(numberOfStructs, structs);
 #else
   return function_pointers_.GetStructsWithCoercion(numberOfStructs, structs);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::SetStructsWithCoercion(StructWithCoercion_struct structs[3])
+{
+  if (!function_pointers_.SetStructsWithCoercion) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_SetStructsWithCoercion.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_SetStructsWithCoercion(structs);
+#else
+  return function_pointers_.SetStructsWithCoercion(structs);
 #endif
 }
 
