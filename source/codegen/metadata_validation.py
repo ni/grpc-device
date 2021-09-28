@@ -16,29 +16,23 @@ FUNCTION_SCHEMA = Schema(
     {
         'parameters': list,
         'returns': str,
-        Optional('cname'): str
+        Optional('cname'): str,
+        Optional('codegen_method'): And(str, lambda s: s in ('public', 'private', 'CustomCode', 'no', 'python-only')),
+        Optional('init_method'): bool,
+        Optional('stream_response'): bool,
+        Optional('is_error_handling'): bool,
+        Optional('render_in_session_base'): bool,
+        Optional('method_name_for_documentation'): str,
+        Optional('use_session_lock'): bool,
+        Optional('documentation'): {
+            'description': str
+        }
     }
 )
 
 def validate_function(function_name: str, metadata: dict):
     try:
         function: Dict[str, Any] = metadata['functions'][function_name]
-        function_keys = set(function.keys())
         FUNCTION_SCHEMA.validate(function)
-        #validate_keys(function_keys, ["parameters", "returns"], [
-        #              "cname", "codegen_method", "init_method", "stream_response", "is_error_handling", "render_in_session_base", "method_name_for_documentation"])
     except Exception as e:
         raise Exception(f"Failed to validate {function_name}") from e
-
-
-def validate_keys(keys: Iterable[str], required_keys: Iterable[str], optional_keys: Iterable[str]):
-    keys = set(keys)
-    for required_key in required_keys:
-        if required_key not in keys:
-            raise Exception(f"missing required key {required_key}")
-        keys.remove(required_key)
-    for optional_key in optional_keys:
-        if optional_key in keys:
-            keys.remove(optional_key)
-    if any(keys):
-        raise Exception(f"Unrecognized keys: {keys}")
