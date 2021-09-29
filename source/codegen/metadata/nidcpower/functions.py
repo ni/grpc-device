@@ -2263,7 +2263,7 @@ functions = {
         'type': 'ViReal64[]',
         'size': {
           'mechanism': 'custom-code',
-          'size': 'number_of_channels'
+          'value': 'number_of_channels'
         }
       },
       {
@@ -2272,7 +2272,7 @@ functions = {
         'type': 'ViReal64[]',
         'size': {
           'mechanism': 'custom-code',
-          'size': 'number_of_channels'
+          'value': 'number_of_channels'
         }
       }
     ],
