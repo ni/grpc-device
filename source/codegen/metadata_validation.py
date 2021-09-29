@@ -31,41 +31,64 @@ def validate_metadata(metadata: dict):
         raise Exception(
             f"Failed to validate {metadata['config']['namespace_component']}") from e
 
+DOCUMENTATION_SCHEMA = Schema(
+    {
+        "description": str,
+        Optional("note"): str,
+        Optional("table_body"): list,
+        Optional("caution"): str,
+    }
+)
+
+SIZE_SCHEMA = Schema(
+    {
+        'mechanism': And(str, lambda s: not common_helpers.is_unsupported_size_mechanism_type(s)),
+        'value': Or(str, int),
+        Optional('value_twist'): str,
+        Optional('tags'): [str],
+    },
+)
+
+PARAM_SCHEMA = Schema(
+    {
+        'direction': And(str, lambda s: s in ('in', 'out')),
+        'name': str,
+        Optional('type'): str,
+        Optional('grpc_type'): str,
+        Optional('documentation'): DOCUMENTATION_SCHEMA,
+        Optional('enum'): str,
+        # This should be SIZE_SCHEMA but don't want to validate if codegen_method is no
+        Optional('size'): dict,
+        Optional('default_value'): Or(str, bool, int, float, None),
+        Optional('is_repeated_capability'): bool,
+        Optional('repeated_capability_type'): str,
+        Optional('use_array'): bool,
+        Optional('numpy'): bool,
+        Optional('grpc_field_number'): And(str, Use(int)), # integer in string form, make sure int(x) doesn't raise
+        Optional('grpc_raw_field_number'): And(str, Use(int)), # integer in string form, make sure int(x) doesn't raise
+        Optional('type_in_documentation'): str,
+        Optional('include_in_proto'): bool,
+        Optional('is_session_handle'): bool,
+        Optional('is_session_name'): bool,
+        Optional('repeating_argument'): bool,
+        Optional('python_api_converter_name'): str,
+        Optional('attribute'): str,
+        Optional('hardcoded_value'): str,
+        Optional('is_compound_type'): bool,
+        Optional('max_length'): int,
+        Optional('repeated_var_args'): bool,
+        Optional('pointer'): bool,
+        Optional('coerced'): bool,
+        Optional('callback_params'): [dict],
+        Optional('callback_token'): bool,
+        Optional('use_in_python_api'): bool,
+    }
+)
+
+
 FUNCTION_SCHEMA = Schema(
     {
-        'parameters': [
-            {
-                'direction': And(str, lambda s: s in ('in', 'out')),
-                'name': str,
-                Optional('type'): str,
-                Optional('grpc_type'): str,
-                Optional('documentation'): dict, # TODO
-                Optional('enum'): str,
-                Optional('size'): dict,
-                Optional('default_value'): Or(str, bool),
-                Optional('is_repeated_capability'): bool,
-                Optional('repeated_capability_type'): str,
-                Optional('use_array'): bool,
-                Optional('numpy'): bool,
-                Optional('grpc_field_number'): And(str, Use(int)), # integer in string form, make sure int(x) doesn't raise
-                Optional('grpc_raw_field_number'): And(str, Use(int)), # integer in string form, make sure int(x) doesn't raise
-                Optional('type_in_documentation'): str,
-                Optional('include_in_proto'): bool,
-                Optional('is_session_handle'): bool,
-                Optional('is_session_name'): bool,
-                Optional('repeating_argument'): bool,
-                Optional('python_api_converter_name'): str,
-                Optional('attribute'): str, # TODO?
-                Optional('hardcoded_value'): str,
-                Optional('is_compound_type'): bool,
-                Optional('max_length'): int, # TODO - only if repeated_var_args
-                Optional('repeated_var_args'): bool,
-                Optional('pointer'): bool, # TODO - when is this legal?
-                Optional('coerced'): bool, # TODO - figure out when this is OK?
-                Optional('callback_params'): [dict], # TODO
-                Optional('callback_token'): bool,
-            }
-        ],
+        'parameters': [PARAM_SCHEMA],
         'returns': str,
         Optional('cname'): str,
         Optional('codegen_method'): And(str, lambda s: s in ('public', 'private', 'CustomCode', 'no', 'python-only')),
@@ -75,36 +98,26 @@ FUNCTION_SCHEMA = Schema(
         Optional('render_in_session_base'): bool,
         Optional('method_name_for_documentation'): str,
         Optional('use_session_lock'): bool,
-        Optional('documentation'): {
-            'description': str
-        }
+        # This should be DOCUMENTATION_SCHEMA but don't want to validate if codegen_method is no
+        Optional('documentation'): dict,
+        Optional('method_templates'): list,
+        Optional('custom_close'): str,
+        Optional('custom_close_method'): bool,
+        Optional("python_name"): str,
     }
-)
-
-SIZE_SCHEMA = Schema(
-    {
-        'mechanism': And(str, lambda s: not common_helpers.is_unsupported_size_mechanism_type(s)),
-        'value': Or(str, int),
-        Optional('value_twist'): str,
-    },
 )
 
 ATTRIBUTE_SCHEMA = Schema(
     {
         "name": str,
-        # I think these should be 'read-write', 'read' or 'write', but we don't seem to use this anyhow.
-        Optional("access"): str,
+        Optional("access"): And(str, lambda s: s in ['read', 'read only', 'write', 'write only', 'read-write']),
         "type": str,
         Optional("resettable"): bool,
         Optional("enum"): str,
         Optional("channel_based"): bool,
         Optional("attribute_class"): str,
         Optional("type_in_documentation"): str,
-        Optional("documentation"): {
-            "description": str,
-            Optional("note"): str,
-            Optional('table_body'): list
-        },
+        Optional("documentation"): DOCUMENTATION_SCHEMA,
         Optional("lv_property"): str,
         Optional("repeated_capability_type"): str,
         Optional("python_type"): str,
@@ -125,10 +138,7 @@ ENUM_SCHEMA = Schema(
             "name": str,
             "value": Or(str, int, float),
             Optional("python_name"): str,
-            Optional("documentation"): {
-                "description": str,
-                Optional("note"): str,
-            }
+            Optional("documentation"): DOCUMENTATION_SCHEMA,
         }],
         Optional("generate-mappings"): bool,
     }
@@ -152,6 +162,8 @@ def validate_function(function_name: str, metadata: dict):
         function: Dict[str, Any] = metadata['functions'][function_name]
         FUNCTION_SCHEMA.validate(function)
         if function.get('codegen_method', 'public') != 'no':
+            if 'documentation' in function:
+                DOCUMENTATION_SCHEMA.validate(function['documentation'])
             for parameter in function['parameters']:
                 validate_parameter_size(parameter, function_name, metadata)
                 if 'type' not in parameter:
@@ -162,6 +174,21 @@ def validate_function(function_name: str, metadata: dict):
                 if 'enum' in parameter:
                     if parameter['enum'] not in metadata['enums']:
                         raise Exception(f"parameter {parameter['name']} has enum {parameter['enum']} that was not found!")
+                if 'max_length' in parameter:
+                    if 'repeated_var_args' not in parameter:
+                        raise Exception(f"parameter {parameter['name']} has max_length but no repeated_var_args!")
+                if 'callback_params' in parameter:
+                    for callback_param in parameter['callback_params']:
+                        try:
+                            PARAM_SCHEMA.validate(callback_param)
+                        except Exception as e:
+                            raise Exception(f"Failed to validate callback_param with name {callback_param['name']}")
+                if parameter.get('pointer', False):
+                    # This is technically legal in other cdses but we should only need it for hardcoded values/callback tokens
+                    if 'hardcoded_value' not in parameter and 'callback_token' not in parameter:
+                        raise Exception(f"parameter {parameter['name']} is pointer but not hardcoded_value!")
+                    if parameter.get('include_in_proto', True):
+                        raise Exception(f"parameter {parameter['name']} is pointer but is include_in_proto!")
 
     except Exception as e:
         raise Exception(f"Failed to validate function {function_name}") from e
