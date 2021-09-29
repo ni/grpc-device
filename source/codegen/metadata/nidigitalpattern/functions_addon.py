@@ -4,6 +4,17 @@
 functions_override_metadata = {
 }
 
+functions_validation_suppression = {
+}
+
+for function_name in ['BurstPatternSynchronized', 'EnableMatchFailCombination', 'WriteSequencerFlagSynchronized']:
+    functions_validation_suppression[function_name] = {
+        "parameters": {
+            # We shipped this way, fixing it would be a breaking change
+            "sessions": ["INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"]
+        }
+    }
+
 functions_additional_burst_pattern = {
     'FancyBurstPattern': {
         'python_name': 'burst_pattern',

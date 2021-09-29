@@ -7,6 +7,8 @@ import common_helpers
 # Rules that can be suppressed
 class RULES:
     ARRAY_PARAMETER_NEEDS_SIZE = "ARRAY_PARAMETER_NEEDS_SIZE"
+    INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE = "INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"
+
 
 def validate_metadata(metadata: dict):
     try:
@@ -71,7 +73,7 @@ SIZE_SCHEMA = Schema(
         'mechanism': And(str, lambda s: not common_helpers.is_unsupported_size_mechanism_type(s)),
         'value': Or(str, int),
         Optional('value_twist'): str,
-    }, # TODO
+    },
 )
 
 def rule_is_suppressed(metadata: dict, rule: str, path: List[str]) -> bool:
@@ -84,6 +86,8 @@ def rule_is_suppressed(metadata: dict, rule: str, path: List[str]) -> bool:
         return False
     return rule in suppression_dict[last_entry]
 
+def parameter_name_exists(function: dict, name: str) -> bool:
+    return any([param for param in function['parameters'] if param['name'] == name])
 
 def validate_function(function_name: str, metadata: dict):
     try:
@@ -91,16 +95,41 @@ def validate_function(function_name: str, metadata: dict):
         FUNCTION_SCHEMA.validate(function)
         if function.get('codegen_method', 'public') != 'no':
             for parameter in function['parameters']:
-                size = parameter.get('size', None)
-                if size is None:
-                    if common_helpers.is_array(parameter.get('type', '')) and not is_string_type(parameter, metadata):
-                        if not rule_is_suppressed(metadata, RULES.ARRAY_PARAMETER_NEEDS_SIZE, ["functions", function_name, 'parameters', parameter['name']]):
-                            raise Exception("parameter is an array but has no size!")
-                if size is not None:
-                    SIZE_SCHEMA.validate(size)
-                #TODO - more
+                validate_parameter_size(parameter, function_name, metadata)
     except Exception as e:
         raise Exception(f"Failed to validate {function_name}") from e
+
+def validate_parameter_size(parameter: dict, function_name: str, metadata: dict):
+    function: Dict[str, Any] = metadata['functions'][function_name]
+    size = parameter.get('size', None)
+    if size is None:
+        if common_helpers.is_array(parameter.get('type', '')) and not is_string_type(parameter, metadata):
+            if not rule_is_suppressed(metadata, RULES.ARRAY_PARAMETER_NEEDS_SIZE, ["functions", function_name, 'parameters', parameter['name']]):
+                raise Exception(f"parameter {parameter['name']} is an array but has no size!")
+    if size is not None:
+        SIZE_SCHEMA.validate(size)
+        mechanism = size['mechanism']
+        if mechanism in ['len', 'ivi-dance', 'ivi-dance-with-a-twist', 'passed-in']:
+            if not parameter_name_exists(function, size['value']):
+                raise Exception(f"parameter {parameter['name']} refers to nonexistant parameter {size['value']} in its size value!")
+        if mechanism == 'ivi-dance-with-a-twist':
+            if 'value_twist' not in size:
+                raise Exception(f"parameter {parameter['name']} doesn't have value_twist in its size parameter!")
+            if not parameter_name_exists(function, size['value_twist']):
+                raise Exception(f"parameter {parameter['name']} refers to nonexistant parameter {size['value_twist']} in its size value_twist!")
+        else:
+            if 'value_twist' in size:
+                raise Exception(f"parameter {parameter['name']} has value_twist in its size parameter but is not ivi-dance-with-a-twist!")
+        if parameter['direction'] == 'in':
+            if mechanism == 'passed-in':
+                if not rule_is_suppressed(metadata, RULES.INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE,
+                ["functions", function_name, "parameters", parameter["name"]]):
+                    raise Exception(f"parameter {parameter['name']} is an input but has mechanism {mechanism}!")
+            if mechanism in ['ivi-dance', 'ivi-dance-with-a-twist']:
+                raise Exception(f"parameter {parameter['name']} is an input but has mechanism {mechanism}!")
+        else:
+            if mechanism == "len":
+                raise Exception(f"parameter {parameter['name']} is an output but has mechanism {mechanism}!")
 
 def is_string_type(parameter: dict, metadata: dict) -> bool:
     if parameter.get('is_compound_type', False):
