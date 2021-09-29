@@ -5,8 +5,13 @@ import common_helpers
 
 # Rules that can be suppressed
 class RULES:
+    # In general, arrays should have sizes passed in to the underlying C API.
     ARRAY_PARAMETER_NEEDS_SIZE = "ARRAY_PARAMETER_NEEDS_SIZE"
+    # The gRPC layer can determine the size of input arrays, so we should not require
+    # callers to pass in the size. We should not add any new suppressions of this type.
     INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE = "INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"
+    # In general, enums shouldn't have duplicate values. This is helpful for catching typos
+    # although there are a few enums that have legitimate duplicates.
     ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES = "ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES"
 
 
