@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict, namedtuple
-from typing import List
+from typing import List, Union
 
 
 def is_output_parameter(parameter):
@@ -105,6 +105,12 @@ def is_unsupported_parameter(parameter):
         or is_unsupported_scalar_array(parameter)
 
 
+def is_unsupported_size_mechanism(parameter: dict) -> bool:
+    size_mechanism = get_size_mechanism(parameter)
+    if size_mechanism is None:
+        return False
+    return is_unsupported_size_mechanism_type(size_mechanism)
+
 # These are the mechanisms that are used to specify the size of arrays/strings. Here's what they mean:
 # - fixed: the array is of a constant size. The size is specified in the 'value' member.
 # - len: the array's length needs to be passed into the function. The parameter to pass it in is specified
@@ -125,8 +131,8 @@ def is_unsupported_parameter(parameter):
 # - passed-in: The array's size is passed in in a separate parameter, which is specified in the 'value' member.
 #              Should only be used for output arrays (otherwise you can just use 'len').
 # - custom-code: The array's size is determined by the C++ code in the 'value' member.
-def is_unsupported_size_mechanism(parameter) -> bool:
-    return not get_size_mechanism(parameter) in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'custom-code', None}
+def is_unsupported_size_mechanism_type(size_mechanism: str) -> bool:
+    return not size_mechanism in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'custom-code'}
 
 
 def is_unsupported_scalar_array(parameter):
@@ -301,7 +307,7 @@ def has_enum_array_string_out_param(functions):
     return False
 
 
-def get_size_mechanism(parameter):
+def get_size_mechanism(parameter: dict) -> Union[str, None]:
     size = parameter.get('size', {})
     return size.get('mechanism', None)
 

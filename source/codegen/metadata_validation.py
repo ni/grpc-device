@@ -1,8 +1,12 @@
 from collections import namedtuple
-from typing import Any, Dict, Iterable, Set
+from typing import Any, Dict, Iterable, List, Set
 from schema import Schema, And, Optional, Or, Use
 import common_helpers
 
+
+# Rules that can be suppressed
+class RULES:
+    ARRAY_PARAMETER_NEEDS_SIZE = "ARRAY_PARAMETER_NEEDS_SIZE"
 
 def validate_metadata(metadata: dict):
     try:
@@ -62,9 +66,46 @@ FUNCTION_SCHEMA = Schema(
     }
 )
 
+SIZE_SCHEMA = Schema(
+    {
+        'mechanism': And(str, lambda s: not common_helpers.is_unsupported_size_mechanism_type(s)),
+        'value': Or(str, int),
+        Optional('value_twist'): str,
+    }, # TODO
+)
+
+def rule_is_suppressed(metadata: dict, rule: str, path: List[str]) -> bool:
+    suppression_dict_name = path[0] + "_validation_suppression"
+    suppression_dict = metadata.get(suppression_dict_name, {})
+    for entry in path[1:-1]:
+        suppression_dict = suppression_dict.get(entry, {})
+    last_entry = path[-1]
+    if last_entry not in suppression_dict:
+        return False
+    return rule in suppression_dict[last_entry]
+
+
 def validate_function(function_name: str, metadata: dict):
     try:
         function: Dict[str, Any] = metadata['functions'][function_name]
         FUNCTION_SCHEMA.validate(function)
+        if function.get('codegen_method', 'public') != 'no':
+            for parameter in function['parameters']:
+                size = parameter.get('size', None)
+                if size is None:
+                    if common_helpers.is_array(parameter.get('type', '')) and not is_string_type(parameter, metadata):
+                        if not rule_is_suppressed(metadata, RULES.ARRAY_PARAMETER_NEEDS_SIZE, ["functions", function_name, 'parameters', parameter['name']]):
+                            raise Exception("parameter is an array but has no size!")
+                if size is not None:
+                    SIZE_SCHEMA.validate(size)
+                #TODO - more
     except Exception as e:
         raise Exception(f"Failed to validate {function_name}") from e
+
+def is_string_type(parameter: dict, metadata: dict) -> bool:
+    if parameter.get('is_compound_type', False):
+        return False
+    grpc_type = parameter.get('grpc_type', None)
+    if grpc_type is None:
+        grpc_type = common_helpers.get_grpc_type(parameter['type'], metadata['config'])
+    return grpc_type == 'string'
