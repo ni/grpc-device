@@ -7,6 +7,7 @@ import common_helpers
 class RULES:
     ARRAY_PARAMETER_NEEDS_SIZE = "ARRAY_PARAMETER_NEEDS_SIZE"
     INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE = "INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"
+    ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES = "ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES"
 
 
 def validate_metadata(metadata: dict):
@@ -16,6 +17,11 @@ def validate_metadata(metadata: dict):
         for attribute_group in common_helpers.get_attribute_groups(metadata):
             for attribute_id in attribute_group.attributes:
                 validate_attribute(attribute_group.attributes[attribute_id], metadata)
+        function_enums = get_function_enums(metadata['functions'])
+        attribute_enums = get_attribute_enums(metadata)
+        used_enums = function_enums.union(attribute_enums)
+        for enum_name in metadata['enums']:
+            validate_enum(enum_name, used_enums, metadata)
     except Exception as e:
         raise Exception(
             f"Failed to validate {metadata['config']['namespace_component']}") from e
@@ -90,8 +96,8 @@ ATTRIBUTE_SCHEMA = Schema(
         Optional("attribute_class"): str,
         Optional("type_in_documentation"): str,
         Optional("documentation"): {
-            'description': str,
-            Optional('note'): str,
+            "description": str,
+            Optional("note"): str,
             Optional('table_body'): list
         },
         Optional("lv_property"): str,
@@ -105,6 +111,21 @@ ATTRIBUTE_SCHEMA = Schema(
 SIMPLE_ATTRIBUTE_SCHEMA = Schema(
     {
         "name": str
+    }
+)
+
+ENUM_SCHEMA = Schema(
+    {
+        "values": [{
+            "name": str,
+            "value": Or(str, int, float),
+            Optional("python_name"): str,
+            Optional("documentation"): {
+                "description": str,
+                Optional("note"): str,
+            }
+        }],
+        Optional("generate-mappings"): bool,
     }
 )
 
@@ -152,8 +173,27 @@ def validate_attribute(attribute: dict, metadata: dict):
                 raise Exception(f"attribute {attribute['name']} has enum {attribute['enum']} that was not found!")
 
     except Exception as e:
-        raise Exception(f"Failed to validate enum with name {attribute.get('name', '(none)')}") from e
+        raise Exception(f"Failed to validate attribute with name {attribute.get('name', '(none)')}") from e
 
+
+def validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
+    try:
+        enum: Dict[str, Any] = metadata['enums'][enum_name]
+        ENUM_SCHEMA.validate(enum)
+        if enum_name in used_enums:
+            generate_mappings = enum.get('generate-mappings', False)
+            value_types = set([type(value['value']) for value in enum['values']])
+            if not generate_mappings:
+                value_types.remove(type(1))
+                if any(value_types):
+                    raise Exception(f"generate-mappings is False, but values have non-int types: {value_types}")
+            values = [value['value'] for value in enum['values']] 
+            values_set = set(values)
+            if len(values) != len(values_set):
+                if not rule_is_suppressed(metadata, RULES.ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES, ["enums", enum_name]):
+                    raise Exception(f"Duplicate values in enum!")
+    except Exception as e:
+        raise Exception(f"Failed to validate enum with name {enum_name}") from e
 
 def validate_parameter_size(parameter: dict, function_name: str, metadata: dict):
     function: Dict[str, Any] = metadata['functions'][function_name]
@@ -186,6 +226,25 @@ def validate_parameter_size(parameter: dict, function_name: str, metadata: dict)
         else:
             if mechanism == "len":
                 raise Exception(f"parameter {parameter['name']} is an output but has mechanism {mechanism}!")
+
+def get_function_enums(functions_metadata: dict) -> Set[str]:
+    function_enums = set()
+    for function_name in functions_metadata:
+        function = functions_metadata[function_name]
+        for param in function['parameters']:
+            if 'enum' in param:
+                function_enums.add(param['enum'])
+    return function_enums
+
+def get_attribute_enums(metadata: dict) -> Set[str]:
+    attribute_enums = set()
+    for attribute_group in common_helpers.get_attribute_groups(metadata):
+        for attribute_id in attribute_group.attributes:
+            attribute = attribute_group.attributes[attribute_id]
+            if 'enum' in attribute:
+                attribute_enums.add(attribute['enum'])
+    return attribute_enums
+
 
 def is_string_type(parameter: dict, metadata: dict) -> bool:
     if parameter.get('is_compound_type', False):
