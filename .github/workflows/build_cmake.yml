@@ -73,7 +73,6 @@ jobs:
           COMMAND cmake
             -S .
             -B build
-            -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
             ${{ matrix.config.cmake_platform }}
           RESULT_VARIABLE result
         )
@@ -85,7 +84,7 @@ jobs:
       shell: cmake -P {0}
       run: |
         execute_process(
-          COMMAND cmake --build build --config $ENV{BUILD_TYPE}
+          COMMAND cmake --build build -D IS_GITHUB_BUILD=1 --config $ENV{BUILD_TYPE}
           RESULT_VARIABLE result
           OUTPUT_VARIABLE output
           ERROR_VARIABLE output

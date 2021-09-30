@@ -46,11 +46,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 #----------------------------------------------------------------------
 # Set up virtual environment for the build system
+# This is only needed for local builds - GitHub builds install the
+# necessary dependencies in the .yml files.
 #----------------------------------------------------------------------
-CreateVirtualEnvironment(venv
-  REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/requirements.txt
-  OUT_PYTHON_EXE PYTHON_EXE
-)
+if (NOT IS_GITHUB_BUILD)
+  CreateVirtualEnvironment(venv
+    REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/requirements.txt
+    OUT_PYTHON_EXE PYTHON_EXE
+  )
+endif()
 
 #----------------------------------------------------------------------
 # Include generated *.pb.h files
@@ -137,10 +141,14 @@ foreach(api ${nidrivers})
       ${nidriver_client_srcs}
       "${service_output_dir}/${api}/${api}_client.cpp")
   endif()
+  set(proto_dependencies ${codegen_dependencies} ${codegen_scripts})
+  if (NOT IS_GITHUB_BUILD)
+    set(proto_dependencies ${proto_dependencies} venv)
+  endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
     COMMENT "Generating proto file and service for ${api}"
-    DEPENDS ${codegen_dependencies} ${codegen_scripts} venv)
+    DEPENDS ${proto_dependencies})
 endforeach()
 
 #----------------------------------------------------------------------
@@ -226,7 +234,6 @@ target_link_libraries(ni_grpc_device_server
    )
 
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
-add_dependencies(ni_grpc_device_server venv)
 
 if(WIN32)
   target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen niScope niRFSA niRFSG niswitch nisync niTClk)
