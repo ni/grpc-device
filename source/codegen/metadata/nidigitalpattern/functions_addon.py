@@ -4,11 +4,11 @@
 functions_override_metadata = {
 }
 
-functions_validation_suppression = {
+functions_validation_suppressions = {
 }
 
 for function_name in ['BurstPatternSynchronized', 'EnableMatchFailCombination', 'WriteSequencerFlagSynchronized']:
-    functions_validation_suppression[function_name] = {
+    functions_validation_suppressions[function_name] = {
         "parameters": {
             # We shipped this way, fixing it would be a breaking change
             "sessions": ["INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"]

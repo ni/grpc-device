@@ -145,7 +145,7 @@ ENUM_SCHEMA = Schema(
 )
 
 def rule_is_suppressed(metadata: dict, rule: str, path: List[str]) -> bool:
-    suppression_dict_name = path[0] + "_validation_suppression"
+    suppression_dict_name = path[0] + "_validation_suppressions"
     suppression_dict = metadata.get(suppression_dict_name, {})
     for entry in path[1:-1]:
         suppression_dict = suppression_dict.get(entry, {})

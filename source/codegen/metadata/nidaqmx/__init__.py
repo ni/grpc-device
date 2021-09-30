@@ -6,7 +6,7 @@ from config import config
 
 metadata = {
     "functions" : functions,
-    "functions_validation_suppression": functions_validation_suppressions,
+    "functions_validation_suppressions": functions_validation_suppressions,
     "attributes" : attributes,
     "enums" : enums,
     "config" : config

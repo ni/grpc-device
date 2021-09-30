@@ -4,7 +4,7 @@
 functions_override_metadata = {
 }
 
-functions_validation_suppression = {
+functions_validation_suppressions = {
     "InputArraysWithNarrowIntegerTypes": {
         "parameters": {
             "u16Array": ["ARRAY_PARAMETER_NEEDS_SIZE"],

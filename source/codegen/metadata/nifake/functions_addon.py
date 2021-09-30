@@ -4,7 +4,7 @@
 functions_override_metadata = {
 }
 
-functions_validation_suppression = {
+functions_validation_suppressions = {
     "AcceptViSessionArray": {
         "parameters": {
             "sessionArray": ["INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"]
