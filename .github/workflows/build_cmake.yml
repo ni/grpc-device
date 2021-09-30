@@ -53,6 +53,9 @@ jobs:
     - name: Install mako
       run: python -m pip install mako
 
+    - name: Install schema
+      run: python -m pip install schema
+
     - name: Update Submodules
       run: git submodule update --init --recursive
 
