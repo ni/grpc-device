@@ -54,6 +54,12 @@ if (NOT IS_GITHUB_BUILD)
     REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/requirements.txt
     OUT_PYTHON_EXE PYTHON_EXE
   )
+else()
+  find_package(Python3 COMPONENTS Interpreter)
+  if(NOT ${Python3_FOUND})
+    message(WARNING "Python3 not found. Python3 is required for code generation.")
+  endif()
+  set(PYTHON_EXE ${Python3_EXECUTABLE})
 endif()
 
 #----------------------------------------------------------------------
