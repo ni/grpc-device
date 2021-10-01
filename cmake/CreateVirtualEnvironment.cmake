@@ -91,6 +91,7 @@ function(CreateVirtualEnvironment TARGET)
     add_custom_command(
             OUTPUT ${CFG_FILE}
             COMMAND ${Python3_EXECUTABLE} -m venv ${VENV}
+            DEPENDS ${ARG_REQUIREMENTS_TXT}
     )
     set(OUTPUT_FILE ${VENV}/environment.txt)
     add_custom_command(
