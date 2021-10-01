@@ -52,7 +52,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 #----------------------------------------------------------------------
 if (NOT IS_GITHUB_BUILD)
   CreateVirtualEnvironment(venv
-    REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/requirements.txt
+    REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/python_build_modules.txt
     OUT_PYTHON_EXE PYTHON_EXE
   )
 else()
