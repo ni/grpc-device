@@ -73,6 +73,7 @@ jobs:
           COMMAND cmake
             -S .
             -B build
+            -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
             -D IS_GITHUB_BUILD=1
             ${{ matrix.config.cmake_platform }}
           RESULT_VARIABLE result
