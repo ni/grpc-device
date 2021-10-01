@@ -39,13 +39,6 @@ else()
 endif()
 
 #----------------------------------------------------------------------
-# Use C++17 (needed for shared_mutex support on Linux)
-#----------------------------------------------------------------------
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-#----------------------------------------------------------------------
 # Set up virtual environment for the build system
 # This is only needed for local builds - GitHub builds install the
 # necessary dependencies in the .yml files.
@@ -62,6 +55,13 @@ if (NOT IS_GITHUB_BUILD)
 else()
   set(PYTHON_EXE ${Python3_EXECUTABLE})
 endif()
+
+#----------------------------------------------------------------------
+# Use C++17 (needed for shared_mutex support on Linux)
+#----------------------------------------------------------------------
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 #----------------------------------------------------------------------
 # Include generated *.pb.h files
