@@ -55,7 +55,7 @@ if(NOT ${Python3_FOUND})
   message(WARNING "Python3 not found. Python3 is required for code generation.")
 endif()
 if (NOT IS_GITHUB_BUILD)
-  CreateVirtualEnvironment(venvTest
+  CreateVirtualEnvironment(venv
     REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/python_build_modules.txt
     OUT_PYTHON_EXE PYTHON_EXE
   )
@@ -150,7 +150,7 @@ foreach(api ${nidrivers})
   endif()
   set(proto_dependencies ${codegen_dependencies} ${codegen_scripts})
   if (NOT IS_GITHUB_BUILD)
-    set(proto_dependencies ${proto_dependencies} venvTest)
+    set(proto_dependencies ${proto_dependencies} venv)
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
