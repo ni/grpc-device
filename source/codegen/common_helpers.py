@@ -307,7 +307,7 @@ def has_enum_array_string_out_param(functions):
     return False
 
 
-def get_size_mechanism(parameter: dict) -> Optional[str]
+def get_size_mechanism(parameter: dict) -> Optional[str]:
     size = parameter.get('size', {})
     return size.get('mechanism', None)
 
