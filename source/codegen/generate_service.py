@@ -110,7 +110,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--output", "-o", help="The path to the top-level directory to save the generated files. The API-specific sub-directories will be automatically created.")
     parser.add_argument(
-        "--validate", "-v", help="Just validate the metadata and don't generate any files"
+        "--validate", "-v", dest="validate", action="store_true", help="Just validate the metadata and don't generate any files",
     )
     args = parser.parse_args()
-    generate_all(args.metadata, "." if args.output is None else args.output)
+    generate_all(
+        args.metadata, "." if args.output is None else args.output, args.validate)
