@@ -172,11 +172,11 @@ void convert_to_grpc(const ${custom_type["name"]}& input, ${namespace_prefix}${c
 template <>
 ${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type["grpc_name"]}& input) 
 {
-  ${custom_type["name"]}* output = new ${custom_type["name"]}();  
+  auto output = ${custom_type["name"]}();  
 %       for field in custom_type["fields"]: 
-  output->${common_helpers.pascal_to_camel(common_helpers.snake_to_pascal(field["grpc_name"]))} = input.${common_helpers.camel_to_snake(field["name"])}();
+  output.${common_helpers.pascal_to_camel(common_helpers.snake_to_pascal(field["grpc_name"]))} = input.${common_helpers.camel_to_snake(field["name"])}();
 %       endfor
-  return *output;
+  return output;
 }
 
 %     endif

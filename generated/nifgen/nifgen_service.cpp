@@ -3477,19 +3477,19 @@ namespace converters {
 template <>
 NIComplexNumber_struct convert_from_grpc(const nifgen_grpc::NIComplexNumber& input) 
 {
-  NIComplexNumber_struct* output = new NIComplexNumber_struct();  
-  output->real = input.real();
-  output->imaginary = input.imaginary();
-  return *output;
+  auto output = NIComplexNumber_struct();  
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
 }
 
 template <>
 NIComplexI16_struct convert_from_grpc(const nifgen_grpc::NIComplexInt32& input) 
 {
-  NIComplexI16_struct* output = new NIComplexI16_struct();  
-  output->real = input.real();
-  output->imaginary = input.imaginary();
-  return *output;
+  auto output = NIComplexI16_struct();  
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
 }
 
 } // converters

@@ -3320,28 +3320,28 @@ void convert_to_grpc(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplex
 template <>
 NIComplexNumber_struct convert_from_grpc(const nirfsg_grpc::NIComplexNumber& input) 
 {
-  NIComplexNumber_struct* output = new NIComplexNumber_struct();  
-  output->real = input.real();
-  output->imaginary = input.imaginary();
-  return *output;
+  auto output = NIComplexNumber_struct();  
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
 }
 
 template <>
 NIComplexNumberF32_struct convert_from_grpc(const nirfsg_grpc::NIComplexNumberF32& input) 
 {
-  NIComplexNumberF32_struct* output = new NIComplexNumberF32_struct();  
-  output->real = input.real();
-  output->imaginary = input.imaginary();
-  return *output;
+  auto output = NIComplexNumberF32_struct();  
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
 }
 
 template <>
 NIComplexI16_struct convert_from_grpc(const nirfsg_grpc::NIComplexI16& input) 
 {
-  NIComplexI16_struct* output = new NIComplexI16_struct();  
-  output->real = input.real();
-  output->imaginary = input.imaginary();
-  return *output;
+  auto output = NIComplexI16_struct();  
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
 }
 
 } // converters

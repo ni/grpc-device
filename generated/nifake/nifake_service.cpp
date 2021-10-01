@@ -1916,10 +1916,10 @@ void convert_to_grpc(const CustomStruct& input, nifake_grpc::FakeCustomStruct* o
 template <>
 CustomStruct convert_from_grpc(const nifake_grpc::FakeCustomStruct& input) 
 {
-  CustomStruct* output = new CustomStruct();  
-  output->structInt = input.struct_int();
-  output->structDouble = input.struct_double();
-  return *output;
+  auto output = CustomStruct();  
+  output.structInt = input.struct_int();
+  output.structDouble = input.struct_double();
+  return output;
 }
 
 } // converters

@@ -57,8 +57,8 @@ def get_input_and_output_custom_types(functions):
     input_custom_types = set()
     output_custom_types = set()
     for function in functions:
-        struct_array_params = [p for p in functions[function]["parameters"] if is_struct(p)]
-        for parameter in struct_array_params:
+        struct_params = [p for p in functions[function]["parameters"] if is_struct(p)]
+        for parameter in struct_params:
             if is_input_parameter(parameter):
                 input_custom_types.add(
                     get_underlying_type_name(parameter["type"]))
