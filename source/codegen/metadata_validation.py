@@ -21,7 +21,8 @@ def validate_metadata(metadata: dict):
             validate_function(function_name, metadata)
         for attribute_group in common_helpers.get_attribute_groups(metadata):
             for attribute_id in attribute_group.attributes:
-                validate_attribute(attribute_group.attributes[attribute_id], metadata)
+                validate_attribute(
+                    attribute_group.attributes[attribute_id], metadata)
         function_enums = get_function_enums(metadata['functions'])
         attribute_enums = get_attribute_enums(metadata)
         used_enums = function_enums.union(attribute_enums)
@@ -30,6 +31,7 @@ def validate_metadata(metadata: dict):
     except Exception as e:
         raise Exception(
             f"Failed to validate {metadata['config']['namespace_component']}") from e
+
 
 DOCUMENTATION_SCHEMA = Schema(
     {
@@ -57,15 +59,16 @@ PARAM_SCHEMA = Schema(
         Optional('grpc_type'): str,
         Optional('documentation'): DOCUMENTATION_SCHEMA,
         Optional('enum'): str,
-        # This should be SIZE_SCHEMA but don't want to validate if codegen_method is no
-        Optional('size'): dict,
+        Optional('size'): SIZE_SCHEMA,
         Optional('default_value'): Or(str, bool, int, float, None),
         Optional('is_repeated_capability'): bool,
         Optional('repeated_capability_type'): str,
         Optional('use_array'): bool,
         Optional('numpy'): bool,
-        Optional('grpc_field_number'): And(str, Use(int)), # integer in string form, make sure int(x) doesn't raise
-        Optional('grpc_raw_field_number'): And(str, Use(int)), # integer in string form, make sure int(x) doesn't raise
+        # integer in string form, make sure int(x) doesn't raise
+        Optional('grpc_field_number'): And(str, Use(int)),
+        # integer in string form, make sure int(x) doesn't raise
+        Optional('grpc_raw_field_number'): And(str, Use(int)),
         Optional('type_in_documentation'): str,
         Optional('include_in_proto'): bool,
         Optional('is_session_handle'): bool,
@@ -98,14 +101,14 @@ FUNCTION_SCHEMA = Schema(
         Optional('render_in_session_base'): bool,
         Optional('method_name_for_documentation'): str,
         Optional('use_session_lock'): bool,
-        # This should be DOCUMENTATION_SCHEMA but don't want to validate if codegen_method is no
-        Optional('documentation'): dict,
+        Optional('documentation'): DOCUMENTATION_SCHEMA,
         Optional('method_templates'): list,
         Optional('custom_close'): str,
         Optional('custom_close_method'): bool,
         Optional("python_name"): str,
     }
 )
+
 
 ATTRIBUTE_SCHEMA = Schema(
     {
@@ -144,6 +147,7 @@ ENUM_SCHEMA = Schema(
     }
 )
 
+
 def rule_is_suppressed(metadata: dict, rule: str, path: List[str]) -> bool:
     suppression_dict_name = path[0] + "_validation_suppressions"
     suppression_dict = metadata.get(suppression_dict_name, {})
@@ -154,44 +158,54 @@ def rule_is_suppressed(metadata: dict, rule: str, path: List[str]) -> bool:
         return False
     return rule in suppression_dict[last_entry]
 
+
 def parameter_name_exists(function: dict, name: str) -> bool:
     return any([param for param in function['parameters'] if param['name'] == name])
+
 
 def validate_function(function_name: str, metadata: dict):
     try:
         function: Dict[str, Any] = metadata['functions'][function_name]
-        FUNCTION_SCHEMA.validate(function)
         if function.get('codegen_method', 'public') != 'no':
+            FUNCTION_SCHEMA.validate(function)
             if 'documentation' in function:
                 DOCUMENTATION_SCHEMA.validate(function['documentation'])
             for parameter in function['parameters']:
                 validate_parameter_size(parameter, function_name, metadata)
                 if 'type' not in parameter:
                     if 'grpc_type' not in parameter:
-                        raise Exception(f"parameter {parameter['name']} has no type or grpc_type!")
+                        raise Exception(
+                            f"parameter {parameter['name']} has no type or grpc_type!")
                     if not parameter.get('repeated_var_args', False):
-                        raise Exception(f"parameter {parameter['name']} has no type and repeated_var_args is not set!")
+                        raise Exception(
+                            f"parameter {parameter['name']} has no type and repeated_var_args is not set!")
                 if 'enum' in parameter:
                     if parameter['enum'] not in metadata['enums']:
-                        raise Exception(f"parameter {parameter['name']} has enum {parameter['enum']} that was not found!")
+                        raise Exception(
+                            f"parameter {parameter['name']} has enum {parameter['enum']} that was not found!")
                 if 'max_length' in parameter:
                     if 'repeated_var_args' not in parameter:
-                        raise Exception(f"parameter {parameter['name']} has max_length but no repeated_var_args!")
+                        raise Exception(
+                            f"parameter {parameter['name']} has max_length but no repeated_var_args!")
                 if 'callback_params' in parameter:
                     for callback_param in parameter['callback_params']:
                         try:
                             PARAM_SCHEMA.validate(callback_param)
                         except Exception as e:
-                            raise Exception(f"Failed to validate callback_param with name {callback_param['name']}")
+                            raise Exception(
+                                f"Failed to validate callback_param with name {callback_param['name']}")
                 if parameter.get('pointer', False):
                     # This is technically legal in other cdses but we should only need it for hardcoded values/callback tokens
                     if 'hardcoded_value' not in parameter and 'callback_token' not in parameter:
-                        raise Exception(f"parameter {parameter['name']} is pointer but not hardcoded_value!")
+                        raise Exception(
+                            f"parameter {parameter['name']} is pointer but not hardcoded_value!")
                     if parameter.get('include_in_proto', True):
-                        raise Exception(f"parameter {parameter['name']} is pointer but is include_in_proto!")
+                        raise Exception(
+                            f"parameter {parameter['name']} is pointer but is include_in_proto!")
 
     except Exception as e:
         raise Exception(f"Failed to validate function {function_name}") from e
+
 
 def validate_attribute(attribute: dict, metadata: dict):
     try:
@@ -202,10 +216,12 @@ def validate_attribute(attribute: dict, metadata: dict):
             ATTRIBUTE_SCHEMA.validate(attribute)
         if 'enum' in attribute:
             if attribute['enum'] not in metadata['enums']:
-                raise Exception(f"attribute {attribute['name']} has enum {attribute['enum']} that was not found!")
+                raise Exception(
+                    f"attribute {attribute['name']} has enum {attribute['enum']} that was not found!")
 
     except Exception as e:
-        raise Exception(f"Failed to validate attribute with name {attribute.get('name', '(none)')}") from e
+        raise Exception(
+            f"Failed to validate attribute with name {attribute.get('name', '(none)')}") from e
 
 
 def validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
@@ -214,18 +230,22 @@ def validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
         ENUM_SCHEMA.validate(enum)
         if enum_name in used_enums:
             generate_mappings = enum.get('generate-mappings', False)
-            value_types = set([type(value['value']) for value in enum['values']])
+            value_types = set([type(value['value'])
+                              for value in enum['values']])
             if not generate_mappings:
                 value_types.remove(type(1))
                 if any(value_types):
-                    raise Exception(f"generate-mappings is False, but values have non-int types: {value_types}")
-            values = [value['value'] for value in enum['values']] 
+                    raise Exception(
+                        f"generate-mappings is False, but values have non-int types: {value_types}")
+            values = [value['value'] for value in enum['values']]
             values_set = set(values)
             if len(values) != len(values_set):
                 if not rule_is_suppressed(metadata, RULES.ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES, ["enums", enum_name]):
                     raise Exception(f"Duplicate values in enum!")
     except Exception as e:
-        raise Exception(f"Failed to validate enum with name {enum_name}") from e
+        raise Exception(
+            f"Failed to validate enum with name {enum_name}") from e
+
 
 def validate_parameter_size(parameter: dict, function_name: str, metadata: dict):
     function: Dict[str, Any] = metadata['functions'][function_name]
@@ -233,31 +253,40 @@ def validate_parameter_size(parameter: dict, function_name: str, metadata: dict)
     if size is None:
         if common_helpers.is_array(parameter.get('type', '')) and not is_string_type(parameter, metadata):
             if not rule_is_suppressed(metadata, RULES.ARRAY_PARAMETER_NEEDS_SIZE, ["functions", function_name, 'parameters', parameter['name']]):
-                raise Exception(f"parameter {parameter['name']} is an array but has no size!")
+                raise Exception(
+                    f"parameter {parameter['name']} is an array but has no size!")
     if size is not None:
         SIZE_SCHEMA.validate(size)
         mechanism = size['mechanism']
         if mechanism in ['len', 'ivi-dance', 'ivi-dance-with-a-twist', 'passed-in']:
             if not parameter_name_exists(function, size['value']):
-                raise Exception(f"parameter {parameter['name']} refers to nonexistant parameter {size['value']} in its size value!")
+                raise Exception(
+                    f"parameter {parameter['name']} refers to nonexistant parameter {size['value']} in its size value!")
         if mechanism == 'ivi-dance-with-a-twist':
             if 'value_twist' not in size:
-                raise Exception(f"parameter {parameter['name']} doesn't have value_twist in its size parameter!")
+                raise Exception(
+                    f"parameter {parameter['name']} doesn't have value_twist in its size parameter!")
             if not parameter_name_exists(function, size['value_twist']):
-                raise Exception(f"parameter {parameter['name']} refers to nonexistant parameter {size['value_twist']} in its size value_twist!")
+                raise Exception(
+                    f"parameter {parameter['name']} refers to nonexistant parameter {size['value_twist']} in its size value_twist!")
         else:
             if 'value_twist' in size:
-                raise Exception(f"parameter {parameter['name']} has value_twist in its size parameter but is not ivi-dance-with-a-twist!")
+                raise Exception(
+                    f"parameter {parameter['name']} has value_twist in its size parameter but is not ivi-dance-with-a-twist!")
         if parameter['direction'] == 'in':
             if mechanism == 'passed-in':
                 if not rule_is_suppressed(metadata, RULES.INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE,
-                ["functions", function_name, "parameters", parameter["name"]]):
-                    raise Exception(f"parameter {parameter['name']} is an input but has mechanism {mechanism}! Use mechanism len instead so the user doesn't have to explicitly pass in the size.")
+                                          ["functions", function_name, "parameters", parameter["name"]]):
+                    raise Exception(
+                        f"parameter {parameter['name']} is an input but has mechanism {mechanism}! Use mechanism len instead so the user doesn't have to explicitly pass in the size.")
             if mechanism in ['ivi-dance', 'ivi-dance-with-a-twist']:
-                raise Exception(f"parameter {parameter['name']} is an input but has mechanism {mechanism}!")
+                raise Exception(
+                    f"parameter {parameter['name']} is an input but has mechanism {mechanism}!")
         else:
             if mechanism == "len":
-                raise Exception(f"parameter {parameter['name']} is an output but has mechanism {mechanism}!")
+                raise Exception(
+                    f"parameter {parameter['name']} is an output but has mechanism {mechanism}!")
+
 
 def get_function_enums(functions_metadata: dict) -> Set[str]:
     function_enums = set()
@@ -267,6 +296,7 @@ def get_function_enums(functions_metadata: dict) -> Set[str]:
             if 'enum' in param:
                 function_enums.add(param['enum'])
     return function_enums
+
 
 def get_attribute_enums(metadata: dict) -> Set[str]:
     attribute_enums = set()
@@ -283,5 +313,6 @@ def is_string_type(parameter: dict, metadata: dict) -> bool:
         return False
     grpc_type = parameter.get('grpc_type', None)
     if grpc_type is None:
-        grpc_type = common_helpers.get_grpc_type(parameter['type'], metadata['config'])
+        grpc_type = common_helpers.get_grpc_type(
+            parameter['type'], metadata['config'])
     return grpc_type == 'string'
