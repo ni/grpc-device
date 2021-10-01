@@ -86,7 +86,7 @@ jobs:
       shell: cmake -P {0}
       run: |
         execute_process(
-          COMMAND cmake --build build --config $ENV{BUILD_TYPE}
+          COMMAND cmake --build build --trace-source="cmake/CreateVirtualEnvironment.cmake" --trace-source="CMakeLists.txt" --trace-expand --expand-trace --config $ENV{BUILD_TYPE}
           RESULT_VARIABLE result
           OUTPUT_VARIABLE output
           ERROR_VARIABLE output
