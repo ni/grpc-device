@@ -40,6 +40,8 @@ Optional Output Arguments:
 
 #]=============================================================================]
 
+include(CMakePrintHelpers)
+
 function(CreateVirtualEnvironment TARGET)
     set(KEYWORD_ARGS REQUIREMENTS_TXT PREFIX ENV_NAME
             OUT_PYTHON_EXE OUT_BINARY_DIR OUT_VENV_DIR)
@@ -87,12 +89,16 @@ function(CreateVirtualEnvironment TARGET)
         set(INSTALL_CMD "")
     endif()
 
+    message("before set")
     set(CFG_FILE ${VENV}/pyvenv.cfg)
+    message("after set")
+    cmake_print_variables(CFG_FILE VENV ARG_REQUIREMENTS_TXT)
     add_custom_command(
             OUTPUT ${CFG_FILE}
             COMMAND ${Python3_EXECUTABLE} -m venv ${VENV}
             DEPENDS ${ARG_REQUIREMENTS_TXT}
     )
+    message("after set custom command")
     set(OUTPUT_FILE ${VENV}/environment.txt)
     add_custom_command(
             OUTPUT ${OUTPUT_FILE}
