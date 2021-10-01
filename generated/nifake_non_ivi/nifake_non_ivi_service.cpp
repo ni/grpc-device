@@ -18,6 +18,9 @@
 
 namespace nifake_non_ivi_grpc {
 
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
+
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 

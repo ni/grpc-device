@@ -15,6 +15,9 @@
 
 namespace nifake_grpc {
 
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
+
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
@@ -30,13 +33,6 @@ namespace nifake_grpc {
   {
   }
 
-  void NiFakeService::Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output) 
-  {
-    for (auto item : input) {
-      output->Add(item != VI_FALSE);
-    }
-  }
-
   template <typename TEnum>
   void NiFakeService::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
   {
@@ -44,38 +40,6 @@ namespace nifake_grpc {
     {
       output->Add(item);
     }
-  }
-
-  void NiFakeService::Copy(const CustomStruct& input, nifake_grpc::FakeCustomStruct* output) 
-  {
-    output->set_struct_int(input.structInt);
-    output->set_struct_double(input.structDouble);
-  }
-
-  void NiFakeService::Copy(const std::vector<CustomStruct>& input, google::protobuf::RepeatedPtrField<nifake_grpc::FakeCustomStruct>* output) 
-  {
-    for (auto item : input) {
-      auto message = new nifake_grpc::FakeCustomStruct();
-      Copy(item, message);
-      output->AddAllocated(message);
-    }
-  }
-
-   CustomStruct NiFakeService::ConvertMessage(const nifake_grpc::FakeCustomStruct& input) 
-  {
-    CustomStruct* output = new CustomStruct();  
-    output->structInt = input.struct_int();
-    output->structDouble = input.struct_double();
-    return *output;
-  }
-
-  void NiFakeService::Copy(const google::protobuf::RepeatedPtrField<nifake_grpc::FakeCustomStruct>& input, std::vector<CustomStruct>* output)
-  {
-    std::transform(
-        input.begin(),
-        input.end(),
-        std::back_inserter(*output),
-        [&](nifake_grpc::FakeCustomStruct x) { return ConvertMessage(x); });
   }
 
   //---------------------------------------------------------------------
@@ -179,7 +143,7 @@ namespace nifake_grpc {
       auto status = library_->BoolArrayOutputFunction(vi, number_of_elements, an_array.data());
       response->set_status(status);
       if (status == 0) {
-        Copy(an_array, response->mutable_an_array());
+        convert_to_grpc(an_array, response->mutable_an_array());
       }
       return ::grpc::Status::OK;
     }
@@ -563,7 +527,7 @@ namespace nifake_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-          Copy(array_out, response->mutable_array_out());
+          convert_to_grpc(array_out, response->mutable_array_out());
           {
             auto shrunk_size = actual_size;
             auto current_size = response->mutable_array_out()->size();
@@ -645,7 +609,7 @@ namespace nifake_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_array_out(array_out);
-          nidevice_grpc::trim_trailing_nulls(*(response->mutable_array_out()));
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_array_out()));
           response->set_actual_size(actual_size);
         }
         return ::grpc::Status::OK;
@@ -684,7 +648,7 @@ namespace nifake_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_string_out(string_out);
-          nidevice_grpc::trim_trailing_nulls(*(response->mutable_string_out()));
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
           response->set_actual_size(actual_size);
         }
         return ::grpc::Status::OK;
@@ -1004,6 +968,29 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetCustomType(::grpc::ServerContext* context, const GetCustomTypeRequest* request, GetCustomTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      CustomStruct cs {};
+      auto status = library_->GetCustomType(vi, &cs);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(cs, response->mutable_cs());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetCustomTypeArray(::grpc::ServerContext* context, const GetCustomTypeArrayRequest* request, GetCustomTypeArrayResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1017,7 +1004,7 @@ namespace nifake_grpc {
       auto status = library_->GetCustomTypeArray(vi, number_of_elements, cs.data());
       response->set_status(status);
       if (status == 0) {
-        Copy(cs, response->mutable_cs());
+        convert_to_grpc(cs, response->mutable_cs());
       }
       return ::grpc::Status::OK;
     }
@@ -1647,6 +1634,26 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::SetCustomType(::grpc::ServerContext* context, const SetCustomTypeRequest* request, SetCustomTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto cs = convert_from_grpc<CustomStruct>(request->cs());
+      auto status = library_->SetCustomType(vi, cs);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::SetCustomTypeArray(::grpc::ServerContext* context, const SetCustomTypeArrayRequest* request, SetCustomTypeArrayResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1656,9 +1663,7 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 number_of_elements = static_cast<ViInt32>(request->cs().size());
-      auto cs_request = request->cs();
-      std::vector<CustomStruct> cs;
-      Copy(cs_request, &cs);
+      auto cs = convert_from_grpc<CustomStruct>(request->cs());
       auto status = library_->SetCustomTypeArray(vi, number_of_elements, cs.data());
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1898,4 +1903,25 @@ namespace nifake_grpc {
   {
   }
 } // namespace nifake_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const CustomStruct& input, nifake_grpc::FakeCustomStruct* output) 
+{
+  output->set_struct_int(input.structInt);
+  output->set_struct_double(input.structDouble);
+}
+
+template <>
+CustomStruct convert_from_grpc(const nifake_grpc::FakeCustomStruct& input) 
+{
+  auto output = CustomStruct();  
+  output.structInt = input.struct_int();
+  output.structDouble = input.struct_double();
+  return output;
+}
+
+} // converters
+} // nidevice_grpc
 

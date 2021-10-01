@@ -51,6 +51,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]);
   ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute);
   ViStatus GetCalInterval(ViSession vi, ViInt32* months);
+  ViStatus GetCustomType(ViSession vi, CustomStruct* cs);
   ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]);
   ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle);
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
@@ -79,6 +80,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
   ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  ViStatus SetCustomType(ViSession vi, CustomStruct cs);
   ViStatus SetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]);
   ViStatus StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName);
   ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString);
@@ -126,6 +128,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetAttributeViStringPtr = decltype(&niFake_GetAttributeViString);
   using GetCalDateAndTimePtr = decltype(&niFake_GetCalDateAndTime);
   using GetCalIntervalPtr = decltype(&niFake_GetCalInterval);
+  using GetCustomTypePtr = decltype(&niFake_GetCustomType);
   using GetCustomTypeArrayPtr = decltype(&niFake_GetCustomTypeArray);
   using GetEnumValuePtr = decltype(&niFake_GetEnumValue);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
@@ -154,6 +157,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using SetAttributeViInt64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
   using SetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   using SetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  using SetCustomTypePtr = decltype(&niFake_SetCustomType);
   using SetCustomTypeArrayPtr = decltype(&niFake_SetCustomTypeArray);
   using StringValuedEnumInputFunctionWithDefaultsPtr = decltype(&niFake_StringValuedEnumInputFunctionWithDefaults);
   using TwoInputFunctionPtr = decltype(&niFake_TwoInputFunction);
@@ -201,6 +205,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetAttributeViStringPtr GetAttributeViString;
     GetCalDateAndTimePtr GetCalDateAndTime;
     GetCalIntervalPtr GetCalInterval;
+    GetCustomTypePtr GetCustomType;
     GetCustomTypeArrayPtr GetCustomTypeArray;
     GetEnumValuePtr GetEnumValue;
     GetErrorPtr GetError;
@@ -229,6 +234,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     SetAttributeViInt64Ptr SetAttributeViInt64;
     SetAttributeViReal64Ptr SetAttributeViReal64;
     SetAttributeViStringPtr SetAttributeViString;
+    SetCustomTypePtr SetCustomType;
     SetCustomTypeArrayPtr SetCustomTypeArray;
     StringValuedEnumInputFunctionWithDefaultsPtr StringValuedEnumInputFunctionWithDefaults;
     TwoInputFunctionPtr TwoInputFunction;

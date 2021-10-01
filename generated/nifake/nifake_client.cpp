@@ -573,6 +573,22 @@ get_cal_interval(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+GetCustomTypeResponse
+get_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetCustomTypeRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetCustomTypeResponse{};
+
+  raise_if_error(
+      stub->GetCustomType(&context, request, &response));
+
+  return response;
+}
+
 GetCustomTypeArrayResponse
 get_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements)
 {
@@ -947,6 +963,23 @@ return_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 
   raise_if_error(
       stub->ReturnMultipleTypes(&context, request, &response));
+
+  return response;
+}
+
+SetCustomTypeResponse
+set_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const FakeCustomStruct& cs)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetCustomTypeRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.mutable_cs()->CopyFrom(cs);
+
+  auto response = SetCustomTypeResponse{};
+
+  raise_if_error(
+      stub->SetCustomType(&context, request, &response));
 
   return response;
 }

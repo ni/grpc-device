@@ -49,6 +49,7 @@ service NiFake {
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetCalDateAndTime(GetCalDateAndTimeRequest) returns (GetCalDateAndTimeResponse);
   rpc GetCalInterval(GetCalIntervalRequest) returns (GetCalIntervalResponse);
+  rpc GetCustomType(GetCustomTypeRequest) returns (GetCustomTypeResponse);
   rpc GetCustomTypeArray(GetCustomTypeArrayRequest) returns (GetCustomTypeArrayResponse);
   rpc GetEnumValue(GetEnumValueRequest) returns (GetEnumValueResponse);
   rpc GetViUInt8(GetViUInt8Request) returns (GetViUInt8Response);
@@ -70,6 +71,7 @@ service NiFake {
   rpc ReturnDurationInSeconds(ReturnDurationInSecondsRequest) returns (ReturnDurationInSecondsResponse);
   rpc ReturnListOfDurationsInSeconds(ReturnListOfDurationsInSecondsRequest) returns (ReturnListOfDurationsInSecondsResponse);
   rpc ReturnMultipleTypes(ReturnMultipleTypesRequest) returns (ReturnMultipleTypesResponse);
+  rpc SetCustomType(SetCustomTypeRequest) returns (SetCustomTypeResponse);
   rpc SetCustomTypeArray(SetCustomTypeArrayRequest) returns (SetCustomTypeArrayResponse);
   rpc StringValuedEnumInputFunctionWithDefaults(StringValuedEnumInputFunctionWithDefaultsRequest) returns (StringValuedEnumInputFunctionWithDefaultsResponse);
   rpc TwoInputFunction(TwoInputFunctionRequest) returns (TwoInputFunctionResponse);
@@ -480,6 +482,15 @@ message GetCalIntervalResponse {
   sint32 months = 2;
 }
 
+message GetCustomTypeRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetCustomTypeResponse {
+  int32 status = 1;
+  FakeCustomStruct cs = 2;
+}
+
 message GetCustomTypeArrayRequest {
   nidevice_grpc.Session vi = 1;
   sint32 number_of_elements = 2;
@@ -713,6 +724,15 @@ message ReturnMultipleTypesResponse {
   double a_float_enum_raw = 9;
   repeated double an_array = 10;
   string a_string = 11;
+}
+
+message SetCustomTypeRequest {
+  nidevice_grpc.Session vi = 1;
+  FakeCustomStruct cs = 2;
+}
+
+message SetCustomTypeResponse {
+  int32 status = 1;
 }
 
 message SetCustomTypeArrayRequest {

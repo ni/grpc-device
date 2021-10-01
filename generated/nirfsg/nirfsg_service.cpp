@@ -15,6 +15,9 @@
 
 namespace nirfsg_grpc {
 
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
+
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
@@ -28,72 +31,6 @@ namespace nirfsg_grpc {
 
   NiRFSGService::~NiRFSGService()
   {
-  }
-
-  void NiRFSGService::Copy(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output) 
-  {
-    output->set_real(input.real);
-    output->set_imaginary(input.imaginary);
-  }
-
-  void NiRFSGService::Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>* output) 
-  {
-    for (auto item : input) {
-      auto message = new nirfsg_grpc::NIComplexNumber();
-      Copy(item, message);
-      output->AddAllocated(message);
-    }
-  }
-
-   NIComplexNumber_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexNumber& input) 
-  {
-    NIComplexNumber_struct* output = new NIComplexNumber_struct();  
-    output->real = input.real();
-    output->imaginary = input.imaginary();
-    return *output;
-  }
-
-  void NiRFSGService::Copy(const google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumber>& input, std::vector<NIComplexNumber_struct>* output)
-  {
-    std::transform(
-        input.begin(),
-        input.end(),
-        std::back_inserter(*output),
-        [&](nirfsg_grpc::NIComplexNumber x) { return ConvertMessage(x); });
-  }
-
-   NIComplexNumberF32_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexNumberF32& input) 
-  {
-    NIComplexNumberF32_struct* output = new NIComplexNumberF32_struct();  
-    output->real = input.real();
-    output->imaginary = input.imaginary();
-    return *output;
-  }
-
-  void NiRFSGService::Copy(const google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexNumberF32>& input, std::vector<NIComplexNumberF32_struct>* output)
-  {
-    std::transform(
-        input.begin(),
-        input.end(),
-        std::back_inserter(*output),
-        [&](nirfsg_grpc::NIComplexNumberF32 x) { return ConvertMessage(x); });
-  }
-
-   NIComplexI16_struct NiRFSGService::ConvertMessage(const nirfsg_grpc::NIComplexI16& input) 
-  {
-    NIComplexI16_struct* output = new NIComplexI16_struct();  
-    output->real = input.real();
-    output->imaginary = input.imaginary();
-    return *output;
-  }
-
-  void NiRFSGService::Copy(const google::protobuf::RepeatedPtrField<nirfsg_grpc::NIComplexI16>& input, std::vector<NIComplexI16_struct>* output)
-  {
-    std::transform(
-        input.begin(),
-        input.end(),
-        std::back_inserter(*output),
-        [&](nirfsg_grpc::NIComplexI16 x) { return ConvertMessage(x); });
   }
 
   //---------------------------------------------------------------------
@@ -1256,9 +1193,7 @@ namespace nirfsg_grpc {
       auto table_name = request->table_name().c_str();
       auto frequencies = const_cast<ViReal64*>(request->frequencies().data());
       ViInt32 frequencies_size = static_cast<ViInt32>(request->frequencies().size());
-      auto sparameter_table_request = request->sparameter_table();
-      std::vector<NIComplexNumber_struct> sparameter_table;
-      Copy(sparameter_table_request, &sparameter_table);
+      auto sparameter_table = convert_from_grpc<NIComplexNumber_struct>(request->sparameter_table());
       ViInt32 sparameter_table_size = static_cast<ViInt32>(request->sparameter_table().size());
       ViInt32 number_of_ports = request->number_of_ports();
       ViInt32 sparameter_orientation;
@@ -1879,7 +1814,7 @@ namespace nirfsg_grpc {
         }
         response->set_status(status);
         if (status == 0) {
-          Copy(sparameters, response->mutable_sparameters());
+          convert_to_grpc(sparameters, response->mutable_sparameters());
           {
             auto shrunk_size = number_of_sparameters;
             auto current_size = response->mutable_sparameters()->size();
@@ -3229,9 +3164,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
-      auto wfm_data_request = request->wfm_data();
-      std::vector<NIComplexNumberF32_struct> wfm_data;
-      Copy(wfm_data_request, &wfm_data);
+      auto wfm_data = convert_from_grpc<NIComplexNumberF32_struct>(request->wfm_data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformComplexF32(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
       response->set_status(status);
@@ -3254,9 +3187,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
-      auto wfm_data_request = request->wfm_data();
-      std::vector<NIComplexNumber_struct> wfm_data;
-      Copy(wfm_data_request, &wfm_data);
+      auto wfm_data = convert_from_grpc<NIComplexNumber_struct>(request->wfm_data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformComplexF64(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
       response->set_status(status);
@@ -3279,9 +3210,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
-      auto wfm_data_request = request->wfm_data();
-      std::vector<NIComplexI16_struct> wfm_data;
-      Copy(wfm_data_request, &wfm_data);
+      auto wfm_data = convert_from_grpc<NIComplexI16_struct>(request->wfm_data());
       auto status = library_->WriteArbWaveformComplexI16(vi, waveform_name, number_of_samples, wfm_data.data());
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3378,4 +3307,43 @@ namespace nirfsg_grpc {
   {
   }
 } // namespace nirfsg_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output) 
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+template <>
+NIComplexNumber_struct convert_from_grpc(const nirfsg_grpc::NIComplexNumber& input) 
+{
+  auto output = NIComplexNumber_struct();  
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
+}
+
+template <>
+NIComplexNumberF32_struct convert_from_grpc(const nirfsg_grpc::NIComplexNumberF32& input) 
+{
+  auto output = NIComplexNumberF32_struct();  
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
+}
+
+template <>
+NIComplexI16_struct convert_from_grpc(const nirfsg_grpc::NIComplexI16& input) 
+{
+  auto output = NIComplexI16_struct();  
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
+}
+
+} // converters
+} // nidevice_grpc
 

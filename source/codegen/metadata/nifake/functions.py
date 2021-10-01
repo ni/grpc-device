@@ -1221,7 +1221,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetCustomType': {
-        'codegen_method': 'no',
         'documentation': {
             'description': 'This function returns a custom type.'
         },
@@ -2511,7 +2510,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetCustomType': {
-        'codegen_method': 'no',
         'documentation': {
             'description': 'This function takes a custom type.'
         },

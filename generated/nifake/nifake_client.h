@@ -55,6 +55,7 @@ GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, cons
 GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttributes& attribute_id);
 GetCalDateAndTimeResponse get_cal_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& cal_type);
 GetCalIntervalResponse get_cal_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetCustomTypeResponse get_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetCustomTypeArrayResponse get_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 GetEnumValueResponse get_enum_value(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetViUInt8Response get_vi_uint8(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -76,6 +77,7 @@ ReturnANumberAndAStringResponse return_a_number_and_a_string(const StubPtr& stub
 ReturnDurationInSecondsResponse return_duration_in_seconds(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReturnListOfDurationsInSecondsResponse return_list_of_durations_in_seconds(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 ReturnMultipleTypesResponse return_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_size);
+SetCustomTypeResponse set_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const FakeCustomStruct& cs);
 SetCustomTypeArrayResponse set_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<FakeCustomStruct>& cs);
 StringValuedEnumInputFunctionWithDefaultsResponse string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<MobileOSNames, std::string>& a_mobile_os_name);
 TwoInputFunctionResponse two_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& a_number, const pb::string& a_string);
