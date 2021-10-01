@@ -42,7 +42,7 @@ Optional Output Arguments:
 
 function(CreateVirtualEnvironment TARGET)
     set(KEYWORD_ARGS REQUIREMENTS_TXT PREFIX ENV_NAME
-            OUT_PYTHON_EXE OUT_BINARY_DIR OUT_VENV_DIR OUTPUT_FILE)
+            OUT_PYTHON_EXE OUT_BINARY_DIR OUT_VENV_DIR)
 
     set(MULTI_ARGS SOURCES REQUIREMENTS)
 
@@ -100,7 +100,7 @@ function(CreateVirtualEnvironment TARGET)
             DEPENDS ${CFG_FILE} ${ARG_SOURCES} ${ARG_REQUIREMENTS_TXT}
     )
 
-    #add_custom_target(${TARGET} DEPENDS ${OUTPUT_FILE})
+    add_custom_target(${TARGET} DEPENDS ${OUTPUT_FILE})
 
     if (ARG_OUT_VENV_DIR)
         set(${ARG_OUT_VENV_DIR} ${VENV} PARENT_SCOPE)
@@ -112,10 +112,6 @@ function(CreateVirtualEnvironment TARGET)
 
     if (ARG_OUT_BINARY_DIR)
         set(${ARG_OUT_BINARY_DIR} ${BIN_DIR} PARENT_SCOPE)
-    endif ()
-
-    if (ARG_OUTPUT_FILE)
-        set(${ARG_OUTPUT_FILE} ${OUTPUT_FILE} PARENT_SCOPE)
     endif ()
 
 endfunction()

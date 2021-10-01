@@ -51,7 +51,6 @@ if (NOT IS_GITHUB_BUILD)
   CreateVirtualEnvironment(venv
     REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/python_build_modules.txt
     OUT_PYTHON_EXE PYTHON_EXE
-    OUTPUT_FILE OUTPUT_VENV_FILE
   )
 else()
   set(PYTHON_EXE ${Python3_EXECUTABLE})
@@ -151,7 +150,7 @@ foreach(api ${nidrivers})
   endif()
   set(proto_dependencies ${codegen_dependencies} ${codegen_scripts})
   if (NOT IS_GITHUB_BUILD)
-    set(proto_dependencies ${proto_dependencies} ${OUTPUT_VENV_FILE})
+    set(proto_dependencies ${proto_dependencies} venv)
   endif()
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
