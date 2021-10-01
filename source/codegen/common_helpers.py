@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict, namedtuple
-from typing import List, Union
+from typing import List, Optional
 
 
 def is_output_parameter(parameter):
@@ -307,7 +307,7 @@ def has_enum_array_string_out_param(functions):
     return False
 
 
-def get_size_mechanism(parameter: dict) -> Union[str, None]:
+def get_size_mechanism(parameter: dict) -> Optional[str]
     size = parameter.get('size', {})
     return size.get('mechanism', None)
 
