@@ -48,14 +48,17 @@ def any_function_uses_timestamp(functions):
     return False
 
 
+def get_custom_types(config: dict) -> dict:
+    return config.get("custom_types", {})
+
+
 def get_input_and_output_custom_types(functions):
     '''Returns a set of custom types used by input and output parameters separately.'''
     input_custom_types = set()
     output_custom_types = set()
     for function in functions:
-        struct_array_params = [p for p in functions[function]
-                               ["parameters"] if is_struct(p) and is_array(p["type"])]
-        for parameter in struct_array_params:
+        struct_params = [p for p in functions[function]["parameters"] if is_struct(p)]
+        for parameter in struct_params:
             if is_input_parameter(parameter):
                 input_custom_types.add(
                     get_underlying_type_name(parameter["type"]))
@@ -661,3 +664,13 @@ def get_enum_value_cpp_type(enum: dict) -> str:
     if isinstance(enum_value, str):
         return "std::string"
     return "std::int32_t"
+
+
+def is_regular_string_arg(parameter: dict) -> bool:
+    """Excludes: byte arrays"""
+    return is_string_arg(parameter) and not parameter["grpc_type"] == "bytes"
+
+
+def is_regular_byte_array_arg(parameter: dict)-> bool:
+    """Excludes: strings and byte arrays that are mapped to enums"""
+    return parameter["grpc_type"] == "bytes" and not is_enum(parameter)

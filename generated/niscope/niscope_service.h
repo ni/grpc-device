@@ -13,6 +13,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <map>
+#include <server/converters.h>
 #include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 #include <server/shared_library.h>
@@ -127,14 +128,6 @@ public:
 private:
   NiScopeLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-  void Copy(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output);
-  void Copy(const std::vector<niScope_wfmInfo>& input, google::protobuf::RepeatedPtrField<niscope_grpc::WaveformInfo>* output);
-  void Copy(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output);
-  void Copy(const std::vector<niScope_coefficientInfo>& input, google::protobuf::RepeatedPtrField<niscope_grpc::CoefficientInfo>* output);
-  void Copy(const NIComplexNumber_struct& input, niscope_grpc::NIComplexNumber* output);
-  void Copy(const std::vector<NIComplexNumber_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexNumber>* output);
-  void Copy(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output);
-  void Copy(const std::vector<NIComplexI16_struct>& input, google::protobuf::RepeatedPtrField<niscope_grpc::NIComplexInt32>* output);
 
   struct NiScopeFeatureToggles
   {
@@ -148,5 +141,18 @@ private:
 };
 
 } // namespace niscope_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output);
+template <>
+void convert_to_grpc(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output);
+template <>
+void convert_to_grpc(const NIComplexNumber_struct& input, niscope_grpc::NIComplexNumber* output);
+template <>
+void convert_to_grpc(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output);
+} // namespace converters
+} // namespace nidevice_grpc
 
 #endif  // NISCOPE_GRPC_SERVICE_H

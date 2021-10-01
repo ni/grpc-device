@@ -24,6 +24,11 @@ bool operator==(const nifake_grpc::FakeCustomStruct& first, const CustomStruct& 
   return first.struct_int() == second.structInt && first.struct_double() == second.structDouble;
 }
 
+bool operator==(const CustomStruct& first, const nifake_grpc::FakeCustomStruct& second)
+{
+  return second == first;
+}
+
 using ::testing::StrEq;
 
 namespace ni {
@@ -37,6 +42,7 @@ using ::testing::AllOf;
 using ::testing::Args;
 using ::testing::DoAll;
 using ::testing::ElementsAreArray;
+using ::testing::Eq;
 using ::testing::Pointee;
 using ::testing::Return;
 using ::testing::SetArgPointee;
@@ -2289,6 +2295,40 @@ TEST(NiFakeServiceTests, FakeService_CreateConfigurationList_PassesAttributeArra
   request.mutable_list_attribute_ids()->CopyFrom({ATTRIBUTES.cbegin(), ATTRIBUTES.cend()});
   auto response = CreateConfigurationListResponse{};
   service_holder.service.CreateConfigurationList(&service_holder.context, &request, &response);
+
+  EXPECT_EQ(0, response.status());
+}
+
+TEST(NiFakeServiceTests, FakeService_GetCustomStruct_ReturnsCustomStruct)
+{
+  auto EXPECTED = CustomStruct{};
+  EXPECTED.structDouble = 1.234;
+  EXPECTED.structInt = 9999;
+  FakeServiceHolder service_holder;
+  EXPECT_CALL(service_holder.library, GetCustomType(_, _))
+      .WillOnce(DoAll(SetArgPointee<1>(EXPECTED), Return(kDriverSuccess)));
+
+  auto request = GetCustomTypeRequest{};
+  auto response = GetCustomTypeResponse{};
+  service_holder.service.GetCustomType(&service_holder.context, &request, &response);
+
+  EXPECT_EQ(0, response.status());
+  EXPECT_EQ(response.cs(), EXPECTED);
+}
+
+TEST(NiFakeServiceTests, FakeService_SetCustomStruct_PassesCustomStruct)
+{
+  auto EXPECTED = nifake_grpc::FakeCustomStruct{};
+  EXPECTED.set_struct_double(1e6);
+  EXPECTED.set_struct_int(500);
+  FakeServiceHolder service_holder;
+  EXPECT_CALL(service_holder.library, SetCustomType(_, Eq(EXPECTED)))
+      .WillOnce(Return(kDriverSuccess));
+
+  auto request = SetCustomTypeRequest{};
+  request.mutable_cs()->CopyFrom(EXPECTED);
+  auto response = SetCustomTypeResponse{};
+  service_holder.service.SetCustomType(&service_holder.context, &request, &response);
 
   EXPECT_EQ(0, response.status());
 }

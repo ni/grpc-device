@@ -15,6 +15,9 @@
 
 namespace nirfsa_grpc {
 
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
+
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
@@ -1928,7 +1931,7 @@ namespace nirfsa_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_name(name);
-          nidevice_grpc::trim_trailing_nulls(*(response->mutable_name()));
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
           response->set_buffer_size(buffer_size);
         }
         return ::grpc::Status::OK;

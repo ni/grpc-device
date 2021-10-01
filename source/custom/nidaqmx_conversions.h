@@ -1,20 +1,14 @@
+#ifndef NIDEVICE_GRPC_DEVICE_NIDAQMX_CONVERSIONS_H
+#define NIDEVICE_GRPC_DEVICE_NIDAQMX_CONVERSIONS_H
+
 // Needed for the definition of CVIAbsoluteTime
 #include <google/protobuf/util/time_util.h>
+#include <server/converters.h>
 
 #include "NIDAQmx.h"
 
-template <typename CType, typename GrpcType>
-void convert_to_grpc(const CType& value, GrpcType* value_out)
-{
-  *value_out = static_cast<GrpcType>(value);
-}
-
-template <typename CType, typename GrpcType>
-CType convert_from_grpc(const GrpcType& value)
-{
-  return static_cast<CType>(value);
-}
-
+namespace nidevice_grpc {
+namespace converters {
 const int64 SecondsFromCVI1904EpochTo1970Epoch = 2082844800LL;
 const double TwoToSixtyFour = (double)(1 << 31) * (double)(1 << 31) * (double)(1 << 2);
 const double NanosecondsPerSecond = 1000000000.0;
@@ -43,3 +37,7 @@ CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& value)
   cviTime.cviTime.lsb = static_cast<uInt64>((static_cast<double>(value.nanos()) / NanosecondsPerSecond) * TwoToSixtyFour);
   return cviTime;
 }
+}  // namespace converters
+}  // namespace nidevice_grpc
+
+#endif  // NIDEVICE_GRPC_DEVICE_NIDAQMX_CONVERSIONS_H

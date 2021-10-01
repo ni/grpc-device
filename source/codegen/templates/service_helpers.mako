@@ -469,10 +469,8 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
         [](auto x) { return (${c_type_underlying_type})x; }); \
- % elif common_helpers.is_struct(parameter) and common_helpers.is_array(c_type):
-      auto ${parameter_name}_request = ${request_snippet};
-      std::vector<${c_type_underlying_type}> ${parameter_name};
-      Copy(${parameter_name}_request, &${parameter_name});\
+ % elif common_helpers.is_struct(parameter):
+      auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${request_snippet});\
 % elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
 % elif grpc_type == 'nidevice_grpc.Session':
@@ -659,20 +657,29 @@ ${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_na
 %   elif service_helpers.is_output_array_that_needs_coercion(parameter):
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
 ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x")}\
-%   elif common_helpers.is_array(parameter['type']):
-%     if common_helpers.is_string_arg(parameter):
+%   elif common_helpers.is_struct(parameter) or parameter['type'] == 'ViBoolean[]':
+        convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
+%   elif common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
-%     elif common_helpers.is_struct(parameter) or parameter['type'] == 'ViBoolean[]':
-        Copy(${parameter_name}, response->mutable_${parameter_name}());
-%     endif
+%   elif parameter['type'] == 'ViSession':
+        auto session_id = session_repository_->resolve_session_id(${parameter_name});
+        response->mutable_${parameter_name}()->set_id(session_id);
+%   elif parameter['type'] == 'CVIAbsoluteTime':
+        convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
+%   elif common_helpers.is_array(parameter['type']):
+### pass: other array types don't need to copy.
+%   else:
+        response->set_${parameter_name}(${parameter_name});
+%   endif
+### Handle ivi-dance-with-a-twist resizing.
 %     if common_helpers.is_ivi_dance_array_with_a_twist_param(parameter):
 <%
   size = common_helpers.get_size_expression(parameter)
 %>\
-%       if parameter['grpc_type'] == 'bytes':
+%       if common_helpers.is_regular_byte_array_arg(parameter):
         response->mutable_${parameter_name}()->resize(${size});
-%       elif common_helpers.is_string_arg(parameter):
-        nidevice_grpc::trim_trailing_nulls(*(response->mutable_${parameter_name}()));
+%       elif common_helpers.is_regular_string_arg(parameter):
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_${parameter_name}()));
 %       elif common_helpers.is_struct(parameter):
 ##        RepeatedPtrField doesn't support Resize(), so use DeleteSubrange()
 ##        to delete any extra elements.
@@ -688,14 +695,6 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
         response->mutable_${parameter_name}()->Resize(${size}, 0);
 %       endif
 %     endif
-%   elif parameter['type'] == 'ViSession':
-        auto session_id = session_repository_->resolve_session_id(${parameter_name});
-        response->mutable_${parameter_name}()->set_id(session_id);
-%   elif parameter['type'] == 'CVIAbsoluteTime':
-        convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
-%   else:
-        response->set_${parameter_name}(${parameter_name});
-%   endif
 % endfor
 </%def>
 

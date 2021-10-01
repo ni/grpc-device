@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 #include <server/converters.h>
 
-using namespace nidevice_grpc;
+using namespace nidevice_grpc::converters;
 using namespace ::testing;
 
 namespace ni {

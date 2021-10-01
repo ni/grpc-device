@@ -1471,11 +1471,6 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'numberOfGainReferenceCalConstants',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'bufferSize',
-                    'value_twist': 'gainReferenceCalConstants'
-                },
                 'type': 'ViInt32'
             }
         ],

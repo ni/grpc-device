@@ -1,8 +1,12 @@
 #include <niscope/niscope_service.h>
+#include <server/converters.h>
 
 #include <stdexcept>
 
 namespace niscope_grpc {
+using nidevice_grpc::converters::convert_from_grpc;
+using nidevice_grpc::converters::convert_to_grpc;
+
 const auto kErrorReadBufferTooSmall = -200229;
 
 struct DriverErrorException : std::runtime_error {
@@ -43,7 +47,7 @@ void CheckStatus(int status)
     auto status = library_->Fetch(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
     response->set_status(status);
     if (status == 0) {
-      Copy(waveform_info, response->mutable_wfm_info());
+      convert_to_grpc(waveform_info, response->mutable_wfm_info());
     }
     return ::grpc::Status::OK;
   }
@@ -82,7 +86,7 @@ void CheckStatus(int status)
     auto status = library_->FetchBinary8(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
     response->set_status(status);
     if (status == 0) {
-      Copy(waveform_info, response->mutable_wfm_info());
+      convert_to_grpc(waveform_info, response->mutable_wfm_info());
     }
     return ::grpc::Status::OK;
   }
@@ -120,7 +124,7 @@ void CheckStatus(int status)
     auto status = library_->FetchBinary16(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
     response->set_status(status);
     if (status == 0) {
-      Copy(waveform_info, response->mutable_wfm_info());
+      convert_to_grpc(waveform_info, response->mutable_wfm_info());
       response->mutable_waveform()->Add(waveform.begin(), waveform.end());
     }
     return ::grpc::Status::OK;
@@ -160,7 +164,7 @@ void CheckStatus(int status)
     response->set_status(status);
     if (status == 0) {
       response->mutable_waveform()->Add(waveform.begin(), waveform.end());
-      Copy(waveform_info, response->mutable_wfm_info());
+      convert_to_grpc(waveform_info, response->mutable_wfm_info());
     }
     return ::grpc::Status::OK;
   }
@@ -210,7 +214,7 @@ void CheckStatus(int status)
     auto status = library_->FetchArrayMeasurement(vi, channel_list, timeout, array_meas_function, measurement_waveform_size, meas_wfm, waveform_info.data());
     response->set_status(status);
     if (status == 0) {
-      Copy(waveform_info, response->mutable_wfm_info());
+      convert_to_grpc(waveform_info, response->mutable_wfm_info());
     }
     return ::grpc::Status::OK;
   }
@@ -304,7 +308,7 @@ void CheckStatus(int status)
     auto status = library_->Read(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
     response->set_status(status);
     if (status == 0) {
-      Copy(waveform_info, response->mutable_wfm_info());
+      convert_to_grpc(waveform_info, response->mutable_wfm_info());
     }
     return ::grpc::Status::OK;
   }
@@ -342,8 +346,8 @@ void CheckStatus(int status)
     auto status = library_->FetchComplex(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
     response->set_status(status);
     if (status == 0) {
-      Copy(waveform, response->mutable_wfm());
-      Copy(waveform_info, response->mutable_wfm_info());
+      convert_to_grpc(waveform, response->mutable_wfm());
+      convert_to_grpc(waveform_info, response->mutable_wfm_info());
     }
     return ::grpc::Status::OK;
   }
@@ -381,8 +385,8 @@ void CheckStatus(int status)
     auto status = library_->FetchComplexBinary16(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
     response->set_status(status);
     if (status == 0) {
-      Copy(waveform, response->mutable_wfm());
-      Copy(waveform_info, response->mutable_wfm_info());
+      convert_to_grpc(waveform, response->mutable_wfm());
+      convert_to_grpc(waveform_info, response->mutable_wfm_info());
     }
     return ::grpc::Status::OK;
   }
@@ -463,7 +467,7 @@ void CheckStatus(int status)
       response->set_status(status);
       if (status == 0) {
         response->set_number_of_coefficient_sets(number_of_coefficient_sets);
-        Copy(coefficient_info, response->mutable_coefficient_info());
+        convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
       }
       return ::grpc::Status::OK;
     }
@@ -503,7 +507,7 @@ void CheckStatus(int status)
       response->set_status(status);
       if (status == 0) {
         response->set_number_of_coefficient_sets(number_of_coefficient_sets);
-        Copy(coefficient_info, response->mutable_coefficient_info());
+        convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
       }
       return ::grpc::Status::OK;
     }
