@@ -92,7 +92,7 @@ function(CreateVirtualEnvironment TARGET)
     message("before set")
     set(CFG_FILE ${VENV}/pyvenv.cfg)
     message("after set")
-    cmake_print_variables(CFG_FILE VENV ARG_REQUIREMENTS_TXT)
+    cmake_print_variables(CFG_FILE VENV ARG_REQUIREMENTS_TXT Python3_EXECUTABLE)
     add_custom_command(
             OUTPUT ${CFG_FILE}
             COMMAND ${Python3_EXECUTABLE} -m venv ${VENV}
@@ -100,6 +100,7 @@ function(CreateVirtualEnvironment TARGET)
     )
     message("after set custom command")
     set(OUTPUT_FILE ${VENV}/environment.txt)
+    cmake_print_variables(OUTPUT_FILE INSTALL_CMD BIN_DIR CFG_FILE ARG_SOURCES ARG_REQUIREMENTS_TXT)
     add_custom_command(
             OUTPUT ${OUTPUT_FILE}
             COMMAND ${INSTALL_CMD}
