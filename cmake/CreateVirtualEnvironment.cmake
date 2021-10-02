@@ -95,7 +95,9 @@ function(CreateVirtualEnvironment TARGET)
     cmake_print_variables(CFG_FILE VENV ARG_REQUIREMENTS_TXT Python3_EXECUTABLE)
     add_custom_command(
             OUTPUT ${CFG_FILE}
+            COMMENT "Right before create venv"
             COMMAND ${Python3_EXECUTABLE} -m venv ${VENV}
+            COMMENT "Right after create venv"
             DEPENDS ${ARG_REQUIREMENTS_TXT}
     )
     message("after set custom command")
@@ -103,8 +105,11 @@ function(CreateVirtualEnvironment TARGET)
     cmake_print_variables(OUTPUT_FILE INSTALL_CMD BIN_DIR CFG_FILE ARG_SOURCES ARG_REQUIREMENTS_TXT)
     add_custom_command(
             OUTPUT ${OUTPUT_FILE}
+            COMMENT "Right before install"
             COMMAND ${INSTALL_CMD}
+            COMMENT "Right before pip freeze"
             COMMAND ${BIN_DIR}/pip freeze > ${OUTPUT_FILE}
+            COMMENT "Right after pip freeze"
             DEPENDS ${CFG_FILE} ${ARG_SOURCES} ${ARG_REQUIREMENTS_TXT}
     )
 
