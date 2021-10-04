@@ -41,7 +41,7 @@ endif()
 #----------------------------------------------------------------------
 # Set up virtual environment for the build system
 # This is only needed for local builds - GitHub builds install the
-# necessary dependencies in the .yml files.
+# necessary dependencies (from python_build_modules.txt) in the .yml files.
 #----------------------------------------------------------------------
 find_package(Python3 COMPONENTS Interpreter)
 if(NOT ${Python3_FOUND})

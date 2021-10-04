@@ -40,8 +40,6 @@ Optional Output Arguments:
 
 #]=============================================================================]
 
-include(CMakePrintHelpers)
-
 function(CreateVirtualEnvironment TARGET)
     set(KEYWORD_ARGS REQUIREMENTS_TXT PREFIX ENV_NAME
             OUT_PYTHON_EXE OUT_BINARY_DIR OUT_VENV_DIR)
@@ -89,23 +87,15 @@ function(CreateVirtualEnvironment TARGET)
         set(INSTALL_CMD "")
     endif()
 
-    message("before set")
     set(CFG_FILE ${VENV}/pyvenv.cfg)
-    message("after set")
-    file(MAKE_DIRECTORY ${VENV})
-    cmake_print_variables(CFG_FILE VENV ARG_REQUIREMENTS_TXT Python3_EXECUTABLE)
     add_custom_command(
             OUTPUT ${CFG_FILE}
-            COMMENT "Right before create venv"
             COMMAND ${Python3_EXECUTABLE} -m venv ${VENV}
             DEPENDS ${ARG_REQUIREMENTS_TXT}
     )
-    message("after set custom command")
     set(OUTPUT_FILE ${VENV}/environment.txt)
-    cmake_print_variables(OUTPUT_FILE INSTALL_CMD BIN_DIR CFG_FILE ARG_SOURCES ARG_REQUIREMENTS_TXT)
     add_custom_command(
             OUTPUT ${OUTPUT_FILE}
-            COMMENT "Right before install"
             COMMAND ${INSTALL_CMD}
             COMMAND ${BIN_DIR}/pip freeze > ${OUTPUT_FILE}
             DEPENDS ${CFG_FILE} ${ARG_SOURCES} ${ARG_REQUIREMENTS_TXT}
