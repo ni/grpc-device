@@ -295,7 +295,7 @@ int32 NiFakeNonIviLibrary::SetMarbleAttributeInt32(FakeHandle handle, int32 attr
 #endif
 }
 
-int32 NiFakeNonIviLibrary::SetColors(int32 colors[], int32 size)
+int32 NiFakeNonIviLibrary::SetColors(int32 colors[3], int32 size)
 {
   if (!function_pointers_.SetColors) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_SetColors.");

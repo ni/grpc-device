@@ -38,7 +38,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 ResetMarbleAttribute(FakeHandle handle, int32 attribute);
   int32 SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value);
   int32 SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value);
-  int32 SetColors(int32 colors[], int32 size);
+  int32 SetColors(int32 colors[3], int32 size);
 
  private:
   using ClosePtr = decltype(&niFakeNonIvi_Close);

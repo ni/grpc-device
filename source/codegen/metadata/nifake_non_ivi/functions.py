@@ -455,7 +455,11 @@ functions = {
                 'direction': 'in',
                 'enum': 'BeautifulColor',
                 'name': 'colors',
-                'type': 'int32[]'
+                'type': 'int32[]',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': '3'
+                }
             },
             {
                 'direction': 'in',

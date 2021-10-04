@@ -2009,7 +2009,7 @@ functions = {
             },
             {
                 'size': {
-                    'mechanism': 'ivi_dance_with_a_twist',
+                    'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
                     'value_twist': 'numberOfCoefficientSets',
                 },
@@ -2047,7 +2047,7 @@ functions = {
             },
             {
                 'size': {
-                    'mechanism': 'ivi_dance_with_a_twist',
+                    'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
                     'value_twist': 'numberOfCoefficientSets',
                 },

@@ -4,4 +4,20 @@
 functions_override_metadata = {
 }
 
-
+functions_validation_suppressions = {
+    "AcceptViSessionArray": {
+        "parameters": {
+            "sessionArray": ["INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"]
+        }
+    },
+    "BoolArrayInputFunction": {
+        "parameters": {
+            "anArray": ["INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"]
+        }
+    },
+    "ViUInt8ArrayInputFunction": {
+        "parameters": {
+            "anArray": ["INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"]
+        }
+    },
+}

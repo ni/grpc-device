@@ -1,0 +1,4 @@
+contextlib2==21.6.0
+Mako==1.1.5
+MarkupSafe==2.0.1
+schema==0.7.4

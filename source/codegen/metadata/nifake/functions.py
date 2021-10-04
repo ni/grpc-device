@@ -743,7 +743,7 @@ functions = {
                 'name': 'numberOfElements',
                 'size': {
                     'mechanism': 'custom-code',
-                    'value': None
+                    'value': '',
                 },
                 'type': 'ViInt32'
             },
@@ -755,7 +755,7 @@ functions = {
                 'name': 'arrayOut',
                 'size': {
                     'mechanism': 'custom-code',
-                    'value': None
+                    'value': ''
                 },
                 'type': 'struct CustomStruct[]',
                 'grpc_type': 'repeated FakeCustomStruct'
@@ -786,7 +786,7 @@ functions = {
                 'name': 'numberOfElements',
                 'size': {
                     'mechanism': 'custom-code',
-                    'value': None
+                    'value': '',
                 },
                 'type': 'ViInt32'
             },
