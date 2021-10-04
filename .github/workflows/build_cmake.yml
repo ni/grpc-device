@@ -50,11 +50,8 @@ jobs:
       with:
         python-version: '3.x'
 
-    #- name: Install mako
-    #  run: python -m pip install mako
-#
-    #- name: Install schema
-    #  run: python -m pip install schema
+    - name: Install build dependencies
+      run: python -m pip install -r python_build_modules.txt
 
     - name: Update Submodules
       run: git submodule update --init --recursive
@@ -74,7 +71,7 @@ jobs:
             -S .
             -B build
             -D CMAKE_BUILD_TYPE=$ENV{BUILD_TYPE}
-            -D TODOIS_GITHUB_BUILD=1
+            -D IS_GITHUB_BUILD=1
             ${{ matrix.config.cmake_platform }}
           RESULT_VARIABLE result
         )
