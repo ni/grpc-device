@@ -100,6 +100,7 @@ function(CreateVirtualEnvironment TARGET)
             DEPENDS ${ARG_REQUIREMENTS_TXT}
     )
     message("after set custom command")
+    file(MAKE_DIRECTORY ${VENV})
     set(OUTPUT_FILE ${VENV}/environment.txt)
     cmake_print_variables(OUTPUT_FILE INSTALL_CMD BIN_DIR CFG_FILE ARG_SOURCES ARG_REQUIREMENTS_TXT)
     add_custom_command(
