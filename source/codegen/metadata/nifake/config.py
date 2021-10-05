@@ -42,7 +42,8 @@ config = {
                 {
                     'type': 'ViInt16',
                     'enum': 'Turtle',
-                    'name': 'turtle'
+                    'name': 'turtle',
+                    'coerced': True,
                 }
             ]
         }

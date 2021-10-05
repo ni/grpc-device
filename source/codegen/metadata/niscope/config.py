@@ -110,12 +110,14 @@ config = {
                 {
                     'type': 'ViInt16',
                     'name': 'real',
-                    'grpc_name': 'real'
+                    'grpc_name': 'real',
+                    'coerced': True,
                 },
                 {
                     'type': 'ViInt16',
                     'name': 'imaginary',
-                    'grpc_name': 'imaginary'
+                    'grpc_name': 'imaginary',
+                    'coerced': True,
                 }
             ]
         }
