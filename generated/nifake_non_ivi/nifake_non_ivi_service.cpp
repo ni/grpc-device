@@ -826,6 +826,9 @@ namespace nifake_non_ivi_grpc {
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
   }
 
   bool NiFakeNonIviService::is_enabled()
@@ -857,9 +860,30 @@ template <>
 StructWithCoercion_struct convert_from_grpc(const nifake_non_ivi_grpc::StructWithCoercion& input) 
 {
   auto output = StructWithCoercion_struct();  
-  output.first = input.first();
-  output.second = input.second();
-  output.third = input.third();
+  if (input.first() < std::numeric_limits<myInt16>::min() || input.first() > std::numeric_limits<myInt16>::max()) {
+      std::string message("value ");
+      message.append(std::to_string(input.first()));
+      message.append(" doesn't fit in datatype ");
+      message.append("myInt16");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+  }
+  output.first = static_cast<myInt16>(input.first());
+  if (input.second() < std::numeric_limits<myUInt16>::min() || input.second() > std::numeric_limits<myUInt16>::max()) {
+      std::string message("value ");
+      message.append(std::to_string(input.second()));
+      message.append(" doesn't fit in datatype ");
+      message.append("myUInt16");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+  }
+  output.second = static_cast<myUInt16>(input.second());
+  if (input.third() < std::numeric_limits<myInt8>::min() || input.third() > std::numeric_limits<myInt8>::max()) {
+      std::string message("value ");
+      message.append(std::to_string(input.third()));
+      message.append(" doesn't fit in datatype ");
+      message.append("myInt8");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+  }
+  output.third = static_cast<myInt8>(input.third());
   return output;
 }
 

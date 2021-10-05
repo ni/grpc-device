@@ -1216,13 +1216,85 @@ TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeInt16_Error)
   SetSingleStructWithCoercionData(request.add_structs(), 0);
   SetSingleStructWithCoercionData(request.add_structs(), 1);
   SetSingleStructWithCoercionData(request.add_structs(), 2);
-  request.mutable_structs(1)->set_first(UINT16_MAX + 1);
+  request.mutable_structs(1)->set_first(INT16_MAX + 1);
   SetStructsWithCoercionResponse response;
 
   auto status = service_.SetStructsWithCoercion(&context, &request, &response);
 
   EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
   EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MAX + 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooSmallInt16_Error)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .Times(0);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  request.mutable_structs(1)->set_first(INT16_MIN - 1);
+  SetStructsWithCoercionResponse response;
+
+  auto status = service_.SetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MIN - 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeUInt16_Error)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .Times(0);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  request.mutable_structs(1)->set_second(UINT16_MAX + 1);
+  SetStructsWithCoercionResponse response;
+
+  auto status = service_.SetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(UINT16_MAX + 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeInt8_Error)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .Times(0);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  request.mutable_structs(1)->set_third(INT8_MAX + 1);
+  SetStructsWithCoercionResponse response;
+
+  auto status = service_.SetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MAX + 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooSmallInt8_Error)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .Times(0);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  request.mutable_structs(1)->set_third(INT8_MIN - 1);
+  SetStructsWithCoercionResponse response;
+
+  auto status = service_.SetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
 }
 
 }  // namespace unit

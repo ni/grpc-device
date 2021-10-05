@@ -27,6 +27,23 @@ def is_input_array_that_needs_coercion(parameter):
     return common_helpers.is_input_parameter(parameter) and get_c_element_type_for_array_that_needs_coercion(parameter) is not None
 
 
+def is_input_that_needs_coercion(parameter, custom_types: list):
+    if not common_helpers.is_input_parameter(parameter):
+        return False
+    if parameter.get('coerced', False):
+        return True
+    if not common_helpers.is_struct(parameter):
+        return False
+    underlying_struct_name = common_helpers.get_underlying_type_name(
+        parameter["type"])
+    underlying_structs = [
+        custom_type for custom_type in custom_types if custom_type['name'] == underlying_struct_name]
+    if not any([underlying_structs]):
+        return False
+    custom_type = underlying_structs[0]
+    return any([field.get('coerced', False) for field in custom_type['fields']])
+
+
 def is_output_array_that_needs_coercion(parameter):
     return common_helpers.is_output_parameter(parameter) and get_c_element_type_for_array_that_needs_coercion(parameter) is not None
 
@@ -249,8 +266,8 @@ def is_custom_close_method(function_data):
     return function_data.get('custom_close_method', False)
 
 
-def requires_checked_conversion(parameters):
-    return any([is_input_array_that_needs_coercion(p) for p in parameters])
+def requires_checked_conversion(parameters, custom_types):
+    return any([is_input_that_needs_coercion(p, custom_types) for p in parameters])
 
 
 def get_request_param(method_name):
