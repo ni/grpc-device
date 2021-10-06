@@ -3264,6 +3264,9 @@ namespace nifgen_grpc {
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -3457,6 +3460,9 @@ namespace nifgen_grpc {
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
   }
 
   bool NiFgenService::is_enabled()
@@ -3487,8 +3493,22 @@ template <>
 NIComplexI16_struct convert_from_grpc(const nifgen_grpc::NIComplexInt32& input) 
 {
   auto output = NIComplexI16_struct();  
-  output.real = input.real();
-  output.imaginary = input.imaginary();
+  if (input.real() < std::numeric_limits<ViInt16>::min() || input.real() > std::numeric_limits<ViInt16>::max()) {
+      std::string message("value ");
+      message.append(std::to_string(input.real()));
+      message.append(" doesn't fit in datatype ");
+      message.append("ViInt16");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+  }
+  output.real = static_cast<ViInt16>(input.real());
+  if (input.imaginary() < std::numeric_limits<ViInt16>::min() || input.imaginary() > std::numeric_limits<ViInt16>::max()) {
+      std::string message("value ");
+      message.append(std::to_string(input.imaginary()));
+      message.append(" doesn't fit in datatype ");
+      message.append("ViInt16");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+  }
+  output.imaginary = static_cast<ViInt16>(input.imaginary());
   return output;
 }
 

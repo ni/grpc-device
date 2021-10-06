@@ -12,6 +12,15 @@
 using namespace nifake_non_ivi_grpc;
 using namespace ::testing;
 
+bool operator==(const StructWithCoercion_struct& left, const StructWithCoercion& right)
+{
+  return left.first == right.first() && left.second == right.second() && left.third == right.third();
+}
+bool operator==(const StructWithCoercion_struct& left, const StructWithCoercion_struct& right)
+{
+  return left.first == right.first && left.second == right.second && left.third == right.third;
+}
+
 namespace ni {
 namespace tests {
 namespace unit {
@@ -66,6 +75,70 @@ void SetU8Data(Unused, myUInt8* u8_data)
   u8_data[0] = 0;
   u8_data[1] = UINT8_MAX;
   u8_data[2] = 16;
+}
+
+void SetSingleStructWithCoercionData(StructWithCoercion_struct* data, int index)
+{
+  switch (index) {
+    case 0:
+      data->first = 0;
+      data->second = 0;
+      data->third = 0;
+      break;
+    case 1:
+      data->first = INT16_MAX;
+      data->second = UINT16_MAX;
+      data->third = INT8_MAX;
+      break;
+    case 2:
+      data->first = INT16_MIN;
+      data->second = 16;
+      data->third = INT8_MIN;
+      break;
+    default:
+      EXPECT_TRUE(false);
+  }
+}
+
+void SetSingleStructWithCoercionData(StructWithCoercion* data, int index)
+{
+  switch (index) {
+    case 0:
+      data->set_first(0);
+      data->set_second(0);
+      data->set_third(0);
+      break;
+    case 1:
+      data->set_first(INT16_MAX);
+      data->set_second(UINT16_MAX);
+      data->set_third(INT8_MAX);
+      break;
+    case 2:
+      data->set_first(INT16_MIN);
+      data->set_second(16);
+      data->set_third(INT8_MIN);
+      break;
+    default:
+      EXPECT_TRUE(false);
+  }
+}
+
+void SetStructWithCoercionData(Unused, StructWithCoercion_struct* data)
+{
+  SetSingleStructWithCoercionData(&data[0], 0);
+  SetSingleStructWithCoercionData(&data[1], 1);
+  SetSingleStructWithCoercionData(&data[2], 2);
+}
+
+MATCHER(CustomStructWithCoercionData, "")
+{
+  StructWithCoercion_struct const* data_array = std::get<0>(arg);
+  StructWithCoercion_struct expected_data[3];
+  SetSingleStructWithCoercionData(&expected_data[0], 0);
+  SetSingleStructWithCoercionData(&expected_data[1], 1);
+  SetSingleStructWithCoercionData(&expected_data[2], 2);
+
+  return expected_data[0] == data_array[0] && expected_data[1] == data_array[1] && expected_data[2] == data_array[2];
 }
 
 MATCHER_P(CVIAbsoluteTimeEq, lhs, "")
@@ -1086,6 +1159,142 @@ TEST_F(NiFakeNonIviServiceEnabledToggleTests, UnreleasedServiceWithToggleEnabled
 TEST_F(NiFakeNonIviServiceTests, UnreleasedServiceWithNoToggles_IsEnabled_ReturnsFalse)
 {
   EXPECT_FALSE(service_.is_enabled());
+}
+
+TEST_F(NiFakeNonIviServiceTests, GetStructsWithCoercion_ReturnsInRangeData)
+{
+  ::grpc::ServerContext context;
+  GetStructsWithCoercionRequest request;
+  request.set_number_of_structs(3);
+  GetStructsWithCoercionResponse response;
+  EXPECT_CALL(library_, GetStructsWithCoercion(_, _))
+      .WillOnce(DoAll(
+          Invoke(SetStructWithCoercionData),
+          Return(kDriverSuccess)));
+
+  service_.GetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(3, response.structs().size());
+  EXPECT_EQ(3, response.structs_size());
+  StructWithCoercion_struct expected_struct;
+  SetSingleStructWithCoercionData(&expected_struct, 0);
+  EXPECT_EQ(expected_struct, response.structs(0));
+  EXPECT_EQ(expected_struct, response.structs()[0]);
+  SetSingleStructWithCoercionData(&expected_struct, 1);
+  EXPECT_EQ(expected_struct, response.structs(1));
+  EXPECT_EQ(expected_struct, response.structs()[1]);
+  SetSingleStructWithCoercionData(&expected_struct, 2);
+  EXPECT_EQ(expected_struct, response.structs(2));
+  EXPECT_EQ(expected_struct, response.structs()[2]);
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_DataGetsCoerced)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .With(CustomStructWithCoercionData())
+      .Times(1);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  SetStructsWithCoercionResponse response;
+
+  service_.SetStructsWithCoercion(&context, &request, &response);
+
+  auto status = response.status();
+  EXPECT_EQ(kDriverSuccess, status);
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeInt16_Error)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .Times(0);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  request.mutable_structs(1)->set_first(INT16_MAX + 1);
+  SetStructsWithCoercionResponse response;
+
+  auto status = service_.SetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MAX + 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooSmallInt16_Error)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .Times(0);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  request.mutable_structs(1)->set_first(INT16_MIN - 1);
+  SetStructsWithCoercionResponse response;
+
+  auto status = service_.SetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MIN - 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeUInt16_Error)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .Times(0);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  request.mutable_structs(1)->set_second(UINT16_MAX + 1);
+  SetStructsWithCoercionResponse response;
+
+  auto status = service_.SetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(UINT16_MAX + 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooLargeInt8_Error)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .Times(0);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  request.mutable_structs(1)->set_third(INT8_MAX + 1);
+  SetStructsWithCoercionResponse response;
+
+  auto status = service_.SetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MAX + 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooSmallInt8_Error)
+{
+  EXPECT_CALL(library_, SetStructsWithCoercion(_))
+      .Times(0);
+  ::grpc::ServerContext context;
+  SetStructsWithCoercionRequest request;
+  SetSingleStructWithCoercionData(request.add_structs(), 0);
+  SetSingleStructWithCoercionData(request.add_structs(), 1);
+  SetSingleStructWithCoercionData(request.add_structs(), 2);
+  request.mutable_structs(1)->set_third(INT8_MIN - 1);
+  SetStructsWithCoercionResponse response;
+
+  auto status = service_.SetStructsWithCoercion(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
 }
 
 }  // namespace unit

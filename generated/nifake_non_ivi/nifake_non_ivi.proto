@@ -38,6 +38,8 @@ service NiFakeNonIvi {
   rpc SetMarbleAttributeDouble(SetMarbleAttributeDoubleRequest) returns (SetMarbleAttributeDoubleResponse);
   rpc SetMarbleAttributeInt32(SetMarbleAttributeInt32Request) returns (SetMarbleAttributeInt32Response);
   rpc SetColors(SetColorsRequest) returns (SetColorsResponse);
+  rpc GetStructsWithCoercion(GetStructsWithCoercionRequest) returns (GetStructsWithCoercionResponse);
+  rpc SetStructsWithCoercion(SetStructsWithCoercionRequest) returns (SetStructsWithCoercionResponse);
 }
 
 enum MarbleInt32ArrayAttributes {
@@ -84,6 +86,11 @@ message StringAndEnum {
   double powerUpState = 3;
 }
 
+message StructWithCoercion {
+  int32 first = 1;
+  int32 second = 2;
+  int32 third = 3;
+}
 message CloseRequest {
   nidevice_grpc.Session handle = 1;
 }
@@ -302,6 +309,23 @@ message SetColorsRequest {
 }
 
 message SetColorsResponse {
+  int32 status = 1;
+}
+
+message GetStructsWithCoercionRequest {
+  int32 number_of_structs = 1;
+}
+
+message GetStructsWithCoercionResponse {
+  int32 status = 1;
+  repeated StructWithCoercion structs = 2;
+}
+
+message SetStructsWithCoercionRequest {
+  repeated StructWithCoercion structs = 1;
+}
+
+message SetStructsWithCoercionResponse {
   int32 status = 1;
 }
 

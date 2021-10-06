@@ -123,7 +123,7 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-% if service_helpers.requires_checked_conversion(parameters):
+% if service_helpers.requires_checked_conversion(parameters, custom_types):
     catch (nidevice_grpc::ValueOutOfRangeException& ex) {
       return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
     }
@@ -174,7 +174,25 @@ ${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type[
 {
   auto output = ${custom_type["name"]}();  
 %       for field in custom_type["fields"]: 
-  output.${common_helpers.pascal_to_camel(common_helpers.snake_to_pascal(field["grpc_name"]))} = input.${common_helpers.camel_to_snake(field["name"])}();
+<%
+            input_field_name = common_helpers.camel_to_snake(field["name"])
+            output_field_name = common_helpers.pascal_to_camel(common_helpers.snake_to_pascal(field["grpc_name"]))
+%>\
+%           if field.get("coerced", False):
+<%
+               c_element_type = field["type"]
+%>\
+  if (input.${input_field_name}() < std::numeric_limits<${c_element_type}>::min() || input.${input_field_name}() > std::numeric_limits<${c_element_type}>::max()) {
+      std::string message("value ");
+      message.append(std::to_string(input.${input_field_name}()));
+      message.append(" doesn't fit in datatype ");
+      message.append("${c_element_type}");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+  }
+  output.${output_field_name} = static_cast<${c_element_type}>(input.${input_field_name}());
+%            else:
+  output.${output_field_name} = input.${input_field_name}();
+%            endif
 %       endfor
   return output;
 }

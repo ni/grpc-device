@@ -404,5 +404,37 @@ set_colors(const StubPtr& stub, const std::vector<pb::int32>& colors, const pb::
   return response;
 }
 
+GetStructsWithCoercionResponse
+get_structs_with_coercion(const StubPtr& stub, const pb::int32& number_of_structs)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetStructsWithCoercionRequest{};
+  request.set_number_of_structs(number_of_structs);
+
+  auto response = GetStructsWithCoercionResponse{};
+
+  raise_if_error(
+      stub->GetStructsWithCoercion(&context, request, &response));
+
+  return response;
+}
+
+SetStructsWithCoercionResponse
+set_structs_with_coercion(const StubPtr& stub, const std::vector<StructWithCoercion>& structs)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetStructsWithCoercionRequest{};
+  copy_array(structs, request.mutable_structs());
+
+  auto response = SetStructsWithCoercionResponse{};
+
+  raise_if_error(
+      stub->SetStructsWithCoercion(&context, request, &response));
+
+  return response;
+}
+
 
 } // namespace nifake_non_ivi_grpc::experimental::client

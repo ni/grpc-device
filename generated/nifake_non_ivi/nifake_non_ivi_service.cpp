@@ -788,6 +788,49 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetStructsWithCoercion(::grpc::ServerContext* context, const GetStructsWithCoercionRequest* request, GetStructsWithCoercionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int32 number_of_structs = request->number_of_structs();
+      std::vector<StructWithCoercion_struct> structs(number_of_structs, StructWithCoercion_struct());
+      auto status = library_->GetStructsWithCoercion(number_of_structs, structs.data());
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(structs, response->mutable_structs());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetStructsWithCoercion(::grpc::ServerContext* context, const SetStructsWithCoercionRequest* request, SetStructsWithCoercionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto structs = convert_from_grpc<StructWithCoercion_struct>(request->structs());
+      auto status = library_->SetStructsWithCoercion(structs.data());
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
   bool NiFakeNonIviService::is_enabled()
   {
     return feature_toggles_.is_enabled;
@@ -802,4 +845,48 @@ namespace nifake_non_ivi_grpc {
   {
   }
 } // namespace nifake_non_ivi_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const StructWithCoercion_struct& input, nifake_non_ivi_grpc::StructWithCoercion* output) 
+{
+  output->set_first(input.first);
+  output->set_second(input.second);
+  output->set_third(input.third);
+}
+
+template <>
+StructWithCoercion_struct convert_from_grpc(const nifake_non_ivi_grpc::StructWithCoercion& input) 
+{
+  auto output = StructWithCoercion_struct();  
+  if (input.first() < std::numeric_limits<myInt16>::min() || input.first() > std::numeric_limits<myInt16>::max()) {
+      std::string message("value ");
+      message.append(std::to_string(input.first()));
+      message.append(" doesn't fit in datatype ");
+      message.append("myInt16");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+  }
+  output.first = static_cast<myInt16>(input.first());
+  if (input.second() < std::numeric_limits<myUInt16>::min() || input.second() > std::numeric_limits<myUInt16>::max()) {
+      std::string message("value ");
+      message.append(std::to_string(input.second()));
+      message.append(" doesn't fit in datatype ");
+      message.append("myUInt16");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+  }
+  output.second = static_cast<myUInt16>(input.second());
+  if (input.third() < std::numeric_limits<myInt8>::min() || input.third() > std::numeric_limits<myInt8>::max()) {
+      std::string message("value ");
+      message.append(std::to_string(input.third()));
+      message.append(" doesn't fit in datatype ");
+      message.append("myInt8");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
+  }
+  output.third = static_cast<myInt8>(input.third());
+  return output;
+}
+
+} // converters
+} // nidevice_grpc
 

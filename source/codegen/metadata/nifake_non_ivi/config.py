@@ -30,6 +30,27 @@ config = {
                     'name': 'powerUpState',
                 },
             ]
+        },
+        {
+            'name': 'StructWithCoercion_struct',
+            'grpc_name': 'StructWithCoercion',
+            'fields': [
+                {
+                    'type': 'myInt16',
+                    'name': 'first',
+                    'coerced': True
+                },
+                {
+                    'type': 'myUInt16',
+                    'name': 'second',
+                    'coerced': True
+                },
+                {
+                    'type': 'myInt8',
+                    'name': 'third',
+                    'coerced': True
+                }
+            ],
         }
     ],
     'additional_headers': ['custom/nidaqmx_conversions.h'],

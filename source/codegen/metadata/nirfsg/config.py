@@ -49,10 +49,12 @@ config = {
                 {
                     'type': 'ViInt16',
                     'name': 'real',
+                    'coerced': True,
                 },
                 {
                     'type': 'ViInt16',
                     'name': 'imaginary',
+                    'coerced': True,
                 }
             ]
         },

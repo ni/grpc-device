@@ -13,6 +13,12 @@ using myUInt16 = uint16_t;
 using myInt8 = int8_t;
 using myUInt8 = uint8_t;
 
+struct StructWithCoercion_struct {
+  myInt16 first;
+  myUInt16 second;
+  myInt8 third;
+};
+
 using CallbackPtr = int32(myInt16, void*);
 
 #endif /* NIFAKE_NON_IVI_H */
