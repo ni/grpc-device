@@ -48,6 +48,10 @@ ${mako_helper.define_attribute_enum(group.name, define_attribute_enum, attribute
 % endfor
 ${mako_helper.define_function_enums(function_enums)}\
 ${mako_helper.insert_custom_template_if_found()}\
+% for custom_type in common_helpers.get_custom_types(config):
+${mako_helper.define_custom_type(custom_type)}\
+
+% endfor
 % for function in common_helpers.filter_proto_rpc_functions(functions):
 <%
   input_parameters, output_parameters = proto_helpers.get_parameters(functions[function])

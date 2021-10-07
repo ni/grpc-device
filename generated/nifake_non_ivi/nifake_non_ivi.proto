@@ -81,16 +81,17 @@ enum MarbleInt32AttributeValues {
 }
 
 message StringAndEnum {
-  string channelName = 1;
+  string channel_name = 1;
   BeautifulColor color = 2;
-  double powerUpState = 3;
+  double power_up_state = 3;
 }
 
 message StructWithCoercion {
   int32 first = 1;
-  int32 second = 2;
+  uint32 second = 2;
   int32 third = 3;
 }
+
 message CloseRequest {
   nidevice_grpc.Session handle = 1;
 }

@@ -155,9 +155,10 @@ message FakeCustomStruct {
 }
 
 message StringAndTurtle {
-  string stringArg = 1;
+  string string_arg = 1;
   Turtle turtle = 2;
 }
+
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }

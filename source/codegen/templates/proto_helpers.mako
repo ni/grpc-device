@@ -1,4 +1,6 @@
 <%!
+  from mako.exceptions import TopLevelLookupException
+
   import common_helpers
   import proto_helpers
 %>
@@ -54,13 +56,14 @@ enum ${enum_name} {
 <%
   config = data["config"]
   lookup = data["lookup"]
-  has_custom_template = False
-  if config["custom_types"]:
-    custom_template = "custom_proto.mako"
-    has_custom_template = True
+  custom_template = None
+  try:
+    custom_template = lookup.get_template("custom_proto.mako").render()
+  except TopLevelLookupException:
+    pass # no template
 %>\
-% if has_custom_template:
-${lookup.get_template(custom_template).render()}
+% if custom_template:
+${custom_template}
 % endif
 </%def>
 
@@ -96,6 +99,24 @@ message ${common_helpers.snake_to_pascal(function)}Request {
 message ${common_helpers.snake_to_pascal(function)}Response {
 % for parameter in response_parameters:
   ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]};
+% endfor
+}
+</%def>
+
+## Define a proto message for a given custom type.
+<%def name="define_custom_type(custom_type)">\
+<%
+  config = data["config"]
+  used_indexes = []
+%>\
+message ${custom_type["grpc_name"]} {
+% for field in custom_type["fields"]:
+<%
+  field_type = field.get("enum", None) or common_helpers.get_grpc_type(field["type"], config)
+  field_name = field["grpc_name"]
+  field_number = proto_helpers.generate_parameter_field_number(field, used_indexes)
+%>\
+  ${field_type} ${field_name} = ${field_number};
 % endfor
 }
 </%def>

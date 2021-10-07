@@ -263,8 +263,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       stripped_grpc_type = 'std::string'
   parameter_c_type = parameter['type']
   parameter_c_type_pointer = parameter_c_type.replace('[]','*')
-  # In gRPC fields, the names of the fields in the struct are lowercase
-  parameter_name = parameter['name'].lower()
+  parameter_name = common_helpers.camel_to_snake(parameter['name'])
 %>\
       auto get_${parameter['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, int n) -> ${parameter_c_type_pointer} {
             if (vector.size() > n) {

@@ -1206,7 +1206,7 @@ namespace nifake_grpc {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       auto get_stringArg_if = [](const google::protobuf::RepeatedPtrField<StringAndTurtle>& vector, int n) -> ViConstString {
             if (vector.size() > n) {
-                  return vector[n].stringarg().c_str();
+                  return vector[n].string_arg().c_str();
             }
             return nullptr;
       };
