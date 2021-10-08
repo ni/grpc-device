@@ -1518,8 +1518,11 @@ functions = {
                 'name': 'name',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
+                    'tags': [
+                        'strlen-bug'
+                    ],
                     'value': 'bufferSize',
-                    'value_twist': 'bufferSize'
+                    'value_twist': 'bufferSize',
                 },
                 'type': 'ViChar[]'
             },

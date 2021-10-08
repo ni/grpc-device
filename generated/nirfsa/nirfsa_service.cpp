@@ -1921,7 +1921,7 @@ namespace nirfsa_grpc {
         }
         std::string name;
         if (buffer_size > 0) {
-            name.resize(buffer_size - 1);
+            name.resize(buffer_size /* Workaround: strlen-bug */);
         }
         status = library_->GetRelayName(vi, channel_list, index, (ViChar*)name.data(), &buffer_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
