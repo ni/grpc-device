@@ -6695,7 +6695,7 @@ namespace nidaqmx_grpc {
       };
       auto get_expState_if = [](const google::protobuf::RepeatedPtrField<WatchdogExpChannelsAndState>& vector, int n) -> int32 {
             if (vector.size() > n) {
-                  return vector[n].expstate();
+                  return vector[n].exp_state();
             }
             return 0;
       };
@@ -7022,13 +7022,13 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpChannelAndType>& vector, int n) -> const char* {
             if (vector.size() > n) {
-                  return vector[n].channelname().c_str();
+                  return vector[n].channel_name().c_str();
             }
             return nullptr;
       };
       auto get_channelType_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpChannelAndType>& vector, int n) -> int32 {
             if (vector.size() > n) {
-                  return vector[n].channeltype();
+                  return vector[n].channel_type();
             }
             return 0;
       };
@@ -13835,7 +13835,7 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto get_channelNames_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpChannelsAndState>& vector, int n) -> const char* {
             if (vector.size() > n) {
-                  return vector[n].channelnames().c_str();
+                  return vector[n].channel_names().c_str();
             }
             return nullptr;
       };
@@ -13847,7 +13847,7 @@ namespace nidaqmx_grpc {
       };
       auto get_channelType_if = [](const google::protobuf::RepeatedPtrField<AnalogPowerUpChannelsAndState>& vector, int n) -> int32 {
             if (vector.size() > n) {
-                  return vector[n].channeltype();
+                  return vector[n].channel_type();
             }
             return 0;
       };
@@ -14389,7 +14389,7 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto get_channelNames_if = [](const google::protobuf::RepeatedPtrField<DigitalPowerUpChannelsAndState>& vector, int n) -> const char* {
             if (vector.size() > n) {
-                  return vector[n].channelnames().c_str();
+                  return vector[n].channel_names().c_str();
             }
             return nullptr;
       };
@@ -14427,7 +14427,7 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto get_channelNames_if = [](const google::protobuf::RepeatedPtrField<DigitalPullUpPullDownChannelsAndState>& vector, int n) -> const char* {
             if (vector.size() > n) {
-                  return vector[n].channelnames().c_str();
+                  return vector[n].channel_names().c_str();
             }
             return nullptr;
       };

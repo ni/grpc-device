@@ -175,8 +175,8 @@ ${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type[
   auto output = ${custom_type["name"]}();  
 %       for field in custom_type["fields"]: 
 <%
-            input_field_name = common_helpers.camel_to_snake(field["name"])
-            output_field_name = common_helpers.pascal_to_camel(common_helpers.snake_to_pascal(field["grpc_name"]))
+            input_field_name = field["grpc_name"]
+            output_field_name = field["name"]
 %>\
 %           if field.get("coerced", False):
 <%

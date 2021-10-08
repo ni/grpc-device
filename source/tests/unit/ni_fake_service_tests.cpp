@@ -275,7 +275,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithOneArgument_SucceedsAn
   request.set_resource_name(resource_name);
   request.set_session_name(session_name);
   auto nameAndTurtle = request.add_name_and_turtle();
-  nameAndTurtle->set_stringarg("SomeStringArg");
+  nameAndTurtle->set_string_arg("SomeStringArg");
   nameAndTurtle->set_turtle(nifake_grpc::Turtle::TURTLE_DONATELLO);
   nifake_grpc::InitWithVarArgsResponse response;
   ::grpc::Status status = service.InitWithVarArgs(&context, &request, &response);
@@ -304,13 +304,13 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithThreeArguments_Succeed
   request.set_resource_name(resource_name);
   request.set_session_name(session_name);
   auto nameAndTurtle = request.add_name_and_turtle();
-  nameAndTurtle->set_stringarg("SomeStringArg");
+  nameAndTurtle->set_string_arg("SomeStringArg");
   nameAndTurtle->set_turtle(nifake_grpc::Turtle::TURTLE_DONATELLO);
   nameAndTurtle = request.add_name_and_turtle();
-  nameAndTurtle->set_stringarg("SomeStringArg2");
+  nameAndTurtle->set_string_arg("SomeStringArg2");
   nameAndTurtle->set_turtle(nifake_grpc::Turtle::TURTLE_MICHELANGELO);
   nameAndTurtle = request.add_name_and_turtle();
-  nameAndTurtle->set_stringarg("SomeStringArg3");
+  nameAndTurtle->set_string_arg("SomeStringArg3");
   nameAndTurtle->set_turtle(nifake_grpc::Turtle::TURTLE_RAPHAEL);
   nifake_grpc::InitWithVarArgsResponse response;
   ::grpc::Status status = service.InitWithVarArgs(&context, &request, &response);

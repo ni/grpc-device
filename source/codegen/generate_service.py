@@ -8,6 +8,8 @@ import metadata_mutation
 import metadata_validation
 from mako.lookup import TemplateLookup
 
+import common_helpers
+
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
     current_dir = os.path.dirname(__file__)
@@ -54,7 +56,7 @@ def mutate_metadata(metadata: dict):
     for custom_type in config.get("custom_types", []):
         for field in custom_type["fields"]:
             if "grpc_name" not in field:
-                field["grpc_name"] = field["name"]
+                field["grpc_name"] = common_helpers.camel_to_snake(field["name"])
 
     attribute_expander = metadata_mutation.AttributeAccessorExpander(metadata)
     for function_name in metadata["functions"]:

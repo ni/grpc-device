@@ -766,8 +766,8 @@ message WaveformInfo {
   double offset = 5;
   double gain = 6;
   double reserved1 = 7;
-  double reserved2 = 8; 
-} 
+  double reserved2 = 8;
+}
 
 message CoefficientInfo {
   double offset = 1;
@@ -777,14 +777,15 @@ message CoefficientInfo {
 }
 
 message NIComplexNumber {
-    double real = 1;
-    double imaginary = 2;
-} 
+  double real = 1;
+  double imaginary = 2;
+}
 
 message NIComplexInt32 {
-    sint32 real = 1;
-    sint32 imaginary = 2;
+  sint32 real = 1;
+  sint32 imaginary = 2;
 }
+
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }

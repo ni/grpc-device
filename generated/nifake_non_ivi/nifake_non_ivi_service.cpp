@@ -552,7 +552,7 @@ namespace nifake_non_ivi_grpc {
       auto input_name = request->input_name().c_str();
       auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
             if (vector.size() > n) {
-                  return vector[n].channelname().c_str();
+                  return vector[n].channel_name().c_str();
             }
             return nullptr;
       };
@@ -564,7 +564,7 @@ namespace nifake_non_ivi_grpc {
       };
       auto get_powerUpState_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> double {
             if (vector.size() > n) {
-                  return vector[n].powerupstate();
+                  return vector[n].power_up_state();
             }
             return 0;
       };

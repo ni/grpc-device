@@ -522,9 +522,9 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_OneArgumentPair)
   InputVarArgsRequest request;
   request.set_input_name("inputName");
   auto arg = request.add_string_and_enums();
-  arg->set_channelname("channel");
+  arg->set_channel_name("channel");
   arg->set_color(BEAUTIFUL_COLOR_PINK);
-  arg->set_powerupstate(1.0);
+  arg->set_power_up_state(1.0);
   InputVarArgsResponse response;
 
   service_.InputVarArgs(&context, &request, &response);
@@ -540,13 +540,13 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_TwoArgumentPairs)
   InputVarArgsRequest request;
   request.set_input_name("inputName");
   auto arg = request.add_string_and_enums();
-  arg->set_channelname("channel0");
+  arg->set_channel_name("channel0");
   arg->set_color(BEAUTIFUL_COLOR_PINK);
-  arg->set_powerupstate(1.0);
+  arg->set_power_up_state(1.0);
   arg = request.add_string_and_enums();
-  arg->set_channelname("channel1");
+  arg->set_channel_name("channel1");
   arg->set_color(BEAUTIFUL_COLOR_AQUA);
-  arg->set_powerupstate(2.0);
+  arg->set_power_up_state(2.0);
   InputVarArgsResponse response;
 
   service_.InputVarArgs(&context, &request, &response);
@@ -562,17 +562,17 @@ TEST_F(NiFakeNonIviServiceTests, InputVarArgs_ThreeArgumentPairs)
   InputVarArgsRequest request;
   request.set_input_name("inputName");
   auto arg = request.add_string_and_enums();
-  arg->set_channelname("channel0");
+  arg->set_channel_name("channel0");
   arg->set_color(BEAUTIFUL_COLOR_PINK);
-  arg->set_powerupstate(1.0);
+  arg->set_power_up_state(1.0);
   arg = request.add_string_and_enums();
-  arg->set_channelname("channel1");
+  arg->set_channel_name("channel1");
   arg->set_color(BEAUTIFUL_COLOR_AQUA);
-  arg->set_powerupstate(2.0);
+  arg->set_power_up_state(2.0);
   arg = request.add_string_and_enums();
-  arg->set_channelname("channel2");
+  arg->set_channel_name("channel2");
   arg->set_color(BEAUTIFUL_COLOR_GREEN);
-  arg->set_powerupstate(3.0);
+  arg->set_power_up_state(3.0);
   InputVarArgsResponse response;
 
   service_.InputVarArgs(&context, &request, &response);
