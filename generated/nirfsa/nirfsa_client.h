@@ -60,6 +60,7 @@ ConfigureSpectrumFrequencyCenterSpanResponse configure_spectrum_frequency_center
 ConfigureSpectrumFrequencyStartStopResponse configure_spectrum_frequency_start_stop(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& start_frequency, const double& stop_frequency);
 CreateConfigurationListResponse create_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& list_name, const std::vector<NiRFSAAttributes>& list_attribute_i_ds, const bool& set_as_active_list);
 CreateConfigurationListStepResponse create_configuration_list_step(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& set_as_active_step);
+CreateDeembeddingSparameterTableArrayResponse create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const std::vector<double>& frequencies, const std::vector<NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation);
 CreateDeembeddingSparameterTableS2PFileResponse create_deembedding_sparameter_table_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const pb::string& s2p_file_path, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation);
 DeleteAllDeembeddingTablesResponse delete_all_deembedding_tables(const StubPtr& stub, const nidevice_grpc::Session& vi);
 DeleteConfigurationListResponse delete_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& list_name);
@@ -74,6 +75,12 @@ ErrorQueryResponse error_query(const StubPtr& stub, const nidevice_grpc::Session
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const simple_variant<ExportTerminalRangeTable, std::string>& output_terminal);
 ExtCalStoreBaselineForSelfCalibrationResponse ext_cal_store_baseline_for_self_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& password, const pb::int64& self_calibration_step);
 ExternalAlignmentAdjustPreselectorResponse external_alignment_adjust_preselector(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& coefficients);
+FetchIQMultiRecordComplexF32Response fetch_iq_multi_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout);
+FetchIQMultiRecordComplexF64Response fetch_iq_multi_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout);
+FetchIQMultiRecordComplexI16Response fetch_iq_multi_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout);
+FetchIQSingleRecordComplexF32Response fetch_iq_single_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout);
+FetchIQSingleRecordComplexF64Response fetch_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout);
+FetchIQSingleRecordComplexI16Response fetch_iq_single_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout);
 GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id);
 GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id);
 GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id);
@@ -82,6 +89,7 @@ GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, cons
 GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id);
 GetCalUserDefinedInfoResponse get_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetCalUserDefinedInfoMaxSizeResponse get_cal_user_defined_info_max_size(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetDeembeddingSparametersResponse get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& sparameters_array_size);
 GetDeviceResponseResponse get_device_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<DeviceResponse, pb::int32>& response_type);
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_description_buffer_size);
 GetExtCalLastDateAndTimeResponse get_ext_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -90,11 +98,14 @@ GetExtCalRecommendedIntervalResponse get_ext_cal_recommended_interval(const Stub
 GetFetchBacklogResponse get_fetch_backlog(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number);
 GetFrequencyResponseResponse get_frequency_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
 GetGainReferenceCalBaselineResponse get_gain_reference_cal_baseline(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetNormalizationCoefficientsResponse get_normalization_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
 GetNumberOfSpectralLinesResponse get_number_of_spectral_lines(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
 GetRelayNameResponse get_relay_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int32& index);
 GetRelayOperationsCountResponse get_relay_operations_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
+GetScalingCoefficientsResponse get_scaling_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
 GetSelfCalLastDateAndTimeResponse get_self_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int64& self_calibration_step);
 GetSelfCalLastTempResponse get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int64& self_calibration_step);
+GetSpectralInfoForSMTResponse get_spectral_info_for_smt(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetStreamEndpointHandleResponse get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint);
 GetTerminalNameResponse get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const pb::int32& buffer_size);
 GetUserDataResponse get_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& identifier);
@@ -107,6 +118,9 @@ InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, c
 IsSelfCalValidResponse is_self_cal_valid(const StubPtr& stub, const nidevice_grpc::Session& vi);
 LockSessionResponse lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 PerformThermalCorrectionResponse perform_thermal_correction(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ReadIQSingleRecordComplexF64Response read_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int64& data_array_size);
+ReadPowerSpectrumF32Response read_power_spectrum_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& data_array_size);
+ReadPowerSpectrumF64Response read_power_spectrum_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& data_array_size);
 ResetResponse reset(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetAttributeResponse reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id);
 ResetDeviceResponse reset_device(const StubPtr& stub, const nidevice_grpc::Session& vi);

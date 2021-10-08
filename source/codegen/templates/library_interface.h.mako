@@ -18,6 +18,9 @@ include_guard_name = service_helpers.get_include_guard_name(config, "_LIBRARY_WR
 
 #include <grpcpp/grpcpp.h>
 #include <${config["c_header"]}>
+% for additional_header in common_helpers.get_additional_headers(config, "library_interface.h"):
+#include "${additional_header}"
+% endfor
 
 namespace ${config["namespace_component"]}_grpc {
 

@@ -784,6 +784,35 @@ create_configuration_list_step(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+CreateDeembeddingSparameterTableArrayResponse
+create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const std::vector<double>& frequencies, const std::vector<NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateDeembeddingSparameterTableArrayRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_port(port);
+  request.set_table_name(table_name);
+  copy_array(frequencies, request.mutable_frequencies());
+  copy_array(sparameter_table, request.mutable_sparameter_table());
+  request.set_number_of_ports(number_of_ports);
+  const auto sparameter_orientation_ptr = sparameter_orientation.get_if<SparameterOrientation>();
+  const auto sparameter_orientation_raw_ptr = sparameter_orientation.get_if<pb::int32>();
+  if (sparameter_orientation_ptr) {
+    request.set_sparameter_orientation(*sparameter_orientation_ptr);
+  }
+  else if (sparameter_orientation_raw_ptr) {
+    request.set_sparameter_orientation_raw(*sparameter_orientation_raw_ptr);
+  }
+
+  auto response = CreateDeembeddingSparameterTableArrayResponse{};
+
+  raise_if_error(
+      stub->CreateDeembeddingSparameterTableArray(&context, request, &response));
+
+  return response;
+}
+
 CreateDeembeddingSparameterTableS2PFileResponse
 create_deembedding_sparameter_table_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const pb::string& s2p_file_path, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation)
 {
@@ -1044,6 +1073,129 @@ external_alignment_adjust_preselector(const StubPtr& stub, const nidevice_grpc::
   return response;
 }
 
+FetchIQMultiRecordComplexF32Response
+fetch_iq_multi_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchIQMultiRecordComplexF32Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_starting_record(starting_record);
+  request.set_number_of_records(number_of_records);
+  request.set_number_of_samples(number_of_samples);
+  request.set_timeout(timeout);
+
+  auto response = FetchIQMultiRecordComplexF32Response{};
+
+  raise_if_error(
+      stub->FetchIQMultiRecordComplexF32(&context, request, &response));
+
+  return response;
+}
+
+FetchIQMultiRecordComplexF64Response
+fetch_iq_multi_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchIQMultiRecordComplexF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_starting_record(starting_record);
+  request.set_number_of_records(number_of_records);
+  request.set_number_of_samples(number_of_samples);
+  request.set_timeout(timeout);
+
+  auto response = FetchIQMultiRecordComplexF64Response{};
+
+  raise_if_error(
+      stub->FetchIQMultiRecordComplexF64(&context, request, &response));
+
+  return response;
+}
+
+FetchIQMultiRecordComplexI16Response
+fetch_iq_multi_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchIQMultiRecordComplexI16Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_starting_record(starting_record);
+  request.set_number_of_records(number_of_records);
+  request.set_number_of_samples(number_of_samples);
+  request.set_timeout(timeout);
+
+  auto response = FetchIQMultiRecordComplexI16Response{};
+
+  raise_if_error(
+      stub->FetchIQMultiRecordComplexI16(&context, request, &response));
+
+  return response;
+}
+
+FetchIQSingleRecordComplexF32Response
+fetch_iq_single_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchIQSingleRecordComplexF32Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_record_number(record_number);
+  request.set_number_of_samples(number_of_samples);
+  request.set_timeout(timeout);
+
+  auto response = FetchIQSingleRecordComplexF32Response{};
+
+  raise_if_error(
+      stub->FetchIQSingleRecordComplexF32(&context, request, &response));
+
+  return response;
+}
+
+FetchIQSingleRecordComplexF64Response
+fetch_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchIQSingleRecordComplexF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_record_number(record_number);
+  request.set_number_of_samples(number_of_samples);
+  request.set_timeout(timeout);
+
+  auto response = FetchIQSingleRecordComplexF64Response{};
+
+  raise_if_error(
+      stub->FetchIQSingleRecordComplexF64(&context, request, &response));
+
+  return response;
+}
+
+FetchIQSingleRecordComplexI16Response
+fetch_iq_single_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number, const pb::int64& number_of_samples, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchIQSingleRecordComplexI16Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_record_number(record_number);
+  request.set_number_of_samples(number_of_samples);
+  request.set_timeout(timeout);
+
+  auto response = FetchIQSingleRecordComplexI16Response{};
+
+  raise_if_error(
+      stub->FetchIQSingleRecordComplexI16(&context, request, &response));
+
+  return response;
+}
+
 GetAttributeViBooleanResponse
 get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id)
 {
@@ -1180,6 +1332,23 @@ get_cal_user_defined_info_max_size(const StubPtr& stub, const nidevice_grpc::Ses
 
   raise_if_error(
       stub->GetCalUserDefinedInfoMaxSize(&context, request, &response));
+
+  return response;
+}
+
+GetDeembeddingSparametersResponse
+get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& sparameters_array_size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetDeembeddingSparametersRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_sparameters_array_size(sparameters_array_size);
+
+  auto response = GetDeembeddingSparametersResponse{};
+
+  raise_if_error(
+      stub->GetDeembeddingSparameters(&context, request, &response));
 
   return response;
 }
@@ -1325,6 +1494,23 @@ get_gain_reference_cal_baseline(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+GetNormalizationCoefficientsResponse
+get_normalization_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetNormalizationCoefficientsRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+
+  auto response = GetNormalizationCoefficientsResponse{};
+
+  raise_if_error(
+      stub->GetNormalizationCoefficients(&context, request, &response));
+
+  return response;
+}
+
 GetNumberOfSpectralLinesResponse
 get_number_of_spectral_lines(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
 {
@@ -1377,6 +1563,23 @@ get_relay_operations_count(const StubPtr& stub, const nidevice_grpc::Session& vi
   return response;
 }
 
+GetScalingCoefficientsResponse
+get_scaling_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetScalingCoefficientsRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+
+  auto response = GetScalingCoefficientsResponse{};
+
+  raise_if_error(
+      stub->GetScalingCoefficients(&context, request, &response));
+
+  return response;
+}
+
 GetSelfCalLastDateAndTimeResponse
 get_self_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int64& self_calibration_step)
 {
@@ -1407,6 +1610,22 @@ get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 
   raise_if_error(
       stub->GetSelfCalLastTemp(&context, request, &response));
+
+  return response;
+}
+
+GetSpectralInfoForSMTResponse
+get_spectral_info_for_smt(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSpectralInfoForSMTRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetSpectralInfoForSMTResponse{};
+
+  raise_if_error(
+      stub->GetSpectralInfoForSMT(&context, request, &response));
 
   return response;
 }
@@ -1619,6 +1838,63 @@ perform_thermal_correction(const StubPtr& stub, const nidevice_grpc::Session& vi
 
   raise_if_error(
       stub->PerformThermalCorrection(&context, request, &response));
+
+  return response;
+}
+
+ReadIQSingleRecordComplexF64Response
+read_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int64& data_array_size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadIQSingleRecordComplexF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_timeout(timeout);
+  request.set_data_array_size(data_array_size);
+
+  auto response = ReadIQSingleRecordComplexF64Response{};
+
+  raise_if_error(
+      stub->ReadIQSingleRecordComplexF64(&context, request, &response));
+
+  return response;
+}
+
+ReadPowerSpectrumF32Response
+read_power_spectrum_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& data_array_size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadPowerSpectrumF32Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_timeout(timeout);
+  request.set_data_array_size(data_array_size);
+
+  auto response = ReadPowerSpectrumF32Response{};
+
+  raise_if_error(
+      stub->ReadPowerSpectrumF32(&context, request, &response));
+
+  return response;
+}
+
+ReadPowerSpectrumF64Response
+read_power_spectrum_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& data_array_size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadPowerSpectrumF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_timeout(timeout);
+  request.set_data_array_size(data_array_size);
+
+  auto response = ReadPowerSpectrumF64Response{};
+
+  raise_if_error(
+      stub->ReadPowerSpectrumF64(&context, request, &response));
 
   return response;
 }
