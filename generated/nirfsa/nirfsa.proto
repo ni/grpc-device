@@ -54,6 +54,7 @@ service NiRFSA {
   rpc ConfigureSpectrumFrequencyStartStop(ConfigureSpectrumFrequencyStartStopRequest) returns (ConfigureSpectrumFrequencyStartStopResponse);
   rpc CreateConfigurationList(CreateConfigurationListRequest) returns (CreateConfigurationListResponse);
   rpc CreateConfigurationListStep(CreateConfigurationListStepRequest) returns (CreateConfigurationListStepResponse);
+  rpc CreateDeembeddingSparameterTableArray(CreateDeembeddingSparameterTableArrayRequest) returns (CreateDeembeddingSparameterTableArrayResponse);
   rpc CreateDeembeddingSparameterTableS2PFile(CreateDeembeddingSparameterTableS2PFileRequest) returns (CreateDeembeddingSparameterTableS2PFileResponse);
   rpc DeleteAllDeembeddingTables(DeleteAllDeembeddingTablesRequest) returns (DeleteAllDeembeddingTablesResponse);
   rpc DeleteConfigurationList(DeleteConfigurationListRequest) returns (DeleteConfigurationListResponse);
@@ -68,6 +69,12 @@ service NiRFSA {
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc ExtCalStoreBaselineForSelfCalibration(ExtCalStoreBaselineForSelfCalibrationRequest) returns (ExtCalStoreBaselineForSelfCalibrationResponse);
   rpc ExternalAlignmentAdjustPreselector(ExternalAlignmentAdjustPreselectorRequest) returns (ExternalAlignmentAdjustPreselectorResponse);
+  rpc FetchIQMultiRecordComplexF32(FetchIQMultiRecordComplexF32Request) returns (FetchIQMultiRecordComplexF32Response);
+  rpc FetchIQMultiRecordComplexF64(FetchIQMultiRecordComplexF64Request) returns (FetchIQMultiRecordComplexF64Response);
+  rpc FetchIQMultiRecordComplexI16(FetchIQMultiRecordComplexI16Request) returns (FetchIQMultiRecordComplexI16Response);
+  rpc FetchIQSingleRecordComplexF32(FetchIQSingleRecordComplexF32Request) returns (FetchIQSingleRecordComplexF32Response);
+  rpc FetchIQSingleRecordComplexF64(FetchIQSingleRecordComplexF64Request) returns (FetchIQSingleRecordComplexF64Response);
+  rpc FetchIQSingleRecordComplexI16(FetchIQSingleRecordComplexI16Request) returns (FetchIQSingleRecordComplexI16Response);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
@@ -76,6 +83,7 @@ service NiRFSA {
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetCalUserDefinedInfo(GetCalUserDefinedInfoRequest) returns (GetCalUserDefinedInfoResponse);
   rpc GetCalUserDefinedInfoMaxSize(GetCalUserDefinedInfoMaxSizeRequest) returns (GetCalUserDefinedInfoMaxSizeResponse);
+  rpc GetDeembeddingSparameters(GetDeembeddingSparametersRequest) returns (GetDeembeddingSparametersResponse);
   rpc GetDeviceResponse(GetDeviceResponseRequest) returns (GetDeviceResponseResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetExtCalLastDateAndTime(GetExtCalLastDateAndTimeRequest) returns (GetExtCalLastDateAndTimeResponse);
@@ -84,11 +92,14 @@ service NiRFSA {
   rpc GetFetchBacklog(GetFetchBacklogRequest) returns (GetFetchBacklogResponse);
   rpc GetFrequencyResponse(GetFrequencyResponseRequest) returns (GetFrequencyResponseResponse);
   rpc GetGainReferenceCalBaseline(GetGainReferenceCalBaselineRequest) returns (GetGainReferenceCalBaselineResponse);
+  rpc GetNormalizationCoefficients(GetNormalizationCoefficientsRequest) returns (GetNormalizationCoefficientsResponse);
   rpc GetNumberOfSpectralLines(GetNumberOfSpectralLinesRequest) returns (GetNumberOfSpectralLinesResponse);
   rpc GetRelayName(GetRelayNameRequest) returns (GetRelayNameResponse);
   rpc GetRelayOperationsCount(GetRelayOperationsCountRequest) returns (GetRelayOperationsCountResponse);
+  rpc GetScalingCoefficients(GetScalingCoefficientsRequest) returns (GetScalingCoefficientsResponse);
   rpc GetSelfCalLastDateAndTime(GetSelfCalLastDateAndTimeRequest) returns (GetSelfCalLastDateAndTimeResponse);
   rpc GetSelfCalLastTemp(GetSelfCalLastTempRequest) returns (GetSelfCalLastTempResponse);
+  rpc GetSpectralInfoForSMT(GetSpectralInfoForSMTRequest) returns (GetSpectralInfoForSMTResponse);
   rpc GetStreamEndpointHandle(GetStreamEndpointHandleRequest) returns (GetStreamEndpointHandleResponse);
   rpc GetTerminalName(GetTerminalNameRequest) returns (GetTerminalNameResponse);
   rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
@@ -101,6 +112,9 @@ service NiRFSA {
   rpc IsSelfCalValid(IsSelfCalValidRequest) returns (IsSelfCalValidResponse);
   rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc PerformThermalCorrection(PerformThermalCorrectionRequest) returns (PerformThermalCorrectionResponse);
+  rpc ReadIQSingleRecordComplexF64(ReadIQSingleRecordComplexF64Request) returns (ReadIQSingleRecordComplexF64Response);
+  rpc ReadPowerSpectrumF32(ReadPowerSpectrumF32Request) returns (ReadPowerSpectrumF32Response);
+  rpc ReadPowerSpectrumF64(ReadPowerSpectrumF64Request) returns (ReadPowerSpectrumF64Response);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
@@ -717,6 +731,49 @@ enum NiRFSAStringAttributeValuesMapped {
   NIRFSA_STRING_TRIGGER_SOURCE_RANGE_TABLE_SYNC_ADVANCE_TRIGGER_STR = 60;
 }
 
+message NIComplexNumber {
+  double real = 1;
+  double imaginary = 2;
+}
+
+message NIComplexNumberF32 {
+  float real = 1;
+  float imaginary = 2;
+}
+
+message NIComplexI16 {
+  sint32 real = 1;
+  sint32 imaginary = 2;
+}
+
+message WaveformInfo {
+  double absolute_initial_x = 1;
+  double relative_initial_x = 2;
+  double x_increment = 3;
+  int64 actual_samples = 4;
+  double offset = 5;
+  double gain = 6;
+}
+
+message CoefficientInfo {
+  double offset = 1;
+  double gain = 2;
+}
+
+message SmtSpectrumInfo {
+  uint32 spectrum_type = 1;
+  uint32 linear_db = 2;
+  uint32 window = 3;
+  sint32 window_size = 4;
+  sint32 fft_size = 5;
+}
+
+message SpectrumInfo {
+  double initial_frequency = 1;
+  double frequency_increment = 2;
+  sint32 number_of_spectral_lines = 3;
+}
+
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1129,6 +1186,23 @@ message CreateConfigurationListStepResponse {
   int32 status = 1;
 }
 
+message CreateDeembeddingSparameterTableArrayRequest {
+  nidevice_grpc.Session vi = 1;
+  string port = 2;
+  string table_name = 3;
+  repeated double frequencies = 4;
+  repeated NIComplexNumber sparameter_table = 5;
+  sint32 number_of_ports = 6;
+  oneof sparameter_orientation_enum {
+    SparameterOrientation sparameter_orientation = 7;
+    sint32 sparameter_orientation_raw = 8;
+  }
+}
+
+message CreateDeembeddingSparameterTableArrayResponse {
+  int32 status = 1;
+}
+
 message CreateDeembeddingSparameterTableS2PFileRequest {
   nidevice_grpc.Session vi = 1;
   string port = 2;
@@ -1268,6 +1342,93 @@ message ExternalAlignmentAdjustPreselectorResponse {
   int32 status = 1;
 }
 
+message FetchIQMultiRecordComplexF32Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  int64 starting_record = 3;
+  int64 number_of_records = 4;
+  int64 number_of_samples = 5;
+  double timeout = 6;
+}
+
+message FetchIQMultiRecordComplexF32Response {
+  int32 status = 1;
+  NIComplexNumberF32 data = 2;
+  WaveformInfo wfm_info = 3;
+}
+
+message FetchIQMultiRecordComplexF64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  int64 starting_record = 3;
+  int64 number_of_records = 4;
+  int64 number_of_samples = 5;
+  double timeout = 6;
+}
+
+message FetchIQMultiRecordComplexF64Response {
+  int32 status = 1;
+  NIComplexNumber data = 2;
+  WaveformInfo wfm_info = 3;
+}
+
+message FetchIQMultiRecordComplexI16Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  int64 starting_record = 3;
+  int64 number_of_records = 4;
+  int64 number_of_samples = 5;
+  double timeout = 6;
+}
+
+message FetchIQMultiRecordComplexI16Response {
+  int32 status = 1;
+  NIComplexI16 data = 2;
+  WaveformInfo wfm_info = 3;
+}
+
+message FetchIQSingleRecordComplexF32Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  int64 record_number = 3;
+  int64 number_of_samples = 4;
+  double timeout = 5;
+}
+
+message FetchIQSingleRecordComplexF32Response {
+  int32 status = 1;
+  NIComplexNumberF32 data = 2;
+  WaveformInfo wfm_info = 3;
+}
+
+message FetchIQSingleRecordComplexF64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  int64 record_number = 3;
+  int64 number_of_samples = 4;
+  double timeout = 5;
+}
+
+message FetchIQSingleRecordComplexF64Response {
+  int32 status = 1;
+  NIComplexNumber data = 2;
+  WaveformInfo wfm_info = 3;
+}
+
+message FetchIQSingleRecordComplexI16Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  int64 record_number = 3;
+  int64 number_of_samples = 4;
+  double timeout = 5;
+}
+
+message FetchIQSingleRecordComplexI16Response {
+  int32 status = 1;
+  NIComplexI16 data = 2;
+  WaveformInfo wfm_info = 3;
+}
+
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1350,6 +1511,18 @@ message GetCalUserDefinedInfoMaxSizeRequest {
 message GetCalUserDefinedInfoMaxSizeResponse {
   int32 status = 1;
   sint32 info_size = 2;
+}
+
+message GetDeembeddingSparametersRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 sparameters_array_size = 2;
+}
+
+message GetDeembeddingSparametersResponse {
+  int32 status = 1;
+  NIComplexNumber sparameters = 2;
+  sint32 number_of_sparameters = 3;
+  sint32 number_of_ports = 4;
 }
 
 message GetDeviceResponseRequest {
@@ -1445,6 +1618,17 @@ message GetGainReferenceCalBaselineResponse {
   sint32 number_of_gain_reference_cal_constants = 3;
 }
 
+message GetNormalizationCoefficientsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+}
+
+message GetNormalizationCoefficientsResponse {
+  int32 status = 1;
+  repeated CoefficientInfo coefficient_info = 2;
+  sint32 number_of_coefficient_sets = 3;
+}
+
 message GetNumberOfSpectralLinesRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
@@ -1478,6 +1662,17 @@ message GetRelayOperationsCountResponse {
   sint32 buffer_size = 3;
 }
 
+message GetScalingCoefficientsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+}
+
+message GetScalingCoefficientsResponse {
+  int32 status = 1;
+  repeated CoefficientInfo coefficient_info = 2;
+  sint32 number_of_coefficient_sets = 3;
+}
+
 message GetSelfCalLastDateAndTimeRequest {
   nidevice_grpc.Session vi = 1;
   int64 self_calibration_step = 2;
@@ -1500,6 +1695,15 @@ message GetSelfCalLastTempRequest {
 message GetSelfCalLastTempResponse {
   int32 status = 1;
   double temp = 2;
+}
+
+message GetSpectralInfoForSMTRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetSpectralInfoForSMTResponse {
+  int32 status = 1;
+  SmtSpectrumInfo spectrum_info = 2;
 }
 
 message GetStreamEndpointHandleRequest {
@@ -1625,6 +1829,45 @@ message PerformThermalCorrectionRequest {
 
 message PerformThermalCorrectionResponse {
   int32 status = 1;
+}
+
+message ReadIQSingleRecordComplexF64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  double timeout = 3;
+  int64 data_array_size = 4;
+}
+
+message ReadIQSingleRecordComplexF64Response {
+  int32 status = 1;
+  NIComplexNumber data = 2;
+  WaveformInfo wfm_info = 3;
+}
+
+message ReadPowerSpectrumF32Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  double timeout = 3;
+  sint32 data_array_size = 4;
+}
+
+message ReadPowerSpectrumF32Response {
+  int32 status = 1;
+  repeated float power_spectrum_data = 2;
+  SpectrumInfo spectrum_info = 3;
+}
+
+message ReadPowerSpectrumF64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  double timeout = 3;
+  sint32 data_array_size = 4;
+}
+
+message ReadPowerSpectrumF64Response {
+  int32 status = 1;
+  repeated double power_spectrum_data = 2;
+  SpectrumInfo spectrum_info = 3;
 }
 
 message ResetRequest {

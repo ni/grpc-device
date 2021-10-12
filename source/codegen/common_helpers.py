@@ -193,8 +193,15 @@ def normalize_leading_special_case_pascal_tokens(pascal_string: str) -> str:
     return pascal_string
 
 
-def camel_to_snake(camel_string):
+def is_actually_pascal(camel_or_pascal_string: str) -> bool:
+    return 'A' <= camel_or_pascal_string[0] <= 'Z'
+
+
+def camel_to_snake(camel_string: str)-> str:
     '''Returns a snake_string for a given camelString.'''
+    if is_actually_pascal(camel_string):
+        camel_string = pascal_to_camel(camel_string)
+
     camel_string = normalize_special_pascal_tokens(camel_string)
     # Add _ before Words:
     # someDeviceIPAddress -> some_DeviceIP_Address
@@ -490,10 +497,10 @@ def trim_trailing_comma():
     return lambda text: trim_trailing_comma_impl(text)
 
 
-def filter_parameters_for_grpc_fields(parameters):
+def filter_parameters_for_grpc_fields(parameters_or_fields: List[dict]):
   """Filter out the parameters that shouldn't be represented by a field on a grpc message.
       For example, get rid of any parameters whose values should be determined from another parameter."""
-  return [p for p in parameters if p.get('include_in_proto', True)]
+  return [p for p in parameters_or_fields if p.get('include_in_proto', True)]
 
 
 class AttributeGroup:
@@ -680,3 +687,12 @@ def is_regular_string_arg(parameter: dict) -> bool:
 def is_regular_byte_array_arg(parameter: dict)-> bool:
     """Excludes: strings and byte arrays that are mapped to enums"""
     return parameter["grpc_type"] == "bytes" and not is_enum(parameter)
+
+
+def get_additional_headers(config: dict, including_from_file: str) -> List[str]:
+    additional_header_requirements = config.get("additional_headers", {})
+    return (
+        header
+        for header, required_by in additional_header_requirements.items()
+        if including_from_file in required_by
+    )

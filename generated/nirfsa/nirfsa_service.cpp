@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nirfsa_aliases.h"
 #include <server/converters.h>
 
 namespace nirfsa_grpc {
@@ -1048,6 +1049,48 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::CreateDeembeddingSparameterTableArray(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableArrayRequest* request, CreateDeembeddingSparameterTableArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto port = request->port().c_str();
+      auto table_name = request->table_name().c_str();
+      auto frequencies = const_cast<ViReal64*>(request->frequencies().data());
+      ViInt32 frequencies_size = static_cast<ViInt32>(request->frequencies().size());
+      auto sparameter_table = convert_from_grpc<NIComplexNumber_struct>(request->sparameter_table());
+      ViInt32 sparameter_table_size = static_cast<ViInt32>(request->sparameter_table().size());
+      ViInt32 number_of_ports = request->number_of_ports();
+      ViInt32 sparameter_orientation;
+      switch (request->sparameter_orientation_enum_case()) {
+        case nirfsa_grpc::CreateDeembeddingSparameterTableArrayRequest::SparameterOrientationEnumCase::kSparameterOrientation: {
+          sparameter_orientation = static_cast<ViInt32>(request->sparameter_orientation());
+          break;
+        }
+        case nirfsa_grpc::CreateDeembeddingSparameterTableArrayRequest::SparameterOrientationEnumCase::kSparameterOrientationRaw: {
+          sparameter_orientation = static_cast<ViInt32>(request->sparameter_orientation_raw());
+          break;
+        }
+        case nirfsa_grpc::CreateDeembeddingSparameterTableArrayRequest::SparameterOrientationEnumCase::SPARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sparameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CreateDeembeddingSparameterTableArray(vi, port, table_name, frequencies, frequencies_size, sparameter_table.data(), sparameter_table_size, number_of_ports, sparameter_orientation);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::CreateDeembeddingSparameterTableS2PFile(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableS2PFileRequest* request, CreateDeembeddingSparameterTableS2PFileResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1389,6 +1432,183 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::FetchIQMultiRecordComplexF32(::grpc::ServerContext* context, const FetchIQMultiRecordComplexF32Request* request, FetchIQMultiRecordComplexF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt64 starting_record = request->starting_record();
+      ViInt64 number_of_records = request->number_of_records();
+      ViInt64 number_of_samples = request->number_of_samples();
+      ViReal64 timeout = request->timeout();
+      NIComplexNumberF32_struct data {};
+      niRFSA_wfmInfo_struct wfm_info {};
+      auto status = library_->FetchIQMultiRecordComplexF32(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, &data, &wfm_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::FetchIQMultiRecordComplexF64(::grpc::ServerContext* context, const FetchIQMultiRecordComplexF64Request* request, FetchIQMultiRecordComplexF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt64 starting_record = request->starting_record();
+      ViInt64 number_of_records = request->number_of_records();
+      ViInt64 number_of_samples = request->number_of_samples();
+      ViReal64 timeout = request->timeout();
+      NIComplexNumber_struct data {};
+      niRFSA_wfmInfo_struct wfm_info {};
+      auto status = library_->FetchIQMultiRecordComplexF64(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, &data, &wfm_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::FetchIQMultiRecordComplexI16(::grpc::ServerContext* context, const FetchIQMultiRecordComplexI16Request* request, FetchIQMultiRecordComplexI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt64 starting_record = request->starting_record();
+      ViInt64 number_of_records = request->number_of_records();
+      ViInt64 number_of_samples = request->number_of_samples();
+      ViReal64 timeout = request->timeout();
+      NIComplexI16_struct data {};
+      niRFSA_wfmInfo_struct wfm_info {};
+      auto status = library_->FetchIQMultiRecordComplexI16(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, &data, &wfm_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::FetchIQSingleRecordComplexF32(::grpc::ServerContext* context, const FetchIQSingleRecordComplexF32Request* request, FetchIQSingleRecordComplexF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt64 record_number = request->record_number();
+      ViInt64 number_of_samples = request->number_of_samples();
+      ViReal64 timeout = request->timeout();
+      NIComplexNumberF32_struct data {};
+      niRFSA_wfmInfo_struct wfm_info {};
+      auto status = library_->FetchIQSingleRecordComplexF32(vi, channel_list, record_number, number_of_samples, timeout, &data, &wfm_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::FetchIQSingleRecordComplexF64(::grpc::ServerContext* context, const FetchIQSingleRecordComplexF64Request* request, FetchIQSingleRecordComplexF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt64 record_number = request->record_number();
+      ViInt64 number_of_samples = request->number_of_samples();
+      ViReal64 timeout = request->timeout();
+      NIComplexNumber_struct data {};
+      niRFSA_wfmInfo_struct wfm_info {};
+      auto status = library_->FetchIQSingleRecordComplexF64(vi, channel_list, record_number, number_of_samples, timeout, &data, &wfm_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::FetchIQSingleRecordComplexI16(::grpc::ServerContext* context, const FetchIQSingleRecordComplexI16Request* request, FetchIQSingleRecordComplexI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt64 record_number = request->record_number();
+      ViInt64 number_of_samples = request->number_of_samples();
+      ViReal64 timeout = request->timeout();
+      NIComplexI16_struct data {};
+      niRFSA_wfmInfo_struct wfm_info {};
+      auto status = library_->FetchIQSingleRecordComplexI16(vi, channel_list, record_number, number_of_samples, timeout, &data, &wfm_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1593,6 +1813,34 @@ namespace nirfsa_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_info_size(info_size);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::GetDeembeddingSparameters(::grpc::ServerContext* context, const GetDeembeddingSparametersRequest* request, GetDeembeddingSparametersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 sparameters_array_size = request->sparameters_array_size();
+      NIComplexNumber_struct sparameters {};
+      ViInt32 number_of_sparameters {};
+      ViInt32 number_of_ports {};
+      auto status = library_->GetDeembeddingSparameters(vi, &sparameters, sparameters_array_size, &number_of_sparameters, &number_of_ports);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(sparameters, response->mutable_sparameters());
+        response->set_number_of_sparameters(number_of_sparameters);
+        response->set_number_of_ports(number_of_ports);
       }
       return ::grpc::Status::OK;
     }
@@ -1878,6 +2126,51 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::GetNormalizationCoefficients(::grpc::ServerContext* context, const GetNormalizationCoefficientsRequest* request, GetNormalizationCoefficientsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt32 number_of_coefficient_sets {};
+      while (true) {
+        auto status = library_->GetNormalizationCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<niRFSA_coefficientInfo_struct> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo_struct());
+        auto array_size = number_of_coefficient_sets;
+        status = library_->GetNormalizationCoefficients(vi, channel_list, array_size, coefficient_info.data(), &number_of_coefficient_sets);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
+          {
+            auto shrunk_size = number_of_coefficient_sets;
+            auto current_size = response->mutable_coefficient_info()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::GetNumberOfSpectralLines(::grpc::ServerContext* context, const GetNumberOfSpectralLinesRequest* request, GetNumberOfSpectralLinesResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1982,6 +2275,51 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::GetScalingCoefficients(::grpc::ServerContext* context, const GetScalingCoefficientsRequest* request, GetScalingCoefficientsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt32 number_of_coefficient_sets {};
+      while (true) {
+        auto status = library_->GetScalingCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<niRFSA_coefficientInfo_struct> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo_struct());
+        auto array_size = number_of_coefficient_sets;
+        status = library_->GetScalingCoefficients(vi, channel_list, array_size, coefficient_info.data(), &number_of_coefficient_sets);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
+          {
+            auto shrunk_size = number_of_coefficient_sets;
+            auto current_size = response->mutable_coefficient_info()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2028,6 +2366,29 @@ namespace nirfsa_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_temp(temp);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::GetSpectralInfoForSMT(::grpc::ServerContext* context, const GetSpectralInfoForSMTRequest* request, GetSpectralInfoForSMTResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      SmtSpectrumInfo_struct spectrum_info {};
+      auto status = library_->GetSpectralInfoForSMT(vi, &spectrum_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
       }
       return ::grpc::Status::OK;
     }
@@ -2355,6 +2716,90 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->PerformThermalCorrection(vi);
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::ReadIQSingleRecordComplexF64(::grpc::ServerContext* context, const ReadIQSingleRecordComplexF64Request* request, ReadIQSingleRecordComplexF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViReal64 timeout = request->timeout();
+      ViInt64 data_array_size = request->data_array_size();
+      NIComplexNumber_struct data {};
+      niRFSA_wfmInfo_struct wfm_info {};
+      auto status = library_->ReadIQSingleRecordComplexF64(vi, channel_list, timeout, &data, data_array_size, &wfm_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(data, response->mutable_data());
+        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::ReadPowerSpectrumF32(::grpc::ServerContext* context, const ReadPowerSpectrumF32Request* request, ReadPowerSpectrumF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViReal64 timeout = request->timeout();
+      ViInt32 data_array_size = request->data_array_size();
+      response->mutable_power_spectrum_data()->Resize(data_array_size, 0);
+      ViReal32* power_spectrum_data = response->mutable_power_spectrum_data()->mutable_data();
+      niRFSA_spectrumInfo_struct spectrum_info {};
+      auto status = library_->ReadPowerSpectrumF32(vi, channel_list, timeout, power_spectrum_data, data_array_size, &spectrum_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSAService::ReadPowerSpectrumF64(::grpc::ServerContext* context, const ReadPowerSpectrumF64Request* request, ReadPowerSpectrumF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViReal64 timeout = request->timeout();
+      ViInt32 data_array_size = request->data_array_size();
+      response->mutable_power_spectrum_data()->Resize(data_array_size, 0);
+      ViReal64* power_spectrum_data = response->mutable_power_spectrum_data()->mutable_data();
+      niRFSA_spectrumInfo_struct spectrum_info {};
+      auto status = library_->ReadPowerSpectrumF64(vi, channel_list, timeout, power_spectrum_data, data_array_size, &spectrum_info);
+      response->set_status(status);
+      if (status == 0) {
+        convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2871,4 +3316,75 @@ namespace nirfsa_grpc {
   {
   }
 } // namespace nirfsa_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const NIComplexNumber_struct& input, nirfsa_grpc::NIComplexNumber* output) 
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+template <>
+NIComplexNumber_struct convert_from_grpc(const nirfsa_grpc::NIComplexNumber& input) 
+{
+  auto output = NIComplexNumber_struct();  
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
+}
+
+template <>
+void convert_to_grpc(const NIComplexNumberF32_struct& input, nirfsa_grpc::NIComplexNumberF32* output) 
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+template <>
+void convert_to_grpc(const NIComplexI16_struct& input, nirfsa_grpc::NIComplexI16* output) 
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+template <>
+void convert_to_grpc(const niRFSA_wfmInfo_struct& input, nirfsa_grpc::WaveformInfo* output) 
+{
+  output->set_absolute_initial_x(input.absoluteInitialX);
+  output->set_relative_initial_x(input.relativeInitialX);
+  output->set_x_increment(input.xIncrement);
+  output->set_actual_samples(input.actualSamples);
+  output->set_offset(input.offset);
+  output->set_gain(input.gain);
+}
+
+template <>
+void convert_to_grpc(const niRFSA_coefficientInfo_struct& input, nirfsa_grpc::CoefficientInfo* output) 
+{
+  output->set_offset(input.offset);
+  output->set_gain(input.gain);
+}
+
+template <>
+void convert_to_grpc(const SmtSpectrumInfo_struct& input, nirfsa_grpc::SmtSpectrumInfo* output) 
+{
+  output->set_spectrum_type(input.spectrumType);
+  output->set_linear_db(input.linearDB);
+  output->set_window(input.window);
+  output->set_window_size(input.windowSize);
+  output->set_fft_size(input.FFTSize);
+}
+
+template <>
+void convert_to_grpc(const niRFSA_spectrumInfo_struct& input, nirfsa_grpc::SpectrumInfo* output) 
+{
+  output->set_initial_frequency(input.initialFrequency);
+  output->set_frequency_increment(input.frequencyIncrement);
+  output->set_number_of_spectral_lines(input.numberOfSpectralLines);
+}
+
+} // converters
+} // nidevice_grpc
 

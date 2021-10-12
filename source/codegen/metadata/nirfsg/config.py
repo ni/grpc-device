@@ -59,7 +59,6 @@ config = {
             ]
         },
     ],
-    'additional_headers': [],
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-RFSG',
     'extra_errors_used': [

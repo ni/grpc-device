@@ -14,7 +14,7 @@ const double TwoToSixtyFour = (double)(1 << 31) * (double)(1 << 31) * (double)(1
 const double NanosecondsPerSecond = 1000000000.0;
 
 template <>
-void convert_to_grpc(const CVIAbsoluteTime& value, google::protobuf::Timestamp* timestamp)
+inline void convert_to_grpc(const CVIAbsoluteTime& value, google::protobuf::Timestamp* timestamp)
 {
   // msb is whole seconds after 12:00 a.m., Friday, January 1, 1904, Universal Time
   time_t unixTime = static_cast<time_t>(value.cviTime.msb - SecondsFromCVI1904EpochTo1970Epoch);
@@ -29,7 +29,7 @@ void convert_to_grpc(const CVIAbsoluteTime& value, google::protobuf::Timestamp* 
 }
 
 template <>
-CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& value)
+inline CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& value)
 {
   time_t unixTime = google::protobuf::util::TimeUtil::TimestampToTimeT(value);
   CVIAbsoluteTime cviTime;

@@ -9,7 +9,186 @@ config = {
     'namespace_component': 'nirfsa',
     'close_function': 'Close',
     'custom_types': [
+        {
+            'name': 'NIComplexNumber_struct',
+            'grpc_name': 'NIComplexNumber',
+            'fields': [
+                {
+                    'type': 'ViReal64',
+                    'name': 'real',
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'imaginary',
+                }
+            ]
+        },
+        {
+            'name': 'NIComplexNumberF32_struct',
+            'grpc_name': 'NIComplexNumberF32',
+            'fields': [
+                {
+                    'type': 'ViReal32',
+                    'name': 'real',
+                },
+                {
+                    'type': 'ViReal32',
+                    'name': 'imaginary',
+                }
+            ]
+        },
+        {
+            'name': 'NIComplexI16_struct',
+            'grpc_name': 'NIComplexI16',
+            'fields': [
+                {
+                    'type': 'ViInt16',
+                    'name': 'real',
+                    'coerced': True,
+                },
+                {
+                    'type': 'ViInt16',
+                    'name': 'imaginary',
+                    'coerced': True,
+                }
+            ]
+        },
+        {
+            'name': 'niRFSA_wfmInfo_struct',
+            'grpc_name': 'WaveformInfo',
+            'fields': [
+                {
+                    'type': 'ViReal64',
+                    'name': 'absoluteInitialX'
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'relativeInitialX'
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'xIncrement'
+                },
+                {
+                    'type': 'ViInt64', 
+                    'name': 'actualSamples'
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'offset'
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'gain'
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'reserved1',
+                    'include_in_proto': False,
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'reserved2',
+                    'include_in_proto': False,
+                },
+            ]
+        },
+        {
+            'name': 'niRFSA_coefficientInfo_struct',
+            'grpc_name': 'CoefficientInfo',
+            'fields': [
+                {
+                    'type': 'ViReal64', 
+                    'name': 'offset'
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'gain'
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'reserved1',
+                    'include_in_proto': False,
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'reserved2',
+                    'include_in_proto': False,
+                },
+            ]
+        },
+        {
+            'name': 'SmtSpectrumInfo_struct',
+            'grpc_name': 'SmtSpectrumInfo',
+            'fields': [
+                {
+                    'type': 'ViUInt16', 
+                    'name': 'spectrumType'
+                },
+                {
+                    'type': 'ViUInt16',
+                    'name': 'linearDB'
+                },
+                {
+                    'type': 'ViUInt16', 
+                    'name': 'window'
+                },
+                {
+                    'type': 'ViInt32', 
+                    'name': 'windowSize'
+                },
+                {
+                    'type': 'ViInt32', 
+                    'name': 'FFTSize'
+                },
+            ]
+        },
+        {
+            'name': 'niRFSA_spectrumInfo_struct',
+            'grpc_name': 'SpectrumInfo',
+            'fields': [
+                {
+                    'type': 'ViReal64', 
+                    'name': 'initialFrequency'
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'frequencyIncrement'
+                },
+                {
+                    'type': 'ViInt32', 
+                    'name': 'numberOfSpectralLines'
+                },
+                
+                {
+                    'type': 'ViReal64', 
+                    'name': 'reserved1',
+                    'include_in_proto': False,
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'reserved2',
+                    'include_in_proto': False,
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'reserved3',
+                    'include_in_proto': False,
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'reserved4',
+                    'include_in_proto': False,
+                },
+                {
+                    'type': 'ViReal64', 
+                    'name': 'reserved5',
+                    'include_in_proto': False,
+                },
+            ]
+        }
     ],
+    'additional_headers': { 'custom/nirfsa_aliases.h': ['service.cpp', 'library_interface.h'] },
     'driver_name': 'NI-RFSA',
     'init_function': 'InitWithOptions',
     'code_readiness': 'NextRelease',

@@ -71,6 +71,7 @@ public:
   ::grpc::Status ConfigureSpectrumFrequencyStartStop(::grpc::ServerContext* context, const ConfigureSpectrumFrequencyStartStopRequest* request, ConfigureSpectrumFrequencyStartStopResponse* response) override;
   ::grpc::Status CreateConfigurationList(::grpc::ServerContext* context, const CreateConfigurationListRequest* request, CreateConfigurationListResponse* response) override;
   ::grpc::Status CreateConfigurationListStep(::grpc::ServerContext* context, const CreateConfigurationListStepRequest* request, CreateConfigurationListStepResponse* response) override;
+  ::grpc::Status CreateDeembeddingSparameterTableArray(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableArrayRequest* request, CreateDeembeddingSparameterTableArrayResponse* response) override;
   ::grpc::Status CreateDeembeddingSparameterTableS2PFile(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableS2PFileRequest* request, CreateDeembeddingSparameterTableS2PFileResponse* response) override;
   ::grpc::Status DeleteAllDeembeddingTables(::grpc::ServerContext* context, const DeleteAllDeembeddingTablesRequest* request, DeleteAllDeembeddingTablesResponse* response) override;
   ::grpc::Status DeleteConfigurationList(::grpc::ServerContext* context, const DeleteConfigurationListRequest* request, DeleteConfigurationListResponse* response) override;
@@ -85,6 +86,12 @@ public:
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
   ::grpc::Status ExtCalStoreBaselineForSelfCalibration(::grpc::ServerContext* context, const ExtCalStoreBaselineForSelfCalibrationRequest* request, ExtCalStoreBaselineForSelfCalibrationResponse* response) override;
   ::grpc::Status ExternalAlignmentAdjustPreselector(::grpc::ServerContext* context, const ExternalAlignmentAdjustPreselectorRequest* request, ExternalAlignmentAdjustPreselectorResponse* response) override;
+  ::grpc::Status FetchIQMultiRecordComplexF32(::grpc::ServerContext* context, const FetchIQMultiRecordComplexF32Request* request, FetchIQMultiRecordComplexF32Response* response) override;
+  ::grpc::Status FetchIQMultiRecordComplexF64(::grpc::ServerContext* context, const FetchIQMultiRecordComplexF64Request* request, FetchIQMultiRecordComplexF64Response* response) override;
+  ::grpc::Status FetchIQMultiRecordComplexI16(::grpc::ServerContext* context, const FetchIQMultiRecordComplexI16Request* request, FetchIQMultiRecordComplexI16Response* response) override;
+  ::grpc::Status FetchIQSingleRecordComplexF32(::grpc::ServerContext* context, const FetchIQSingleRecordComplexF32Request* request, FetchIQSingleRecordComplexF32Response* response) override;
+  ::grpc::Status FetchIQSingleRecordComplexF64(::grpc::ServerContext* context, const FetchIQSingleRecordComplexF64Request* request, FetchIQSingleRecordComplexF64Response* response) override;
+  ::grpc::Status FetchIQSingleRecordComplexI16(::grpc::ServerContext* context, const FetchIQSingleRecordComplexI16Request* request, FetchIQSingleRecordComplexI16Response* response) override;
   ::grpc::Status GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;
   ::grpc::Status GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response) override;
@@ -93,6 +100,7 @@ public:
   ::grpc::Status GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response) override;
   ::grpc::Status GetCalUserDefinedInfo(::grpc::ServerContext* context, const GetCalUserDefinedInfoRequest* request, GetCalUserDefinedInfoResponse* response) override;
   ::grpc::Status GetCalUserDefinedInfoMaxSize(::grpc::ServerContext* context, const GetCalUserDefinedInfoMaxSizeRequest* request, GetCalUserDefinedInfoMaxSizeResponse* response) override;
+  ::grpc::Status GetDeembeddingSparameters(::grpc::ServerContext* context, const GetDeembeddingSparametersRequest* request, GetDeembeddingSparametersResponse* response) override;
   ::grpc::Status GetDeviceResponse(::grpc::ServerContext* context, const GetDeviceResponseRequest* request, GetDeviceResponseResponse* response) override;
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
   ::grpc::Status GetExtCalLastDateAndTime(::grpc::ServerContext* context, const GetExtCalLastDateAndTimeRequest* request, GetExtCalLastDateAndTimeResponse* response) override;
@@ -101,11 +109,14 @@ public:
   ::grpc::Status GetFetchBacklog(::grpc::ServerContext* context, const GetFetchBacklogRequest* request, GetFetchBacklogResponse* response) override;
   ::grpc::Status GetFrequencyResponse(::grpc::ServerContext* context, const GetFrequencyResponseRequest* request, GetFrequencyResponseResponse* response) override;
   ::grpc::Status GetGainReferenceCalBaseline(::grpc::ServerContext* context, const GetGainReferenceCalBaselineRequest* request, GetGainReferenceCalBaselineResponse* response) override;
+  ::grpc::Status GetNormalizationCoefficients(::grpc::ServerContext* context, const GetNormalizationCoefficientsRequest* request, GetNormalizationCoefficientsResponse* response) override;
   ::grpc::Status GetNumberOfSpectralLines(::grpc::ServerContext* context, const GetNumberOfSpectralLinesRequest* request, GetNumberOfSpectralLinesResponse* response) override;
   ::grpc::Status GetRelayName(::grpc::ServerContext* context, const GetRelayNameRequest* request, GetRelayNameResponse* response) override;
   ::grpc::Status GetRelayOperationsCount(::grpc::ServerContext* context, const GetRelayOperationsCountRequest* request, GetRelayOperationsCountResponse* response) override;
+  ::grpc::Status GetScalingCoefficients(::grpc::ServerContext* context, const GetScalingCoefficientsRequest* request, GetScalingCoefficientsResponse* response) override;
   ::grpc::Status GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalLastTemp(::grpc::ServerContext* context, const GetSelfCalLastTempRequest* request, GetSelfCalLastTempResponse* response) override;
+  ::grpc::Status GetSpectralInfoForSMT(::grpc::ServerContext* context, const GetSpectralInfoForSMTRequest* request, GetSpectralInfoForSMTResponse* response) override;
   ::grpc::Status GetStreamEndpointHandle(::grpc::ServerContext* context, const GetStreamEndpointHandleRequest* request, GetStreamEndpointHandleResponse* response) override;
   ::grpc::Status GetTerminalName(::grpc::ServerContext* context, const GetTerminalNameRequest* request, GetTerminalNameResponse* response) override;
   ::grpc::Status GetUserData(::grpc::ServerContext* context, const GetUserDataRequest* request, GetUserDataResponse* response) override;
@@ -118,6 +129,9 @@ public:
   ::grpc::Status IsSelfCalValid(::grpc::ServerContext* context, const IsSelfCalValidRequest* request, IsSelfCalValidResponse* response) override;
   ::grpc::Status LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response) override;
   ::grpc::Status PerformThermalCorrection(::grpc::ServerContext* context, const PerformThermalCorrectionRequest* request, PerformThermalCorrectionResponse* response) override;
+  ::grpc::Status ReadIQSingleRecordComplexF64(::grpc::ServerContext* context, const ReadIQSingleRecordComplexF64Request* request, ReadIQSingleRecordComplexF64Response* response) override;
+  ::grpc::Status ReadPowerSpectrumF32(::grpc::ServerContext* context, const ReadPowerSpectrumF32Request* request, ReadPowerSpectrumF32Response* response) override;
+  ::grpc::Status ReadPowerSpectrumF64(::grpc::ServerContext* context, const ReadPowerSpectrumF64Request* request, ReadPowerSpectrumF64Response* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
@@ -166,5 +180,26 @@ private:
 };
 
 } // namespace nirfsa_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const NIComplexNumber_struct& input, nirfsa_grpc::NIComplexNumber* output);
+template <>
+NIComplexNumber_struct convert_from_grpc(const nirfsa_grpc::NIComplexNumber& input);
+template <>
+void convert_to_grpc(const NIComplexNumberF32_struct& input, nirfsa_grpc::NIComplexNumberF32* output);
+template <>
+void convert_to_grpc(const NIComplexI16_struct& input, nirfsa_grpc::NIComplexI16* output);
+template <>
+void convert_to_grpc(const niRFSA_wfmInfo_struct& input, nirfsa_grpc::WaveformInfo* output);
+template <>
+void convert_to_grpc(const niRFSA_coefficientInfo_struct& input, nirfsa_grpc::CoefficientInfo* output);
+template <>
+void convert_to_grpc(const SmtSpectrumInfo_struct& input, nirfsa_grpc::SmtSpectrumInfo* output);
+template <>
+void convert_to_grpc(const niRFSA_spectrumInfo_struct& input, nirfsa_grpc::SpectrumInfo* output);
+} // namespace converters
+} // namespace nidevice_grpc
 
 #endif  // NIRFSA_GRPC_SERVICE_H

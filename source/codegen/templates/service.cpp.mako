@@ -34,11 +34,9 @@ any_ivi_dance_functions = any(
 #include <iostream>
 #include <atomic>
 #include <vector>
-% if "additional_headers" in config:
-% for additional_header in config["additional_headers"]:
+% for additional_header in common_helpers.get_additional_headers(config, "service.cpp"):
 #include "${additional_header}"
 % endfor
-% endif
 #include <server/converters.h>
 % if has_async_functions:
 #include <server/callback_router.h>
@@ -162,7 +160,7 @@ namespace converters {
 template <>
 void convert_to_grpc(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
 {
-%       for field in custom_type["fields"]: 
+%       for field in common_helpers.filter_parameters_for_grpc_fields(custom_type["fields"]):
   output->set_${field["grpc_name"]}(input.${field["name"]});
 %       endfor
 }
@@ -173,7 +171,7 @@ template <>
 ${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type["grpc_name"]}& input) 
 {
   auto output = ${custom_type["name"]}();  
-%       for field in custom_type["fields"]: 
+%       for field in common_helpers.filter_parameters_for_grpc_fields(custom_type["fields"]):
 <%
             input_field_name = field["grpc_name"]
             output_field_name = field["name"]

@@ -766,6 +766,66 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'CreateDeembeddingSparameterTableArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'port',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequencies',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'frequenciesSize'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequenciesSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated NIComplexNumber',
+                'name': 'sparameterTable',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'sparameterTableSize'
+                },
+                'type': 'struct NIComplexNumber_struct[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sparameterTableSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfPorts',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SparameterOrientation',
+                'name': 'sparameterOrientation',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'CreateDeembeddingSparameterTableS2PFile': {
         'parameters': [
             {
@@ -1018,6 +1078,273 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'FetchIQMultiRecordComplexF32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'startingRecord',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfRecords',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamples',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'NIComplexNumberF32',
+                'name': 'data',
+                'type': 'struct NIComplexNumberF32_struct'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'WaveformInfo',
+                'name': 'wfmInfo',
+                'type': 'struct niRFSA_wfmInfo_struct'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'FetchIQMultiRecordComplexF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'startingRecord',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfRecords',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamples',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'NIComplexNumber',
+                'name': 'data',
+                'type': 'struct NIComplexNumber_struct'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'WaveformInfo',
+                'name': 'wfmInfo',
+                'type': 'struct niRFSA_wfmInfo_struct'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'FetchIQMultiRecordComplexI16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'startingRecord',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfRecords',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamples',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'NIComplexI16',
+                'name': 'data',
+                'type': 'struct NIComplexI16_struct'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'WaveformInfo',
+                'name': 'wfmInfo',
+                'type': 'struct niRFSA_wfmInfo_struct'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'FetchIQSingleRecordComplexF32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordNumber',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamples',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'NIComplexNumberF32',
+                'name': 'data',
+                'type': 'struct NIComplexNumberF32_struct'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'WaveformInfo',
+                'name': 'wfmInfo',
+                'type': 'struct niRFSA_wfmInfo_struct'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'FetchIQSingleRecordComplexF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordNumber',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamples',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'NIComplexNumber',
+                'name': 'data',
+                'type': 'struct NIComplexNumber_struct'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'WaveformInfo',
+                'name': 'wfmInfo',
+                'type': 'struct niRFSA_wfmInfo_struct'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'FetchIQSingleRecordComplexI16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordNumber',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSamples',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'NIComplexI16',
+                'name': 'data',
+                'type': 'struct NIComplexI16_struct'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'WaveformInfo',
+                'name': 'wfmInfo',
+                'type': 'struct niRFSA_wfmInfo_struct'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAttributeViBoolean': {
         'parameters': [
             {
@@ -1206,6 +1533,37 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'infoSize',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetDeembeddingSparameters': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'NIComplexNumber',
+                'name': 'sparameters',
+                'type': 'struct NIComplexNumber_struct'
+            },
+            {
+                'direction': 'in',
+                'name': 'sparametersArraySize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfSparameters',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfPorts',
                 'type': 'ViInt32'
             }
         ],
@@ -1476,6 +1834,42 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetNormalizationCoefficients': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'repeated CoefficientInfo',
+                'name': 'coefficientInfo',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'numberOfCoefficientSets'
+                },
+                'type': 'struct niRFSA_coefficientInfo_struct[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfCoefficientSets',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetNumberOfSpectralLines': {
         'parameters': [
             {
@@ -1564,6 +1958,42 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetScalingCoefficients': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'repeated CoefficientInfo',
+                'name': 'coefficientInfo',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'numberOfCoefficientSets'
+                },
+                'type': 'struct niRFSA_coefficientInfo_struct[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfCoefficientSets',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetSelfCalLastDateAndTime': {
         'parameters': [
             {
@@ -1620,6 +2050,22 @@ functions = {
                 'direction': 'out',
                 'name': 'temp',
                 'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetSpectralInfoForSMT': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SmtSpectrumInfo',
+                'name': 'spectrumInfo',
+                'type': 'struct SmtSpectrumInfo_struct'
             }
         ],
         'returns': 'ViStatus'
@@ -1878,6 +2324,123 @@ functions = {
                 'direction': 'in',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ReadIQSingleRecordComplexF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'NIComplexNumber',
+                'name': 'data',
+                'type': 'struct NIComplexNumber_struct'
+            },
+            {
+                'direction': 'in',
+                'name': 'dataArraySize',
+                'type': 'ViInt64'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'WaveformInfo',
+                'name': 'wfmInfo',
+                'type': 'struct niRFSA_wfmInfo_struct'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ReadPowerSpectrumF32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'name': 'powerSpectrumData',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'dataArraySize'
+                },
+                'type': 'ViReal32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dataArraySize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SpectrumInfo',
+                'name': 'spectrumInfo',
+                'type': 'struct niRFSA_spectrumInfo_struct'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ReadPowerSpectrumF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'name': 'powerSpectrumData',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'dataArraySize'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dataArraySize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SpectrumInfo',
+                'name': 'spectrumInfo',
+                'type': 'struct niRFSA_spectrumInfo_struct'
             }
         ],
         'returns': 'ViStatus'
