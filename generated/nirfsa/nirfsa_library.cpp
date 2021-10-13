@@ -789,7 +789,7 @@ ViStatus NiRFSALibrary::ExternalAlignmentAdjustPreselector(ViSession vi, ViInt32
 #endif
 }
 
-ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct* data, niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
 {
   if (!function_pointers_.FetchIQMultiRecordComplexF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQMultiRecordComplexF32.");
@@ -801,7 +801,7 @@ ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF32(ViSession vi, ViConstString
 #endif
 }
 
-ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct* data, niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
 {
   if (!function_pointers_.FetchIQMultiRecordComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQMultiRecordComplexF64.");
@@ -813,7 +813,7 @@ ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF64(ViSession vi, ViConstString
 #endif
 }
 
-ViStatus NiRFSALibrary::FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct* data, niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus NiRFSALibrary::FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
 {
   if (!function_pointers_.FetchIQMultiRecordComplexI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQMultiRecordComplexI16.");
@@ -825,7 +825,7 @@ ViStatus NiRFSALibrary::FetchIQMultiRecordComplexI16(ViSession vi, ViConstString
 #endif
 }
 
-ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct* data, niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct* wfmInfo)
 {
   if (!function_pointers_.FetchIQSingleRecordComplexF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQSingleRecordComplexF32.");
@@ -837,7 +837,7 @@ ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF32(ViSession vi, ViConstStrin
 #endif
 }
 
-ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct* data, niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct* wfmInfo)
 {
   if (!function_pointers_.FetchIQSingleRecordComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQSingleRecordComplexF64.");
@@ -849,7 +849,7 @@ ViStatus NiRFSALibrary::FetchIQSingleRecordComplexF64(ViSession vi, ViConstStrin
 #endif
 }
 
-ViStatus NiRFSALibrary::FetchIQSingleRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct* data, niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus NiRFSALibrary::FetchIQSingleRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct* wfmInfo)
 {
   if (!function_pointers_.FetchIQSingleRecordComplexI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_FetchIQSingleRecordComplexI16.");
@@ -1305,7 +1305,7 @@ ViStatus NiRFSALibrary::PerformThermalCorrection(ViSession vi)
 #endif
 }
 
-ViStatus NiRFSALibrary::ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct* data, ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus NiRFSALibrary::ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct data[], ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo)
 {
   if (!function_pointers_.ReadIQSingleRecordComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ReadIQSingleRecordComplexF64.");

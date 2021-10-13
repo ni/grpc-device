@@ -1,15 +1,19 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
+#include <algorithm>
+
 #include "device_server.h"
 #include "ivi.h"  // VI_SUCCESS
 #include "niRFSA.h"
 #include "niRFSAErrors.h"
 #include "nirfsa/nirfsa_client.h"
+#include "nitclk/nitclk_client.h"
 
 using namespace ::testing;
 using namespace nirfsa_grpc;
 namespace client = nirfsa_grpc::experimental::client;
+namespace nitclk_client = nitclk_grpc::experimental::client;
 namespace pb = google::protobuf;
 
 namespace ni {
@@ -50,6 +54,11 @@ class NiRFSADriverApiTests : public Test {
   const std::unique_ptr<NiRFSA::Stub>& stub() const
   {
     return stub_;
+  }
+
+  std::unique_ptr<nitclk_grpc::NiTClk::Stub> create_tclk_stub() const
+  {
+    return nitclk_grpc::NiTClk::NewStub(device_server_->InProcessChannel());
   }
 
   void check_error(const nidevice_grpc::Session& session)
@@ -108,23 +117,79 @@ TEST_F(NiRFSADriverApiTests, Init_Close_Succeeds)
   EXPECT_SUCCESS(session, close_response);
 }
 
-TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedIQ_Succeeds)
+MATCHER(IsNonDefaultComplexArray, "")
 {
+  return std::all_of(
+      arg.cbegin(),
+      arg.cend(),
+      [](const auto& val) { return (val.real() != 0 && val.imaginary() != 0); });
+}
+
+TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedIQ_FetchIQSingleRecordComplexF64_ReturnsData)
+{
+  const auto NUMBER_OF_SAMPLES = 1000;
   auto session = init_session(stub(), PXI_5663E);
   auto configure_clock = client::configure_ref_clock(stub(), session, RefClockSourceRangeTable::REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
   auto configure_reference_level = client::configure_reference_level(stub(), session, "", 0);
   auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_IQ);
   auto configure_number_of_samples = client::configure_number_of_samples(stub(), session, "", true, 1000);
   auto configure_iq_rate = client::configure_iq_rate(stub(), session, "", 1e6);
-
   EXPECT_SUCCESS(session, configure_clock);
   EXPECT_SUCCESS(session, configure_reference_level);
   EXPECT_SUCCESS(session, configure_acquisition_type);
   EXPECT_SUCCESS(session, configure_number_of_samples);
   EXPECT_SUCCESS(session, configure_iq_rate);
+
+  auto fetch_record = client::read_iq_single_record_complex_f64(stub(), session, "", 10.0, NUMBER_OF_SAMPLES);
+
+  EXPECT_SUCCESS(session, fetch_record);
+  EXPECT_EQ(NUMBER_OF_SAMPLES, fetch_record.data().size());
+  EXPECT_THAT(fetch_record.data(), IsNonDefaultComplexArray());
+  EXPECT_EQ(0, fetch_record.wfm_info().absolute_initial_x());
+  EXPECT_EQ(NUMBER_OF_SAMPLES, fetch_record.wfm_info().actual_samples());
+  EXPECT_EQ(1, fetch_record.wfm_info().gain());
+  EXPECT_NEAR(1e-06, fetch_record.wfm_info().x_increment(), 1e-08);
 }
 
-TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedSpectrum_Succeeds)
+TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedIQ_FetchIQMultiRecordComplexF32_ReturnsData)
+{
+  const auto NUMBER_OF_SAMPLES = 10;
+  const auto NUMBER_OF_RECORDS = 2;
+  auto session = init_session(stub(), PXI_5663E);
+  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_IQ);
+  auto configure_number_of_samples = client::configure_number_of_samples(stub(), session, "", true, NUMBER_OF_SAMPLES);
+  auto configure_number_of_records = client::configure_number_of_records(stub(), session, "", true, NUMBER_OF_RECORDS);
+  EXPECT_SUCCESS(session, configure_acquisition_type);
+  EXPECT_SUCCESS(session, configure_number_of_samples);
+  EXPECT_SUCCESS(session, configure_number_of_records);
+
+  auto initiate = client::initiate(stub(), session);
+  auto fetch_record = client::fetch_iq_multi_record_complex_f32(stub(), session, "", 0, NUMBER_OF_RECORDS, NUMBER_OF_SAMPLES, 10.0);
+
+  EXPECT_SUCCESS(session, fetch_record);
+  EXPECT_EQ(NUMBER_OF_SAMPLES * NUMBER_OF_RECORDS, fetch_record.data().size());
+  EXPECT_THAT(fetch_record.data(), IsNonDefaultComplexArray());
+  EXPECT_EQ(NUMBER_OF_RECORDS, fetch_record.wfm_info().size());
+}
+
+TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedIQ_FetchIQSingleRecordComplexI16_ReturnsData)
+{
+  const auto NUMBER_OF_SAMPLES = 10;
+  auto session = init_session(stub(), PXI_5663E);
+  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_IQ);
+  auto configure_number_of_samples = client::configure_number_of_samples(stub(), session, "", true, NUMBER_OF_SAMPLES);
+  EXPECT_SUCCESS(session, configure_acquisition_type);
+  EXPECT_SUCCESS(session, configure_number_of_samples);
+
+  auto initiate = client::initiate(stub(), session);
+  auto fetch_record = client::fetch_iq_single_record_complex_i16(stub(), session, "", 0, NUMBER_OF_SAMPLES, 10.0);
+
+  EXPECT_SUCCESS(session, fetch_record);
+  EXPECT_EQ(NUMBER_OF_SAMPLES, fetch_record.data().size());
+  EXPECT_THAT(fetch_record.data(), IsNonDefaultComplexArray());
+}
+
+TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedSpectrum_ReadPowerSpectrumF64_ReturnsSpectrumData)
 {
   auto session = init_session(stub(), PXI_5663E);
   auto configure_clock = client::configure_ref_clock(stub(), session, std::string("OnboardClock"), 10e6);
@@ -133,7 +198,6 @@ TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedSpectrum_Succeeds)
   auto configure_frequency_start_stop = client::configure_spectrum_frequency_start_stop(stub(), session, "", 990e6, 1010e6);
   auto configure_resolution_bandwidth = client::configure_resolution_bandwidth(stub(), session, "", 10e3);
   auto number_of_spectral_lines = client::get_number_of_spectral_lines(stub(), session, "");
-
   EXPECT_SUCCESS(session, configure_clock);
   EXPECT_SUCCESS(session, configure_reference_level);
   EXPECT_SUCCESS(session, configure_acquisition_type);
@@ -141,6 +205,24 @@ TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedSpectrum_Succeeds)
   EXPECT_SUCCESS(session, configure_resolution_bandwidth);
   EXPECT_SUCCESS(session, number_of_spectral_lines);
   EXPECT_EQ(4974, number_of_spectral_lines.number_of_spectral_lines());
+
+  auto power_spectrum = client::read_power_spectrum_f64(
+      stub(),
+      session,
+      "",
+      10.0,
+      number_of_spectral_lines.number_of_spectral_lines());
+  EXPECT_SUCCESS(session, power_spectrum);
+  auto max_power_iter = std::max_element(
+      power_spectrum.power_spectrum_data().cbegin(),
+      power_spectrum.power_spectrum_data().cend());
+  EXPECT_NE(0.0, *max_power_iter);
+  EXPECT_THAT(power_spectrum.power_spectrum_data(), Each(Ne(0.0)));
+  EXPECT_EQ(
+      power_spectrum.spectrum_info().number_of_spectral_lines(),
+      number_of_spectral_lines.number_of_spectral_lines());
+  EXPECT_NE(0.0, power_spectrum.spectrum_info().initial_frequency());
+  EXPECT_NE(0.0, power_spectrum.spectrum_info().frequency_increment());
 }
 
 TEST_F(NiRFSADriverApiTests, GetDeviceResponse_ReturnsResponseData)
@@ -373,6 +455,63 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_Reports
   EXPECT_RFSA_ERROR(IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED, session, response);
 }
 
+TEST_F(NiRFSADriverApiTests, GetScalingCoefficients_ReturnsCoefficients)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  auto response = client::get_scaling_coefficients(
+      stub(),
+      session,
+      "");
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ(1, response.coefficient_info().size());
+  EXPECT_NE(0.0, response.coefficient_info()[0].gain());
+  EXPECT_EQ(0.0, response.coefficient_info()[0].offset());
+}
+
+TEST_F(NiRFSADriverApiTests, GetNormalizationCoefficients_ReturnsCoefficients)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  auto response = client::get_normalization_coefficients(
+      stub(),
+      session,
+      "");
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ(1, response.coefficient_info().size());
+  EXPECT_NE(0.0, response.coefficient_info()[0].gain());
+  EXPECT_EQ(0.0, response.coefficient_info()[0].offset());
+}
+
+TEST_F(NiRFSADriverApiTests, ConfiguredSpectrumAcquisition_GetSpectralInfoForSmt_ReturnsSpectralInforForSmt)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  auto spectral_lines = client::get_number_of_spectral_lines(stub(), session, "");
+  auto configure_acquisition_type = client::configure_acquisition_type(
+      stub(),
+      session,
+      AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_SPECTRUM);
+  auto power_spectrum = client::read_power_spectrum_f64(stub(), session, "", 10.0, spectral_lines.number_of_spectral_lines());
+  auto response = client::get_spectral_info_for_smt(stub(), session);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ(312, response.spectrum_info().fft_size());
+  EXPECT_EQ(1, response.spectrum_info().linear_db());
+  EXPECT_EQ(2, response.spectrum_info().spectrum_type());
+  EXPECT_EQ(312, response.spectrum_info().window_size());
+  EXPECT_EQ(8, response.spectrum_info().window());
+}
+
+TEST_F(NiRFSADriverApiTests, TwoSessions_SetupTclkSyncPulseSenderSynchronization_Succeeds)
+{
+  auto first_session = init_session(stub(), PXI_5663E);
+  auto second_session = init_session(stub(), PXI_5663E);
+
+  auto tclk_stub = create_tclk_stub();
+  auto result = nitclk_client::setup_for_sync_pulse_sender_synchronize(tclk_stub, {first_session, second_session}, 0);
+
+  EXPECT_SUCCESS(first_session, result);
+}
 }  // namespace
 }  // namespace system
 }  // namespace tests

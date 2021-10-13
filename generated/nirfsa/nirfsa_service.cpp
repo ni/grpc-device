@@ -1445,9 +1445,9 @@ namespace nirfsa_grpc {
       ViInt64 number_of_records = request->number_of_records();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      NIComplexNumberF32_struct data {};
-      niRFSA_wfmInfo_struct wfm_info {};
-      auto status = library_->FetchIQMultiRecordComplexF32(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, &data, &wfm_info);
+      std::vector<NIComplexNumberF32_struct> data(number_of_samples * number_of_records, NIComplexNumberF32_struct());
+      std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
+      auto status = library_->FetchIQMultiRecordComplexF32(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       response->set_status(status);
       if (status == 0) {
         convert_to_grpc(data, response->mutable_data());
@@ -1475,9 +1475,9 @@ namespace nirfsa_grpc {
       ViInt64 number_of_records = request->number_of_records();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      NIComplexNumber_struct data {};
-      niRFSA_wfmInfo_struct wfm_info {};
-      auto status = library_->FetchIQMultiRecordComplexF64(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, &data, &wfm_info);
+      std::vector<NIComplexNumber_struct> data(number_of_samples * number_of_records, NIComplexNumber_struct());
+      std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
+      auto status = library_->FetchIQMultiRecordComplexF64(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       response->set_status(status);
       if (status == 0) {
         convert_to_grpc(data, response->mutable_data());
@@ -1505,9 +1505,9 @@ namespace nirfsa_grpc {
       ViInt64 number_of_records = request->number_of_records();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      NIComplexI16_struct data {};
-      niRFSA_wfmInfo_struct wfm_info {};
-      auto status = library_->FetchIQMultiRecordComplexI16(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, &data, &wfm_info);
+      std::vector<NIComplexI16_struct> data(number_of_samples * number_of_records, NIComplexI16_struct());
+      std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
+      auto status = library_->FetchIQMultiRecordComplexI16(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       response->set_status(status);
       if (status == 0) {
         convert_to_grpc(data, response->mutable_data());
@@ -1534,9 +1534,9 @@ namespace nirfsa_grpc {
       ViInt64 record_number = request->record_number();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      NIComplexNumberF32_struct data {};
+      std::vector<NIComplexNumberF32_struct> data(number_of_samples, NIComplexNumberF32_struct());
       niRFSA_wfmInfo_struct wfm_info {};
-      auto status = library_->FetchIQSingleRecordComplexF32(vi, channel_list, record_number, number_of_samples, timeout, &data, &wfm_info);
+      auto status = library_->FetchIQSingleRecordComplexF32(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       response->set_status(status);
       if (status == 0) {
         convert_to_grpc(data, response->mutable_data());
@@ -1563,9 +1563,9 @@ namespace nirfsa_grpc {
       ViInt64 record_number = request->record_number();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      NIComplexNumber_struct data {};
+      std::vector<NIComplexNumber_struct> data(number_of_samples, NIComplexNumber_struct());
       niRFSA_wfmInfo_struct wfm_info {};
-      auto status = library_->FetchIQSingleRecordComplexF64(vi, channel_list, record_number, number_of_samples, timeout, &data, &wfm_info);
+      auto status = library_->FetchIQSingleRecordComplexF64(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       response->set_status(status);
       if (status == 0) {
         convert_to_grpc(data, response->mutable_data());
@@ -1592,9 +1592,9 @@ namespace nirfsa_grpc {
       ViInt64 record_number = request->record_number();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      NIComplexI16_struct data {};
+      std::vector<NIComplexI16_struct> data(number_of_samples, NIComplexI16_struct());
       niRFSA_wfmInfo_struct wfm_info {};
-      auto status = library_->FetchIQSingleRecordComplexI16(vi, channel_list, record_number, number_of_samples, timeout, &data, &wfm_info);
+      auto status = library_->FetchIQSingleRecordComplexI16(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       response->set_status(status);
       if (status == 0) {
         convert_to_grpc(data, response->mutable_data());
@@ -2736,9 +2736,9 @@ namespace nirfsa_grpc {
       auto channel_list = request->channel_list().c_str();
       ViReal64 timeout = request->timeout();
       ViInt64 data_array_size = request->data_array_size();
-      NIComplexNumber_struct data {};
+      std::vector<NIComplexNumber_struct> data(data_array_size, NIComplexNumber_struct());
       niRFSA_wfmInfo_struct wfm_info {};
-      auto status = library_->ReadIQSingleRecordComplexF64(vi, channel_list, timeout, &data, data_array_size, &wfm_info);
+      auto status = library_->ReadIQSingleRecordComplexF64(vi, channel_list, timeout, data.data(), data_array_size, &wfm_info);
       response->set_status(status);
       if (status == 0) {
         convert_to_grpc(data, response->mutable_data());
