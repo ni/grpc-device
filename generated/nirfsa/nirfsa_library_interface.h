@@ -69,12 +69,12 @@ class NiRFSALibraryInterface {
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;
   virtual ViStatus ExtCalStoreBaselineForSelfCalibration(ViSession vi, ViString password, ViInt64 selfCalibrationStep) = 0;
   virtual ViStatus ExternalAlignmentAdjustPreselector(ViSession vi, ViInt32 numberOfCoefficients, ViReal64 coefficients[]) = 0;
-  virtual ViStatus FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct* data, niRFSA_wfmInfo_struct* wfmInfo) = 0;
-  virtual ViStatus FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct* data, niRFSA_wfmInfo_struct* wfmInfo) = 0;
-  virtual ViStatus FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct* data, niRFSA_wfmInfo_struct* wfmInfo) = 0;
-  virtual ViStatus FetchIQSingleRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct* data, niRFSA_wfmInfo_struct* wfmInfo) = 0;
-  virtual ViStatus FetchIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct* data, niRFSA_wfmInfo_struct* wfmInfo) = 0;
-  virtual ViStatus FetchIQSingleRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct* data, niRFSA_wfmInfo_struct* wfmInfo) = 0;
+  virtual ViStatus FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct wfmInfo[]) = 0;
+  virtual ViStatus FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct wfmInfo[]) = 0;
+  virtual ViStatus FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct wfmInfo[]) = 0;
+  virtual ViStatus FetchIQSingleRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct* wfmInfo) = 0;
+  virtual ViStatus FetchIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct* wfmInfo) = 0;
+  virtual ViStatus FetchIQSingleRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct* wfmInfo) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* value) = 0;
   virtual ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* value) = 0;
@@ -112,7 +112,7 @@ class NiRFSALibraryInterface {
   virtual ViStatus IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps) = 0;
   virtual ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus PerformThermalCorrection(ViSession vi) = 0;
-  virtual ViStatus ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct* data, ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo) = 0;
+  virtual ViStatus ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct data[], ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo) = 0;
   virtual ViStatus ReadPowerSpectrumF32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal32 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo) = 0;
   virtual ViStatus ReadPowerSpectrumF64(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal64 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo) = 0;
   virtual ViStatus Reset(ViSession vi) = 0;

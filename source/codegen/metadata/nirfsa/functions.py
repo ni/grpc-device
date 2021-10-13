@@ -1112,15 +1112,23 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'NIComplexNumberF32',
+                'grpc_type': 'repeated NIComplexNumberF32',
                 'name': 'data',
-                'type': 'struct NIComplexNumberF32_struct'
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': 'numberOfSamples * numberOfRecords'
+                },
+                'type': 'struct NIComplexNumberF32_struct[]'
             },
             {
                 'direction': 'out',
-                'grpc_type': 'WaveformInfo',
+                'grpc_type': 'repeated WaveformInfo',
                 'name': 'wfmInfo',
-                'type': 'struct niRFSA_wfmInfo_struct'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfRecords'
+                },
+                'type': 'struct niRFSA_wfmInfo_struct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -1159,15 +1167,23 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'NIComplexNumber',
+                'grpc_type': 'repeated NIComplexNumber',
                 'name': 'data',
-                'type': 'struct NIComplexNumber_struct'
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': 'numberOfSamples * numberOfRecords'
+                },
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'direction': 'out',
-                'grpc_type': 'WaveformInfo',
+                'grpc_type': 'repeated WaveformInfo',
                 'name': 'wfmInfo',
-                'type': 'struct niRFSA_wfmInfo_struct'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfRecords'
+                },
+                'type': 'struct niRFSA_wfmInfo_struct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -1206,15 +1222,23 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'NIComplexI16',
+                'grpc_type': 'repeated NIComplexI16',
                 'name': 'data',
-                'type': 'struct NIComplexI16_struct'
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': 'numberOfSamples * numberOfRecords'
+                },
+                'type': 'struct NIComplexI16_struct[]'
             },
             {
                 'direction': 'out',
-                'grpc_type': 'WaveformInfo',
+                'grpc_type': 'repeated WaveformInfo',
                 'name': 'wfmInfo',
-                'type': 'struct niRFSA_wfmInfo_struct'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfRecords'
+                },
+                'type': 'struct niRFSA_wfmInfo_struct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -1248,9 +1272,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'NIComplexNumberF32',
+                'grpc_type': 'repeated NIComplexNumberF32',
                 'name': 'data',
-                'type': 'struct NIComplexNumberF32_struct'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfSamples'
+                },
+                'type': 'struct NIComplexNumberF32_struct[]'
             },
             {
                 'direction': 'out',
@@ -1290,9 +1318,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'NIComplexNumber',
+                'grpc_type': 'repeated NIComplexNumber',
                 'name': 'data',
-                'type': 'struct NIComplexNumber_struct'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfSamples'
+                },
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'direction': 'out',
@@ -1332,9 +1364,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'NIComplexI16',
+                'grpc_type': 'repeated NIComplexI16',
                 'name': 'data',
-                'type': 'struct NIComplexI16_struct'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfSamples'
+                },
+                'type': 'struct NIComplexI16_struct[]'
             },
             {
                 'direction': 'out',
@@ -1916,7 +1952,7 @@ functions = {
                         'strlen-bug'
                     ],
                     'value': 'bufferSize',
-                    'value_twist': 'bufferSize',
+                    'value_twist': 'bufferSize'
                 },
                 'type': 'ViChar[]'
             },
@@ -2347,9 +2383,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'NIComplexNumber',
+                'grpc_type': 'repeated NIComplexNumber',
                 'name': 'data',
-                'type': 'struct NIComplexNumber_struct'
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'dataArraySize'
+                },
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',

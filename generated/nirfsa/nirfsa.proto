@@ -1353,8 +1353,8 @@ message FetchIQMultiRecordComplexF32Request {
 
 message FetchIQMultiRecordComplexF32Response {
   int32 status = 1;
-  NIComplexNumberF32 data = 2;
-  WaveformInfo wfm_info = 3;
+  repeated NIComplexNumberF32 data = 2;
+  repeated WaveformInfo wfm_info = 3;
 }
 
 message FetchIQMultiRecordComplexF64Request {
@@ -1368,8 +1368,8 @@ message FetchIQMultiRecordComplexF64Request {
 
 message FetchIQMultiRecordComplexF64Response {
   int32 status = 1;
-  NIComplexNumber data = 2;
-  WaveformInfo wfm_info = 3;
+  repeated NIComplexNumber data = 2;
+  repeated WaveformInfo wfm_info = 3;
 }
 
 message FetchIQMultiRecordComplexI16Request {
@@ -1383,8 +1383,8 @@ message FetchIQMultiRecordComplexI16Request {
 
 message FetchIQMultiRecordComplexI16Response {
   int32 status = 1;
-  NIComplexI16 data = 2;
-  WaveformInfo wfm_info = 3;
+  repeated NIComplexI16 data = 2;
+  repeated WaveformInfo wfm_info = 3;
 }
 
 message FetchIQSingleRecordComplexF32Request {
@@ -1397,7 +1397,7 @@ message FetchIQSingleRecordComplexF32Request {
 
 message FetchIQSingleRecordComplexF32Response {
   int32 status = 1;
-  NIComplexNumberF32 data = 2;
+  repeated NIComplexNumberF32 data = 2;
   WaveformInfo wfm_info = 3;
 }
 
@@ -1411,7 +1411,7 @@ message FetchIQSingleRecordComplexF64Request {
 
 message FetchIQSingleRecordComplexF64Response {
   int32 status = 1;
-  NIComplexNumber data = 2;
+  repeated NIComplexNumber data = 2;
   WaveformInfo wfm_info = 3;
 }
 
@@ -1425,7 +1425,7 @@ message FetchIQSingleRecordComplexI16Request {
 
 message FetchIQSingleRecordComplexI16Response {
   int32 status = 1;
-  NIComplexI16 data = 2;
+  repeated NIComplexI16 data = 2;
   WaveformInfo wfm_info = 3;
 }
 
@@ -1840,7 +1840,7 @@ message ReadIQSingleRecordComplexF64Request {
 
 message ReadIQSingleRecordComplexF64Response {
   int32 status = 1;
-  NIComplexNumber data = 2;
+  repeated NIComplexNumber data = 2;
   WaveformInfo wfm_info = 3;
 }
 

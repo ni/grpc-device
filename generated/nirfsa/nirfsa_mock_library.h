@@ -70,12 +70,12 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, ExportSignal, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));
   MOCK_METHOD(ViStatus, ExtCalStoreBaselineForSelfCalibration, (ViSession vi, ViString password, ViInt64 selfCalibrationStep), (override));
   MOCK_METHOD(ViStatus, ExternalAlignmentAdjustPreselector, (ViSession vi, ViInt32 numberOfCoefficients, ViReal64 coefficients[]), (override));
-  MOCK_METHOD(ViStatus, FetchIQMultiRecordComplexF32, (ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct* data, niRFSA_wfmInfo_struct* wfmInfo), (override));
-  MOCK_METHOD(ViStatus, FetchIQMultiRecordComplexF64, (ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct* data, niRFSA_wfmInfo_struct* wfmInfo), (override));
-  MOCK_METHOD(ViStatus, FetchIQMultiRecordComplexI16, (ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct* data, niRFSA_wfmInfo_struct* wfmInfo), (override));
-  MOCK_METHOD(ViStatus, FetchIQSingleRecordComplexF32, (ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct* data, niRFSA_wfmInfo_struct* wfmInfo), (override));
-  MOCK_METHOD(ViStatus, FetchIQSingleRecordComplexF64, (ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct* data, niRFSA_wfmInfo_struct* wfmInfo), (override));
-  MOCK_METHOD(ViStatus, FetchIQSingleRecordComplexI16, (ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct* data, niRFSA_wfmInfo_struct* wfmInfo), (override));
+  MOCK_METHOD(ViStatus, FetchIQMultiRecordComplexF32, (ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct wfmInfo[]), (override));
+  MOCK_METHOD(ViStatus, FetchIQMultiRecordComplexF64, (ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct wfmInfo[]), (override));
+  MOCK_METHOD(ViStatus, FetchIQMultiRecordComplexI16, (ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct wfmInfo[]), (override));
+  MOCK_METHOD(ViStatus, FetchIQSingleRecordComplexF32, (ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct* wfmInfo), (override));
+  MOCK_METHOD(ViStatus, FetchIQSingleRecordComplexF64, (ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct* wfmInfo), (override));
+  MOCK_METHOD(ViStatus, FetchIQSingleRecordComplexI16, (ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct* wfmInfo), (override));
   MOCK_METHOD(ViStatus, GetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* value), (override));
@@ -113,7 +113,7 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, IsSelfCalValid, (ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps), (override));
   MOCK_METHOD(ViStatus, LockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, PerformThermalCorrection, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, ReadIQSingleRecordComplexF64, (ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct* data, ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo), (override));
+  MOCK_METHOD(ViStatus, ReadIQSingleRecordComplexF64, (ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct data[], ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo), (override));
   MOCK_METHOD(ViStatus, ReadPowerSpectrumF32, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal32 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo), (override));
   MOCK_METHOD(ViStatus, ReadPowerSpectrumF64, (ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal64 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo), (override));
   MOCK_METHOD(ViStatus, Reset, (ViSession vi), (override));
