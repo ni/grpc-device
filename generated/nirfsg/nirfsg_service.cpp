@@ -166,22 +166,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViReal64 value;
-      switch (request->value_enum_case()) {
-        case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValue: {
-          value = static_cast<ViReal64>(request->value());
-          break;
-        }
-        case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueRaw: {
-          value = static_cast<ViReal64>(request->value_raw());
-          break;
-        }
-        case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
-          break;
-        }
-      }
-
+      ViReal64 value = request->value_raw();
       auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2905,22 +2890,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
-      ViReal64 value;
-      switch (request->value_enum_case()) {
-        case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::kValue: {
-          value = static_cast<ViReal64>(request->value());
-          break;
-        }
-        case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueRaw: {
-          value = static_cast<ViReal64>(request->value_raw());
-          break;
-        }
-        case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
-          break;
-        }
-      }
-
+      ViReal64 value = request->value_raw();
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute, value);
       response->set_status(status);
       return ::grpc::Status::OK;
