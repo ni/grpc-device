@@ -1692,7 +1692,7 @@ functions = {
                 'direction': 'out',
                 'name': 'errorDescription',
                 'size': {
-                    'mechanism': 'passed-in',
+                    'mechanism': 'ivi-dance',
                     'value': 'errorDescriptionBufferSize'
                 },
                 'type': 'ViChar[]'

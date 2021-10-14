@@ -91,7 +91,7 @@ GetCalUserDefinedInfoResponse get_cal_user_defined_info(const StubPtr& stub, con
 GetCalUserDefinedInfoMaxSizeResponse get_cal_user_defined_info_max_size(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetDeembeddingSparametersResponse get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetDeviceResponseResponse get_device_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<DeviceResponse, pb::int32>& response_type);
-GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_description_buffer_size);
+GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExtCalLastDateAndTimeResponse get_ext_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExtCalLastTempResponse get_ext_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExtCalRecommendedIntervalResponse get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);

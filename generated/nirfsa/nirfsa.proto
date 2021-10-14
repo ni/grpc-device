@@ -1543,7 +1543,6 @@ message GetDeviceResponseResponse {
 
 message GetErrorRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 error_description_buffer_size = 2;
 }
 
 message GetErrorResponse {

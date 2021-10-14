@@ -1378,13 +1378,12 @@ get_device_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 GetErrorResponse
-get_error(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_description_buffer_size)
+get_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
   ::grpc::ClientContext context;
 
   auto request = GetErrorRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_error_description_buffer_size(error_description_buffer_size);
 
   auto response = GetErrorResponse{};
 
