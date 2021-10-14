@@ -427,6 +427,41 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFetchOffset_UpdatesFetchOffsetSuccessful
   EXPECT_EQ(NEW_OFFSET, get_response.value());
 }
 
+// NOTE: disabled because this test requires a 58XX device. Simulating a 58XX hangs on shutdown.
+TEST_F(NiRFSADriverApiTests, DISABLED_ReconfigureDowncoverterMode_UpdatesDownconverterModeSuccessfully)
+{
+  constexpr auto USER_DEFINED = NiRFSAInt32AttributeValues::NIRFSA_INT32_DOWNCONVERTER_FREQUENCY_OFFSET_MODE_RANGE_TABLE_USER_DEFINED;
+  constexpr auto ENABLED = NiRFSAInt32AttributeValues::NIRFSA_INT32_DOWNCONVERTER_FREQUENCY_OFFSET_MODE_RANGE_TABLE_ENABLED;
+  const auto session = init_session(stub(), "5841");
+  // Per nirfsa.sub: "NOTE: You must set this attribute to enable the NIRFSA_ATTR_DOWNCONVERTER_FREQUENCY_OFFSET_MODE attribute."
+  const auto bandwidth_response = client::set_attribute_vi_real64(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_SIGNAL_BANDWIDTH,
+      1e4);
+  const auto initial_response = client::get_attribute_vi_int32(stub(), session, "", NiRFSAAttributes::NIRFSA_ATTRIBUTE_DOWNCONVERTER_FREQUENCY_OFFSET_MODE);
+  // Toggle the mode since it persists between sessions.
+  const auto new_mode = (initial_response.value() == USER_DEFINED) ? ENABLED : USER_DEFINED;
+  const auto set_response = client::set_attribute_vi_int32(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_DOWNCONVERTER_FREQUENCY_OFFSET_MODE,
+      new_mode);
+  const auto get_response = client::get_attribute_vi_int32(
+      stub(),
+      session,
+      "",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_DOWNCONVERTER_FREQUENCY_OFFSET_MODE);
+
+  EXPECT_SUCCESS(session, initial_response);
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_NE(initial_response.value(), get_response.value());
+  EXPECT_EQ(new_mode, get_response.value());
+}
+
 TEST_F(NiRFSADriverApiTests, CreateConfigurationList_Succeeds)
 {
   const auto LIST_NAME = "MyList";

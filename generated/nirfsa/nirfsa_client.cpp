@@ -2158,7 +2158,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id, const simple_variant<NiRFSAReal64AttributeValues, double>& value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id, const double& value_raw)
 {
   ::grpc::ClientContext context;
 
@@ -2166,14 +2166,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
-  const auto value_ptr = value.get_if<NiRFSAReal64AttributeValues>();
-  const auto value_raw_ptr = value.get_if<double>();
-  if (value_ptr) {
-    request.set_value(*value_ptr);
-  }
-  else if (value_raw_ptr) {
-    request.set_value_raw(*value_raw_ptr);
-  }
+  request.set_value_raw(value_raw);
 
   auto response = SetAttributeViReal64Response{};
 
