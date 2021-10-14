@@ -1337,13 +1337,12 @@ get_cal_user_defined_info_max_size(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 GetDeembeddingSparametersResponse
-get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& sparameters_array_size)
+get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeembeddingSparametersRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_sparameters_array_size(sparameters_array_size);
 
   auto response = GetDeembeddingSparametersResponse{};
 

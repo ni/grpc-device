@@ -957,7 +957,7 @@ ViStatus NiRFSALibrary::GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* info
 #endif
 }
 
-ViStatus NiRFSALibrary::GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct* sparameters, ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts)
+ViStatus NiRFSALibrary::GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts)
 {
   if (!function_pointers_.GetDeembeddingSparameters) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetDeembeddingSparameters.");

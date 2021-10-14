@@ -85,7 +85,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]);
   ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[256]);
   ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize);
-  ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct* sparameters, ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts);
+  ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts);
   ViStatus GetDeviceResponse(ViSession vi, ViConstString channelList, ViInt32 responseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies);
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
   ViStatus GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);

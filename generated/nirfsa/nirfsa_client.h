@@ -89,7 +89,7 @@ GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, cons
 GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id);
 GetCalUserDefinedInfoResponse get_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetCalUserDefinedInfoMaxSizeResponse get_cal_user_defined_info_max_size(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetDeembeddingSparametersResponse get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& sparameters_array_size);
+GetDeembeddingSparametersResponse get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetDeviceResponseResponse get_device_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<DeviceResponse, pb::int32>& response_type);
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_description_buffer_size);
 GetExtCalLastDateAndTimeResponse get_ext_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);

@@ -83,7 +83,7 @@ class NiRFSALibraryInterface {
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]) = 0;
   virtual ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[256]) = 0;
   virtual ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize) = 0;
-  virtual ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct* sparameters, ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts) = 0;
+  virtual ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts) = 0;
   virtual ViStatus GetDeviceResponse(ViSession vi, ViConstString channelList, ViInt32 responseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]) = 0;
   virtual ViStatus GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute) = 0;

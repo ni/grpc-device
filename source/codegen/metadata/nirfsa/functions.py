@@ -1583,9 +1583,14 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'NIComplexNumber',
+                'grpc_type': 'repeated NIComplexNumber',
                 'name': 'sparameters',
-                'type': 'struct NIComplexNumber_struct'
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'sparametersArraySize',
+                    'value_twist': 'numberOfSparameters'
+                },
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
