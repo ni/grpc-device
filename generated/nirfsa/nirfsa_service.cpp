@@ -1831,18 +1831,36 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 sparameters_array_size = request->sparameters_array_size();
-      NIComplexNumber_struct sparameters {};
       ViInt32 number_of_sparameters {};
       ViInt32 number_of_ports {};
-      auto status = library_->GetDeembeddingSparameters(vi, &sparameters, sparameters_array_size, &number_of_sparameters, &number_of_ports);
-      response->set_status(status);
-      if (status == 0) {
-        convert_to_grpc(sparameters, response->mutable_sparameters());
-        response->set_number_of_sparameters(number_of_sparameters);
-        response->set_number_of_ports(number_of_ports);
+      while (true) {
+        auto status = library_->GetDeembeddingSparameters(vi, nullptr, 0, &number_of_sparameters, &number_of_ports);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
+        auto sparameters_array_size = number_of_sparameters;
+        status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          convert_to_grpc(sparameters, response->mutable_sparameters());
+          {
+            auto shrunk_size = number_of_sparameters;
+            auto current_size = response->mutable_sparameters()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_number_of_sparameters(number_of_sparameters);
+          response->set_number_of_ports(number_of_ports);
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
