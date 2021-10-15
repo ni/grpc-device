@@ -736,7 +736,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'listAttributeIDs',
+                'name': 'listAttributeIds',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfListAttributes'

@@ -1015,10 +1015,10 @@ namespace nirfsa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto list_name = request->list_name().c_str();
-      ViInt32 number_of_list_attributes = static_cast<ViInt32>(request->list_attribute_i_ds().size());
-      auto list_attribute_i_ds = const_cast<ViAttr*>(reinterpret_cast<const ViAttr*>(request->list_attribute_i_ds().data()));
+      ViInt32 number_of_list_attributes = static_cast<ViInt32>(request->list_attribute_ids().size());
+      auto list_attribute_ids = const_cast<ViAttr*>(reinterpret_cast<const ViAttr*>(request->list_attribute_ids().data()));
       ViBoolean set_as_active_list = request->set_as_active_list();
-      auto status = library_->CreateConfigurationList(vi, list_name, number_of_list_attributes, list_attribute_i_ds, set_as_active_list);
+      auto status = library_->CreateConfigurationList(vi, list_name, number_of_list_attributes, list_attribute_ids, set_as_active_list);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

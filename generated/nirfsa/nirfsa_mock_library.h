@@ -53,7 +53,7 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureSoftwareEdgeStartTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ConfigureSpectrumFrequencyCenterSpan, (ViSession vi, ViConstString channelList, ViReal64 centerFrequency, ViReal64 span), (override));
   MOCK_METHOD(ViStatus, ConfigureSpectrumFrequencyStartStop, (ViSession vi, ViConstString channelList, ViReal64 startFrequency, ViReal64 stopFrequency), (override));
-  MOCK_METHOD(ViStatus, CreateConfigurationList, (ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIDs[], ViBoolean setAsActiveList), (override));
+  MOCK_METHOD(ViStatus, CreateConfigurationList, (ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIds[], ViBoolean setAsActiveList), (override));
   MOCK_METHOD(ViStatus, CreateConfigurationListStep, (ViSession vi, ViBoolean setAsActiveStep), (override));
   MOCK_METHOD(ViStatus, CreateDeembeddingSparameterTableArray, (ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation), (override));
   MOCK_METHOD(ViStatus, CreateDeembeddingSparameterTableS2PFile, (ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation), (override));

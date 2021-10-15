@@ -749,14 +749,14 @@ configure_spectrum_frequency_start_stop(const StubPtr& stub, const nidevice_grpc
 }
 
 CreateConfigurationListResponse
-create_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& list_name, const std::vector<NiRFSAAttributes>& list_attribute_i_ds, const bool& set_as_active_list)
+create_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& list_name, const std::vector<NiRFSAAttributes>& list_attribute_ids, const bool& set_as_active_list)
 {
   ::grpc::ClientContext context;
 
   auto request = CreateConfigurationListRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_list_name(list_name);
-  copy_array(list_attribute_i_ds, request.mutable_list_attribute_i_ds());
+  copy_array(list_attribute_ids, request.mutable_list_attribute_ids());
   request.set_set_as_active_list(set_as_active_list);
 
   auto response = CreateConfigurationListResponse{};
