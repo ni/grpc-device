@@ -1938,19 +1938,32 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 error_description_buffer_size = request->error_description_buffer_size();
-      ViStatus error_code {};
-      std::string error_description;
-      if (error_description_buffer_size > 0) {
-          error_description.resize(error_description_buffer_size - 1);
+
+      while (true) {
+        auto status = library_->GetError(vi, nullptr, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        ViInt32 error_description_buffer_size = status;
+      
+        ViStatus error_code {};
+        std::string error_description;
+        if (error_description_buffer_size > 0) {
+            error_description.resize(error_description_buffer_size - 1);
+        }
+        status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_error_code(error_code);
+          response->set_error_description(error_description);
+        }
+        return ::grpc::Status::OK;
       }
-      auto status = library_->GetError(vi, &error_code, error_description_buffer_size, (ViChar*)error_description.data());
-      response->set_status(status);
-      if (status == 0) {
-        response->set_error_code(error_code);
-        response->set_error_description(error_description);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

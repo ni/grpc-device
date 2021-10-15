@@ -63,7 +63,7 @@ class NiRFSADriverApiTests : public Test {
 
   void check_error(const nidevice_grpc::Session& session)
   {
-    auto response = client::get_error(stub(), session, 2048);
+    auto response = client::get_error(stub(), session);
     EXPECT_EQ("", std::string(response.error_description().c_str()));
   }
 
@@ -81,9 +81,11 @@ class NiRFSADriverApiTests : public Test {
   }
 
   template <typename TResponse>
-  void EXPECT_RFSA_ERROR(pb::int32 expected_error, const nidevice_grpc::Session& session, const TResponse& response)
+  void EXPECT_RFSA_ERROR(pb::int32 expected_error, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
   {
     ni::tests::system::EXPECT_RFSA_ERROR(expected_error, response);
+    const auto error = client::get_error(stub(), session);
+    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));
     clear_error(session);
   }
 
@@ -452,7 +454,7 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_Reports
       {NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttributes::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
       true);
 
-  EXPECT_RFSA_ERROR(IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED, session, response);
+  EXPECT_RFSA_ERROR(IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED, "Attribute or property not supported.", session, response);
 }
 
 TEST_F(NiRFSADriverApiTests, GetScalingCoefficients_ReturnsCoefficients)
