@@ -22,6 +22,7 @@
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedRFSG" as the physical channel name
 import grpc
 import sys
+import time
 
 import nirfsg_pb2 as nirfsg_types
 import nirfsg_pb2_grpc as grpc_nirfsg
@@ -72,7 +73,19 @@ try:
     )
     RaiseIfError(response)
     vi = response.vi
-    print(f"vi is {vi}")
+    RaiseIfError(client.ConfigureRF(
+        nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5)
+    ))
+    print("Generating tone...")
+    RaiseIfError(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
+    # Wait for two seconds and change frequency
+    time.sleep(2)
+    print("Changing frequency")
+    RaiseIfError(client.ConfigureRF(
+        nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1.5e9, power_level=-5)
+    ))
+    print("Generating tone...")
+    time.sleep(2)
 finally:
     if vi:
         client.Close(nirfsg_types.CloseRequest(vi=vi))
