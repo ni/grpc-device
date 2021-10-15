@@ -2004,7 +2004,7 @@ attributes = {
         },
         'enum': 'DownconverterFrequencyOffsetModeRangeTable',
         'name': 'DOWNCONVERTER_FREQUENCY_OFFSET_MODE',
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
     1150306: {
         'access': 'read-write',
