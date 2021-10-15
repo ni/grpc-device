@@ -1,5 +1,5 @@
-# This program demonstrates the use of NI-RFSG to generate a single tone CW at a specified frequency and power.             *
-# The niRFSG_Abort function is used to quickly change from one configuration to another.                                      *
+# This program demonstrates the use of niRFSG_ConfigureRefClock to route the reference clock source
+# during a simple sine wave generation.
 #
 # The gRPC API is built from the C API. NI-RFSG documentation is installed with the driver at:
 # C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niRFSG\documentation\English\RFSG.chm
@@ -18,8 +18,9 @@
 # Running from command line:
 #
 # Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python getting-started-single-tone-generation.py <server_address> <port_number> <physical_channel_name>
+#   > python reference-clock.py <server_address> <port_number> <physical_channel_name>
 # If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedRFSG" as the physical channel name
+
 import grpc
 import sys
 import time
@@ -68,16 +69,24 @@ try:
     RaiseIfError(client.ConfigureRF(
         nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5)
     ))
-    print("Generating tone...")
-    RaiseIfError(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
-    # Wait for two seconds and change frequency
-    time.sleep(2)
-    print("Changing frequency")
-    RaiseIfError(client.ConfigureRF(
-        nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1.5e9, power_level=-5)
+    RaiseIfError(client.ConfigureGenerationMode(
+        nirfsg_types.ConfigureGenerationModeRequest(
+            vi=vi,
+            generation_mode=nirfsg_types.ATTR_GENERATION_MODE_RANGE_TABLE_CW)
     ))
-    print("Generating tone...")
+    RaiseIfError(client.ConfigureRefClock(
+        nirfsg_types.ConfigureRefClockRequest(
+            vi=vi,
+            ref_clock_source_mapped=nirfsg_types.ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR,
+            ref_clock_rate=10e6
+        )
+    ))
+    print("Generating...")
+    RaiseIfError(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
     time.sleep(2)
+    # Check the generation status
+    RaiseIfError(client.CheckGenerationStatus(
+        nirfsg_types.CheckGenerationStatusRequest(vi=vi)))
 finally:
     if vi:
         client.ConfigureOutputEnabled(
