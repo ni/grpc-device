@@ -52,7 +52,7 @@ class NiRFSALibraryInterface {
   virtual ViStatus ConfigureSoftwareEdgeStartTrigger(ViSession vi) = 0;
   virtual ViStatus ConfigureSpectrumFrequencyCenterSpan(ViSession vi, ViConstString channelList, ViReal64 centerFrequency, ViReal64 span) = 0;
   virtual ViStatus ConfigureSpectrumFrequencyStartStop(ViSession vi, ViConstString channelList, ViReal64 startFrequency, ViReal64 stopFrequency) = 0;
-  virtual ViStatus CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIDs[], ViBoolean setAsActiveList) = 0;
+  virtual ViStatus CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIds[], ViBoolean setAsActiveList) = 0;
   virtual ViStatus CreateConfigurationListStep(ViSession vi, ViBoolean setAsActiveStep) = 0;
   virtual ViStatus CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation) = 0;
   virtual ViStatus CreateDeembeddingSparameterTableS2PFile(ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation) = 0;

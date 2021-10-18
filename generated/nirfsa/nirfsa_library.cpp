@@ -585,15 +585,15 @@ ViStatus NiRFSALibrary::ConfigureSpectrumFrequencyStartStop(ViSession vi, ViCons
 #endif
 }
 
-ViStatus NiRFSALibrary::CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIDs[], ViBoolean setAsActiveList)
+ViStatus NiRFSALibrary::CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIds[], ViBoolean setAsActiveList)
 {
   if (!function_pointers_.CreateConfigurationList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CreateConfigurationList.");
   }
 #if defined(_MSC_VER)
-  return niRFSA_CreateConfigurationList(vi, listName, numberOfListAttributes, listAttributeIDs, setAsActiveList);
+  return niRFSA_CreateConfigurationList(vi, listName, numberOfListAttributes, listAttributeIds, setAsActiveList);
 #else
-  return function_pointers_.CreateConfigurationList(vi, listName, numberOfListAttributes, listAttributeIDs, setAsActiveList);
+  return function_pointers_.CreateConfigurationList(vi, listName, numberOfListAttributes, listAttributeIds, setAsActiveList);
 #endif
 }
 

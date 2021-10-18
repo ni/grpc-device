@@ -1165,7 +1165,7 @@ message ConfigureSpectrumFrequencyStartStopResponse {
 message CreateConfigurationListRequest {
   nidevice_grpc.Session vi = 1;
   string list_name = 2;
-  repeated NiRFSAAttributes list_attribute_i_ds = 3;
+  repeated NiRFSAAttributes list_attribute_ids = 3;
   bool set_as_active_list = 4;
 }
 
