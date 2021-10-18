@@ -128,8 +128,10 @@ static void RunServer(const ServerConfiguration& config)
   builder.RegisterService(&nidcpower_service);
 
   nirfsg_grpc::NiRFSGLibrary nirfsg_library;
-  nirfsg_grpc::NiRFSGService nirfsg_service(&nirfsg_library, mi_shared_resource_repository);
-  builder.RegisterService(&nirfsg_service);
+  nirfsg_grpc::NiRFSGService nirfsg_service(&nirfsg_library, mi_shared_resource_repository, config.feature_toggles);
+  if (nirfsg_service.is_enabled()) {
+    builder.RegisterService(&nirfsg_service);
+  }
 
   nifgen_grpc::NiFgenLibrary nifgen_library;
   nifgen_grpc::NiFgenService nifgen_service(&nifgen_library, mi_shared_resource_repository);
