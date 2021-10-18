@@ -375,6 +375,94 @@ TEST_F(NiRFSGDriverApiTests, SetDeembeddingSParameters_GetDeembeddingSParameters
   EXPECT_EQ(parameter4, get_parameters.sparameters(3));
   EXPECT_EQ(parameter4, get_parameters.sparameters()[3]);
 }
+
+TEST_F(NiRFSGDriverApiTests, WriteArbWaveformI16_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5841);
+  auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
+  auto configure_generation_mode = client::configure_generation_mode(stub(), session, AttrGenerationModeRangeTable::ATTR_GENERATION_MODE_RANGE_TABLE_ARB_WAVEFORM);
+  auto configure_power_level_type = client::configure_power_level_type(stub(), session, AttrPowerLevelTypeRangeTable::ATTR_POWER_LEVEL_TYPE_RANGE_TABLE_PEAK_POWER);
+  auto point1 = nirfsg_grpc::NIComplexI16();
+  point1.set_real(INT16_MAX);
+  point1.set_imaginary(INT16_MIN);
+  auto point2 = nirfsg_grpc::NIComplexI16();
+  point2.set_real(0);
+  point2.set_imaginary(0);
+  auto point3 = nirfsg_grpc::NIComplexI16();
+  point3.set_real(INT16_MIN);
+  point3.set_imaginary(INT16_MAX);
+  auto point4 = nirfsg_grpc::NIComplexI16();
+  point4.set_real(0);
+  point4.set_imaginary(0);
+  std::vector<nirfsg_grpc::NIComplexI16> waveform = {point1, point2, point3, point4};
+  auto write_waveform = client::write_arb_waveform_complex_i16(stub(), session, "waveform", waveform);
+  auto initiate = client::initiate(stub(), session);
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+  auto check_status = client::check_generation_status(stub(), session);
+  auto disable_output = client::configure_output_enabled(stub(), session, false);
+  auto close = client::close(stub(), session);
+
+  EXPECT_SUCCESS(session, configure_rf);
+  EXPECT_SUCCESS(session, configure_generation_mode);
+  EXPECT_SUCCESS(session, configure_power_level_type);
+  EXPECT_SUCCESS(session, write_waveform);
+  EXPECT_SUCCESS(session, initiate);
+  EXPECT_SUCCESS(session, check_status);
+  EXPECT_SUCCESS(session, disable_output);
+  EXPECT_SUCCESS(session, close);
+}
+
+TEST_F(NiRFSGDriverApiTests, WriteArbWaveformF32_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5841);
+  auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
+  auto configure_generation_mode = client::configure_generation_mode(stub(), session, AttrGenerationModeRangeTable::ATTR_GENERATION_MODE_RANGE_TABLE_ARB_WAVEFORM);
+  auto configure_power_level_type = client::configure_power_level_type(stub(), session, AttrPowerLevelTypeRangeTable::ATTR_POWER_LEVEL_TYPE_RANGE_TABLE_PEAK_POWER);
+  auto point1 = nirfsg_grpc::NIComplexNumberF32();
+  point1.set_real(0.7f);
+  point1.set_imaginary(-0.7f);
+  auto point2 = nirfsg_grpc::NIComplexNumberF32();
+  point2.set_real(0);
+  point2.set_imaginary(1.0);
+  auto point3 = nirfsg_grpc::NIComplexNumberF32();
+  point3.set_real(-0.7f);
+  point3.set_imaginary(0.7f);
+  auto point4 = nirfsg_grpc::NIComplexNumberF32();
+  point4.set_real(-1.0);
+  point4.set_imaginary(0);
+  std::vector<nirfsg_grpc::NIComplexNumberF32> waveform = {point1, point2, point3, point4};
+  auto write_waveform = client::write_arb_waveform_complex_f32(stub(), session, "waveform", waveform, false);
+  auto initiate = client::initiate(stub(), session);
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+  auto check_status = client::check_generation_status(stub(), session);
+  auto disable_output = client::configure_output_enabled(stub(), session, false);
+  auto close = client::close(stub(), session);
+
+  EXPECT_SUCCESS(session, configure_rf);
+  EXPECT_SUCCESS(session, configure_generation_mode);
+  EXPECT_SUCCESS(session, configure_power_level_type);
+  EXPECT_SUCCESS(session, write_waveform);
+  EXPECT_SUCCESS(session, initiate);
+  EXPECT_SUCCESS(session, check_status);
+  EXPECT_SUCCESS(session, disable_output);
+  EXPECT_SUCCESS(session, close);
+}
+
+TEST_F(NiRFSGDriverApiTests, SetUserData_GetUserData_DataMatches)
+{
+  auto session = init_session(stub(), PXI_5652);
+  std::string data = "abc";
+  data.push_back('\0');
+  data.append("def");
+  auto set_response = client::set_user_data(stub(), session, "identifier", data);
+  auto get_response = client::get_user_data(stub(), session, "identifier");
+  EXPECT_SUCCESS(session, set_response);
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_EQ(7, get_response.data().length());
+  EXPECT_EQ(data, get_response.data());
+}
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
