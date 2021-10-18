@@ -108,13 +108,31 @@ TEST_F(NiRFSGDriverApiTests, PerformReset_Succeeds)
 TEST_F(NiRFSGDriverApiTests, ConfigureGettingStartedSingleToneGenerationFromExample_Succeeds)
 {
   auto session = init_session(stub(), PXI_5652);
-  auto configure_clock = client::configure_ref_clock(stub(), session, AttrRefClockSourceRangeTable::ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
   auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
-  auto configure_generation_mode = client::configure_generation_mode(stub(), session, AttrGenerationModeRangeTable::ATTR_GENERATION_MODE_RANGE_TABLE_CW);
+  auto initiate = client::initiate(stub(), session);
 
-  EXPECT_SUCCESS(session, configure_clock);
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  auto check_status = client::check_generation_status(stub(), session);
+
+  // change frequency
+  auto abort = client::abort(stub(), session);
+  auto configure_rf2 = client::configure_rf(stub(), session, 1.5e9, -5);
+  auto initiate2 = client::initiate(stub(), session);
+
+  std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  auto check_status2 = client::check_generation_status(stub(), session);
+  auto disable_output = client::configure_output_enabled(stub(), session, false);
+  auto close = client::close(stub(), session);
+
   EXPECT_SUCCESS(session, configure_rf);
-  EXPECT_SUCCESS(session, configure_generation_mode);
+  EXPECT_SUCCESS(session, initiate);
+  EXPECT_SUCCESS(session, check_status);
+  EXPECT_SUCCESS(session, abort);
+  EXPECT_SUCCESS(session, configure_rf2);
+  EXPECT_SUCCESS(session, initiate2);
+  EXPECT_SUCCESS(session, check_status2);
+  EXPECT_SUCCESS(session, disable_output);
+  EXPECT_SUCCESS(session, close);
 }
 
 TEST_F(NiRFSGDriverApiTests, GenerateAndRouteReferenceClockFromExample_Succeeds)
