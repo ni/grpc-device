@@ -122,7 +122,7 @@ TEST_F(NiRFSGDriverApiTests, PerformReset_Succeeds)
   EXPECT_EQ(0, response.status());
 }
 
-TEST_F(NiRFSGDriverApiTests, ConfigureGettingStartedSingleToneGenerationFromExample_Succeeds)
+TEST_F(NiRFSGDriverApiTests, GettingStartedSingleToneGenerationFromExample_Succeeds)
 {
   auto session = init_session(stub(), PXI_5652);
   auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
