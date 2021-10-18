@@ -13,7 +13,7 @@
 # Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 #
 # Refer to the NI-RFSG gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
+# Link: https://github.com/ni/grpc-device/wiki/NI-RFSG-C-Function-Reference
 #
 # Running from command line:
 #
