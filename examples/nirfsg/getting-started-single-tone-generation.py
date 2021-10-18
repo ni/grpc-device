@@ -73,6 +73,7 @@ try:
     # Wait for two seconds and change frequency
     time.sleep(2)
     print("Changing frequency")
+    RaiseIfError(client.Abort(nirfsg_types.AbortRequest(vi=vi)))
     RaiseIfError(client.ConfigureRF(
         nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1.5e9, power_level=-5)
     ))
