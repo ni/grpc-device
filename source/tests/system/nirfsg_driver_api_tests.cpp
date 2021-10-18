@@ -5,9 +5,11 @@
 #include "device_server.h"
 #include "nirfsg/nirfsg_client.h"
 #include "nirfsg/nirfsg_service.h"
+#include "nitclk/nitclk_client.h"
 
 using namespace nirfsg_grpc;
 namespace client = nirfsg_grpc::experimental::client;
+namespace nitclk_client = nitclk_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
 
@@ -26,6 +28,7 @@ namespace tests {
 namespace system {
 
 const auto PXI_5652 = "5652";
+const auto PXI_5840 = "5840";
 const auto PXI_5841 = "5841";
 
 const int krfsgDriverApiSuccess = 0;
@@ -56,6 +59,11 @@ class NiRFSGDriverApiTests : public ::testing::Test {
     return nirfsg_stub_;
   }
 
+  std::unique_ptr<nitclk_grpc::NiTClk::Stub> create_tclk_stub() const
+  {
+    return nitclk_grpc::NiTClk::NewStub(device_server_->InProcessChannel());
+  }
+
   void check_error(const nidevice_grpc::Session& session)
   {
     auto response = client::get_error(stub(), session);
@@ -66,6 +74,10 @@ class NiRFSGDriverApiTests : public ::testing::Test {
   void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
   {
     ni::tests::system::EXPECT_SUCCESS(response);
+    if (response.status() != krfsgDriverApiSuccess) {
+      auto error_message_response = client::error_message(stub(), session, response.status());
+      EXPECT_EQ("", std::string(error_message_response.error_message().c_str()));
+    }
     check_error(session);
   }
 
@@ -74,18 +86,23 @@ class NiRFSGDriverApiTests : public ::testing::Test {
   std::unique_ptr<NiRFSG::Stub> nirfsg_stub_;
 };
 
-InitWithOptionsResponse init(const client::StubPtr& stub, const std::string& model)
+InitWithOptionsResponse init(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
 {
   auto options = std::string("Simulate=1, DriverSetup=Model:") + model;
-  return client::init_with_options(stub, "FakeDevice", false, false, options);
+  return client::init_with_options(stub, resource_name, false, false, options);
+}
+
+nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
+{
+  auto response = init(stub, model, resource_name);
+  auto session = response.vi();
+  EXPECT_SUCCESS(response);
+  return session;
 }
 
 nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model)
 {
-  auto response = init(stub, model);
-  auto session = response.vi();
-  EXPECT_SUCCESS(response);
-  return session;
+  return init_session(stub, model, "FakeDevice");
 }
 
 TEST_F(NiRFSGDriverApiTests, PerformSelfTest_Succeeds)
@@ -462,6 +479,17 @@ TEST_F(NiRFSGDriverApiTests, SetUserData_GetUserData_DataMatches)
   EXPECT_SUCCESS(session, get_response);
   EXPECT_EQ(7, get_response.data().length());
   EXPECT_EQ(data, get_response.data());
+}
+
+TEST_F(NiRFSGDriverApiTests, TwoSessions_SetupTclkSyncPulseSenderSynchronization_Succeeds)
+{
+  auto first_session = init_session(stub(), PXI_5841, "FakeDevice");
+  auto second_session = init_session(stub(), PXI_5841, "AnotherFakeDevice");
+
+  auto tclk_stub = create_tclk_stub();
+  auto result = nitclk_client::setup_for_sync_pulse_sender_synchronize(tclk_stub, {first_session, second_session}, 0);
+
+  EXPECT_SUCCESS(first_session, result);
 }
 }  // namespace system
 }  // namespace tests
