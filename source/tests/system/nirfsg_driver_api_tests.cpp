@@ -108,9 +108,9 @@ TEST_F(NiRFSGDriverApiTests, PerformReset_Succeeds)
 TEST_F(NiRFSGDriverApiTests, ConfigureGettingStartedSingleToneGenerationFromExample_Succeeds)
 {
   auto session = init_session(stub(), PXI_5652);
-  auto configure_clock = client::configure_ref_clock(stub(), session, AttrRefClockSourceRangeTable::ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
+  auto configure_clock = client::configure_ref_clock(stub(), session, RefClockSourceRangeTable::REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
   auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
-  auto configure_generation_mode = client::configure_generation_mode(stub(), session, AttrGenerationModeRangeTable::ATTR_GENERATION_MODE_RANGE_TABLE_CW);
+  auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationModeRangeTable::GENERATION_MODE_RANGE_TABLE_CW);
 
   EXPECT_SUCCESS(session, configure_clock);
   EXPECT_SUCCESS(session, configure_rf);
@@ -121,8 +121,8 @@ TEST_F(NiRFSGDriverApiTests, GenerateAndRouteReferenceClockFromExample_Succeeds)
 {
   auto session = init_session(stub(), PXI_5652);
   auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
-  auto configure_generation_mode = client::configure_generation_mode(stub(), session, AttrGenerationModeRangeTable::ATTR_GENERATION_MODE_RANGE_TABLE_CW);
-  auto configure_clock = client::configure_ref_clock(stub(), session, AttrRefClockSourceRangeTable::ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
+  auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationModeRangeTable::GENERATION_MODE_RANGE_TABLE_CW);
+  auto configure_clock = client::configure_ref_clock(stub(), session, RefClockSourceRangeTable::REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
   auto initiate = client::initiate(stub(), session);
 
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -146,8 +146,8 @@ TEST_F(NiRFSGDriverApiTests, ConfigureDigitalEdgeStartTrigger_Succeeds)
   auto response = client::configure_digital_edge_start_trigger(
       stub(),
       session,
-      AttrTriggerSourceRangeTable::ATTR_TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG0_STR,
-      AttrDigitalEdgeEdgeRangeTable::ATTR_DIGITAL_EDGE_EDGE_RANGE_TABLE_RISING_EDGE);
+      TriggerSourceRangeTable::TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG0_STR,
+      DigitalEdgeEdgeRangeTable::DIGITAL_EDGE_EDGE_RANGE_TABLE_RISING_EDGE);
 
   EXPECT_SUCCESS(session, response);
 }
@@ -165,7 +165,7 @@ TEST_F(NiRFSGDriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
       session,
       "",
       NiRFSGAttributes::NIRFSG_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL,
-      NiRFSGStringAttributeValuesMapped::NIRFSG_STRING_ATTR_REF_CLOCK_OUTPUT_TERM_RANGE_TABLE_REF_OUT_STR);
+      NiRFSGStringAttributeValuesMapped::NIRFSG_STRING_REF_CLOCK_OUTPUT_TERM_RANGE_TABLE_REF_OUT_STR);
   auto get_response = client::get_attribute_vi_string(
       stub(),
       session,
