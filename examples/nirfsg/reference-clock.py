@@ -52,7 +52,7 @@ vi = None
 
 
 # Raise an exception if an error was returned
-def RaiseIfError(response):
+def raise_if_error(response):
     if response.status != 0:
         response = client.ErrorMessage(
             nirfsg_types.ErrorMessageRequest(error_code=response.status))
@@ -64,17 +64,17 @@ try:
         nirfsg_types.InitWithOptionsRequest(
             session_name=session_name, resource_name=resource, option_string=options)
     )
-    RaiseIfError(response)
+    raise_if_error(response)
     vi = response.vi
-    RaiseIfError(client.ConfigureRF(
+    raise_if_error(client.ConfigureRF(
         nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5)
     ))
-    RaiseIfError(client.ConfigureGenerationMode(
+    raise_if_error(client.ConfigureGenerationMode(
         nirfsg_types.ConfigureGenerationModeRequest(
             vi=vi,
             generation_mode=nirfsg_types.ATTR_GENERATION_MODE_RANGE_TABLE_CW)
     ))
-    RaiseIfError(client.ConfigureRefClock(
+    raise_if_error(client.ConfigureRefClock(
         nirfsg_types.ConfigureRefClockRequest(
             vi=vi,
             ref_clock_source_mapped=nirfsg_types.ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR,
@@ -82,10 +82,10 @@ try:
         )
     ))
     print("Generating...")
-    RaiseIfError(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
+    raise_if_error(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
     time.sleep(2)
     # Check the generation status
-    RaiseIfError(client.CheckGenerationStatus(
+    raise_if_error(client.CheckGenerationStatus(
         nirfsg_types.CheckGenerationStatusRequest(vi=vi)))
 finally:
     if vi:

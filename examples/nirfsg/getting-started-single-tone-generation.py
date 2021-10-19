@@ -51,7 +51,7 @@ vi = None
 
 
 # Raise an exception if an error was returned
-def RaiseIfError(response):
+def raise_if_error(response):
     if response.status != 0:
         response = client.ErrorMessage(
             nirfsg_types.ErrorMessageRequest(error_code=response.status))
@@ -63,18 +63,18 @@ try:
         nirfsg_types.InitWithOptionsRequest(
             session_name=session_name, resource_name=resource, option_string=options)
     )
-    RaiseIfError(response)
+    raise_if_error(response)
     vi = response.vi
-    RaiseIfError(client.ConfigureRF(
+    raise_if_error(client.ConfigureRF(
         nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5)
     ))
     print("Generating tone...")
-    RaiseIfError(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
+    raise_if_error(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
     # Wait for two seconds and change frequency
     time.sleep(2)
     print("Changing frequency")
-    RaiseIfError(client.Abort(nirfsg_types.AbortRequest(vi=vi)))
-    RaiseIfError(client.ConfigureRF(
+    raise_if_error(client.Abort(nirfsg_types.AbortRequest(vi=vi)))
+    raise_if_error(client.ConfigureRF(
         nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1.5e9, power_level=-5)
     ))
     print("Generating tone...")
