@@ -1,4 +1,4 @@
-# This program demonstrates the use of NI-RFSG to generate a single tone CW at a specified frequency and power.             *
+# This program demonstrates the use of NI-RFSG to generate a single tone CW at a specified frequency and power.
 # The niRFSG_Abort function is used to quickly change from one configuration to another.                                      *
 #
 # The gRPC API is built from the C API. NI-RFSG documentation is installed with the driver at:
