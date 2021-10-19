@@ -68,8 +68,8 @@ try:
     raise_if_error(client.ConfigureRF(
         nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5)
     ))
-    print("Generating tone...")
     raise_if_error(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
+    print("Generating tone...")
     # Wait for two seconds and change frequency
     time.sleep(2)
     print("Changing frequency")
@@ -77,6 +77,7 @@ try:
     raise_if_error(client.ConfigureRF(
         nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1.5e9, power_level=-5)
     ))
+    raise_if_error(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
     print("Generating tone...")
     time.sleep(2)
 finally:
