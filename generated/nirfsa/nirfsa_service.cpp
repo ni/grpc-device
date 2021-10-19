@@ -794,8 +794,8 @@ namespace nirfsa_grpc {
       ViConstString pxi_clk10_source;
       switch (request->pxi_clk10_source_enum_case()) {
         case nirfsa_grpc::ConfigurePXIChassisClk10Request::PxiClk10SourceEnumCase::kPxiClk10SourceMapped: {
-          auto pxi_clk10_source_imap_it = pxichassisclk10sourcerangetable_input_map_.find(request->pxi_clk10_source_mapped());
-          if (pxi_clk10_source_imap_it == pxichassisclk10sourcerangetable_input_map_.end()) {
+          auto pxi_clk10_source_imap_it = pxichassisclk10source_input_map_.find(request->pxi_clk10_source_mapped());
+          if (pxi_clk10_source_imap_it == pxichassisclk10source_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for pxi_clk10_source_mapped was not specified or out of range.");
           }
           pxi_clk10_source = const_cast<ViConstString>((pxi_clk10_source_imap_it->second).c_str());
@@ -833,8 +833,8 @@ namespace nirfsa_grpc {
       ViConstString clock_source;
       switch (request->clock_source_enum_case()) {
         case nirfsa_grpc::ConfigureRefClockRequest::ClockSourceEnumCase::kClockSourceMapped: {
-          auto clock_source_imap_it = refclocksourcerangetable_input_map_.find(request->clock_source_mapped());
-          if (clock_source_imap_it == refclocksourcerangetable_input_map_.end()) {
+          auto clock_source_imap_it = refclocksource_input_map_.find(request->clock_source_mapped());
+          if (clock_source_imap_it == refclocksource_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for clock_source_mapped was not specified or out of range.");
           }
           clock_source = const_cast<ViConstString>((clock_source_imap_it->second).c_str());
@@ -1362,8 +1362,8 @@ namespace nirfsa_grpc {
       ViConstString output_terminal;
       switch (request->output_terminal_enum_case()) {
         case nirfsa_grpc::ExportSignalRequest::OutputTerminalEnumCase::kOutputTerminalMapped: {
-          auto output_terminal_imap_it = exportterminalrangetable_input_map_.find(request->output_terminal_mapped());
-          if (output_terminal_imap_it == exportterminalrangetable_input_map_.end()) {
+          auto output_terminal_imap_it = exportterminal_input_map_.find(request->output_terminal_mapped());
+          if (output_terminal_imap_it == exportterminal_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_terminal_mapped was not specified or out of range.");
           }
           output_terminal = const_cast<ViConstString>((output_terminal_imap_it->second).c_str());
