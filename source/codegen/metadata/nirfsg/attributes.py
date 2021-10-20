@@ -158,7 +158,7 @@ attributes = {
             'description': ' Specifies the Reference Clock source. To set this attribute, the NI-RFSG  device must be in the Configuration state. Only certain combinations  of this attribute and the NIRFSG_ATTR_PXI_CHASSIS_CLK10_SOURCE  attribute are valid\n \n backplane clock on PXI chassis only using the  NIRFSG_ATTR_PXI_CHASSIS_CLK10_SOURCE attribute. \n \n  ',
             'note': ' PXI-5670/5671 and PXIe-5672 devices also allow you to drive the PXI 10 MHz '
         },
-        'enum': 'AttrRefClockSourceRangeTable',
+        'enum': 'RefClockSourceRangeTable',
         'name': 'REF_CLOCK_SOURCE',
         'type': 'ViString'
     },
@@ -167,7 +167,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Start Trigger. This attribute is  used when the NIRFSG_ATTR_START_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_EDGE. This attribute is not case-sensitive. To set the  NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_SOURCE attribute, the NI-RFSG device  must be in the Configuration state.\n \n'
         },
-        'enum': 'AttrTriggerSourceRangeTable',
+        'enum': 'TriggerSourceRangeTable',
         'name': 'DIGITAL_EDGE_START_TRIGGER_SOURCE',
         'type': 'ViString'
     },
@@ -176,7 +176,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the destination terminal for exporting the Start Trigger.  To set this attribute, the NI-RFSG device must be in the Configuration  state.\n \n'
         },
-        'enum': 'AttrAnySignalOutputTermRangeTable',
+        'enum': 'AnySignalOutputTermRangeTable',
         'name': 'EXPORTED_START_TRIGGER_OUTPUT_TERMINAL',
         'type': 'ViString'
     },
@@ -185,7 +185,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the clock source for driving the PXI 10 MHz backplane Reference  Clock. This attribute is configurable if the PXI-5610 upconverter  module is installed in only Slot 2 of a PXI chassis. To set this attribute, the  NI-RFSG device must be in the Configuration state.\n'
         },
-        'enum': 'AttrPXIChassisClk10RangeTable',
+        'enum': 'PXIChassisClk10RangeTable',
         'name': 'PXI_CHASSIS_CLK10_SOURCE',
         'type': 'ViString'
     },
@@ -194,7 +194,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies whether the driver maintains phase continuity in the  arbitrary waveforms. When this attribute is set to  NIRFSG_VAL_ENABLE, NI-RFSG may increase the waveform size. When  this attribute is set to NIRFSG_VAL_ENABLE, the  NIRFSG_ATTR_FREQUENCY_TOLERANCE attribute specifies the maximum  allowable frequency error that can be introduced when keeping the  signal phase-continuous. To set the NIRFSG_ATTR_PHASE_CONTINUITY_ENABLED  attribute, the NI-RFSG device must be in the Configuration state.  NIRFSG_ATTR_PHASE_CONTINUITY_ENABLED applies only when the  NIRFSG_ATTR_GENERATION_MODE attribute is set to  NIRFSG_VAL_ARB_WAVEFORM or NIRFSG_VAL_SCRIPT. \n \n On the PXI-5671: When using the PXI-5671 with I/Q rates less than or equal  to 8.33 MS/s, an input phase-continuous signal is always phase-continuous  upon output, and this attribute has no effect. \n \n PXIe-5644/5645/5646, PXIe-5672/5673/5673E, PXIe-5820/5830/5831/5840/5841: Phase continuity is always enabled on this device. \n \n'
         },
-        'enum': 'AttrPhaseContinuityRangeTable',
+        'enum': 'PhaseContinuityRangeTable',
         'name': 'PHASE_CONTINUITY_ENABLED',
         'type': 'ViInt32'
     },
@@ -303,7 +303,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies whether to generate a continuous wave (CW) signal, the arb  waveform specified by the NIRFSG_ATTR_SELECTED_WAVEFORM attribute, or the  script specified by the NIRFSG_ATTR_SELECTED_SCRIPT attribute, upon  calling the niRFSG_Initiate function. \n  '
         },
-        'enum': 'AttrGenerationModeRangeTable',
+        'enum': 'GenerationModeRangeTable',
         'name': 'GENERATION_MODE',
         'type': 'ViInt32'
     },
@@ -321,7 +321,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Script Trigger. This attribute is  used when the NIRFSG_ATTR_SCRIPT_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_EDGE. This attribute is not case-sensitive. To set this  attribute, the NI-RFSG device must be in the Configuration state.\n \n'
         },
-        'enum': 'AttrTriggerSourceRangeTable',
+        'enum': 'TriggerSourceRangeTable',
         'name': 'DIGITAL_EDGE_SCRIPT_TRIGGER_SOURCE',
         'type': 'ViString'
     },
@@ -330,7 +330,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the active edge for the Script Trigger. This attribute is used  when NIRFSG_ATTR_SCRIPT_TRIGGER_TYPE is set to NIRFSG_VAL_DIGITAL_EDGE. To  set the NIRFSG_ATTR_DIGITAL_EDGE_SCRIPT_TRIGGER_EDGE attribute,  the NI-RFSG device must be in the Configuration state.\n \n'
         },
-        'enum': 'AttrDigitalEdgeEdgeRangeTable',
+        'enum': 'DigitalEdgeEdgeRangeTable',
         'name': 'DIGITAL_EDGE_SCRIPT_TRIGGER_EDGE',
         'type': 'ViInt32'
     },
@@ -339,7 +339,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the destination terminal for exporting the Script Trigger. To  set this attribute, the NI-RFSG device must be in the Configuration state.  For trigger delay information, refer to the triggering section in the NI  RF Signal Generators Help. \n \n'
         },
-        'enum': 'AttrAnySignalOutputTermRangeTable',
+        'enum': 'AnySignalOutputTermRangeTable',
         'name': 'EXPORTED_SCRIPT_TRIGGER_OUTPUT_TERMINAL',
         'type': 'ViString'
     },
@@ -354,7 +354,7 @@ attributes = {
     1150024: {
         'access': 'read-write',
         'documentation': {
-            'description': ' Specifies the phase of the RF output signal. Use this attribute  to align the phase of the RF output with the phase of the RF output of  another device, as long as the two devices are phase-coherent. \n \n Units: degrees (°) \n \n'
+            'description': ' Specifies the phase of the RF output signal. Use this attribute  to align the phase of the RF output with the phase of the RF output of  another device, as long as the two devices are phase-coherent. \n \n Units: degrees (º) \n \n'
         },
         'name': 'PHASE_OFFSET',
         'type': 'ViReal64'
@@ -381,7 +381,7 @@ attributes = {
             'description': ' Configures the loop bandwidth of the tuning PLLs. This attribute is ignored on the  PXI-5610, PXI-5670/5671, PXIe-5672 for signal bandwidths greater than or equal to 10 MHz.  This attribute is ignored on the PXI/PXIe-5650/5651/5652 for RF frequencies less than 50 MHz. \n \n PXIe-5644/5645/5646/5650/5651/5652/5673/5673E allows the frequency to settle  significantly faster at the expense of increased phase noise.  Setting this attribute to NIRFSG_VAL_MEDIUM is not a valid  option on the PXI/PXIe-5650/5651/5652, PXIe-5673/5673E. NIRFSG_VAL_MEDIUM is the only  supported value for the PXIe-5830/5831/5840/5841. \n To use this attribute for the PXIe-5830/5831, you must use the channelName parameter  of the niRFSG_SetAttributeViInt32 function to specify the name of the channel you are configuring. You can  configure the LO1 and LO2 channels by using lo1 or lo2 as the channel string, or set the channel string to lo1,lo2  to configure both channels. For all other devices, the the only valid value for the channel string is  (empty string). \n \n',
             'note': ' Setting this attribute to NIRFSG_VAL_WIDE on the '
         },
-        'enum': 'AttrLoopBandwidthRangeTable',
+        'enum': 'LoopBandwidthRangeTable',
         'name': 'LOOP_BANDWIDTH',
         'type': 'ViInt32'
     },
@@ -391,7 +391,7 @@ attributes = {
             'description': ' Specifies the Sample Clock mode on the device.  To set this attribute, the device must be in the Configuration state. \n \n PXIe-5644/5645/5646, PXIe-5820/5830/5831/5840/5841: NIRFSG_VAL_DIVIDE_DOWN is the only supported value for this device. \n \n',
             'note': ' Using the high resolution clock may result in increased phase noise. /n'
         },
-        'enum': 'AttrArbOnboardSampleClockModeRangeTable',
+        'enum': 'ArbOnboardSampleClockModeRangeTable',
         'name': 'ARB_ONBOARD_SAMPLE_CLOCK_MODE',
         'type': 'ViInt32'
     },
@@ -400,7 +400,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the Sample Clock source for the device.  To set this attribute, the NI-RFSG device must be in the Configuration state.\n \n PXIe-5644/5645/5646, PXIe-5820/5830/5831/5840/5841: NIRFSG_VAL_ONBOARD_CLK_STR is the only supported value for this device. \n \n'
         },
-        'enum': 'AttrArbSampleClockSourceRangeTable',
+        'enum': 'ArbSampleClockSourceRangeTable',
         'name': 'ARB_SAMPLE_CLOCK_SOURCE',
         'type': 'ViString'
     },
@@ -417,7 +417,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the analog modulation format to use. \n \n'
         },
-        'enum': 'AttrAnalogModulationTypeRangeTable',
+        'enum': 'AnalogModulationTypeRangeTable',
         'name': 'ANALOG_MODULATION_TYPE',
         'type': 'ViInt32'
     },
@@ -426,7 +426,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the type of waveform to use as the message signal for analog  modulation. \n \n'
         },
-        'enum': 'AttrAnalogModulationWaveformTypeRangeTable',
+        'enum': 'AnalogModulationWaveformTypeRangeTable',
         'name': 'ANALOG_MODULATION_WAVEFORM_TYPE',
         'type': 'ViInt32'
     },
@@ -451,7 +451,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the digital modulation format to use.\n \n'
         },
-        'enum': 'AttrDigitalModulationTypeRangeTable',
+        'enum': 'DigitalModulationTypeRangeTable',
         'name': 'DIGITAL_MODULATION_TYPE',
         'type': 'ViInt32'
     },
@@ -468,7 +468,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the type of waveform to use as the message signal in digital  modulation.\n \n'
         },
-        'enum': 'AttrDigitalModulationWaveformTypeRangeTable',
+        'enum': 'DigitalModulationWaveformTypeRangeTable',
         'name': 'DIGITAL_MODULATION_WAVEFORM_TYPE',
         'type': 'ViInt32'
     },
@@ -510,7 +510,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies how NI-RFSG interprets the value of the  NIRFSG_ATTR_POWER_LEVEL attribute.  The NIRFSG_ATTR_POWER_LEVEL_TYPE  attribute also affects how waveforms are scaled.\n \n PXI-5670/5671: While in Script generation mode, if this attribute is set to NIRFSG_VAL_AVERAGE_POWER,  NI-RFSG scales each waveform so that all waveforms have the same average power.  The average power level of each waveform matches the value set with the NIRFSG_ATTR_POWER_LEVEL attribute.  You can disable this scaling operation by setting the NIRFSG_ATTR_POWER_LEVEL_TYPE attribute to NIRFSG_VAL_PEAK_POWER.\n \n PXIe-5644/5645/5646, PXIe-5672/5673/5673E, PXIe-5820/5830/5831/5840/5841: While in Script generation mode, this attribute must be set to NIRFSG_VAL_PEAK_POWER. \n \n'
         },
-        'enum': 'AttrPowerLevelTypeRangeTable',
+        'enum': 'PowerLevelTypeRangeTable',
         'name': 'POWER_LEVEL_TYPE',
         'type': 'ViInt32'
     },
@@ -567,7 +567,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the destination terminal for exporting the Reference Clock on  the NI RF signal generators. To set this attribute,  the NI-RFSG device must be in the Configuration state. \n'
         },
-        'enum': 'AttrRefClockOutputTermRangeTable',
+        'enum': 'RefClockOutputTermRangeTable',
         'name': 'EXPORTED_REF_CLOCK_OUTPUT_TERMINAL',
         'type': 'ViString'
     },
@@ -576,7 +576,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Script Trigger. This attribute is  used when the NIRFSG_ATTR_SCRIPT_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_LEVEL. This attribute is not case-sensitive. To set  the NIRFSG_ATTR_DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE attribute,  the NI-RFSG device must be in the Configuration state.\n \n'
         },
-        'enum': 'AttrTriggerSourceRangeTable',
+        'enum': 'TriggerSourceRangeTable',
         'name': 'DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE',
         'type': 'ViString'
     },
@@ -585,7 +585,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the active level for the Script Trigger. This attribute is used  when the NIRFSG_ATTR_SCRIPT_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_LEVEL. \n \n'
         },
-        'enum': 'AttrDigitalLevelActiveLevelRangeTable',
+        'enum': 'DigitalLevelActiveLevelRangeTable',
         'name': 'DIGITAL_LEVEL_SCRIPT_TRIGGER_ACTIVE_LEVEL',
         'type': 'ViInt32'
     },
@@ -594,7 +594,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the pulse-shaping filter type for the FIR filter. You can use this attribute  only with signal generators that support onboard signal processing (OSP).  NI-RFSG returns an error if you use this attribute with a device that  does not support OSP. \n'
         },
-        'enum': 'AttrArbFilterTypeRangeTable',
+        'enum': 'ArbFilterTypeRangeTable',
         'name': 'ARB_FILTER_TYPE',
         'type': 'ViInt32'
     },
@@ -652,7 +652,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the destination terminal for exporting the Done event. To set  this attribute, the NI-RFSG device must be in the Configuration state.\n'
         },
-        'enum': 'AttrAnySignalOutputTermRangeTable',
+        'enum': 'AnySignalOutputTermRangeTable',
         'name': 'EXPORTED_DONE_EVENT_OUTPUT_TERMINAL',
         'type': 'ViString'
     },
@@ -661,7 +661,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the destination terminal for exporting the marker event. To set  this attribute, the NI-RFSG device must be in the Configuration state.\n'
         },
-        'enum': 'AttrAnySignalOutputTermRangeTable',
+        'enum': 'AnySignalOutputTermRangeTable',
         'name': 'EXPORTED_MARKER_EVENT_OUTPUT_TERMINAL',
         'type': 'ViString'
     },
@@ -670,7 +670,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the destination terminal for exporting the started event. To set  this attribute, the NI-RFSG device must be in the Configuration state.\n'
         },
-        'enum': 'AttrAnySignalOutputTermRangeTable',
+        'enum': 'AnySignalOutputTermRangeTable',
         'name': 'EXPORTED_STARTED_EVENT_OUTPUT_TERMINAL',
         'type': 'ViString'
     },
@@ -792,7 +792,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the interpretation of the value passed to the  NIRFSG_ATTR_FREQUENCY_SETTLING attribute. \n \n'
         },
-        'enum': 'AttrFrequencySettlingUnitsRangeTable',
+        'enum': 'FrequencySettlingUnitsRangeTable',
         'name': 'FREQUENCY_SETTLING_UNITS',
         'type': 'ViInt32'
     },
@@ -884,7 +884,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Configuration List Step trigger.  This attribute is valid only when the  NIRFSG_ATTR_CONFIGURATION_LIST_STEP_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_EDGE. \n'
         },
-        'enum': 'AttrConfigListTrigSourceRangeTable',
+        'enum': 'ConfigListTrigSourceRangeTable',
         'name': 'DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE',
         'type': 'ViString'
     },
@@ -902,7 +902,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies whether the configuration list runs only once or continuously.\n'
         },
-        'enum': 'AttrConfigurationListRepeatRangeTable',
+        'enum': 'ConfigurationListRepeatRangeTable',
         'name': 'CONFIGURATION_LIST_REPEAT',
         'type': 'ViInt32'
     },
@@ -911,7 +911,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the active edge for the Configuration List Step  trigger.  This attribute is valid only when the  NIRFSG_ATTR_CONFIGURATION_LIST_STEP_TRIGGER_TYPE attribute  is set to NIRFSG_VAL_DIGITAL_EDGE. To set this attribute, the NI-RFSG  device must be in the Configuration state. \n'
         },
-        'enum': 'AttrConfigListTriggerDigEdgeEdgeRangeTable',
+        'enum': 'ConfigListTriggerDigEdgeEdgeRangeTable',
         'name': 'DIGITAL_EDGE_CONFIGURATION_LIST_STEP_TRIGGER_EDGE',
         'type': 'ViInt32'
     },
@@ -929,7 +929,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the destination terminal for exporting the Configuration List Step trigger.  To set this attribute, the NI-RFSG device must be in the Configuration state. \n'
         },
-        'enum': 'AttrConfigListTrigOutputTermRangeTable',
+        'enum': 'ConfigListTrigOutputTermRangeTable',
         'name': 'EXPORTED_CONFIGURATION_LIST_STEP_TRIGGER_OUTPUT_TERMINAL',
         'type': 'ViString'
     },
@@ -987,7 +987,7 @@ attributes = {
             'description': ' Adjusts the dynamics of the current driving the YIG main coil.\n \n allows the frequency to settle significantly faster for some frequency  transitions at the expense of increased phase noise. \n \n',
             'note': ' Setting this attribute to NIRFSG_VAL_FAST on the PXIe-5653 '
         },
-        'enum': 'AttrYigMainCoilRangeTable',
+        'enum': 'YigMainCoilRangeTable',
         'name': 'YIG_MAIN_COIL_DRIVE',
         'type': 'ViInt32'
     },
@@ -1052,7 +1052,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the destination terminal for exporting the Configuration Settled event. To set  this attribute, the NI-RFSG device must be in the Configuration state.\n'
         },
-        'enum': 'AttrConfigSettledEventOutputTermRangeTable',
+        'enum': 'ConfigSettledEventOutputTermRangeTable',
         'name': 'EXPORTED_CONFIGURATION_SETTLED_EVENT_OUTPUT_TERMINAL',
         'type': 'ViString'
     },
@@ -1070,7 +1070,7 @@ attributes = {
         'documentation': {
             'description': ' Configures the loop bandwidth of the reference PLL.\n \n'
         },
-        'enum': 'AttrLoopBandwidthRangeTable',
+        'enum': 'LoopBandwidthRangeTable',
         'name': 'REF_PLL_BANDWIDTH',
         'type': 'ViInt32'
     },
@@ -1119,7 +1119,7 @@ attributes = {
         'documentation': {
             'description': ' Determines the inheritance behavior of the NIRFSG_ATTR_PEAK_POWER_ADJUSTMENT  attribute when a script inherits values from specified waveforms. \n \n'
         },
-        'enum': 'AttrPPAScriptInheritanceTable',
+        'enum': 'PPAScriptInheritanceTable',
         'name': 'PEAK_POWER_ADJUSTMENT_INHERITANCE',
         'type': 'ViInt32'
     },
@@ -1144,7 +1144,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the connector(s) to use to generate the signal. To set this attribute,  the NI-RFSG device must be in the Configuration state. \n \n You must write complex I and Q data for all options. The Q data has no effect if  you set this attribute to I Only and set the NIRFSG_ATTR_IQ_OUT_PORT_CARRIER_FREQUENCY  attribute to 0. If you set the NIRFSG_ATTR_IQ_OUT_PORT_CARRIER_FREQUENCY attribute to a  value other than 0, the onboard signal processing (OSP) frequency shifts I and Q as a complex  value and outputs the real portion of the result on the I connector(s) of the device. \n \n If you set the NIRFSG_ATTR_OUTPUT_PORT attribute to NIRFSG_VAL_I_ONLY or NIRFSG_VAL_IQ_OUT,  the NIRFSG_ATTR_IQ_OUT_PORT_TERMINAL_CONFIGURATION attribute applies. \n \n'
         },
-        'enum': 'AttrOutputPortRangeTable',
+        'enum': 'OutputPortRangeTable',
         'name': 'OUTPUT_PORT',
         'type': 'ViInt32'
     },
@@ -1163,7 +1163,7 @@ attributes = {
             'description': ' Specifies whether to use the I/Q OUT port for Differential configuration or Single-Ended configuration.  If you set this attribute to NIRFSG_VAL_SINGLE_ENDED, you must terminate the negative I and Q output  connectors with a 50 Ohm termination. \n \n If you set this attribute to NIRFSG_VAL_SINGLE_ENDED, the positive I and Q connectors generate the resulting waveform.  If you set this attribute to NIRFSG_VAL_DIFFERENTIAL, both the positive and negative I and Q connectors generate the resulting waveform. \n\n To use this attribute, you must use the channelName parameter of the niRFSG_SetAttributeViInt32 function to  specify the name of the channel you are configuring. For the PXIe-5645, you can configure the I and Q channels  by using I or Q as the channel string, or set the channel string to  (empty string) to configure both channels.  For the PXIe-5820, the only valid value for the channel string is  (empty string). \n\n To set this attribute, the NI-RFSG device must be in the Configuration state. \n \n Refer to the Differential and Single-Ended Operation (I/Q Interface) topic of the NI RF Signal Generators Help  for more information about differential and single-ended operation.\n \n',
             'note': ' For the PXIe-5645, this attribute is ignored if you are using the RF ports. \n'
         },
-        'enum': 'AttrIqOutPortTermConfigRangeTable',
+        'enum': 'IqOutPortTermConfigRangeTable',
         'name': 'IQ_OUT_PORT_TERMINAL_CONFIGURATION',
         'type': 'ViInt32'
     },
@@ -1200,14 +1200,14 @@ attributes = {
             'description': ' Specifies whether to use the internal or external local oscillator (LO) source.  If this attribute is set to  (empty string), NI-RFSG uses the internal LO source.  To set this attribute, the NI-RFSG device must be in the Configuration state. \n To use this attribute for the PXIe-5830/5831, you must use the channelName parameter  of the niRFSG_SetAttributeViString function to specify the name of the channel you are configuring. You can  configure the LO1 and LO2 channels by using lo1 or lo2 as the channel string, or set the channel string to lo1,lo2  to configure both channels. For all other devices, the the only valid value for the channel string is  (empty string). \n \n \n',
             'note': ' For the PXIe-5841 with PXIe-5655, RF list mode is not supported when this attribute is set to NIRFSG_VAL_LO_SOURCE_SG_SA_SHARED_STR. \n'
         },
-        'enum': 'AttrLoSourceRangetTable',
+        'enum': 'LoSourceRangetTable',
         'name': 'LO_SOURCE',
         'type': 'ViString'
     },
     1150151: {
         'access': 'read-write',
         'documentation': {
-            'description': ' Specifies the step size, in hertz, for tuning the local oscillator (LO) phase-locked loop (PLL). \n \n When the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute is enabled, the specified step size  affects the fractional spur performance of the device. When the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED  attribute is disabled, the specified step size affects the phase noise performance of the device. \n \n The valid values for this attribute depend on the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute.  PXIe-5644/5645/5646�If you disable the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute, the specified value is  coerced to the nearest valid value. \n \n PXIe-5840/5841�If you disable the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute, the specified value is  coerced to the nearest valid value that is less than or equal to the desired step size. \n \n'
+            'description': ' Specifies the step size, in hertz, for tuning the local oscillator (LO) phase-locked loop (PLL). \n \n When the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute is enabled, the specified step size  affects the fractional spur performance of the device. When the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED  attribute is disabled, the specified step size affects the phase noise performance of the device. \n \n The valid values for this attribute depend on the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute.  PXIe-5644/5645/5646—If you disable the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute, the specified value is  coerced to the nearest valid value. \n \n PXIe-5840/5841—If you disable the NIRFSG_ATTR_LO_PLL_FRACTIONAL_MODE_ENABLED attribute, the specified value is  coerced to the nearest valid value that is less than or equal to the desired step size. \n \n'
         },
         'name': 'LO_FREQUENCY_STEP_SIZE',
         'type': 'ViReal64'
@@ -1312,7 +1312,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the narrowband frequency modulation (FM) range to apply  by sending the signal through an integrator. \n This attribute is valid only when you set the NIRFSG_ATTR_ANALOG_MODULATION_TYPE  attribute to NIRFSG_VAL_FM and the NIRFSG_ATTR_ANALOG_MODULATION_FM_BAND attribute to NIRFSG_VAL_NARROWBAND. \n'
         },
-        'enum': 'AttrAnalogModulationFMNarrowbandIntegratorRangeTable',
+        'enum': 'AnalogModulationFMNarrowbandIntegratorRangeTable',
         'name': 'ANALOG_MODULATION_FM_NARROWBAND_INTEGRATOR',
         'type': 'ViInt32'
     },
@@ -1379,7 +1379,7 @@ attributes = {
             'description': ' Specifies the amplification path to use. The low harmonic path provides greater  second and third harmonic spurious response, and the high power path provides higher output power. \n \n NI-RFSG automatically sets the value of this attribute based on power and frequency settings.  Setting this attribute overrides the value chosen by NI-RFSG.\n \n  \n',
             'note': ' Resetting this attribute reverts back to the default unset behavior. \n'
         },
-        'enum': 'AttrAmpPathRangeTable',
+        'enum': 'AmpPathRangeTable',
         'name': 'AMP_PATH',
         'type': 'ViInt32'
     },
@@ -1404,7 +1404,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the pulse modulation mode to use.\n \n'
         },
-        'enum': 'AttrPulseModulationModeRangeTable',
+        'enum': 'PulseModulationModeRangeTable',
         'name': 'PULSE_MODULATION_MODE',
         'type': 'ViInt32'
     },
@@ -1413,7 +1413,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the analog modulation frequency modulation (FM) band to use.  Wideband FM allows for modulating signals higher than 100 kHz.  Narrowband FM allows for modulating lower frequency signals. \n'
         },
-        'enum': 'AttrAnalogModulationFMBandRangeTable',
+        'enum': 'AnalogModulationFMBandRangeTable',
         'name': 'ANALOG_MODULATION_FM_BAND',
         'type': 'ViInt32'
     },
@@ -1422,7 +1422,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the phase modulation (PM) mode to use. \n'
         },
-        'enum': 'AttrAnalogModulationPMModeRangeTable',
+        'enum': 'AnalogModulationPMModeRangeTable',
         'name': 'ANALOG_MODULATION_PM_MODE',
         'type': 'ViInt32'
     },
@@ -1474,7 +1474,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the output behavior for the Marker Event.  To set this attribute,  the NI-RFSG device must be in the Configuration state. \n'
         },
-        'enum': 'AttrMarkerEventOutputBehaviorRangeTable',
+        'enum': 'MarkerEventOutputBehaviorRangeTable',
         'name': 'MARKER_EVENT_OUTPUT_BEHAVIOR',
         'type': 'ViInt32'
     },
@@ -1491,7 +1491,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the pulse width units for the Marker Event. This attribute is  valid only when the NIRFSG_ATTR_MARKER_EVENT_OUTPUT_BEHAVIOR attribute is set to NIRFSG_VAL_PULSE. \n \n To set this attribute, the NI-RFSG device must be in the Configuration state. \n \n'
         },
-        'enum': 'AttrMarkerEventPulseWidthUnitsRangeTable',
+        'enum': 'MarkerEventPulseWidthUnitsRangeTable',
         'name': 'MARKER_EVENT_PULSE_WIDTH_UNITS',
         'type': 'ViInt32'
     },
@@ -1500,7 +1500,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the initial state for the Marker Event when the  NIRFSG_ATTR_MARKER_EVENT_OUTPUT_BEHAVIOR attribute is set to NIRFSG_VAL_TOGGLE.  \n \n To set this attribute, the NI-RFSG device must be in the Configuration state. \n \n'
         },
-        'enum': 'AttrMarkerEventToggleInitialStateRangeTable',
+        'enum': 'MarkerEventToggleInitialStateRangeTable',
         'name': 'MARKER_EVENT_TOGGLE_INITIAL_STATE',
         'type': 'ViInt32'
     },
@@ -1620,7 +1620,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies whether to allow NI-RFSG to select the upconverter frequency offset.  You can either set an offset yourself or let NI-RFSG select one for you. \n\n Placing the upconverter center frequency outside the bandwidth of your input signal can help avoid issues such as LO leakage. \n\n To set an offset yourself, set this attribute to NIRFSG_VAL_AUTOMATIC or NIRFSG_VAL_USER_DEFINED,  and set either the NIRFSG_ATTR_UPCONVERTER_CENTER_FREQUENCY or the NIRFSG_ATTR_UPCONVERTER_FREQUENCY_OFFSET attribute. \n To allow NI-RFSG to automatically select the upconverter frequency offset, set this attribute  to NIRFSG_VAL_AUTOMATIC or NIRFSG_VAL_ENABLED and set the NIRFSG_ATTR_SIGNAL_BANDWIDTH to describe your  expected input signal. Do not set the NIRFSG_ATTR_UPCONVERTER_CENTER_FREQUENCY or NIRFSG_ATTR_UPCONVERTER_FREQUENCY_OFFSET  attributes. If all conditions are met, NI-RFSG places the upconverter center frequency outside the signal  bandwidth if there is sufficient room in the device instantaneous bandwidth to do so. \n Set this attribute to NIRFSG_VAL_ENABLED if you want to receive an error any time NIRFSG  is unable to apply automatic offset. \n When you set an offset yourself or do not use an offset, the reference frequency for gain is  near the upconverter center frequency, and offset mode reads back as NIRFSG_VAL_USER_DEFINED. When NI-RFSG  automatically sets an offset, the reference frequency for gain is the carrier frequency, and offset mode reads back as NIRFSG_VAL_ENABLED. \n \n'
         },
-        'enum': 'AttrUpconverterFrequencyOffsetModeRangeTable',
+        'enum': 'UpconverterFrequencyOffsetModeRangeTable',
         'name': 'UPCONVERTER_FREQUENCY_OFFSET_MODE',
         'type': 'ViInt32'
     },
@@ -1684,7 +1684,7 @@ attributes = {
     1150264: {
         'access': 'read-write',
         'documentation': {
-            'description': ' Specifies the bandwidth of the arbitrary signal. This value must be less than or equal to (0.8 � I/Q rate). \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841\n'
+            'description': ' Specifies the bandwidth of the arbitrary signal. This value must be less than or equal to (0.8 × I/Q rate). \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841\n'
         },
         'name': 'WAVEFORM_SIGNAL_BANDWIDTH',
         'type': 'ViReal64'
@@ -1872,7 +1872,7 @@ attributes = {
     1250452: {
         'access': 'read-write',
         'documentation': {
-            'description': ' This attribute specifies the I/Q rate of the arbitrary waveform.  The I/Q rate is coerced to a value the hardware can achieve.  Read this value back after setting it to see what the actual  I/Q rate is. NI-RFSG internally uses an FIR filter with flat  response up to (0.4 � IQ rate). Given a desired signal with  the maximum frequency content f, sample the signal at  an I/Q rate greater than or equal to (f/0.4). \n \n This attribute applies only when the NIRFSG_ATTR_GENERATION_MODE  attribute is set to NIRFSG_VAL_ARB_WAVEFORM or NIRFSG_VAL_SCRIPT. \n \n Use this attribute to associate an I/Q rate with a waveform.  Refer to the Assigning Properties or Attributes to a Waveform topic of  the NI RF Signal Generators Help for more information about assigning an I/Q rate to a waveform. \n'
+            'description': ' This attribute specifies the I/Q rate of the arbitrary waveform.  The I/Q rate is coerced to a value the hardware can achieve.  Read this value back after setting it to see what the actual  I/Q rate is. NI-RFSG internally uses an FIR filter with flat  response up to (0.4 × IQ rate). Given a desired signal with  the maximum frequency content f, sample the signal at  an I/Q rate greater than or equal to (f/0.4). \n \n This attribute applies only when the NIRFSG_ATTR_GENERATION_MODE  attribute is set to NIRFSG_VAL_ARB_WAVEFORM or NIRFSG_VAL_SCRIPT. \n \n Use this attribute to associate an I/Q rate with a waveform.  Refer to the Assigning Properties or Attributes to a Waveform topic of  the NI RF Signal Generators Help for more information about assigning an I/Q rate to a waveform. \n'
         },
         'name': 'IQ_RATE',
         'type': 'ViReal64'
@@ -1924,7 +1924,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the active edge for the Start Trigger. This attribute is used  when the NIRFSG_ATTR_START_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_EDGE. To set the NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_EDGE  attribute, the NI-RFSG device must be in the Configuration state. \n \n'
         },
-        'enum': 'AttrDigitalEdgeEdgeRangeTable',
+        'enum': 'DigitalEdgeEdgeRangeTable',
         'name': 'DIGITAL_EDGE_START_TRIGGER_EDGE',
         'type': 'ViInt32'
     }

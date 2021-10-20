@@ -401,7 +401,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AttrDigitalEdgeEdgeRangeTable',
+                'enum': 'DigitalEdgeEdgeRangeTable',
                 'name': 'edge',
                 'type': 'ViInt32'
             }
@@ -423,13 +423,13 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AttrTriggerSourceRangeTable',
+                'enum': 'TriggerSourceRangeTable',
                 'name': 'source',
                 'type': 'ViConstString'
             },
             {
                 'direction': 'in',
-                'enum': 'AttrDigitalEdgeEdgeRangeTable',
+                'enum': 'DigitalEdgeEdgeRangeTable',
                 'name': 'edge',
                 'type': 'ViInt32'
             }
@@ -445,13 +445,13 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AttrTriggerSourceRangeTable',
+                'enum': 'TriggerSourceRangeTable',
                 'name': 'source',
                 'type': 'ViConstString'
             },
             {
                 'direction': 'in',
-                'enum': 'AttrDigitalEdgeEdgeRangeTable',
+                'enum': 'DigitalEdgeEdgeRangeTable',
                 'name': 'edge',
                 'type': 'ViInt32'
             }
@@ -473,13 +473,13 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AttrTriggerSourceRangeTable',
+                'enum': 'TriggerSourceRangeTable',
                 'name': 'source',
                 'type': 'ViConstString'
             },
             {
                 'direction': 'in',
-                'enum': 'AttrDigitalLevelActiveLevelRangeTable',
+                'enum': 'DigitalLevelActiveLevelRangeTable',
                 'name': 'level',
                 'type': 'ViInt32'
             }
@@ -519,7 +519,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AttrGenerationModeRangeTable',
+                'enum': 'GenerationModeRangeTable',
                 'name': 'generationMode',
                 'type': 'ViInt32'
             }
@@ -565,7 +565,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AttrPXIChassisClk10RangeTable',
+                'enum': 'PXIChassisClk10RangeTable',
                 'name': 'pxiClk10Source',
                 'type': 'ViConstString'
             }
@@ -581,7 +581,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AttrPowerLevelTypeRangeTable',
+                'enum': 'PowerLevelTypeRangeTable',
                 'name': 'powerLevelType',
                 'type': 'ViInt32'
             }
@@ -617,7 +617,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AttrRefClockSourceRangeTable',
+                'enum': 'RefClockSourceRangeTable',
                 'name': 'refClockSource',
                 'type': 'ViConstString'
             },

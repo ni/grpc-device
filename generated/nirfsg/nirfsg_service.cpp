@@ -618,8 +618,8 @@ namespace nirfsg_grpc {
       ViConstString source;
       switch (request->source_enum_case()) {
         case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::SourceEnumCase::kSourceMapped: {
-          auto source_imap_it = attrtriggersourcerangetable_input_map_.find(request->source_mapped());
-          if (source_imap_it == attrtriggersourcerangetable_input_map_.end()) {
+          auto source_imap_it = triggersourcerangetable_input_map_.find(request->source_mapped());
+          if (source_imap_it == triggersourcerangetable_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
           }
           source = const_cast<ViConstString>((source_imap_it->second).c_str());
@@ -673,8 +673,8 @@ namespace nirfsg_grpc {
       ViConstString source;
       switch (request->source_enum_case()) {
         case nirfsg_grpc::ConfigureDigitalEdgeStartTriggerRequest::SourceEnumCase::kSourceMapped: {
-          auto source_imap_it = attrtriggersourcerangetable_input_map_.find(request->source_mapped());
-          if (source_imap_it == attrtriggersourcerangetable_input_map_.end()) {
+          auto source_imap_it = triggersourcerangetable_input_map_.find(request->source_mapped());
+          if (source_imap_it == triggersourcerangetable_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
           }
           source = const_cast<ViConstString>((source_imap_it->second).c_str());
@@ -748,8 +748,8 @@ namespace nirfsg_grpc {
       ViConstString source;
       switch (request->source_enum_case()) {
         case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::SourceEnumCase::kSourceMapped: {
-          auto source_imap_it = attrtriggersourcerangetable_input_map_.find(request->source_mapped());
-          if (source_imap_it == attrtriggersourcerangetable_input_map_.end()) {
+          auto source_imap_it = triggersourcerangetable_input_map_.find(request->source_mapped());
+          if (source_imap_it == triggersourcerangetable_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
           }
           source = const_cast<ViConstString>((source_imap_it->second).c_str());
@@ -899,8 +899,8 @@ namespace nirfsg_grpc {
       ViConstString pxi_clk10_source;
       switch (request->pxi_clk10_source_enum_case()) {
         case nirfsg_grpc::ConfigurePXIChassisClk10Request::PxiClk10SourceEnumCase::kPxiClk10SourceMapped: {
-          auto pxi_clk10_source_imap_it = attrpxichassisclk10rangetable_input_map_.find(request->pxi_clk10_source_mapped());
-          if (pxi_clk10_source_imap_it == attrpxichassisclk10rangetable_input_map_.end()) {
+          auto pxi_clk10_source_imap_it = pxichassisclk10rangetable_input_map_.find(request->pxi_clk10_source_mapped());
+          if (pxi_clk10_source_imap_it == pxichassisclk10rangetable_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for pxi_clk10_source_mapped was not specified or out of range.");
           }
           pxi_clk10_source = const_cast<ViConstString>((pxi_clk10_source_imap_it->second).c_str());
@@ -994,8 +994,8 @@ namespace nirfsg_grpc {
       ViConstString ref_clock_source;
       switch (request->ref_clock_source_enum_case()) {
         case nirfsg_grpc::ConfigureRefClockRequest::RefClockSourceEnumCase::kRefClockSourceMapped: {
-          auto ref_clock_source_imap_it = attrrefclocksourcerangetable_input_map_.find(request->ref_clock_source_mapped());
-          if (ref_clock_source_imap_it == attrrefclocksourcerangetable_input_map_.end()) {
+          auto ref_clock_source_imap_it = refclocksourcerangetable_input_map_.find(request->ref_clock_source_mapped());
+          if (ref_clock_source_imap_it == refclocksourcerangetable_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ref_clock_source_mapped was not specified or out of range.");
           }
           ref_clock_source = const_cast<ViConstString>((ref_clock_source_imap_it->second).c_str());
