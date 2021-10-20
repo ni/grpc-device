@@ -37,8 +37,30 @@ def is_enum(parameter: dict):
     return "enum" in parameter or "mapped-enum" in parameter
 
 
-def is_struct(parameter: dict):
+def is_custom_struct(parameter: dict) -> bool:
     return parameter["type"].startswith("struct")
+
+
+def is_common_message_type(parameter: dict) -> bool:
+    grpc_type = get_underlying_grpc_type(parameter)
+    common_proto_message_types = [
+        "google.protobuf.Timestamp",
+        "nidevice_grpc.NIComplexNumber",
+        "nidevice_grpc.NIComplexNumberF32"
+    ]
+
+    return grpc_type in common_proto_message_types
+
+
+def is_struct(parameter: dict) -> bool:
+    return is_common_message_type(parameter) or is_custom_struct(parameter)
+
+
+def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
+    """
+    Returns true if the parameter data can be converted with convert_from_grpc and convert_to_grpc.
+    """
+    return is_struct(parameter) or parameter["type"] == "ViBoolean[]"
 
 
 def any_function_uses_timestamp(functions):
@@ -57,7 +79,7 @@ def get_input_and_output_custom_types(functions):
     input_custom_types = set()
     output_custom_types = set()
     for function in functions:
-        struct_params = [p for p in functions[function]["parameters"] if is_struct(p)]
+        struct_params = [p for p in functions[function]["parameters"] if is_custom_struct(p)]
         for parameter in struct_params:
             if is_input_parameter(parameter):
                 input_custom_types.add(

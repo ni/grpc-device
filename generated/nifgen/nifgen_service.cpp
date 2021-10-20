@@ -3481,15 +3481,6 @@ namespace nifgen_grpc {
 namespace nidevice_grpc {
 namespace converters {
 template <>
-NIComplexNumber_struct convert_from_grpc(const nifgen_grpc::NIComplexNumber& input) 
-{
-  auto output = NIComplexNumber_struct();  
-  output.real = input.real();
-  output.imaginary = input.imaginary();
-  return output;
-}
-
-template <>
 NIComplexI16_struct convert_from_grpc(const nifgen_grpc::NIComplexInt32& input) 
 {
   auto output = NIComplexI16_struct();  

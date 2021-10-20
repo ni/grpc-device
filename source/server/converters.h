@@ -2,6 +2,8 @@
 #define NIDEVICE_GRPC_DEVICE_CONVERTERS_H
 
 #include <google/protobuf/repeated_field.h>
+#include <server/common_types.h>  // For common C types.
+#include <session.pb.h>           // For common grpc types.
 
 #include <algorithm>
 #include <string>
@@ -62,6 +64,38 @@ inline void convert_to_grpc(const std::vector<BoolType>& input, google::protobuf
   for (auto item : input) {
     output->Add(item != BoolType(0));
   }
+}
+
+template <>
+inline void convert_to_grpc(const NIComplexNumberF32_struct& input, nidevice_grpc::NIComplexNumberF32* output)
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+template <>
+inline NIComplexNumberF32_struct convert_from_grpc(const nidevice_grpc::NIComplexNumberF32& input)
+{
+  auto output = NIComplexNumberF32_struct();
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
+}
+
+template <>
+inline void convert_to_grpc(const NIComplexNumber_struct& input, nidevice_grpc::NIComplexNumber* output)
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+template <>
+inline NIComplexNumber_struct convert_from_grpc(const nidevice_grpc::NIComplexNumber& input)
+{
+  auto output = NIComplexNumber_struct();
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
 }
 
 }  // namespace converters

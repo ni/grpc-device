@@ -1439,8 +1439,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': '(num_samples * actual_num_wfms)'
                 },
-                'type':'struct NIComplexNumber_struct[]',
-                'grpc_type': 'repeated NIComplexNumber'
+                'type':'NIComplexNumber_struct[]',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber'
             },
             {
                 'name':'wfmInfo',

@@ -510,7 +510,7 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      CVIAbsoluteTime when = convert_from_grpc<CVIAbsoluteTime>(request->when());
+      auto when = convert_from_grpc<CVIAbsoluteTime>(request->when());
       auto status = library_->InputTimestamp(when);
       response->set_status(status);
       return ::grpc::Status::OK;

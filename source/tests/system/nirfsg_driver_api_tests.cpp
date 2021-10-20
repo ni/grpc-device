@@ -13,7 +13,7 @@ namespace nitclk_client = nitclk_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
 
-namespace nirfsg_grpc {
+namespace nidevice_grpc {
 // Needs to be in the nirfsg_grpc namespace for googletest to find this
 // because of argument-dependent lookup - see
 // https://stackoverflow.com/questions/33371088/how-to-get-a-custom-operator-to-work-with-google-test
@@ -364,19 +364,19 @@ TEST_F(NiRFSGDriverApiTests, SetDeembeddingSParameters_GetDeembeddingSParameters
 {
   auto session = init_session(stub(), PXI_5841);
   std::vector<double> frequencies = {1 * 1000 * 1000 * 1000};
-  auto parameter1 = nirfsg_grpc::NIComplexNumber();
+  auto parameter1 = nidevice_grpc::NIComplexNumber();
   parameter1.set_real(1.0);
   parameter1.set_imaginary(-1.0);
-  auto parameter2 = nirfsg_grpc::NIComplexNumber();
+  auto parameter2 = nidevice_grpc::NIComplexNumber();
   parameter2.set_real(-0.5);
   parameter2.set_imaginary(0.5);
-  auto parameter3 = nirfsg_grpc::NIComplexNumber();
+  auto parameter3 = nidevice_grpc::NIComplexNumber();
   parameter3.set_real(0.0);
   parameter3.set_imaginary(1.0);
-  auto parameter4 = nirfsg_grpc::NIComplexNumber();
+  auto parameter4 = nidevice_grpc::NIComplexNumber();
   parameter4.set_real(-1.0);
   parameter4.set_imaginary(0.0);
-  std::vector<nirfsg_grpc::NIComplexNumber> parameters = {parameter1, parameter2, parameter3, parameter4};
+  std::vector<nidevice_grpc::NIComplexNumber> parameters = {parameter1, parameter2, parameter3, parameter4};
   auto set_parameters = client::create_deembedding_sparameter_table_array(
       stub(),
       session,
@@ -446,19 +446,19 @@ TEST_F(NiRFSGDriverApiTests, WriteArbWaveformF32_Succeeds)
   auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
   auto configure_generation_mode = client::configure_generation_mode(stub(), session, AttrGenerationModeRangeTable::ATTR_GENERATION_MODE_RANGE_TABLE_ARB_WAVEFORM);
   auto configure_power_level_type = client::configure_power_level_type(stub(), session, AttrPowerLevelTypeRangeTable::ATTR_POWER_LEVEL_TYPE_RANGE_TABLE_PEAK_POWER);
-  auto point1 = nirfsg_grpc::NIComplexNumberF32();
+  auto point1 = nidevice_grpc::NIComplexNumberF32();
   point1.set_real(0.7f);
   point1.set_imaginary(-0.7f);
-  auto point2 = nirfsg_grpc::NIComplexNumberF32();
+  auto point2 = nidevice_grpc::NIComplexNumberF32();
   point2.set_real(0);
   point2.set_imaginary(1.0);
-  auto point3 = nirfsg_grpc::NIComplexNumberF32();
+  auto point3 = nidevice_grpc::NIComplexNumberF32();
   point3.set_real(-0.7f);
   point3.set_imaginary(0.7f);
-  auto point4 = nirfsg_grpc::NIComplexNumberF32();
+  auto point4 = nidevice_grpc::NIComplexNumberF32();
   point4.set_real(-1.0);
   point4.set_imaginary(0);
-  std::vector<nirfsg_grpc::NIComplexNumberF32> waveform = {point1, point2, point3, point4};
+  std::vector<nidevice_grpc::NIComplexNumberF32> waveform = {point1, point2, point3, point4};
   auto write_waveform = client::write_arb_waveform_complex_f32(stub(), session, "waveform", waveform, false);
   auto initiate = client::initiate(stub(), session);
   std::this_thread::sleep_for(std::chrono::milliseconds(100));

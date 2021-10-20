@@ -979,7 +979,7 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      CVIAbsoluteTime when = convert_from_grpc<CVIAbsoluteTime>(request->when());
+      auto when = convert_from_grpc<CVIAbsoluteTime>(request->when());
       int32 timescale;
       switch (request->timescale_enum_case()) {
         case nidaqmx_grpc::CfgTimeStartTrigRequest::TimescaleEnumCase::kTimescale: {
@@ -13878,7 +13878,7 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
+      auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetArmStartTrigTrigWhen(task, data);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -14679,7 +14679,7 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
+      auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetFirstSampClkWhen(task, data);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -15260,7 +15260,7 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
+      auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetStartTrigTrigWhen(task, data);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -15280,7 +15280,7 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      CVIAbsoluteTime data = convert_from_grpc<CVIAbsoluteTime>(request->data());
+      auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetSyncPulseTimeWhen(task, data);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -15579,7 +15579,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      CVIAbsoluteTime value = convert_from_grpc<CVIAbsoluteTime>(request->value());
+      auto value = convert_from_grpc<CVIAbsoluteTime>(request->value());
       auto size = 0U;
       auto status = library_->SetTimingAttributeExTimestamp(task, device_names, attribute, value, size);
       response->set_status(status);
@@ -15796,7 +15796,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      CVIAbsoluteTime value = convert_from_grpc<CVIAbsoluteTime>(request->value());
+      auto value = convert_from_grpc<CVIAbsoluteTime>(request->value());
       auto size = 0U;
       auto status = library_->SetTimingAttributeTimestamp(task, attribute, value, size);
       response->set_status(status);
@@ -16171,7 +16171,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      CVIAbsoluteTime value = convert_from_grpc<CVIAbsoluteTime>(request->value());
+      auto value = convert_from_grpc<CVIAbsoluteTime>(request->value());
       auto size = 0U;
       auto status = library_->SetTrigAttributeTimestamp(task, attribute, value, size);
       response->set_status(status);

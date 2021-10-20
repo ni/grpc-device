@@ -68,7 +68,7 @@ ConfigureTriggerModeResponse configure_trigger_mode(const StubPtr& stub, const n
 CreateAdvancedArbSequenceResponse create_advanced_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& waveform_handles_array, const std::vector<pb::int32>& loop_counts_array, const std::vector<pb::int32>& sample_counts_array, const std::vector<pb::int32>& marker_location_array);
 CreateArbSequenceResponse create_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& waveform_handles_array, const std::vector<pb::int32>& loop_counts_array);
 CreateFreqListResponse create_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Waveform, pb::int32>& waveform, const std::vector<double>& frequency_array, const std::vector<double>& duration_array);
-CreateWaveformComplexF64Response create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<NIComplexNumber>& waveform_data_array);
+CreateWaveformComplexF64Response create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& waveform_data_array);
 CreateWaveformF64Response create_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& waveform_data_array);
 CreateWaveformFromFileF64Response create_waveform_from_file_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const simple_variant<ByteOrder, pb::int32>& byte_order);
 CreateWaveformFromFileHWSResponse create_waveform_from_file_hws(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const bool& use_rate_from_waveform, const bool& use_gain_and_offset_from_waveform);
@@ -152,8 +152,8 @@ WriteNamedWaveformI16Response write_named_waveform_i16(const StubPtr& stub, cons
 WriteP2PEndpointI16Response write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& endpoint_name, const std::vector<pb::int32>& endpoint_data);
 WriteScriptResponse write_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& script);
 WriteWaveformResponse write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<double>& data);
-WriteWaveformComplexF64Response write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<NIComplexNumber>& data, const pb::int32& waveform_handle);
-WriteNamedWaveformComplexF64Response write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<NIComplexNumber>& data);
+WriteWaveformComplexF64Response write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& data, const pb::int32& waveform_handle);
+WriteNamedWaveformComplexF64Response write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumber>& data);
 WriteNamedWaveformComplexI16Response write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<NIComplexInt32>& data);
 
 } // namespace nifgen_grpc::experimental::client

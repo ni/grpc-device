@@ -468,7 +468,7 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
         [](auto x) { return (${c_type_underlying_type})x; }); \
- % elif common_helpers.is_struct(parameter):
+ % elif common_helpers.supports_standard_copy_conversion_routines(parameter):
       auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${request_snippet});\
 % elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
@@ -501,8 +501,6 @@ ${initialize_standard_input_param(function_name, parameter)}
         });
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
-% elif c_type == 'CVIAbsoluteTime':
-      ${c_type} ${parameter_name} = convert_from_grpc<${c_type}>(${request_snippet});\
 % else:
       ${c_type} ${parameter_name} = ${request_snippet};\
 % endif
@@ -545,7 +543,7 @@ ${initialize_standard_input_param(function_name, parameter)}
   buffer_size = common_helpers.get_buffer_size_expression(parameter)
   size = common_helpers.get_size_expression(parameter)
 %>\
-%     if common_helpers.is_struct(parameter) or underlying_param_type == 'ViBoolean':
+%     if common_helpers.supports_standard_copy_conversion_routines(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
 ## Byte arrays are leveraging a string as a buffer, so we don't need to take special consideration of the null terminator.
 %     elif parameter['grpc_type'] == 'bytes':
@@ -656,15 +654,13 @@ ${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_na
 %   elif service_helpers.is_output_array_that_needs_coercion(parameter):
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
 ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x")}\
-%   elif common_helpers.is_struct(parameter) or parameter['type'] == 'ViBoolean[]':
+%   elif common_helpers.supports_standard_copy_conversion_routines(parameter):
         convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
 %   elif common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
 %   elif parameter['type'] == 'ViSession':
         auto session_id = session_repository_->resolve_session_id(${parameter_name});
         response->mutable_${parameter_name}()->set_id(session_id);
-%   elif parameter['type'] == 'CVIAbsoluteTime':
-        convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
 %   elif common_helpers.is_array(parameter['type']):
 ### pass: other array types don't need to copy.
 %   else:

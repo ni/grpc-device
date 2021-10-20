@@ -184,12 +184,6 @@ private:
 namespace nidevice_grpc {
 namespace converters {
 template <>
-void convert_to_grpc(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output);
-template <>
-NIComplexNumber_struct convert_from_grpc(const nirfsg_grpc::NIComplexNumber& input);
-template <>
-NIComplexNumberF32_struct convert_from_grpc(const nirfsg_grpc::NIComplexNumberF32& input);
-template <>
 NIComplexI16_struct convert_from_grpc(const nirfsg_grpc::NIComplexI16& input);
 } // namespace converters
 } // namespace nidevice_grpc

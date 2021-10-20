@@ -776,11 +776,6 @@ message CoefficientInfo {
   double reserved2 = 4;
 }
 
-message NIComplexNumber {
-  double real = 1;
-  double imaginary = 2;
-}
-
 message NIComplexInt32 {
   sint32 real = 1;
   sint32 imaginary = 2;
@@ -1404,7 +1399,7 @@ message FetchComplexRequest {
 
 message FetchComplexResponse {
   int32 status = 1;
-  repeated NIComplexNumber wfm = 2;
+  repeated nidevice_grpc.NIComplexNumber wfm = 2;
   repeated WaveformInfo wfm_info = 3;
 }
 

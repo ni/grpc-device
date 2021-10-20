@@ -3284,31 +3284,6 @@ namespace nirfsg_grpc {
 namespace nidevice_grpc {
 namespace converters {
 template <>
-void convert_to_grpc(const NIComplexNumber_struct& input, nirfsg_grpc::NIComplexNumber* output) 
-{
-  output->set_real(input.real);
-  output->set_imaginary(input.imaginary);
-}
-
-template <>
-NIComplexNumber_struct convert_from_grpc(const nirfsg_grpc::NIComplexNumber& input) 
-{
-  auto output = NIComplexNumber_struct();  
-  output.real = input.real();
-  output.imaginary = input.imaginary();
-  return output;
-}
-
-template <>
-NIComplexNumberF32_struct convert_from_grpc(const nirfsg_grpc::NIComplexNumberF32& input) 
-{
-  auto output = NIComplexNumberF32_struct();  
-  output.real = input.real();
-  output.imaginary = input.imaginary();
-  return output;
-}
-
-template <>
 NIComplexI16_struct convert_from_grpc(const nirfsg_grpc::NIComplexI16& input) 
 {
   auto output = NIComplexI16_struct();  

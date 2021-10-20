@@ -785,7 +785,7 @@ create_configuration_list_step(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 CreateDeembeddingSparameterTableArrayResponse
-create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const std::vector<double>& frequencies, const std::vector<NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation)
+create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const std::vector<double>& frequencies, const std::vector<nidevice_grpc::NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SparameterOrientation, pb::int32>& sparameter_orientation)
 {
   ::grpc::ClientContext context;
 

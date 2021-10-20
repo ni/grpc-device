@@ -2414,13 +2414,6 @@ void convert_to_grpc(const niScope_coefficientInfo& input, niscope_grpc::Coeffic
 }
 
 template <>
-void convert_to_grpc(const NIComplexNumber_struct& input, niscope_grpc::NIComplexNumber* output) 
-{
-  output->set_real(input.real);
-  output->set_imaginary(input.imaginary);
-}
-
-template <>
 void convert_to_grpc(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output) 
 {
   output->set_real(input.real);

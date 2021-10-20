@@ -149,8 +149,6 @@ void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* o
 template <>
 void convert_to_grpc(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output);
 template <>
-void convert_to_grpc(const NIComplexNumber_struct& input, niscope_grpc::NIComplexNumber* output);
-template <>
 void convert_to_grpc(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output);
 } // namespace converters
 } // namespace nidevice_grpc

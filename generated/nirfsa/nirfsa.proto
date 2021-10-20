@@ -727,16 +727,6 @@ enum NiRFSAStringAttributeValuesMapped {
   NIRFSA_STRING_TRIGGER_SOURCE_RANGE_TABLE_SYNC_ADVANCE_TRIGGER_STR = 60;
 }
 
-message NIComplexNumber {
-  double real = 1;
-  double imaginary = 2;
-}
-
-message NIComplexNumberF32 {
-  float real = 1;
-  float imaginary = 2;
-}
-
 message NIComplexI16 {
   sint32 real = 1;
   sint32 imaginary = 2;
@@ -1187,7 +1177,7 @@ message CreateDeembeddingSparameterTableArrayRequest {
   string port = 2;
   string table_name = 3;
   repeated double frequencies = 4;
-  repeated NIComplexNumber sparameter_table = 5;
+  repeated nidevice_grpc.NIComplexNumber sparameter_table = 5;
   sint32 number_of_ports = 6;
   oneof sparameter_orientation_enum {
     SparameterOrientation sparameter_orientation = 7;
@@ -1349,7 +1339,7 @@ message FetchIQMultiRecordComplexF32Request {
 
 message FetchIQMultiRecordComplexF32Response {
   int32 status = 1;
-  repeated NIComplexNumberF32 data = 2;
+  repeated nidevice_grpc.NIComplexNumberF32 data = 2;
   repeated WaveformInfo wfm_info = 3;
 }
 
@@ -1364,7 +1354,7 @@ message FetchIQMultiRecordComplexF64Request {
 
 message FetchIQMultiRecordComplexF64Response {
   int32 status = 1;
-  repeated NIComplexNumber data = 2;
+  repeated nidevice_grpc.NIComplexNumber data = 2;
   repeated WaveformInfo wfm_info = 3;
 }
 
@@ -1393,7 +1383,7 @@ message FetchIQSingleRecordComplexF32Request {
 
 message FetchIQSingleRecordComplexF32Response {
   int32 status = 1;
-  repeated NIComplexNumberF32 data = 2;
+  repeated nidevice_grpc.NIComplexNumberF32 data = 2;
   WaveformInfo wfm_info = 3;
 }
 
@@ -1407,7 +1397,7 @@ message FetchIQSingleRecordComplexF64Request {
 
 message FetchIQSingleRecordComplexF64Response {
   int32 status = 1;
-  repeated NIComplexNumber data = 2;
+  repeated nidevice_grpc.NIComplexNumber data = 2;
   WaveformInfo wfm_info = 3;
 }
 
@@ -1515,7 +1505,7 @@ message GetDeembeddingSparametersRequest {
 
 message GetDeembeddingSparametersResponse {
   int32 status = 1;
-  repeated NIComplexNumber sparameters = 2;
+  repeated nidevice_grpc.NIComplexNumber sparameters = 2;
   sint32 number_of_sparameters = 3;
   sint32 number_of_ports = 4;
 }
@@ -1834,7 +1824,7 @@ message ReadIQSingleRecordComplexF64Request {
 
 message ReadIQSingleRecordComplexF64Response {
   int32 status = 1;
-  repeated NIComplexNumber data = 2;
+  repeated nidevice_grpc.NIComplexNumber data = 2;
   WaveformInfo wfm_info = 3;
 }
 

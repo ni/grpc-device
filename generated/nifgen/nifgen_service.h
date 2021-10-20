@@ -188,8 +188,6 @@ private:
 namespace nidevice_grpc {
 namespace converters {
 template <>
-NIComplexNumber_struct convert_from_grpc(const nifgen_grpc::NIComplexNumber& input);
-template <>
 NIComplexI16_struct convert_from_grpc(const nifgen_grpc::NIComplexInt32& input);
 } // namespace converters
 } // namespace nidevice_grpc

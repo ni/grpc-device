@@ -1019,8 +1019,8 @@ functions = {
             {
                 'name':'waveformDataArray',
                 'direction':'in',
-                'type': 'struct NIComplexNumber_struct[]',
-                'grpc_type': 'repeated NIComplexNumber',
+                'type': 'NIComplexNumber_struct[]',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
@@ -2969,8 +2969,8 @@ functions = {
             {
                 'name':'data',
                 'direction':'in',
-                'type':'struct NIComplexNumber_struct[]',
-                'grpc_type':'repeated NIComplexNumber',
+                'type':'NIComplexNumber_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexNumber',
                 'size':{
                     'mechanism':'len',
                     'value':'numberOfSamples'
@@ -3009,8 +3009,8 @@ functions = {
             {
                 'name':'data',
                 'direction':'in',
-                'type':'struct NIComplexNumber_struct[]',
-                'grpc_type':'repeated NIComplexNumber',
+                'type':'NIComplexNumber_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexNumber',
                 'size':{
                     'mechanism':'len',
                     'value':'size'
