@@ -131,9 +131,9 @@ TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedIQ_FetchIQSingleRecordComple
 {
   const auto NUMBER_OF_SAMPLES = 1000;
   auto session = init_session(stub(), PXI_5663E);
-  auto configure_clock = client::configure_ref_clock(stub(), session, RefClockSourceRangeTable::REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
+  auto configure_clock = client::configure_ref_clock(stub(), session, RefClockSource::REF_CLOCK_SOURCE_ONBOARD_CLOCK, 10e6);
   auto configure_reference_level = client::configure_reference_level(stub(), session, "", 0);
-  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_IQ);
+  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionType::ACQUISITION_TYPE_IQ);
   auto configure_number_of_samples = client::configure_number_of_samples(stub(), session, "", true, 1000);
   auto configure_iq_rate = client::configure_iq_rate(stub(), session, "", 1e6);
   EXPECT_SUCCESS(session, configure_clock);
@@ -158,7 +158,7 @@ TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedIQ_FetchIQMultiRecordComplex
   const auto NUMBER_OF_SAMPLES = 10;
   const auto NUMBER_OF_RECORDS = 2;
   auto session = init_session(stub(), PXI_5663E);
-  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_IQ);
+  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionType::ACQUISITION_TYPE_IQ);
   auto configure_number_of_samples = client::configure_number_of_samples(stub(), session, "", true, NUMBER_OF_SAMPLES);
   auto configure_number_of_records = client::configure_number_of_records(stub(), session, "", true, NUMBER_OF_RECORDS);
   EXPECT_SUCCESS(session, configure_acquisition_type);
@@ -178,7 +178,7 @@ TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedIQ_FetchIQSingleRecordComple
 {
   const auto NUMBER_OF_SAMPLES = 10;
   auto session = init_session(stub(), PXI_5663E);
-  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_IQ);
+  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionType::ACQUISITION_TYPE_IQ);
   auto configure_number_of_samples = client::configure_number_of_samples(stub(), session, "", true, NUMBER_OF_SAMPLES);
   EXPECT_SUCCESS(session, configure_acquisition_type);
   EXPECT_SUCCESS(session, configure_number_of_samples);
@@ -196,7 +196,7 @@ TEST_F(NiRFSADriverApiTests, ConfigureGettingStartedSpectrum_ReadPowerSpectrumF6
   auto session = init_session(stub(), PXI_5663E);
   auto configure_clock = client::configure_ref_clock(stub(), session, std::string("OnboardClock"), 10e6);
   auto configure_reference_level = client::configure_reference_level(stub(), session, "", 0);
-  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_SPECTRUM);
+  auto configure_acquisition_type = client::configure_acquisition_type(stub(), session, AcquisitionType::ACQUISITION_TYPE_SPECTRUM);
   auto configure_frequency_start_stop = client::configure_spectrum_frequency_start_stop(stub(), session, "", 990e6, 1010e6);
   auto configure_resolution_bandwidth = client::configure_resolution_bandwidth(stub(), session, "", 10e3);
   auto number_of_spectral_lines = client::get_number_of_spectral_lines(stub(), session, "");
@@ -270,8 +270,8 @@ TEST_F(NiRFSADriverApiTests, ConfigureDigitalEdgeRefTrigger_Succeeds)
   auto response = client::configure_digital_edge_ref_trigger(
       stub(),
       session,
-      DigitalEdgeTriggerSource::DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0_STR,
-      DigitalEdgeRangeTable::DIGITAL_EDGE_RANGE_TABLE_RISING_EDGE,
+      DigitalEdgeTriggerSource::DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0,
+      DigitalEdge::DIGITAL_EDGE_RISING_EDGE,
       10);
 
   EXPECT_SUCCESS(session, response);
@@ -290,7 +290,7 @@ TEST_F(NiRFSADriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
       session,
       "",
       NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL,
-      NiRFSAStringAttributeValuesMapped::NIRFSA_STRING_REF_CLOCK_OUT_TERMINAL_RANGE_TABLE_REF_OUT_STR);
+      NiRFSAStringAttributeValuesMapped::NIRFSA_STRING_REF_CLOCK_OUT_TERMINAL_REF_OUT);
   auto get_response = client::get_attribute_vi_string(
       stub(),
       session,
@@ -317,7 +317,7 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFFTWindowType_UpdatesFFTWindowSuccessful
       session,
       "",
       NiRFSAAttributes::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE,
-      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_RANGE_TABLE_BLACKMAN);
+      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_BLACKMAN);
   auto get_response = client::get_attribute_vi_int32(
       stub(),
       session,
@@ -329,7 +329,7 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFFTWindowType_UpdatesFFTWindowSuccessful
   EXPECT_SUCCESS(session, get_response);
   EXPECT_NE(initial_response.value(), get_response.value());
   EXPECT_EQ(
-      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_RANGE_TABLE_BLACKMAN,
+      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_BLACKMAN,
       get_response.value());
 }
 
@@ -341,7 +341,7 @@ TEST_F(NiRFSADriverApiTests, ExportSignal_Succeeds)
       session,
       Signal::SIGNAL_START_TRIGGER,
       "",
-      ExportTerminalRangeTable::EXPORT_TERMINAL_RANGE_TABLE_REF_OUT_STR);
+      ExportTerminal::EXPORT_TERMINAL_REF_OUT);
 
   EXPECT_SUCCESS(session, response);
 }
@@ -432,8 +432,8 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFetchOffset_UpdatesFetchOffsetSuccessful
 // NOTE: disabled because this test requires a 58XX device. Simulating a 58XX hangs on shutdown.
 TEST_F(NiRFSADriverApiTests, DISABLED_ReconfigureDowncoverterMode_UpdatesDownconverterModeSuccessfully)
 {
-  constexpr auto USER_DEFINED = NiRFSAInt32AttributeValues::NIRFSA_INT32_DOWNCONVERTER_FREQUENCY_OFFSET_MODE_RANGE_TABLE_USER_DEFINED;
-  constexpr auto ENABLED = NiRFSAInt32AttributeValues::NIRFSA_INT32_DOWNCONVERTER_FREQUENCY_OFFSET_MODE_RANGE_TABLE_ENABLED;
+  constexpr auto USER_DEFINED = NiRFSAInt32AttributeValues::NIRFSA_INT32_DOWNCONVERTER_FREQUENCY_OFFSET_MODE_USER_DEFINED;
+  constexpr auto ENABLED = NiRFSAInt32AttributeValues::NIRFSA_INT32_DOWNCONVERTER_FREQUENCY_OFFSET_MODE_ENABLED;
   const auto session = init_session(stub(), "5841");
   // Per nirfsa.sub: "NOTE: You must set this attribute to enable the NIRFSA_ATTR_DOWNCONVERTER_FREQUENCY_OFFSET_MODE attribute."
   const auto bandwidth_response = client::set_attribute_vi_real64(
@@ -527,7 +527,7 @@ TEST_F(NiRFSADriverApiTests, ConfiguredSpectrumAcquisition_GetSpectralInfoForSmt
   auto configure_acquisition_type = client::configure_acquisition_type(
       stub(),
       session,
-      AcquisitionTypeRangeTable::ACQUISITION_TYPE_RANGE_TABLE_SPECTRUM);
+      AcquisitionType::ACQUISITION_TYPE_SPECTRUM);
   auto power_spectrum = client::read_power_spectrum_f64(stub(), session, "", 10.0, spectral_lines.number_of_spectral_lines());
   auto response = client::get_spectral_info_for_smt(stub(), session);
 
