@@ -98,7 +98,6 @@ InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string&
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 LoadConfigurationsFromFileResponse load_configurations_from_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_path);
-LockSessionResponse lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 PerformPowerSearchResponse perform_power_search(const StubPtr& stub, const nidevice_grpc::Session& vi);
 PerformThermalCorrectionResponse perform_thermal_correction(const StubPtr& stub, const nidevice_grpc::Session& vi);
 QueryArbWaveformCapabilitiesResponse query_arb_waveform_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -126,7 +125,6 @@ SetUserDataResponse set_user_data(const StubPtr& stub, const nidevice_grpc::Sess
 SetWaveformBurstStartLocationsResponse set_waveform_burst_start_locations(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& locations);
 SetWaveformBurstStopLocationsResponse set_waveform_burst_stop_locations(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& locations);
 SetWaveformMarkerEventLocationsResponse set_waveform_marker_event_locations(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& locations);
-UnlockSessionResponse unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 WaitUntilSettledResponse wait_until_settled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& max_time_milliseconds);
 WriteArbWaveformResponse write_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<double>& i_data, const std::vector<double>& q_data, const bool& more_data_pending);
 WriteArbWaveformComplexF32Response write_arb_waveform_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<NIComplexNumberF32>& wfm_data, const bool& more_data_pending);

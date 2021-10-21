@@ -93,7 +93,6 @@ ImportAttributeConfigurationFileResponse import_attribute_configuration_file(con
 InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string);
 InitiateAcquisitionResponse initiate_acquisition(const StubPtr& stub, const nidevice_grpc::Session& vi);
-LockSessionResponse lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ProbeCompensationSignalStartResponse probe_compensation_signal_start(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ProbeCompensationSignalStopResponse probe_compensation_signal_stop(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReadResponse read(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& num_samples);
@@ -111,7 +110,6 @@ SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const ni
 SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const simple_variant<NiScopeReal64AttributeValues, double>& value);
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const nidevice_grpc::Session& value);
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const pb::string& value_raw);
-UnlockSessionResponse unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 
 } // namespace niscope_grpc::experimental::client
 

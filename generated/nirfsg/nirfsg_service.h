@@ -109,7 +109,6 @@ public:
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
   ::grpc::Status LoadConfigurationsFromFile(::grpc::ServerContext* context, const LoadConfigurationsFromFileRequest* request, LoadConfigurationsFromFileResponse* response) override;
-  ::grpc::Status LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response) override;
   ::grpc::Status PerformPowerSearch(::grpc::ServerContext* context, const PerformPowerSearchRequest* request, PerformPowerSearchResponse* response) override;
   ::grpc::Status PerformThermalCorrection(::grpc::ServerContext* context, const PerformThermalCorrectionRequest* request, PerformThermalCorrectionResponse* response) override;
   ::grpc::Status QueryArbWaveformCapabilities(::grpc::ServerContext* context, const QueryArbWaveformCapabilitiesRequest* request, QueryArbWaveformCapabilitiesResponse* response) override;
@@ -137,7 +136,6 @@ public:
   ::grpc::Status SetWaveformBurstStartLocations(::grpc::ServerContext* context, const SetWaveformBurstStartLocationsRequest* request, SetWaveformBurstStartLocationsResponse* response) override;
   ::grpc::Status SetWaveformBurstStopLocations(::grpc::ServerContext* context, const SetWaveformBurstStopLocationsRequest* request, SetWaveformBurstStopLocationsResponse* response) override;
   ::grpc::Status SetWaveformMarkerEventLocations(::grpc::ServerContext* context, const SetWaveformMarkerEventLocationsRequest* request, SetWaveformMarkerEventLocationsResponse* response) override;
-  ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
   ::grpc::Status WaitUntilSettled(::grpc::ServerContext* context, const WaitUntilSettledRequest* request, WaitUntilSettledResponse* response) override;
   ::grpc::Status WriteArbWaveform(::grpc::ServerContext* context, const WriteArbWaveformRequest* request, WriteArbWaveformResponse* response) override;
   ::grpc::Status WriteArbWaveformComplexF32(::grpc::ServerContext* context, const WriteArbWaveformComplexF32Request* request, WriteArbWaveformComplexF32Response* response) override;

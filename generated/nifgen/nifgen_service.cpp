@@ -2523,29 +2523,6 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViBoolean caller_has_lock {};
-      auto status = library_->LockSession(vi, &caller_has_lock);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::ManualEnableP2PStream(::grpc::ServerContext* context, const ManualEnableP2PStreamRequest* request, ManualEnableP2PStreamResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3164,29 +3141,6 @@ namespace nifgen_grpc {
       ViInt32 offset = request->offset();
       auto status = library_->SetWaveformNextWritePosition(vi, channel_name, waveform_handle, relative_to, offset);
       response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViBoolean caller_has_lock {};
-      auto status = library_->UnlockSession(vi, &caller_has_lock);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

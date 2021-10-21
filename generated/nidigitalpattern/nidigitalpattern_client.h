@@ -114,7 +114,6 @@ LoadPatternResponse load_pattern(const StubPtr& stub, const nidevice_grpc::Sessi
 LoadPinMapResponse load_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
 LoadSpecificationsResponse load_specifications(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
 LoadTimingResponse load_timing(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
-LockSessionResponse lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 MapPinToChannelResponse map_pin_to_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin, const pb::int32& site, const pb::string& channel);
 PPMUConfigureApertureTimeResponse ppmu_configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& aperture_time, const simple_variant<PpmuApertureTimeUnits, pb::int32>& units);
 PPMUConfigureCurrentLevelResponse ppmu_configure_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& current_level);
@@ -145,7 +144,6 @@ SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const 
 TDRResponse tdr(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const bool& apply_offsets);
 UnloadAllPatternsResponse unload_all_patterns(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& unload_keep_alive_pattern);
 UnloadSpecificationsResponse unload_specifications(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
-UnlockSessionResponse unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 WaitUntilDoneResponse wait_until_done(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& timeout);
 WriteSequencerFlagResponse write_sequencer_flag(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& flag, const bool& value);
 WriteSequencerFlagSynchronizedResponse write_sequencer_flag_synchronized(const StubPtr& stub, const pb::uint32& session_count, const std::vector<nidevice_grpc::Session>& sessions, const pb::string& flag, const bool& value);

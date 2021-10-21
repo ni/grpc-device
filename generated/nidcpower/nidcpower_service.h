@@ -143,7 +143,6 @@ public:
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status InitializeWithChannels(::grpc::ServerContext* context, const InitializeWithChannelsRequest* request, InitializeWithChannelsResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
-  ::grpc::Status LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response) override;
   ::grpc::Status Measure(::grpc::ServerContext* context, const MeasureRequest* request, MeasureResponse* response) override;
   ::grpc::Status MeasureMultiple(::grpc::ServerContext* context, const MeasureMultipleRequest* request, MeasureMultipleResponse* response) override;
   ::grpc::Status QueryInCompliance(::grpc::ServerContext* context, const QueryInComplianceRequest* request, QueryInComplianceResponse* response) override;
@@ -166,7 +165,6 @@ public:
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
   ::grpc::Status SetSequence(::grpc::ServerContext* context, const SetSequenceRequest* request, SetSequenceResponse* response) override;
-  ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
   ::grpc::Status WaitForEvent(::grpc::ServerContext* context, const WaitForEventRequest* request, WaitForEventResponse* response) override;
 
   bool is_enabled();

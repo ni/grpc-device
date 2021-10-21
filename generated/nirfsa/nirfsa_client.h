@@ -116,7 +116,6 @@ InitializeExternalAlignmentResponse initialize_external_alignment(const StubPtr&
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsSelfCalValidResponse is_self_cal_valid(const StubPtr& stub, const nidevice_grpc::Session& vi);
-LockSessionResponse lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 PerformThermalCorrectionResponse perform_thermal_correction(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReadIQSingleRecordComplexF64Response read_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int64& data_array_size);
 ReadPowerSpectrumF32Response read_power_spectrum_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& data_array_size);
@@ -140,7 +139,6 @@ SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, cons
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id, const simple_variant<NiRFSAStringAttributeValuesMapped, std::string>& value);
 SetCalUserDefinedInfoResponse set_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& info);
 SetUserDataResponse set_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& identifier, const pb::int32& buffer_size);
-UnlockSessionResponse unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 
 } // namespace nirfsa_grpc::experimental::client
 

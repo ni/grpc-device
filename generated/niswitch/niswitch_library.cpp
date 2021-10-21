@@ -593,11 +593,7 @@ ViStatus NiSwitchLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_LockSession.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_LockSession(vi, callerHasLock);
-#else
   return function_pointers_.LockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiSwitchLibrary::RelayControl(ViSession vi, ViConstString relayName, ViInt32 relayAction)
@@ -809,11 +805,7 @@ ViStatus NiSwitchLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_UnlockSession.");
   }
-#if defined(_MSC_VER)
-  return niSwitch_UnlockSession(vi, callerHasLock);
-#else
   return function_pointers_.UnlockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiSwitchLibrary::WaitForDebounce(ViSession vi, ViInt32 maximumTimeMs)

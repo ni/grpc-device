@@ -266,7 +266,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using ImportAttributeConfigurationFilePtr = decltype(&niDCPower_ImportAttributeConfigurationFile);
   using InitializeWithChannelsPtr = decltype(&niDCPower_InitializeWithChannels);
   using InitiatePtr = decltype(&niDCPower_Initiate);
-  using LockSessionPtr = decltype(&niDCPower_LockSession);
+  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using MeasurePtr = decltype(&niDCPower_Measure);
   using MeasureMultiplePtr = decltype(&niDCPower_MeasureMultiple);
   using ParseChannelCountPtr = ViStatus (*)(ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels);
@@ -290,7 +290,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using SetAttributeViSessionPtr = decltype(&niDCPower_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niDCPower_SetAttributeViString);
   using SetSequencePtr = decltype(&niDCPower_SetSequence);
-  using UnlockSessionPtr = decltype(&niDCPower_UnlockSession);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitForEventPtr = decltype(&niDCPower_WaitForEvent);
 
   typedef struct FunctionPointers {

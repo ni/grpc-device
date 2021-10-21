@@ -181,7 +181,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   using InitPtr = decltype(&niScope_init);
   using InitWithOptionsPtr = decltype(&niScope_InitWithOptions);
   using InitiateAcquisitionPtr = decltype(&niScope_InitiateAcquisition);
-  using LockSessionPtr = decltype(&niScope_LockSession);
+  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using ProbeCompensationSignalStartPtr = decltype(&niScope_ProbeCompensationSignalStart);
   using ProbeCompensationSignalStopPtr = decltype(&niScope_ProbeCompensationSignalStop);
   using ReadPtr = decltype(&niScope_Read);
@@ -199,7 +199,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   using SetAttributeViReal64Ptr = decltype(&niScope_SetAttributeViReal64);
   using SetAttributeViSessionPtr = decltype(&niScope_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niScope_SetAttributeViString);
-  using UnlockSessionPtr = decltype(&niScope_UnlockSession);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;

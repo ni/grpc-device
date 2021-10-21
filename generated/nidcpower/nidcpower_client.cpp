@@ -2097,22 +2097,6 @@ initiate(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = LockSessionResponse{};
-
-  raise_if_error(
-      stub->LockSession(&context, request, &response));
-
-  return response;
-}
-
 MeasureResponse
 measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<MeasurementTypes, pb::int32>& measurement_type)
 {
@@ -2530,22 +2514,6 @@ set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
 
   raise_if_error(
       stub->SetSequence(&context, request, &response));
-
-  return response;
-}
-
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnlockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = UnlockSessionResponse{};
-
-  raise_if_error(
-      stub->UnlockSession(&context, request, &response));
 
   return response;
 }

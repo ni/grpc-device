@@ -1808,22 +1808,6 @@ is_self_cal_valid(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = LockSessionResponse{};
-
-  raise_if_error(
-      stub->LockSession(&context, request, &response));
-
-  return response;
-}
-
 PerformThermalCorrectionResponse
 perform_thermal_correction(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -2250,22 +2234,6 @@ set_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::s
 
   raise_if_error(
       stub->SetUserData(&context, request, &response));
-
-  return response;
-}
-
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnlockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = UnlockSessionResponse{};
-
-  raise_if_error(
-      stub->UnlockSession(&context, request, &response));
 
   return response;
 }

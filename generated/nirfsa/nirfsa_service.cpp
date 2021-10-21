@@ -2714,29 +2714,6 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViBoolean caller_has_lock {};
-      auto status = library_->LockSession(vi, &caller_has_lock);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::PerformThermalCorrection(::grpc::ServerContext* context, const PerformThermalCorrectionRequest* request, PerformThermalCorrectionResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3289,29 +3266,6 @@ namespace nirfsa_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_data(data);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViBoolean caller_has_lock {};
-      auto status = library_->UnlockSession(vi, &caller_has_lock);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }

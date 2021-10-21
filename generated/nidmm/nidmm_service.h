@@ -103,7 +103,6 @@ public:
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
   ::grpc::Status IsOverRange(::grpc::ServerContext* context, const IsOverRangeRequest* request, IsOverRangeResponse* response) override;
   ::grpc::Status IsUnderRange(::grpc::ServerContext* context, const IsUnderRangeRequest* request, IsUnderRangeResponse* response) override;
-  ::grpc::Status LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response) override;
   ::grpc::Status PerformOpenCableComp(::grpc::ServerContext* context, const PerformOpenCableCompRequest* request, PerformOpenCableCompResponse* response) override;
   ::grpc::Status PerformShortCableComp(::grpc::ServerContext* context, const PerformShortCableCompRequest* request, PerformShortCableCompResponse* response) override;
   ::grpc::Status Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response) override;
@@ -122,7 +121,6 @@ public:
   ::grpc::Status SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response) override;
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
-  ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
 
   bool is_enabled();
 private:

@@ -1064,11 +1064,7 @@ ViStatus NiRFSGLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_LockSession.");
   }
-#if defined(_MSC_VER)
-  return niRFSG_LockSession(vi, callerHasLock);
-#else
   return function_pointers_.LockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiRFSGLibrary::PerformPowerSearch(ViSession vi)
@@ -1400,11 +1396,7 @@ ViStatus NiRFSGLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_UnlockSession.");
   }
-#if defined(_MSC_VER)
-  return niRFSG_UnlockSession(vi, callerHasLock);
-#else
   return function_pointers_.UnlockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiRFSGLibrary::WaitUntilSettled(ViSession vi, ViInt32 maxTimeMilliseconds)
