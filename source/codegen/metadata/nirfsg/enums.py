@@ -898,6 +898,18 @@ enums = {
             }
         ]
     },
+    'IqOffsetUnits': {
+        'values': [
+            {
+                'name': 'PERCENT',
+                'value': 11000
+            },
+            {
+                'name': 'VOLTS',
+                'value': 11001
+            }
+        ]
+    },
     'IqOutPortTermConfigRangeTable': {
         'values': [
             {
@@ -1349,6 +1361,18 @@ enums = {
             }
         ]
     },
+    'RefClockRate': {
+        'values': [
+            {
+                'name': '10_MHZ',
+                'value': 10000000
+            },
+            {
+                'name': 'AUTO',
+                'value': -1
+            }
+        ]
+    },
     'RefClockSourceRangeTable': {
         'generate-mappings': True,
         'values': [
@@ -1405,6 +1429,46 @@ enums = {
             {
                 'name': 'CURRENT_POSITION',
                 'value': 8001
+            }
+        ]
+    },
+    'ResetWithOptionsStepsToOmit': {
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'WAVEFORMS',
+                'value': 1
+            },
+            {
+                'name': 'SCRIPTS',
+                'value': 2
+            },
+            {
+                'name': 'ROUTES',
+                'value': 4
+            },
+            {
+                'name': 'DEEMBEDDING_TABLES',
+                'value': 8
+            }
+        ]
+    },
+    'RfInLoExportEnabled': {
+        'values': [
+            {
+                'name': 'UNSPECIFIED',
+                'value': -2
+            },
+            {
+                'name': 'DISABLE',
+                'value': 0
+            },
+            {
+                'name': 'ENABLE',
+                'value': 1
             }
         ]
     },
@@ -1485,6 +1549,34 @@ enums = {
                 },
                 'name': 'SOFTWARE',
                 'value': 2
+            }
+        ]
+    },
+    'SelfCalibrateRangeStepsToOmit': {
+        'values': [
+            {
+                'name': 'OMIT_NONE',
+                'value': 0
+            },
+            {
+                'name': 'LO_SELF_CAL',
+                'value': 1
+            },
+            {
+                'name': 'POWER_LEVEL_ACCURACY',
+                'value': 2
+            },
+            {
+                'name': 'RESIDUAL_LO_POWER',
+                'value': 4
+            },
+            {
+                'name': 'IMAGE_SUPPRESSION',
+                'value': 8
+            },
+            {
+                'name': 'SYNTHESIZER_ALIGNMENT',
+                'value': 16
             }
         ]
     },

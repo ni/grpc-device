@@ -39,6 +39,11 @@ attributes = {
         'name': 'RECORD_COERCIONS',
         'type': 'ViBoolean'
     },
+    1050007: {
+        'access': 'read-write',
+        'name': 'DRIVER_SETUP',
+        'type': 'ViString'
+    },
     1050021: {
         'access': 'read-write',
         'documentation': {
@@ -47,6 +52,21 @@ attributes = {
         },
         'name': 'INTERCHANGE_CHECK',
         'type': 'ViBoolean'
+    },
+    1050022: {
+        'access': 'read-write',
+        'name': 'SPY',
+        'type': 'ViBoolean'
+    },
+    1050023: {
+        'access': 'read-write',
+        'name': 'USE_SPECIFIC_SIMULATION',
+        'type': 'ViBoolean'
+    },
+    1050203: {
+        'access': 'read-write',
+        'name': 'CHANNEL_COUNT',
+        'type': 'ViInt32'
     },
     1050302: {
         'access': 'read only',
@@ -86,6 +106,11 @@ attributes = {
             'description': ' Returns a string that contains a comma-separated list of class-extension  groups that NI-RFSG implements.\n     '
         },
         'name': 'GROUP_CAPABILITIES',
+        'type': 'ViString'
+    },
+    1050402: {
+        'access': 'read-write',
+        'name': 'FUNCTION_CAPABILITIES',
         'type': 'ViString'
     },
     1050510: {
@@ -384,6 +409,11 @@ attributes = {
         'enum': 'LoopBandwidthRangeTable',
         'name': 'LOOP_BANDWIDTH',
         'type': 'ViInt32'
+    },
+    1150028: {
+        'access': 'read-write',
+        'name': 'FGEN_SESSION',
+        'type': 'ViSession'
     },
     1150029: {
         'access': 'read-write',
@@ -739,6 +769,11 @@ attributes = {
         'name': 'IQ_SKEW',
         'type': 'ViReal64'
     },
+    1150074: {
+        'access': 'read-write',
+        'name': 'LO_SESSION',
+        'type': 'ViSession'
+    },
     1150075: {
         'access': 'read only',
         'documentation': {
@@ -784,6 +819,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the units of the NIRFSG_ATTR_IQ_I_OFFSET attribute and the  NIRFSG_ATTR_IQ_Q_OFFSET attribute.  Offset units are either percent or  volts.\n \n'
         },
+        'enum': 'IqOffsetUnits',
         'name': 'IQ_OFFSET_UNITS',
         'type': 'ViInt32'
     },
@@ -1349,6 +1385,11 @@ attributes = {
         'name': 'ATTENUATOR_SETTING',
         'type': 'ViReal64'
     },
+    1150175: {
+        'access': 'read-write',
+        'name': 'CONFIGURATION_LIST_IS_DONE',
+        'type': 'ViBoolean'
+    },
     1150180: {
         'access': 'read-write',
         'documentation': {
@@ -1372,6 +1413,11 @@ attributes = {
         },
         'name': 'AE_TEMPERATURE',
         'type': 'ViReal64'
+    },
+    1150183: {
+        'access': 'read-write',
+        'name': 'AE_SESSION',
+        'type': 'ViSession'
     },
     1150185: {
         'access': 'read-write',
@@ -1572,6 +1618,11 @@ attributes = {
         'name': 'ABSOLUTE_DELAY',
         'type': 'ViReal64'
     },
+    1150226: {
+        'access': 'read-write',
+        'name': 'DEVICE_INSTANTANEOUS_BANDWIDTH',
+        'type': 'ViReal64'
+    },
     1150228: {
         'access': 'read-write',
         'documentation': {
@@ -1605,6 +1656,12 @@ attributes = {
         },
         'enum': 'Enable_values',
         'name': 'LO_OUT_EXPORT_CONFIGURE_FROM_RFSA',
+        'type': 'ViInt32'
+    },
+    1150243: {
+        'access': 'read-write',
+        'enum': 'RfInLoExportEnabled',
+        'name': 'RF_IN_LO_EXPORT_ENABLED',
         'type': 'ViInt32'
     },
     1150244: {
@@ -1713,6 +1770,11 @@ attributes = {
         'name': 'FIXED_GROUP_DELAY_ACROSS_PORTS',
         'type': 'ViString'
     },
+    1150272: {
+        'access': 'read-write',
+        'name': 'WAVEFORM_FILEPATH',
+        'type': 'ViString'
+    },
     1150273: {
         'access': 'read-write',
         'documentation': {
@@ -1764,6 +1826,11 @@ attributes = {
         'enum': 'Enable_values',
         'name': 'WAVEFORM_RF_BLANKING',
         'type': 'ViInt32'
+    },
+    1150289: {
+        'access': 'read-write',
+        'name': 'DEEMBEDDING_COMPENSATION_GAIN',
+        'type': 'ViReal64'
     },
     1150293: {
         'access': 'read-write',
@@ -1842,6 +1909,7 @@ attributes = {
             'description': ' Specifies the Reference Clock rate, in Hz, of the signal present at the REF IN or CLK IN connector.  This property is only valid when the NIRFSG_ATTR_REF_CLOCK_SOURCE attribute is set to NIRFSG_VAL_CLK_IN_STR,  NIRFSG_VAL_REF_IN_STR, or NIRFSG_VAL_REF_IN_2_STR.. To set this attribute, the NI-RFSG device  must be in the Configuration state. If you are using the PXIe-5654/5654 with PXIe-5696,  the NI-RFSG device must be in the Committed state to read this attribute.  When you read this attribute, it returns the frequency the device is  locked to during the Committed state.\n \n If you set this attribute to NIRFSG_VAL_AUTO, NI-RFSG uses the default Reference Clock  rate for the device or automatically detects the Reference Clock rate if automatic detection is supported by the device.\n \n For all other supported devices, NI-RFSG uses the default Reference Clock rate of 10 MHz.\n \n PXIe-5654/5654 with PXIe-5696: Values between 1 MHz to 20 MHz in 1 MHz steps are supported in  addition to the NIRFSG_VAL_AUTO and NIRFSG_VAL_10MHZ values.\n PXIe-5841 with PXIe-5655: 10 MHz, 100 MHz, 270 MHz, and 3.84 MHz * y, where y is 4, 8, 16, 24, 25, or 32.\n \n  Units: hertz (Hz) \n \n  ',
             'note': ' Automatic detection of the Reference Clock rate is supported on only the PXIe-5654/5654 with PXIe-5696. '
         },
+        'enum': 'RefClockRate',
         'name': 'REF_CLOCK_RATE',
         'type': 'ViReal64'
     },
@@ -1852,6 +1920,11 @@ attributes = {
         },
         'name': 'IQ_ENABLED',
         'type': 'ViBoolean'
+    },
+    1250402: {
+        'access': 'read-write',
+        'name': 'IQ_NOMINAL_VOLTAGE',
+        'type': 'ViReal64'
     },
     1250404: {
         'access': 'read-write',
@@ -1875,6 +1948,11 @@ attributes = {
             'description': ' This attribute specifies the I/Q rate of the arbitrary waveform.  The I/Q rate is coerced to a value the hardware can achieve.  Read this value back after setting it to see what the actual  I/Q rate is. NI-RFSG internally uses an FIR filter with flat  response up to (0.4 × IQ rate). Given a desired signal with  the maximum frequency content f, sample the signal at  an I/Q rate greater than or equal to (f/0.4). \n \n This attribute applies only when the NIRFSG_ATTR_GENERATION_MODE  attribute is set to NIRFSG_VAL_ARB_WAVEFORM or NIRFSG_VAL_SCRIPT. \n \n Use this attribute to associate an I/Q rate with a waveform.  Refer to the Assigning Properties or Attributes to a Waveform topic of  the NI RF Signal Generators Help for more information about assigning an I/Q rate to a waveform. \n'
         },
         'name': 'IQ_RATE',
+        'type': 'ViReal64'
+    },
+    1250453: {
+        'access': 'read-write',
+        'name': 'ARB_FILTER_FREQUENCY',
         'type': 'ViReal64'
     },
     1250454: {

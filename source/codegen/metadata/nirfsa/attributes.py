@@ -60,6 +60,11 @@ attributes = {
         'name': 'INTERCHANGE_CHECK',
         'type': 'ViBoolean'
     },
+    1050203: {
+        'access': 'read-write',
+        'name': 'CHANNEL_COUNT',
+        'type': 'ViInt32'
+    },
     1050302: {
         'access': 'read only',
         'documentation': {
@@ -90,6 +95,11 @@ attributes = {
             'description': ' Returns a comma-separated list of supported devices.\n\n Default Value: N/A \n\n Supported Devices: PXI-5600, PXIe-5601/5603/5605/5606 (external digitizer mode), PXIe-5644/5645/5646, PXI-5661, PXIe-5663/5663E/5665/5667/5668, PXIe-5693/5694/5698, PXIe-5820/5830/5831/5840/5841     '
         },
         'name': 'SUPPORTED_INSTRUMENT_MODELS',
+        'type': 'ViString'
+    },
+    1050401: {
+        'access': 'read-write',
+        'name': 'GROUP_CAPABILITIES',
         'type': 'ViString'
     },
     1050510: {
@@ -131,6 +141,16 @@ attributes = {
         },
         'name': 'SPECIFIC_DRIVER_DESCRIPTION',
         'type': 'ViString'
+    },
+    1050515: {
+        'access': 'read-write',
+        'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION',
+        'type': 'ViInt32'
+    },
+    1050516: {
+        'access': 'read-write',
+        'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION',
+        'type': 'ViInt32'
     },
     1050551: {
         'access': 'read only',
@@ -578,6 +598,11 @@ attributes = {
         'name': 'DEVICE_TEMPERATURE',
         'type': 'ViReal64'
     },
+    1150052: {
+        'access': 'read-write',
+        'name': 'NISCOPE_SESSION',
+        'type': 'ViSession'
+    },
     1150053: {
         'access': 'read only',
         'documentation': {
@@ -714,6 +739,11 @@ attributes = {
         'enum': 'RefClockOutTerminal',
         'name': 'EXPORTED_REF_CLOCK_OUTPUT_TERMINAL',
         'type': 'ViString'
+    },
+    1150073: {
+        'access': 'read-write',
+        'name': 'NIRFSG_SESSION',
+        'type': 'ViSession'
     },
     1150074: {
         'access': 'read-write',
@@ -1339,6 +1369,11 @@ attributes = {
         'name': 'STEP_GAIN_ENABLED',
         'type': 'ViInt32'
     },
+    1150158: {
+        'access': 'read-write',
+        'name': '5665_PRESELECTOR_TUNING_DAC_VALUE',
+        'type': 'ViInt32'
+    },
     1150159: {
         'access': 'read-write',
         'documentation': {
@@ -1420,6 +1455,11 @@ attributes = {
         'enum': 'NotchFilterEnabled',
         'name': 'NOTCH_FILTER_ENABLED',
         'type': 'ViInt32'
+    },
+    1150168: {
+        'access': 'read-write',
+        'name': 'CAL_TONE_STEP_ATTENUATION',
+        'type': 'ViReal64'
     },
     1150169: {
         'access': 'read-write',
@@ -1644,6 +1684,16 @@ attributes = {
         'enum': 'EnabledAttr',
         'name': 'REF_TRIGGER_OSP_DELAY_ENABLED',
         'type': 'ViInt32'
+    },
+    1150200: {
+        'access': 'read-write',
+        'name': 'RF_CONDITIONING_SESSION',
+        'type': 'ViSession'
+    },
+    1150201: {
+        'access': 'read-write',
+        'name': 'IF_CONDITIONING_SESSION',
+        'type': 'ViSession'
     },
     1150203: {
         'access': 'read-write',
@@ -2080,5 +2130,10 @@ attributes = {
         },
         'name': 'FIXED_GROUP_DELAY_ACROSS_PORTS',
         'type': 'ViString'
+    },
+    1150325: {
+        'access': 'read-write',
+        'name': 'DEEMBEDDING_COMPENSATION_GAIN',
+        'type': 'ViReal64'
     }
 }

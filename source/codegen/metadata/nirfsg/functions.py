@@ -1833,6 +1833,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'ResetWithOptionsStepsToOmit',
                 'name': 'stepsToOmit',
                 'type': 'ViUInt64'
             }
@@ -1922,6 +1923,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SelfCalibrateRangeStepsToOmit',
                 'name': 'stepsToOmit',
                 'type': 'ViInt64'
             },
