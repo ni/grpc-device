@@ -168,8 +168,8 @@ TEST_F(NiRFSGDriverApiTests, GenerateAndRouteReferenceClockFromExample_Succeeds)
 {
   auto session = init_session(stub(), PXI_5652);
   auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
-  auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationModeRangeTable::GENERATION_MODE_RANGE_TABLE_CW);
-  auto configure_clock = client::configure_ref_clock(stub(), session, RefClockSourceRangeTable::REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR, 10e6);
+  auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationMode::GENERATION_MODE_CW);
+  auto configure_clock = client::configure_ref_clock(stub(), session, RefClockSource::REF_CLOCK_SOURCE_ONBOARD_CLOCK, 10e6);
   auto initiate = client::initiate(stub(), session);
 
   WaitForAndAssertGenerationStarted(stub(), session);
@@ -191,8 +191,8 @@ TEST_F(NiRFSGDriverApiTests, ConfigureDigitalEdgeStartTrigger_Succeeds)
   auto response = client::configure_digital_edge_start_trigger(
       stub(),
       session,
-      TriggerSourceRangeTable::TRIGGER_SOURCE_RANGE_TABLE_PXI_TRIG0_STR,
-      DigitalEdgeEdgeRangeTable::DIGITAL_EDGE_EDGE_RANGE_TABLE_RISING_EDGE);
+      TriggerSource::TRIGGER_SOURCE_PXI_TRIG0,
+      DigitalEdgeEdge::DIGITAL_EDGE_EDGE_RISING_EDGE);
 
   EXPECT_SUCCESS(session, response);
 }
@@ -210,7 +210,7 @@ TEST_F(NiRFSGDriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
       session,
       "",
       NiRFSGAttributes::NIRFSG_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL,
-      NiRFSGStringAttributeValuesMapped::NIRFSG_STRING_REF_CLOCK_OUTPUT_TERM_RANGE_TABLE_REF_OUT_STR);
+      NiRFSGStringAttributeValuesMapped::NIRFSG_STRING_REF_CLOCK_OUTPUT_TERM_REF_OUT);
   auto get_response = client::get_attribute_vi_string(
       stub(),
       session,
@@ -261,7 +261,7 @@ TEST_F(NiRFSGDriverApiTests, ExportSignal_Succeeds)
       session,
       RoutedSignal::ROUTED_SIGNAL_START_TRIGGER,
       std::string(""),
-      OutputSignal::OUTPUT_SIGNAL_PFI0_STR);
+      OutputSignal::OUTPUT_SIGNAL_PFI0);
 
   EXPECT_SUCCESS(session, response);
 }
@@ -407,8 +407,8 @@ TEST_F(NiRFSGDriverApiTests, WriteArbWaveformI16_Succeeds)
 {
   auto session = init_session(stub(), PXI_5841);
   auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
-  auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationModeRangeTable::GENERATION_MODE_RANGE_TABLE_ARB_WAVEFORM);
-  auto configure_power_level_type = client::configure_power_level_type(stub(), session, PowerLevelTypeRangeTable::POWER_LEVEL_TYPE_RANGE_TABLE_PEAK_POWER);
+  auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationMode::GENERATION_MODE_ARB_WAVEFORM);
+  auto configure_power_level_type = client::configure_power_level_type(stub(), session, PowerLevelType::POWER_LEVEL_TYPE_PEAK_POWER);
   auto point1 = nirfsg_grpc::NIComplexI16();
   point1.set_real(INT16_MAX);
   point1.set_imaginary(INT16_MIN);
@@ -444,8 +444,8 @@ TEST_F(NiRFSGDriverApiTests, WriteArbWaveformF32_Succeeds)
 {
   auto session = init_session(stub(), PXI_5841);
   auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
-  auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationModeRangeTable::GENERATION_MODE_RANGE_TABLE_ARB_WAVEFORM);
-  auto configure_power_level_type = client::configure_power_level_type(stub(), session, PowerLevelTypeRangeTable::POWER_LEVEL_TYPE_RANGE_TABLE_PEAK_POWER);
+  auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationMode::GENERATION_MODE_ARB_WAVEFORM);
+  auto configure_power_level_type = client::configure_power_level_type(stub(), session, PowerLevelType::POWER_LEVEL_TYPE_PEAK_POWER);
   auto point1 = nirfsg_grpc::NIComplexNumberF32();
   point1.set_real(0.7f);
   point1.set_imaginary(-0.7f);

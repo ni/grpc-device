@@ -1,5 +1,5 @@
 enums = {
-    'AmpPathRangeTable': {
+    'AmpPath': {
         'values': [
             {
                 'documentation': {
@@ -17,7 +17,7 @@ enums = {
             }
         ]
     },
-    'AnalogModulationFMBandRangeTable': {
+    'AnalogModulationFMBand': {
         'values': [
             {
                 'documentation': {
@@ -35,7 +35,7 @@ enums = {
             }
         ]
     },
-    'AnalogModulationFMNarrowbandIntegratorRangeTable': {
+    'AnalogModulationFMNarrowbandIntegrator': {
         'values': [
             {
                 'documentation': {
@@ -60,7 +60,7 @@ enums = {
             }
         ]
     },
-    'AnalogModulationPMModeRangeTable': {
+    'AnalogModulationPMMode': {
         'values': [
             {
                 'documentation': {
@@ -78,7 +78,7 @@ enums = {
             }
         ]
     },
-    'AnalogModulationTypeRangeTable': {
+    'AnalogModulationType': {
         'values': [
             {
                 'documentation': {
@@ -110,7 +110,7 @@ enums = {
             }
         ]
     },
-    'AnalogModulationWaveformTypeRangeTable': {
+    'AnalogModulationWaveformType': {
         'values': [
             {
                 'documentation': {
@@ -135,135 +135,135 @@ enums = {
             }
         ]
     },
-    'AnySignalOutputTermRangeTable': {
+    'AnySignalOutputTerm': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' The signal is not exported.\n'
                 },
-                'name': 'DO_NOT_EXPORT_STR',
+                'name': 'DO_NOT_EXPORT',
                 'value': ''
             },
             {
                 'documentation': {
                     'description': ' PFI 0 on the front panel SMB connector.  For the PXIe-5841 with PXIe-5655, the signal is exported to the PXIe-5841 PFI 0.\n'
                 },
-                'name': 'PFI0_STR',
+                'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
                 'documentation': {
                     'description': ' PFI 1 on the front panel SMB connector.\n'
                 },
-                'name': 'PFI1_STR',
+                'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
                 'documentation': {
                     'description': ' PFI 4 on the front panel DDC connector.\n'
                 },
-                'name': 'PFI4_STR',
+                'name': 'PFI4',
                 'value': 'PFI4'
             },
             {
                 'documentation': {
                     'description': ' PFI 5 on the front panel DDC connector.\n'
                 },
-                'name': 'PFI5_STR',
+                'name': 'PFI5',
                 'value': 'PFI5'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 0.\n'
                 },
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 1.\n'
                 },
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 2.\n'
                 },
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 3.\n'
                 },
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 4.\n'
                 },
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 5.\n'
                 },
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 6.\n'
                 },
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
                 'documentation': {
                     'description': ' PXIe DStar C trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.\n'
                 },
-                'name': 'PXIE_DSTARC_STR',
+                'name': 'PXIE_DSTARC',
                 'value': 'PXIe_DStarC'
             },
             {
                 'documentation': {
                     'description': ' TRIG IN/OUT terminal.\n'
                 },
-                'name': 'TRIG_OUT_STR',
+                'name': 'TRIG_OUT',
                 'value': 'TrigOut'
             }
         ]
     },
-    'ArbFilterTypeRangeTable': {
+    'ArbFilterType': {
         'values': [
             {
                 'documentation': {
                     'description': ' None'
                 },
-                'name': 'ARB_FILTER_TYPE_NONE',
+                'name': 'NONE',
                 'value': 10000
             },
             {
                 'documentation': {
                     'description': ' Applies a root-raised cosine filter to the data with the alpha value  specified with the NIRFSG_ATTR_ARB_FILTER_ROOT_RAISED_COSINE_ALPHA  attribute. '
                 },
-                'name': 'ARB_FILTER_TYPE_ROOT_RAISED_COSINE',
+                'name': 'ROOT_RAISED_COSINE',
                 'value': 10001
             },
             {
                 'documentation': {
                     'description': ' Applies a raised cosine filter to the data with the alpha value specified  with the NIRFSG_ATTR_ARB_FILTER_RAISED_COSINE_ALPHA attribute. '
                 },
-                'name': 'ARB_FILTER_TYPE_RAISED_COSINE',
+                'name': 'RAISED_COSINE',
                 'value': 10002
             }
         ]
     },
-    'ArbOnboardSampleClockModeRangeTable': {
+    'ArbOnboardSampleClockMode': {
         'values': [
             {
                 'documentation': {
@@ -281,239 +281,239 @@ enums = {
             }
         ]
     },
-    'ArbSampleClockSourceRangeTable': {
+    'ArbSampleClockSource': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' Use the AWG module onboard clock as the clock source.\n'
                 },
-                'name': 'ONBOARD_CLOCK_STR',
+                'name': 'ONBOARD_CLOCK',
                 'value': 'OnboardClock'
             },
             {
                 'documentation': {
                     'description': ' Use the external clock as the clock source.\n'
                 },
-                'name': 'CLK_IN_STR',
+                'name': 'CLK_IN',
                 'value': 'ClkIn'
             }
         ]
     },
-    'ConfigListTrigOutputTermRangeTable': {
+    'ConfigListTrigOutputTerm': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' The signal is not exported.\n'
                 },
-                'name': 'DO_NOT_EXPORT_STR',
+                'name': 'DO_NOT_EXPORT',
                 'value': ''
             },
             {
                 'documentation': {
                     'description': ' PFI 0 on the front panel SMB connector.  For the PXIe-5841 with PXIe-5655, the signal is exported to the PXIe-5841 PFI 0.\n'
                 },
-                'name': 'PFI0_STR',
+                'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
                 'documentation': {
                     'description': ' PFI 1 on the front panel SMB connector.\n'
                 },
-                'name': 'PFI1_STR',
+                'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 0.\n'
                 },
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 1.\n'
                 },
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 2.\n'
                 },
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 3.\n'
                 },
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 4.\n'
                 },
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 5.\n'
                 },
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 6.\n'
                 },
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
                 'documentation': {
                     'description': ' PXIe DStar C trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.\n'
                 },
-                'name': 'PXIE_DSTARC_STR',
+                'name': 'PXIE_DSTARC',
                 'value': 'PXIe_DStarC'
             },
             {
                 'documentation': {
                     'description': ' TRIG IN/OUT terminal.\n'
                 },
-                'name': 'TRIG_OUT_STR',
+                'name': 'TRIG_OUT',
                 'value': 'TrigOut'
             }
         ]
     },
-    'ConfigListTrigSourceRangeTable': {
+    'ConfigListTrigSource': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' PFI 0 on the front panel SMB connector.\n'
                 },
-                'name': 'PFI0_STR',
+                'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
                 'documentation': {
                     'description': ' PFI 1 on the front panel SMB connector.\n'
                 },
-                'name': 'PFI1_STR',
+                'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 0.\n'
                 },
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 1.\n'
                 },
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 2.\n'
                 },
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 3.\n'
                 },
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 4.\n'
                 },
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 5.\n'
                 },
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 6.\n'
                 },
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 7.\n'
                 },
-                'name': 'PXI_TRIG7_STR',
+                'name': 'PXI_TRIG7',
                 'value': 'PXI_Trig7'
             },
             {
                 'documentation': {
                     'description': ' PXI Star trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.\n'
                 },
-                'name': 'PXIE_DSTARB_STR',
+                'name': 'PXIE_DSTARB',
                 'value': 'PXIe_DStarB'
             },
             {
                 'documentation': {
                     'description': ' Marker Event 0.\n'
                 },
-                'name': 'MARKER0_EVENT_STR',
+                'name': 'MARKER0_EVENT',
                 'value': 'Marker0Event'
             },
             {
                 'documentation': {
                     'description': ' Marker Event 1.\n'
                 },
-                'name': 'MARKER1_EVENT_STR',
+                'name': 'MARKER1_EVENT',
                 'value': 'Marker1Event'
             },
             {
                 'documentation': {
                     'description': ' Marker Event 2.\n'
                 },
-                'name': 'MARKER2_EVENT_STR',
+                'name': 'MARKER2_EVENT',
                 'value': 'Marker2Event'
             },
             {
                 'documentation': {
                     'description': ' Marker Event 3.\n'
                 },
-                'name': 'MARKER3_EVENT_STR',
+                'name': 'MARKER3_EVENT',
                 'value': 'Marker3Event'
             },
             {
                 'documentation': {
                     'description': ' Timer Event.\n'
                 },
-                'name': 'TIMER_EVENT_STR',
+                'name': 'TIMER_EVENT',
                 'value': 'TimerEvent'
             },
             {
                 'documentation': {
                     'description': ' TRIG IN/OUT terminal.\n'
                 },
-                'name': 'TRIG_IN_STR',
+                'name': 'TRIG_IN',
                 'value': 'TrigIn'
             }
         ]
     },
-    'ConfigListTriggerDigEdgeEdgeRangeTable': {
+    'ConfigListTriggerDigEdgeEdge': {
         'values': [
             {
                 'documentation': {
@@ -524,82 +524,82 @@ enums = {
             }
         ]
     },
-    'ConfigSettledEventOutputTermRangeTable': {
+    'ConfigSettledEventOutputTerm': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' The signal is not exported.\n'
                 },
-                'name': 'DO_NOT_EXPORT_STR',
+                'name': 'DO_NOT_EXPORT',
                 'value': ''
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 0.\n'
                 },
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 1.\n'
                 },
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 2.\n'
                 },
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 3.\n'
                 },
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 4.\n'
                 },
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 5.\n'
                 },
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 6.\n'
                 },
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
                 'documentation': {
                     'description': ' PXIe DStar C trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.\n'
                 },
-                'name': 'PXIE_DSTARC_STR',
+                'name': 'PXIE_DSTARC',
                 'value': 'PXIe_DStarC'
             },
             {
                 'documentation': {
                     'description': ' TRIG IN/OUT terminal.\n'
                 },
-                'name': 'TRIG_OUT_STR',
+                'name': 'TRIG_OUT',
                 'value': 'TrigOut'
             }
         ]
     },
-    'ConfigurationListRepeatRangeTable': {
+    'ConfigurationListRepeat': {
         'values': [
             {
                 'documentation': {
@@ -623,21 +623,21 @@ enums = {
                 'documentation': {
                     'description': ' De-embedding is not applied to the measurement. '
                 },
-                'name': 'DEEMBEDDING_TYPE_NONE',
+                'name': 'NONE',
                 'value': 25000
             },
             {
                 'documentation': {
                     'description': ' De-embeds the measurement using only the gain term.'
                 },
-                'name': 'DEEMBEDDING_TYPE_SCALAR',
+                'name': 'SCALAR',
                 'value': 25001
             },
             {
                 'documentation': {
                     'description': ' De-embeds the measurement using the gain term and the reflection term.'
                 },
-                'name': 'DEEMBEDDING_TYPE_VECTOR',
+                'name': 'VECTOR',
                 'value': 25002
             }
         ]
@@ -646,84 +646,84 @@ enums = {
         'generate-mappings': True,
         'values': [
             {
-                'name': 'PFI0_STR',
+                'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
-                'name': 'PFI1_STR',
+                'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
-                'name': 'PFI2_STR',
+                'name': 'PFI2',
                 'value': 'PFI2'
             },
             {
-                'name': 'PFI3_STR',
+                'name': 'PFI3',
                 'value': 'PFI3'
             },
             {
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
-                'name': 'PXI_TRIG7_STR',
+                'name': 'PXI_TRIG7',
                 'value': 'PXI_Trig7'
             },
             {
-                'name': 'PXI_STAR_STR',
+                'name': 'PXI_STAR',
                 'value': 'PXI_STAR'
             },
             {
-                'name': 'MARKER0_EVENT_STR',
+                'name': 'MARKER0_EVENT',
                 'value': 'Marker0Event'
             },
             {
-                'name': 'MARKER1_EVENT_STR',
+                'name': 'MARKER1_EVENT',
                 'value': 'Marker1Event'
             },
             {
-                'name': 'MARKER2_EVENT_STR',
+                'name': 'MARKER2_EVENT',
                 'value': 'Marker2Event'
             },
             {
-                'name': 'MARKER3_EVENT_STR',
+                'name': 'MARKER3_EVENT',
                 'value': 'Marker3Event'
             },
             {
-                'name': 'TIMER_EVENT_STR',
+                'name': 'TIMER_EVENT',
                 'value': 'TimerEvent'
             },
             {
-                'name': 'TRIG_IN_STR',
+                'name': 'TRIG_IN',
                 'value': 'TrigIn'
             }
         ]
     },
-    'DigitalEdgeEdgeRangeTable': {
+    'DigitalEdgeEdge': {
         'values': [
             {
                 'documentation': {
@@ -762,7 +762,7 @@ enums = {
             }
         ]
     },
-    'DigitalLevelActiveLevelRangeTable': {
+    'DigitalLevelActiveLevel': {
         'values': [
             {
                 'documentation': {
@@ -780,7 +780,7 @@ enums = {
             }
         ]
     },
-    'DigitalModulationTypeRangeTable': {
+    'DigitalModulationType': {
         'values': [
             {
                 'documentation': {
@@ -812,7 +812,7 @@ enums = {
             }
         ]
     },
-    'DigitalModulationWaveformTypeRangeTable': {
+    'DigitalModulationWaveformType': {
         'values': [
             {
                 'documentation': {
@@ -830,7 +830,7 @@ enums = {
             }
         ]
     },
-    'Enable_values': {
+    'EnableValues': {
         'values': [
             {
                 'documentation': {
@@ -848,7 +848,7 @@ enums = {
             }
         ]
     },
-    'FrequencySettlingUnitsRangeTable': {
+    'FrequencySettlingUnits': {
         'values': [
             {
                 'documentation': {
@@ -873,7 +873,7 @@ enums = {
             }
         ]
     },
-    'GenerationModeRangeTable': {
+    'GenerationMode': {
         'values': [
             {
                 'documentation': {
@@ -898,7 +898,7 @@ enums = {
             }
         ]
     },
-    'IqOutPortTermConfigRangeTable': {
+    'IqOutPortTermConfig': {
         'values': [
             {
                 'documentation': {
@@ -919,20 +919,20 @@ enums = {
     'LinearInterpolationFormat': {
         'values': [
             {
-                'name': 'LINEAR_INTERPOLATION_FORMAT_REAL_AND_IMAGINARY',
+                'name': 'REAL_AND_IMAGINARY',
                 'value': 26000
             },
             {
-                'name': 'LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_AND_PHASE',
+                'name': 'MAGNITUDE_AND_PHASE',
                 'value': 26001
             },
             {
-                'name': 'LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_DB_AND_PHASE',
+                'name': 'MAGNITUDE_DB_AND_PHASE',
                 'value': 26002
             }
         ]
     },
-    'ListStepTriggerTypeRangeTable': {
+    'ListStepTriggerType': {
         'values': [
             {
                 'documentation': {
@@ -950,47 +950,47 @@ enums = {
             }
         ]
     },
-    'LoSourceRangetTable': {
+    'LoSource': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' Uses an internal LO as the LO source. If you specify an internal LO source, the LO is generated  within the device itself. \n\n PXIe-5840 with PXIe-5653: If the center frequency is greater than or equal to 3.2 GHz,  this configuration uses the PXIe-5653 LO source. For frequencies less than 3.2 GHz,  this configuration uses the PXIe-5840 internal LO. \n PXIe-5841 with PXIe-5655: This configuration uses the onboard LO of the PXIe-5655. \n'
                 },
-                'name': 'LO_SOURCE_ONBOARD_STR',
+                'name': 'ONBOARD',
                 'value': 'Onboard'
             },
             {
                 'documentation': {
                     'description': ' Uses an external LO as the LO source. Connect a signal to the LO IN connector on  the device and use the NIRFSG_ATTR_UPCONVERTER_CENTER_FREQUENCY attribute to specify the LO frequency. \n'
                 },
-                'name': 'LO_SOURCE_LO_IN_STR',
+                'name': 'LO_IN',
                 'value': 'LO_In'
             },
             {
                 'documentation': {
                     'description': ' Uses the PXIe-5840 internal LO as the LO source. This value is valid on only the PXIe-5840 with PXIe-5653.'
                 },
-                'name': 'LO_SOURCE_SECONDARY_STR',
+                'name': 'SECONDARY',
                 'value': 'Secondary'
             },
             {
                 'documentation': {
                     'description': ' Uses the same internal LO during some RX and TX operations. In this mode, an internal synthesizer  is chosen by the driver and the synthesizer signal is switched to both the RF In and RF Out mixers.  This value is valid on only the PXIe-5830/5831/5841 with PXIe-5655. \n'
                 },
-                'name': 'LO_SOURCE_SG_SA_SHARED_STR',
+                'name': 'SG_SA_SHARED',
                 'value': 'SG_SA_Shared'
             },
             {
                 'documentation': {
                     'description': ' NI-RFSG internally makes the configuration to share the LO between NI-RFSA and NI-RFSG. This value is valid only on the PXIe-5820/5830/5831/5832/5840/5841. \n'
                 },
-                'name': 'LO_SOURCE_AUTOMATIC_SG_SA_SHARED_STR',
+                'name': 'AUTOMATIC_SG_SA_SHARED',
                 'value': 'AUTOMATIC_SG_SA_SHARED_STR'
             }
         ]
     },
-    'LoopBandwidthRangeTable': {
+    'LoopBandwidth': {
         'values': [
             {
                 'documentation': {
@@ -1015,7 +1015,7 @@ enums = {
             }
         ]
     },
-    'MarkerEventOutputBehaviorRangeTable': {
+    'MarkerEventOutputBehavior': {
         'values': [
             {
                 'documentation': {
@@ -1033,7 +1033,7 @@ enums = {
             }
         ]
     },
-    'MarkerEventPulseWidthUnitsRangeTable': {
+    'MarkerEventPulseWidthUnits': {
         'values': [
             {
                 'documentation': {
@@ -1051,7 +1051,7 @@ enums = {
             }
         ]
     },
-    'MarkerEventToggleInitialStateRangeTable': {
+    'MarkerEventToggleInitialState': {
         'values': [
             {
                 'documentation': {
@@ -1085,7 +1085,7 @@ enums = {
             }
         ]
     },
-    'OutputPortRangeTable': {
+    'OutputPort': {
         'values': [
             {
                 'documentation': {
@@ -1121,90 +1121,90 @@ enums = {
         'generate-mappings': True,
         'values': [
             {
-                'name': 'DO_NOT_EXPORT_STR',
+                'name': 'DO_NOT_EXPORT',
                 'value': ''
             },
             {
-                'name': 'PFI0_STR',
+                'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
-                'name': 'PFI1_STR',
+                'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
-                'name': 'PFI4_STR',
+                'name': 'PFI4',
                 'value': 'PFI4'
             },
             {
-                'name': 'PFI5_STR',
+                'name': 'PFI5',
                 'value': 'PFI5'
             },
             {
-                'name': 'PXI_STAR_STR',
+                'name': 'PXI_STAR',
                 'value': 'PXI_STAR'
             },
             {
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
-                'name': 'REF_OUT2_STR',
+                'name': 'REF_OUT2',
                 'value': 'RefOut2'
             },
             {
-                'name': 'REF_OUT_STR',
+                'name': 'REF_OUT',
                 'value': 'RefOut'
             },
             {
-                'name': 'TRIG_OUT_STR',
+                'name': 'TRIG_OUT',
                 'value': 'TrigOut'
             }
         ]
     },
-    'OverflowErrorReportingRangeTable': {
+    'OverflowErrorReporting': {
         'values': [
             {
                 'documentation': {
                     'description': ' Configures NI-RFSG to return a warning when an OSP overflow occurs.'
                 },
-                'name': 'ERROR_REPORTING_WARNING',
+                'name': 'WARNING',
                 'value': 1301
             },
             {
                 'documentation': {
                     'description': ' Configures NI-RFSG to not return an error or a warning when an OSP overflow occurs.'
                 },
-                'name': 'ERROR_REPORTING_DISABLED',
+                'name': 'DISABLED',
                 'value': 1302
             }
         ]
     },
-    'PPAScriptInheritanceTable': {
+    'PPAScriptInheritance': {
         'values': [
             {
                 'documentation': {
@@ -1229,33 +1229,33 @@ enums = {
             }
         ]
     },
-    'PXIChassisClk10RangeTable': {
+    'PXIChassisClk10': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' Do not drive the PXI_CLK10 signal.\n'
                 },
-                'name': 'NONE_STR',
+                'name': 'NONE',
                 'value': 'None'
             },
             {
                 'documentation': {
                     'description': ' Use the highly stable oven-controlled onboard Reference Clock to drive  the PXI_CLK10 signal. This value is not valid on the PXIe-5672.\n'
                 },
-                'name': 'ONBOARD_CLOCK_STR',
+                'name': 'ONBOARD_CLOCK',
                 'value': 'OnboardClock'
             },
             {
                 'documentation': {
                     'description': ' Use the clock present at the front panel REF IN connector to drive the  PXI_CLK10 signal.\n'
                 },
-                'name': 'REF_IN_STR',
+                'name': 'REF_IN',
                 'value': 'RefIn'
             }
         ]
     },
-    'PhaseContinuityRangeTable': {
+    'PhaseContinuity': {
         'values': [
             {
                 'documentation': {
@@ -1280,7 +1280,7 @@ enums = {
             }
         ]
     },
-    'PowerLevelTypeRangeTable': {
+    'PowerLevelType': {
         'values': [
             {
                 'documentation': {
@@ -1298,7 +1298,7 @@ enums = {
             }
         ]
     },
-    'PulseModulationModeRangeTable': {
+    'PulseModulationMode': {
         'values': [
             {
                 'documentation': {
@@ -1316,82 +1316,82 @@ enums = {
             }
         ]
     },
-    'RefClockOutputTermRangeTable': {
+    'RefClockOutputTerm': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' Do not export the Reference Clock.\n'
                 },
-                'name': 'DO_NOT_EXPORT_STR',
+                'name': 'DO_NOT_EXPORT',
                 'value': ''
             },
             {
                 'documentation': {
                     'description': ' Export the Reference Clock signal to the REF OUT connector of the device.\n'
                 },
-                'name': 'REF_OUT_STR',
+                'name': 'REF_OUT',
                 'value': 'RefOut'
             },
             {
                 'documentation': {
                     'description': ' Export the Reference Clock signal to the REF OUT2 connector of the device, if applicable.\n'
                 },
-                'name': 'REF_OUT2_STR',
+                'name': 'REF_OUT2',
                 'value': 'RefOut2'
             },
             {
                 'documentation': {
                     'description': ' Export the Reference Clock signal to the CLK OUT connector of the device.\n'
                 },
-                'name': 'CLK_OUT_STR',
+                'name': 'CLK_OUT',
                 'value': 'ClkOut'
             }
         ]
     },
-    'RefClockSourceRangeTable': {
+    'RefClockSource': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' Uses the onboard Reference Clock as the clock source.\n PXIe-5830/5831—For the PXIe-5830, connect the PXIe-5820 REF IN connector to the PXIe-3621 REF OUT connector.  For the PXIe-5831, connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector. \n PXIe-5831 with PXIe-5653—Connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector.  Connect the PXIe-5653 REF OUT (10 MHz) connector to the PXIe-3622 REF IN connector. \n PXIe-5840 with PXIe-5653—Lock to the PXIe-5653 onboard clock. Connect the REF OUT (10 MHz)  connector on the PXIe-5653 to the PXIe-5840 REF IN connector. Configure open NI-RFSA  sessions to the device to use NIRFSA_VAL_REF_IN_STR for the PXIe-5840 or  NIRFSA_VAL_REF_IN_2_STR for the PXIe-5840 with PXIe-5653. \n PXIe-5841 with PXIe-5655—Lock to the PXIe-5655 onboard clock. Connect the REF OUT  connector on the PXIe-5655 to the PXIe-5841 REF IN connector. \n'
                 },
-                'name': 'ONBOARD_CLOCK_STR',
+                'name': 'ONBOARD_CLOCK',
                 'value': 'OnboardClock'
             },
             {
                 'documentation': {
                     'description': ' Use the clock signal present at the front panel RefIn connector as the  clock source.\n PXIe-5830/5831—For the PXIe-5830, connect the PXIe-5820 REF IN connector to the PXIe-3621 REF OUT connector.  For the PXIe-5831, connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector. For the PXIe-5830,  lock the external signal to the PXIe-3621 REF IN connector. For the PXIe-5831, lock the external  signal to the PXIe-3622 REF IN connector. \n PXIe-5831 with PXIe-5653—Connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector.  Connect the PXIe-5653 REF OUT (10 MHz) connector to the PXIe-3622 REF IN connector. Lock the external signal to the PXIe-5653 REF IN connector.  PXIe-5840 with PXIe-5653—Lock to the PXIe-5653 onboard clock.  Connect the REF OUT (10 MHz) connector on the PXIe-5653 to the PXIe-5840 REF IN connector. \n PXIe-5841 with PXIe-5655—Lock to the signal at the REF IN connector on the associated PXIe-5655.  Connect the PXIe-5655 REF OUT connector to the PXIe-5841 REF IN connector. \n'
                 },
-                'name': 'REF_IN_STR',
+                'name': 'REF_IN',
                 'value': 'RefIn'
             },
             {
                 'documentation': {
                     'description': ' Use the PXI_CLK signal, which is present on the PXI backplane, as the  clock source.\n'
                 },
-                'name': 'PXI_CLK_STR',
+                'name': 'PXI_CLK',
                 'value': 'PXI_CLK'
             },
             {
                 'documentation': {
                     'description': ' Use the clock signal present at the front panel ClkIn connector as the  clock source. This value is not valid for the PXIe-5644/5645/5646 or  PXIe-5820/5830/5831/5831 with PXIe-5653/5840/5840 with PXIe-5653/5841/5841 with PXIe-5655. \n'
                 },
-                'name': 'CLK_IN_STR',
+                'name': 'CLK_IN',
                 'value': 'ClkIn'
             },
             {
                 'documentation': {
                     'description': ' This value is valid on only the PXIe-5840 with PXIe-5653. NI-RFSG locks the  Reference Clock to the clock sourced at the PXIe-5840 REF IN terminal that is already  configured by an NI-RFSA session. Connect the PXIe-5840 REF OUT connector to the PXIe-5653  REF IN connector. Configure open NI-RFSA sessions to the device to use NIRFSA_VAL_REF_IN_STR  for the PXIe-5840 or NIRFSA_VAL_ONBOARD_CLOCK_STR for the PXIe-5840 with PXIe-5653. \n'
                 },
-                'name': 'REF_IN_2_STR',
+                'name': 'REF_IN_2',
                 'value': 'RefIn2'
             },
             {
                 'documentation': {
                     'description': ' This value is valid on only the PXIe-5831 with PXIe-5653 and the PXIe-5840 with PXIe-5653.  PXIe-5831 with PXIe-5653—NI-RFSG configures the PXIe-5653 to export the Reference clock and  configures the PXIe-5820 and PXIe-3622 to use NIRFSG_VAL_PXI_CLK_STR as the Reference Clock source.  Connect the PXIe-5653 REF OUT (10 MHz) connector to the PXI chassis REF IN connector. \n PXIe-5840 with PXIe-5653—NI-RFSG configures the  PXIe-5653 to export the Reference Clock, and configures the PXIe-5840 to use  NIRFSG_VAL_PXI_CLK_STR. Connect the PXIe-5653 REF OUT (10 MHz) connector to the  PXI chassis REF IN connector. For best performance, configure all other devices  in the system to use NIRFSG_VAL_PXI_CLK_STR as the Reference Clock source. \n'
                 },
-                'name': 'PXI_CLK_MASTER_STR',
+                'name': 'PXI_CLK_MASTER',
                 'value': 'PXI_ClkMaster'
             }
         ]
@@ -1456,7 +1456,7 @@ enums = {
             }
         ]
     },
-    'ScriptTriggerTypeRangeTable': {
+    'ScriptTriggerType': {
         'values': [
             {
                 'documentation': {
@@ -1529,7 +1529,7 @@ enums = {
             }
         ]
     },
-    'StartTriggerTypeRangeTable': {
+    'StartTriggerType': {
         'values': [
             {
                 'documentation': {
@@ -1561,131 +1561,131 @@ enums = {
             }
         ]
     },
-    'TriggerSourceRangeTable': {
+    'TriggerSource': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' PFI 0 on the front panel SMB connector.\n'
                 },
-                'name': 'PFI0_STR',
+                'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
                 'documentation': {
                     'description': ' PFI 1 on the front panel SMB connector.\n'
                 },
-                'name': 'PFI1_STR',
+                'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
                 'documentation': {
                     'description': ' PFI 2 on the front panel DDC connector.\n'
                 },
-                'name': 'PFI2_STR',
+                'name': 'PFI2',
                 'value': 'PFI2'
             },
             {
                 'documentation': {
                     'description': ' PFI 3 on the front panel DDC connector.\n'
                 },
-                'name': 'PFI3_STR',
+                'name': 'PFI3',
                 'value': 'PFI3'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 0.\n'
                 },
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 1.\n'
                 },
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 2.\n'
                 },
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 3.\n'
                 },
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 4.\n'
                 },
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 5.\n'
                 },
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 6.\n'
                 },
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
                 'documentation': {
                     'description': ' PXI trigger line 7.\n'
                 },
-                'name': 'PXI_TRIG7_STR',
+                'name': 'PXI_TRIG7',
                 'value': 'PXI_Trig7'
             },
             {
                 'documentation': {
                     'description': ' PXI Star trigger line. This value is not valid on the PXIe-5644/5645/5646.\n'
                 },
-                'name': 'PXI_STAR_STR',
+                'name': 'PXI_STAR',
                 'value': 'PXI_STAR'
             },
             {
                 'documentation': {
                     'description': ' PXIe DStar B trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841. \n'
                 },
-                'name': 'PXIE_DSTARB_STR',
+                'name': 'PXIE_DSTARB',
                 'value': 'PXIe_DStarB'
             },
             {
                 'documentation': {
                     'description': ' Sync Start trigger line.'
                 },
-                'name': 'SYNC_START_TRIGGER_STR',
+                'name': 'SYNC_START_TRIGGER',
                 'value': 'Sync_Start'
             },
             {
                 'documentation': {
                     'description': ' Sync script trigger line.'
                 },
-                'name': 'SYNC_SCRIPT_TRIGGER_STR',
+                'name': 'SYNC_SCRIPT_TRIGGER',
                 'value': 'Sync_Script'
             },
             {
                 'documentation': {
                     'description': ' TRIG IN/OUT terminal.\n'
                 },
-                'name': 'TRIG_IN_STR',
+                'name': 'TRIG_IN',
                 'value': 'TrigIn'
             }
         ]
     },
-    'UpconverterFrequencyOffsetModeRangeTable': {
+    'UpconverterFrequencyOffsetMode': {
         'values': [
             {
                 'documentation': {
@@ -1714,14 +1714,21 @@ enums = {
         'values': [
             {
                 'documentation': {
-                    'description': ' NI-RFSG automatically detects the burst start and burst stop locations by analyzing the waveform. NIRFSG_VAL_WRITE_WAVEFORM_BURST_DETECTION_MODE_MANUAL (0) User sets the burst detection parameters.'
+                    'description': ' NI-RFSG automatically detects the burst start and burst stop locations by analyzing the waveform.'
                 },
-                'name': 'WRITE_WAVEFORM_BURST_DETECTION_MODE_AUTO',
+                'name': 'AUTO',
                 'value': -1
+            },
+            {
+                'documentation': {
+                    'description': ' User sets the burst detection parameters.'
+                },
+                'name': 'MANUAL',
+                'value': 0
             }
         ]
     },
-    'YigMainCoilRangeTable': {
+    'YigMainCoil': {
         'values': [
             {
                 'documentation': {
