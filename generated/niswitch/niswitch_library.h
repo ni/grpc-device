@@ -123,7 +123,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   using InvalidateAllAttributesPtr = decltype(&niSwitch_InvalidateAllAttributes);
   using IsDebouncedPtr = decltype(&niSwitch_IsDebounced);
   using IsScanningPtr = decltype(&niSwitch_IsScanning);
-  using LockSessionPtr = decltype(&niSwitch_LockSession);
+  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using RelayControlPtr = decltype(&niSwitch_RelayControl);
   using ResetPtr = decltype(&niSwitch_reset);
   using ResetInterchangeCheckPtr = decltype(&niSwitch_ResetInterchangeCheck);
@@ -141,7 +141,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   using SetAttributeViSessionPtr = decltype(&niSwitch_SetAttributeViSession);
   using SetContinuousScanPtr = decltype(&niSwitch_SetContinuousScan);
   using SetPathPtr = decltype(&niSwitch_SetPath);
-  using UnlockSessionPtr = decltype(&niSwitch_UnlockSession);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitForDebouncePtr = decltype(&niSwitch_WaitForDebounce);
   using WaitForScanCompletePtr = decltype(&niSwitch_WaitForScanComplete);
 

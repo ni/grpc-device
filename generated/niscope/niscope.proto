@@ -87,7 +87,6 @@ service NiScope {
   rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitiateAcquisition(InitiateAcquisitionRequest) returns (InitiateAcquisitionResponse);
-  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc ProbeCompensationSignalStart(ProbeCompensationSignalStartRequest) returns (ProbeCompensationSignalStartResponse);
   rpc ProbeCompensationSignalStop(ProbeCompensationSignalStopRequest) returns (ProbeCompensationSignalStopResponse);
   rpc Read(ReadRequest) returns (ReadResponse);
@@ -105,7 +104,6 @@ service NiScope {
   rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
-  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
 }
 
 enum NiScopeAttributes {
@@ -1670,15 +1668,6 @@ message InitiateAcquisitionResponse {
   int32 status = 1;
 }
 
-message LockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message LockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
-}
-
 message ProbeCompensationSignalStartRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1862,14 +1851,5 @@ message SetAttributeViStringRequest {
 
 message SetAttributeViStringResponse {
   int32 status = 1;
-}
-
-message UnlockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message UnlockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
 }
 

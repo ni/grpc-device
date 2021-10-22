@@ -233,7 +233,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using InitiatePtr = decltype(&niRFSA_Initiate);
   using InvalidateAllAttributesPtr = decltype(&niRFSA_InvalidateAllAttributes);
   using IsSelfCalValidPtr = decltype(&niRFSA_IsSelfCalValid);
-  using LockSessionPtr = decltype(&niRFSA_LockSession);
+  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using PerformThermalCorrectionPtr = decltype(&niRFSA_PerformThermalCorrection);
   using ReadIQSingleRecordComplexF64Ptr = decltype(&niRFSA_ReadIQSingleRecordComplexF64);
   using ReadPowerSpectrumF32Ptr = decltype(&niRFSA_ReadPowerSpectrumF32);
@@ -257,7 +257,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using SetAttributeViStringPtr = decltype(&niRFSA_SetAttributeViString);
   using SetCalUserDefinedInfoPtr = decltype(&niRFSA_SetCalUserDefinedInfo);
   using SetUserDataPtr = decltype(&niRFSA_SetUserData);
-  using UnlockSessionPtr = decltype(&niRFSA_UnlockSession);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;

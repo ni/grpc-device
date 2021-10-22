@@ -1782,22 +1782,6 @@ load_timing(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::str
   return response;
 }
 
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = LockSessionResponse{};
-
-  raise_if_error(
-      stub->LockSession(&context, request, &response));
-
-  return response;
-}
-
 MapPinToChannelResponse
 map_pin_to_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin, const pb::int32& site, const pb::string& channel)
 {
@@ -2379,22 +2363,6 @@ unload_specifications(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 
   raise_if_error(
       stub->UnloadSpecifications(&context, request, &response));
-
-  return response;
-}
-
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnlockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = UnlockSessionResponse{};
-
-  raise_if_error(
-      stub->UnlockSession(&context, request, &response));
 
   return response;
 }

@@ -1537,22 +1537,6 @@ load_configurations_from_file(const StubPtr& stub, const nidevice_grpc::Session&
   return response;
 }
 
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = LockSessionResponse{};
-
-  raise_if_error(
-      stub->LockSession(&context, request, &response));
-
-  return response;
-}
-
 PerformPowerSearchResponse
 perform_power_search(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -2061,22 +2045,6 @@ set_waveform_marker_event_locations(const StubPtr& stub, const nidevice_grpc::Se
 
   raise_if_error(
       stub->SetWaveformMarkerEventLocations(&context, request, &response));
-
-  return response;
-}
-
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnlockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = UnlockSessionResponse{};
-
-  raise_if_error(
-      stub->UnlockSession(&context, request, &response));
 
   return response;
 }

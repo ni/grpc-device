@@ -57,7 +57,6 @@ service NiSwitch {
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsDebounced(IsDebouncedRequest) returns (IsDebouncedResponse);
   rpc IsScanning(IsScanningRequest) returns (IsScanningResponse);
-  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc RelayControl(RelayControlRequest) returns (RelayControlResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
@@ -75,7 +74,6 @@ service NiSwitch {
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
   rpc SetContinuousScan(SetContinuousScanRequest) returns (SetContinuousScanResponse);
   rpc SetPath(SetPathRequest) returns (SetPathResponse);
-  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitForDebounce(WaitForDebounceRequest) returns (WaitForDebounceResponse);
   rpc WaitForScanComplete(WaitForScanCompleteRequest) returns (WaitForScanCompleteResponse);
 }
@@ -775,15 +773,6 @@ message IsScanningResponse {
   bool is_scanning = 2;
 }
 
-message LockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message LockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
-}
-
 message RelayControlRequest {
   nidevice_grpc.Session vi = 1;
   string relay_name = 2;
@@ -970,15 +959,6 @@ message SetPathRequest {
 
 message SetPathResponse {
   int32 status = 1;
-}
-
-message UnlockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message UnlockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
 }
 
 message WaitForDebounceRequest {

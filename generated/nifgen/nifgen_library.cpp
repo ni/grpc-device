@@ -1336,11 +1336,7 @@ ViStatus NiFgenLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_LockSession.");
   }
-#if defined(_MSC_VER)
-  return niFgen_LockSession(vi, callerHasLock);
-#else
   return function_pointers_.LockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiFgenLibrary::ManualEnableP2PStream(ViSession vi, ViConstString endpointName)
@@ -1624,11 +1620,7 @@ ViStatus NiFgenLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_UnlockSession.");
   }
-#if defined(_MSC_VER)
-  return niFgen_UnlockSession(vi, callerHasLock);
-#else
   return function_pointers_.UnlockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiFgenLibrary::WaitUntilDone(ViSession vi, ViInt32 maxTime)

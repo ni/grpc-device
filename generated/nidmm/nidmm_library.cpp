@@ -969,11 +969,7 @@ ViStatus NiDmmLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_LockSession.");
   }
-#if defined(_MSC_VER)
-  return niDMM_LockSession(vi, callerHasLock);
-#else
   return function_pointers_.LockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiDmmLibrary::PerformOpenCableComp(ViSession vi, ViReal64* conductance, ViReal64* susceptance)
@@ -1197,11 +1193,7 @@ ViStatus NiDmmLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_UnlockSession.");
   }
-#if defined(_MSC_VER)
-  return niDMM_UnlockSession(vi, callerHasLock);
-#else
   return function_pointers_.UnlockSession(vi, callerHasLock);
-#endif
 }
 
 }  // namespace nidmm_grpc

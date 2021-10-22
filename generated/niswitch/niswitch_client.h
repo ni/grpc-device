@@ -63,7 +63,6 @@ InitiateScanResponse initiate_scan(const StubPtr& stub, const nidevice_grpc::Ses
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsDebouncedResponse is_debounced(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsScanningResponse is_scanning(const StubPtr& stub, const nidevice_grpc::Session& vi);
-LockSessionResponse lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 RelayControlResponse relay_control(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& relay_name, const simple_variant<RelayAction, pb::int32>& relay_action);
 ResetResponse reset(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetInterchangeCheckResponse reset_interchange_check(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -81,7 +80,6 @@ SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const 
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttributes& attribute_id, const nidevice_grpc::Session& attribute_value);
 SetContinuousScanResponse set_continuous_scan(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& continuous_scan);
 SetPathResponse set_path(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& path_list);
-UnlockSessionResponse unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 WaitForDebounceResponse wait_for_debounce(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& maximum_time_ms);
 WaitForScanCompleteResponse wait_for_scan_complete(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& maximum_time_ms);
 

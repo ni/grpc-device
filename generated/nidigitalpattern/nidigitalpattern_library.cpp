@@ -1275,11 +1275,7 @@ ViStatus NiDigitalLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_LockSession.");
   }
-#if defined(_MSC_VER)
-  return niDigital_LockSession(vi, callerHasLock);
-#else
   return function_pointers_.LockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiDigitalLibrary::MapPinToChannel(ViSession vi, ViConstString pin, ViInt32 site, ViConstString channel)
@@ -1647,11 +1643,7 @@ ViStatus NiDigitalLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_UnlockSession.");
   }
-#if defined(_MSC_VER)
-  return niDigital_UnlockSession(vi, callerHasLock);
-#else
   return function_pointers_.UnlockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiDigitalLibrary::WaitUntilDone(ViSession vi, ViReal64 timeout)
