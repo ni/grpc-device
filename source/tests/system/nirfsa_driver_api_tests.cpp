@@ -557,49 +557,29 @@ TEST_F(NiRFSADriverApiTests, TwoSessions_SetupTclkSyncPulseSenderSynchronization
   EXPECT_SUCCESS(first_session, result);
 }
 
-TEST_F(NiRFSADriverApiTests, Versions)
+TEST_F(NiRFSADriverApiTests, SelfCalibrateWithStepsToOmit_Succeeds)
 {
   auto session = init_session(stub(), PXI_5663E);
-
-  auto major = client::get_attribute_vi_int32(stub(), session, "", NiRFSAAttributes::NIRFSA_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION);
-  auto minor = client::get_attribute_vi_int32(stub(), session, "", NiRFSAAttributes::NIRFSA_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION);
-
-  EXPECT_SUCCESS(session, major);
-  EXPECT_SUCCESS(session, minor);
-  EXPECT_EQ(0, major.value());
-  EXPECT_EQ(0, major.value());
-}
-
-TEST_F(NiRFSADriverApiTests, Sessions)
-{
-  while (!IsDebuggerPresent()) Sleep(10);
-  auto session = init_session(stub(), PXI_5663E);
-
-  auto response = client::get_attribute_vi_session(stub(), session, "", NiRFSAAttributes::NIRFSA_ATTRIBUTE_NISCOPE_SESSION);
-  auto scope_stub = create_scope_stub();
-  auto scope_response = niscope_client::self_test(scope_stub, response.value());
-
-  EXPECT_EQ(0, response.value().id());
-  EXPECT_SUCCESS(session, response);
-  EXPECT_SUCCESS(session, scope_response);
-}
-
-TEST_F(NiRFSADriverApiTests, SelfCalSkip)
-{
-  auto session = init_session(stub(), PXI_5663E);
-
-  auto response = client::self_calibrate(stub(), session, SelfCalibrateStepsToOmit::SELF_CALIBRATE_STEPS_TO_OMIT_ALIGNMENT);
+  const auto response = client::self_calibrate(stub(), session, SelfCalibrateStepsToOmit::SELF_CALIBRATE_STEPS_TO_OMIT_ALIGNMENT);
 
   EXPECT_SUCCESS(session, response);
 }
 
-TEST_F(NiRFSADriverApiTests, DeembeddingCompensation)
+// NOTE: disabled because this test requires a 58XX device. Simulating a 58XX hangs on shutdown.
+TEST_F(NiRFSADriverApiTests, DISABLED_GetDeembeddingCompensationGain_Succeeds)
 {
-  auto session = init_session(stub(), PXI_5663E);
+  auto session = init_session(stub(), "5830");
 
-  auto response = client::set_attribute_vi_real64(stub(), session, "", NiRFSAAttributes::NIRFSA_ATTRIBUTE_DEEMBEDDING_COMPENSATION_GAIN, 1e3);
+  const auto deembedding_type = client::set_attribute_vi_int32(
+      stub(),
+      session,
+      "if1",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_DEEMBEDDING_TYPE,
+      NiRFSAInt32AttributeValues::NIRFSA_INT32_DEEMBEDDING_TYPE_SCALAR);
+  const auto compensation_gain = client::get_attribute_vi_real64(stub(), session, "", NiRFSAAttributes::NIRFSA_ATTRIBUTE_DEEMBEDDING_COMPENSATION_GAIN);
 
-  EXPECT_SUCCESS(session, response);
+  EXPECT_NEAR(0.0, compensation_gain.value(), 1e-6);
+  EXPECT_SUCCESS(session, compensation_gain);
 }
 
 }  // namespace
