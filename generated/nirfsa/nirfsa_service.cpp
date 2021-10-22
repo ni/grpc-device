@@ -1839,6 +1839,16 @@ namespace nirfsa_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (number_of_sparameters == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_number_of_sparameters(number_of_sparameters);
+            response->set_number_of_ports(number_of_ports);
+            return ::grpc::Status::OK;
+          }
+        }
         std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
         auto sparameters_array_size = number_of_sparameters;
         status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
@@ -1900,6 +1910,15 @@ namespace nirfsa_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (number_of_frequencies == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_number_of_frequencies(number_of_frequencies);
+            return ::grpc::Status::OK;
+          }
         }
         response->mutable_frequencies()->Resize(number_of_frequencies, 0);
         ViReal64* frequencies = response->mutable_frequencies()->mutable_data();
@@ -2090,6 +2109,15 @@ namespace nirfsa_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (number_of_frequencies == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_number_of_frequencies(number_of_frequencies);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_frequencies()->Resize(number_of_frequencies, 0);
         ViReal64* frequencies = response->mutable_frequencies()->mutable_data();
         response->mutable_magnitude_response()->Resize(number_of_frequencies, 0);
@@ -2134,6 +2162,15 @@ namespace nirfsa_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (number_of_gain_reference_cal_constants == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_number_of_gain_reference_cal_constants(number_of_gain_reference_cal_constants);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_gain_reference_cal_constants()->Resize(number_of_gain_reference_cal_constants, 0);
         ViReal64* gain_reference_cal_constants = response->mutable_gain_reference_cal_constants()->mutable_data();
         auto buffer_size = number_of_gain_reference_cal_constants;
@@ -2172,6 +2209,15 @@ namespace nirfsa_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (number_of_coefficient_sets == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+            return ::grpc::Status::OK;
+          }
         }
         std::vector<niRFSA_coefficientInfo_struct> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo_struct());
         auto array_size = number_of_coefficient_sets;
@@ -2243,6 +2289,15 @@ namespace nirfsa_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (buffer_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_buffer_size(buffer_size);
+            return ::grpc::Status::OK;
+          }
+        }
         std::string name;
         if (buffer_size > 0) {
             name.resize(buffer_size /* Workaround: strlen-bug */);
@@ -2284,6 +2339,15 @@ namespace nirfsa_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (buffer_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_buffer_size(buffer_size);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_operations_count()->Resize(buffer_size, 0);
         ViInt32* operations_count = reinterpret_cast<ViInt32*>(response->mutable_operations_count()->mutable_data());
         status = library_->GetRelayOperationsCount(vi, channel_list, operations_count, &buffer_size);
@@ -2321,6 +2385,15 @@ namespace nirfsa_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (number_of_coefficient_sets == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+            return ::grpc::Status::OK;
+          }
         }
         std::vector<niRFSA_coefficientInfo_struct> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo_struct());
         auto array_size = number_of_coefficient_sets;
@@ -2513,6 +2586,15 @@ namespace nirfsa_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_data_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_data_size(actual_data_size);
+            return ::grpc::Status::OK;
+          }
         }
         std::string data(actual_data_size, '\0');
         auto buffer_size = actual_data_size;

@@ -94,6 +94,17 @@ ${initialize_output_params(scalar_output_parameters)}\
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (${twist_param_name} == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+<%block filter="common_helpers.indent(2)">\
+${set_response_values(scalar_output_parameters)}\
+</%block>\
+            return ::grpc::Status::OK;
+          }
+        }
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(array_output_parameters)}\
 </%block>\

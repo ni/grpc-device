@@ -1385,6 +1385,16 @@ namespace nidigitalpattern_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (actual_num_waveforms == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_waveforms(actual_num_waveforms);
+            response->set_actual_samples_per_waveform(actual_samples_per_waveform);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_data()->Resize(actual_num_waveforms, 0);
         ViUInt32* data = reinterpret_cast<ViUInt32*>(response->mutable_data()->mutable_data());
         auto data_buffer_size = actual_num_waveforms;
@@ -1460,6 +1470,15 @@ namespace nidigitalpattern_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_num_pin_data == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_pin_data(actual_num_pin_data);
+            return ::grpc::Status::OK;
+          }
         }
         std::string expected_pin_states(actual_num_pin_data, '\0');
         std::string actual_pin_states(actual_num_pin_data, '\0');
@@ -1588,6 +1607,15 @@ namespace nidigitalpattern_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_num_frequencies == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_frequencies(actual_num_frequencies);
+            return ::grpc::Status::OK;
+          }
         }
         response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
         ViReal64* frequencies = response->mutable_frequencies()->mutable_data();
@@ -1920,6 +1948,15 @@ namespace nidigitalpattern_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (actual_num_read == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_read(actual_num_read);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_failure_count()->Resize(actual_num_read, 0);
         ViInt64* failure_count = response->mutable_failure_count()->mutable_data();
         auto buffer_size = actual_num_read;
@@ -1982,6 +2019,15 @@ namespace nidigitalpattern_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_num_pins == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_pins(actual_num_pins);
+            return ::grpc::Status::OK;
+          }
         }
         response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
         ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
@@ -2145,6 +2191,15 @@ namespace nidigitalpattern_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (actual_num_values == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_values(actual_num_values);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_pin_indexes()->Resize(actual_num_values, 0);
         ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
         response->mutable_site_numbers()->Resize(actual_num_values, 0);
@@ -2189,6 +2244,15 @@ namespace nidigitalpattern_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_num_sites == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_sites(actual_num_sites);
+            return ::grpc::Status::OK;
+          }
         }
         std::vector<ViBoolean> pass_fail(actual_num_sites, ViBoolean());
         auto pass_fail_buffer_size = actual_num_sites;
@@ -2244,6 +2308,15 @@ namespace nidigitalpattern_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_num_site_numbers == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_site_numbers(actual_num_site_numbers);
+            return ::grpc::Status::OK;
+          }
         }
         response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
         ViInt32* site_numbers = reinterpret_cast<ViInt32*>(response->mutable_site_numbers()->mutable_data());
@@ -2926,6 +2999,15 @@ namespace nidigitalpattern_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (actual_num_read == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_read(actual_num_read);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_measurements()->Resize(actual_num_read, 0);
         ViReal64* measurements = response->mutable_measurements()->mutable_data();
         auto buffer_size = actual_num_read;
@@ -3032,6 +3114,15 @@ namespace nidigitalpattern_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_num_read == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_read(actual_num_read);
+            return ::grpc::Status::OK;
+          }
         }
         std::string data(actual_num_read, '\0');
         auto buffer_size = actual_num_read;
@@ -3396,6 +3487,15 @@ namespace nidigitalpattern_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_num_offsets == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_num_offsets(actual_num_offsets);
+            return ::grpc::Status::OK;
+          }
         }
         response->mutable_offsets()->Resize(actual_num_offsets, 0);
         ViReal64* offsets = response->mutable_offsets()->mutable_data();

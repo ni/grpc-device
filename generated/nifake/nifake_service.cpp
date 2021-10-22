@@ -480,6 +480,15 @@ namespace nifake_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (actual_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_size(actual_size);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_array_out()->Resize(actual_size, 0);
         ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
         auto buffer_size = actual_size;
@@ -517,6 +526,15 @@ namespace nifake_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_size(actual_size);
+            return ::grpc::Status::OK;
+          }
         }
         std::vector<CustomStruct> array_out(actual_size, CustomStruct());
         auto buffer_size = actual_size;
@@ -560,6 +578,15 @@ namespace nifake_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (actual_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_size(actual_size);
+            return ::grpc::Status::OK;
+          }
+        }
         std::string array_out(actual_size, '\0');
         auto buffer_size = actual_size;
         status = library_->GetAnIviDanceWithATwistByteArray(buffer_size, (ViInt8*)array_out.data(), &actual_size);
@@ -595,6 +622,15 @@ namespace nifake_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_size(actual_size);
+            return ::grpc::Status::OK;
+          }
         }
         std::string array_out;
         if (actual_size > 0) {
@@ -634,6 +670,15 @@ namespace nifake_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (actual_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_size(actual_size);
+            return ::grpc::Status::OK;
+          }
         }
         std::string string_out;
         if (actual_size > 0) {
@@ -1454,6 +1499,15 @@ namespace nifake_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (buffer_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_buffer_size(buffer_size);
+            return ::grpc::Status::OK;
+          }
         }
         response->mutable_data()->Resize(buffer_size, 0);
         ViInt32* data = reinterpret_cast<ViInt32*>(response->mutable_data()->mutable_data());

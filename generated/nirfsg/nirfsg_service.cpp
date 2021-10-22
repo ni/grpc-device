@@ -1790,6 +1790,16 @@ namespace nirfsg_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (number_of_sparameters == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_number_of_sparameters(number_of_sparameters);
+            response->set_number_of_ports(number_of_ports);
+            return ::grpc::Status::OK;
+          }
+        }
         std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
         auto sparameters_array_size = number_of_sparameters;
         status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
@@ -2099,6 +2109,15 @@ namespace nirfsg_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (actual_data_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_actual_data_size(actual_data_size);
+            return ::grpc::Status::OK;
+          }
+        }
         std::string data(actual_data_size, '\0');
         auto buffer_size = actual_data_size;
         status = library_->GetUserData(vi, identifier, buffer_size, (ViInt8*)data.data(), &actual_data_size);
@@ -2137,6 +2156,15 @@ namespace nirfsg_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (required_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_required_size(required_size);
+            return ::grpc::Status::OK;
+          }
         }
         response->mutable_locations()->Resize(required_size, 0);
         ViReal64* locations = response->mutable_locations()->mutable_data();
@@ -2177,6 +2205,15 @@ namespace nirfsg_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (required_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_required_size(required_size);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_locations()->Resize(required_size, 0);
         ViReal64* locations = response->mutable_locations()->mutable_data();
         auto number_of_locations = required_size;
@@ -2215,6 +2252,15 @@ namespace nirfsg_grpc {
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
+        }
+        if (status == 0) {
+          if (required_size == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_required_size(required_size);
+            return ::grpc::Status::OK;
+          }
         }
         response->mutable_locations()->Resize(required_size, 0);
         ViReal64* locations = response->mutable_locations()->mutable_data();

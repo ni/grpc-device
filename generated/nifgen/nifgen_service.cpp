@@ -2095,6 +2095,15 @@ namespace nifgen_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        if (status == 0) {
+          if (number_of_coefficients_read == 0) {
+            // Note that if a function has ivi-dance-with-a-twist parameters, we don't support any other
+            // array output parameters. If we do, we need to figure out how the underlying function behaves
+            // to know whether we need to initialize them and pass them in on the first call.
+            response->set_number_of_coefficients_read(number_of_coefficients_read);
+            return ::grpc::Status::OK;
+          }
+        }
         response->mutable_coefficients_array()->Resize(number_of_coefficients_read, 0);
         ViReal64* coefficients_array = response->mutable_coefficients_array()->mutable_data();
         auto array_size = number_of_coefficients_read;
