@@ -986,7 +986,7 @@ enums = {
                     'description': ' NI-RFSG internally makes the configuration to share the LO between NI-RFSA and NI-RFSG. This value is valid only on the PXIe-5820/5830/5831/5832/5840/5841. \n'
                 },
                 'name': 'AUTOMATIC_SG_SA_SHARED',
-                'value': 'AUTOMATIC_SG_SA_SHARED_STR'
+                'value': 'Automatic_SG_SA_Shared'
             }
         ]
     },
