@@ -133,9 +133,10 @@ def is_unsupported_size_mechanism(parameter: dict) -> bool:
 #                           around if a "buffer too small" error is returned on the second call.
 # - passed-in: The array's size is passed in in a separate parameter, which is specified in the 'value' member.
 #              Should only be used for output arrays (otherwise you can just use 'len').
+# - passed-in-by-ptr: TODO
 # - custom-code: The array's size is determined by the C++ code in the 'value' member.
 def is_unsupported_size_mechanism_type(size_mechanism: str) -> bool:
-    return not size_mechanism in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'custom-code'}
+    return not size_mechanism in {'fixed', 'len', 'ivi-dance', 'passed-in', 'passed-in-by-ptr', 'ivi-dance-with-a-twist', 'custom-code'}
 
 
 def is_unsupported_scalar_array(parameter):

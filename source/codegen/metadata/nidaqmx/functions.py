@@ -5954,6 +5954,40 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetAnalogPowerUpStatesWithOutputType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channelNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'stateArray',
+                'size': {
+                    'mechanism': 'passed-in-by-ptr',
+                    'value': 'arraySizePtr'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'PowerUpStates',
+                'name': 'channelTypeArray',
+                'size': {
+                    'mechanism': 'passed-in-by-ptr',
+                    'value': 'arraySizePtr'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizePtr',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetArmStartTrigTimestampVal': {
         'parameters': [
             {
@@ -10828,6 +10862,40 @@ functions = {
                 'max_length': 96,
                 'name': 'powerUpStates',
                 'repeated_var_args': True
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAnalogPowerUpStatesWithOutputType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channelNames',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'stateArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'const float64[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PowerUpStates',
+                'name': 'channelTypeArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'const int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32'
             }
         ],
         'returns': 'int32'
