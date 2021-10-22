@@ -413,7 +413,7 @@ configure_deembedding_table_interpolation_spline(const StubPtr& stub, const nide
 }
 
 ConfigureDigitalEdgeConfigurationListStepTriggerResponse
-configure_digital_edge_configuration_list_step_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeConfigurationListStepTriggerSource, std::string>& source, const simple_variant<DigitalEdgeEdgeRangeTable, pb::int32>& edge)
+configure_digital_edge_configuration_list_step_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeConfigurationListStepTriggerSource, std::string>& source, const simple_variant<DigitalEdgeEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -427,7 +427,7 @@ configure_digital_edge_configuration_list_step_trigger(const StubPtr& stub, cons
   else if (source_raw_ptr) {
     request.set_source_raw(*source_raw_ptr);
   }
-  const auto edge_ptr = edge.get_if<DigitalEdgeEdgeRangeTable>();
+  const auto edge_ptr = edge.get_if<DigitalEdgeEdge>();
   const auto edge_raw_ptr = edge.get_if<pb::int32>();
   if (edge_ptr) {
     request.set_edge(*edge_ptr);
@@ -445,7 +445,7 @@ configure_digital_edge_configuration_list_step_trigger(const StubPtr& stub, cons
 }
 
 ConfigureDigitalEdgeScriptTriggerResponse
-configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeScriptTriggerIdentifier, std::string>& trigger_id, const simple_variant<TriggerSourceRangeTable, std::string>& source, const simple_variant<DigitalEdgeEdgeRangeTable, pb::int32>& edge)
+configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeScriptTriggerIdentifier, std::string>& trigger_id, const simple_variant<TriggerSource, std::string>& source, const simple_variant<DigitalEdgeEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -459,7 +459,7 @@ configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::
   else if (trigger_id_raw_ptr) {
     request.set_trigger_id_raw(*trigger_id_raw_ptr);
   }
-  const auto source_ptr = source.get_if<TriggerSourceRangeTable>();
+  const auto source_ptr = source.get_if<TriggerSource>();
   const auto source_raw_ptr = source.get_if<std::string>();
   if (source_ptr) {
     request.set_source_mapped(*source_ptr);
@@ -467,7 +467,7 @@ configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::
   else if (source_raw_ptr) {
     request.set_source_raw(*source_raw_ptr);
   }
-  const auto edge_ptr = edge.get_if<DigitalEdgeEdgeRangeTable>();
+  const auto edge_ptr = edge.get_if<DigitalEdgeEdge>();
   const auto edge_raw_ptr = edge.get_if<pb::int32>();
   if (edge_ptr) {
     request.set_edge(*edge_ptr);
@@ -485,13 +485,13 @@ configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureDigitalEdgeStartTriggerResponse
-configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<TriggerSourceRangeTable, std::string>& source, const simple_variant<DigitalEdgeEdgeRangeTable, pb::int32>& edge)
+configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<TriggerSource, std::string>& source, const simple_variant<DigitalEdgeEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureDigitalEdgeStartTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto source_ptr = source.get_if<TriggerSourceRangeTable>();
+  const auto source_ptr = source.get_if<TriggerSource>();
   const auto source_raw_ptr = source.get_if<std::string>();
   if (source_ptr) {
     request.set_source_mapped(*source_ptr);
@@ -499,7 +499,7 @@ configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::S
   else if (source_raw_ptr) {
     request.set_source_raw(*source_raw_ptr);
   }
-  const auto edge_ptr = edge.get_if<DigitalEdgeEdgeRangeTable>();
+  const auto edge_ptr = edge.get_if<DigitalEdgeEdge>();
   const auto edge_raw_ptr = edge.get_if<pb::int32>();
   if (edge_ptr) {
     request.set_edge(*edge_ptr);
@@ -517,7 +517,7 @@ configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ConfigureDigitalLevelScriptTriggerResponse
-configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeScriptTriggerIdentifier, std::string>& trigger_id, const simple_variant<TriggerSourceRangeTable, std::string>& source, const simple_variant<DigitalLevelActiveLevelRangeTable, pb::int32>& level)
+configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeScriptTriggerIdentifier, std::string>& trigger_id, const simple_variant<TriggerSource, std::string>& source, const simple_variant<DigitalLevelActiveLevel, pb::int32>& level)
 {
   ::grpc::ClientContext context;
 
@@ -531,7 +531,7 @@ configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc:
   else if (trigger_id_raw_ptr) {
     request.set_trigger_id_raw(*trigger_id_raw_ptr);
   }
-  const auto source_ptr = source.get_if<TriggerSourceRangeTable>();
+  const auto source_ptr = source.get_if<TriggerSource>();
   const auto source_raw_ptr = source.get_if<std::string>();
   if (source_ptr) {
     request.set_source_mapped(*source_ptr);
@@ -539,7 +539,7 @@ configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc:
   else if (source_raw_ptr) {
     request.set_source_raw(*source_raw_ptr);
   }
-  const auto level_ptr = level.get_if<DigitalLevelActiveLevelRangeTable>();
+  const auto level_ptr = level.get_if<DigitalLevelActiveLevel>();
   const auto level_raw_ptr = level.get_if<pb::int32>();
   if (level_ptr) {
     request.set_level(*level_ptr);
@@ -574,13 +574,13 @@ configure_digital_modulation_user_defined_waveform(const StubPtr& stub, const ni
 }
 
 ConfigureGenerationModeResponse
-configure_generation_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<GenerationModeRangeTable, pb::int32>& generation_mode)
+configure_generation_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<GenerationMode, pb::int32>& generation_mode)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureGenerationModeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto generation_mode_ptr = generation_mode.get_if<GenerationModeRangeTable>();
+  const auto generation_mode_ptr = generation_mode.get_if<GenerationMode>();
   const auto generation_mode_raw_ptr = generation_mode.get_if<pb::int32>();
   if (generation_mode_ptr) {
     request.set_generation_mode(*generation_mode_ptr);
@@ -632,13 +632,13 @@ configure_p2p_endpoint_fullness_start_trigger(const StubPtr& stub, const nidevic
 }
 
 ConfigurePXIChassisClk10Response
-configure_pxi_chassis_clk10(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PXIChassisClk10RangeTable, std::string>& pxi_clk10_source)
+configure_pxi_chassis_clk10(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PXIChassisClk10, std::string>& pxi_clk10_source)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigurePXIChassisClk10Request{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto pxi_clk10_source_ptr = pxi_clk10_source.get_if<PXIChassisClk10RangeTable>();
+  const auto pxi_clk10_source_ptr = pxi_clk10_source.get_if<PXIChassisClk10>();
   const auto pxi_clk10_source_raw_ptr = pxi_clk10_source.get_if<std::string>();
   if (pxi_clk10_source_ptr) {
     request.set_pxi_clk10_source_mapped(*pxi_clk10_source_ptr);
@@ -656,13 +656,13 @@ configure_pxi_chassis_clk10(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 ConfigurePowerLevelTypeResponse
-configure_power_level_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLevelTypeRangeTable, pb::int32>& power_level_type)
+configure_power_level_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLevelType, pb::int32>& power_level_type)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigurePowerLevelTypeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto power_level_type_ptr = power_level_type.get_if<PowerLevelTypeRangeTable>();
+  const auto power_level_type_ptr = power_level_type.get_if<PowerLevelType>();
   const auto power_level_type_raw_ptr = power_level_type.get_if<pb::int32>();
   if (power_level_type_ptr) {
     request.set_power_level_type(*power_level_type_ptr);
@@ -698,13 +698,13 @@ configure_rf(const StubPtr& stub, const nidevice_grpc::Session& vi, const double
 }
 
 ConfigureRefClockResponse
-configure_ref_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RefClockSourceRangeTable, std::string>& ref_clock_source, const double& ref_clock_rate)
+configure_ref_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RefClockSource, std::string>& ref_clock_source, const double& ref_clock_rate)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureRefClockRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto ref_clock_source_ptr = ref_clock_source.get_if<RefClockSourceRangeTable>();
+  const auto ref_clock_source_ptr = ref_clock_source.get_if<RefClockSource>();
   const auto ref_clock_source_raw_ptr = ref_clock_source.get_if<std::string>();
   if (ref_clock_source_ptr) {
     request.set_ref_clock_source_mapped(*ref_clock_source_ptr);
@@ -1544,22 +1544,6 @@ load_configurations_from_file(const StubPtr& stub, const nidevice_grpc::Session&
   return response;
 }
 
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = LockSessionResponse{};
-
-  raise_if_error(
-      stub->LockSession(&context, request, &response));
-
-  return response;
-}
-
 PerformPowerSearchResponse
 perform_power_search(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -2089,22 +2073,6 @@ set_waveform_marker_event_locations(const StubPtr& stub, const nidevice_grpc::Se
 
   raise_if_error(
       stub->SetWaveformMarkerEventLocations(&context, request, &response));
-
-  return response;
-}
-
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnlockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = UnlockSessionResponse{};
-
-  raise_if_error(
-      stub->UnlockSession(&context, request, &response));
 
   return response;
 }

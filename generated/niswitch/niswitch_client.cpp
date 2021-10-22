@@ -754,22 +754,6 @@ is_scanning(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = LockSessionResponse{};
-
-  raise_if_error(
-      stub->LockSession(&context, request, &response));
-
-  return response;
-}
-
 RelayControlResponse
 relay_control(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& relay_name, const simple_variant<RelayAction, pb::int32>& relay_action)
 {
@@ -1114,22 +1098,6 @@ set_path(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string
 
   raise_if_error(
       stub->SetPath(&context, request, &response));
-
-  return response;
-}
-
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnlockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = UnlockSessionResponse{};
-
-  raise_if_error(
-      stub->UnlockSession(&context, request, &response));
 
   return response;
 }

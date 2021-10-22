@@ -92,7 +92,6 @@ InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi)
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsOverRangeResponse is_over_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& measurement_value);
 IsUnderRangeResponse is_under_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& measurement_value);
-LockSessionResponse lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 PerformOpenCableCompResponse perform_open_cable_comp(const StubPtr& stub, const nidevice_grpc::Session& vi);
 PerformShortCableCompResponse perform_short_cable_comp(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReadResponse read(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<TimeLimit, pb::int32>& maximum_time);
@@ -111,7 +110,6 @@ SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const ni
 SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttributes& attribute_id, const simple_variant<NiDmmReal64AttributeValues, double>& attribute_value);
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttributes& attribute_id, const nidevice_grpc::Session& attribute_value);
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttributes& attribute_id, const pb::string& attribute_value_raw);
-UnlockSessionResponse unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 
 } // namespace nidmm_grpc::experimental::client
 

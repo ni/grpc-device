@@ -126,7 +126,6 @@ service NiDCPower {
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
   rpc InitializeWithChannels(InitializeWithChannelsRequest) returns (InitializeWithChannelsResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
-  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc Measure(MeasureRequest) returns (MeasureResponse);
   rpc MeasureMultiple(MeasureMultipleRequest) returns (MeasureMultipleResponse);
   rpc QueryInCompliance(QueryInComplianceRequest) returns (QueryInComplianceResponse);
@@ -149,7 +148,6 @@ service NiDCPower {
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
   rpc SetSequence(SetSequenceRequest) returns (SetSequenceResponse);
-  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitForEvent(WaitForEventRequest) returns (WaitForEventResponse);
 }
 
@@ -1612,15 +1610,6 @@ message InitiateResponse {
   int32 status = 1;
 }
 
-message LockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message LockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
-}
-
 message MeasureRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1857,15 +1846,6 @@ message SetSequenceRequest {
 
 message SetSequenceResponse {
   int32 status = 1;
-}
-
-message UnlockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message UnlockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
 }
 
 message WaitForEventRequest {

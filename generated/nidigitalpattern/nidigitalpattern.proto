@@ -108,7 +108,6 @@ service NiDigital {
   rpc LoadPinMap(LoadPinMapRequest) returns (LoadPinMapResponse);
   rpc LoadSpecifications(LoadSpecificationsRequest) returns (LoadSpecificationsResponse);
   rpc LoadTiming(LoadTimingRequest) returns (LoadTimingResponse);
-  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc MapPinToChannel(MapPinToChannelRequest) returns (MapPinToChannelResponse);
   rpc PPMUConfigureApertureTime(PPMUConfigureApertureTimeRequest) returns (PPMUConfigureApertureTimeResponse);
   rpc PPMUConfigureCurrentLevel(PPMUConfigureCurrentLevelRequest) returns (PPMUConfigureCurrentLevelResponse);
@@ -139,7 +138,6 @@ service NiDigital {
   rpc TDR(TDRRequest) returns (TDRResponse);
   rpc UnloadAllPatterns(UnloadAllPatternsRequest) returns (UnloadAllPatternsResponse);
   rpc UnloadSpecifications(UnloadSpecificationsRequest) returns (UnloadSpecificationsResponse);
-  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
   rpc WriteSequencerFlag(WriteSequencerFlagRequest) returns (WriteSequencerFlagResponse);
   rpc WriteSequencerFlagSynchronized(WriteSequencerFlagSynchronizedRequest) returns (WriteSequencerFlagSynchronizedResponse);
@@ -1417,15 +1415,6 @@ message LoadTimingResponse {
   int32 status = 1;
 }
 
-message LockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message LockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
-}
-
 message MapPinToChannelRequest {
   nidevice_grpc.Session vi = 1;
   string pin = 2;
@@ -1752,15 +1741,6 @@ message UnloadSpecificationsRequest {
 
 message UnloadSpecificationsResponse {
   int32 status = 1;
-}
-
-message UnlockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message UnlockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
 }
 
 message WaitUntilDoneRequest {

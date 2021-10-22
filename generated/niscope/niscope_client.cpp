@@ -1540,22 +1540,6 @@ initiate_acquisition(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = LockSessionResponse{};
-
-  raise_if_error(
-      stub->LockSession(&context, request, &response));
-
-  return response;
-}
-
 ProbeCompensationSignalStartResponse
 probe_compensation_signal_start(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -1884,22 +1868,6 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 
   raise_if_error(
       stub->SetAttributeViString(&context, request, &response));
-
-  return response;
-}
-
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnlockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = UnlockSessionResponse{};
-
-  raise_if_error(
-      stub->UnlockSession(&context, request, &response));
 
   return response;
 }

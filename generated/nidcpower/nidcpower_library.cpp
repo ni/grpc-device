@@ -1495,11 +1495,7 @@ ViStatus NiDCPowerLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_LockSession.");
   }
-#if defined(_MSC_VER)
-  return niDCPower_LockSession(vi, callerHasLock);
-#else
   return function_pointers_.LockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiDCPowerLibrary::Measure(ViSession vi, ViConstString channelName, ViInt32 measurementType, ViReal64* measurement)
@@ -1779,11 +1775,7 @@ ViStatus NiDCPowerLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_UnlockSession.");
   }
-#if defined(_MSC_VER)
-  return niDCPower_UnlockSession(vi, callerHasLock);
-#else
   return function_pointers_.UnlockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiDCPowerLibrary::WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout)

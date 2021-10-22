@@ -209,7 +209,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using InitiatePtr = decltype(&niRFSG_Initiate);
   using InvalidateAllAttributesPtr = decltype(&niRFSG_InvalidateAllAttributes);
   using LoadConfigurationsFromFilePtr = decltype(&niRFSG_LoadConfigurationsFromFile);
-  using LockSessionPtr = decltype(&niRFSG_LockSession);
+  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using PerformPowerSearchPtr = decltype(&niRFSG_PerformPowerSearch);
   using PerformThermalCorrectionPtr = decltype(&niRFSG_PerformThermalCorrection);
   using QueryArbWaveformCapabilitiesPtr = decltype(&niRFSG_QueryArbWaveformCapabilities);
@@ -237,7 +237,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using SetWaveformBurstStartLocationsPtr = decltype(&niRFSG_SetWaveformBurstStartLocations);
   using SetWaveformBurstStopLocationsPtr = decltype(&niRFSG_SetWaveformBurstStopLocations);
   using SetWaveformMarkerEventLocationsPtr = decltype(&niRFSG_SetWaveformMarkerEventLocations);
-  using UnlockSessionPtr = decltype(&niRFSG_UnlockSession);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitUntilSettledPtr = decltype(&niRFSG_WaitUntilSettled);
   using WriteArbWaveformPtr = decltype(&niRFSG_WriteArbWaveform);
   using WriteArbWaveformComplexF32Ptr = decltype(&niRFSG_WriteArbWaveformComplexF32);

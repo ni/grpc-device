@@ -981,11 +981,7 @@ ViStatus NiScopeLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niScope_LockSession.");
   }
-#if defined(_MSC_VER)
-  return niScope_LockSession(vi, callerHasLock);
-#else
   return function_pointers_.LockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiScopeLibrary::ProbeCompensationSignalStart(ViSession vi)
@@ -1197,11 +1193,7 @@ ViStatus NiScopeLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niScope_UnlockSession.");
   }
-#if defined(_MSC_VER)
-  return niScope_UnlockSession(vi, callerHasLock);
-#else
   return function_pointers_.UnlockSession(vi, callerHasLock);
-#endif
 }
 
 }  // namespace niscope_grpc

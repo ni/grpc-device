@@ -125,7 +125,6 @@ public:
   ::grpc::Status LoadPinMap(::grpc::ServerContext* context, const LoadPinMapRequest* request, LoadPinMapResponse* response) override;
   ::grpc::Status LoadSpecifications(::grpc::ServerContext* context, const LoadSpecificationsRequest* request, LoadSpecificationsResponse* response) override;
   ::grpc::Status LoadTiming(::grpc::ServerContext* context, const LoadTimingRequest* request, LoadTimingResponse* response) override;
-  ::grpc::Status LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response) override;
   ::grpc::Status MapPinToChannel(::grpc::ServerContext* context, const MapPinToChannelRequest* request, MapPinToChannelResponse* response) override;
   ::grpc::Status PPMUConfigureApertureTime(::grpc::ServerContext* context, const PPMUConfigureApertureTimeRequest* request, PPMUConfigureApertureTimeResponse* response) override;
   ::grpc::Status PPMUConfigureCurrentLevel(::grpc::ServerContext* context, const PPMUConfigureCurrentLevelRequest* request, PPMUConfigureCurrentLevelResponse* response) override;
@@ -156,7 +155,6 @@ public:
   ::grpc::Status TDR(::grpc::ServerContext* context, const TDRRequest* request, TDRResponse* response) override;
   ::grpc::Status UnloadAllPatterns(::grpc::ServerContext* context, const UnloadAllPatternsRequest* request, UnloadAllPatternsResponse* response) override;
   ::grpc::Status UnloadSpecifications(::grpc::ServerContext* context, const UnloadSpecificationsRequest* request, UnloadSpecificationsResponse* response) override;
-  ::grpc::Status UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response) override;
   ::grpc::Status WaitUntilDone(::grpc::ServerContext* context, const WaitUntilDoneRequest* request, WaitUntilDoneResponse* response) override;
   ::grpc::Status WriteSequencerFlag(::grpc::ServerContext* context, const WriteSequencerFlagRequest* request, WriteSequencerFlagResponse* response) override;
   ::grpc::Status WriteSequencerFlagSynchronized(::grpc::ServerContext* context, const WriteSequencerFlagSynchronizedRequest* request, WriteSequencerFlagSynchronizedResponse* response) override;

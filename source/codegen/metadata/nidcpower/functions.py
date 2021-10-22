@@ -2204,6 +2204,7 @@ functions = {
     'returns': 'ViStatus'
   },
   'LockSession': {
+    'codegen_method': 'private',
     'parameters': [
       {
         'name': 'vi',
@@ -2735,6 +2736,7 @@ functions = {
     'returns': 'ViStatus'
   },
   'UnlockSession': {
+    'codegen_method': 'private',
     'parameters': [
       {
         'name': 'vi',

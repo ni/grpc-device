@@ -1286,11 +1286,7 @@ ViStatus NiRFSALibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_LockSession.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_LockSession(vi, callerHasLock);
-#else
   return function_pointers_.LockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiRFSALibrary::PerformThermalCorrection(ViSession vi)
@@ -1574,11 +1570,7 @@ ViStatus NiRFSALibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_UnlockSession.");
   }
-#if defined(_MSC_VER)
-  return niRFSA_UnlockSession(vi, callerHasLock);
-#else
   return function_pointers_.UnlockSession(vi, callerHasLock);
-#endif
 }
 
 }  // namespace nirfsa_grpc

@@ -86,7 +86,6 @@ service NiDmm {
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsOverRange(IsOverRangeRequest) returns (IsOverRangeResponse);
   rpc IsUnderRange(IsUnderRangeRequest) returns (IsUnderRangeResponse);
-  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc PerformOpenCableComp(PerformOpenCableCompRequest) returns (PerformOpenCableCompResponse);
   rpc PerformShortCableComp(PerformShortCableCompRequest) returns (PerformShortCableCompResponse);
   rpc Read(ReadRequest) returns (ReadResponse);
@@ -105,7 +104,6 @@ service NiDmm {
   rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
-  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
 }
 
 enum NiDmmAttributes {
@@ -1312,15 +1310,6 @@ message IsUnderRangeResponse {
   bool is_under_range = 2;
 }
 
-message LockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message LockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
-}
-
 message PerformOpenCableCompRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1514,14 +1503,5 @@ message SetAttributeViStringRequest {
 
 message SetAttributeViStringResponse {
   int32 status = 1;
-}
-
-message UnlockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message UnlockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
 }
 
