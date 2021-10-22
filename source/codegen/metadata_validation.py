@@ -214,6 +214,13 @@ def validate_function(function_name: str, metadata: dict):
                 raise Exception(
                     f"Multiple ivi-dance-with-a-twist parameters with different sizes or twists are not currently supported! Parameter names: {ivi_dance_with_a_twist_params}"
                 )
+            output_array_parameters = [p for p in function['parameters']
+                                       if common_helpers.is_output_parameter(p) and 'size' in p]
+            if len(ivi_dance_with_a_twist_params) > 0 and len(ivi_dance_with_a_twist_params) != len(output_array_parameters):
+                raise Exception(
+                    "Functions with ivi-dance-with-a-twist-parameters and other output parameters are not currently supported!" +
+                    " When we do, figure out how to handle the case where the ivi-dance-with-a-twist size comes back as 0."
+                )
 
     except Exception as e:
         raise Exception(f"Failed to validate function {function_name}") from e
