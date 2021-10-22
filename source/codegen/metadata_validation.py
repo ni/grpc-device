@@ -166,6 +166,9 @@ def parameter_name_exists(function: dict, name: str) -> bool:
 def validate_function(function_name: str, metadata: dict):
     try:
         function: Dict[str, Any] = metadata['functions'][function_name]
+        ivi_dance_with_a_twist_params = []
+        ivi_dance_with_a_twist_sizes = set()
+        ivi_dance_with_a_twist_twists = set()
         if function.get('codegen_method', 'public') != 'no':
             FUNCTION_SCHEMA.validate(function)
             if 'documentation' in function:
@@ -202,6 +205,15 @@ def validate_function(function_name: str, metadata: dict):
                     if parameter.get('include_in_proto', True):
                         raise Exception(
                             f"parameter {parameter['name']} is pointer but is include_in_proto!")
+                if parameter.get('size', {}).get('mechanism', None) == 'ivi-dance-with-a-twist':
+                    size = parameter['size']
+                    ivi_dance_with_a_twist_params.append(parameter['name'])
+                    ivi_dance_with_a_twist_sizes.add(size['value'])
+                    ivi_dance_with_a_twist_twists.add(size['value_twist'])
+            if len(ivi_dance_with_a_twist_sizes) > 1 or len(ivi_dance_with_a_twist_twists) > 1:
+                raise Exception(
+                    f"Multiple ivi-dance-with-a-twist parameters with different sizes or twists are not currently supported! Parameter names: {ivi_dance_with_a_twist_params}"
+                )
 
     except Exception as e:
         raise Exception(f"Failed to validate function {function_name}") from e
