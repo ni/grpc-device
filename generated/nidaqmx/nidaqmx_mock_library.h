@@ -144,6 +144,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ExportSignal, (TaskHandle task, int32 signalID, const char outputTerminal[]), (override));
   MOCK_METHOD(int32, GetAIChanCalCalDate, (TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute), (override));
   MOCK_METHOD(int32, GetAIChanCalExpDate, (TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute), (override));
+  MOCK_METHOD(int32, GetAnalogPowerUpStatesWithOutputType, (const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr), (override));
   MOCK_METHOD(int32, GetArmStartTrigTimestampVal, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetArmStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime* data), (override));
   MOCK_METHOD(int32, GetAutoConfiguredCDAQSyncConnections, (char portList[], uInt32 portListSize), (override));
@@ -299,6 +300,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, SelfTestDevice, (const char deviceName[]), (override));
   MOCK_METHOD(int32, SetAIChanCalCalDate, (TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute), (override));
   MOCK_METHOD(int32, SetAIChanCalExpDate, (TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute), (override));
+  MOCK_METHOD(int32, SetAnalogPowerUpStatesWithOutputType, (const char channelNames[], const float64 stateArray[], const int32 channelTypeArray[], uInt32 arraySize), (override));
   MOCK_METHOD(int32, SetArmStartTrigTrigWhen, (TaskHandle task, CVIAbsoluteTime data), (override));
   MOCK_METHOD(int32, SetBufferAttributeUInt32, (TaskHandle task, int32 attribute, uInt32 value), (override));
   MOCK_METHOD(int32, SetCalInfoAttributeBool, (const char deviceName[], int32 attribute, bool32 value, uInt32 size), (override));

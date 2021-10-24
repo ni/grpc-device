@@ -29,6 +29,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[]);
   int32 InputArrayOfBytes(const myUInt8 u8Array[]);
   int32 OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u8Data[]);
+  int32 OutputArraysWithPassedInByPtrMechanism(int32 i32Data[], myUInt16 u16Data[], int32* arraySize);
   int32 RegisterCallback(myInt16 inputData, CallbackPtr callbackFunction, void* callbackData);
   int32 ReadStream(int32 start, int32 stop, int32* value);
   int32 InputTimestamp(CVIAbsoluteTime when);
@@ -54,6 +55,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using OutputArraysWithNarrowIntegerTypesPtr = decltype(&niFakeNonIvi_OutputArraysWithNarrowIntegerTypes);
   using InputArrayOfBytesPtr = decltype(&niFakeNonIvi_InputArrayOfBytes);
   using OutputArrayOfBytesPtr = decltype(&niFakeNonIvi_OutputArrayOfBytes);
+  using OutputArraysWithPassedInByPtrMechanismPtr = decltype(&niFakeNonIvi_OutputArraysWithPassedInByPtrMechanism);
   using RegisterCallbackPtr = decltype(&niFakeNonIvi_RegisterCallback);
   using ReadStreamPtr = decltype(&niFakeNonIvi_ReadStream);
   using InputTimestampPtr = decltype(&niFakeNonIvi_InputTimestamp);
@@ -79,6 +81,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     OutputArraysWithNarrowIntegerTypesPtr OutputArraysWithNarrowIntegerTypes;
     InputArrayOfBytesPtr InputArrayOfBytes;
     OutputArrayOfBytesPtr OutputArrayOfBytes;
+    OutputArraysWithPassedInByPtrMechanismPtr OutputArraysWithPassedInByPtrMechanism;
     RegisterCallbackPtr RegisterCallback;
     ReadStreamPtr ReadStream;
     InputTimestampPtr InputTimestamp;

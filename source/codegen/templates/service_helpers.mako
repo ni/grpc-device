@@ -251,6 +251,8 @@ ${initialize_enum_input_param(function_name, parameter)}
 ${initialize_len_input_param(parameter)}
 % elif 'hardcoded_value' in parameter:
 ${initialize_hardcoded_parameter(parameter)}
+% elif parameter.get('pointer', False):
+${initialize_pointer_input_parameter(parameter)}
 % else:
 ${initialize_standard_input_param(function_name, parameter)}
 % endif
@@ -425,6 +427,11 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Initialize a 'hardcoded' param.
 <%def name="initialize_hardcoded_parameter(parameter)">\
       auto ${common_helpers.camel_to_snake(parameter['cppName'])} = ${parameter['hardcoded_value']};\
+</%def>
+
+## Initialize an input parameter that's passed by pointer.
+<%def name="initialize_pointer_input_parameter(parameter)">\
+      ${parameter['type']} ${common_helpers.camel_to_snake(parameter['cppName'])}_copy = request->${common_helpers.camel_to_snake(parameter['cppName'])}();\
 </%def>
 
 

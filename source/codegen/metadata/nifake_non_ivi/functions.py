@@ -237,6 +237,35 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'OutputArraysWithPassedInByPtrMechanism': {
+        'parameters': [
+            {
+                'direction': 'out',
+                'name': 'i32Data',
+                'size': {
+                    'mechanism': 'passed-in-by-ptr',
+                    'value': 'arraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'u16Data',
+                'size': {
+                    'mechanism': 'passed-in-by-ptr',
+                    'value': 'arraySize'
+                },
+                'coerced': True,
+                'type': 'myUInt16[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'RegisterCallback': {
         'parameters': [
             {

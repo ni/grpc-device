@@ -450,6 +450,38 @@ namespace nifake_non_ivi_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputArraysWithPassedInByPtrMechanism(::grpc::ServerContext* context, const OutputArraysWithPassedInByPtrMechanismRequest* request, OutputArraysWithPassedInByPtrMechanismResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int32 array_size_copy = request->array_size();
+      response->mutable_i32_data()->Resize(array_size_copy, 0);
+      int32* i32_data = reinterpret_cast<int32*>(response->mutable_i32_data()->mutable_data());
+      std::vector<myUInt16> u16_data(array_size_copy);
+      auto status = library_->OutputArraysWithPassedInByPtrMechanism(i32_data, u16_data.data(), &array_size_copy);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_u16_data()->Clear();
+        response->mutable_u16_data()->Reserve(array_size_copy);
+        std::transform(
+          u16_data.begin(),
+          u16_data.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
+          [&](auto x) { 
+              return x;
+          });
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::ServerWriteReactor<RegisterCallbackResponse>*
   NiFakeNonIviService::RegisterCallback(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request)
   {

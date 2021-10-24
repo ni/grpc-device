@@ -146,6 +146,7 @@ service NiDAQmx {
   rpc GetAIChanCalCalDate(GetAIChanCalCalDateRequest) returns (GetAIChanCalCalDateResponse);
   rpc GetAIChanCalExpDate(GetAIChanCalExpDateRequest) returns (GetAIChanCalExpDateResponse);
   rpc GetAnalogPowerUpStates(GetAnalogPowerUpStatesRequest) returns (GetAnalogPowerUpStatesResponse);
+  rpc GetAnalogPowerUpStatesWithOutputType(GetAnalogPowerUpStatesWithOutputTypeRequest) returns (GetAnalogPowerUpStatesWithOutputTypeResponse);
   rpc GetArmStartTrigTimestampVal(GetArmStartTrigTimestampValRequest) returns (GetArmStartTrigTimestampValResponse);
   rpc GetArmStartTrigTrigWhen(GetArmStartTrigTrigWhenRequest) returns (GetArmStartTrigTrigWhenResponse);
   rpc GetAutoConfiguredCDAQSyncConnections(GetAutoConfiguredCDAQSyncConnectionsRequest) returns (GetAutoConfiguredCDAQSyncConnectionsResponse);
@@ -304,6 +305,7 @@ service NiDAQmx {
   rpc SetAIChanCalCalDate(SetAIChanCalCalDateRequest) returns (SetAIChanCalCalDateResponse);
   rpc SetAIChanCalExpDate(SetAIChanCalExpDateRequest) returns (SetAIChanCalExpDateResponse);
   rpc SetAnalogPowerUpStates(SetAnalogPowerUpStatesRequest) returns (SetAnalogPowerUpStatesResponse);
+  rpc SetAnalogPowerUpStatesWithOutputType(SetAnalogPowerUpStatesWithOutputTypeRequest) returns (SetAnalogPowerUpStatesWithOutputTypeResponse);
   rpc SetArmStartTrigTrigWhen(SetArmStartTrigTrigWhenRequest) returns (SetArmStartTrigTrigWhenResponse);
   rpc SetBufferAttributeUInt32(SetBufferAttributeUInt32Request) returns (SetBufferAttributeUInt32Response);
   rpc SetCalInfoAttributeBool(SetCalInfoAttributeBoolRequest) returns (SetCalInfoAttributeBoolResponse);
@@ -6854,6 +6856,18 @@ message GetAnalogPowerUpStatesResponse {
   repeated double power_up_states = 2;
 }
 
+message GetAnalogPowerUpStatesWithOutputTypeRequest {
+  string channel_names = 1;
+  uint32 array_size_ptr = 2;
+}
+
+message GetAnalogPowerUpStatesWithOutputTypeResponse {
+  int32 status = 1;
+  repeated double state_array = 2;
+  repeated PowerUpStates channel_type_array = 3;
+  repeated int32 channel_type_array_raw = 4;
+}
+
 message GetArmStartTrigTimestampValRequest {
   nidevice_grpc.Session task = 1;
 }
@@ -8869,6 +8883,16 @@ message SetAnalogPowerUpStatesRequest {
 }
 
 message SetAnalogPowerUpStatesResponse {
+  int32 status = 1;
+}
+
+message SetAnalogPowerUpStatesWithOutputTypeRequest {
+  string channel_names = 1;
+  repeated double state_array = 2;
+  repeated int32 channel_type_array = 3;
+}
+
+message SetAnalogPowerUpStatesWithOutputTypeResponse {
   int32 status = 1;
 }
 

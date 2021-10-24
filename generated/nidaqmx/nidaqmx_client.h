@@ -151,6 +151,7 @@ ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Ses
 GetAIChanCalCalDateResponse get_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name);
 GetAIChanCalExpDateResponse get_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name);
 GetAnalogPowerUpStatesResponse get_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, const std::vector<AnalogPowerUpChannelAndType>& channels);
+GetAnalogPowerUpStatesWithOutputTypeResponse get_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const pb::uint32& array_size_ptr);
 GetArmStartTrigTimestampValResponse get_arm_start_trig_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetArmStartTrigTrigWhenResponse get_arm_start_trig_trig_when(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetAutoConfiguredCDAQSyncConnectionsResponse get_auto_configured_cdaq_sync_connections(const StubPtr& stub);
@@ -309,6 +310,7 @@ SelfTestDeviceResponse self_test_device(const StubPtr& stub, const pb::string& d
 SetAIChanCalCalDateResponse set_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name, const pb::uint32& year, const pb::uint32& month, const pb::uint32& day, const pb::uint32& hour, const pb::uint32& minute);
 SetAIChanCalExpDateResponse set_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name, const pb::uint32& year, const pb::uint32& month, const pb::uint32& day, const pb::uint32& hour, const pb::uint32& minute);
 SetAnalogPowerUpStatesResponse set_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, const std::vector<AnalogPowerUpChannelsAndState>& power_up_states);
+SetAnalogPowerUpStatesWithOutputTypeResponse set_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const std::vector<double>& state_array, const std::vector<pb::int32>& channel_type_array);
 SetArmStartTrigTrigWhenResponse set_arm_start_trig_trig_when(const StubPtr& stub, const nidevice_grpc::Session& task, const google::protobuf::Timestamp& data);
 SetBufferAttributeUInt32Response set_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<BufferUInt32Attributes, pb::int32>& attribute, const pb::uint32& value);
 SetCalInfoAttributeBoolResponse set_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, const simple_variant<CalibrationInfoBoolAttributes, pb::int32>& attribute, const bool& value);
