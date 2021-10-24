@@ -77,6 +77,16 @@ void SetU8Data(Unused, myUInt8* u8_data)
   u8_data[2] = 16;
 }
 
+void SetArraysByPtrData(int32* int32_data, myUInt16* u16_data, Unused)
+{
+  int32_data[0] = -1;
+  int32_data[1] = 1;
+  int32_data[2] = 128;
+  u16_data[0] = 0;
+  u16_data[1] = UINT16_MAX;
+  u16_data[2] = 16;
+}
+
 void SetSingleStructWithCoercionData(StructWithCoercion_struct* data, int index)
 {
   switch (index) {
@@ -1295,6 +1305,58 @@ TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooSmallInt8_Error)
 
   EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
   EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeMatches_ArraysReturnedAreThatSize)
+{
+  EXPECT_CALL(library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(3)))
+      .WillOnce(DoAll(
+          Invoke(SetArraysByPtrData),
+          Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  OutputArraysWithPassedInByPtrMechanismRequest request;
+  request.set_array_size(3);
+  OutputArraysWithPassedInByPtrMechanismResponse response;
+
+  service_.OutputArraysWithPassedInByPtrMechanism(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(3, response.i32_data_size());
+  EXPECT_EQ(3, response.i32_data().size());
+  EXPECT_EQ(-1, response.i32_data(0));
+  EXPECT_EQ(1, response.i32_data(1));
+  EXPECT_EQ(128, response.i32_data(2));
+  EXPECT_EQ(3, response.u16_data_size());
+  EXPECT_EQ(3, response.u16_data().size());
+  EXPECT_EQ(0, response.u16_data(0));
+  EXPECT_EQ(UINT16_MAX, response.u16_data(1));
+  EXPECT_EQ(16, response.u16_data(2));
+}
+
+TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTooBig_ArraysReturnedAreShrunkToCorrectSize)
+{
+  EXPECT_CALL(library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(5)))
+      .WillOnce(DoAll(
+          Invoke(SetArraysByPtrData),
+          Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  OutputArraysWithPassedInByPtrMechanismRequest request;
+  request.set_array_size(5);
+  OutputArraysWithPassedInByPtrMechanismResponse response;
+
+  service_.OutputArraysWithPassedInByPtrMechanism(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(3, response.i32_data_size());
+  EXPECT_EQ(3, response.i32_data().size());
+  EXPECT_EQ(-1, response.i32_data(0));
+  EXPECT_EQ(1, response.i32_data(1));
+  EXPECT_EQ(128, response.i32_data(2));
+  EXPECT_EQ(3, response.u16_data_size());
+  EXPECT_EQ(3, response.u16_data().size());
+  EXPECT_EQ(0, response.u16_data(0));
+  EXPECT_EQ(UINT16_MAX, response.u16_data(1));
+  EXPECT_EQ(16, response.u16_data(2));
 }
 
 }  // namespace unit
