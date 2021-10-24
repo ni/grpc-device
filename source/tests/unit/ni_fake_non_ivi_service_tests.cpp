@@ -1308,6 +1308,21 @@ TEST_F(NiFakeNonIviServiceTests, SetStructsWithCoercion_TooSmallInt8_Error)
   EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
 }
 
+void ExpectOutputArraysWithPassedInByPtrMechanismResponseData(const OutputArraysWithPassedInByPtrMechanismResponse& response)
+{
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(3, response.i32_data_size());
+  EXPECT_EQ(3, response.i32_data().size());
+  EXPECT_EQ(-1, response.i32_data(0));
+  EXPECT_EQ(1, response.i32_data(1));
+  EXPECT_EQ(128, response.i32_data(2));
+  EXPECT_EQ(3, response.u16_data_size());
+  EXPECT_EQ(3, response.u16_data().size());
+  EXPECT_EQ(0, response.u16_data(0));
+  EXPECT_EQ(UINT16_MAX, response.u16_data(1));
+  EXPECT_EQ(16, response.u16_data(2));
+}
+
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeMatches_ArraysReturnedAreThatSize)
 {
   EXPECT_CALL(library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(3)))
@@ -1321,17 +1336,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeMatc
 
   service_.OutputArraysWithPassedInByPtrMechanism(&context, &request, &response);
 
-  EXPECT_EQ(kDriverSuccess, response.status());
-  EXPECT_EQ(3, response.i32_data_size());
-  EXPECT_EQ(3, response.i32_data().size());
-  EXPECT_EQ(-1, response.i32_data(0));
-  EXPECT_EQ(1, response.i32_data(1));
-  EXPECT_EQ(128, response.i32_data(2));
-  EXPECT_EQ(3, response.u16_data_size());
-  EXPECT_EQ(3, response.u16_data().size());
-  EXPECT_EQ(0, response.u16_data(0));
-  EXPECT_EQ(UINT16_MAX, response.u16_data(1));
-  EXPECT_EQ(16, response.u16_data(2));
+  ExpectOutputArraysWithPassedInByPtrMechanismResponseData(response);
 }
 
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTooBig_ArraysReturnedAreShrunkToCorrectSize)
@@ -1347,19 +1352,8 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTo
 
   service_.OutputArraysWithPassedInByPtrMechanism(&context, &request, &response);
 
-  EXPECT_EQ(kDriverSuccess, response.status());
-  EXPECT_EQ(3, response.i32_data_size());
-  EXPECT_EQ(3, response.i32_data().size());
-  EXPECT_EQ(-1, response.i32_data(0));
-  EXPECT_EQ(1, response.i32_data(1));
-  EXPECT_EQ(128, response.i32_data(2));
-  EXPECT_EQ(3, response.u16_data_size());
-  EXPECT_EQ(3, response.u16_data().size());
-  EXPECT_EQ(0, response.u16_data(0));
-  EXPECT_EQ(UINT16_MAX, response.u16_data(1));
-  EXPECT_EQ(16, response.u16_data(2));
+  ExpectOutputArraysWithPassedInByPtrMechanismResponseData(response);
 }
-
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
