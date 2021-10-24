@@ -646,7 +646,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       convert_x_to_enum = checked_convert_x_to_enum if use_checked_enum_conversion else cast_x_to_enum
 %>\
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
-${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_name=parameter_name, transform_x=convert_x_to_enum)}\
+${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_name=parameter_name, transform_x=convert_x_to_enum, size=common_helpers.get_size_expression(parameter))}\
 %       elif parameter['type'] == 'ViReal64':
         if(${parameter_name} == (int)${parameter_name}) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
@@ -662,7 +662,7 @@ ${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_na
 %     endif
 %   elif service_helpers.is_output_array_that_needs_coercion(parameter):
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
-${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x")}\
+${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x", size=common_helpers.get_size_expression(parameter))}\
 %   elif common_helpers.is_struct(parameter) or parameter['type'] == 'ViBoolean[]':
         convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
 %   elif common_helpers.is_string_arg(parameter):
@@ -673,6 +673,10 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 %   elif parameter['type'] == 'CVIAbsoluteTime':
         convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
 %   elif common_helpers.is_array(parameter['type']):
+%     if common_helpers.get_size_mechanism(parameter) == 'passed-in-by-ptr':
+### size may have changed
+        response->mutable_${parameter_name}()->Resize(${common_helpers.get_size_expression(parameter)}, 0);
+%     endif
 ### pass: other array types don't need to copy.
 %   else:
         response->set_${parameter_name}(${parameter_name});
@@ -711,10 +715,10 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 </%def>
 
 ## Copy source_buffer to response->mutable_[parameter_name]() applying transform_x.
-<%def name="copy_to_response_with_transform(source_buffer, parameter_name, transform_x)">\
+<%def name="copy_to_response_with_transform(source_buffer, parameter_name, transform_x, size)">\
         std::transform(
           ${source_buffer}.begin(),
-          ${source_buffer}.end(),
+          ${source_buffer}.begin() + ${size},
           google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
           [&](auto x) { 
               return ${transform_x};

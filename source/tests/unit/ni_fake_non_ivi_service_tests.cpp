@@ -77,7 +77,7 @@ void SetU8Data(Unused, myUInt8* u8_data)
   u8_data[2] = 16;
 }
 
-void SetArraysByPtrData(int32* int32_data, myUInt16* u16_data, Unused)
+void SetArraysByPtrData(int32* int32_data, myUInt16* u16_data, int32* size)
 {
   int32_data[0] = -1;
   int32_data[1] = 1;
@@ -85,6 +85,7 @@ void SetArraysByPtrData(int32* int32_data, myUInt16* u16_data, Unused)
   u16_data[0] = 0;
   u16_data[1] = UINT16_MAX;
   u16_data[2] = 16;
+  *size = 3;
 }
 
 void SetSingleStructWithCoercionData(StructWithCoercion_struct* data, int index)

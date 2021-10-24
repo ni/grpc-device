@@ -7079,11 +7079,12 @@ namespace nidaqmx_grpc {
       auto status = library_->GetAnalogPowerUpStatesWithOutputType(channel_names, state_array, channel_type_array, &array_size_ptr_copy);
       response->set_status(status);
       if (status == 0) {
+        response->mutable_state_array()->Resize(array_size_ptr_copy, 0);
         response->mutable_channel_type_array()->Clear();
         response->mutable_channel_type_array()->Reserve(array_size_ptr_copy);
         std::transform(
           response->channel_type_array_raw().begin(),
-          response->channel_type_array_raw().end(),
+          response->channel_type_array_raw().begin() + array_size_ptr_copy,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_channel_type_array()),
           [&](auto x) { 
               return static_cast<nidaqmx_grpc::PowerUpStates>(x);
@@ -7947,7 +7948,7 @@ namespace nidaqmx_grpc {
           response->mutable_value()->Reserve(size);
           std::transform(
             response->value_raw().begin(),
-            response->value_raw().end(),
+            response->value_raw().begin() + size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
             [&](auto x) { 
                 return checked_convert_value(x);
@@ -9346,7 +9347,7 @@ namespace nidaqmx_grpc {
           response->mutable_value()->Reserve(size);
           std::transform(
             response->value_raw().begin(),
-            response->value_raw().end(),
+            response->value_raw().begin() + size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
             [&](auto x) { 
                 return checked_convert_value(x);
@@ -11398,7 +11399,7 @@ namespace nidaqmx_grpc {
           response->mutable_value()->Reserve(size);
           std::transform(
             response->value_raw().begin(),
-            response->value_raw().end(),
+            response->value_raw().begin() + size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
             [&](auto x) { 
                 return checked_convert_value(x);
@@ -12197,7 +12198,7 @@ namespace nidaqmx_grpc {
         response->mutable_read_array()->Reserve(array_size_in_samps);
         std::transform(
           read_array.begin(),
-          read_array.end(),
+          read_array.begin() + array_size_in_samps,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
           [&](auto x) { 
               return x;
@@ -12295,7 +12296,7 @@ namespace nidaqmx_grpc {
         response->mutable_read_array()->Reserve(array_size_in_samps);
         std::transform(
           read_array.begin(),
-          read_array.end(),
+          read_array.begin() + array_size_in_samps,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
           [&](auto x) { 
               return x;
@@ -12885,7 +12886,7 @@ namespace nidaqmx_grpc {
         response->mutable_read_array()->Reserve(array_size_in_samps);
         std::transform(
           read_array.begin(),
-          read_array.end(),
+          read_array.begin() + array_size_in_samps,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
           [&](auto x) { 
               return x;
