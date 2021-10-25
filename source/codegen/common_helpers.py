@@ -140,8 +140,9 @@ def is_unsupported_size_mechanism(parameter: dict) -> bool:
 #              Should only be used for output arrays (otherwise you can just use 'len').
 # - passed-in-by-ptr: The array's size is passed in in a separate parameter, which is specified in the 'value' member.
 #                     It is passed in by pointer, and on return the underlying call will set the actual number of
-#                     elements filled in to the array.
-#                     Should only be used for output arrays (otherwise you can just use 'len').
+#                     elements filled in to the array as long as that is smaller than the passed-in value. (if it is
+#                     larger, the underlying call will return an error)
+#                     Should only be used for output arrays.
 # - custom-code: The array's size is determined by the C++ code in the 'value' member.
 
 
