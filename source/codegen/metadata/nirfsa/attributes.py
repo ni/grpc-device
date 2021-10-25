@@ -598,11 +598,6 @@ attributes = {
         'name': 'DEVICE_TEMPERATURE',
         'type': 'ViReal64'
     },
-    1150052: {
-        'access': 'read-write',
-        'name': 'NISCOPE_SESSION',
-        'type': 'ViSession'
-    },
     1150053: {
         'access': 'read only',
         'documentation': {
@@ -739,11 +734,6 @@ attributes = {
         'enum': 'RefClockOutTerminal',
         'name': 'EXPORTED_REF_CLOCK_OUTPUT_TERMINAL',
         'type': 'ViString'
-    },
-    1150073: {
-        'access': 'read-write',
-        'name': 'NIRFSG_SESSION',
-        'type': 'ViSession'
     },
     1150074: {
         'access': 'read-write',
@@ -1684,16 +1674,6 @@ attributes = {
         'enum': 'EnabledAttr',
         'name': 'REF_TRIGGER_OSP_DELAY_ENABLED',
         'type': 'ViInt32'
-    },
-    1150200: {
-        'access': 'read-write',
-        'name': 'RF_CONDITIONING_SESSION',
-        'type': 'ViSession'
-    },
-    1150201: {
-        'access': 'read-write',
-        'name': 'IF_CONDITIONING_SESSION',
-        'type': 'ViSession'
     },
     1150203: {
         'access': 'read-write',

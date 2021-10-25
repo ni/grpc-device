@@ -1002,6 +1002,24 @@ enums = {
             }
         ]
     },
+    'LoadOptions': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' NI-RFSG loads all the configurations to the session.'
+                },
+                'name': 'SKIP_NONE',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': ' NI-RFSG skips loading the waveform configurations to the session.'
+                },
+                'name': 'SKIP_WAVEFORMS',
+                'value': 1
+            }
+        ]
+    },
     'LoopBandwidth': {
         'values': [
             {
@@ -1429,6 +1447,38 @@ enums = {
             {
                 'name': 'CURRENT_POSITION',
                 'value': 8001
+            }
+        ]
+    },
+    'ResetOptions': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' NI-RFSG resets all the configurations.'
+                },
+                'name': 'SKIP_NONE',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': ' NI-RFSG skips resetting the waveform configurations.'
+                },
+                'name': 'SKIP_WAVEFORMS',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': ' NI-RFSG skips resetting the scripts.'
+                },
+                'name': 'SKIP_SCRIPTS',
+                'value': 2
+            },
+            {
+                'documentation': {
+                    'description': ' NI-RFSG skips resetting the de-embeding tables.'
+                },
+                'name': 'SKIP_DEEMBEDING_TABLES',
+                'value': 8
             }
         ]
     },

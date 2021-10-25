@@ -410,11 +410,6 @@ attributes = {
         'name': 'LOOP_BANDWIDTH',
         'type': 'ViInt32'
     },
-    1150028: {
-        'access': 'read-write',
-        'name': 'FGEN_SESSION',
-        'type': 'ViSession'
-    },
     1150029: {
         'access': 'read-write',
         'documentation': {
@@ -768,11 +763,6 @@ attributes = {
         },
         'name': 'IQ_SKEW',
         'type': 'ViReal64'
-    },
-    1150074: {
-        'access': 'read-write',
-        'name': 'LO_SESSION',
-        'type': 'ViSession'
     },
     1150075: {
         'access': 'read only',
@@ -1414,11 +1404,6 @@ attributes = {
         'name': 'AE_TEMPERATURE',
         'type': 'ViReal64'
     },
-    1150183: {
-        'access': 'read-write',
-        'name': 'AE_SESSION',
-        'type': 'ViSession'
-    },
     1150185: {
         'access': 'read-write',
         'documentation': {
@@ -1831,6 +1816,24 @@ attributes = {
         'access': 'read-write',
         'name': 'DEEMBEDDING_COMPENSATION_GAIN',
         'type': 'ViReal64'
+    },
+    1150290: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' Specifies the configurations to skip while loading from a file. \n\n Default Value: NIRFSG_VAL_LOAD_CONFIGURATIONS_FROM_FILE_LOAD_OPTIONS_SKIP_NONE\n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841\n\n'
+        },
+        'enum': 'LoadOptions',
+        'name': 'LOAD_CONFIGURATIONS_FROM_FILE_LOAD_OPTIONS',
+        'type': 'ViInt32'
+    },
+    1150291: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' Specifies the configurations to skip to reset while loading from a file. \n\n Default Value: NIRFSG_VAL_LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS_SKIP_NONE\n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841\n\n'
+        },
+        'enum': 'ResetOptions',
+        'name': 'LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS',
+        'type': 'ViInt32'
     },
     1150293: {
         'access': 'read-write',
