@@ -64,6 +64,27 @@ enums = {
                 },
                 'name': 'PEAK_HOLD_AVERAGING',
                 'value': 403
+            },
+            {
+                'documentation': {
+                    'description': ' Min Hold averaging'
+                },
+                'name': 'MIN_HOLD_AVERAGING',
+                'value': 404
+            },
+            {
+                'documentation': {
+                    'description': ' Scalar averaging'
+                },
+                'name': 'SCALAR_AVERAGING',
+                'value': 405
+            },
+            {
+                'documentation': {
+                    'description': ' Log averaging'
+                },
+                'name': 'LOG_AVERAGING',
+                'value': 406
             }
         ]
     },
@@ -787,6 +808,20 @@ enums = {
                 },
                 'name': 'LOW_SIDE_LOBE',
                 'value': 509
+            },
+            {
+                'documentation': {
+                    'description': ' Gaussian Window.  '
+                },
+                'name': 'GAUSSIAN',
+                'value': 510
+            },
+            {
+                'documentation': {
+                    'description': ' Kaiser-Bessel window.  '
+                },
+                'name': 'KAISER_BESSEL',
+                'value': 511
             }
         ]
     },
@@ -1337,6 +1372,22 @@ enums = {
             }
         ]
     },
+    'ResetWithOptionsStepsToOmit': {
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'ROUTES',
+                'value': 1
+            },
+            {
+                'name': 'DEEMBEDDING_TABLES',
+                'value': 2
+            }
+        ]
+    },
     'RfLBSigCondPathSel': {
         'values': [
             {
@@ -1567,6 +1618,54 @@ enums = {
                 },
                 'name': 'FILTER_PATH_EXTERNAL_FILTER',
                 'value': 3317
+            }
+        ]
+    },
+    'SelfCalibrateStepsToOmit': {
+        'values': [
+            {
+                'name': 'OMIT_NONE',
+                'value': 0
+            },
+            {
+                'name': 'ALIGNMENT',
+                'value': 1
+            },
+            {
+                'name': 'GAIN_REFERENCE',
+                'value': 2
+            },
+            {
+                'name': 'IF_FLATNESS',
+                'value': 4
+            },
+            {
+                'name': 'DIGITIZER_SELF_CAL',
+                'value': 8
+            },
+            {
+                'name': 'LO_SELF_CAL',
+                'value': 16
+            },
+            {
+                'name': 'AMPLITUDE_ACCURACY',
+                'value': 32
+            },
+            {
+                'name': 'RESIDUAL_LO_POWER',
+                'value': 64
+            },
+            {
+                'name': 'IMAGE_SUPPRESSION',
+                'value': 128
+            },
+            {
+                'name': 'SYNTHESIZER_ALIGNMENT',
+                'value': 256
+            },
+            {
+                'name': 'DC_OFFSET',
+                'value': 512
             }
         ]
     },

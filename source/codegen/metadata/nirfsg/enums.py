@@ -898,6 +898,18 @@ enums = {
             }
         ]
     },
+    'IqOffsetUnits': {
+        'values': [
+            {
+                'name': 'PERCENT',
+                'value': 11000
+            },
+            {
+                'name': 'VOLTS',
+                'value': 11001
+            }
+        ]
+    },
     'IqOutPortTermConfig': {
         'values': [
             {
@@ -987,6 +999,24 @@ enums = {
                 },
                 'name': 'AUTOMATIC_SG_SA_SHARED',
                 'value': 'Automatic_SG_SA_Shared'
+            }
+        ]
+    },
+    'LoadOptions': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' NI-RFSG loads all the configurations to the session.'
+                },
+                'name': 'SKIP_NONE',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': ' NI-RFSG skips loading the waveform configurations to the session.'
+                },
+                'name': 'SKIP_WAVEFORMS',
+                'value': 1
             }
         ]
     },
@@ -1349,6 +1379,18 @@ enums = {
             }
         ]
     },
+    'RefClockRate': {
+        'values': [
+            {
+                'name': '10_MHZ',
+                'value': 10000000
+            },
+            {
+                'name': 'AUTO',
+                'value': -1
+            }
+        ]
+    },
     'RefClockSource': {
         'generate-mappings': True,
         'values': [
@@ -1405,6 +1447,78 @@ enums = {
             {
                 'name': 'CURRENT_POSITION',
                 'value': 8001
+            }
+        ]
+    },
+    'ResetOptions': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' NI-RFSG resets all the configurations.'
+                },
+                'name': 'SKIP_NONE',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': ' NI-RFSG skips resetting the waveform configurations.'
+                },
+                'name': 'SKIP_WAVEFORMS',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': ' NI-RFSG skips resetting the scripts.'
+                },
+                'name': 'SKIP_SCRIPTS',
+                'value': 2
+            },
+            {
+                'documentation': {
+                    'description': ' NI-RFSG skips resetting the de-embeding tables.'
+                },
+                'name': 'SKIP_DEEMBEDING_TABLES',
+                'value': 8
+            }
+        ]
+    },
+    'ResetWithOptionsStepsToOmit': {
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'WAVEFORMS',
+                'value': 1
+            },
+            {
+                'name': 'SCRIPTS',
+                'value': 2
+            },
+            {
+                'name': 'ROUTES',
+                'value': 4
+            },
+            {
+                'name': 'DEEMBEDDING_TABLES',
+                'value': 8
+            }
+        ]
+    },
+    'RfInLoExportEnabled': {
+        'values': [
+            {
+                'name': 'UNSPECIFIED',
+                'value': -2
+            },
+            {
+                'name': 'DISABLE',
+                'value': 0
+            },
+            {
+                'name': 'ENABLE',
+                'value': 1
             }
         ]
     },
@@ -1485,6 +1599,34 @@ enums = {
                 },
                 'name': 'SOFTWARE',
                 'value': 2
+            }
+        ]
+    },
+    'SelfCalibrateRangeStepsToOmit': {
+        'values': [
+            {
+                'name': 'OMIT_NONE',
+                'value': 0
+            },
+            {
+                'name': 'LO_SELF_CAL',
+                'value': 1
+            },
+            {
+                'name': 'POWER_LEVEL_ACCURACY',
+                'value': 2
+            },
+            {
+                'name': 'RESIDUAL_LO_POWER',
+                'value': 4
+            },
+            {
+                'name': 'IMAGE_SUPPRESSION',
+                'value': 8
+            },
+            {
+                'name': 'SYNTHESIZER_ALIGNMENT',
+                'value': 16
             }
         ]
     },

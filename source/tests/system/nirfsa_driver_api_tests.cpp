@@ -8,12 +8,14 @@
 #include "niRFSA.h"
 #include "niRFSAErrors.h"
 #include "nirfsa/nirfsa_client.h"
+#include "niscope/niscope_client.h"
 #include "nitclk/nitclk_client.h"
 
 using namespace ::testing;
 using namespace nirfsa_grpc;
 namespace client = nirfsa_grpc::experimental::client;
 namespace nitclk_client = nitclk_grpc::experimental::client;
+namespace niscope_client = niscope_grpc::experimental::client;
 namespace pb = google::protobuf;
 
 namespace ni {
@@ -59,6 +61,11 @@ class NiRFSADriverApiTests : public Test {
   std::unique_ptr<nitclk_grpc::NiTClk::Stub> create_tclk_stub() const
   {
     return nitclk_grpc::NiTClk::NewStub(device_server_->InProcessChannel());
+  }
+
+  std::unique_ptr<niscope_grpc::NiScope::Stub> create_scope_stub() const
+  {
+    return niscope_grpc::NiScope::NewStub(device_server_->InProcessChannel());
   }
 
   void check_error(const nidevice_grpc::Session& session)
@@ -317,7 +324,7 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFFTWindowType_UpdatesFFTWindowSuccessful
       session,
       "",
       NiRFSAAttributes::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE,
-      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_BLACKMAN);
+      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_GAUSSIAN);
   auto get_response = client::get_attribute_vi_int32(
       stub(),
       session,
@@ -329,7 +336,7 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFFTWindowType_UpdatesFFTWindowSuccessful
   EXPECT_SUCCESS(session, get_response);
   EXPECT_NE(initial_response.value(), get_response.value());
   EXPECT_EQ(
-      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_BLACKMAN,
+      NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_GAUSSIAN,
       get_response.value());
 }
 
@@ -549,6 +556,32 @@ TEST_F(NiRFSADriverApiTests, TwoSessions_SetupTclkSyncPulseSenderSynchronization
 
   EXPECT_SUCCESS(first_session, result);
 }
+
+TEST_F(NiRFSADriverApiTests, SelfCalibrateWithStepsToOmit_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  const auto response = client::self_calibrate(stub(), session, SelfCalibrateStepsToOmit::SELF_CALIBRATE_STEPS_TO_OMIT_ALIGNMENT);
+
+  EXPECT_SUCCESS(session, response);
+}
+
+// NOTE: disabled because this test requires a 58XX device. Simulating a 58XX hangs on shutdown.
+TEST_F(NiRFSADriverApiTests, DISABLED_GetDeembeddingCompensationGain_Succeeds)
+{
+  auto session = init_session(stub(), "5830");
+
+  const auto deembedding_type = client::set_attribute_vi_int32(
+      stub(),
+      session,
+      "if1",
+      NiRFSAAttributes::NIRFSA_ATTRIBUTE_DEEMBEDDING_TYPE,
+      NiRFSAInt32AttributeValues::NIRFSA_INT32_DEEMBEDDING_TYPE_SCALAR);
+  const auto compensation_gain = client::get_attribute_vi_real64(stub(), session, "", NiRFSAAttributes::NIRFSA_ATTRIBUTE_DEEMBEDDING_COMPENSATION_GAIN);
+
+  EXPECT_NEAR(0.0, compensation_gain.value(), 1e-6);
+  EXPECT_SUCCESS(session, compensation_gain);
+}
+
 }  // namespace
 }  // namespace system
 }  // namespace tests

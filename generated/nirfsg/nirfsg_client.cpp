@@ -116,7 +116,7 @@ check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViReal64Response
-check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const double& value_raw)
+check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const simple_variant<NiRFSGReal64AttributeValues, double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -124,7 +124,14 @@ check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi,
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  const auto value_ptr = value.get_if<NiRFSGReal64AttributeValues>();
+  const auto value_raw_ptr = value.get_if<double>();
+  if (value_ptr) {
+    request.set_value(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = CheckAttributeViReal64Response{};
 
@@ -1671,13 +1678,20 @@ reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ResetWithOptionsResponse
-reset_with_options(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::uint64& steps_to_omit)
+reset_with_options(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ResetWithOptionsStepsToOmit, pb::uint64>& steps_to_omit)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetWithOptionsRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_steps_to_omit(steps_to_omit);
+  const auto steps_to_omit_ptr = steps_to_omit.get_if<ResetWithOptionsStepsToOmit>();
+  const auto steps_to_omit_raw_ptr = steps_to_omit.get_if<pb::uint64>();
+  if (steps_to_omit_ptr) {
+    request.set_steps_to_omit(*steps_to_omit_ptr);
+  }
+  else if (steps_to_omit_raw_ptr) {
+    request.set_steps_to_omit_raw(*steps_to_omit_raw_ptr);
+  }
 
   auto response = ResetWithOptionsResponse{};
 
@@ -1755,13 +1769,20 @@ self_cal(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SelfCalibrateRangeResponse
-self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int64& steps_to_omit, const double& min_frequency, const double& max_frequency, const double& min_power_level, const double& max_power_level)
+self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateRangeStepsToOmit, pb::int64>& steps_to_omit, const double& min_frequency, const double& max_frequency, const double& min_power_level, const double& max_power_level)
 {
   ::grpc::ClientContext context;
 
   auto request = SelfCalibrateRangeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_steps_to_omit(steps_to_omit);
+  const auto steps_to_omit_ptr = steps_to_omit.get_if<SelfCalibrateRangeStepsToOmit>();
+  const auto steps_to_omit_raw_ptr = steps_to_omit.get_if<pb::int64>();
+  if (steps_to_omit_ptr) {
+    request.set_steps_to_omit(*steps_to_omit_ptr);
+  }
+  else if (steps_to_omit_raw_ptr) {
+    request.set_steps_to_omit_raw(*steps_to_omit_raw_ptr);
+  }
   request.set_min_frequency(min_frequency);
   request.set_max_frequency(max_frequency);
   request.set_min_power_level(min_power_level);
@@ -1914,7 +1935,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const double& value_raw)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSGAttributes& attribute, const simple_variant<NiRFSGReal64AttributeValues, double>& value)
 {
   ::grpc::ClientContext context;
 
@@ -1922,7 +1943,14 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  const auto value_ptr = value.get_if<NiRFSGReal64AttributeValues>();
+  const auto value_raw_ptr = value.get_if<double>();
+  if (value_ptr) {
+    request.set_value(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = SetAttributeViReal64Response{};
 

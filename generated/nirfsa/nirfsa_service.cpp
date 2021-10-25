@@ -2903,7 +2903,22 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViUInt64 steps_to_omit = request->steps_to_omit();
+      ViUInt64 steps_to_omit;
+      switch (request->steps_to_omit_enum_case()) {
+        case nirfsa_grpc::ResetWithOptionsRequest::StepsToOmitEnumCase::kStepsToOmit: {
+          steps_to_omit = static_cast<ViUInt64>(request->steps_to_omit());
+          break;
+        }
+        case nirfsa_grpc::ResetWithOptionsRequest::StepsToOmitEnumCase::kStepsToOmitRaw: {
+          steps_to_omit = static_cast<ViUInt64>(request->steps_to_omit_raw());
+          break;
+        }
+        case nirfsa_grpc::ResetWithOptionsRequest::StepsToOmitEnumCase::STEPS_TO_OMIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for steps_to_omit was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ResetWithOptions(vi, steps_to_omit);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2967,7 +2982,22 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt64 steps_to_omit = request->steps_to_omit();
+      ViInt64 steps_to_omit;
+      switch (request->steps_to_omit_enum_case()) {
+        case nirfsa_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::kStepsToOmit: {
+          steps_to_omit = static_cast<ViInt64>(request->steps_to_omit());
+          break;
+        }
+        case nirfsa_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::kStepsToOmitRaw: {
+          steps_to_omit = static_cast<ViInt64>(request->steps_to_omit_raw());
+          break;
+        }
+        case nirfsa_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::STEPS_TO_OMIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for steps_to_omit was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SelfCalibrate(vi, steps_to_omit);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2987,7 +3017,22 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt64 steps_to_omit = request->steps_to_omit();
+      ViInt64 steps_to_omit;
+      switch (request->steps_to_omit_enum_case()) {
+        case nirfsa_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::kStepsToOmit: {
+          steps_to_omit = static_cast<ViInt64>(request->steps_to_omit());
+          break;
+        }
+        case nirfsa_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::kStepsToOmitRaw: {
+          steps_to_omit = static_cast<ViInt64>(request->steps_to_omit_raw());
+          break;
+        }
+        case nirfsa_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::STEPS_TO_OMIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for steps_to_omit was not specified or out of range");
+          break;
+        }
+      }
+
       ViReal64 min_frequency = request->min_frequency();
       ViReal64 max_frequency = request->max_frequency();
       ViReal64 min_reference_level = request->min_reference_level();
