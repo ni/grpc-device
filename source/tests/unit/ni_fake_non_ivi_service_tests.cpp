@@ -1354,6 +1354,23 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTo
 
   ExpectOutputArraysWithPassedInByPtrMechanismResponseData(response);
 }
+
+TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTooSmall_ReturnsError)
+{
+  const int32 SOME_ERROR = 10;
+  EXPECT_CALL(library_, OutputArraysWithPassedInByPtrMechanism(_, _, Pointee(5)))
+      .WillOnce(
+          Return(SOME_ERROR));
+  ::grpc::ServerContext context;
+  OutputArraysWithPassedInByPtrMechanismRequest request;
+  request.set_array_size(5);
+  OutputArraysWithPassedInByPtrMechanismResponse response;
+
+  service_.OutputArraysWithPassedInByPtrMechanism(&context, &request, &response);
+
+  EXPECT_EQ(SOME_ERROR, response.status());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
