@@ -4647,7 +4647,7 @@ message CfgWatchdogAOExpirStatesRequest {
   nidevice_grpc.Session task = 1;
   string channel_names = 2;
   repeated double expir_state_array = 3;
-  repeated int32 output_type_array = 4;
+  repeated WatchdogAOOutputType output_type_array = 4;
 }
 
 message CfgWatchdogAOExpirStatesResponse {
@@ -4657,7 +4657,7 @@ message CfgWatchdogAOExpirStatesResponse {
 message CfgWatchdogCOExpirStatesRequest {
   nidevice_grpc.Session task = 1;
   string channel_names = 2;
-  repeated int32 expir_state_array = 3;
+  repeated WatchdogCOExpirState expir_state_array = 3;
 }
 
 message CfgWatchdogCOExpirStatesResponse {
@@ -4667,7 +4667,7 @@ message CfgWatchdogCOExpirStatesResponse {
 message CfgWatchdogDOExpirStatesRequest {
   nidevice_grpc.Session task = 1;
   string channel_names = 2;
-  repeated int32 expir_state_array = 3;
+  repeated DigitalLineState expir_state_array = 3;
 }
 
 message CfgWatchdogDOExpirStatesResponse {
@@ -8889,7 +8889,7 @@ message SetAnalogPowerUpStatesResponse {
 message SetAnalogPowerUpStatesWithOutputTypeRequest {
   string channel_names = 1;
   repeated double state_array = 2;
-  repeated int32 channel_type_array = 3;
+  repeated PowerUpStates channel_type_array = 3;
 }
 
 message SetAnalogPowerUpStatesWithOutputTypeResponse {
