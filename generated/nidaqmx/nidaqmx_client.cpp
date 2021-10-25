@@ -4565,13 +4565,13 @@ get_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, c
 }
 
 GetAnalogPowerUpStatesWithOutputTypeResponse
-get_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const pb::uint32& array_size_ptr)
+get_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const pb::uint32& array_size)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAnalogPowerUpStatesWithOutputTypeRequest{};
   request.set_channel_names(channel_names);
-  request.set_array_size_ptr(array_size_ptr);
+  request.set_array_size(array_size);
 
   auto response = GetAnalogPowerUpStatesWithOutputTypeResponse{};
 

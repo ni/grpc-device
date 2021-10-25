@@ -6858,13 +6858,13 @@ message GetAnalogPowerUpStatesResponse {
 
 message GetAnalogPowerUpStatesWithOutputTypeRequest {
   string channel_names = 1;
-  uint32 array_size_ptr = 2;
+  uint32 array_size = 2;
 }
 
 message GetAnalogPowerUpStatesWithOutputTypeResponse {
   int32 status = 1;
   repeated double state_array = 2;
-  repeated PowerUpStates channel_type_array = 3;
+  repeated PowerUpChannelType channel_type_array = 3;
   repeated int32 channel_type_array_raw = 4;
 }
 

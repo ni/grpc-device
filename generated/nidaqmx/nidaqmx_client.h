@@ -151,7 +151,7 @@ ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Ses
 GetAIChanCalCalDateResponse get_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name);
 GetAIChanCalExpDateResponse get_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::string& channel_name);
 GetAnalogPowerUpStatesResponse get_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, const std::vector<AnalogPowerUpChannelAndType>& channels);
-GetAnalogPowerUpStatesWithOutputTypeResponse get_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const pb::uint32& array_size_ptr);
+GetAnalogPowerUpStatesWithOutputTypeResponse get_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const pb::uint32& array_size);
 GetArmStartTrigTimestampValResponse get_arm_start_trig_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetArmStartTrigTrigWhenResponse get_arm_start_trig_trig_when(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetAutoConfiguredCDAQSyncConnectionsResponse get_auto_configured_cdaq_sync_connections(const StubPtr& stub);

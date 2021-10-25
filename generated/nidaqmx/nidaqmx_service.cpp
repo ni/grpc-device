@@ -7071,23 +7071,23 @@ namespace nidaqmx_grpc {
     }
     try {
       auto channel_names = request->channel_names().c_str();
-      uInt32 array_size_ptr_copy = request->array_size_ptr();
-      response->mutable_state_array()->Resize(array_size_ptr_copy, 0);
+      uInt32 array_size_copy = request->array_size();
+      response->mutable_state_array()->Resize(array_size_copy, 0);
       float64* state_array = response->mutable_state_array()->mutable_data();
-      response->mutable_channel_type_array_raw()->Resize(array_size_ptr_copy, 0);
+      response->mutable_channel_type_array_raw()->Resize(array_size_copy, 0);
       int32* channel_type_array = reinterpret_cast<int32*>(response->mutable_channel_type_array_raw()->mutable_data());
-      auto status = library_->GetAnalogPowerUpStatesWithOutputType(channel_names, state_array, channel_type_array, &array_size_ptr_copy);
+      auto status = library_->GetAnalogPowerUpStatesWithOutputType(channel_names, state_array, channel_type_array, &array_size_copy);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_state_array()->Resize(array_size_ptr_copy, 0);
+        response->mutable_state_array()->Resize(array_size_copy, 0);
         response->mutable_channel_type_array()->Clear();
-        response->mutable_channel_type_array()->Reserve(array_size_ptr_copy);
+        response->mutable_channel_type_array()->Reserve(array_size_copy);
         std::transform(
           response->channel_type_array_raw().begin(),
-          response->channel_type_array_raw().begin() + array_size_ptr_copy,
+          response->channel_type_array_raw().begin() + array_size_copy,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_channel_type_array()),
           [&](auto x) { 
-              return static_cast<nidaqmx_grpc::PowerUpStates>(x);
+              return static_cast<nidaqmx_grpc::PowerUpChannelType>(x);
           });
       }
       return ::grpc::Status::OK;

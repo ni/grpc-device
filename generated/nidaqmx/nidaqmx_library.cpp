@@ -1968,15 +1968,15 @@ int32 NiDAQmxLibrary::GetAnalogPowerUpStates(const char deviceName[], const char
 #endif
 }
 
-int32 NiDAQmxLibrary::GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySizePtr)
+int32 NiDAQmxLibrary::GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySize)
 {
   if (!function_pointers_.GetAnalogPowerUpStatesWithOutputType) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetAnalogPowerUpStatesWithOutputType.");
   }
 #if defined(_MSC_VER)
-  return DAQmxGetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySizePtr);
+  return DAQmxGetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySize);
 #else
-  return function_pointers_.GetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySizePtr);
+  return function_pointers_.GetAnalogPowerUpStatesWithOutputType(channelNames, stateArray, channelTypeArray, arraySize);
 #endif
 }
 

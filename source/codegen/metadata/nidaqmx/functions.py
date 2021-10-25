@@ -5966,23 +5966,23 @@ functions = {
                 'name': 'stateArray',
                 'size': {
                     'mechanism': 'passed-in-by-ptr',
-                    'value': 'arraySizePtr'
+                    'value': 'arraySize'
                 },
                 'type': 'float64[]'
             },
             {
                 'direction': 'out',
-                'enum': 'PowerUpStates',
+                'enum': 'PowerUpChannelType',
                 'name': 'channelTypeArray',
                 'size': {
                     'mechanism': 'passed-in-by-ptr',
-                    'value': 'arraySizePtr'
+                    'value': 'arraySize'
                 },
                 'type': 'int32[]'
             },
             {
                 'direction': 'in',
-                'name': 'arraySizePtr',
+                'name': 'arraySize',
                 'type': 'uInt32'
             }
         ],
