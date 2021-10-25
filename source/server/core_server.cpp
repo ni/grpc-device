@@ -42,6 +42,7 @@ struct ServerConfiguration {
   std::string server_cert;
   std::string server_key;
   std::string root_cert;
+  int max_message_size;
   nidevice_grpc::FeatureToggles feature_toggles;
 };
 
@@ -56,6 +57,7 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
     config.root_cert = server_config_parser.parse_root_cert();
+    config.max_message_size = server_config_parser.parse_max_message_size();
     config.feature_toggles = server_config_parser.parse_feature_toggles();
   }
   catch (const std::exception& ex) {
@@ -150,6 +152,9 @@ static void RunServer(const ServerConfiguration& config)
   if (nirfsa_service.is_enabled()) {
     builder.RegisterService(&nirfsa_service);
   }
+
+  builder.SetMaxSendMessageSize(config.max_message_size);
+  builder.SetMaxReceiveMessageSize(config.max_message_size);
 
   // Assemble the server.
   {

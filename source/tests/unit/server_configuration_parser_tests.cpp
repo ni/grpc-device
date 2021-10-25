@@ -482,6 +482,57 @@ TEST(ServerConfigurationParserTests, JsonConfigWithNoFeatureToggles_ParseFeature
   EXPECT_FALSE(features.is_feature_enabled("scary_prototype_feature", CodeReadiness::kPrototype));
 }
 
+TEST(ServerConfigurationParserTests, JsonConfigWithNoMaxMessageSize_ParseMaxMessageSize_MaxMessageSizeIsUnlimited)
+{
+  const auto config_json = nlohmann::json::parse(R"({})");
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  const auto message_size = server_config_parser.parse_max_message_size();
+
+  EXPECT_EQ(nidevice_grpc::UNLIMITED_MAX_MESSAGE_SIZE, message_size);
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithMaxMessageSize_ParseMaxMessageSize_MaxMessageSizeIsParsed)
+{
+  const auto config_json = nlohmann::json::parse(R"(
+  {
+    "max_message_size": 8000000
+  })");
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  const auto message_size = server_config_parser.parse_max_message_size();
+
+  EXPECT_EQ(8000000, message_size);
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithNegativeMaxMessageSize_ParseMaxMessageSize_MaxMessageSizeIsParsed)
+{
+  const auto config_json = nlohmann::json::parse(R"(
+  {
+    "max_message_size": -12345
+  })");
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  const auto message_size = server_config_parser.parse_max_message_size();
+
+  EXPECT_EQ(-12345, message_size);
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWitIllFormedMaxMessageSize_ParseMaxMessageSize_ThrowsInvalidMaxMessageSizeException)
+{
+  const auto config_json = nlohmann::json::parse(R"(
+  {
+    "max_message_size": "something_else"
+  })");
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  EXPECT_THROW(
+      {
+        const auto message_size = server_config_parser.parse_max_message_size();
+      },
+      nidevice_grpc::ServerConfigurationParser::InvalidMaxMessageSizeException);
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
