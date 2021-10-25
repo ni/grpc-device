@@ -687,6 +687,10 @@ class NiDAQmxDriverApiTests : public Test {
   void EXPECT_SUCCESS(const TResponse& response)
   {
     EXPECT_EQ(DAQmxSuccess, response.status());
+    if (response.status() != DAQmxSuccess) {
+      auto error_response = client::get_error_string(stub(), response.status());
+      EXPECT_EQ("", error_response.error_string());
+    }
   }
 
   template <typename TResponse>
