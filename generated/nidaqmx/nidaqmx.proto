@@ -8889,7 +8889,7 @@ message SetAnalogPowerUpStatesResponse {
 message SetAnalogPowerUpStatesWithOutputTypeRequest {
   string channel_names = 1;
   repeated double state_array = 2;
-  repeated PowerUpStates channel_type_array = 3;
+  repeated PowerUpChannelType channel_type_array = 3;
 }
 
 message SetAnalogPowerUpStatesWithOutputTypeResponse {

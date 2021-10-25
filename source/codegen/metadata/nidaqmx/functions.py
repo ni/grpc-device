@@ -10884,7 +10884,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'PowerUpStates',
+                'enum': 'PowerUpChannelType',
                 'name': 'channelTypeArray',
                 'size': {
                     'mechanism': 'len',
