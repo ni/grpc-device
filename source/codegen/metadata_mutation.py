@@ -44,9 +44,11 @@ def mark_size_params(parameters):
     """Marks the size parameters in the metadata."""
     for param in parameters:
         mechanism = common_helpers.get_size_mechanism(param)
-        if mechanism in {'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist'}:
+        if mechanism in {'len', 'ivi-dance', 'passed-in', 'passed-in-by-ptr', 'ivi-dance-with-a-twist'}:
             size_param = get_size_param(param, parameters)
             size_param['is_size_param'] = True
+            if mechanism == 'passed-in-by-ptr':
+                size_param['pointer'] = True
 
 def mark_non_proto_params(parameters):
     """Mark the parameters that shouldn't be included in the proto request message. 

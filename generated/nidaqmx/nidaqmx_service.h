@@ -162,6 +162,7 @@ public:
   ::grpc::Status GetAIChanCalCalDate(::grpc::ServerContext* context, const GetAIChanCalCalDateRequest* request, GetAIChanCalCalDateResponse* response) override;
   ::grpc::Status GetAIChanCalExpDate(::grpc::ServerContext* context, const GetAIChanCalExpDateRequest* request, GetAIChanCalExpDateResponse* response) override;
   ::grpc::Status GetAnalogPowerUpStates(::grpc::ServerContext* context, const GetAnalogPowerUpStatesRequest* request, GetAnalogPowerUpStatesResponse* response) override;
+  ::grpc::Status GetAnalogPowerUpStatesWithOutputType(::grpc::ServerContext* context, const GetAnalogPowerUpStatesWithOutputTypeRequest* request, GetAnalogPowerUpStatesWithOutputTypeResponse* response) override;
   ::grpc::Status GetArmStartTrigTimestampVal(::grpc::ServerContext* context, const GetArmStartTrigTimestampValRequest* request, GetArmStartTrigTimestampValResponse* response) override;
   ::grpc::Status GetArmStartTrigTrigWhen(::grpc::ServerContext* context, const GetArmStartTrigTrigWhenRequest* request, GetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status GetAutoConfiguredCDAQSyncConnections(::grpc::ServerContext* context, const GetAutoConfiguredCDAQSyncConnectionsRequest* request, GetAutoConfiguredCDAQSyncConnectionsResponse* response) override;
@@ -320,6 +321,7 @@ public:
   ::grpc::Status SetAIChanCalCalDate(::grpc::ServerContext* context, const SetAIChanCalCalDateRequest* request, SetAIChanCalCalDateResponse* response) override;
   ::grpc::Status SetAIChanCalExpDate(::grpc::ServerContext* context, const SetAIChanCalExpDateRequest* request, SetAIChanCalExpDateResponse* response) override;
   ::grpc::Status SetAnalogPowerUpStates(::grpc::ServerContext* context, const SetAnalogPowerUpStatesRequest* request, SetAnalogPowerUpStatesResponse* response) override;
+  ::grpc::Status SetAnalogPowerUpStatesWithOutputType(::grpc::ServerContext* context, const SetAnalogPowerUpStatesWithOutputTypeRequest* request, SetAnalogPowerUpStatesWithOutputTypeResponse* response) override;
   ::grpc::Status SetArmStartTrigTrigWhen(::grpc::ServerContext* context, const SetArmStartTrigTrigWhenRequest* request, SetArmStartTrigTrigWhenResponse* response) override;
   ::grpc::Status SetBufferAttributeUInt32(::grpc::ServerContext* context, const SetBufferAttributeUInt32Request* request, SetBufferAttributeUInt32Response* response) override;
   ::grpc::Status SetCalInfoAttributeBool(::grpc::ServerContext* context, const SetCalInfoAttributeBoolRequest* request, SetCalInfoAttributeBoolResponse* response) override;

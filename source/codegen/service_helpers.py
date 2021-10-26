@@ -96,6 +96,8 @@ def create_args(parameters):
             result = f'{result}CallbackRouter::handle_callback, '
         elif 'callback_token' in parameter:
             result = f'{result}handler->token(), '
+        elif not is_output and common_helpers.is_pointer_parameter(parameter) and 'hardcoded_value' not in parameter:
+            result = f'{result}&{parameter_name}_copy, '
         else:
             if is_array and common_helpers.is_struct(parameter):
                 parameter_name = parameter_name + ".data()"

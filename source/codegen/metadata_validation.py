@@ -258,7 +258,7 @@ def validate_parameter_size(parameter: dict, function_name: str, metadata: dict)
     if size is not None:
         SIZE_SCHEMA.validate(size)
         mechanism = size['mechanism']
-        if mechanism in ['len', 'ivi-dance', 'ivi-dance-with-a-twist', 'passed-in']:
+        if mechanism in ['len', 'ivi-dance', 'ivi-dance-with-a-twist', 'passed-in', 'passed-in-by-ptr']:
             if not parameter_name_exists(function, size['value']):
                 raise Exception(
                     f"parameter {parameter['name']} refers to nonexistant parameter {size['value']} in its size value!")
@@ -274,7 +274,7 @@ def validate_parameter_size(parameter: dict, function_name: str, metadata: dict)
                 raise Exception(
                     f"parameter {parameter['name']} has value_twist in its size parameter but is not ivi-dance-with-a-twist!")
         if parameter['direction'] == 'in':
-            if mechanism == 'passed-in':
+            if mechanism == 'passed-in' or mechanism == 'passed-in-by-ptr':
                 if not rule_is_suppressed(metadata, RULES.INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE,
                                           ["functions", function_name, "parameters", parameter["name"]]):
                     raise Exception(

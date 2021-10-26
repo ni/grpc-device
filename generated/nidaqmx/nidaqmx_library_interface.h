@@ -142,6 +142,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 ExportSignal(TaskHandle task, int32 signalID, const char outputTerminal[]) = 0;
   virtual int32 GetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
   virtual int32 GetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32* year, uInt32* month, uInt32* day, uInt32* hour, uInt32* minute) = 0;
+  virtual int32 GetAnalogPowerUpStatesWithOutputType(const char channelNames[], float64 stateArray[], int32 channelTypeArray[], uInt32* arraySize) = 0;
   virtual int32 GetArmStartTrigTimestampVal(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime* data) = 0;
   virtual int32 GetAutoConfiguredCDAQSyncConnections(char portList[], uInt32 portListSize) = 0;
@@ -297,6 +298,7 @@ class NiDAQmxLibraryInterface {
   virtual int32 SelfTestDevice(const char deviceName[]) = 0;
   virtual int32 SetAIChanCalCalDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute) = 0;
   virtual int32 SetAIChanCalExpDate(TaskHandle task, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute) = 0;
+  virtual int32 SetAnalogPowerUpStatesWithOutputType(const char channelNames[], const float64 stateArray[], const int32 channelTypeArray[], uInt32 arraySize) = 0;
   virtual int32 SetArmStartTrigTrigWhen(TaskHandle task, CVIAbsoluteTime data) = 0;
   virtual int32 SetBufferAttributeUInt32(TaskHandle task, int32 attribute, uInt32 value) = 0;
   virtual int32 SetCalInfoAttributeBool(const char deviceName[], int32 attribute, bool32 value, uInt32 size) = 0;

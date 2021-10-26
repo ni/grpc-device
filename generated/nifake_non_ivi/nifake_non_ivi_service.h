@@ -44,6 +44,7 @@ public:
   ::grpc::Status OutputArraysWithNarrowIntegerTypes(::grpc::ServerContext* context, const OutputArraysWithNarrowIntegerTypesRequest* request, OutputArraysWithNarrowIntegerTypesResponse* response) override;
   ::grpc::Status InputArrayOfBytes(::grpc::ServerContext* context, const InputArrayOfBytesRequest* request, InputArrayOfBytesResponse* response) override;
   ::grpc::Status OutputArrayOfBytes(::grpc::ServerContext* context, const OutputArrayOfBytesRequest* request, OutputArrayOfBytesResponse* response) override;
+  ::grpc::Status OutputArraysWithPassedInByPtrMechanism(::grpc::ServerContext* context, const OutputArraysWithPassedInByPtrMechanismRequest* request, OutputArraysWithPassedInByPtrMechanismResponse* response) override;
   ::grpc::ServerWriteReactor<RegisterCallbackResponse>* RegisterCallback(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request) override;
   ::grpc::ServerWriteReactor<ReadStreamResponse>* ReadStream(::grpc::CallbackServerContext* context, const ReadStreamRequest* request) override;
   ::grpc::Status InputTimestamp(::grpc::ServerContext* context, const InputTimestampRequest* request, InputTimestampResponse* response) override;

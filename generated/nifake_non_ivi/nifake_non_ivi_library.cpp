@@ -32,6 +32,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.OutputArraysWithNarrowIntegerTypes = reinterpret_cast<OutputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArraysWithNarrowIntegerTypes"));
   function_pointers_.InputArrayOfBytes = reinterpret_cast<InputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArrayOfBytes"));
   function_pointers_.OutputArrayOfBytes = reinterpret_cast<OutputArrayOfBytesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArrayOfBytes"));
+  function_pointers_.OutputArraysWithPassedInByPtrMechanism = reinterpret_cast<OutputArraysWithPassedInByPtrMechanismPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputArraysWithPassedInByPtrMechanism"));
   function_pointers_.RegisterCallback = reinterpret_cast<RegisterCallbackPtr>(shared_library_.get_function_pointer("niFakeNonIvi_RegisterCallback"));
   function_pointers_.ReadStream = reinterpret_cast<ReadStreamPtr>(shared_library_.get_function_pointer("niFakeNonIvi_ReadStream"));
   function_pointers_.InputTimestamp = reinterpret_cast<InputTimestampPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputTimestamp"));
@@ -186,6 +187,18 @@ int32 NiFakeNonIviLibrary::OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u
   return niFakeNonIvi_OutputArrayOfBytes(numberOfU8Samples, u8Data);
 #else
   return function_pointers_.OutputArrayOfBytes(numberOfU8Samples, u8Data);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::OutputArraysWithPassedInByPtrMechanism(int32 i32Data[], myUInt16 u16Data[], int32* arraySize)
+{
+  if (!function_pointers_.OutputArraysWithPassedInByPtrMechanism) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputArraysWithPassedInByPtrMechanism.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_OutputArraysWithPassedInByPtrMechanism(i32Data, u16Data, arraySize);
+#else
+  return function_pointers_.OutputArraysWithPassedInByPtrMechanism(i32Data, u16Data, arraySize);
 #endif
 }
 

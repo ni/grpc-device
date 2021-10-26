@@ -33,6 +33,7 @@ IotaWithCustomSizeResponse iota_with_custom_size(const StubPtr& stub, const pb::
 OutputArraysWithNarrowIntegerTypesResponse output_arrays_with_narrow_integer_types(const StubPtr& stub, const pb::int32& number_of_u16_samples, const pb::int32& number_of_i16_samples, const pb::int32& number_of_i8_samples);
 InputArrayOfBytesResponse input_array_of_bytes(const StubPtr& stub, const pb::string& u8_array);
 OutputArrayOfBytesResponse output_array_of_bytes(const StubPtr& stub, const pb::int32& number_of_u8_samples);
+OutputArraysWithPassedInByPtrMechanismResponse output_arrays_with_passed_in_by_ptr_mechanism(const StubPtr& stub, const pb::int32& array_size);
 std::unique_ptr<grpc::ClientReader<RegisterCallbackResponse>> register_callback(const StubPtr& stub, ::grpc::ClientContext& context, const pb::int32& input_data);
 std::unique_ptr<grpc::ClientReader<ReadStreamResponse>> read_stream(const StubPtr& stub, ::grpc::ClientContext& context, const pb::int32& start, const pb::int32& stop);
 InputTimestampResponse input_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& when);
