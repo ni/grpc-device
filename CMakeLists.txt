@@ -167,11 +167,19 @@ get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
 # Generate sources from proto files
+# Usage: GenerateGrpcSources(PROTO <path> OUTPUT <path>...)
 #----------------------------------------------------------------------
-function(GenerateGrpcSources proto_file proto_path output_files)
+function(GenerateGrpcSources)
+  set(oneValueArgs PROTO)
+  set(multiValueArgs OUTPUT)
+  cmake_parse_arguments(GENERATE_ARGS "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  set(output_files "${GENERATE_ARGS_OUTPUT}")
+  set(proto_file "${GENERATE_ARGS_PROTO}")
+  get_filename_component(proto_path "${proto_file}" PATH)
   # Asssumption: all outputs are in the same directory: use the zero-th.
   list(GET output_files 0 proto_srcs)
   get_filename_component(proto_out_path "${proto_srcs}" PATH)
+  message(${output_files})
   add_custom_command(
     OUTPUT ${output_files}
     COMMAND ${_PROTOBUF_PROTOC}
@@ -191,29 +199,34 @@ set(session_grpc_srcs "${proto_srcs_dir}/session.grpc.pb.cc")
 set(session_grpc_hdrs "${proto_srcs_dir}/session.grpc.pb.h")
 set(nidevice_proto_srcs "${proto_srcs_dir}/nidevice.pb.cc")
 set(nidevice_proto_hdrs "${proto_srcs_dir}/nidevice.pb.h")
+
 GenerateGrpcSources(
-  ${session_proto}
-  ${session_proto_path}
-  "${session_proto_srcs}" "${session_proto_hdrs}" "${session_grpc_srcs}" "${session_grpc_hdrs}"
+  PROTO
+    ${session_proto}
+  OUTPUT
+    "${session_proto_srcs}" 
+    "${session_proto_hdrs}" 
+    "${session_grpc_srcs}" 
+    "${session_grpc_hdrs}"
 )
 
 GenerateGrpcSources(
-  ${nidevice_proto}
-  ${session_proto_path}
-  "${nidevice_proto_srcs}" "${nidevice_proto_hdrs}"
+  PROTO
+    ${nidevice_proto}
+  OUTPUT
+    "${nidevice_proto_srcs}"
+    "${nidevice_proto_hdrs}"
 )
 
 foreach(api ${nidrivers})
-  set(driver_srcs     
-    "${proto_srcs_dir}/${api}.pb.cc"
-    "${proto_srcs_dir}/${api}.pb.h"
-    "${proto_srcs_dir}/${api}.grpc.pb.cc"
-    "${proto_srcs_dir}/${api}.grpc.pb.h"
-  )
   GenerateGrpcSources(
-    ${service_output_dir}/${api}/${api}.proto
-    ${service_output_dir}/${api}/
-    "${proto_srcs_dir}/${api}.pb.cc" "${proto_srcs_dir}/${api}.pb.h" "${proto_srcs_dir}/${api}.grpc.pb.cc" "${proto_srcs_dir}/${api}.grpc.pb.h"
+    PROTO
+      ${service_output_dir}/${api}/${api}.proto
+    OUTPUT
+      "${proto_srcs_dir}/${api}.pb.cc"
+      "${proto_srcs_dir}/${api}.pb.h"
+      "${proto_srcs_dir}/${api}.grpc.pb.cc"
+      "${proto_srcs_dir}/${api}.grpc.pb.h"
   )
   if(NOT api MATCHES "^nifake.*")
     set(nidriver_service_srcs
