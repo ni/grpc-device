@@ -194,13 +194,13 @@ set(nidevice_proto_hdrs "${proto_srcs_dir}/nidevice.pb.h")
 GenerateGrpcSources(
   ${session_proto}
   ${session_proto_path}
-  "${nidevice_proto_srcs}" "${nidevice_proto_hdrs}"
+  "${session_proto_srcs}" "${session_proto_hdrs}" "${session_grpc_srcs}" "${session_grpc_hdrs}"
 )
 
 GenerateGrpcSources(
   ${nidevice_proto}
   ${session_proto_path}
-  "${session_proto_srcs}" "${session_proto_hdrs}" "${session_grpc_srcs}" "${session_grpc_hdrs}"
+  "${nidevice_proto_srcs}" "${nidevice_proto_hdrs}"
 )
 
 foreach(api ${nidrivers})
