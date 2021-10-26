@@ -16,8 +16,10 @@ static const char* kUnspecifiedPortMessage = "The server port must be specified 
 static const char* kValueTypeNotStringMessage = "The following key must be specified in the server's configuration file as a string enclosed with double quotes: ";
 static const char* kFileNotFoundMessage = "The following certificate file was not found: ";
 static const char* kInvalidExePathMessage = "The server was unable to resolve the current executable path.";
+static const char* kInvalidMaxMessageSizeMessage = "The max message size must be an integer.";
 static const char* kInvalidFeatureToggleMessage = "Feature Toggles must be specified as boolean fields in the form \"feature_toggles\": { \"feature1\": true, \"feature2\": false }. \n\n";
 static const char* kDefaultAddressPrefix = "[::]:";
+constexpr int UNLIMITED_MAX_MESSAGE_SIZE = -1;
 
 class ServerConfigurationParser {
  public:
@@ -32,6 +34,7 @@ class ServerConfigurationParser {
   std::string parse_server_cert() const;
   std::string parse_server_key() const;
   std::string parse_root_cert() const;
+  int parse_max_message_size() const;
   FeatureToggles parse_feature_toggles() const;
 
   struct ConfigFileNotFoundException : public std::runtime_error {
@@ -68,6 +71,10 @@ class ServerConfigurationParser {
 
   struct InvalidFeatureToggleException : std::runtime_error {
     InvalidFeatureToggleException(const std::string& type_error_details);
+  };
+
+  struct InvalidMaxMessageSizeException : std::runtime_error {
+    InvalidMaxMessageSizeException(const std::string& type_error_details);
   };
 
  private:

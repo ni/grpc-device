@@ -21,6 +21,7 @@ static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
 static const char* kSecurityJsonKey = "security";
 static const char* kCertsFolderName = "certs";
+static const char* kMaxMessageSizeKey = "max_message_size";
 static const char* kFeatureTogglesKey = "feature_toggles";
 #if defined(_MSC_VER)
 static const char* kPathDelimitter = "\\";
@@ -131,6 +132,21 @@ std::string ServerConfigurationParser::parse_root_cert() const
   return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimitter + file_name);
 }
 
+int ServerConfigurationParser::parse_max_message_size() const
+{
+  auto max_size_section_it = config_file_.find(kMaxMessageSizeKey);
+  if (max_size_section_it != config_file_.end()) {
+    try {
+      return max_size_section_it->get<int>();
+    }
+    catch (const nlohmann::json::type_error& ex) {
+      throw InvalidMaxMessageSizeException(ex.what());
+    }
+  }
+
+  return UNLIMITED_MAX_MESSAGE_SIZE;
+}
+
 FeatureToggles ServerConfigurationParser::parse_feature_toggles() const
 {
   FeatureToggleConfigurationMap map;
@@ -223,6 +239,11 @@ ServerConfigurationParser::InvalidExePathException::InvalidExePathException()
 
 ServerConfigurationParser::InvalidFeatureToggleException::InvalidFeatureToggleException(const std::string& type_error_details)
     : std::runtime_error(kInvalidFeatureToggleMessage + type_error_details)
+{
+}
+
+ServerConfigurationParser::InvalidMaxMessageSizeException::InvalidMaxMessageSizeException(const std::string& type_error_details)
+    : std::runtime_error(kInvalidMaxMessageSizeMessage + type_error_details)
 {
 }
 }  // namespace nidevice_grpc
