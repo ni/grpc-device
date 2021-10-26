@@ -4564,6 +4564,23 @@ get_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, c
   return response;
 }
 
+GetAnalogPowerUpStatesWithOutputTypeResponse
+get_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const pb::uint32& array_size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAnalogPowerUpStatesWithOutputTypeRequest{};
+  request.set_channel_names(channel_names);
+  request.set_array_size(array_size);
+
+  auto response = GetAnalogPowerUpStatesWithOutputTypeResponse{};
+
+  raise_if_error(
+      stub->GetAnalogPowerUpStatesWithOutputType(&context, request, &response));
+
+  return response;
+}
+
 GetArmStartTrigTimestampValResponse
 get_arm_start_trig_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& task)
 {
@@ -8111,6 +8128,24 @@ set_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, c
 
   raise_if_error(
       stub->SetAnalogPowerUpStates(&context, request, &response));
+
+  return response;
+}
+
+SetAnalogPowerUpStatesWithOutputTypeResponse
+set_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::string& channel_names, const std::vector<double>& state_array, const std::vector<pb::int32>& channel_type_array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAnalogPowerUpStatesWithOutputTypeRequest{};
+  request.set_channel_names(channel_names);
+  copy_array(state_array, request.mutable_state_array());
+  copy_array(channel_type_array, request.mutable_channel_type_array());
+
+  auto response = SetAnalogPowerUpStatesWithOutputTypeResponse{};
+
+  raise_if_error(
+      stub->SetAnalogPowerUpStatesWithOutputType(&context, request, &response));
 
   return response;
 }

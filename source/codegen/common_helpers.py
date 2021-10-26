@@ -18,16 +18,20 @@ def is_callback_token_parameter(parameter):
 def is_pointer_parameter(parameter):
     return is_output_parameter(parameter) or parameter.get('pointer', False)
 
-
 # This means the parameter follows a specific varargs convention where
 # the user can pass in an arbitrary repetition of fixed arguments.
+
+
 def is_repeated_varargs_parameter(parameter: dict):
     return parameter.get('repeated_var_args', False)
 
 # This means the parameter can be repeated as many times as desired.
 # See also is_repeatied_varargs_parameter()
+
+
 def is_repeating_parameter(parameter: dict):
     return parameter.get('repeating_argument', False)
+
 
 def is_array(dataType: str):
     return dataType.endswith("[]") or dataType.endswith("*")
@@ -102,7 +106,11 @@ def get_input_and_output_custom_types(functions):
     input_custom_types = set()
     output_custom_types = set()
     for function in functions:
-        struct_params = [p for p in functions[function]["parameters"] if is_custom_struct(p)]
+        struct_params = [
+            p 
+            for p in functions[function]["parameters"] 
+            if is_custom_struct(p)
+        ]
         for parameter in struct_params:
             if is_input_parameter(parameter):
                 input_custom_types.add(
@@ -178,9 +186,16 @@ def is_unsupported_size_mechanism(parameter: dict) -> bool:
 #                           around if a "buffer too small" error is returned on the second call.
 # - passed-in: The array's size is passed in in a separate parameter, which is specified in the 'value' member.
 #              Should only be used for output arrays (otherwise you can just use 'len').
+# - passed-in-by-ptr: The array's size is passed in in a separate parameter, which is specified in the 'value' member.
+#                     It is passed in by pointer, and on return the underlying call will set the actual number of
+#                     elements filled in to the array as long as that is smaller than the passed-in value. (if it is
+#                     larger, the underlying call will return an error)
+#                     Should only be used for output arrays.
 # - custom-code: The array's size is determined by the C++ code in the 'value' member.
+
+
 def is_unsupported_size_mechanism_type(size_mechanism: str) -> bool:
-    return not size_mechanism in {'fixed', 'len', 'ivi-dance', 'passed-in', 'ivi-dance-with-a-twist', 'custom-code'}
+    return not size_mechanism in {'fixed', 'len', 'ivi-dance', 'passed-in', 'passed-in-by-ptr', 'ivi-dance-with-a-twist', 'custom-code'}
 
 
 def is_unsupported_scalar_array(parameter):
@@ -191,7 +206,7 @@ def is_unsupported_enum_array(parameter):
     if is_enum(parameter):
         if is_input_parameter(parameter):
             return False
-            
+
         return not is_supported_enum_array_output_type(parameter)
     return False
 
@@ -203,38 +218,44 @@ def is_supported_enum_array_output_type(parameter):
 def is_static_castable_enum_type(parameter):
     grpc_type = get_underlying_grpc_type(parameter)
     # Note: sint32 could work here but causes issue with existing attribute output accessors
-    # because it's not wire-compatible with enum. If it's added here, we need to make sure that 
+    # because it's not wire-compatible with enum. If it's added here, we need to make sure that
     # we're handling compatibility issues on those methods.
     return grpc_type in ['int32', 'uint32']
 
 
-PascalTokenSubstitution = namedtuple('PascalTokenSubstitution', ['pascal_representation', 'preferred_representation'])
+PascalTokenSubstitution = namedtuple('PascalTokenSubstitution', [
+                                     'pascal_representation', 'preferred_representation'])
 SPECIAL_CASE_PASCAL_TOKENS = [
-    PascalTokenSubstitution('Uint', 'UInt') # NI uses UInt, not Uint, and never U_INT when converting to snake.
+    # NI uses UInt, not Uint, and never U_INT when converting to snake.
+    PascalTokenSubstitution('Uint', 'UInt')
 ]
 
 
 def normalize_special_pascal_tokens(pascal_or_camel_string: str) -> str:
     for pascal_token, special_case_override in SPECIAL_CASE_PASCAL_TOKENS:
-        pascal_or_camel_string = pascal_or_camel_string.replace(special_case_override, pascal_token)
+        pascal_or_camel_string = pascal_or_camel_string.replace(
+            special_case_override, pascal_token)
     return pascal_or_camel_string
 
 
 def insert_special_case_pascal_tokens(normal_pascal_string: str) -> str:
     for pascal_token, special_case_override in SPECIAL_CASE_PASCAL_TOKENS:
-        normal_pascal_string = normal_pascal_string.replace(pascal_token, special_case_override)
+        normal_pascal_string = normal_pascal_string.replace(
+            pascal_token, special_case_override)
     return normal_pascal_string
 
 
 def insert_leading_special_case_pascal_tokens(camel_string: str) -> str:
     for pascal_token, special_case_override in SPECIAL_CASE_PASCAL_TOKENS:
-        camel_string = replace_prefix(camel_string, pascal_token.lower(), special_case_override)
+        camel_string = replace_prefix(
+            camel_string, pascal_token.lower(), special_case_override)
     return camel_string
 
 
 def normalize_leading_special_case_pascal_tokens(pascal_string: str) -> str:
     for pascal_token, special_case_override in SPECIAL_CASE_PASCAL_TOKENS:
-        pascal_string = replace_prefix(pascal_string, special_case_override, pascal_token)
+        pascal_string = replace_prefix(
+            pascal_string, special_case_override, pascal_token)
     return pascal_string
 
 
@@ -242,7 +263,7 @@ def is_actually_pascal(camel_or_pascal_string: str) -> bool:
     return 'A' <= camel_or_pascal_string[0] <= 'Z'
 
 
-def camel_to_snake(camel_string: str)-> str:
+def camel_to_snake(camel_string: str) -> str:
     '''Returns a snake_string for a given camelString.'''
     if is_actually_pascal(camel_string):
         camel_string = pascal_to_camel(camel_string)
@@ -290,17 +311,18 @@ def pascal_to_camel(pascal_string):
     return match[1].lower() + match[2]
 
 
-
 def ensure_pascal_case(pascal_or_camel_string):
     '''Ensures that a camel/pascal case string is pascal case
     NOTE: does not distinguish leading all-caps acronyms.'''
-    pascal_or_camel_string = insert_leading_special_case_pascal_tokens(pascal_or_camel_string)
+    pascal_or_camel_string = insert_leading_special_case_pascal_tokens(
+        pascal_or_camel_string)
 
     match = re.fullmatch(r'^([a-z])(.*)$', pascal_or_camel_string)
     if match:
         return match[1].upper() + match[2]
-  
+
     return pascal_or_camel_string
+
 
 def pascal_to_snake(pascal_string):
     '''Returns a snake_string for a given PascalString.'''
@@ -398,6 +420,8 @@ def get_buffer_size_expression(parameter: dict) -> str:
         return parameter['size']['value']
     elif size_mechanism == 'ivi-dance-with-a-twist':
         return camel_to_snake(parameter['size']['value_twist'])
+    elif size_mechanism == 'passed-in-by-ptr':
+        return camel_to_snake(parameter['size']['value']) + '_copy'
     else:
         return camel_to_snake(parameter['size']['value'])
 
@@ -487,11 +511,12 @@ def get_ivi_dance_with_a_twist_params(parameters):
         (p for p in parameters if is_ivi_dance_array_with_a_twist_param(p)))
 
     size_param = get_param_with_name(parameters, array_param['size']['value'])
-    twist_param = get_param_with_name(parameters, array_param['size']['value_twist'])
+    twist_param = get_param_with_name(
+        parameters, array_param['size']['value_twist'])
 
     other_params = (
-        p 
-        for p in parameters 
+        p
+        for p in parameters
         if p not in [array_param, size_param, twist_param]
     )
     return (size_param, twist_param, array_param, other_params)
@@ -538,14 +563,14 @@ def trim_trailing_comma():
     def trim_trailing_comma_impl(text: str) -> str:
         i = text.rfind(",")
         return text[:i] + text[i+1:]
-    
+
     return lambda text: trim_trailing_comma_impl(text)
 
 
 def filter_parameters_for_grpc_fields(parameters_or_fields: List[dict]):
-  """Filter out the parameters that shouldn't be represented by a field on a grpc message.
-      For example, get rid of any parameters whose values should be determined from another parameter."""
-  return [p for p in parameters_or_fields if p.get('include_in_proto', True)]
+    """Filter out the parameters that shouldn't be represented by a field on a grpc message.
+        For example, get rid of any parameters whose values should be determined from another parameter."""
+    return [p for p in parameters_or_fields if p.get('include_in_proto', True)]
 
 
 class AttributeGroup:
@@ -553,7 +578,6 @@ class AttributeGroup:
         self.name = name
         self.attributes = attributes
         self._config = config
-
 
     def get_attributes_split_by_sub_group(self):
         """
@@ -600,7 +624,8 @@ def strip_suffix(s: str, suffix: str) -> str:
 
 
 def replace_prefix(s: str, prefix: str, sub: str) -> str:
-    return sub + s[len(prefix):] if s.startswith(prefix) else s 
+    return sub + s[len(prefix):] if s.startswith(prefix) else s
+
 
 def get_grpc_type_name_for_identifier(data_type, config):
     """
@@ -712,7 +737,7 @@ def supports_raw_attributes(config: dict) -> bool:
 def get_enum_value_cpp_type(enum: dict) -> str:
     """Uses the python datatype of the first value in the enum to
     infer the C++ type.
-    
+
     Used for mapped enums."""
     enum_value = enum["values"][0]["value"]
     if isinstance(enum_value, float):
@@ -729,7 +754,7 @@ def is_regular_string_arg(parameter: dict) -> bool:
     return is_string_arg(parameter) and not parameter["grpc_type"] == "bytes"
 
 
-def is_regular_byte_array_arg(parameter: dict)-> bool:
+def is_regular_byte_array_arg(parameter: dict) -> bool:
     """Excludes: strings and byte arrays that are mapped to enums"""
     return parameter["grpc_type"] == "bytes" and not is_enum(parameter)
 

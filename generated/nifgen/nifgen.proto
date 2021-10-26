@@ -114,7 +114,6 @@ service NiFgen {
   rpc InitiateGeneration(InitiateGenerationRequest) returns (InitiateGenerationResponse);
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsDone(IsDoneRequest) returns (IsDoneResponse);
-  rpc LockSession(LockSessionRequest) returns (LockSessionResponse);
   rpc ManualEnableP2PStream(ManualEnableP2PStreamRequest) returns (ManualEnableP2PStreamResponse);
   rpc QueryArbSeqCapabilities(QueryArbSeqCapabilitiesRequest) returns (QueryArbSeqCapabilitiesResponse);
   rpc QueryArbWfmCapabilities(QueryArbWfmCapabilitiesRequest) returns (QueryArbWfmCapabilitiesResponse);
@@ -138,7 +137,6 @@ service NiFgen {
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
   rpc SetNamedWaveformNextWritePosition(SetNamedWaveformNextWritePositionRequest) returns (SetNamedWaveformNextWritePositionResponse);
   rpc SetWaveformNextWritePosition(SetWaveformNextWritePositionRequest) returns (SetWaveformNextWritePositionResponse);
-  rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
   rpc WriteBinary16Waveform(WriteBinary16WaveformRequest) returns (WriteBinary16WaveformResponse);
   rpc WriteComplexBinary16Waveform(WriteComplexBinary16WaveformRequest) returns (WriteComplexBinary16WaveformResponse);
@@ -1710,15 +1708,6 @@ message IsDoneResponse {
   bool done = 2;
 }
 
-message LockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message LockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
-}
-
 message ManualEnableP2PStreamRequest {
   nidevice_grpc.Session vi = 1;
   string endpoint_name = 2;
@@ -1975,15 +1964,6 @@ message SetWaveformNextWritePositionRequest {
 
 message SetWaveformNextWritePositionResponse {
   int32 status = 1;
-}
-
-message UnlockSessionRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message UnlockSessionResponse {
-  int32 status = 1;
-  bool caller_has_lock = 2;
 }
 
 message WaitUntilDoneRequest {

@@ -222,6 +222,22 @@ output_array_of_bytes(const StubPtr& stub, const pb::int32& number_of_u8_samples
   return response;
 }
 
+OutputArraysWithPassedInByPtrMechanismResponse
+output_arrays_with_passed_in_by_ptr_mechanism(const StubPtr& stub, const pb::int32& array_size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OutputArraysWithPassedInByPtrMechanismRequest{};
+  request.set_array_size(array_size);
+
+  auto response = OutputArraysWithPassedInByPtrMechanismResponse{};
+
+  raise_if_error(
+      stub->OutputArraysWithPassedInByPtrMechanism(&context, request, &response));
+
+  return response;
+}
+
 std::unique_ptr<grpc::ClientReader<RegisterCallbackResponse>>
 register_callback(const StubPtr& stub, ::grpc::ClientContext& context, const pb::int32& input_data)
 {

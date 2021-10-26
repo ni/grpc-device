@@ -93,7 +93,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'IfFilterTable',
+                'enum': 'IfFilter',
                 'name': 'ifFilter',
                 'type': 'ViInt32'
             },
@@ -133,7 +133,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'IfFilterTable',
+                'enum': 'IfFilter',
                 'name': 'ifFilter',
                 'type': 'ViInt32'
             },
@@ -289,7 +289,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcquisitionTypeRangeTable',
+                'enum': 'AcquisitionType',
                 'name': 'acquisitionType',
                 'type': 'ViInt32'
             }
@@ -377,7 +377,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DigitalEdgeRangeTable',
+                'enum': 'DigitalEdge',
                 'name': 'edge',
                 'type': 'ViInt32'
             }
@@ -399,7 +399,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DigitalEdgeRangeTable',
+                'enum': 'DigitalEdge',
                 'name': 'edge',
                 'type': 'ViInt32'
             },
@@ -426,7 +426,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DigitalEdgeRangeTable',
+                'enum': 'DigitalEdge',
                 'name': 'edge',
                 'type': 'ViInt32'
             }
@@ -473,7 +473,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AnalogSlopeRangeTable',
+                'enum': 'AnalogSlope',
                 'name': 'slope',
                 'type': 'ViInt32'
             },
@@ -564,7 +564,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'PxiChassisClk10SourceRangeTable',
+                'enum': 'PxiChassisClk10Source',
                 'name': 'pxiClk10Source',
                 'type': 'ViConstString'
             }
@@ -580,7 +580,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'RefClockSourceRangeTable',
+                'enum': 'RefClockSource',
                 'name': 'clockSource',
                 'type': 'ViConstString'
             },
@@ -1027,7 +1027,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ExportTerminalRangeTable',
+                'enum': 'ExportTerminal',
                 'name': 'outputTerminal',
                 'type': 'ViConstString'
             }
@@ -2345,6 +2345,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'LockSession': {
+        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -2550,6 +2551,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'ResetWithOptionsStepsToOmit',
                 'name': 'stepsToOmit',
                 'type': 'ViUInt64'
             }
@@ -2604,6 +2606,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SelfCalibrateStepsToOmit',
                 'name': 'stepsToOmit',
                 'type': 'ViInt64'
             }
@@ -2619,6 +2622,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SelfCalibrateStepsToOmit',
                 'name': 'stepsToOmit',
                 'type': 'ViInt64'
             },
@@ -2890,6 +2894,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'UnlockSession': {
+        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',

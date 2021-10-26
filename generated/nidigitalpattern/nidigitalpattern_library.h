@@ -244,7 +244,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   using LoadPinMapPtr = decltype(&niDigital_LoadPinMap);
   using LoadSpecificationsPtr = decltype(&niDigital_LoadSpecifications);
   using LoadTimingPtr = decltype(&niDigital_LoadTiming);
-  using LockSessionPtr = decltype(&niDigital_LockSession);
+  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using MapPinToChannelPtr = decltype(&niDigital_MapPinToChannel);
   using PPMUConfigureApertureTimePtr = decltype(&niDigital_PPMU_ConfigureApertureTime);
   using PPMUConfigureCurrentLevelPtr = decltype(&niDigital_PPMU_ConfigureCurrentLevel);
@@ -275,7 +275,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   using TDRPtr = decltype(&niDigital_TDR);
   using UnloadAllPatternsPtr = decltype(&niDigital_UnloadAllPatterns);
   using UnloadSpecificationsPtr = decltype(&niDigital_UnloadSpecifications);
-  using UnlockSessionPtr = decltype(&niDigital_UnlockSession);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitUntilDonePtr = decltype(&niDigital_WaitUntilDone);
   using WriteSequencerFlagPtr = decltype(&niDigital_WriteSequencerFlag);
   using WriteSequencerFlagSynchronizedPtr = decltype(&niDigital_WriteSequencerFlagSynchronized);

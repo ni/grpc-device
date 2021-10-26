@@ -119,7 +119,6 @@ InitializeWithChannelsResponse initialize_with_channels(const StubPtr& stub, con
 InitiateGenerationResponse initiate_generation(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsDoneResponse is_done(const StubPtr& stub, const nidevice_grpc::Session& vi);
-LockSessionResponse lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ManualEnableP2PStreamResponse manual_enable_p2p_stream(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& endpoint_name);
 QueryArbSeqCapabilitiesResponse query_arb_seq_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi);
 QueryArbWfmCapabilitiesResponse query_arb_wfm_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -143,7 +142,6 @@ SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, cons
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const pb::string& attribute_value_raw);
 SetNamedWaveformNextWritePositionResponse set_named_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const simple_variant<RelativeTo, pb::int32>& relative_to, const pb::int32& offset);
 SetWaveformNextWritePositionResponse set_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const simple_variant<RelativeTo, pb::int32>& relative_to, const pb::int32& offset);
-UnlockSessionResponse unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 WaitUntilDoneResponse wait_until_done(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& max_time);
 WriteBinary16WaveformResponse write_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<pb::int32>& data);
 WriteComplexBinary16WaveformResponse write_complex_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<nidevice_grpc::NIComplexI16>& data);

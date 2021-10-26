@@ -2194,6 +2194,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'LockSession': {
+        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -2606,6 +2607,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'UnlockSession': {
+        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',

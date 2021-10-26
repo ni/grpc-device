@@ -186,7 +186,7 @@ namespace nifake_non_ivi_grpc {
         response->mutable_value()->Reserve(10);
         std::transform(
           response->value_raw().begin(),
-          response->value_raw().end(),
+          response->value_raw().begin() + 10,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
           [&](auto x) { 
               return checked_convert_value(x);
@@ -377,7 +377,7 @@ namespace nifake_non_ivi_grpc {
         response->mutable_u16_data()->Reserve(number_of_u16_samples);
         std::transform(
           u16_data.begin(),
-          u16_data.end(),
+          u16_data.begin() + number_of_u16_samples,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
           [&](auto x) { 
               return x;
@@ -386,7 +386,7 @@ namespace nifake_non_ivi_grpc {
         response->mutable_i16_data()->Reserve(number_of_i16_samples);
         std::transform(
           i16_data.begin(),
-          i16_data.end(),
+          i16_data.begin() + number_of_i16_samples,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_i16_data()),
           [&](auto x) { 
               return x;
@@ -395,7 +395,7 @@ namespace nifake_non_ivi_grpc {
         response->mutable_i8_data()->Reserve(number_of_i8_samples);
         std::transform(
           i8_data.begin(),
-          i8_data.end(),
+          i8_data.begin() + number_of_i8_samples,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_i8_data()),
           [&](auto x) { 
               return x;
@@ -440,6 +440,39 @@ namespace nifake_non_ivi_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_u8_data(u8_data);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputArraysWithPassedInByPtrMechanism(::grpc::ServerContext* context, const OutputArraysWithPassedInByPtrMechanismRequest* request, OutputArraysWithPassedInByPtrMechanismResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int32 array_size_copy = request->array_size();
+      response->mutable_i32_data()->Resize(array_size_copy, 0);
+      int32* i32_data = reinterpret_cast<int32*>(response->mutable_i32_data()->mutable_data());
+      std::vector<myUInt16> u16_data(array_size_copy);
+      auto status = library_->OutputArraysWithPassedInByPtrMechanism(i32_data, u16_data.data(), &array_size_copy);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_i32_data()->Resize(array_size_copy, 0);
+        response->mutable_u16_data()->Clear();
+        response->mutable_u16_data()->Reserve(array_size_copy);
+        std::transform(
+          u16_data.begin(),
+          u16_data.begin() + array_size_copy,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
+          [&](auto x) { 
+              return x;
+          });
       }
       return ::grpc::Status::OK;
     }

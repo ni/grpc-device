@@ -1,5 +1,5 @@
 enums = {
-    'AcquisitionTypeRangeTable': {
+    'AcquisitionType': {
         'values': [
             {
                 'documentation': {
@@ -17,7 +17,7 @@ enums = {
             }
         ]
     },
-    'AnalogSlopeRangeTable': {
+    'AnalogSlope': {
         'values': [
             {
                 'documentation': {
@@ -35,7 +35,7 @@ enums = {
             }
         ]
     },
-    'AveragingModeRangeTable': {
+    'AveragingMode': {
         'values': [
             {
                 'documentation': {
@@ -64,10 +64,31 @@ enums = {
                 },
                 'name': 'PEAK_HOLD_AVERAGING',
                 'value': 403
+            },
+            {
+                'documentation': {
+                    'description': ' Min Hold averaging'
+                },
+                'name': 'MIN_HOLD_AVERAGING',
+                'value': 404
+            },
+            {
+                'documentation': {
+                    'description': ' Scalar averaging'
+                },
+                'name': 'SCALAR_AVERAGING',
+                'value': 405
+            },
+            {
+                'documentation': {
+                    'description': ' Log averaging'
+                },
+                'name': 'LOG_AVERAGING',
+                'value': 406
             }
         ]
     },
-    'BandwidthTypeRangeTable': {
+    'BandwidthType': {
         'values': [
             {
                 'documentation': {
@@ -117,7 +138,7 @@ enums = {
             }
         ]
     },
-    'CalIFFilterSelectionTable': {
+    'CalIFFilterSelection': {
         'values': [
             {
                 'documentation': {
@@ -198,53 +219,53 @@ enums = {
             }
         ]
     },
-    'CalToneModeRangeTable': {
+    'CalToneMode': {
         'values': [
             {
                 'documentation': {
                     'description': ' Disables the calibration tone for the associated path.'
                 },
-                'name': 'CAL_TONE_DISABLED',
+                'name': 'DISABLED',
                 'value': 2700
             },
             {
                 'documentation': {
                     'description': ' Injects the calibration tone into the low band RF path.'
                 },
-                'name': 'CAL_TONE_LOWBAND_RF',
+                'name': 'LOWBAND_RF',
                 'value': 2701
             },
             {
                 'documentation': {
                     'description': ' Injects the calibration tone into the high band RF path.'
                 },
-                'name': 'CAL_TONE_HIGHBAND_RF',
+                'name': 'HIGHBAND_RF',
                 'value': 2702
             },
             {
                 'documentation': {
                     'description': ' Injects the calibration tone into the high band IF path.'
                 },
-                'name': 'CAL_TONE_HIGHBAND_IF',
+                'name': 'HIGHBAND_IF',
                 'value': 2703
             },
             {
                 'documentation': {
                     'description': ' Injects the calibration tone into the low band RF path (bypass the ALC).'
                 },
-                'name': 'CAL_TONE_LOWBAND_RF_WITHOUT_ALC',
+                'name': 'LOWBAND_RF_WITHOUT_ALC',
                 'value': 2704
             },
             {
                 'documentation': {
                     'description': ' Injects the calibration tone into the high band RF path (through the Comb Generator).'
                 },
-                'name': 'CAL_TONE_COMB_GENERATOR',
+                'name': 'COMB_GENERATOR',
                 'value': 2705
             }
         ]
     },
-    'ChannelCouplingRangeTable': {
+    'ChannelCoupling': {
         'values': [
             {
                 'documentation': {
@@ -262,27 +283,27 @@ enums = {
             }
         ]
     },
-    'ConditioningCalToneModeRangeTable': {
+    'ConditioningCalToneMode': {
         'values': [
             {
                 'documentation': {
                     'description': ' Disables the calibration tone for the associated path.'
                 },
-                'name': 'CAL_TONE_DISABLED',
+                'name': 'DISABLED',
                 'value': 2700
             },
             {
                 'documentation': {
                     'description': ' Injects the calibration tone into the low band RF path.'
                 },
-                'name': 'CAL_TONE_LOWBAND_RF',
+                'name': 'LOWBAND_RF',
                 'value': 2701
             },
             {
                 'documentation': {
                     'description': ' Injects the calibration tone into the high band RF path.'
                 },
-                'name': 'CAL_TONE_HIGHBAND_RF',
+                'name': 'HIGHBAND_RF',
                 'value': 2702
             }
         ]
@@ -293,21 +314,21 @@ enums = {
                 'documentation': {
                     'description': ' De-embedding is not applied to the measurement.'
                 },
-                'name': 'DEEMBEDDING_TYPE_NONE',
+                'name': 'NONE',
                 'value': 3900
             },
             {
                 'documentation': {
                     'description': ' De-embeds the measurement using only the gain term.'
                 },
-                'name': 'DEEMBEDDING_TYPE_SCALAR',
+                'name': 'SCALAR',
                 'value': 3901
             },
             {
                 'documentation': {
                     'description': ' De-embeds the measurement using the gain term and the reflection term.'
                 },
-                'name': 'DEEMBEDDING_TYPE_VECTOR',
+                'name': 'VECTOR',
                 'value': 3902
             }
         ]
@@ -336,7 +357,7 @@ enums = {
             }
         ]
     },
-    'DigitalEdgeRangeTable': {
+    'DigitalEdge': {
         'values': [
             {
                 'documentation': {
@@ -358,140 +379,140 @@ enums = {
         'generate-mappings': True,
         'values': [
             {
-                'name': 'PFI0_STR',
+                'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
-                'name': 'PFI1_STR',
+                'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
-                'name': 'PXI_TRIG7_STR',
+                'name': 'PXI_TRIG7',
                 'value': 'PXI_Trig7'
             },
             {
-                'name': 'PXI_STAR_STR',
+                'name': 'PXI_STAR',
                 'value': 'PXI_STAR'
             },
             {
-                'name': 'RTSI0_STR',
+                'name': 'RTSI0',
                 'value': 'PXI_Trig0'
             },
             {
-                'name': 'RTSI1_STR',
+                'name': 'RTSI1',
                 'value': 'PXI_Trig1'
             },
             {
-                'name': 'RTSI2_STR',
+                'name': 'RTSI2',
                 'value': 'PXI_Trig2'
             },
             {
-                'name': 'RTSI3_STR',
+                'name': 'RTSI3',
                 'value': 'PXI_Trig3'
             },
             {
-                'name': 'RTSI4_STR',
+                'name': 'RTSI4',
                 'value': 'PXI_Trig4'
             },
             {
-                'name': 'RTSI5_STR',
+                'name': 'RTSI5',
                 'value': 'PXI_Trig5'
             },
             {
-                'name': 'RTSI6_STR',
+                'name': 'RTSI6',
                 'value': 'PXI_Trig6'
             },
             {
-                'name': 'RTSI7_STR',
+                'name': 'RTSI7',
                 'value': 'PXI_Trig7'
             },
             {
-                'name': 'TIMER_EVENT_STR',
+                'name': 'TIMER_EVENT',
                 'value': 'TimerEvent'
             }
         ]
     },
-    'DigitizerSampleClockOutTerminalRangeTable': {
+    'DigitizerSampleClockOutTerminal': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' The Sample clock is not exported.'
                 },
-                'name': 'NONE_STR',
+                'name': 'NONE',
                 'value': 'None'
             },
             {
                 'documentation': {
                     'description': ' Export the clock on the CLK OUT terminal on the Digitizer.'
                 },
-                'name': 'CLK_OUT_STR',
+                'name': 'CLK_OUT',
                 'value': 'ClkOut'
             }
         ]
     },
-    'DigitizerSampleClockTimebaseSourceRangeTable': {
+    'DigitizerSampleClockTimebaseSource': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' The digitizer uses its onboard clock as the Sample clock timebase.'
                 },
-                'name': 'ONBOARD_CLOCK_STR',
+                'name': 'ONBOARD_CLOCK',
                 'value': 'OnboardClock'
             },
             {
                 'documentation': {
                     'description': ' The digitizer uses the signal present at the CLK IN connector as the  Sample clock timebase.'
                 },
-                'name': 'CLK_IN_STR',
+                'name': 'CLK_IN',
                 'value': 'ClkIn'
             },
             {
                 'documentation': {
                     'description': ' The digitizer uses the signal generated on the 100 MHz REF OUT terminal on the PXIe-5653 as the  Sample clock timebase. This value is supported only for PXIe-5603 and PXIe-5665.'
                 },
-                'name': 'LO_REF_CLK_STR',
+                'name': 'LO_REF_CLK',
                 'value': 'LORefClk'
             },
             {
                 'documentation': {
                     'description': ' The digitizer uses the signal present at the PXI Star line as the  Sample clock timebase.'
                 },
-                'name': 'PXI_STAR_STR',
+                'name': 'PXI_STAR',
                 'value': 'PXI_STAR'
             }
         ]
     },
-    'DownconverterFrequencyOffsetModeRangeTable': {
+    'DownconverterFrequencyOffsetMode': {
         'values': [
             {
                 'documentation': {
@@ -516,32 +537,32 @@ enums = {
             }
         ]
     },
-    'DownconverterPreselectorEnabledAttrRangeTable': {
+    'DownconverterPreselectorEnabledAttr': {
         'values': [
             {
                 'documentation': {
                     'description': ' Disables the preselector.'
                 },
-                'name': 'PRESELECTOR_DISABLED',
+                'name': 'DISABLED',
                 'value': 2600
             },
             {
                 'documentation': {
                     'description': ' The preselector is automatically enabled when it is in the signal path and is automatically  disabled when it is not in the signal path. Only devices with a preselector on the downconverter support this option.  Use the NIRFSA_ATTR_PRESELECTOR_PRESENT attribute to determine if the downconverter has a preselector.'
                 },
-                'name': 'PRESELECTOR_ENABLED_WHEN_IN_SIGNAL_PATH',
+                'name': 'ENABLED_WHEN_IN_SIGNAL_PATH',
                 'value': 2601
             },
             {
                 'documentation': {
                     'description': ' Enables the preselector. If the preselector is not in a signal path or if the preselector is not supported on the device,  NI-RFSA returns an error. Select the NIRFSA_VAL_PRESELECTOR_ENABLED_WHEN_IN_SIGNAL_PATH whenever possible avoid an error.'
                 },
-                'name': 'PRESELECTOR_ENABLED',
+                'name': 'ENABLED',
                 'value': 2602
             }
         ]
     },
-    'EnabledAttrRangeTable': {
+    'EnabledAttr': {
         'values': [
             {
                 'documentation': {
@@ -559,124 +580,124 @@ enums = {
             }
         ]
     },
-    'ExportTerminalRangeTable': {
+    'ExportTerminal': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' The signal is not exported.'
                 },
-                'name': 'DO_NOT_EXPORT_STR',
+                'name': 'DO_NOT_EXPORT',
                 'value': ''
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PFI 0.  For the PXIe-5841 with PXIe-5655, the signal is exported to the PXIe-5841 PFI 0.'
                 },
-                'name': 'PFI0_STR',
+                'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PFI 1.'
                 },
-                'name': 'PFI1_STR',
+                'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PXI trigger line 0.'
                 },
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PXI trigger line 1.'
                 },
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PXI trigger line 2.'
                 },
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PXI trigger line 3.'
                 },
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PXI trigger line 4.'
                 },
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PXI trigger line 5.'
                 },
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PXI trigger line 6.'
                 },
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to PXI trigger line 7.'
                 },
-                'name': 'PXI_TRIG7_STR',
+                'name': 'PXI_TRIG7',
                 'value': 'PXI_Trig7'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to the PXI star trigger line.'
                 },
-                'name': 'PXI_STAR_STR',
+                'name': 'PXI_STAR',
                 'value': 'PXI_STAR'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on the PXIe DStar C trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.'
                 },
-                'name': 'PXIE_DSTARC_STR',
+                'name': 'PXIE_DSTARC',
                 'value': 'PXIe_DStarC'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to the PXI/PXIe-5652 Ref Out.'
                 },
-                'name': 'REF_OUT_STR',
+                'name': 'REF_OUT',
                 'value': 'RefOut'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to the PXI/PXIe-5652 Ref Out 2.'
                 },
-                'name': 'REF_OUT2_STR',
+                'name': 'REF_OUT2',
                 'value': 'RefOut2'
             },
             {
                 'documentation': {
                     'description': ' The signal is exported to the PXIe-5622 Clk Out.'
                 },
-                'name': 'CLK_OUT_STR',
+                'name': 'CLK_OUT',
                 'value': 'ClkOut'
             }
         ]
     },
-    'FetchRelativeToRangeTable': {
+    'FetchRelativeTo': {
         'values': [
             {
                 'documentation': {
@@ -715,7 +736,7 @@ enums = {
             }
         ]
     },
-    'FftWindowTypeRangeTable': {
+    'FftWindowType': {
         'values': [
             {
                 'documentation': {
@@ -787,35 +808,49 @@ enums = {
                 },
                 'name': 'LOW_SIDE_LOBE',
                 'value': 509
+            },
+            {
+                'documentation': {
+                    'description': ' Gaussian Window.  '
+                },
+                'name': 'GAUSSIAN',
+                'value': 510
+            },
+            {
+                'documentation': {
+                    'description': ' Kaiser-Bessel window.  '
+                },
+                'name': 'KAISER_BESSEL',
+                'value': 511
             }
         ]
     },
-    'FrequencySettlingUnitsRangeTable': {
+    'FrequencySettlingUnits': {
         'values': [
             {
                 'documentation': {
                     'description': ' Specify frequency settling time in parts per million (PPM).'
                 },
-                'name': 'FSU_PPM',
+                'name': 'PPM',
                 'value': 2000
             },
             {
                 'documentation': {
                     'description': ' Specify frequency settling in time after lock (seconds).'
                 },
-                'name': 'FSU_SECONDS_AFTER_LOCK',
+                'name': 'SECONDS_AFTER_LOCK',
                 'value': 2001
             },
             {
                 'documentation': {
                     'description': ' Specify frequency settling time after I/O (seconds).'
                 },
-                'name': 'FSU_SECONDS_AFTER_IO',
+                'name': 'SECONDS_AFTER_IO',
                 'value': 2002
             }
         ]
     },
-    'GeneralTriggerTypeRangeTable': {
+    'GeneralTriggerType': {
         'values': [
             {
                 'documentation': {
@@ -840,7 +875,7 @@ enums = {
             }
         ]
     },
-    'IfFilterTable': {
+    'IfFilter': {
         'values': [
             {
                 'documentation': {
@@ -872,7 +907,7 @@ enums = {
             }
         ]
     },
-    'InputPortRangeTable': {
+    'InputPort': {
         'values': [
             {
                 'documentation': {
@@ -904,7 +939,7 @@ enums = {
             }
         ]
     },
-    'IqInPortTermConfigRangeTable': {
+    'IqInPortTermConfig': {
         'values': [
             {
                 'documentation': {
@@ -925,15 +960,15 @@ enums = {
     'LinearInterpolationFormat': {
         'values': [
             {
-                'name': 'LINEAR_INTERPOLATION_FORMAT_REAL_AND_IMAGINARY',
+                'name': 'REAL_AND_IMAGINARY',
                 'value': 4000
             },
             {
-                'name': 'LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_AND_PHASE',
+                'name': 'MAGNITUDE_AND_PHASE',
                 'value': 4001
             },
             {
-                'name': 'LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_DB_AND_PHASE',
+                'name': 'MAGNITUDE_DB_AND_PHASE',
                 'value': 4002
             }
         ]
@@ -944,19 +979,19 @@ enums = {
                 'documentation': {
                     'description': ' Configures the LO signal that the NI-RFSA device generates at a frequency higher than  the RF frequency. This LO frequency is given by the formula fLO = fRF + fIF.'
                 },
-                'name': 'LO_INJECTION_HIGH_SIDE',
+                'name': 'HIGH_SIDE',
                 'value': 1300
             },
             {
                 'documentation': {
                     'description': ' Configures the LO signal that the NI-RFSA device generates at a frequency lower than  the RF frequency. This LO frequency is given by the formula fLO = fRF - fIF.'
                 },
-                'name': 'LO_INJECTION_LOW_SIDE',
+                'name': 'LOW_SIDE',
                 'value': 1301
             }
         ]
     },
-    'LoPathSelectionRangeTable': {
+    'LoPathSelection': {
         'values': [
             {
                 'documentation': {
@@ -995,7 +1030,7 @@ enums = {
             }
         ]
     },
-    'LoSourceSelectionTable': {
+    'LoSourceSelection': {
         'generate-mappings': True,
         'values': [
             {
@@ -1009,44 +1044,44 @@ enums = {
                 'documentation': {
                     'description': ' Specifies that the LO source used to downconvert the RF input signal is  connected to the LO IN connector on the front panel.'
                 },
-                'name': 'LO_IN_STR',
+                'name': 'LO_IN',
                 'value': 'LO_In'
             },
             {
                 'documentation': {
                     'description': ' Uses the PXIe-5831/5840 internal LO as the LO source. This value is valid on only the PXIe-5840 with PXIe-5653 or PXIe-5831 with PXIe-5653.'
                 },
-                'name': 'LO_SOURCE_SECONDARY_STR',
+                'name': 'LO_SOURCE_SECONDARY',
                 'value': 'Secondary'
             },
             {
                 'documentation': {
                     'description': ' Uses the same internal LO during NI-RFSA and NI-RFSG sessions. NI-RFSA selects an internal synthesizer  and the synthesizer signal is switched to both the RF Out and RF In mixers. This value is valid on only the PXIe-5830/5831/5841 with PXIe-5655.'
                 },
-                'name': 'LO_SOURCE_SG_SA_SHARED_STR',
+                'name': 'LO_SOURCE_SG_SA_SHARED',
                 'value': 'SG_SA_Shared'
             }
         ]
     },
-    'LoYIGMainCoilDriveRangeTable': {
+    'LoYIGMainCoilDrive': {
         'values': [
             {
                 'documentation': {
                     'description': ' Adjusts the YIG main coil on the LO for an underdamped response.'
                 },
-                'name': 'LO_YIG_MAIN_COIL_DRIVE_NORMAL',
+                'name': 'NORMAL',
                 'value': 2400
             },
             {
                 'documentation': {
                     'description': ' Adjusts the YIG main coil on the LO for an overdamped response.'
                 },
-                'name': 'LO_YIG_MAIN_COIL_DRIVE_FAST',
+                'name': 'FAST',
                 'value': 2401
             }
         ]
     },
-    'LoopBandwidthTable': {
+    'LoopBandwidth': {
         'values': [
             {
                 'documentation': {
@@ -1071,50 +1106,50 @@ enums = {
             }
         ]
     },
-    'NotchFilterEnabledRangeTable': {
+    'NotchFilterEnabled': {
         'values': [
             {
                 'documentation': {
                     'description': ' Specifies the notch filter will not be used.'
                 },
-                'name': 'NOTCH_FILTER_DISABLED',
+                'name': 'DISABLED',
                 'value': 3400
             },
             {
                 'documentation': {
                     'description': ' Specifies that a notch filter will be used if available.'
                 },
-                'name': 'NOTCH_FILTER_ENABLED_WHEN_IN_SIGNAL_PATH',
+                'name': 'ENABLED_WHEN_IN_SIGNAL_PATH',
                 'value': 3401
             },
             {
                 'documentation': {
                     'description': ' Specifies that the notch filter will be used.'
                 },
-                'name': 'NOTCH_FILTER_ENABLED',
+                'name': 'ENABLED',
                 'value': 3402
             }
         ]
     },
-    'OverflowErrorReportingRangeTable': {
+    'OverflowErrorReporting': {
         'values': [
             {
                 'documentation': {
                     'description': ' Configures NI-RFSA to return a warning when an ADC or onboard signal processing (OSP) overflow occurs.'
                 },
-                'name': 'ERROR_REPORTING_WARNING',
+                'name': 'WARNING',
                 'value': 1301
             },
             {
                 'documentation': {
                     'description': ' Configures NI-RFSA to not return an error or a warning when an ADC or OSP overflow occurs.'
                 },
-                'name': 'ERROR_REPORTING_DISABLED',
+                'name': 'DISABLED',
                 'value': 1302
             }
         ]
     },
-    'PowerSpectrumUnitsRangeTable': {
+    'PowerSpectrumUnits': {
         'values': [
             {
                 'documentation': {
@@ -1166,139 +1201,139 @@ enums = {
                 'documentation': {
                     'description': ' Units are seconds.'
                 },
-                'name': 'PULSE_WIDTH_UNITS_SECONDS',
+                'name': 'SECONDS',
                 'value': 6200
             },
             {
                 'documentation': {
                     'description': ' Units are clock periods.'
                 },
-                'name': 'PULSE_WIDTH_UNITS_CLOCK_PERIODS',
+                'name': 'CLOCK_PERIODS',
                 'value': 6201
             }
         ]
     },
-    'PxiChassisClk10SourceRangeTable': {
+    'PxiChassisClk10Source': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' The device does not drive the PXI 10 MHz backplane Reference clock.'
                 },
-                'name': 'NONE_STR',
+                'name': 'NONE',
                 'value': 'None'
             },
             {
                 'documentation': {
                     'description': ' The device drives the PXI 10 MHz backplane Reference clock with the PXI-5600  onboard clock. You must connect the 10 MHz OUT connector to the PXI 10 MHz  I/O connector on the PXI-5600 front panel to use this option.'
                 },
-                'name': 'ONBOARD_CLOCK_STR',
+                'name': 'ONBOARD_CLOCK',
                 'value': 'OnboardClock'
             },
             {
                 'documentation': {
                     'description': ' The device drives the PXI 10 MHz backplane Reference clock with the reference  source attached to the PXI-5600 FREQ REF IN connector. You must connect the  10 MHz OUT connector to the PXI 10 MHz I/O connector on the PXI-5600 front  panel to use this option.'
                 },
-                'name': 'REF_IN_STR',
+                'name': 'REF_IN',
                 'value': 'RefIn'
             }
         ]
     },
-    'RefClockOutTerminalRangeTable': {
+    'RefClockOutTerminal': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' The Reference clock is not exported.'
                 },
-                'name': 'NONE_STR',
+                'name': 'NONE',
                 'value': 'None'
             },
             {
                 'documentation': {
                     'description': ' Export the clock on the REF IN/OUT terminal on the 5652 or on the REF OUT terminals on the PXIe-5653,  or the REF OUT terminal on the PXIe-5644/5645/5646, PXIe-5694, and PXIe-5820/5830/5831/5840/5841.'
                 },
-                'name': 'REF_OUT_STR',
+                'name': 'REF_OUT',
                 'value': 'RefOut'
             },
             {
                 'documentation': {
                     'description': ' Export the clock on the REF OUT2 terminal on the LO. This connector does not  exist on some versions of the PXI/PXIe-5652.'
                 },
-                'name': 'REF_OUT2_STR',
+                'name': 'REF_OUT2',
                 'value': 'RefOut2'
             },
             {
                 'documentation': {
                     'description': ' Export the clock on the CLK OUT terminal on the Digitizer.'
                 },
-                'name': 'CLK_OUT_STR',
+                'name': 'CLK_OUT',
                 'value': 'ClkOut'
             },
             {
                 'documentation': {
                     'description': ' Export the RF Condiioner REF OUT terminal on the PXIe-5694. This value is  valid only for the PXIe-5667.'
                 },
-                'name': 'IF_COND_REF_OUT_STR',
+                'name': 'IF_COND_REF_OUT',
                 'value': 'IFCondRefOut'
             }
         ]
     },
-    'RefClockSourceRangeTable': {
+    'RefClockSource': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' No Reference clock is required for the current device configuration. This value is valid only for the PXIe-5694. '
                 },
-                'name': 'NONE_STR',
+                'name': 'NONE',
                 'value': 'None'
             },
             {
                 'documentation': {
                     'description': ' PXI-5661-NI-RFSA locks the NI-RFSA device to the PXI-5600 RF downconverter onboard clock. \n\n PXIe-5663/5663E-NI-RFSA locks the PXIe-5663/5663E to the PXI/PXIe-5652 LO source onboard clock. Connect  the REF OUT2 connector (if it exists) on the PXI/PXIe-5652 to the CLK IN terminal on the  PXIe-5622. On versions of the PXIe-5663/5663E that lack a REF OUT2 connector on the PXI/PXIe-5652,  connect the REF IN/OUT connector on the PXI/PXIe-5652 to the CLK IN terminal on the PXIe-5622. \n\n PXIe-5665-NI-RFSA locks the PXIe-5665 to the PXIe-5653 LO source onboard clock. Connect the 100 MHz REF OUT  terminal on the PXIe-5653 to the CLK IN terminal on the PXIe-5622. \n\n PXIe-5667-NI-RFSA locks the PXIe-5667 to the PXIe-5653 LO source onboard clock.  Connect the 100 MHz REF OUT terminal on the PXIe-5653 to the CLK IN terminal on the PXIe-5622,  and connect the 10 MHZ REF OUT terminal on the PXIe-5653 to the REF/LO IN connector on the PXIe-5694.\n\n PXIe-5668-Lock the PXIe-5668 to the PXIe-5653 LO SOURCE onboard clock. Connect the LO2  OUT connector on the PXIe-5606 to the CLK IN connector on the PXIe-5624. \n\n PXIe-5644/5645/5646, PXIe-5820/5840/5841—Lock the NI-RFSA device to its onboard clock. PXIe-5830/5831—For the PXIe-5830, connect the PXIe-5820 REF IN connector to the PXIe3621 REF OUT connector. For the PXIe-5831,  connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector. \n\n PXIe-5831 with PXIe-5653—Connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector. Connect the PXIe-5653 REF OUT (10 MHz)  connector to the PXIe-3622 REF IN connector. \n\n PXIe-5840 with PXIe-5653—Lock to the PXIe-5653 onboard clock. Connect the REF OUT (10 MHz) connector on the  PXIe-5653 to the PXIe-5840 REF IN connector. Configure open NI-RFSG sessions to the device to use NIRFSG_VAL_REF_IN_STR  for the PXIe-5840 or NIRFSG_VAL_REF_IN_2_STR for the PXIe-5840 with PXIe-5653. \n\n PXIe-5841 with PXIe-5655—Lock to the PXIe-5655 onboard clock. Connect the REF OUT connector on  the PXIe-5655 to the PXIe-5841 REF IN connector.'
                 },
-                'name': 'ONBOARD_CLOCK_STR',
+                'name': 'ONBOARD_CLOCK',
                 'value': 'OnboardClock'
             },
             {
                 'documentation': {
                     'description': ' PXI-5661—NI-RFSA locks the NI-RFSA device to the signal at the external FREQ REF IN  connector on the PXI-5600. \n\n PXIe-5663/5663E—Connect the external signal to the PXI/PXIe-5652 REF IN/OUT connector. Connect the  REF OUT2 connector (if it exists) on the PXI/PXIe-5652 to the CLK IN terminal on the PXIe-5622. On  versions of the 5663/5663E that lack a REF OUT2 connector on the PXI/PXIe-5652, this configuration  can only be used in external digitizer mode.\n\n PXIe-5665—Connect the external signal to the PXIe-5653 REF IN connector. Connect the 100 MHz REF OUT  terminal on the PXIe-5653 to the CLK IN terminal on the PXIe-5622. If your external clock signal frequency is set to a frequency other than 10 MHz,  set the NIRFSA_ATTR_REF_CLOCK_RATE attribute according to the frequency of your external clock signal.\n\n PXIe-5667—Connect the external signal to the PXIe-5653 REF IN connector. Connect the 100 MHz REF OUT terminal  on the PXIe-5653 to the CLK IN terminal on the PXIe-5622, and connect the 10 MHZ REF OUT terminal on  the PXIe-5653 to the REF/LO IN connector on the PXIe-5694. If your external clock signal frequency is  set to a frequency other than 10 MHz, set the NIRFSA_ATTR_REF_CLOCK_RATE attribute according  to the frequency of your external clock signal. \n\n PXIe-5694—Connect the Reference clock signal to the REF/LO IN connector on the PXIe-5694 front panel.\n\n PXIe-5644/5645/5646, PXIe-5820/5840/5841—Lock the NI-RFSA device to the signal at the external REF IN connector. \n PXIe-5830/5831—For the PXIe-5830, connect the PXIe-5820 REF IN connector to the PXIe3621 REF OUT connector.  For the PXIe-5831, connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector.  For the PXIe-5830, lock the external signal to the PXIe-3621 REF IN connector. For the PXIe-5831,  lock the external signal to the PXIe-3622 REF IN connector. \n PXIe-5831 with PXIe-5653—Connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector.  Connect the PXIe-5653 REF OUT (10 MHz) connector to the PXIe-3622 REF IN connector. Lock the external signal to the PXIe-5653 REF IN connector. \n PXIe-5840 with PXIe-5653—Lock to the signal at the REF IN connector on the associated PXIe-5653. Connect the  REF OUT (10 MHz) connector on the PXIe-5653 to the PXIe-5840 REF IN connector. \n PXIe-5841 with PXIe-5655—Lock to the signal at the REF IN connector on the associated PXIe-5655.  Connect the REF OUT connector on the PXIe-5655 to the PXIe-5841 REF IN.'
                 },
-                'name': 'REF_IN_STR',
+                'name': 'REF_IN',
                 'value': 'RefIn'
             },
             {
                 'documentation': {
                     'description': ' PXI-5661-NI-RFSA locks the NI-RFSA device to the PXI backplane clock using the PXI-5600.  You must connect the PXI 10 MHz connector to the REF IN connector on the  PXI-5600 front panel to use this option. \n\n PXIe-5668-Lock the PXIe-5653 to the PXI backplane clock. Connect the PXIe-5606 LO2  OUT to the LO2 IN connector on the PXIe-5624. \n\n PXIe-5644/5645/5646, PXIe-5663/5663E/5665/5667, PXIe-5694, PXIe-5820/5830/5831/5831 with PXIe-5653/5840/5841/5840 with PXIe-5653/5841/5841 with PXIe-5655-Lock the device to the PXI backplane clock. '
                 },
-                'name': 'PXI_CLK_STR',
+                'name': 'PXI_CLK',
                 'value': 'PXI_Clk'
             },
             {
                 'documentation': {
                     'description': ' PXI-5661-This configuration does not apply to the PXI-5661. \n\n PXIe-5663/5663E-Lock the PXIe-5663/5663E to an external 10 MHz signal.  Connect the external signal to the  CLK IN connector on the PXIe-5622, and connect the PXIe-5622 CLK OUT connector to the  FREQ REF IN connector  on the PXI/PXIe-5652.\n\n PXIe-5665-NI-RFSA locks the PXIe-5665 to an external 100 MHz signal.  Connect the external signal to the CLK IN  connector on the PXIe-5622, and connect the PXIe-5622 CLK OUT connector to the REF IN  connector on the PXIe-5653. Set the NIRFSA_ATTR_REF_CLOCK_RATE attribute to 100 MHz. \n\n PXIe-5667-NI-RFSA locks the PXIe-5667 to an external 100 MHz signal. Connect the external signal  to the CLK IN connector on the PXIe-5622, and connect the PXIe-5622 CLK OUT connector to the REF IN  connector on the PXIe-5653. Connect the 10 MHZ REF OUT terminal on the PXIe-5653 to the REF/LO IN connector  on the PXIe-5694. Set the NIRFSA_ATTR_REF_CLOCK_RATE attribute to 100 MHz.\n\n PXIe-5668-Lock the PXIe-5668 to an external 100 MHz signal. Connect the external signal to the CLK IN  connector on the PXIe-5624, and connect the PXIe-5624 CLK OUT connector to the REF IN connector on the PXIe-5653.  Set the clock rate parameter to 100 MHz. \n\n PXIe-5644/5645/5646, PXIe-5820/5830/5831/5831 with PXIe-5653/5840/5840 with PXIe-5653/5841/5841 with PXIe-5655-This configuration does not apply. '
                 },
-                'name': 'CLK_IN_STR',
+                'name': 'CLK_IN',
                 'value': 'ClkIn'
             },
             {
                 'documentation': {
                     'description': ' PXIe-5840 with PXIe-5653—NI-RFSA locks the device to the clock sourced at the PXIe-5840 REF IN terminal that  is already configured by an NI-RFSG session. Connect the PXIe-5840 REF OUT connector to the PXIe-5653 REF IN connector.  Configure open NI-RFSG sessions to the device to use NIRFSG_VAL_REF_IN_2_STR for the PXIe-5840 or NIRFSG_VAL_ONBOARD_CLOCK_STR for the PXIe-5840 with PXIe-5653. \n\n PXI-5661, PXIe-5663/5663E/5665/5667/5668, PXIe-5644/5645/5646, PXIe-5820/5830/5831/5831 with PXIe-5653/5840/5841/5841 with PXIe-5655—This configuration does not apply. '
                 },
-                'name': 'REF_IN_2_STR',
+                'name': 'REF_IN_2',
                 'value': 'RefIn2'
             },
             {
                 'documentation': {
                     'description': ' PXIe-5831 with PXIe-5653—NI-RFSA configures the PXIe-5653 to export the Reference clock and configures the PXIe-5820 and PXIe-3622  to use PXI_Clk as the Reference Clock source. Connect the PXIe-5653 REF OUT (10 MHz) connector to the PXI chassis REF IN connector. \n PXIe-5840 with PXIe-5653—NI-RFSA configures the PXIe-5653 to export the Reference Clock, and configures the  PXIe-5840 to use NIRFSA_VAL_PXI_CLK_STR. Connect the PXIe-5653 REF OUT (10 MHz) connector to the PXI chassis REF IN connector.  For best performance, configure all other devices in the system to use NIRFSA_VAL_PXI_CLK_STR as the Reference Clock source. \n\n PXI-5661, PXIe-5663/5663E/5665/5667/5668, PXIe-5644/5645/5646, PXIe-5820/5830/5840/5841/5841 with PXIe-5655—This configuration does not apply. '
                 },
-                'name': 'PXI_CLK_MASTER_STR',
+                'name': 'PXI_CLK_MASTER',
                 'value': 'PXI_ClkMaster'
             }
         ]
     },
-    'RefTriggerTypeRangeTable': {
+    'RefTriggerType': {
         'values': [
             {
                 'documentation': {
@@ -1337,7 +1372,23 @@ enums = {
             }
         ]
     },
-    'RfLBSigCondPathSelTable': {
+    'ResetWithOptionsStepsToOmit': {
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'ROUTES',
+                'value': 1
+            },
+            {
+                'name': 'DEEMBEDDING_TABLES',
+                'value': 2
+            }
+        ]
+    },
+    'RfLBSigCondPathSel': {
         'values': [
             {
                 'documentation': {
@@ -1376,7 +1427,7 @@ enums = {
             }
         ]
     },
-    'RfPathSelectionRangeTable': {
+    'RfPathSelection': {
         'values': [
             {
                 'documentation': {
@@ -1408,165 +1459,213 @@ enums = {
             }
         ]
     },
-    'RfPreampEnabledRangeTable': {
+    'RfPreampEnabled': {
         'values': [
             {
                 'documentation': {
                     'description': ' Disables the RF preamplifier. '
                 },
-                'name': 'RF_PREAMP_DISABLED',
+                'name': 'DISABLED',
                 'value': 2500
             },
             {
                 'documentation': {
                     'description': ' Enables the RF preamplifier when the RF preamplifier is present in the signal path  and disables the preamplifier when it is not in the path. Only devices with an RF  preamplifier on the downconverter support this option. Use the NIRFSA_ATTR_RF_PREAMP_PRESENT  attribute to determine whether the downconverter has a preamplifier.'
                 },
-                'name': 'RF_PREAMP_ENABLED_WHEN_IN_SIGNAL_PATH',
+                'name': 'ENABLED_WHEN_IN_SIGNAL_PATH',
                 'value': 2501
             },
             {
                 'documentation': {
                     'description': ' Enables the RF preamplifier. If the RF preamplifier is not in a signal path,  NI-RFSA returns an error. Select the NIRFSA_VAL_RF_PREAMP_ENABLED_WHEN_IN_SIGNAL_PATH  option whenever possible to avoid an error.'
                 },
-                'name': 'RF_PREAMP_ENABLED',
+                'name': 'ENABLED',
                 'value': 2502
             },
             {
                 'documentation': {
                     'description': ' Enables the RF preamplifier automatically based on the value of the NIRFSA_ATTR_REFERENCE_LEVEL attribute. This value is valid only for the PXIe-5644/5645/5646, PXIe-5667, and PXIe-5830/5831/5840/5841.'
                 },
-                'name': 'RF_PREAMP_AUTOMATIC',
+                'name': 'AUTOMATIC',
                 'value': 2503
             }
         ]
     },
-    'RfPreselectorFilterRangeTable': {
+    'RfPreselectorFilter': {
         'values': [
             {
                 'documentation': {
                     'description': ' Specifies that no filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_NONE',
+                'name': 'FILTER_PATH_NONE',
                 'value': 3300
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 19-35 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_1',
+                'name': 'FILTER_PATH_1',
                 'value': 3301
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 33-61 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_2',
+                'name': 'FILTER_PATH_2',
                 'value': 3302
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 59-110 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_3',
+                'name': 'FILTER_PATH_3',
                 'value': 3303
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 90-167 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_4',
+                'name': 'FILTER_PATH_4',
                 'value': 3304
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 140-245 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_5',
+                'name': 'FILTER_PATH_5',
                 'value': 3305
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 205-370 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_6',
+                'name': 'FILTER_PATH_6',
                 'value': 3306
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 330-595 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_7',
+                'name': 'FILTER_PATH_7',
                 'value': 3307
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 550-975 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_8',
+                'name': 'FILTER_PATH_8',
                 'value': 3308
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 910-1600 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_9',
+                'name': 'FILTER_PATH_9',
                 'value': 3309
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 1520-2040 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_10',
+                'name': 'FILTER_PATH_10',
                 'value': 3310
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 1960-2540 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_11',
+                'name': 'FILTER_PATH_11',
                 'value': 3311
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 2460-3040 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_12',
+                'name': 'FILTER_PATH_12',
                 'value': 3312
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 2960-3840 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_13',
+                'name': 'FILTER_PATH_13',
                 'value': 3313
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 3760-4640 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_14',
+                'name': 'FILTER_PATH_14',
                 'value': 3314
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 4560-5840 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_15',
+                'name': 'FILTER_PATH_15',
                 'value': 3315
             },
             {
                 'documentation': {
                     'description': ' Specifies that the 5760-7040 MHz pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_16',
+                'name': 'FILTER_PATH_16',
                 'value': 3316
             },
             {
                 'documentation': {
                     'description': ' Specifies that the external pre-selector filter is used'
                 },
-                'name': 'RF_PRESELECTOR_FILTER_PATH_EXTERNAL_FILTER',
+                'name': 'FILTER_PATH_EXTERNAL_FILTER',
                 'value': 3317
+            }
+        ]
+    },
+    'SelfCalibrateStepsToOmit': {
+        'values': [
+            {
+                'name': 'OMIT_NONE',
+                'value': 0
+            },
+            {
+                'name': 'ALIGNMENT',
+                'value': 1
+            },
+            {
+                'name': 'GAIN_REFERENCE',
+                'value': 2
+            },
+            {
+                'name': 'IF_FLATNESS',
+                'value': 4
+            },
+            {
+                'name': 'DIGITIZER_SELF_CAL',
+                'value': 8
+            },
+            {
+                'name': 'LO_SELF_CAL',
+                'value': 16
+            },
+            {
+                'name': 'AMPLITUDE_ACCURACY',
+                'value': 32
+            },
+            {
+                'name': 'RESIDUAL_LO_POWER',
+                'value': 64
+            },
+            {
+                'name': 'IMAGE_SUPPRESSION',
+                'value': 128
+            },
+            {
+                'name': 'SYNTHESIZER_ALIGNMENT',
+                'value': 256
+            },
+            {
+                'name': 'DC_OFFSET',
+                'value': 512
             }
         ]
     },
@@ -1618,20 +1717,20 @@ enums = {
             }
         ]
     },
-    'SignalConditioningEnabledRangeTable': {
+    'SignalConditioningEnabled': {
         'values': [
             {
                 'documentation': {
                     'description': ' Specifies that the signal conditioning will be enabled.'
                 },
-                'name': 'SIGNAL_CONDITIONING_ENABLED',
+                'name': 'ENABLED',
                 'value': 3600
             },
             {
                 'documentation': {
                     'description': ' Specifies that all signal conditioning will be bypassed.'
                 },
-                'name': 'SIGNAL_CONDITIONING_BYPASSED',
+                'name': 'BYPASSED',
                 'value': 3601
             }
         ]
@@ -1648,154 +1747,154 @@ enums = {
             }
         ]
     },
-    'StepGainEnabledRangeTable': {
+    'StepGainEnabled': {
         'values': [
             {
                 'documentation': {
                     'description': ' Specifies that the step gain amplifier will be disabled.'
                 },
-                'name': 'STEP_GAIN_DISABLED',
+                'name': 'DISABLED',
                 'value': 3200
             },
             {
                 'documentation': {
                     'description': ' Specifies that the step gain amplifier will be enabled.'
                 },
-                'name': 'STEP_GAIN_ENABLED',
+                'name': 'ENABLED',
                 'value': 3201
             }
         ]
     },
-    'TriggerSourceRangeTable': {
+    'TriggerSource': {
         'generate-mappings': True,
         'values': [
             {
                 'documentation': {
                     'description': ' The trigger is received on PFI 0.  For the PXIe-5841 with PXIe-5655, the trigger is received on the PXIe-5841 PFI 0.'
                 },
-                'name': 'PFI0_STR',
+                'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on PFI 1.'
                 },
-                'name': 'PFI1_STR',
+                'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on PXI trigger line 0.'
                 },
-                'name': 'PXI_TRIG0_STR',
+                'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on PXI trigger line 1.'
                 },
-                'name': 'PXI_TRIG1_STR',
+                'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on PXI trigger line 2.'
                 },
-                'name': 'PXI_TRIG2_STR',
+                'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on PXI trigger line 3.'
                 },
-                'name': 'PXI_TRIG3_STR',
+                'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on PXI trigger line 4.'
                 },
-                'name': 'PXI_TRIG4_STR',
+                'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on PXI trigger line 5.'
                 },
-                'name': 'PXI_TRIG5_STR',
+                'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on PXI trigger line 6.'
                 },
-                'name': 'PXI_TRIG6_STR',
+                'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on PXI trigger line 7.'
                 },
-                'name': 'PXI_TRIG7_STR',
+                'name': 'PXI_TRIG7',
                 'value': 'PXI_Trig7'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on the PXI star trigger line.'
                 },
-                'name': 'PXI_STAR_STR',
+                'name': 'PXI_STAR',
                 'value': 'PXI_STAR'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on the PXIe DStar B trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.'
                 },
-                'name': 'PXIE_DSTARB_STR',
+                'name': 'PXIE_DSTARB',
                 'value': 'PXIe_DStarB'
             },
             {
                 'documentation': {
                     'description': ' The trigger is received on expiration of the specified Timer Event Interval.'
                 },
-                'name': 'TIMER_EVENT_STR',
+                'name': 'TIMER_EVENT',
                 'value': 'TimerEvent'
             },
             {
                 'documentation': {
                     'description': ' The device is reconfigured when the acquisition reaches the end of record event.'
                 },
-                'name': 'END_OF_RECORD_EVENT_STR',
+                'name': 'END_OF_RECORD_EVENT',
                 'value': 'EndOfRecordEvent'
             },
             {
                 'documentation': {
                     'description': ' The device uses the Start trigger to start the timer.'
                 },
-                'name': 'START_TRIGGER_STR',
+                'name': 'START_TRIGGER',
                 'value': 'StartTrigger'
             },
             {
                 'documentation': {
                     'description': ' The device uses the Reference trigger to start the timer.'
                 },
-                'name': 'REFERENCE_TRIGGER_STR',
+                'name': 'REFERENCE_TRIGGER',
                 'value': 'ReferenceTrigger'
             },
             {
-                'name': 'SYNC_START_TRIGGER_STR',
+                'name': 'SYNC_START_TRIGGER',
                 'value': 'Sync_Start'
             },
             {
-                'name': 'SYNC_REF_TRIGGER_STR',
+                'name': 'SYNC_REF_TRIGGER',
                 'value': 'Sync_Ref'
             },
             {
-                'name': 'SYNC_ADVANCE_TRIGGER_STR',
+                'name': 'SYNC_ADVANCE_TRIGGER',
                 'value': 'Sync_Advance'
             }
         ]
     },
-    'UnspecifiedAttrRangeTable': {
+    'UnspecifiedAttr': {
         'values': [
             {
                 'documentation': {

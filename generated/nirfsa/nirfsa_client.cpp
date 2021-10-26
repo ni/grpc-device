@@ -90,14 +90,14 @@ cal_adjust_downconverter_gain(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 CalAdjustIFAttenuationCalibrationResponse
-cal_adjust_if_attenuation_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<IfFilterTable, pb::int32>& if_filter, const std::vector<double>& attenuator_settings, const double& measurement)
+cal_adjust_if_attenuation_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<IfFilter, pb::int32>& if_filter, const std::vector<double>& attenuator_settings, const double& measurement)
 {
   ::grpc::ClientContext context;
 
   auto request = CalAdjustIFAttenuationCalibrationRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
-  const auto if_filter_ptr = if_filter.get_if<IfFilterTable>();
+  const auto if_filter_ptr = if_filter.get_if<IfFilter>();
   const auto if_filter_raw_ptr = if_filter.get_if<pb::int32>();
   if (if_filter_ptr) {
     request.set_if_filter(*if_filter_ptr);
@@ -117,14 +117,14 @@ cal_adjust_if_attenuation_calibration(const StubPtr& stub, const nidevice_grpc::
 }
 
 CalAdjustIFResponseCalibrationResponse
-cal_adjust_if_response_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<IfFilterTable, pb::int32>& if_filter, const double& rf_frequency, const double& band_width, const std::vector<double>& measurements)
+cal_adjust_if_response_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<IfFilter, pb::int32>& if_filter, const double& rf_frequency, const double& band_width, const std::vector<double>& measurements)
 {
   ::grpc::ClientContext context;
 
   auto request = CalAdjustIFResponseCalibrationRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
-  const auto if_filter_ptr = if_filter.get_if<IfFilterTable>();
+  const auto if_filter_ptr = if_filter.get_if<IfFilter>();
   const auto if_filter_raw_ptr = if_filter.get_if<pb::int32>();
   if (if_filter_ptr) {
     request.set_if_filter(*if_filter_ptr);
@@ -293,13 +293,13 @@ commit(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ConfigureAcquisitionTypeResponse
-configure_acquisition_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AcquisitionTypeRangeTable, pb::int32>& acquisition_type)
+configure_acquisition_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AcquisitionType, pb::int32>& acquisition_type)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureAcquisitionTypeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto acquisition_type_ptr = acquisition_type.get_if<AcquisitionTypeRangeTable>();
+  const auto acquisition_type_ptr = acquisition_type.get_if<AcquisitionType>();
   const auto acquisition_type_raw_ptr = acquisition_type.get_if<pb::int32>();
   if (acquisition_type_ptr) {
     request.set_acquisition_type(*acquisition_type_ptr);
@@ -379,7 +379,7 @@ configure_deembedding_table_interpolation_spline(const StubPtr& stub, const nide
 }
 
 ConfigureDigitalEdgeAdvanceTriggerResponse
-configure_digital_edge_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeTriggerSource, std::string>& source, const simple_variant<DigitalEdgeRangeTable, pb::int32>& edge)
+configure_digital_edge_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeTriggerSource, std::string>& source, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -393,7 +393,7 @@ configure_digital_edge_advance_trigger(const StubPtr& stub, const nidevice_grpc:
   else if (source_raw_ptr) {
     request.set_source_raw(*source_raw_ptr);
   }
-  const auto edge_ptr = edge.get_if<DigitalEdgeRangeTable>();
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
   const auto edge_raw_ptr = edge.get_if<pb::int32>();
   if (edge_ptr) {
     request.set_edge(*edge_ptr);
@@ -411,7 +411,7 @@ configure_digital_edge_advance_trigger(const StubPtr& stub, const nidevice_grpc:
 }
 
 ConfigureDigitalEdgeRefTriggerResponse
-configure_digital_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeTriggerSource, std::string>& source, const simple_variant<DigitalEdgeRangeTable, pb::int32>& edge, const pb::int64& pretrigger_samples)
+configure_digital_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeTriggerSource, std::string>& source, const simple_variant<DigitalEdge, pb::int32>& edge, const pb::int64& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -425,7 +425,7 @@ configure_digital_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Ses
   else if (source_raw_ptr) {
     request.set_source_raw(*source_raw_ptr);
   }
-  const auto edge_ptr = edge.get_if<DigitalEdgeRangeTable>();
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
   const auto edge_raw_ptr = edge.get_if<pb::int32>();
   if (edge_ptr) {
     request.set_edge(*edge_ptr);
@@ -444,7 +444,7 @@ configure_digital_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ConfigureDigitalEdgeStartTriggerResponse
-configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeTriggerSource, std::string>& source, const simple_variant<DigitalEdgeRangeTable, pb::int32>& edge)
+configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeTriggerSource, std::string>& source, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -458,7 +458,7 @@ configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::S
   else if (source_raw_ptr) {
     request.set_source_raw(*source_raw_ptr);
   }
-  const auto edge_ptr = edge.get_if<DigitalEdgeRangeTable>();
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
   const auto edge_raw_ptr = edge.get_if<pb::int32>();
   if (edge_ptr) {
     request.set_edge(*edge_ptr);
@@ -494,7 +494,7 @@ configure_iq_carrier_frequency(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 ConfigureIQPowerEdgeRefTriggerResponse
-configure_iq_power_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& source, const double& level, const simple_variant<AnalogSlopeRangeTable, pb::int32>& slope, const pb::int64& pretrigger_samples)
+configure_iq_power_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& source, const double& level, const simple_variant<AnalogSlope, pb::int32>& slope, const pb::int64& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
@@ -502,7 +502,7 @@ configure_iq_power_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Se
   request.mutable_vi()->CopyFrom(vi);
   request.set_source(source);
   request.set_level(level);
-  const auto slope_ptr = slope.get_if<AnalogSlopeRangeTable>();
+  const auto slope_ptr = slope.get_if<AnalogSlope>();
   const auto slope_raw_ptr = slope.get_if<pb::int32>();
   if (slope_ptr) {
     request.set_slope(*slope_ptr);
@@ -577,13 +577,13 @@ configure_number_of_samples(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 ConfigurePXIChassisClk10Response
-configure_pxi_chassis_clk10(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PxiChassisClk10SourceRangeTable, std::string>& pxi_clk10_source)
+configure_pxi_chassis_clk10(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PxiChassisClk10Source, std::string>& pxi_clk10_source)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigurePXIChassisClk10Request{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto pxi_clk10_source_ptr = pxi_clk10_source.get_if<PxiChassisClk10SourceRangeTable>();
+  const auto pxi_clk10_source_ptr = pxi_clk10_source.get_if<PxiChassisClk10Source>();
   const auto pxi_clk10_source_raw_ptr = pxi_clk10_source.get_if<std::string>();
   if (pxi_clk10_source_ptr) {
     request.set_pxi_clk10_source_mapped(*pxi_clk10_source_ptr);
@@ -601,13 +601,13 @@ configure_pxi_chassis_clk10(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 ConfigureRefClockResponse
-configure_ref_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RefClockSourceRangeTable, std::string>& clock_source, const double& ref_clock_rate)
+configure_ref_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RefClockSource, std::string>& clock_source, const double& ref_clock_rate)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureRefClockRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto clock_source_ptr = clock_source.get_if<RefClockSourceRangeTable>();
+  const auto clock_source_ptr = clock_source.get_if<RefClockSource>();
   const auto clock_source_raw_ptr = clock_source.get_if<std::string>();
   if (clock_source_ptr) {
     request.set_clock_source_mapped(*clock_source_ptr);
@@ -1006,7 +1006,7 @@ error_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const simple_variant<ExportTerminalRangeTable, std::string>& output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const simple_variant<ExportTerminal, std::string>& output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -1021,7 +1021,7 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
     request.set_signal_raw(*signal_raw_ptr);
   }
   request.set_signal_identifier(signal_identifier);
-  const auto output_terminal_ptr = output_terminal.get_if<ExportTerminalRangeTable>();
+  const auto output_terminal_ptr = output_terminal.get_if<ExportTerminal>();
   const auto output_terminal_raw_ptr = output_terminal.get_if<std::string>();
   if (output_terminal_ptr) {
     request.set_output_terminal_mapped(*output_terminal_ptr);
@@ -1808,22 +1808,6 @@ is_self_cal_valid(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = LockSessionResponse{};
-
-  raise_if_error(
-      stub->LockSession(&context, request, &response));
-
-  return response;
-}
-
 PerformThermalCorrectionResponse
 perform_thermal_correction(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -1964,13 +1948,20 @@ reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ResetWithOptionsResponse
-reset_with_options(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::uint64& steps_to_omit)
+reset_with_options(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ResetWithOptionsStepsToOmit, pb::uint64>& steps_to_omit)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetWithOptionsRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_steps_to_omit(steps_to_omit);
+  const auto steps_to_omit_ptr = steps_to_omit.get_if<ResetWithOptionsStepsToOmit>();
+  const auto steps_to_omit_raw_ptr = steps_to_omit.get_if<pb::uint64>();
+  if (steps_to_omit_ptr) {
+    request.set_steps_to_omit(*steps_to_omit_ptr);
+  }
+  else if (steps_to_omit_raw_ptr) {
+    request.set_steps_to_omit_raw(*steps_to_omit_raw_ptr);
+  }
 
   auto response = ResetWithOptionsResponse{};
 
@@ -2013,13 +2004,20 @@ self_cal(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SelfCalibrateResponse
-self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int64& steps_to_omit)
+self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateStepsToOmit, pb::int64>& steps_to_omit)
 {
   ::grpc::ClientContext context;
 
   auto request = SelfCalibrateRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_steps_to_omit(steps_to_omit);
+  const auto steps_to_omit_ptr = steps_to_omit.get_if<SelfCalibrateStepsToOmit>();
+  const auto steps_to_omit_raw_ptr = steps_to_omit.get_if<pb::int64>();
+  if (steps_to_omit_ptr) {
+    request.set_steps_to_omit(*steps_to_omit_ptr);
+  }
+  else if (steps_to_omit_raw_ptr) {
+    request.set_steps_to_omit_raw(*steps_to_omit_raw_ptr);
+  }
 
   auto response = SelfCalibrateResponse{};
 
@@ -2030,13 +2028,20 @@ self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 }
 
 SelfCalibrateRangeResponse
-self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int64& steps_to_omit, const double& min_frequency, const double& max_frequency, const double& min_reference_level, const double& max_reference_level)
+self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateStepsToOmit, pb::int64>& steps_to_omit, const double& min_frequency, const double& max_frequency, const double& min_reference_level, const double& max_reference_level)
 {
   ::grpc::ClientContext context;
 
   auto request = SelfCalibrateRangeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_steps_to_omit(steps_to_omit);
+  const auto steps_to_omit_ptr = steps_to_omit.get_if<SelfCalibrateStepsToOmit>();
+  const auto steps_to_omit_raw_ptr = steps_to_omit.get_if<pb::int64>();
+  if (steps_to_omit_ptr) {
+    request.set_steps_to_omit(*steps_to_omit_ptr);
+  }
+  else if (steps_to_omit_raw_ptr) {
+    request.set_steps_to_omit_raw(*steps_to_omit_raw_ptr);
+  }
   request.set_min_frequency(min_frequency);
   request.set_max_frequency(max_frequency);
   request.set_min_reference_level(min_reference_level);
@@ -2250,22 +2255,6 @@ set_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::s
 
   raise_if_error(
       stub->SetUserData(&context, request, &response));
-
-  return response;
-}
-
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnlockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = UnlockSessionResponse{};
-
-  raise_if_error(
-      stub->UnlockSession(&context, request, &response));
 
   return response;
 }

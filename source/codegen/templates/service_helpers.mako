@@ -251,6 +251,8 @@ ${initialize_enum_input_param(function_name, parameter)}
 ${initialize_len_input_param(parameter)}
 % elif 'hardcoded_value' in parameter:
 ${initialize_hardcoded_parameter(parameter)}
+% elif parameter.get('pointer', False):
+${initialize_pointer_input_parameter(parameter)}
 % else:
 ${initialize_standard_input_param(function_name, parameter)}
 % endif
@@ -425,6 +427,11 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Initialize a 'hardcoded' param.
 <%def name="initialize_hardcoded_parameter(parameter)">\
       auto ${common_helpers.camel_to_snake(parameter['cppName'])} = ${parameter['hardcoded_value']};\
+</%def>
+
+## Initialize an input parameter that's passed by pointer.
+<%def name="initialize_pointer_input_parameter(parameter)">\
+      ${parameter['type']} ${common_helpers.camel_to_snake(parameter['cppName'])}_copy = request->${common_helpers.camel_to_snake(parameter['cppName'])}();\
 </%def>
 
 
@@ -637,7 +644,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       convert_x_to_enum = checked_convert_x_to_enum if use_checked_enum_conversion else cast_x_to_enum
 %>\
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
-${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_name=parameter_name, transform_x=convert_x_to_enum)}\
+${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_name=parameter_name, transform_x=convert_x_to_enum, size=common_helpers.get_size_expression(parameter))}\
 %       elif parameter['type'] == 'ViReal64':
         if(${parameter_name} == (int)${parameter_name}) {
           response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
@@ -653,7 +660,7 @@ ${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_na
 %     endif
 %   elif service_helpers.is_output_array_that_needs_coercion(parameter):
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
-${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x")}\
+${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x", size=common_helpers.get_size_expression(parameter))}\
 %   elif common_helpers.supports_standard_copy_conversion_routines(parameter):
         convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
 %   elif common_helpers.is_string_arg(parameter):
@@ -662,6 +669,10 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
         auto session_id = session_repository_->resolve_session_id(${parameter_name});
         response->mutable_${parameter_name}()->set_id(session_id);
 %   elif common_helpers.is_array(parameter['type']):
+%     if common_helpers.get_size_mechanism(parameter) == 'passed-in-by-ptr':
+### size may have changed
+        response->mutable_${parameter_name}()->Resize(${common_helpers.get_size_expression(parameter)}, 0);
+%     endif
 ### pass: other array types don't need to copy.
 %   else:
         response->set_${parameter_name}(${parameter_name});
@@ -700,10 +711,10 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 </%def>
 
 ## Copy source_buffer to response->mutable_[parameter_name]() applying transform_x.
-<%def name="copy_to_response_with_transform(source_buffer, parameter_name, transform_x)">\
+<%def name="copy_to_response_with_transform(source_buffer, parameter_name, transform_x, size)">\
         std::transform(
           ${source_buffer}.begin(),
-          ${source_buffer}.end(),
+          ${source_buffer}.begin() + ${size},
           google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
           [&](auto x) { 
               return ${transform_x};

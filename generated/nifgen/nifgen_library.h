@@ -250,7 +250,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using InitiateGenerationPtr = decltype(&niFgen_InitiateGeneration);
   using InvalidateAllAttributesPtr = decltype(&niFgen_InvalidateAllAttributes);
   using IsDonePtr = decltype(&niFgen_IsDone);
-  using LockSessionPtr = decltype(&niFgen_LockSession);
+  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using ManualEnableP2PStreamPtr = decltype(&niFgen_ManualEnableP2PStream);
   using QueryArbSeqCapabilitiesPtr = decltype(&niFgen_QueryArbSeqCapabilities);
   using QueryArbWfmCapabilitiesPtr = decltype(&niFgen_QueryArbWfmCapabilities);
@@ -274,7 +274,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using SetAttributeViStringPtr = decltype(&niFgen_SetAttributeViString);
   using SetNamedWaveformNextWritePositionPtr = decltype(&niFgen_SetNamedWaveformNextWritePosition);
   using SetWaveformNextWritePositionPtr = decltype(&niFgen_SetWaveformNextWritePosition);
-  using UnlockSessionPtr = decltype(&niFgen_UnlockSession);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitUntilDonePtr = decltype(&niFgen_WaitUntilDone);
   using WriteBinary16WaveformPtr = decltype(&niFgen_WriteBinary16Waveform);
   using WriteComplexBinary16WaveformPtr = decltype(&niFgen_WriteComplexBinary16Waveform);

@@ -75,6 +75,9 @@ def get_message_parameter_definitions(parameters):
         # we define all enum fields in response messages
         parameter_definitions.extend(enum_parameters)
     else:
+      if common_helpers.is_enum(parameter):
+        # For input arrays of enums, don't generate a raw type, but do use the correct enum type.
+        parameter_type = f'repeated {parameter["enum"]}'
       grpc_field_number = generate_parameter_field_number(parameter, used_indexes)
       parameter_definitions.append({
         "name": parameter_name,

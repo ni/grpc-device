@@ -28,6 +28,7 @@ service NiFakeNonIvi {
   rpc OutputArraysWithNarrowIntegerTypes(OutputArraysWithNarrowIntegerTypesRequest) returns (OutputArraysWithNarrowIntegerTypesResponse);
   rpc InputArrayOfBytes(InputArrayOfBytesRequest) returns (InputArrayOfBytesResponse);
   rpc OutputArrayOfBytes(OutputArrayOfBytesRequest) returns (OutputArrayOfBytesResponse);
+  rpc OutputArraysWithPassedInByPtrMechanism(OutputArraysWithPassedInByPtrMechanismRequest) returns (OutputArraysWithPassedInByPtrMechanismResponse);
   rpc RegisterCallback(RegisterCallbackRequest) returns (stream RegisterCallbackResponse);
   rpc ReadStream(ReadStreamRequest) returns (stream ReadStreamResponse);
   rpc InputTimestamp(InputTimestampRequest) returns (InputTimestampResponse);
@@ -209,6 +210,16 @@ message OutputArrayOfBytesResponse {
   bytes u8_data = 2;
 }
 
+message OutputArraysWithPassedInByPtrMechanismRequest {
+  int32 array_size = 1;
+}
+
+message OutputArraysWithPassedInByPtrMechanismResponse {
+  int32 status = 1;
+  repeated int32 i32_data = 2;
+  repeated uint32 u16_data = 3;
+}
+
 message RegisterCallbackRequest {
   int32 input_data = 1;
 }
@@ -305,7 +316,7 @@ message SetMarbleAttributeInt32Response {
 }
 
 message SetColorsRequest {
-  repeated int32 colors = 1;
+  repeated BeautifulColor colors = 1;
   int32 size = 2;
 }
 

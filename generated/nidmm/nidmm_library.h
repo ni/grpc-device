@@ -180,7 +180,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using InvalidateAllAttributesPtr = decltype(&niDMM_InvalidateAllAttributes);
   using IsOverRangePtr = decltype(&niDMM_IsOverRange);
   using IsUnderRangePtr = decltype(&niDMM_IsUnderRange);
-  using LockSessionPtr = decltype(&niDMM_LockSession);
+  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using PerformOpenCableCompPtr = decltype(&niDMM_PerformOpenCableComp);
   using PerformShortCableCompPtr = decltype(&niDMM_PerformShortCableComp);
   using ReadPtr = decltype(&niDMM_Read);
@@ -199,7 +199,7 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using SetAttributeViReal64Ptr = decltype(&niDMM_SetAttributeViReal64);
   using SetAttributeViSessionPtr = decltype(&niDMM_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niDMM_SetAttributeViString);
-  using UnlockSessionPtr = decltype(&niDMM_UnlockSession);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
 
   typedef struct FunctionPointers {
     Control4022Ptr Control4022;

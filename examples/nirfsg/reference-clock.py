@@ -72,12 +72,12 @@ try:
     raise_if_error(client.ConfigureGenerationMode(
         nirfsg_types.ConfigureGenerationModeRequest(
             vi=vi,
-            generation_mode=nirfsg_types.ATTR_GENERATION_MODE_RANGE_TABLE_CW)
+            generation_mode=nirfsg_types.GENERATION_MODE_CW)
     ))
     raise_if_error(client.ConfigureRefClock(
         nirfsg_types.ConfigureRefClockRequest(
             vi=vi,
-            ref_clock_source_mapped=nirfsg_types.ATTR_REF_CLOCK_SOURCE_RANGE_TABLE_ONBOARD_CLOCK_STR,
+            ref_clock_source_mapped=nirfsg_types.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
             ref_clock_rate=10e6
         )
     ))

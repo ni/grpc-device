@@ -794,8 +794,8 @@ namespace nirfsa_grpc {
       ViConstString pxi_clk10_source;
       switch (request->pxi_clk10_source_enum_case()) {
         case nirfsa_grpc::ConfigurePXIChassisClk10Request::PxiClk10SourceEnumCase::kPxiClk10SourceMapped: {
-          auto pxi_clk10_source_imap_it = pxichassisclk10sourcerangetable_input_map_.find(request->pxi_clk10_source_mapped());
-          if (pxi_clk10_source_imap_it == pxichassisclk10sourcerangetable_input_map_.end()) {
+          auto pxi_clk10_source_imap_it = pxichassisclk10source_input_map_.find(request->pxi_clk10_source_mapped());
+          if (pxi_clk10_source_imap_it == pxichassisclk10source_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for pxi_clk10_source_mapped was not specified or out of range.");
           }
           pxi_clk10_source = const_cast<ViConstString>((pxi_clk10_source_imap_it->second).c_str());
@@ -833,8 +833,8 @@ namespace nirfsa_grpc {
       ViConstString clock_source;
       switch (request->clock_source_enum_case()) {
         case nirfsa_grpc::ConfigureRefClockRequest::ClockSourceEnumCase::kClockSourceMapped: {
-          auto clock_source_imap_it = refclocksourcerangetable_input_map_.find(request->clock_source_mapped());
-          if (clock_source_imap_it == refclocksourcerangetable_input_map_.end()) {
+          auto clock_source_imap_it = refclocksource_input_map_.find(request->clock_source_mapped());
+          if (clock_source_imap_it == refclocksource_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for clock_source_mapped was not specified or out of range.");
           }
           clock_source = const_cast<ViConstString>((clock_source_imap_it->second).c_str());
@@ -1362,8 +1362,8 @@ namespace nirfsa_grpc {
       ViConstString output_terminal;
       switch (request->output_terminal_enum_case()) {
         case nirfsa_grpc::ExportSignalRequest::OutputTerminalEnumCase::kOutputTerminalMapped: {
-          auto output_terminal_imap_it = exportterminalrangetable_input_map_.find(request->output_terminal_mapped());
-          if (output_terminal_imap_it == exportterminalrangetable_input_map_.end()) {
+          auto output_terminal_imap_it = exportterminal_input_map_.find(request->output_terminal_mapped());
+          if (output_terminal_imap_it == exportterminal_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_terminal_mapped was not specified or out of range.");
           }
           output_terminal = const_cast<ViConstString>((output_terminal_imap_it->second).c_str());
@@ -2714,29 +2714,6 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViBoolean caller_has_lock {};
-      auto status = library_->LockSession(vi, &caller_has_lock);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::PerformThermalCorrection(::grpc::ServerContext* context, const PerformThermalCorrectionRequest* request, PerformThermalCorrectionResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2926,7 +2903,22 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViUInt64 steps_to_omit = request->steps_to_omit();
+      ViUInt64 steps_to_omit;
+      switch (request->steps_to_omit_enum_case()) {
+        case nirfsa_grpc::ResetWithOptionsRequest::StepsToOmitEnumCase::kStepsToOmit: {
+          steps_to_omit = static_cast<ViUInt64>(request->steps_to_omit());
+          break;
+        }
+        case nirfsa_grpc::ResetWithOptionsRequest::StepsToOmitEnumCase::kStepsToOmitRaw: {
+          steps_to_omit = static_cast<ViUInt64>(request->steps_to_omit_raw());
+          break;
+        }
+        case nirfsa_grpc::ResetWithOptionsRequest::StepsToOmitEnumCase::STEPS_TO_OMIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for steps_to_omit was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ResetWithOptions(vi, steps_to_omit);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2990,7 +2982,22 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt64 steps_to_omit = request->steps_to_omit();
+      ViInt64 steps_to_omit;
+      switch (request->steps_to_omit_enum_case()) {
+        case nirfsa_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::kStepsToOmit: {
+          steps_to_omit = static_cast<ViInt64>(request->steps_to_omit());
+          break;
+        }
+        case nirfsa_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::kStepsToOmitRaw: {
+          steps_to_omit = static_cast<ViInt64>(request->steps_to_omit_raw());
+          break;
+        }
+        case nirfsa_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::STEPS_TO_OMIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for steps_to_omit was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SelfCalibrate(vi, steps_to_omit);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3010,7 +3017,22 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt64 steps_to_omit = request->steps_to_omit();
+      ViInt64 steps_to_omit;
+      switch (request->steps_to_omit_enum_case()) {
+        case nirfsa_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::kStepsToOmit: {
+          steps_to_omit = static_cast<ViInt64>(request->steps_to_omit());
+          break;
+        }
+        case nirfsa_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::kStepsToOmitRaw: {
+          steps_to_omit = static_cast<ViInt64>(request->steps_to_omit_raw());
+          break;
+        }
+        case nirfsa_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::STEPS_TO_OMIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for steps_to_omit was not specified or out of range");
+          break;
+        }
+      }
+
       ViReal64 min_frequency = request->min_frequency();
       ViReal64 max_frequency = request->max_frequency();
       ViReal64 min_reference_level = request->min_reference_level();
@@ -3289,29 +3311,6 @@ namespace nirfsa_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_data(data);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViBoolean caller_has_lock {};
-      auto status = library_->UnlockSession(vi, &caller_has_lock);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_caller_has_lock(caller_has_lock);
       }
       return ::grpc::Status::OK;
     }
