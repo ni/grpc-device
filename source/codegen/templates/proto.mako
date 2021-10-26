@@ -26,6 +26,9 @@ option csharp_namespace = "${config["csharp_namespace"]}";
 
 package ${config["namespace_component"]}_grpc;
 
+% if common_helpers.uses_common_message_types(functions):
+import "nidevice.proto";
+% endif
 import "session.proto";
 % if uses_timestamp:
 import "google/protobuf/timestamp.proto";

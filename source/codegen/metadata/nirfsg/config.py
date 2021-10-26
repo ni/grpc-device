@@ -13,24 +13,7 @@ config = {
         'initiate_function': 'Initiate',
         'task': 'generation'
     },
-    'custom_types': [
-        {
-            'name': 'NIComplexI16_struct',
-            'grpc_name': 'NIComplexI16',
-            'fields': [
-                {
-                    'type': 'ViInt16',
-                    'name': 'real',
-                    'coerced': True,
-                },
-                {
-                    'type': 'ViInt16',
-                    'name': 'imaginary',
-                    'coerced': True,
-                }
-            ]
-        },
-    ],
+    'custom_types': [],
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-RFSG',
     'extra_errors_used': [

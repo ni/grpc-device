@@ -142,15 +142,4 @@ private:
 
 } // namespace niscope_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-template <>
-void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output);
-template <>
-void convert_to_grpc(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output);
-template <>
-void convert_to_grpc(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output);
-} // namespace converters
-} // namespace nidevice_grpc
-
 #endif  // NISCOPE_GRPC_SERVICE_H

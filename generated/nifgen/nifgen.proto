@@ -13,6 +13,7 @@ option csharp_namespace = "NationalInstruments.Grpc.Fgen";
 
 package nifgen_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiFgen {
@@ -689,11 +690,6 @@ enum NiFgenReal64AttributeValues {
   NIFGEN_REAL64_OUTPUT_IMPEDANCE_VAL_50_OHMS = 50;
   NIFGEN_REAL64_OUTPUT_IMPEDANCE_VAL_75_OHMS = 75;
   NIFGEN_REAL64_SAMPLE_RATE_VAL_EXTERNAL_SAMPLE_RATE = -1;
-}
-
-message NIComplexInt32 {
-  sint32 real = 1;
-  sint32 imaginary = 2;
 }
 
 message AbortGenerationRequest {
@@ -2014,7 +2010,7 @@ message WriteComplexBinary16WaveformRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   sint32 waveform_handle = 3;
-  repeated NIComplexInt32 data = 4;
+  repeated nidevice_grpc.NIComplexI16 data = 4;
 }
 
 message WriteComplexBinary16WaveformResponse {
@@ -2100,7 +2096,7 @@ message WriteNamedWaveformComplexI16Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   string waveform_name = 3;
-  repeated NIComplexInt32 data = 4;
+  repeated nidevice_grpc.NIComplexI16 data = 4;
 }
 
 message WriteNamedWaveformComplexI16Response {

@@ -181,11 +181,4 @@ private:
 
 } // namespace nirfsg_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-template <>
-NIComplexI16_struct convert_from_grpc(const nirfsg_grpc::NIComplexI16& input);
-} // namespace converters
-} // namespace nidevice_grpc
-
 #endif  // NIRFSG_GRPC_SERVICE_H

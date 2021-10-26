@@ -131,7 +131,7 @@ WaitUntilSettledResponse wait_until_settled(const StubPtr& stub, const nidevice_
 WriteArbWaveformResponse write_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<double>& i_data, const std::vector<double>& q_data, const bool& more_data_pending);
 WriteArbWaveformComplexF32Response write_arb_waveform_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumberF32>& wfm_data, const bool& more_data_pending);
 WriteArbWaveformComplexF64Response write_arb_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumber>& wfm_data, const bool& more_data_pending);
-WriteArbWaveformComplexI16Response write_arb_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<NIComplexI16>& wfm_data);
+WriteArbWaveformComplexI16Response write_arb_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexI16>& wfm_data);
 WriteArbWaveformF32Response write_arb_waveform_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<float>& i_data, const std::vector<float>& q_data, const bool& more_data_pending);
 WriteP2PEndpointI16Response write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint, const std::vector<pb::int32>& endpoint_data);
 WriteScriptResponse write_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& script);

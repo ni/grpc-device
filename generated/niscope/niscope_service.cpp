@@ -2389,37 +2389,3 @@ namespace niscope_grpc {
   }
 } // namespace niscope_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-template <>
-void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output) 
-{
-  output->set_absolute_initial_x(input.absoluteInitialX);
-  output->set_relative_initial_x(input.relativeInitialX);
-  output->set_x_increment(input.xIncrement);
-  output->set_actual_samples(input.actualSamples);
-  output->set_offset(input.offset);
-  output->set_gain(input.gain);
-  output->set_reserved1(input.reserved1);
-  output->set_reserved2(input.reserved2);
-}
-
-template <>
-void convert_to_grpc(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output) 
-{
-  output->set_offset(input.offset);
-  output->set_gain(input.gain);
-  output->set_reserved1(input.reserved1);
-  output->set_reserved2(input.reserved2);
-}
-
-template <>
-void convert_to_grpc(const NIComplexI16_struct& input, niscope_grpc::NIComplexInt32* output) 
-{
-  output->set_real(input.real);
-  output->set_imaginary(input.imaginary);
-}
-
-} // converters
-} // nidevice_grpc
-

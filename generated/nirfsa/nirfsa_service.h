@@ -181,19 +181,4 @@ private:
 
 } // namespace nirfsa_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-template <>
-void convert_to_grpc(const NIComplexI16_struct& input, nirfsa_grpc::NIComplexI16* output);
-template <>
-void convert_to_grpc(const niRFSA_wfmInfo_struct& input, nirfsa_grpc::WaveformInfo* output);
-template <>
-void convert_to_grpc(const niRFSA_coefficientInfo_struct& input, nirfsa_grpc::CoefficientInfo* output);
-template <>
-void convert_to_grpc(const SmtSpectrumInfo_struct& input, nirfsa_grpc::SmtSpectrumInfo* output);
-template <>
-void convert_to_grpc(const niRFSA_spectrumInfo_struct& input, nirfsa_grpc::SpectrumInfo* output);
-} // namespace converters
-} // namespace nidevice_grpc
-
 #endif  // NIRFSA_GRPC_SERVICE_H

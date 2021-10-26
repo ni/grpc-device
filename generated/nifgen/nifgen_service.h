@@ -185,11 +185,4 @@ private:
 
 } // namespace nifgen_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-template <>
-NIComplexI16_struct convert_from_grpc(const nifgen_grpc::NIComplexInt32& input);
-} // namespace converters
-} // namespace nidevice_grpc
-
 #endif  // NIFGEN_GRPC_SERVICE_H

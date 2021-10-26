@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.device";
+option java_outer_classname = "NiDevice";
+option csharp_namespace = "NationalInstruments.Grpc.Device";
+
+package nidevice_grpc;
+
+message NIComplexNumber {
+  double real = 1;
+  double imaginary = 2;
+}
+
+message NIComplexNumberF32 {
+  float real = 1;
+  float imaginary = 2;
+}
+
+message NIComplexI16 {
+  sint32 real = 1;
+  sint32 imaginary = 2;
+}
+
+message WaveformInfo {
+  double absolute_initial_x = 1;
+  double relative_initial_x = 2;
+  double x_increment = 3;
+  int64 actual_samples = 4;
+  double offset = 5;
+  double gain = 6;
+}
+
+message CoefficientInfo {
+  double offset = 1;
+  double gain = 2;
+}
+
+message SmtSpectrumInfo {
+  uint32 spectrum_type = 1;
+  uint32 linear_db = 2;
+  uint32 window = 3;
+  sint32 window_size = 4;
+  sint32 fft_size = 5;
+}
+
+message SpectrumInfo {
+  double initial_frequency = 1;
+  double frequency_increment = 2;
+  sint32 number_of_spectral_lines = 3;
+}

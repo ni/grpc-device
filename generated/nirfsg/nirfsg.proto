@@ -13,6 +13,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiRFSG";
 
 package nirfsg_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiRFSG {
@@ -715,11 +716,6 @@ enum NiRFSGStringAttributeValuesMapped {
   NIRFSG_STRING_ATTR_TRIGGER_SOURCE_RANGE_TABLE_SYNC_START_TRIGGER_STR = 88;
   NIRFSG_STRING_ATTR_TRIGGER_SOURCE_RANGE_TABLE_SYNC_SCRIPT_TRIGGER_STR = 89;
   NIRFSG_STRING_ATTR_TRIGGER_SOURCE_RANGE_TABLE_TRIG_IN_STR = 90;
-}
-
-message NIComplexI16 {
-  sint32 real = 1;
-  sint32 imaginary = 2;
 }
 
 message AbortRequest {
@@ -1916,7 +1912,7 @@ message WriteArbWaveformComplexF64Response {
 message WriteArbWaveformComplexI16Request {
   nidevice_grpc.Session vi = 1;
   string waveform_name = 2;
-  repeated NIComplexI16 wfm_data = 3;
+  repeated nidevice_grpc.NIComplexI16 wfm_data = 3;
 }
 
 message WriteArbWaveformComplexI16Response {

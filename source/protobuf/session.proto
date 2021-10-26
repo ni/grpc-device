@@ -85,14 +85,3 @@ message ResetServerRequest {}
 message ResetServerResponse {
   bool is_server_reset = 1;
 }
-
-// TODO: move to different file with same package name?
-message NIComplexNumber {
-  double real = 1;
-  double imaginary = 2;
-}
-
-message NIComplexNumberF32 {
-  float real = 1;
-  float imaginary = 2;
-}

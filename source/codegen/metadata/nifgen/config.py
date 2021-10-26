@@ -14,26 +14,7 @@ config = {
         'initiate_function': 'InitiateGeneration',
         'task': 'generation'
     },
-    'custom_types': [
-        { 
-            'name': 'NIComplexI16_struct',
-            'grpc_name': 'NIComplexInt32',
-            'fields': [
-                {
-                    'type': 'ViInt16',
-                    'name': 'real',
-                    'grpc_name': 'real',
-                    'coerced': True,
-                },
-                {
-                    'type': 'ViInt16',
-                    'name': 'imaginary',
-                    'grpc_name': 'imaginary',
-                    'coerced': True,
-                }
-            ]
-        }
-    ],
+    'custom_types': [],
     'driver_name': 'NI-FGEN',
     'extra_errors_used': [
         'InvalidRepeatedCapabilityError',

@@ -2157,7 +2157,7 @@ write_arb_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 WriteArbWaveformComplexI16Response
-write_arb_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<NIComplexI16>& wfm_data)
+write_arb_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexI16>& wfm_data)
 {
   ::grpc::ClientContext context;
 

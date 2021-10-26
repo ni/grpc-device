@@ -25,4 +25,12 @@ typedef struct NIComplexNumberF32_struct {
 
 #endif
 
+#if !defined(_NIComplexI16)
+  #define _NIComplexI16
+typedef struct NIComplexI16_struct {
+  ViInt16 real;
+  ViInt16 imaginary;
+} NIComplexI16;
+#endif
+
 #endif /* NIDEVICE_GRPC_DEVICE_COMMON_TYPES_H */

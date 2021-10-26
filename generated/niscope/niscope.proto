@@ -13,6 +13,7 @@ option csharp_namespace = "NationalInstruments.Grpc.Scope";
 
 package niscope_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiScope {
@@ -758,29 +759,6 @@ enum NiScopeReal64AttributeValues {
   NISCOPE_REAL64_CABLE_SENSE_MODE_VAL_CABLE_SENSE_MODE_ON_DEMAND = 1;
 }
 
-message WaveformInfo {
-  double absolute_initial_x = 1;
-  double relative_initial_x = 2;
-  double x_increment = 3;
-  sint32 actual_samples = 4;
-  double offset = 5;
-  double gain = 6;
-  double reserved1 = 7;
-  double reserved2 = 8;
-}
-
-message CoefficientInfo {
-  double offset = 1;
-  double gain = 2;
-  double reserved1 = 3;
-  double reserved2 = 4;
-}
-
-message NIComplexInt32 {
-  sint32 real = 1;
-  sint32 imaginary = 2;
-}
-
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1332,7 +1310,7 @@ message FetchRequest {
 message FetchResponse {
   int32 status = 1;
   repeated double waveform = 2;
-  repeated WaveformInfo wfm_info = 3;
+  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
 }
 
 message FetchArrayMeasurementRequest {
@@ -1348,7 +1326,7 @@ message FetchArrayMeasurementRequest {
 message FetchArrayMeasurementResponse {
   int32 status = 1;
   repeated double meas_wfm = 2;
-  repeated WaveformInfo wfm_info = 3;
+  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
 }
 
 message FetchBinary16Request {
@@ -1361,7 +1339,7 @@ message FetchBinary16Request {
 message FetchBinary16Response {
   int32 status = 1;
   repeated sint32 waveform = 2;
-  repeated WaveformInfo wfm_info = 3;
+  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
 }
 
 message FetchBinary32Request {
@@ -1374,7 +1352,7 @@ message FetchBinary32Request {
 message FetchBinary32Response {
   int32 status = 1;
   repeated sint32 waveform = 2;
-  repeated WaveformInfo wfm_info = 3;
+  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
 }
 
 message FetchBinary8Request {
@@ -1387,7 +1365,7 @@ message FetchBinary8Request {
 message FetchBinary8Response {
   int32 status = 1;
   bytes waveform = 2;
-  repeated WaveformInfo wfm_info = 3;
+  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
 }
 
 message FetchComplexRequest {
@@ -1400,7 +1378,7 @@ message FetchComplexRequest {
 message FetchComplexResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumber wfm = 2;
-  repeated WaveformInfo wfm_info = 3;
+  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
 }
 
 message FetchComplexBinary16Request {
@@ -1412,8 +1390,8 @@ message FetchComplexBinary16Request {
 
 message FetchComplexBinary16Response {
   int32 status = 1;
-  repeated NIComplexInt32 wfm = 2;
-  repeated WaveformInfo wfm_info = 3;
+  repeated nidevice_grpc.NIComplexI16 wfm = 2;
+  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
 }
 
 message FetchMeasurementRequest {
@@ -1589,7 +1567,7 @@ message GetNormalizationCoefficientsRequest {
 
 message GetNormalizationCoefficientsResponse {
   int32 status = 1;
-  repeated CoefficientInfo coefficient_info = 2;
+  repeated nidevice_grpc.CoefficientInfo coefficient_info = 2;
   sint32 number_of_coefficient_sets = 3;
 }
 
@@ -1600,7 +1578,7 @@ message GetScalingCoefficientsRequest {
 
 message GetScalingCoefficientsResponse {
   int32 status = 1;
-  repeated CoefficientInfo coefficient_info = 2;
+  repeated nidevice_grpc.CoefficientInfo coefficient_info = 2;
   sint32 number_of_coefficient_sets = 3;
 }
 
@@ -1700,7 +1678,7 @@ message ReadRequest {
 message ReadResponse {
   int32 status = 1;
   repeated double waveform = 2;
-  repeated WaveformInfo wfm_info = 3;
+  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
 }
 
 message ReadMeasurementRequest {

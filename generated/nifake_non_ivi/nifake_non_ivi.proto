@@ -13,6 +13,7 @@ option csharp_namespace = "NationalInstruments.Grpc.FakeNonIvi";
 
 package nifake_non_ivi_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 import "google/protobuf/timestamp.proto";
 

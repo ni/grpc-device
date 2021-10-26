@@ -2449,13 +2449,13 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'repeated NIComplexI16',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexI16',
                 'name': 'wfmData',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
                 },
-                'type': 'struct NIComplexI16_struct[]'
+                'type': 'NIComplexI16_struct[]'
             }
         ],
         'returns': 'ViStatus'

@@ -41,12 +41,26 @@ def is_custom_struct(parameter: dict) -> bool:
     return parameter["type"].startswith("struct")
 
 
+def uses_common_message_types(functions: dict) -> bool:
+    return any(
+        p
+        for f in functions.values()
+        for p in f["parameters"]
+        if is_common_message_type(p)
+    )
+
+
 def is_common_message_type(parameter: dict) -> bool:
     grpc_type = get_underlying_grpc_type(parameter)
     common_proto_message_types = [
         "google.protobuf.Timestamp",
         "nidevice_grpc.NIComplexNumber",
-        "nidevice_grpc.NIComplexNumberF32"
+        "nidevice_grpc.NIComplexNumberF32",
+        "nidevice_grpc.NIComplexI16",
+        "nidevice_grpc.WaveformInfo",
+        "nidevice_grpc.CoefficientInfo",
+        "nidevice_grpc.SpectrumInfo",
+        "nidevice_grpc.SmtSpectrumInfo",
     ]
 
     return grpc_type in common_proto_message_types
