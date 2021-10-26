@@ -1210,8 +1210,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': 'actual_num_wfms'
                 },
-                'type': 'niScope_wfmInfo[]',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -1262,8 +1262,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': 'actual_num_wfms'
                 },
-                'type': 'niScope_wfmInfo[]',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -1309,8 +1309,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': 'actual_num_wfms'
                 },
-                'type': 'niScope_wfmInfo[]',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -1356,8 +1356,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': 'actual_num_wfms'
                 },
-                'type': 'niScope_wfmInfo[]',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -1403,8 +1403,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': 'actual_num_wfms'
                 },
-                'type': 'niScope_wfmInfo[]',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'
@@ -1449,8 +1449,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': 'self._actual_num_wfms()'
                 },
-                'type': 'niScope_wfmInfo[]',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns':'ViStatus'
@@ -1495,8 +1495,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': 'actual_num_wfms'
                 },
-                'type': 'niScope_wfmInfo[]',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns':'ViStatus'
@@ -2014,9 +2014,9 @@ functions = {
                     'value_twist': 'numberOfCoefficientSets',
                 },
                 'direction': 'out',
-                'type': 'niScope_coefficientInfo[]',
+                'type': 'struct niScope_coefficientInfo[]',
                 'name': 'coefficientInfo',
-                'grpc_type': 'repeated nidevice_grpc.CoefficientInfo'
+                'grpc_type': 'repeated CoefficientInfo'
             },
             {
                 'name':'numberOfCoefficientSets',
@@ -2052,9 +2052,9 @@ functions = {
                     'value_twist': 'numberOfCoefficientSets',
                 },
                 'direction': 'out',
-                'type': 'niScope_coefficientInfo[]',
+                'type': 'struct niScope_coefficientInfo[]',
                 'name': 'coefficientInfo',
-                'grpc_type': 'repeated nidevice_grpc.CoefficientInfo'
+                'grpc_type': 'repeated CoefficientInfo'
             },
             {
                 'direction': 'out',
@@ -2270,8 +2270,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': 'actual_num_wfms'
                 },
-                'type': 'niScope_wfmInfo[]',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo'
+                'type': 'struct niScope_wfmInfo[]',
+                'grpc_type': 'repeated WaveformInfo'
             }
         ],
         'returns': 'ViStatus'

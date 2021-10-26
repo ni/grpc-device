@@ -728,6 +728,26 @@ enum NiRFSAStringAttributeValuesMapped {
   NIRFSA_STRING_TRIGGER_SOURCE_RANGE_TABLE_SYNC_ADVANCE_TRIGGER_STR = 60;
 }
 
+message WaveformInfo {
+  double absolute_initial_x = 1;
+  double relative_initial_x = 2;
+  double x_increment = 3;
+  int64 actual_samples = 4;
+  double offset = 5;
+  double gain = 6;
+}
+
+message CoefficientInfo {
+  double offset = 1;
+  double gain = 2;
+}
+
+message SpectrumInfo {
+  double initial_frequency = 1;
+  double frequency_increment = 2;
+  sint32 number_of_spectral_lines = 3;
+}
+
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1308,7 +1328,7 @@ message FetchIQMultiRecordComplexF32Request {
 message FetchIQMultiRecordComplexF32Response {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 data = 2;
-  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
+  repeated WaveformInfo wfm_info = 3;
 }
 
 message FetchIQMultiRecordComplexF64Request {
@@ -1323,7 +1343,7 @@ message FetchIQMultiRecordComplexF64Request {
 message FetchIQMultiRecordComplexF64Response {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumber data = 2;
-  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
+  repeated WaveformInfo wfm_info = 3;
 }
 
 message FetchIQMultiRecordComplexI16Request {
@@ -1338,7 +1358,7 @@ message FetchIQMultiRecordComplexI16Request {
 message FetchIQMultiRecordComplexI16Response {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexI16 data = 2;
-  repeated nidevice_grpc.WaveformInfo wfm_info = 3;
+  repeated WaveformInfo wfm_info = 3;
 }
 
 message FetchIQSingleRecordComplexF32Request {
@@ -1352,7 +1372,7 @@ message FetchIQSingleRecordComplexF32Request {
 message FetchIQSingleRecordComplexF32Response {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 data = 2;
-  nidevice_grpc.WaveformInfo wfm_info = 3;
+  WaveformInfo wfm_info = 3;
 }
 
 message FetchIQSingleRecordComplexF64Request {
@@ -1366,7 +1386,7 @@ message FetchIQSingleRecordComplexF64Request {
 message FetchIQSingleRecordComplexF64Response {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumber data = 2;
-  nidevice_grpc.WaveformInfo wfm_info = 3;
+  WaveformInfo wfm_info = 3;
 }
 
 message FetchIQSingleRecordComplexI16Request {
@@ -1380,7 +1400,7 @@ message FetchIQSingleRecordComplexI16Request {
 message FetchIQSingleRecordComplexI16Response {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexI16 data = 2;
-  nidevice_grpc.WaveformInfo wfm_info = 3;
+  WaveformInfo wfm_info = 3;
 }
 
 message GetAttributeViBooleanRequest {
@@ -1577,7 +1597,7 @@ message GetNormalizationCoefficientsRequest {
 
 message GetNormalizationCoefficientsResponse {
   int32 status = 1;
-  repeated nidevice_grpc.CoefficientInfo coefficient_info = 2;
+  repeated CoefficientInfo coefficient_info = 2;
   sint32 number_of_coefficient_sets = 3;
 }
 
@@ -1621,7 +1641,7 @@ message GetScalingCoefficientsRequest {
 
 message GetScalingCoefficientsResponse {
   int32 status = 1;
-  repeated nidevice_grpc.CoefficientInfo coefficient_info = 2;
+  repeated CoefficientInfo coefficient_info = 2;
   sint32 number_of_coefficient_sets = 3;
 }
 
@@ -1793,7 +1813,7 @@ message ReadIQSingleRecordComplexF64Request {
 message ReadIQSingleRecordComplexF64Response {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumber data = 2;
-  nidevice_grpc.WaveformInfo wfm_info = 3;
+  WaveformInfo wfm_info = 3;
 }
 
 message ReadPowerSpectrumF32Request {
@@ -1806,7 +1826,7 @@ message ReadPowerSpectrumF32Request {
 message ReadPowerSpectrumF32Response {
   int32 status = 1;
   repeated float power_spectrum_data = 2;
-  nidevice_grpc.SpectrumInfo spectrum_info = 3;
+  SpectrumInfo spectrum_info = 3;
 }
 
 message ReadPowerSpectrumF64Request {
@@ -1819,7 +1839,7 @@ message ReadPowerSpectrumF64Request {
 message ReadPowerSpectrumF64Response {
   int32 status = 1;
   repeated double power_spectrum_data = 2;
-  nidevice_grpc.SpectrumInfo spectrum_info = 3;
+  SpectrumInfo spectrum_info = 3;
 }
 
 message ResetRequest {

@@ -130,24 +130,6 @@ inline NIComplexI16_struct convert_from_grpc(const nidevice_grpc::NIComplexI16& 
   return output;
 }
 
-template <typename WaveformInfoType>
-inline void convert_to_grpc(const WaveformInfoType& input, nidevice_grpc::WaveformInfo* output)
-{
-  output->set_absolute_initial_x(input.absoluteInitialX);
-  output->set_relative_initial_x(input.relativeInitialX);
-  output->set_x_increment(input.xIncrement);
-  output->set_actual_samples(input.actualSamples);
-  output->set_offset(input.offset);
-  output->set_gain(input.gain);
-}
-
-template <typename CoefficientInfoType>
-inline void convert_to_grpc(const CoefficientInfoType& input, nidevice_grpc::CoefficientInfo* output)
-{
-  output->set_offset(input.offset);
-  output->set_gain(input.gain);
-}
-
 template <typename SmtSpectrumInfoType>
 inline void convert_to_grpc(const SmtSpectrumInfoType& input, nidevice_grpc::SmtSpectrumInfo* output)
 {
@@ -156,14 +138,6 @@ inline void convert_to_grpc(const SmtSpectrumInfoType& input, nidevice_grpc::Smt
   output->set_window(input.window);
   output->set_window_size(input.windowSize);
   output->set_fft_size(input.FFTSize);
-}
-
-template <typename SpectrumInfoType>
-inline void convert_to_grpc(const SpectrumInfoType& input, nidevice_grpc::SpectrumInfo* output)
-{
-  output->set_initial_frequency(input.initialFrequency);
-  output->set_frequency_increment(input.frequencyIncrement);
-  output->set_number_of_spectral_lines(input.numberOfSpectralLines);
 }
 
 }  // namespace converters

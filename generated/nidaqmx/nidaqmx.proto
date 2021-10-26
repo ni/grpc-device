@@ -13,7 +13,6 @@ option csharp_namespace = "NationalInstruments.Grpc.NiDAQmx";
 
 package nidaqmx_grpc;
 
-import "nidevice.proto";
 import "session.proto";
 import "google/protobuf/timestamp.proto";
 

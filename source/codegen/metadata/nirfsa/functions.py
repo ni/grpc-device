@@ -1122,13 +1122,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo',
+                'grpc_type': 'repeated WaveformInfo',
                 'name': 'wfmInfo',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'numberOfRecords'
                 },
-                'type': 'niRFSA_wfmInfo_struct[]'
+                'type': 'struct niRFSA_wfmInfo_struct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -1177,13 +1177,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo',
+                'grpc_type': 'repeated WaveformInfo',
                 'name': 'wfmInfo',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'numberOfRecords'
                 },
-                'type': 'niRFSA_wfmInfo_struct[]'
+                'type': 'struct niRFSA_wfmInfo_struct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -1232,13 +1232,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated nidevice_grpc.WaveformInfo',
+                'grpc_type': 'repeated WaveformInfo',
                 'name': 'wfmInfo',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'numberOfRecords'
                 },
-                'type': 'niRFSA_wfmInfo_struct[]'
+                'type': 'struct niRFSA_wfmInfo_struct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -1282,9 +1282,9 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.WaveformInfo',
+                'grpc_type': 'WaveformInfo',
                 'name': 'wfmInfo',
-                'type': 'niRFSA_wfmInfo_struct'
+                'type': 'struct niRFSA_wfmInfo_struct'
             }
         ],
         'returns': 'ViStatus'
@@ -1328,9 +1328,9 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.WaveformInfo',
+                'grpc_type': 'WaveformInfo',
                 'name': 'wfmInfo',
-                'type': 'niRFSA_wfmInfo_struct'
+                'type': 'struct niRFSA_wfmInfo_struct'
             }
         ],
         'returns': 'ViStatus'
@@ -1374,9 +1374,9 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.WaveformInfo',
+                'grpc_type': 'WaveformInfo',
                 'name': 'wfmInfo',
-                'type': 'niRFSA_wfmInfo_struct'
+                'type': 'struct niRFSA_wfmInfo_struct'
             }
         ],
         'returns': 'ViStatus'
@@ -1894,14 +1894,14 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated nidevice_grpc.CoefficientInfo',
+                'grpc_type': 'repeated CoefficientInfo',
                 'name': 'coefficientInfo',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',
                     'value_twist': 'numberOfCoefficientSets'
                 },
-                'type': 'niRFSA_coefficientInfo_struct[]'
+                'type': 'struct niRFSA_coefficientInfo_struct[]'
             },
             {
                 'direction': 'out',
@@ -2018,14 +2018,14 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated nidevice_grpc.CoefficientInfo',
+                'grpc_type': 'repeated CoefficientInfo',
                 'name': 'coefficientInfo',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',
                     'value_twist': 'numberOfCoefficientSets'
                 },
-                'type': 'niRFSA_coefficientInfo_struct[]'
+                'type': 'struct niRFSA_coefficientInfo_struct[]'
             },
             {
                 'direction': 'out',
@@ -2403,9 +2403,9 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.WaveformInfo',
+                'grpc_type': 'WaveformInfo',
                 'name': 'wfmInfo',
-                'type': 'niRFSA_wfmInfo_struct'
+                'type': 'struct niRFSA_wfmInfo_struct'
             }
         ],
         'returns': 'ViStatus'
@@ -2443,9 +2443,9 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.SpectrumInfo',
+                'grpc_type': 'SpectrumInfo',
                 'name': 'spectrumInfo',
-                'type': 'niRFSA_spectrumInfo_struct'
+                'type': 'struct niRFSA_spectrumInfo_struct'
             }
         ],
         'returns': 'ViStatus'
@@ -2483,9 +2483,9 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.SpectrumInfo',
+                'grpc_type': 'SpectrumInfo',
                 'name': 'spectrumInfo',
-                'type': 'niRFSA_spectrumInfo_struct'
+                'type': 'struct niRFSA_spectrumInfo_struct'
             }
         ],
         'returns': 'ViStatus'

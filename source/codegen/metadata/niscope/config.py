@@ -14,7 +14,81 @@ config = {
         'initiate_function': 'InitiateAcquisition',
         'task': 'acquisition'
     },
-    'custom_types': [],
+    'custom_types': [
+        
+                {
+            'name': 'niScope_wfmInfo',
+            'grpc_name': 'WaveformInfo',
+            'fields': [
+                {
+                    'type': 'ViReal64',
+                    'name': 'absoluteInitialX',
+                    'grpc_name': 'absolute_initial_x'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'relativeInitialX',
+                    'grpc_name': 'relative_initial_x'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'xIncrement',
+                    'grpc_name': 'x_increment'
+                },
+                {
+                    'type': 'ViInt32',
+                    'name':  'actualSamples',
+                    'grpc_name': 'actual_samples'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'offset',
+                    'grpc_name': 'offset'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'gain',
+                    'grpc_name': 'gain'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'reserved1',
+                    'grpc_name': 'reserved1'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'reserved2',
+                    'grpc_name': 'reserved2'
+                }
+            ]
+        },
+        { 
+            'name': 'niScope_coefficientInfo',
+            'grpc_name': 'CoefficientInfo',
+            'fields': [
+                {
+                    'type': 'ViReal64',
+                    'name': 'offset',
+                    'grpc_name': 'offset'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'gain',
+                    'grpc_name': 'gain'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'reserved1',
+                    'grpc_name': 'reserved1'
+                },
+                {
+                    'type': 'ViReal64',
+                    'name': 'reserved2',
+                    'grpc_name': 'reserved2'
+                }
+            ]
+        },
+        ],
     'driver_name': 'NI-SCOPE',
     'extra_errors_used': [
         'InvalidRepeatedCapabilityError',

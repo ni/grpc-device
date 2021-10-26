@@ -41,33 +41,42 @@ def is_custom_struct(parameter: dict) -> bool:
     return parameter["type"].startswith("struct")
 
 
-def uses_common_message_types(functions: dict) -> bool:
+def uses_nidevice_common_message_types(functions: dict) -> bool:
     return any(
         p
         for f in functions.values()
         for p in f["parameters"]
-        if is_common_message_type(p)
+        if is_nidevice_common_message_type(p)
     )
 
 
-def is_common_message_type(parameter: dict) -> bool:
-    grpc_type = get_underlying_grpc_type(parameter)
-    common_proto_message_types = [
-        "google.protobuf.Timestamp",
-        "nidevice_grpc.NIComplexNumber",
-        "nidevice_grpc.NIComplexNumberF32",
-        "nidevice_grpc.NIComplexI16",
-        "nidevice_grpc.WaveformInfo",
-        "nidevice_grpc.CoefficientInfo",
-        "nidevice_grpc.SpectrumInfo",
-        "nidevice_grpc.SmtSpectrumInfo",
-    ]
+_NIDEVICE_COMMON_MESSAGE_TYPES = (
+    "nidevice_grpc.NIComplexNumber",
+    "nidevice_grpc.NIComplexNumberF32",
+    "nidevice_grpc.NIComplexI16",
+    "nidevice_grpc.SmtSpectrumInfo",
+)
 
-    return grpc_type in common_proto_message_types
+_WELL_KNOWN_MESSAGE_TYPES = (
+    "google.protobuf.Timestamp",
+)
+
+def is_nidevice_common_message_type(parameter: dict) -> bool:
+    grpc_type = get_underlying_grpc_type(parameter)
+    return grpc_type in _NIDEVICE_COMMON_MESSAGE_TYPES
+
+
+def is_supported_well_known_type(parameter: dict) -> bool:
+    grpc_type = get_underlying_grpc_type(parameter)
+    return grpc_type in _WELL_KNOWN_MESSAGE_TYPES
 
 
 def is_struct(parameter: dict) -> bool:
-    return is_common_message_type(parameter) or is_custom_struct(parameter)
+    return (
+        is_nidevice_common_message_type(parameter)
+        or is_supported_well_known_type(parameter)
+        or is_custom_struct(parameter)
+    )
 
 
 def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
