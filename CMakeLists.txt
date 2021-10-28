@@ -179,7 +179,6 @@ function(GenerateGrpcSources)
   # Asssumption: all outputs are in the same directory: use the zero-th.
   list(GET output_files 0 proto_srcs)
   get_filename_component(proto_out_path "${proto_srcs}" PATH)
-  message(${output_files})
   add_custom_command(
     OUTPUT ${output_files}
     COMMAND ${_PROTOBUF_PROTOC}

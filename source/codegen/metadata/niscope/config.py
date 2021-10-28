@@ -15,8 +15,7 @@ config = {
         'task': 'acquisition'
     },
     'custom_types': [
-        
-                {
+        {
             'name': 'niScope_wfmInfo',
             'grpc_name': 'WaveformInfo',
             'fields': [
@@ -88,7 +87,7 @@ config = {
                 }
             ]
         },
-        ],
+    ],
     'driver_name': 'NI-SCOPE',
     'extra_errors_used': [
         'InvalidRepeatedCapabilityError',
