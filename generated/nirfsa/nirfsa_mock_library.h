@@ -65,8 +65,8 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, DisableRefTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, DisableStartTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, EnableSessionAccess, (ViSession vi, ViBoolean enable), (override));
-  MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus statusCode, ViChar errorMessage[256]), (override));
-  MOCK_METHOD(ViStatus, ErrorQuery, (ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]), (override));
+  MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus statusCode, ViChar errorMessage[1024]), (override));
+  MOCK_METHOD(ViStatus, ErrorQuery, (ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]), (override));
   MOCK_METHOD(ViStatus, ExportSignal, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));
   MOCK_METHOD(ViStatus, ExtCalStoreBaselineForSelfCalibration, (ViSession vi, ViString password, ViInt64 selfCalibrationStep), (override));
   MOCK_METHOD(ViStatus, ExternalAlignmentAdjustPreselector, (ViSession vi, ViInt32 numberOfCoefficients, ViReal64 coefficients[]), (override));
@@ -82,7 +82,7 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, GetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]), (override));
-  MOCK_METHOD(ViStatus, GetCalUserDefinedInfo, (ViSession vi, ViChar info[256]), (override));
+  MOCK_METHOD(ViStatus, GetCalUserDefinedInfo, (ViSession vi, ViChar info[2048]), (override));
   MOCK_METHOD(ViStatus, GetCalUserDefinedInfoMaxSize, (ViSession vi, ViInt32* infoSize), (override));
   MOCK_METHOD(ViStatus, GetDeembeddingSparameters, (ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts), (override));
   MOCK_METHOD(ViStatus, GetDeviceResponse, (ViSession vi, ViConstString channelList, ViInt32 responseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies), (override));
@@ -125,7 +125,7 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, SelfCal, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, SelfCalibrate, (ViSession vi, ViInt64 stepsToOmit), (override));
   MOCK_METHOD(ViStatus, SelfCalibrateRange, (ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minReferenceLevel, ViReal64 maxReferenceLevel), (override));
-  MOCK_METHOD(ViStatus, SelfTest, (ViSession vi, ViInt16* testResult, ViChar testMessage[256]), (override));
+  MOCK_METHOD(ViStatus, SelfTest, (ViSession vi, ViInt16* testResult, ViChar testMessage[2048]), (override));
   MOCK_METHOD(ViStatus, SendSoftwareEdgeTrigger, (ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier), (override));
   MOCK_METHOD(ViStatus, SetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value), (override));
   MOCK_METHOD(ViStatus, SetAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value), (override));

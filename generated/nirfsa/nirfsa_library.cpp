@@ -729,7 +729,7 @@ ViStatus NiRFSALibrary::EnableSessionAccess(ViSession vi, ViBoolean enable)
 #endif
 }
 
-ViStatus NiRFSALibrary::ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[256])
+ViStatus NiRFSALibrary::ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024])
 {
   if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_error_message.");
@@ -741,7 +741,7 @@ ViStatus NiRFSALibrary::ErrorMessage(ViSession vi, ViStatus statusCode, ViChar e
 #endif
 }
 
-ViStatus NiRFSALibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256])
+ViStatus NiRFSALibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024])
 {
   if (!function_pointers_.ErrorQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_error_query.");
@@ -933,7 +933,7 @@ ViStatus NiRFSALibrary::GetAttributeViString(ViSession vi, ViConstString channel
 #endif
 }
 
-ViStatus NiRFSALibrary::GetCalUserDefinedInfo(ViSession vi, ViChar info[256])
+ViStatus NiRFSALibrary::GetCalUserDefinedInfo(ViSession vi, ViChar info[2048])
 {
   if (!function_pointers_.GetCalUserDefinedInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetCalUserDefinedInfo.");
@@ -1445,7 +1445,7 @@ ViStatus NiRFSALibrary::SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, Vi
 #endif
 }
 
-ViStatus NiRFSALibrary::SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[256])
+ViStatus NiRFSALibrary::SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[2048])
 {
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_self_test.");

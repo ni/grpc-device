@@ -414,6 +414,7 @@ namespace nifake_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_a_string(a_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
       }
       return ::grpc::Status::OK;
     }
@@ -453,6 +454,7 @@ namespace nifake_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_a_string(a_string);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
         }
         return ::grpc::Status::OK;
       }
@@ -902,6 +904,7 @@ namespace nifake_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_attribute_value(attribute_value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -1517,6 +1520,7 @@ namespace nifake_grpc {
       if (status == 0) {
         response->set_a_number(a_number);
         response->set_a_string(a_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
       }
       return ::grpc::Status::OK;
     }
@@ -1623,6 +1627,7 @@ namespace nifake_grpc {
           }
           response->set_a_float_enum_raw(a_float_enum);
           response->set_a_string(a_string);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
         }
         return ::grpc::Status::OK;
       }

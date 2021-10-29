@@ -101,6 +101,7 @@ namespace nisync_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_error_message(error_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
       return ::grpc::Status::OK;
     }
@@ -164,6 +165,7 @@ namespace nisync_grpc {
       if (status == 0) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       }
       return ::grpc::Status::OK;
     }
@@ -188,7 +190,9 @@ namespace nisync_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_driver_revision(driver_revision);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_revision()));
         response->set_firmware_revision(firmware_revision);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       }
       return ::grpc::Status::OK;
     }
@@ -1092,6 +1096,7 @@ namespace nisync_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_time_reference_names(time_reference_names);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_time_reference_names()));
         }
         return ::grpc::Status::OK;
       }
@@ -1209,6 +1214,7 @@ namespace nisync_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }

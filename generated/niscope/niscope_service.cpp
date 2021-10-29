@@ -1305,6 +1305,7 @@ namespace niscope_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_error_description(error_description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
       }
       return ::grpc::Status::OK;
     }
@@ -1566,6 +1567,7 @@ namespace niscope_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -1607,6 +1609,7 @@ namespace niscope_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_channel_string(channel_string);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_string()));
         }
         return ::grpc::Status::OK;
       }
@@ -1648,6 +1651,7 @@ namespace niscope_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_name(name);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
         return ::grpc::Status::OK;
       }
@@ -1715,6 +1719,7 @@ namespace niscope_grpc {
         if (status == 0) {
           response->set_error_code(error_code);
           response->set_description(description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
         }
         return ::grpc::Status::OK;
       }
@@ -1756,6 +1761,7 @@ namespace niscope_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_error_message(error_message);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
         }
         return ::grpc::Status::OK;
       }
@@ -2037,7 +2043,9 @@ namespace niscope_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_driver_revision(driver_revision);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_revision()));
         response->set_firmware_revision(firmware_revision);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       }
       return ::grpc::Status::OK;
     }
@@ -2109,6 +2117,7 @@ namespace niscope_grpc {
       if (status == 0) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       }
       return ::grpc::Status::OK;
     }

@@ -415,7 +415,7 @@ TEST_F(NiFgenDriverApiTest, PerformSelfTest_CompletesSuccessfuly)
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
   EXPECT_EQ(0, response.self_test_result());
-  EXPECT_LT(0, response.self_test_message().size());
+  EXPECT_EQ("", response.self_test_message());
 }
 
 TEST_F(NiFgenDriverApiTest, PerformReset_CompletesSuccessfuly)

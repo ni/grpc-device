@@ -111,7 +111,7 @@ TEST_F(NiRFSGDriverApiTests, PerformSelfTest_Succeeds)
   auto response = client::self_test(stub(), session);
   EXPECT_SUCCESS(session, response);
   EXPECT_EQ(0, response.self_test_result());
-  EXPECT_STREQ("Passed", response.self_test_message().c_str());
+  EXPECT_EQ("Passed", response.self_test_message());
 }
 
 TEST_F(NiRFSGDriverApiTests, PerformReset_Succeeds)
@@ -500,6 +500,17 @@ TEST_F(NiRFSGDriverApiTests, TwoSessions_SetupTclkSyncPulseSenderSynchronization
   auto result = nitclk_client::setup_for_sync_pulse_sender_synchronize(tclk_stub, {first_session, second_session}, 0);
 
   EXPECT_SUCCESS(first_session, result);
+}
+
+TEST_F(NiRFSGDriverApiTests, ErrorMessage_ReturnsErrorMessage)
+{
+  auto session = init_session(stub(), PXI_5652);
+  const auto response = client::error_message(stub(), session, IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ(
+      "IVI: (Hex 0xBFFA0012) Attribute or property not supported.",
+      response.error_message());
 }
 }  // namespace system
 }  // namespace tests

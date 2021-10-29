@@ -64,8 +64,8 @@ class NiRFSALibraryInterface {
   virtual ViStatus DisableRefTrigger(ViSession vi) = 0;
   virtual ViStatus DisableStartTrigger(ViSession vi) = 0;
   virtual ViStatus EnableSessionAccess(ViSession vi, ViBoolean enable) = 0;
-  virtual ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[256]) = 0;
-  virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024]) = 0;
+  virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;
   virtual ViStatus ExtCalStoreBaselineForSelfCalibration(ViSession vi, ViString password, ViInt64 selfCalibrationStep) = 0;
   virtual ViStatus ExternalAlignmentAdjustPreselector(ViSession vi, ViInt32 numberOfCoefficients, ViReal64 coefficients[]) = 0;
@@ -81,7 +81,7 @@ class NiRFSALibraryInterface {
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* value) = 0;
   virtual ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* value) = 0;
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]) = 0;
-  virtual ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[256]) = 0;
+  virtual ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[2048]) = 0;
   virtual ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize) = 0;
   virtual ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts) = 0;
   virtual ViStatus GetDeviceResponse(ViSession vi, ViConstString channelList, ViInt32 responseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies) = 0;
@@ -124,7 +124,7 @@ class NiRFSALibraryInterface {
   virtual ViStatus SelfCal(ViSession vi) = 0;
   virtual ViStatus SelfCalibrate(ViSession vi, ViInt64 stepsToOmit) = 0;
   virtual ViStatus SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minReferenceLevel, ViReal64 maxReferenceLevel) = 0;
-  virtual ViStatus SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[256]) = 0;
+  virtual ViStatus SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[2048]) = 0;
   virtual ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier) = 0;
   virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value) = 0;

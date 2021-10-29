@@ -65,8 +65,8 @@ class NiRFSGLibraryInterface {
   virtual ViStatus DisableConfigurationListStepTrigger(ViSession vi) = 0;
   virtual ViStatus DisableScriptTrigger(ViSession vi, ViConstString triggerID) = 0;
   virtual ViStatus DisableStartTrigger(ViSession vi) = 0;
-  virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
-  virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[1024]) = 0;
+  virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean* value) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32* value) = 0;
@@ -106,7 +106,7 @@ class NiRFSGLibraryInterface {
   virtual ViStatus SelectArbWaveform(ViSession vi, ViConstString name) = 0;
   virtual ViStatus SelfCal(ViSession vi) = 0;
   virtual ViStatus SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minPowerLevel, ViReal64 maxPowerLevel) = 0;
-  virtual ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
+  virtual ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[2048]) = 0;
   virtual ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier) = 0;
   virtual ViStatus SetArbWaveformNextWritePosition(ViSession vi, ViConstString waveformName, ViInt32 relativeTo, ViInt32 offset) = 0;
   virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean value) = 0;

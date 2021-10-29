@@ -747,7 +747,7 @@ ViStatus NiRFSGLibrary::DisableStartTrigger(ViSession vi)
 #endif
 }
 
-ViStatus NiRFSGLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
+ViStatus NiRFSGLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[1024])
 {
   if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_error_message.");
@@ -759,7 +759,7 @@ ViStatus NiRFSGLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar er
 #endif
 }
 
-ViStatus NiRFSGLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256])
+ViStatus NiRFSGLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024])
 {
   if (!function_pointers_.ErrorQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_error_query.");
@@ -1235,7 +1235,7 @@ ViStatus NiRFSGLibrary::SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, Vi
 #endif
 }
 
-ViStatus NiRFSGLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
+ViStatus NiRFSGLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[2048])
 {
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_self_test.");

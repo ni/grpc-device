@@ -975,7 +975,7 @@ functions = {
                 'name': 'errorMessage',
                 'size': {
                     'mechanism': 'fixed',
-                    'value': 256
+                    'value': 1024
                 },
                 'type': 'ViChar[]'
             }
@@ -1000,7 +1000,7 @@ functions = {
                 'name': 'errorMessage',
                 'size': {
                     'mechanism': 'fixed',
-                    'value': 256
+                    'value': 1024
                 },
                 'type': 'ViChar[]'
             }
@@ -1552,7 +1552,7 @@ functions = {
                 'name': 'info',
                 'size': {
                     'mechanism': 'fixed',
-                    'value': 256
+                    'value': 2048
                 },
                 'type': 'ViChar[]'
             }
@@ -2667,7 +2667,7 @@ functions = {
                 'name': 'testMessage',
                 'size': {
                     'mechanism': 'fixed',
-                    'value': 256
+                    'value': 2048
                 },
                 'type': 'ViChar[]'
             }
@@ -2855,10 +2855,6 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'info',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
                 'type': 'ViConstString'
             }
         ],

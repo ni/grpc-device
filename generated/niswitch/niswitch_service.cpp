@@ -505,6 +505,7 @@ namespace niswitch_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_error_message(error_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
       return ::grpc::Status::OK;
     }
@@ -530,6 +531,7 @@ namespace niswitch_grpc {
       if (status == 0) {
         response->set_error_code(error_code);
         response->set_error_message(error_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
       return ::grpc::Status::OK;
     }
@@ -646,6 +648,7 @@ namespace niswitch_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_attribute_value(attribute_value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -713,6 +716,7 @@ namespace niswitch_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_channel_name_buffer(channel_name_buffer);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name_buffer()));
         }
         return ::grpc::Status::OK;
       }
@@ -755,6 +759,7 @@ namespace niswitch_grpc {
         if (status == 0) {
           response->set_code(code);
           response->set_description(description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
         }
         return ::grpc::Status::OK;
       }
@@ -795,6 +800,7 @@ namespace niswitch_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_coercion_record(coercion_record);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
         }
         return ::grpc::Status::OK;
       }
@@ -835,6 +841,7 @@ namespace niswitch_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_interchange_warning(interchange_warning);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
         }
         return ::grpc::Status::OK;
       }
@@ -877,6 +884,7 @@ namespace niswitch_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_path(path);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_path()));
         }
         return ::grpc::Status::OK;
       }
@@ -942,6 +950,7 @@ namespace niswitch_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_relay_name_buffer(relay_name_buffer);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_relay_name_buffer()));
         }
         return ::grpc::Status::OK;
       }
@@ -1267,7 +1276,9 @@ namespace niswitch_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_instrument_driver_revision(instrument_driver_revision);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
         response->set_firmware_revision(firmware_revision);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       }
       return ::grpc::Status::OK;
     }
@@ -1433,6 +1444,7 @@ namespace niswitch_grpc {
       if (status == 0) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       }
       return ::grpc::Status::OK;
     }

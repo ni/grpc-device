@@ -565,6 +565,37 @@ TEST_F(NiRFSADriverApiTests, SelfCalibrateWithStepsToOmit_Succeeds)
   EXPECT_SUCCESS(session, response);
 }
 
+TEST_F(NiRFSADriverApiTests, SelfTest_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  const auto response = client::self_test(stub(), session);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ("PASS", response.test_message());
+}
+
+TEST_F(NiRFSADriverApiTests, ErrorMessage_ReturnsErrorMessage)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  const auto response = client::error_message(stub(), session, IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ(
+      "IVI: (Hex 0xBFFA0012) Attribute or property not supported.",
+      response.error_message());
+}
+
+TEST_F(NiRFSADriverApiTests, GetCalUserDefinedInfo_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  const auto response = client::get_cal_user_defined_info(stub(), session);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ(
+      "Simulated Device",
+      response.info());
+}
+
 // NOTE: disabled because this test requires a 58XX device. Simulating a 58XX hangs on shutdown.
 TEST_F(NiRFSADriverApiTests, DISABLED_GetDeembeddingCompensationGain_Succeeds)
 {

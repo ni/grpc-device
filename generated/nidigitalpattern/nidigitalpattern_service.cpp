@@ -1318,6 +1318,7 @@ namespace nidigitalpattern_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_error_message(error_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
       return ::grpc::Status::OK;
     }
@@ -1769,6 +1770,7 @@ namespace nidigitalpattern_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -1810,6 +1812,7 @@ namespace nidigitalpattern_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_name(name);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
         return ::grpc::Status::OK;
       }
@@ -1851,6 +1854,7 @@ namespace nidigitalpattern_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_names(names);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_names()));
         }
         return ::grpc::Status::OK;
       }
@@ -1893,6 +1897,7 @@ namespace nidigitalpattern_grpc {
         if (status == 0) {
           response->set_error_code(error_code);
           response->set_error_description(error_description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         }
         return ::grpc::Status::OK;
       }
@@ -2036,6 +2041,7 @@ namespace nidigitalpattern_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_name(name);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
         return ::grpc::Status::OK;
       }
@@ -2077,6 +2083,7 @@ namespace nidigitalpattern_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_pin_list(pin_list);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_pin_list()));
         }
         return ::grpc::Status::OK;
       }
@@ -2118,6 +2125,7 @@ namespace nidigitalpattern_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_name(name);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
         return ::grpc::Status::OK;
       }
@@ -2390,6 +2398,7 @@ namespace nidigitalpattern_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_name(name);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
         return ::grpc::Status::OK;
       }
@@ -3186,6 +3195,7 @@ namespace nidigitalpattern_grpc {
       if (status == 0) {
         response->set_test_result(test_result);
         response->set_test_message(test_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_test_message()));
       }
       return ::grpc::Status::OK;
     }
