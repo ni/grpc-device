@@ -87,40 +87,6 @@ config = {
                 }
             ]
         },
-        { 
-            'name': 'NIComplexNumber_struct',
-            'grpc_name': 'NIComplexNumber',
-            'fields': [
-                {
-                    'type': 'ViReal64',
-                    'name': 'real',
-                    'grpc_name': 'real'
-                },
-                {
-                    'type': 'ViReal64',
-                    'name': 'imaginary',
-                    'grpc_name': 'imaginary'
-                }
-            ]
-        },
-        { 
-            'name': 'NIComplexI16_struct',
-            'grpc_name': 'NIComplexInt32',
-            'fields': [
-                {
-                    'type': 'ViInt16',
-                    'name': 'real',
-                    'grpc_name': 'real',
-                    'coerced': True,
-                },
-                {
-                    'type': 'ViInt16',
-                    'name': 'imaginary',
-                    'grpc_name': 'imaginary',
-                    'coerced': True,
-                }
-            ]
-        }
     ],
     'driver_name': 'NI-SCOPE',
     'extra_errors_used': [

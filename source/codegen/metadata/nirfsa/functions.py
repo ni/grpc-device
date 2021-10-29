@@ -799,13 +799,13 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'repeated NIComplexNumber',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'sparameterTable',
                 'size': {
                     'mechanism': 'len',
                     'value': 'sparameterTableSize'
                 },
-                'type': 'struct NIComplexNumber_struct[]'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -1112,13 +1112,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated NIComplexNumberF32',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumberF32',
                 'name': 'data',
                 'size': {
                     'mechanism': 'custom-code',
                     'value': 'numberOfSamples * numberOfRecords'
                 },
-                'type': 'struct NIComplexNumberF32_struct[]'
+                'type': 'NIComplexNumberF32_struct[]'
             },
             {
                 'direction': 'out',
@@ -1167,13 +1167,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated NIComplexNumber',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'data',
                 'size': {
                     'mechanism': 'custom-code',
                     'value': 'numberOfSamples * numberOfRecords'
                 },
-                'type': 'struct NIComplexNumber_struct[]'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'out',
@@ -1222,13 +1222,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated NIComplexI16',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexI16',
                 'name': 'data',
                 'size': {
                     'mechanism': 'custom-code',
                     'value': 'numberOfSamples * numberOfRecords'
                 },
-                'type': 'struct NIComplexI16_struct[]'
+                'type': 'NIComplexI16_struct[]'
             },
             {
                 'direction': 'out',
@@ -1272,13 +1272,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated NIComplexNumberF32',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumberF32',
                 'name': 'data',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'numberOfSamples'
                 },
-                'type': 'struct NIComplexNumberF32_struct[]'
+                'type': 'NIComplexNumberF32_struct[]'
             },
             {
                 'direction': 'out',
@@ -1318,13 +1318,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated NIComplexNumber',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'data',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'numberOfSamples'
                 },
-                'type': 'struct NIComplexNumber_struct[]'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'out',
@@ -1364,13 +1364,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated NIComplexI16',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexI16',
                 'name': 'data',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'numberOfSamples'
                 },
-                'type': 'struct NIComplexI16_struct[]'
+                'type': 'NIComplexI16_struct[]'
             },
             {
                 'direction': 'out',
@@ -1583,14 +1583,14 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated NIComplexNumber',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'sparameters',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'sparametersArraySize',
                     'value_twist': 'numberOfSparameters'
                 },
-                'type': 'struct NIComplexNumber_struct[]'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -2104,9 +2104,9 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'SmtSpectrumInfo',
+                'grpc_type': 'nidevice_grpc.SmtSpectrumInfo',
                 'name': 'spectrumInfo',
-                'type': 'struct SmtSpectrumInfo_struct'
+                'type': 'SmtSpectrumInfo_struct'
             }
         ],
         'returns': 'ViStatus'
@@ -2389,13 +2389,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'repeated NIComplexNumber',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'data',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'dataArraySize'
                 },
-                'type': 'struct NIComplexNumber_struct[]'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',

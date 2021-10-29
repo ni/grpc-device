@@ -13,6 +13,7 @@ option csharp_namespace = "NationalInstruments.Grpc.Scope";
 
 package niscope_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiScope {
@@ -774,16 +775,6 @@ message CoefficientInfo {
   double reserved2 = 4;
 }
 
-message NIComplexNumber {
-  double real = 1;
-  double imaginary = 2;
-}
-
-message NIComplexInt32 {
-  sint32 real = 1;
-  sint32 imaginary = 2;
-}
-
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1402,7 +1393,7 @@ message FetchComplexRequest {
 
 message FetchComplexResponse {
   int32 status = 1;
-  repeated NIComplexNumber wfm = 2;
+  repeated nidevice_grpc.NIComplexNumber wfm = 2;
   repeated WaveformInfo wfm_info = 3;
 }
 
@@ -1415,7 +1406,7 @@ message FetchComplexBinary16Request {
 
 message FetchComplexBinary16Response {
   int32 status = 1;
-  repeated NIComplexInt32 wfm = 2;
+  repeated nidevice_grpc.NIComplexI16 wfm = 2;
   repeated WaveformInfo wfm_info = 3;
 }
 

@@ -13,6 +13,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiRFSA";
 
 package nirfsa_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiRFSA {
@@ -761,21 +762,6 @@ enum NiRFSAStringAttributeValuesMapped {
   NIRFSA_STRING_TRIGGER_SOURCE_SYNC_ADVANCE_TRIGGER = 60;
 }
 
-message NIComplexNumber {
-  double real = 1;
-  double imaginary = 2;
-}
-
-message NIComplexNumberF32 {
-  float real = 1;
-  float imaginary = 2;
-}
-
-message NIComplexI16 {
-  sint32 real = 1;
-  sint32 imaginary = 2;
-}
-
 message WaveformInfo {
   double absolute_initial_x = 1;
   double relative_initial_x = 2;
@@ -788,14 +774,6 @@ message WaveformInfo {
 message CoefficientInfo {
   double offset = 1;
   double gain = 2;
-}
-
-message SmtSpectrumInfo {
-  uint32 spectrum_type = 1;
-  uint32 linear_db = 2;
-  uint32 window = 3;
-  sint32 window_size = 4;
-  sint32 fft_size = 5;
 }
 
 message SpectrumInfo {
@@ -1221,7 +1199,7 @@ message CreateDeembeddingSparameterTableArrayRequest {
   string port = 2;
   string table_name = 3;
   repeated double frequencies = 4;
-  repeated NIComplexNumber sparameter_table = 5;
+  repeated nidevice_grpc.NIComplexNumber sparameter_table = 5;
   sint32 number_of_ports = 6;
   oneof sparameter_orientation_enum {
     SparameterOrientation sparameter_orientation = 7;
@@ -1383,7 +1361,7 @@ message FetchIQMultiRecordComplexF32Request {
 
 message FetchIQMultiRecordComplexF32Response {
   int32 status = 1;
-  repeated NIComplexNumberF32 data = 2;
+  repeated nidevice_grpc.NIComplexNumberF32 data = 2;
   repeated WaveformInfo wfm_info = 3;
 }
 
@@ -1398,7 +1376,7 @@ message FetchIQMultiRecordComplexF64Request {
 
 message FetchIQMultiRecordComplexF64Response {
   int32 status = 1;
-  repeated NIComplexNumber data = 2;
+  repeated nidevice_grpc.NIComplexNumber data = 2;
   repeated WaveformInfo wfm_info = 3;
 }
 
@@ -1413,7 +1391,7 @@ message FetchIQMultiRecordComplexI16Request {
 
 message FetchIQMultiRecordComplexI16Response {
   int32 status = 1;
-  repeated NIComplexI16 data = 2;
+  repeated nidevice_grpc.NIComplexI16 data = 2;
   repeated WaveformInfo wfm_info = 3;
 }
 
@@ -1427,7 +1405,7 @@ message FetchIQSingleRecordComplexF32Request {
 
 message FetchIQSingleRecordComplexF32Response {
   int32 status = 1;
-  repeated NIComplexNumberF32 data = 2;
+  repeated nidevice_grpc.NIComplexNumberF32 data = 2;
   WaveformInfo wfm_info = 3;
 }
 
@@ -1441,7 +1419,7 @@ message FetchIQSingleRecordComplexF64Request {
 
 message FetchIQSingleRecordComplexF64Response {
   int32 status = 1;
-  repeated NIComplexNumber data = 2;
+  repeated nidevice_grpc.NIComplexNumber data = 2;
   WaveformInfo wfm_info = 3;
 }
 
@@ -1455,7 +1433,7 @@ message FetchIQSingleRecordComplexI16Request {
 
 message FetchIQSingleRecordComplexI16Response {
   int32 status = 1;
-  repeated NIComplexI16 data = 2;
+  repeated nidevice_grpc.NIComplexI16 data = 2;
   WaveformInfo wfm_info = 3;
 }
 
@@ -1549,7 +1527,7 @@ message GetDeembeddingSparametersRequest {
 
 message GetDeembeddingSparametersResponse {
   int32 status = 1;
-  repeated NIComplexNumber sparameters = 2;
+  repeated nidevice_grpc.NIComplexNumber sparameters = 2;
   sint32 number_of_sparameters = 3;
   sint32 number_of_ports = 4;
 }
@@ -1731,7 +1709,7 @@ message GetSpectralInfoForSMTRequest {
 
 message GetSpectralInfoForSMTResponse {
   int32 status = 1;
-  SmtSpectrumInfo spectrum_info = 2;
+  nidevice_grpc.SmtSpectrumInfo spectrum_info = 2;
 }
 
 message GetStreamEndpointHandleRequest {
@@ -1859,7 +1837,7 @@ message ReadIQSingleRecordComplexF64Request {
 
 message ReadIQSingleRecordComplexF64Response {
   int32 status = 1;
-  repeated NIComplexNumber data = 2;
+  repeated nidevice_grpc.NIComplexNumber data = 2;
   WaveformInfo wfm_info = 3;
 }
 

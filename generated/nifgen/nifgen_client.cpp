@@ -913,7 +913,7 @@ create_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const si
 }
 
 CreateWaveformComplexF64Response
-create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<NIComplexNumber>& waveform_data_array)
+create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& waveform_data_array)
 {
   ::grpc::ClientContext context;
 
@@ -2298,7 +2298,7 @@ write_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 WriteComplexBinary16WaveformResponse
-write_complex_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<NIComplexInt32>& data)
+write_complex_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<nidevice_grpc::NIComplexI16>& data)
 {
   ::grpc::ClientContext context;
 
@@ -2410,7 +2410,7 @@ write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 }
 
 WriteWaveformComplexF64Response
-write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<NIComplexNumber>& data, const pb::int32& waveform_handle)
+write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& data, const pb::int32& waveform_handle)
 {
   ::grpc::ClientContext context;
 
@@ -2429,7 +2429,7 @@ write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 WriteNamedWaveformComplexF64Response
-write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<NIComplexNumber>& data)
+write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumber>& data)
 {
   ::grpc::ClientContext context;
 
@@ -2448,7 +2448,7 @@ write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 WriteNamedWaveformComplexI16Response
-write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<NIComplexInt32>& data)
+write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexI16>& data)
 {
   ::grpc::ClientContext context;
 

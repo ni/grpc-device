@@ -1019,8 +1019,8 @@ functions = {
             {
                 'name':'waveformDataArray',
                 'direction':'in',
-                'type': 'struct NIComplexNumber_struct[]',
-                'grpc_type': 'repeated NIComplexNumber',
+                'type': 'NIComplexNumber_struct[]',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
@@ -2789,8 +2789,8 @@ functions = {
             {
                 'name':'data',
                 'direction':'in',
-                'type':'struct NIComplexI16_struct[]',
-                'grpc_type':'repeated NIComplexInt32',
+                'type':'NIComplexI16_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexI16',
                 'size':{
                     'mechanism':'len',
                     'value':'size'
@@ -2971,8 +2971,8 @@ functions = {
             {
                 'name':'data',
                 'direction':'in',
-                'type':'struct NIComplexNumber_struct[]',
-                'grpc_type':'repeated NIComplexNumber',
+                'type':'NIComplexNumber_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexNumber',
                 'size':{
                     'mechanism':'len',
                     'value':'numberOfSamples'
@@ -3011,8 +3011,8 @@ functions = {
             {
                 'name':'data',
                 'direction':'in',
-                'type':'struct NIComplexNumber_struct[]',
-                'grpc_type':'repeated NIComplexNumber',
+                'type':'NIComplexNumber_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexNumber',
                 'size':{
                     'mechanism':'len',
                     'value':'size'
@@ -3046,8 +3046,8 @@ functions = {
             {
                 'name':'data',
                 'direction':'in',
-                'type':'struct NIComplexI16_struct[]',
-                'grpc_type':'repeated NIComplexInt32',
+                'type':'NIComplexI16_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexI16',
                 'size':{
                     'mechanism':'len',
                     'value':'size'

@@ -1439,8 +1439,8 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': '(num_samples * actual_num_wfms)'
                 },
-                'type':'struct NIComplexNumber_struct[]',
-                'grpc_type': 'repeated NIComplexNumber'
+                'type':'NIComplexNumber_struct[]',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber'
             },
             {
                 'name':'wfmInfo',
@@ -1481,8 +1481,8 @@ functions = {
             {
                 'name':'wfm',
                 'direction':'out',              
-                'type': 'struct NIComplexI16_struct[]',
-                'grpc_type': 'repeated NIComplexInt32',
+                'type': 'NIComplexI16_struct[]',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexI16',
                 'size': {
                     'mechanism': 'custom-code',
                     'value': '(num_samples * actual_num_wfms)'

@@ -162,15 +162,25 @@ endforeach()
 # Proto file
 #----------------------------------------------------------------------
 get_filename_component(session_proto "source/protobuf/session.proto" ABSOLUTE)
+get_filename_component(nidevice_proto "source/protobuf/nidevice.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
 # Generate sources from proto files
+# Usage: GenerateGrpcSources(PROTO <path> OUTPUT <path>...)
 #----------------------------------------------------------------------
-function(GenerateGrpcSources proto_file proto_path proto_srcs proto_hdrs grpc_srcs grpc_hdrs)
+function(GenerateGrpcSources)
+  set(oneValueArgs PROTO)
+  set(multiValueArgs OUTPUT)
+  cmake_parse_arguments(GENERATE_ARGS "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  set(output_files "${GENERATE_ARGS_OUTPUT}")
+  set(proto_file "${GENERATE_ARGS_PROTO}")
+  get_filename_component(proto_path "${proto_file}" PATH)
+  # Asssumption: all outputs are in the same directory: use the zero-th.
+  list(GET output_files 0 proto_srcs)
   get_filename_component(proto_out_path "${proto_srcs}" PATH)
   add_custom_command(
-    OUTPUT "${proto_srcs}" "${proto_hdrs}" "${grpc_srcs}" "${grpc_hdrs}"
+    OUTPUT ${output_files}
     COMMAND ${_PROTOBUF_PROTOC}
     ARGS --grpc_out "${proto_out_path}"
       --cpp_out "${proto_out_path}"
@@ -186,22 +196,37 @@ set(session_proto_srcs "${proto_srcs_dir}/session.pb.cc")
 set(session_proto_hdrs "${proto_srcs_dir}/session.pb.h")
 set(session_grpc_srcs "${proto_srcs_dir}/session.grpc.pb.cc")
 set(session_grpc_hdrs "${proto_srcs_dir}/session.grpc.pb.h")
+set(nidevice_proto_srcs "${proto_srcs_dir}/nidevice.pb.cc")
+set(nidevice_proto_hdrs "${proto_srcs_dir}/nidevice.pb.h")
+
 GenerateGrpcSources(
-  ${session_proto}
-  ${session_proto_path}
-  ${session_proto_srcs}
-  ${session_proto_hdrs}
-  ${session_grpc_srcs}
-  ${session_grpc_hdrs})
+  PROTO
+    ${session_proto}
+  OUTPUT
+    "${session_proto_srcs}" 
+    "${session_proto_hdrs}" 
+    "${session_grpc_srcs}" 
+    "${session_grpc_hdrs}"
+)
+
+GenerateGrpcSources(
+  PROTO
+    ${nidevice_proto}
+  OUTPUT
+    "${nidevice_proto_srcs}"
+    "${nidevice_proto_hdrs}"
+)
 
 foreach(api ${nidrivers})
   GenerateGrpcSources(
-    ${service_output_dir}/${api}/${api}.proto
-    ${service_output_dir}/${api}/
-    "${proto_srcs_dir}/${api}.pb.cc"
-    "${proto_srcs_dir}/${api}.pb.h"
-    "${proto_srcs_dir}/${api}.grpc.pb.cc"
-    "${proto_srcs_dir}/${api}.grpc.pb.h")
+    PROTO
+      ${service_output_dir}/${api}/${api}.proto
+    OUTPUT
+      "${proto_srcs_dir}/${api}.pb.cc"
+      "${proto_srcs_dir}/${api}.pb.h"
+      "${proto_srcs_dir}/${api}.grpc.pb.cc"
+      "${proto_srcs_dir}/${api}.grpc.pb.h"
+  )
   if(NOT api MATCHES "^nifake.*")
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
@@ -222,6 +247,7 @@ add_executable(ni_grpc_device_server
    "source/server/session_utilities_service.cpp"
    "source/server/shared_library.cpp"
    "source/server/syscfg_library.cpp"
+   ${nidevice_proto_srcs}
    ${session_proto_srcs}
    ${session_grpc_srcs}
    ${nidriver_service_srcs})
@@ -283,6 +309,7 @@ add_executable(IntegrationTestsRunner
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
+    ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
@@ -332,6 +359,7 @@ add_executable(UnitTestsRunner
     "source/server/session_repository.cpp"
     "source/server/shared_library.cpp"
     "source/server/syscfg_library.cpp"
+    ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
@@ -408,6 +436,7 @@ add_executable(SystemTestsRunner
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
     "source/server/syscfg_library.cpp"
+    ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
     ${nidriver_service_srcs}

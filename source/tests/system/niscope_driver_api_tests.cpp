@@ -498,8 +498,6 @@ TEST_F(NiScopeDriverApiTest, NiScopeGetScalingCoefficients_SendRequest_NonZeroCo
   EXPECT_EQ(2, response.coefficient_info_size());
   EXPECT_EQ(0, response.coefficient_info(0).offset());
   EXPECT_NE(0, response.coefficient_info(0).gain());
-  EXPECT_EQ(0, response.coefficient_info(0).reserved1());
-  EXPECT_EQ(0, response.coefficient_info(0).reserved2());
 }
 
 TEST_F(NiScopeDriverApiTest, NiScopeGetNormalizationCoefficients_SendRequest_NonZeroCoefficientsReturned)
@@ -518,8 +516,6 @@ TEST_F(NiScopeDriverApiTest, NiScopeGetNormalizationCoefficients_SendRequest_Non
   EXPECT_EQ(2, response.coefficient_info_size());
   EXPECT_EQ(0, response.coefficient_info(0).offset());
   EXPECT_NE(0, response.coefficient_info(0).gain());
-  EXPECT_EQ(0, response.coefficient_info(0).reserved1());
-  EXPECT_EQ(0, response.coefficient_info(0).reserved2());
 }
 
 }  // namespace system

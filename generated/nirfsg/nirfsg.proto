@@ -13,6 +13,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiRFSG";
 
 package nirfsg_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiRFSG {
@@ -768,21 +769,6 @@ enum NiRFSGStringAttributeValuesMapped {
   NIRFSG_STRING_TRIGGER_SOURCE_TRIG_IN = 90;
 }
 
-message NIComplexNumber {
-  double real = 1;
-  double imaginary = 2;
-}
-
-message NIComplexNumberF32 {
-  float real = 1;
-  float imaginary = 2;
-}
-
-message NIComplexI16 {
-  sint32 real = 1;
-  sint32 imaginary = 2;
-}
-
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1221,7 +1207,7 @@ message CreateDeembeddingSparameterTableArrayRequest {
   string port = 2;
   string table_name = 3;
   repeated double frequencies = 4;
-  repeated NIComplexNumber sparameter_table = 5;
+  repeated nidevice_grpc.NIComplexNumber sparameter_table = 5;
   sint32 number_of_ports = 6;
   oneof sparameter_orientation_enum {
     SParameterOrientation sparameter_orientation = 7;
@@ -1450,7 +1436,7 @@ message GetDeembeddingSparametersRequest {
 
 message GetDeembeddingSparametersResponse {
   int32 status = 1;
-  repeated NIComplexNumber sparameters = 2;
+  repeated nidevice_grpc.NIComplexNumber sparameters = 2;
   sint32 number_of_sparameters = 3;
   sint32 number_of_ports = 4;
 }
@@ -1949,7 +1935,7 @@ message WriteArbWaveformResponse {
 message WriteArbWaveformComplexF32Request {
   nidevice_grpc.Session vi = 1;
   string waveform_name = 2;
-  repeated NIComplexNumberF32 wfm_data = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 wfm_data = 3;
   bool more_data_pending = 4;
 }
 
@@ -1960,7 +1946,7 @@ message WriteArbWaveformComplexF32Response {
 message WriteArbWaveformComplexF64Request {
   nidevice_grpc.Session vi = 1;
   string waveform_name = 2;
-  repeated NIComplexNumber wfm_data = 3;
+  repeated nidevice_grpc.NIComplexNumber wfm_data = 3;
   bool more_data_pending = 4;
 }
 
@@ -1971,7 +1957,7 @@ message WriteArbWaveformComplexF64Response {
 message WriteArbWaveformComplexI16Request {
   nidevice_grpc.Session vi = 1;
   string waveform_name = 2;
-  repeated NIComplexI16 wfm_data = 3;
+  repeated nidevice_grpc.NIComplexI16 wfm_data = 3;
 }
 
 message WriteArbWaveformComplexI16Response {

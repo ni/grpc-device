@@ -3335,36 +3335,6 @@ namespace nirfsa_grpc {
 namespace nidevice_grpc {
 namespace converters {
 template <>
-void convert_to_grpc(const NIComplexNumber_struct& input, nirfsa_grpc::NIComplexNumber* output) 
-{
-  output->set_real(input.real);
-  output->set_imaginary(input.imaginary);
-}
-
-template <>
-NIComplexNumber_struct convert_from_grpc(const nirfsa_grpc::NIComplexNumber& input) 
-{
-  auto output = NIComplexNumber_struct();  
-  output.real = input.real();
-  output.imaginary = input.imaginary();
-  return output;
-}
-
-template <>
-void convert_to_grpc(const NIComplexNumberF32_struct& input, nirfsa_grpc::NIComplexNumberF32* output) 
-{
-  output->set_real(input.real);
-  output->set_imaginary(input.imaginary);
-}
-
-template <>
-void convert_to_grpc(const NIComplexI16_struct& input, nirfsa_grpc::NIComplexI16* output) 
-{
-  output->set_real(input.real);
-  output->set_imaginary(input.imaginary);
-}
-
-template <>
 void convert_to_grpc(const niRFSA_wfmInfo_struct& input, nirfsa_grpc::WaveformInfo* output) 
 {
   output->set_absolute_initial_x(input.absoluteInitialX);
@@ -3380,16 +3350,6 @@ void convert_to_grpc(const niRFSA_coefficientInfo_struct& input, nirfsa_grpc::Co
 {
   output->set_offset(input.offset);
   output->set_gain(input.gain);
-}
-
-template <>
-void convert_to_grpc(const SmtSpectrumInfo_struct& input, nirfsa_grpc::SmtSpectrumInfo* output) 
-{
-  output->set_spectrum_type(input.spectrumType);
-  output->set_linear_db(input.linearDB);
-  output->set_window(input.window);
-  output->set_window_size(input.windowSize);
-  output->set_fft_size(input.FFTSize);
 }
 
 template <>
