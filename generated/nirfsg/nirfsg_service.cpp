@@ -1465,11 +1465,12 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViStatus error_code = request->error_code();
-      std::string error_message(256 - 1, '\0');
+      std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_error_message(error_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
       return ::grpc::Status::OK;
     }
@@ -1489,12 +1490,13 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 error_code {};
-      std::string error_message(256 - 1, '\0');
+      std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_error_code(error_code);
         response->set_error_message(error_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
       return ::grpc::Status::OK;
     }
@@ -1737,6 +1739,7 @@ namespace nirfsg_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -1778,6 +1781,7 @@ namespace nirfsg_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_name(name);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
         return ::grpc::Status::OK;
       }
@@ -1866,6 +1870,7 @@ namespace nirfsg_grpc {
         if (status == 0) {
           response->set_error_code(error_code);
           response->set_error_description(error_description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         }
         return ::grpc::Status::OK;
       }
@@ -2087,6 +2092,7 @@ namespace nirfsg_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_terminal_name(terminal_name);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_terminal_name()));
         }
         return ::grpc::Status::OK;
       }
@@ -2594,7 +2600,9 @@ namespace nirfsg_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_instrument_driver_revision(instrument_driver_revision);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
         response->set_firmware_revision(firmware_revision);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       }
       return ::grpc::Status::OK;
     }
@@ -2713,12 +2721,13 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 self_test_result {};
-      std::string self_test_message(256 - 1, '\0');
+      std::string self_test_message(2048 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       }
       return ::grpc::Status::OK;
     }

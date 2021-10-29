@@ -164,6 +164,7 @@ namespace nitclk_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_error_string(error_string);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         }
         return ::grpc::Status::OK;
       }

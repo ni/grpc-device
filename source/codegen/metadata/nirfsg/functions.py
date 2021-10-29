@@ -969,7 +969,7 @@ functions = {
                 'name': 'errorMessage',
                 'size': {
                     'mechanism': 'fixed',
-                    'value': 256
+                    'value': 1024
                 },
                 'type': 'ViChar[]'
             }
@@ -994,7 +994,7 @@ functions = {
                 'name': 'errorMessage',
                 'size': {
                     'mechanism': 'fixed',
-                    'value': 256
+                    'value': 1024
                 },
                 'type': 'ViChar[]'
             }
@@ -1969,7 +1969,7 @@ functions = {
                 'name': 'selfTestMessage',
                 'size': {
                     'mechanism': 'fixed',
-                    'value': 256
+                    'value': 2048
                 },
                 'type': 'ViChar[]'
             }

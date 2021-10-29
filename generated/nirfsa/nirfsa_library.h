@@ -66,8 +66,8 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus DisableRefTrigger(ViSession vi);
   ViStatus DisableStartTrigger(ViSession vi);
   ViStatus EnableSessionAccess(ViSession vi, ViBoolean enable);
-  ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[256]);
-  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
+  ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024]);
+  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]);
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
   ViStatus ExtCalStoreBaselineForSelfCalibration(ViSession vi, ViString password, ViInt64 selfCalibrationStep);
   ViStatus ExternalAlignmentAdjustPreselector(ViSession vi, ViInt32 numberOfCoefficients, ViReal64 coefficients[]);
@@ -83,7 +83,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* value);
   ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* value);
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]);
-  ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[256]);
+  ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[2048]);
   ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize);
   ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts);
   ViStatus GetDeviceResponse(ViSession vi, ViConstString channelList, ViInt32 responseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies);
@@ -126,7 +126,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus SelfCal(ViSession vi);
   ViStatus SelfCalibrate(ViSession vi, ViInt64 stepsToOmit);
   ViStatus SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minReferenceLevel, ViReal64 maxReferenceLevel);
-  ViStatus SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[256]);
+  ViStatus SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[2048]);
   ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier);
   ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value);
   ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value);

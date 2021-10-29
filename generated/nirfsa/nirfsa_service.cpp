@@ -1294,11 +1294,12 @@ namespace nirfsa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViStatus status_code = request->status_code();
-      std::string error_message(256 - 1, '\0');
+      std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorMessage(vi, status_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_error_message(error_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
       return ::grpc::Status::OK;
     }
@@ -1318,12 +1319,13 @@ namespace nirfsa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 error_code {};
-      std::string error_message(256 - 1, '\0');
+      std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_error_code(error_code);
         response->set_error_message(error_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
       return ::grpc::Status::OK;
     }
@@ -1766,6 +1768,7 @@ namespace nirfsa_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -1785,11 +1788,12 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      std::string info(256 - 1, '\0');
+      std::string info(2048 - 1, '\0');
       auto status = library_->GetCalUserDefinedInfo(vi, (ViChar*)info.data());
       response->set_status(status);
       if (status == 0) {
         response->set_info(info);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_info()));
       }
       return ::grpc::Status::OK;
     }
@@ -1961,6 +1965,7 @@ namespace nirfsa_grpc {
         if (status == 0) {
           response->set_error_code(error_code);
           response->set_error_description(error_description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         }
         return ::grpc::Status::OK;
       }
@@ -2488,6 +2493,7 @@ namespace nirfsa_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_terminal_name(terminal_name);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_terminal_name()));
       }
       return ::grpc::Status::OK;
     }
@@ -2944,7 +2950,9 @@ namespace nirfsa_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_driver_rev(driver_rev);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_rev()));
         response->set_instr_rev(instr_rev);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instr_rev()));
       }
       return ::grpc::Status::OK;
     }
@@ -3057,12 +3065,13 @@ namespace nirfsa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt16 test_result {};
-      std::string test_message(256 - 1, '\0');
+      std::string test_message(2048 - 1, '\0');
       auto status = library_->SelfTest(vi, &test_result, (ViChar*)test_message.data());
       response->set_status(status);
       if (status == 0) {
         response->set_test_result(test_result);
         response->set_test_message(test_message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_test_message()));
       }
       return ::grpc::Status::OK;
     }

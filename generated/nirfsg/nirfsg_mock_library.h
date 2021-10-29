@@ -67,8 +67,8 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   MOCK_METHOD(ViStatus, DisableConfigurationListStepTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, DisableScriptTrigger, (ViSession vi, ViConstString triggerID), (override));
   MOCK_METHOD(ViStatus, DisableStartTrigger, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
-  MOCK_METHOD(ViStatus, ErrorQuery, (ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]), (override));
+  MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[1024]), (override));
+  MOCK_METHOD(ViStatus, ErrorQuery, (ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]), (override));
   MOCK_METHOD(ViStatus, ExportSignal, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));
   MOCK_METHOD(ViStatus, GetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32* value), (override));
@@ -108,7 +108,7 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   MOCK_METHOD(ViStatus, SelectArbWaveform, (ViSession vi, ViConstString name), (override));
   MOCK_METHOD(ViStatus, SelfCal, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, SelfCalibrateRange, (ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minPowerLevel, ViReal64 maxPowerLevel), (override));
-  MOCK_METHOD(ViStatus, SelfTest, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]), (override));
+  MOCK_METHOD(ViStatus, SelfTest, (ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[2048]), (override));
   MOCK_METHOD(ViStatus, SendSoftwareEdgeTrigger, (ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier), (override));
   MOCK_METHOD(ViStatus, SetArbWaveformNextWritePosition, (ViSession vi, ViConstString waveformName, ViInt32 relativeTo, ViInt32 offset), (override));
   MOCK_METHOD(ViStatus, SetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean value), (override));

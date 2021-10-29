@@ -600,11 +600,11 @@ ${initialize_standard_input_param(function_name, parameter)}
 %>\
 ## Note that this currently only supports one repeated output parameter.
         for (int i = 0; i < ${parameter_name}Vector.size(); ++i) {
-%   if 'enum' in parameter:
+%     if 'enum' in parameter:
           response->add_${varargs_parameter_name}(static_cast<${parameter['enum']}>(${parameter_name}Vector[i]));
-%   else:
+%     else:
           response->add_${varargs_parameter_name}(${parameter_name}Vector[i]);
-%   endif
+%     endif
         }
 %   elif common_helpers.is_repeated_varargs_parameter(parameter): #pass
 %   elif common_helpers.is_enum(parameter) == True:
@@ -677,16 +677,19 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 %   else:
         response->set_${parameter_name}(${parameter_name});
 %   endif
+%   if common_helpers.is_regular_string_arg(parameter):
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_${parameter_name}()));
+%   endif
 ### Handle ivi-dance-with-a-twist resizing.
-%     if common_helpers.is_ivi_dance_array_with_a_twist_param(parameter):
+%   if common_helpers.is_ivi_dance_array_with_a_twist_param(parameter):
 <%
   size = common_helpers.get_size_expression(parameter)
 %>\
-%       if common_helpers.is_regular_byte_array_arg(parameter):
+%     if common_helpers.is_regular_byte_array_arg(parameter):
         response->mutable_${parameter_name}()->resize(${size});
-%       elif common_helpers.is_regular_string_arg(parameter):
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_${parameter_name}()));
-%       elif common_helpers.is_struct(parameter):
+%     elif common_helpers.is_regular_string_arg(parameter):
+### pass: handled above with trim_trailing_nulls for all string outputs.
+%     elif common_helpers.is_struct(parameter):
 ##        RepeatedPtrField doesn't support Resize(), so use DeleteSubrange()
 ##        to delete any extra elements.
         {
@@ -696,11 +699,11 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
             response->mutable_${parameter_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
           }
         }        
-%       else:
+%     else:
 ## This code doesn't handle all parameter types (i.e., enums), see what initialize_output_params() does for that.
         response->mutable_${parameter_name}()->Resize(${size}, 0);
-%       endif
 %     endif
+%   endif
 % endfor
 </%def>
 

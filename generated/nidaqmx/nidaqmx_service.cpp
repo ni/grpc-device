@@ -108,6 +108,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_device_name_out(device_name_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_device_name_out()));
         }
         return ::grpc::Status::OK;
       }
@@ -7172,6 +7173,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_port_list(port_list);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_port_list()));
         }
         return ::grpc::Status::OK;
       }
@@ -7356,6 +7358,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -7653,6 +7656,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -8011,6 +8015,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -8258,6 +8263,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_port_list(port_list);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_port_list()));
         }
         return ::grpc::Status::OK;
       }
@@ -8297,6 +8303,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_error_string(error_string);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         }
         return ::grpc::Status::OK;
       }
@@ -8491,6 +8498,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -8572,6 +8580,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_error_string(error_string);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         }
         return ::grpc::Status::OK;
       }
@@ -8659,6 +8668,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_buffer(buffer);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
         }
         return ::grpc::Status::OK;
       }
@@ -8700,6 +8710,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_buffer(buffer);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
         }
         return ::grpc::Status::OK;
       }
@@ -8741,6 +8752,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_buffer(buffer);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
         }
         return ::grpc::Status::OK;
       }
@@ -8841,6 +8853,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -8941,6 +8954,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -9041,6 +9055,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -9410,6 +9425,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -9701,6 +9717,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -10148,6 +10165,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -10304,6 +10322,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -10447,6 +10466,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -10774,6 +10794,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -11014,6 +11035,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -11463,6 +11485,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -11747,6 +11770,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
@@ -11941,6 +11965,7 @@ namespace nidaqmx_grpc {
         response->set_status(status);
         if (status == 0) {
           response->set_value(value);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
         return ::grpc::Status::OK;
       }
