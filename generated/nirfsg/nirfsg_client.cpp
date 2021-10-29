@@ -1340,23 +1340,6 @@ get_self_calibration_temperature(const StubPtr& stub, const nidevice_grpc::Sessi
   return response;
 }
 
-GetStreamEndpointHandleResponse
-get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetStreamEndpointHandleRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_stream_endpoint(stream_endpoint);
-
-  auto response = GetStreamEndpointHandleResponse{};
-
-  raise_if_error(
-      stub->GetStreamEndpointHandle(&context, request, &response));
-
-  return response;
-}
-
 GetTerminalNameResponse
 get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RoutedSignal, pb::int32>& signal, const simple_variant<SignalIdentifier, std::string>& signal_identifier)
 {
@@ -2186,24 +2169,6 @@ write_arb_waveform_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 
   raise_if_error(
       stub->WriteArbWaveformF32(&context, request, &response));
-
-  return response;
-}
-
-WriteP2PEndpointI16Response
-write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint, const std::vector<pb::int32>& endpoint_data)
-{
-  ::grpc::ClientContext context;
-
-  auto request = WriteP2PEndpointI16Request{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_stream_endpoint(stream_endpoint);
-  copy_array(endpoint_data, request.mutable_endpoint_data());
-
-  auto response = WriteP2PEndpointI16Response{};
-
-  raise_if_error(
-      stub->WriteP2PEndpointI16(&context, request, &response));
 
   return response;
 }

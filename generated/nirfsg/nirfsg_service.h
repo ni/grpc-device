@@ -98,7 +98,6 @@ public:
   ::grpc::Status GetExternalCalibrationLastDateAndTime(::grpc::ServerContext* context, const GetExternalCalibrationLastDateAndTimeRequest* request, GetExternalCalibrationLastDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalibrationDateAndTime(::grpc::ServerContext* context, const GetSelfCalibrationDateAndTimeRequest* request, GetSelfCalibrationDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalibrationTemperature(::grpc::ServerContext* context, const GetSelfCalibrationTemperatureRequest* request, GetSelfCalibrationTemperatureResponse* response) override;
-  ::grpc::Status GetStreamEndpointHandle(::grpc::ServerContext* context, const GetStreamEndpointHandleRequest* request, GetStreamEndpointHandleResponse* response) override;
   ::grpc::Status GetTerminalName(::grpc::ServerContext* context, const GetTerminalNameRequest* request, GetTerminalNameResponse* response) override;
   ::grpc::Status GetUserData(::grpc::ServerContext* context, const GetUserDataRequest* request, GetUserDataResponse* response) override;
   ::grpc::Status GetWaveformBurstStartLocations(::grpc::ServerContext* context, const GetWaveformBurstStartLocationsRequest* request, GetWaveformBurstStartLocationsResponse* response) override;
@@ -142,7 +141,6 @@ public:
   ::grpc::Status WriteArbWaveformComplexF64(::grpc::ServerContext* context, const WriteArbWaveformComplexF64Request* request, WriteArbWaveformComplexF64Response* response) override;
   ::grpc::Status WriteArbWaveformComplexI16(::grpc::ServerContext* context, const WriteArbWaveformComplexI16Request* request, WriteArbWaveformComplexI16Response* response) override;
   ::grpc::Status WriteArbWaveformF32(::grpc::ServerContext* context, const WriteArbWaveformF32Request* request, WriteArbWaveformF32Response* response) override;
-  ::grpc::Status WriteP2PEndpointI16(::grpc::ServerContext* context, const WriteP2PEndpointI16Request* request, WriteP2PEndpointI16Response* response) override;
   ::grpc::Status WriteScript(::grpc::ServerContext* context, const WriteScriptRequest* request, WriteScriptResponse* response) override;
 
   bool is_enabled();

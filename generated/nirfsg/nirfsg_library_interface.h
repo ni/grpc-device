@@ -80,7 +80,6 @@ class NiRFSGLibraryInterface {
   virtual ViStatus GetExternalCalibrationLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second) = 0;
   virtual ViStatus GetSelfCalibrationDateAndTime(ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second) = 0;
   virtual ViStatus GetSelfCalibrationTemperature(ViSession vi, ViInt32 module, ViReal64* temperature) = 0;
-  virtual ViStatus GetStreamEndpointHandle(ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle) = 0;
   virtual ViStatus GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[]) = 0;
   virtual ViStatus GetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize) = 0;
   virtual ViStatus GetWaveformBurstStartLocations(ViSession vi, ViConstString channelName, ViInt32 numberOfLocations, ViReal64 locations[], ViInt32* requiredSize) = 0;
@@ -126,7 +125,6 @@ class NiRFSGLibraryInterface {
   virtual ViStatus WriteArbWaveformComplexF64(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumber_struct wfmData[], ViBoolean moreDataPending) = 0;
   virtual ViStatus WriteArbWaveformComplexI16(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexI16_struct wfmData[]) = 0;
   virtual ViStatus WriteArbWaveformF32(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal32 iData[], ViReal32 qData[], ViBoolean moreDataPending) = 0;
-  virtual ViStatus WriteP2PEndpointI16(ViSession vi, ViConstString streamEndpoint, ViInt32 numberOfSamples, ViInt16 endpointData[]) = 0;
   virtual ViStatus WriteScript(ViSession vi, ViConstString script) = 0;
 };
 

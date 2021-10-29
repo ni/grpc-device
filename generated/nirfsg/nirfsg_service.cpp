@@ -1998,30 +1998,6 @@ namespace nirfsg_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFSGService::GetStreamEndpointHandle(::grpc::ServerContext* context, const GetStreamEndpointHandleRequest* request, GetStreamEndpointHandleResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto stream_endpoint = request->stream_endpoint().c_str();
-      ViUInt32 reader_handle {};
-      auto status = library_->GetStreamEndpointHandle(vi, stream_endpoint, &reader_handle);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_reader_handle(reader_handle);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFSGService::GetTerminalName(::grpc::ServerContext* context, const GetTerminalNameRequest* request, GetTerminalNameResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3226,34 +3202,6 @@ namespace nirfsg_grpc {
       auto q_data = const_cast<ViReal32*>(request->q_data().data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformF32(vi, waveform_name, number_of_samples, i_data, q_data, more_data_pending);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSGService::WriteP2PEndpointI16(::grpc::ServerContext* context, const WriteP2PEndpointI16Request* request, WriteP2PEndpointI16Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto stream_endpoint = request->stream_endpoint().c_str();
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->endpoint_data().size());
-      auto endpoint_data_request = request->endpoint_data();
-      std::vector<ViInt16> endpoint_data;
-      std::transform(
-        endpoint_data_request.begin(),
-        endpoint_data_request.end(),
-        std::back_inserter(endpoint_data),
-        [](auto x) { return (ViInt16)x; }); 
-      auto status = library_->WriteP2PEndpointI16(vi, stream_endpoint, number_of_samples, endpoint_data.data());
       response->set_status(status);
       return ::grpc::Status::OK;
     }

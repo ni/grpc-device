@@ -81,7 +81,6 @@ service NiRFSG {
   rpc GetExternalCalibrationLastDateAndTime(GetExternalCalibrationLastDateAndTimeRequest) returns (GetExternalCalibrationLastDateAndTimeResponse);
   rpc GetSelfCalibrationDateAndTime(GetSelfCalibrationDateAndTimeRequest) returns (GetSelfCalibrationDateAndTimeResponse);
   rpc GetSelfCalibrationTemperature(GetSelfCalibrationTemperatureRequest) returns (GetSelfCalibrationTemperatureResponse);
-  rpc GetStreamEndpointHandle(GetStreamEndpointHandleRequest) returns (GetStreamEndpointHandleResponse);
   rpc GetTerminalName(GetTerminalNameRequest) returns (GetTerminalNameResponse);
   rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
   rpc GetWaveformBurstStartLocations(GetWaveformBurstStartLocationsRequest) returns (GetWaveformBurstStartLocationsResponse);
@@ -125,7 +124,6 @@ service NiRFSG {
   rpc WriteArbWaveformComplexF64(WriteArbWaveformComplexF64Request) returns (WriteArbWaveformComplexF64Response);
   rpc WriteArbWaveformComplexI16(WriteArbWaveformComplexI16Request) returns (WriteArbWaveformComplexI16Response);
   rpc WriteArbWaveformF32(WriteArbWaveformF32Request) returns (WriteArbWaveformF32Response);
-  rpc WriteP2PEndpointI16(WriteP2PEndpointI16Request) returns (WriteP2PEndpointI16Response);
   rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
 }
 
@@ -1510,16 +1508,6 @@ message GetSelfCalibrationTemperatureResponse {
   double temperature = 2;
 }
 
-message GetStreamEndpointHandleRequest {
-  nidevice_grpc.Session vi = 1;
-  string stream_endpoint = 2;
-}
-
-message GetStreamEndpointHandleResponse {
-  int32 status = 1;
-  uint32 reader_handle = 2;
-}
-
 message GetTerminalNameRequest {
   nidevice_grpc.Session vi = 1;
   oneof signal_enum {
@@ -1987,16 +1975,6 @@ message WriteArbWaveformF32Request {
 }
 
 message WriteArbWaveformF32Response {
-  int32 status = 1;
-}
-
-message WriteP2PEndpointI16Request {
-  nidevice_grpc.Session vi = 1;
-  string stream_endpoint = 2;
-  repeated sint32 endpoint_data = 3;
-}
-
-message WriteP2PEndpointI16Response {
   int32 status = 1;
 }
 
