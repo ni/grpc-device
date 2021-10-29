@@ -17,19 +17,11 @@ class NiRFSALibraryInterface {
   virtual ~NiRFSALibraryInterface() {}
 
   virtual ViStatus Abort(ViSession vi) = 0;
-  virtual ViStatus CalAdjustCalTonePower(ViSession vi, ViConstString channelList, ViReal64 measurement) = 0;
-  virtual ViStatus CalAdjustDeviceGain(ViSession vi, ViConstString channelList, ViReal64 frequency, ViReal64 gain) = 0;
-  virtual ViStatus CalAdjustDownconverterGain(ViSession vi, ViConstString channelList, ViReal64 frequency, ViReal64 gain) = 0;
-  virtual ViStatus CalAdjustIFAttenuationCalibration(ViSession vi, ViConstString channelList, ViInt32 ifFilter, ViInt32 numberOfAttenuators, ViReal64 attenuatorSettings[], ViReal64 measurement) = 0;
-  virtual ViStatus CalAdjustIFResponseCalibration(ViSession vi, ViConstString channelList, ViInt32 ifFilter, ViReal64 rfFrequency, ViReal64 bandWidth, ViInt32 numberOfMeasurements, ViReal64 measurements[]) = 0;
-  virtual ViStatus CalSetTemperature(ViSession vi, ViConstString channelList, ViReal64 temperature) = 0;
   virtual ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword) = 0;
   virtual ViStatus CheckAcquisitionStatus(ViSession vi, ViBoolean* isDone) = 0;
   virtual ViStatus ClearError(ViSession vi) = 0;
   virtual ViStatus ClearSelfCalibrateRange(ViSession vi) = 0;
   virtual ViStatus Close(ViSession vi) = 0;
-  virtual ViStatus CloseCalibrationStep(ViSession vi) = 0;
-  virtual ViStatus CloseExternalAlignmentStep(ViSession vi) = 0;
   virtual ViStatus Commit(ViSession vi) = 0;
   virtual ViStatus ConfigureAcquisitionType(ViSession vi, ViInt32 acquisitionType) = 0;
   virtual ViStatus ConfigureDeembeddingTableInterpolationLinear(ViSession vi, ViConstString port, ViConstString tableName, ViInt32 format) = 0;
@@ -67,8 +59,6 @@ class NiRFSALibraryInterface {
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024]) = 0;
   virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;
-  virtual ViStatus ExtCalStoreBaselineForSelfCalibration(ViSession vi, ViString password, ViInt64 selfCalibrationStep) = 0;
-  virtual ViStatus ExternalAlignmentAdjustPreselector(ViSession vi, ViInt32 numberOfCoefficients, ViReal64 coefficients[]) = 0;
   virtual ViStatus FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct wfmInfo[]) = 0;
   virtual ViStatus FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct wfmInfo[]) = 0;
   virtual ViStatus FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct wfmInfo[]) = 0;
@@ -91,7 +81,6 @@ class NiRFSALibraryInterface {
   virtual ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months) = 0;
   virtual ViStatus GetFetchBacklog(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64* backlog) = 0;
   virtual ViStatus GetFrequencyResponse(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies) = 0;
-  virtual ViStatus GetGainReferenceCalBaseline(ViSession vi, ViInt32 bufferSize, ViReal64 gainReferenceCalConstants[], ViInt32* numberOfGainReferenceCalConstants) = 0;
   virtual ViStatus GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo_struct coefficientInfo[], ViInt32* numberOfCoefficientSets) = 0;
   virtual ViStatus GetNumberOfSpectralLines(ViSession vi, ViConstString channelList, ViInt32* numberOfSpectralLines) = 0;
   virtual ViStatus GetRelayName(ViSession vi, ViConstString channelList, ViInt32 index, ViChar name[], ViInt32* bufferSize) = 0;

@@ -22,19 +22,11 @@ NiRFSALibrary::NiRFSALibrary() : shared_library_(kLibraryName)
     return;
   }
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niRFSA_Abort"));
-  function_pointers_.CalAdjustCalTonePower = reinterpret_cast<CalAdjustCalTonePowerPtr>(shared_library_.get_function_pointer("niRFSA_CalAdjustCalTonePower"));
-  function_pointers_.CalAdjustDeviceGain = reinterpret_cast<CalAdjustDeviceGainPtr>(shared_library_.get_function_pointer("niRFSA_CalAdjustDeviceGain"));
-  function_pointers_.CalAdjustDownconverterGain = reinterpret_cast<CalAdjustDownconverterGainPtr>(shared_library_.get_function_pointer("niRFSA_CalAdjustDownconverterGain"));
-  function_pointers_.CalAdjustIFAttenuationCalibration = reinterpret_cast<CalAdjustIFAttenuationCalibrationPtr>(shared_library_.get_function_pointer("niRFSA_CalAdjustIFAttenuationCalibration"));
-  function_pointers_.CalAdjustIFResponseCalibration = reinterpret_cast<CalAdjustIFResponseCalibrationPtr>(shared_library_.get_function_pointer("niRFSA_CalAdjustIFResponseCalibration"));
-  function_pointers_.CalSetTemperature = reinterpret_cast<CalSetTemperaturePtr>(shared_library_.get_function_pointer("niRFSA_CalSetTemperature"));
   function_pointers_.ChangeExtCalPassword = reinterpret_cast<ChangeExtCalPasswordPtr>(shared_library_.get_function_pointer("niRFSA_ChangeExtCalPassword"));
   function_pointers_.CheckAcquisitionStatus = reinterpret_cast<CheckAcquisitionStatusPtr>(shared_library_.get_function_pointer("niRFSA_CheckAcquisitionStatus"));
   function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niRFSA_ClearError"));
   function_pointers_.ClearSelfCalibrateRange = reinterpret_cast<ClearSelfCalibrateRangePtr>(shared_library_.get_function_pointer("niRFSA_ClearSelfCalibrateRange"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niRFSA_close"));
-  function_pointers_.CloseCalibrationStep = reinterpret_cast<CloseCalibrationStepPtr>(shared_library_.get_function_pointer("niRFSA_CloseCalibrationStep"));
-  function_pointers_.CloseExternalAlignmentStep = reinterpret_cast<CloseExternalAlignmentStepPtr>(shared_library_.get_function_pointer("niRFSA_CloseExternalAlignmentStep"));
   function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niRFSA_Commit"));
   function_pointers_.ConfigureAcquisitionType = reinterpret_cast<ConfigureAcquisitionTypePtr>(shared_library_.get_function_pointer("niRFSA_ConfigureAcquisitionType"));
   function_pointers_.ConfigureDeembeddingTableInterpolationLinear = reinterpret_cast<ConfigureDeembeddingTableInterpolationLinearPtr>(shared_library_.get_function_pointer("niRFSA_ConfigureDeembeddingTableInterpolationLinear"));
@@ -72,8 +64,6 @@ NiRFSALibrary::NiRFSALibrary() : shared_library_(kLibraryName)
   function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niRFSA_error_message"));
   function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_.get_function_pointer("niRFSA_error_query"));
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niRFSA_ExportSignal"));
-  function_pointers_.ExtCalStoreBaselineForSelfCalibration = reinterpret_cast<ExtCalStoreBaselineForSelfCalibrationPtr>(shared_library_.get_function_pointer("niRFSA_ExtCalStoreBaselineForSelfCalibration"));
-  function_pointers_.ExternalAlignmentAdjustPreselector = reinterpret_cast<ExternalAlignmentAdjustPreselectorPtr>(shared_library_.get_function_pointer("niRFSA_ExternalAlignmentAdjustPreselector"));
   function_pointers_.FetchIQMultiRecordComplexF32 = reinterpret_cast<FetchIQMultiRecordComplexF32Ptr>(shared_library_.get_function_pointer("niRFSA_FetchIQMultiRecordComplexF32"));
   function_pointers_.FetchIQMultiRecordComplexF64 = reinterpret_cast<FetchIQMultiRecordComplexF64Ptr>(shared_library_.get_function_pointer("niRFSA_FetchIQMultiRecordComplexF64"));
   function_pointers_.FetchIQMultiRecordComplexI16 = reinterpret_cast<FetchIQMultiRecordComplexI16Ptr>(shared_library_.get_function_pointer("niRFSA_FetchIQMultiRecordComplexI16"));
@@ -96,7 +86,6 @@ NiRFSALibrary::NiRFSALibrary() : shared_library_(kLibraryName)
   function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_.get_function_pointer("niRFSA_GetExtCalRecommendedInterval"));
   function_pointers_.GetFetchBacklog = reinterpret_cast<GetFetchBacklogPtr>(shared_library_.get_function_pointer("niRFSA_GetFetchBacklog"));
   function_pointers_.GetFrequencyResponse = reinterpret_cast<GetFrequencyResponsePtr>(shared_library_.get_function_pointer("niRFSA_GetFrequencyResponse"));
-  function_pointers_.GetGainReferenceCalBaseline = reinterpret_cast<GetGainReferenceCalBaselinePtr>(shared_library_.get_function_pointer("niRFSA_GetGainReferenceCalBaseline"));
   function_pointers_.GetNormalizationCoefficients = reinterpret_cast<GetNormalizationCoefficientsPtr>(shared_library_.get_function_pointer("niRFSA_GetNormalizationCoefficients"));
   function_pointers_.GetNumberOfSpectralLines = reinterpret_cast<GetNumberOfSpectralLinesPtr>(shared_library_.get_function_pointer("niRFSA_GetNumberOfSpectralLines"));
   function_pointers_.GetRelayName = reinterpret_cast<GetRelayNamePtr>(shared_library_.get_function_pointer("niRFSA_GetRelayName"));
@@ -165,78 +154,6 @@ ViStatus NiRFSALibrary::Abort(ViSession vi)
 #endif
 }
 
-ViStatus NiRFSALibrary::CalAdjustCalTonePower(ViSession vi, ViConstString channelList, ViReal64 measurement)
-{
-  if (!function_pointers_.CalAdjustCalTonePower) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CalAdjustCalTonePower.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_CalAdjustCalTonePower(vi, channelList, measurement);
-#else
-  return function_pointers_.CalAdjustCalTonePower(vi, channelList, measurement);
-#endif
-}
-
-ViStatus NiRFSALibrary::CalAdjustDeviceGain(ViSession vi, ViConstString channelList, ViReal64 frequency, ViReal64 gain)
-{
-  if (!function_pointers_.CalAdjustDeviceGain) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CalAdjustDeviceGain.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_CalAdjustDeviceGain(vi, channelList, frequency, gain);
-#else
-  return function_pointers_.CalAdjustDeviceGain(vi, channelList, frequency, gain);
-#endif
-}
-
-ViStatus NiRFSALibrary::CalAdjustDownconverterGain(ViSession vi, ViConstString channelList, ViReal64 frequency, ViReal64 gain)
-{
-  if (!function_pointers_.CalAdjustDownconverterGain) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CalAdjustDownconverterGain.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_CalAdjustDownconverterGain(vi, channelList, frequency, gain);
-#else
-  return function_pointers_.CalAdjustDownconverterGain(vi, channelList, frequency, gain);
-#endif
-}
-
-ViStatus NiRFSALibrary::CalAdjustIFAttenuationCalibration(ViSession vi, ViConstString channelList, ViInt32 ifFilter, ViInt32 numberOfAttenuators, ViReal64 attenuatorSettings[], ViReal64 measurement)
-{
-  if (!function_pointers_.CalAdjustIFAttenuationCalibration) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CalAdjustIFAttenuationCalibration.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_CalAdjustIFAttenuationCalibration(vi, channelList, ifFilter, numberOfAttenuators, attenuatorSettings, measurement);
-#else
-  return function_pointers_.CalAdjustIFAttenuationCalibration(vi, channelList, ifFilter, numberOfAttenuators, attenuatorSettings, measurement);
-#endif
-}
-
-ViStatus NiRFSALibrary::CalAdjustIFResponseCalibration(ViSession vi, ViConstString channelList, ViInt32 ifFilter, ViReal64 rfFrequency, ViReal64 bandWidth, ViInt32 numberOfMeasurements, ViReal64 measurements[])
-{
-  if (!function_pointers_.CalAdjustIFResponseCalibration) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CalAdjustIFResponseCalibration.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_CalAdjustIFResponseCalibration(vi, channelList, ifFilter, rfFrequency, bandWidth, numberOfMeasurements, measurements);
-#else
-  return function_pointers_.CalAdjustIFResponseCalibration(vi, channelList, ifFilter, rfFrequency, bandWidth, numberOfMeasurements, measurements);
-#endif
-}
-
-ViStatus NiRFSALibrary::CalSetTemperature(ViSession vi, ViConstString channelList, ViReal64 temperature)
-{
-  if (!function_pointers_.CalSetTemperature) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CalSetTemperature.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_CalSetTemperature(vi, channelList, temperature);
-#else
-  return function_pointers_.CalSetTemperature(vi, channelList, temperature);
-#endif
-}
-
 ViStatus NiRFSALibrary::ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword)
 {
   if (!function_pointers_.ChangeExtCalPassword) {
@@ -294,30 +211,6 @@ ViStatus NiRFSALibrary::Close(ViSession vi)
   return niRFSA_close(vi);
 #else
   return function_pointers_.Close(vi);
-#endif
-}
-
-ViStatus NiRFSALibrary::CloseCalibrationStep(ViSession vi)
-{
-  if (!function_pointers_.CloseCalibrationStep) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CloseCalibrationStep.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_CloseCalibrationStep(vi);
-#else
-  return function_pointers_.CloseCalibrationStep(vi);
-#endif
-}
-
-ViStatus NiRFSALibrary::CloseExternalAlignmentStep(ViSession vi)
-{
-  if (!function_pointers_.CloseExternalAlignmentStep) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_CloseExternalAlignmentStep.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_CloseExternalAlignmentStep(vi);
-#else
-  return function_pointers_.CloseExternalAlignmentStep(vi);
 #endif
 }
 
@@ -765,30 +658,6 @@ ViStatus NiRFSALibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString
 #endif
 }
 
-ViStatus NiRFSALibrary::ExtCalStoreBaselineForSelfCalibration(ViSession vi, ViString password, ViInt64 selfCalibrationStep)
-{
-  if (!function_pointers_.ExtCalStoreBaselineForSelfCalibration) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ExtCalStoreBaselineForSelfCalibration.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_ExtCalStoreBaselineForSelfCalibration(vi, password, selfCalibrationStep);
-#else
-  return function_pointers_.ExtCalStoreBaselineForSelfCalibration(vi, password, selfCalibrationStep);
-#endif
-}
-
-ViStatus NiRFSALibrary::ExternalAlignmentAdjustPreselector(ViSession vi, ViInt32 numberOfCoefficients, ViReal64 coefficients[])
-{
-  if (!function_pointers_.ExternalAlignmentAdjustPreselector) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ExternalAlignmentAdjustPreselector.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_ExternalAlignmentAdjustPreselector(vi, numberOfCoefficients, coefficients);
-#else
-  return function_pointers_.ExternalAlignmentAdjustPreselector(vi, numberOfCoefficients, coefficients);
-#endif
-}
-
 ViStatus NiRFSALibrary::FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
 {
   if (!function_pointers_.FetchIQMultiRecordComplexF32) {
@@ -1050,18 +919,6 @@ ViStatus NiRFSALibrary::GetFrequencyResponse(ViSession vi, ViConstString channel
   return niRFSA_GetFrequencyResponse(vi, channelList, bufferSize, frequencies, magnitudeResponse, phaseResponse, numberOfFrequencies);
 #else
   return function_pointers_.GetFrequencyResponse(vi, channelList, bufferSize, frequencies, magnitudeResponse, phaseResponse, numberOfFrequencies);
-#endif
-}
-
-ViStatus NiRFSALibrary::GetGainReferenceCalBaseline(ViSession vi, ViInt32 bufferSize, ViReal64 gainReferenceCalConstants[], ViInt32* numberOfGainReferenceCalConstants)
-{
-  if (!function_pointers_.GetGainReferenceCalBaseline) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_GetGainReferenceCalBaseline.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_GetGainReferenceCalBaseline(vi, bufferSize, gainReferenceCalConstants, numberOfGainReferenceCalConstants);
-#else
-  return function_pointers_.GetGainReferenceCalBaseline(vi, bufferSize, gainReferenceCalConstants, numberOfGainReferenceCalConstants);
 #endif
 }
 
