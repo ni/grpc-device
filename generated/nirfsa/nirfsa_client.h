@@ -23,19 +23,11 @@ using namespace nidevice_grpc::experimental::client;
 
 
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& vi);
-CalAdjustCalTonePowerResponse cal_adjust_cal_tone_power(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& measurement);
-CalAdjustDeviceGainResponse cal_adjust_device_gain(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& frequency, const double& gain);
-CalAdjustDownconverterGainResponse cal_adjust_downconverter_gain(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& frequency, const double& gain);
-CalAdjustIFAttenuationCalibrationResponse cal_adjust_if_attenuation_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<IfFilter, pb::int32>& if_filter, const std::vector<double>& attenuator_settings, const double& measurement);
-CalAdjustIFResponseCalibrationResponse cal_adjust_if_response_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<IfFilter, pb::int32>& if_filter, const double& rf_frequency, const double& band_width, const std::vector<double>& measurements);
-CalSetTemperatureResponse cal_set_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& temperature);
 ChangeExtCalPasswordResponse change_ext_cal_password(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& old_password, const pb::string& new_password);
 CheckAcquisitionStatusResponse check_acquisition_status(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ClearErrorResponse clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ClearSelfCalibrateRangeResponse clear_self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
-CloseCalibrationStepResponse close_calibration_step(const StubPtr& stub, const nidevice_grpc::Session& vi);
-CloseExternalAlignmentStepResponse close_external_alignment_step(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ConfigureAcquisitionTypeResponse configure_acquisition_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<AcquisitionType, pb::int32>& acquisition_type);
 ConfigureDeembeddingTableInterpolationLinearResponse configure_deembedding_table_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& port, const pb::string& table_name, const simple_variant<LinearInterpolationFormat, pb::int32>& format);
@@ -73,8 +65,6 @@ EnableSessionAccessResponse enable_session_access(const StubPtr& stub, const nid
 ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& status_code);
 ErrorQueryResponse error_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const simple_variant<ExportTerminal, std::string>& output_terminal);
-ExtCalStoreBaselineForSelfCalibrationResponse ext_cal_store_baseline_for_self_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& password, const pb::int64& self_calibration_step);
-ExternalAlignmentAdjustPreselectorResponse external_alignment_adjust_preselector(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& coefficients);
 FetchIQMultiRecordComplexF32Response fetch_iq_multi_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout);
 FetchIQMultiRecordComplexF64Response fetch_iq_multi_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout);
 FetchIQMultiRecordComplexI16Response fetch_iq_multi_record_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout);
@@ -97,7 +87,6 @@ GetExtCalLastTempResponse get_ext_cal_last_temp(const StubPtr& stub, const nidev
 GetExtCalRecommendedIntervalResponse get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetFetchBacklogResponse get_fetch_backlog(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& record_number);
 GetFrequencyResponseResponse get_frequency_response(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
-GetGainReferenceCalBaselineResponse get_gain_reference_cal_baseline(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetNormalizationCoefficientsResponse get_normalization_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
 GetNumberOfSpectralLinesResponse get_number_of_spectral_lines(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
 GetRelayNameResponse get_relay_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int32& index);
@@ -110,7 +99,6 @@ GetStreamEndpointHandleResponse get_stream_endpoint_handle(const StubPtr& stub, 
 GetTerminalNameResponse get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const pb::int32& buffer_size);
 GetUserDataResponse get_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& identifier);
 InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset);
-InitExtCalResponse init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password, const pb::string& option_string);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset, const pb::string& option_string);
 InitializeExternalAlignmentResponse initialize_external_alignment(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string);
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);

@@ -34,19 +34,11 @@ public:
   virtual ~NiRFSAService();
   
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
-  ::grpc::Status CalAdjustCalTonePower(::grpc::ServerContext* context, const CalAdjustCalTonePowerRequest* request, CalAdjustCalTonePowerResponse* response) override;
-  ::grpc::Status CalAdjustDeviceGain(::grpc::ServerContext* context, const CalAdjustDeviceGainRequest* request, CalAdjustDeviceGainResponse* response) override;
-  ::grpc::Status CalAdjustDownconverterGain(::grpc::ServerContext* context, const CalAdjustDownconverterGainRequest* request, CalAdjustDownconverterGainResponse* response) override;
-  ::grpc::Status CalAdjustIFAttenuationCalibration(::grpc::ServerContext* context, const CalAdjustIFAttenuationCalibrationRequest* request, CalAdjustIFAttenuationCalibrationResponse* response) override;
-  ::grpc::Status CalAdjustIFResponseCalibration(::grpc::ServerContext* context, const CalAdjustIFResponseCalibrationRequest* request, CalAdjustIFResponseCalibrationResponse* response) override;
-  ::grpc::Status CalSetTemperature(::grpc::ServerContext* context, const CalSetTemperatureRequest* request, CalSetTemperatureResponse* response) override;
   ::grpc::Status ChangeExtCalPassword(::grpc::ServerContext* context, const ChangeExtCalPasswordRequest* request, ChangeExtCalPasswordResponse* response) override;
   ::grpc::Status CheckAcquisitionStatus(::grpc::ServerContext* context, const CheckAcquisitionStatusRequest* request, CheckAcquisitionStatusResponse* response) override;
   ::grpc::Status ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response) override;
   ::grpc::Status ClearSelfCalibrateRange(::grpc::ServerContext* context, const ClearSelfCalibrateRangeRequest* request, ClearSelfCalibrateRangeResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
-  ::grpc::Status CloseCalibrationStep(::grpc::ServerContext* context, const CloseCalibrationStepRequest* request, CloseCalibrationStepResponse* response) override;
-  ::grpc::Status CloseExternalAlignmentStep(::grpc::ServerContext* context, const CloseExternalAlignmentStepRequest* request, CloseExternalAlignmentStepResponse* response) override;
   ::grpc::Status Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response) override;
   ::grpc::Status ConfigureAcquisitionType(::grpc::ServerContext* context, const ConfigureAcquisitionTypeRequest* request, ConfigureAcquisitionTypeResponse* response) override;
   ::grpc::Status ConfigureDeembeddingTableInterpolationLinear(::grpc::ServerContext* context, const ConfigureDeembeddingTableInterpolationLinearRequest* request, ConfigureDeembeddingTableInterpolationLinearResponse* response) override;
@@ -84,8 +76,6 @@ public:
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
   ::grpc::Status ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response) override;
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
-  ::grpc::Status ExtCalStoreBaselineForSelfCalibration(::grpc::ServerContext* context, const ExtCalStoreBaselineForSelfCalibrationRequest* request, ExtCalStoreBaselineForSelfCalibrationResponse* response) override;
-  ::grpc::Status ExternalAlignmentAdjustPreselector(::grpc::ServerContext* context, const ExternalAlignmentAdjustPreselectorRequest* request, ExternalAlignmentAdjustPreselectorResponse* response) override;
   ::grpc::Status FetchIQMultiRecordComplexF32(::grpc::ServerContext* context, const FetchIQMultiRecordComplexF32Request* request, FetchIQMultiRecordComplexF32Response* response) override;
   ::grpc::Status FetchIQMultiRecordComplexF64(::grpc::ServerContext* context, const FetchIQMultiRecordComplexF64Request* request, FetchIQMultiRecordComplexF64Response* response) override;
   ::grpc::Status FetchIQMultiRecordComplexI16(::grpc::ServerContext* context, const FetchIQMultiRecordComplexI16Request* request, FetchIQMultiRecordComplexI16Response* response) override;
@@ -108,7 +98,6 @@ public:
   ::grpc::Status GetExtCalRecommendedInterval(::grpc::ServerContext* context, const GetExtCalRecommendedIntervalRequest* request, GetExtCalRecommendedIntervalResponse* response) override;
   ::grpc::Status GetFetchBacklog(::grpc::ServerContext* context, const GetFetchBacklogRequest* request, GetFetchBacklogResponse* response) override;
   ::grpc::Status GetFrequencyResponse(::grpc::ServerContext* context, const GetFrequencyResponseRequest* request, GetFrequencyResponseResponse* response) override;
-  ::grpc::Status GetGainReferenceCalBaseline(::grpc::ServerContext* context, const GetGainReferenceCalBaselineRequest* request, GetGainReferenceCalBaselineResponse* response) override;
   ::grpc::Status GetNormalizationCoefficients(::grpc::ServerContext* context, const GetNormalizationCoefficientsRequest* request, GetNormalizationCoefficientsResponse* response) override;
   ::grpc::Status GetNumberOfSpectralLines(::grpc::ServerContext* context, const GetNumberOfSpectralLinesRequest* request, GetNumberOfSpectralLinesResponse* response) override;
   ::grpc::Status GetRelayName(::grpc::ServerContext* context, const GetRelayNameRequest* request, GetRelayNameResponse* response) override;
@@ -121,7 +110,6 @@ public:
   ::grpc::Status GetTerminalName(::grpc::ServerContext* context, const GetTerminalNameRequest* request, GetTerminalNameResponse* response) override;
   ::grpc::Status GetUserData(::grpc::ServerContext* context, const GetUserDataRequest* request, GetUserDataResponse* response) override;
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
-  ::grpc::Status InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response) override;
   ::grpc::Status InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response) override;
   ::grpc::Status InitializeExternalAlignment(::grpc::ServerContext* context, const InitializeExternalAlignmentRequest* request, InitializeExternalAlignmentResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;

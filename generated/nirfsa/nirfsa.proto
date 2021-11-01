@@ -18,19 +18,11 @@ import "session.proto";
 
 service NiRFSA {
   rpc Abort(AbortRequest) returns (AbortResponse);
-  rpc CalAdjustCalTonePower(CalAdjustCalTonePowerRequest) returns (CalAdjustCalTonePowerResponse);
-  rpc CalAdjustDeviceGain(CalAdjustDeviceGainRequest) returns (CalAdjustDeviceGainResponse);
-  rpc CalAdjustDownconverterGain(CalAdjustDownconverterGainRequest) returns (CalAdjustDownconverterGainResponse);
-  rpc CalAdjustIFAttenuationCalibration(CalAdjustIFAttenuationCalibrationRequest) returns (CalAdjustIFAttenuationCalibrationResponse);
-  rpc CalAdjustIFResponseCalibration(CalAdjustIFResponseCalibrationRequest) returns (CalAdjustIFResponseCalibrationResponse);
-  rpc CalSetTemperature(CalSetTemperatureRequest) returns (CalSetTemperatureResponse);
   rpc ChangeExtCalPassword(ChangeExtCalPasswordRequest) returns (ChangeExtCalPasswordResponse);
   rpc CheckAcquisitionStatus(CheckAcquisitionStatusRequest) returns (CheckAcquisitionStatusResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearSelfCalibrateRange(ClearSelfCalibrateRangeRequest) returns (ClearSelfCalibrateRangeResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
-  rpc CloseCalibrationStep(CloseCalibrationStepRequest) returns (CloseCalibrationStepResponse);
-  rpc CloseExternalAlignmentStep(CloseExternalAlignmentStepRequest) returns (CloseExternalAlignmentStepResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
   rpc ConfigureAcquisitionType(ConfigureAcquisitionTypeRequest) returns (ConfigureAcquisitionTypeResponse);
   rpc ConfigureDeembeddingTableInterpolationLinear(ConfigureDeembeddingTableInterpolationLinearRequest) returns (ConfigureDeembeddingTableInterpolationLinearResponse);
@@ -68,8 +60,6 @@ service NiRFSA {
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
-  rpc ExtCalStoreBaselineForSelfCalibration(ExtCalStoreBaselineForSelfCalibrationRequest) returns (ExtCalStoreBaselineForSelfCalibrationResponse);
-  rpc ExternalAlignmentAdjustPreselector(ExternalAlignmentAdjustPreselectorRequest) returns (ExternalAlignmentAdjustPreselectorResponse);
   rpc FetchIQMultiRecordComplexF32(FetchIQMultiRecordComplexF32Request) returns (FetchIQMultiRecordComplexF32Response);
   rpc FetchIQMultiRecordComplexF64(FetchIQMultiRecordComplexF64Request) returns (FetchIQMultiRecordComplexF64Response);
   rpc FetchIQMultiRecordComplexI16(FetchIQMultiRecordComplexI16Request) returns (FetchIQMultiRecordComplexI16Response);
@@ -92,7 +82,6 @@ service NiRFSA {
   rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
   rpc GetFetchBacklog(GetFetchBacklogRequest) returns (GetFetchBacklogResponse);
   rpc GetFrequencyResponse(GetFrequencyResponseRequest) returns (GetFrequencyResponseResponse);
-  rpc GetGainReferenceCalBaseline(GetGainReferenceCalBaselineRequest) returns (GetGainReferenceCalBaselineResponse);
   rpc GetNormalizationCoefficients(GetNormalizationCoefficientsRequest) returns (GetNormalizationCoefficientsResponse);
   rpc GetNumberOfSpectralLines(GetNumberOfSpectralLinesRequest) returns (GetNumberOfSpectralLinesResponse);
   rpc GetRelayName(GetRelayNameRequest) returns (GetRelayNameResponse);
@@ -105,7 +94,6 @@ service NiRFSA {
   rpc GetTerminalName(GetTerminalNameRequest) returns (GetTerminalNameResponse);
   rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
   rpc Init(InitRequest) returns (InitResponse);
-  rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitializeExternalAlignment(InitializeExternalAlignmentRequest) returns (InitializeExternalAlignmentResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
@@ -462,14 +450,6 @@ enum ExportTerminal {
   EXPORT_TERMINAL_CLK_OUT = 16;
 }
 
-enum IfFilter {
-  IF_FILTER_UNSPECIFIED = 0;
-  IF_FILTER_187_5_MHZ_WIDE = 1400;
-  IF_FILTER_187_5_MHZ_NARROW = 1401;
-  IF_FILTER_53_MHZ = 1402;
-  IF_FILTER_BYPASS = 1403;
-}
-
 enum LinearInterpolationFormat {
   LINEAR_INTERPOLATION_FORMAT_UNSPECIFIED = 0;
   LINEAR_INTERPOLATION_FORMAT_REAL_AND_IMAGINARY = 4000;
@@ -790,79 +770,6 @@ message AbortResponse {
   int32 status = 1;
 }
 
-message CalAdjustCalTonePowerRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_list = 2;
-  double measurement = 3;
-}
-
-message CalAdjustCalTonePowerResponse {
-  int32 status = 1;
-}
-
-message CalAdjustDeviceGainRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_list = 2;
-  double frequency = 3;
-  double gain = 4;
-}
-
-message CalAdjustDeviceGainResponse {
-  int32 status = 1;
-}
-
-message CalAdjustDownconverterGainRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_list = 2;
-  double frequency = 3;
-  double gain = 4;
-}
-
-message CalAdjustDownconverterGainResponse {
-  int32 status = 1;
-}
-
-message CalAdjustIFAttenuationCalibrationRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_list = 2;
-  oneof if_filter_enum {
-    IfFilter if_filter = 3;
-    sint32 if_filter_raw = 4;
-  }
-  repeated double attenuator_settings = 5;
-  double measurement = 6;
-}
-
-message CalAdjustIFAttenuationCalibrationResponse {
-  int32 status = 1;
-}
-
-message CalAdjustIFResponseCalibrationRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_list = 2;
-  oneof if_filter_enum {
-    IfFilter if_filter = 3;
-    sint32 if_filter_raw = 4;
-  }
-  double rf_frequency = 5;
-  double band_width = 6;
-  repeated double measurements = 7;
-}
-
-message CalAdjustIFResponseCalibrationResponse {
-  int32 status = 1;
-}
-
-message CalSetTemperatureRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_list = 2;
-  double temperature = 3;
-}
-
-message CalSetTemperatureResponse {
-  int32 status = 1;
-}
-
 message ChangeExtCalPasswordRequest {
   nidevice_grpc.Session vi = 1;
   string old_password = 2;
@@ -903,22 +810,6 @@ message CloseRequest {
 }
 
 message CloseResponse {
-  int32 status = 1;
-}
-
-message CloseCalibrationStepRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message CloseCalibrationStepResponse {
-  int32 status = 1;
-}
-
-message CloseExternalAlignmentStepRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message CloseExternalAlignmentStepResponse {
   int32 status = 1;
 }
 
@@ -1331,25 +1222,6 @@ message ExportSignalResponse {
   int32 status = 1;
 }
 
-message ExtCalStoreBaselineForSelfCalibrationRequest {
-  nidevice_grpc.Session vi = 1;
-  string password = 2;
-  int64 self_calibration_step = 3;
-}
-
-message ExtCalStoreBaselineForSelfCalibrationResponse {
-  int32 status = 1;
-}
-
-message ExternalAlignmentAdjustPreselectorRequest {
-  nidevice_grpc.Session vi = 1;
-  repeated double coefficients = 2;
-}
-
-message ExternalAlignmentAdjustPreselectorResponse {
-  int32 status = 1;
-}
-
 message FetchIQMultiRecordComplexF32Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
@@ -1614,16 +1486,6 @@ message GetFrequencyResponseResponse {
   sint32 number_of_frequencies = 5;
 }
 
-message GetGainReferenceCalBaselineRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetGainReferenceCalBaselineResponse {
-  int32 status = 1;
-  repeated double gain_reference_cal_constants = 2;
-  sint32 number_of_gain_reference_cal_constants = 3;
-}
-
 message GetNormalizationCoefficientsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
@@ -1756,17 +1618,6 @@ message InitRequest {
 }
 
 message InitResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
-}
-
-message InitExtCalRequest {
-  string resource_name = 1;
-  string password = 2;
-  string option_string = 3;
-}
-
-message InitExtCalResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
 }

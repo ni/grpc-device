@@ -55,171 +55,6 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::CalAdjustCalTonePower(::grpc::ServerContext* context, const CalAdjustCalTonePowerRequest* request, CalAdjustCalTonePowerResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto channel_list = request->channel_list().c_str();
-      ViReal64 measurement = request->measurement();
-      auto status = library_->CalAdjustCalTonePower(vi, channel_list, measurement);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::CalAdjustDeviceGain(::grpc::ServerContext* context, const CalAdjustDeviceGainRequest* request, CalAdjustDeviceGainResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto channel_list = request->channel_list().c_str();
-      ViReal64 frequency = request->frequency();
-      ViReal64 gain = request->gain();
-      auto status = library_->CalAdjustDeviceGain(vi, channel_list, frequency, gain);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::CalAdjustDownconverterGain(::grpc::ServerContext* context, const CalAdjustDownconverterGainRequest* request, CalAdjustDownconverterGainResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto channel_list = request->channel_list().c_str();
-      ViReal64 frequency = request->frequency();
-      ViReal64 gain = request->gain();
-      auto status = library_->CalAdjustDownconverterGain(vi, channel_list, frequency, gain);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::CalAdjustIFAttenuationCalibration(::grpc::ServerContext* context, const CalAdjustIFAttenuationCalibrationRequest* request, CalAdjustIFAttenuationCalibrationResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto channel_list = request->channel_list().c_str();
-      ViInt32 if_filter;
-      switch (request->if_filter_enum_case()) {
-        case nirfsa_grpc::CalAdjustIFAttenuationCalibrationRequest::IfFilterEnumCase::kIfFilter: {
-          if_filter = static_cast<ViInt32>(request->if_filter());
-          break;
-        }
-        case nirfsa_grpc::CalAdjustIFAttenuationCalibrationRequest::IfFilterEnumCase::kIfFilterRaw: {
-          if_filter = static_cast<ViInt32>(request->if_filter_raw());
-          break;
-        }
-        case nirfsa_grpc::CalAdjustIFAttenuationCalibrationRequest::IfFilterEnumCase::IF_FILTER_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for if_filter was not specified or out of range");
-          break;
-        }
-      }
-
-      ViInt32 number_of_attenuators = static_cast<ViInt32>(request->attenuator_settings().size());
-      auto attenuator_settings = const_cast<ViReal64*>(request->attenuator_settings().data());
-      ViReal64 measurement = request->measurement();
-      auto status = library_->CalAdjustIFAttenuationCalibration(vi, channel_list, if_filter, number_of_attenuators, attenuator_settings, measurement);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::CalAdjustIFResponseCalibration(::grpc::ServerContext* context, const CalAdjustIFResponseCalibrationRequest* request, CalAdjustIFResponseCalibrationResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto channel_list = request->channel_list().c_str();
-      ViInt32 if_filter;
-      switch (request->if_filter_enum_case()) {
-        case nirfsa_grpc::CalAdjustIFResponseCalibrationRequest::IfFilterEnumCase::kIfFilter: {
-          if_filter = static_cast<ViInt32>(request->if_filter());
-          break;
-        }
-        case nirfsa_grpc::CalAdjustIFResponseCalibrationRequest::IfFilterEnumCase::kIfFilterRaw: {
-          if_filter = static_cast<ViInt32>(request->if_filter_raw());
-          break;
-        }
-        case nirfsa_grpc::CalAdjustIFResponseCalibrationRequest::IfFilterEnumCase::IF_FILTER_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for if_filter was not specified or out of range");
-          break;
-        }
-      }
-
-      ViReal64 rf_frequency = request->rf_frequency();
-      ViReal64 band_width = request->band_width();
-      ViInt32 number_of_measurements = static_cast<ViInt32>(request->measurements().size());
-      auto measurements = const_cast<ViReal64*>(request->measurements().data());
-      auto status = library_->CalAdjustIFResponseCalibration(vi, channel_list, if_filter, rf_frequency, band_width, number_of_measurements, measurements);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::CalSetTemperature(::grpc::ServerContext* context, const CalSetTemperatureRequest* request, CalSetTemperatureResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto channel_list = request->channel_list().c_str();
-      ViReal64 temperature = request->temperature();
-      auto status = library_->CalSetTemperature(vi, channel_list, temperature);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::ChangeExtCalPassword(::grpc::ServerContext* context, const ChangeExtCalPasswordRequest* request, ChangeExtCalPasswordResponse* response)
   {
     if (context->IsCancelled()) {
@@ -312,44 +147,6 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi);
       auto status = library_->Close(vi);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::CloseCalibrationStep(::grpc::ServerContext* context, const CloseCalibrationStepRequest* request, CloseCalibrationStepResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto status = library_->CloseCalibrationStep(vi);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::CloseExternalAlignmentStep(::grpc::ServerContext* context, const CloseExternalAlignmentStepRequest* request, CloseExternalAlignmentStepResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto status = library_->CloseExternalAlignmentStep(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1392,48 +1189,6 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::ExtCalStoreBaselineForSelfCalibration(::grpc::ServerContext* context, const ExtCalStoreBaselineForSelfCalibrationRequest* request, ExtCalStoreBaselineForSelfCalibrationResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViString password = (ViString)request->password().c_str();
-      ViInt64 self_calibration_step = request->self_calibration_step();
-      auto status = library_->ExtCalStoreBaselineForSelfCalibration(vi, password, self_calibration_step);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::ExternalAlignmentAdjustPreselector(::grpc::ServerContext* context, const ExternalAlignmentAdjustPreselectorRequest* request, ExternalAlignmentAdjustPreselectorResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 number_of_coefficients = static_cast<ViInt32>(request->coefficients().size());
-      auto coefficients = const_cast<ViReal64*>(request->coefficients().data());
-      auto status = library_->ExternalAlignmentAdjustPreselector(vi, number_of_coefficients, coefficients);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::FetchIQMultiRecordComplexF32(::grpc::ServerContext* context, const FetchIQMultiRecordComplexF32Request* request, FetchIQMultiRecordComplexF32Response* response)
   {
     if (context->IsCancelled()) {
@@ -2124,44 +1879,6 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::GetGainReferenceCalBaseline(::grpc::ServerContext* context, const GetGainReferenceCalBaselineRequest* request, GetGainReferenceCalBaselineResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 number_of_gain_reference_cal_constants {};
-      while (true) {
-        auto status = library_->GetGainReferenceCalBaseline(vi, 0, nullptr, &number_of_gain_reference_cal_constants);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_gain_reference_cal_constants()->Resize(number_of_gain_reference_cal_constants, 0);
-        ViReal64* gain_reference_cal_constants = response->mutable_gain_reference_cal_constants()->mutable_data();
-        auto buffer_size = number_of_gain_reference_cal_constants;
-        status = library_->GetGainReferenceCalBaseline(vi, buffer_size, gain_reference_cal_constants, &number_of_gain_reference_cal_constants);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status == 0) {
-          response->mutable_gain_reference_cal_constants()->Resize(number_of_gain_reference_cal_constants, 0);
-          response->set_number_of_gain_reference_cal_constants(number_of_gain_reference_cal_constants);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::GetNormalizationCoefficients(::grpc::ServerContext* context, const GetNormalizationCoefficientsRequest* request, GetNormalizationCoefficientsResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2564,31 +2281,6 @@ namespace nirfsa_grpc {
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_vi()->set_id(session_id);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      auto password = request->password().c_str();
-      auto option_string = request->option_string().c_str();
-      ViSession vi {};
-      auto status = library_->InitExtCal(resource_name, password, option_string, &vi);
-      response->set_status(status);
-      if (status == 0) {
-        auto session_id = session_repository_->resolve_session_id(vi);
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;

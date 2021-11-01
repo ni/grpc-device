@@ -19,19 +19,11 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
 
   ::grpc::Status check_function_exists(std::string functionName);
   ViStatus Abort(ViSession vi);
-  ViStatus CalAdjustCalTonePower(ViSession vi, ViConstString channelList, ViReal64 measurement);
-  ViStatus CalAdjustDeviceGain(ViSession vi, ViConstString channelList, ViReal64 frequency, ViReal64 gain);
-  ViStatus CalAdjustDownconverterGain(ViSession vi, ViConstString channelList, ViReal64 frequency, ViReal64 gain);
-  ViStatus CalAdjustIFAttenuationCalibration(ViSession vi, ViConstString channelList, ViInt32 ifFilter, ViInt32 numberOfAttenuators, ViReal64 attenuatorSettings[], ViReal64 measurement);
-  ViStatus CalAdjustIFResponseCalibration(ViSession vi, ViConstString channelList, ViInt32 ifFilter, ViReal64 rfFrequency, ViReal64 bandWidth, ViInt32 numberOfMeasurements, ViReal64 measurements[]);
-  ViStatus CalSetTemperature(ViSession vi, ViConstString channelList, ViReal64 temperature);
   ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword);
   ViStatus CheckAcquisitionStatus(ViSession vi, ViBoolean* isDone);
   ViStatus ClearError(ViSession vi);
   ViStatus ClearSelfCalibrateRange(ViSession vi);
   ViStatus Close(ViSession vi);
-  ViStatus CloseCalibrationStep(ViSession vi);
-  ViStatus CloseExternalAlignmentStep(ViSession vi);
   ViStatus Commit(ViSession vi);
   ViStatus ConfigureAcquisitionType(ViSession vi, ViInt32 acquisitionType);
   ViStatus ConfigureDeembeddingTableInterpolationLinear(ViSession vi, ViConstString port, ViConstString tableName, ViInt32 format);
@@ -69,8 +61,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024]);
   ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]);
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
-  ViStatus ExtCalStoreBaselineForSelfCalibration(ViSession vi, ViString password, ViInt64 selfCalibrationStep);
-  ViStatus ExternalAlignmentAdjustPreselector(ViSession vi, ViInt32 numberOfCoefficients, ViReal64 coefficients[]);
   ViStatus FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct wfmInfo[]);
   ViStatus FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct wfmInfo[]);
   ViStatus FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct wfmInfo[]);
@@ -93,7 +83,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months);
   ViStatus GetFetchBacklog(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64* backlog);
   ViStatus GetFrequencyResponse(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies);
-  ViStatus GetGainReferenceCalBaseline(ViSession vi, ViInt32 bufferSize, ViReal64 gainReferenceCalConstants[], ViInt32* numberOfGainReferenceCalConstants);
   ViStatus GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo_struct coefficientInfo[], ViInt32* numberOfCoefficientSets);
   ViStatus GetNumberOfSpectralLines(ViSession vi, ViConstString channelList, ViInt32* numberOfSpectralLines);
   ViStatus GetRelayName(ViSession vi, ViConstString channelList, ViInt32 index, ViChar name[], ViInt32* bufferSize);
@@ -106,7 +95,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[]);
   ViStatus GetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize);
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi);
-  ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViConstString optionString, ViSession* vi);
   ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViConstString optionString, ViSession* vi);
   ViStatus InitializeExternalAlignment(ViRsrc resourceName, ViConstString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
@@ -140,19 +128,11 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
 
  private:
   using AbortPtr = decltype(&niRFSA_Abort);
-  using CalAdjustCalTonePowerPtr = decltype(&niRFSA_CalAdjustCalTonePower);
-  using CalAdjustDeviceGainPtr = decltype(&niRFSA_CalAdjustDeviceGain);
-  using CalAdjustDownconverterGainPtr = decltype(&niRFSA_CalAdjustDownconverterGain);
-  using CalAdjustIFAttenuationCalibrationPtr = decltype(&niRFSA_CalAdjustIFAttenuationCalibration);
-  using CalAdjustIFResponseCalibrationPtr = decltype(&niRFSA_CalAdjustIFResponseCalibration);
-  using CalSetTemperaturePtr = decltype(&niRFSA_CalSetTemperature);
   using ChangeExtCalPasswordPtr = decltype(&niRFSA_ChangeExtCalPassword);
   using CheckAcquisitionStatusPtr = decltype(&niRFSA_CheckAcquisitionStatus);
   using ClearErrorPtr = decltype(&niRFSA_ClearError);
   using ClearSelfCalibrateRangePtr = decltype(&niRFSA_ClearSelfCalibrateRange);
   using ClosePtr = decltype(&niRFSA_close);
-  using CloseCalibrationStepPtr = decltype(&niRFSA_CloseCalibrationStep);
-  using CloseExternalAlignmentStepPtr = decltype(&niRFSA_CloseExternalAlignmentStep);
   using CommitPtr = decltype(&niRFSA_Commit);
   using ConfigureAcquisitionTypePtr = decltype(&niRFSA_ConfigureAcquisitionType);
   using ConfigureDeembeddingTableInterpolationLinearPtr = decltype(&niRFSA_ConfigureDeembeddingTableInterpolationLinear);
@@ -190,8 +170,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using ErrorMessagePtr = decltype(&niRFSA_error_message);
   using ErrorQueryPtr = decltype(&niRFSA_error_query);
   using ExportSignalPtr = decltype(&niRFSA_ExportSignal);
-  using ExtCalStoreBaselineForSelfCalibrationPtr = decltype(&niRFSA_ExtCalStoreBaselineForSelfCalibration);
-  using ExternalAlignmentAdjustPreselectorPtr = decltype(&niRFSA_ExternalAlignmentAdjustPreselector);
   using FetchIQMultiRecordComplexF32Ptr = decltype(&niRFSA_FetchIQMultiRecordComplexF32);
   using FetchIQMultiRecordComplexF64Ptr = decltype(&niRFSA_FetchIQMultiRecordComplexF64);
   using FetchIQMultiRecordComplexI16Ptr = decltype(&niRFSA_FetchIQMultiRecordComplexI16);
@@ -214,7 +192,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using GetExtCalRecommendedIntervalPtr = decltype(&niRFSA_GetExtCalRecommendedInterval);
   using GetFetchBacklogPtr = decltype(&niRFSA_GetFetchBacklog);
   using GetFrequencyResponsePtr = decltype(&niRFSA_GetFrequencyResponse);
-  using GetGainReferenceCalBaselinePtr = decltype(&niRFSA_GetGainReferenceCalBaseline);
   using GetNormalizationCoefficientsPtr = decltype(&niRFSA_GetNormalizationCoefficients);
   using GetNumberOfSpectralLinesPtr = decltype(&niRFSA_GetNumberOfSpectralLines);
   using GetRelayNamePtr = decltype(&niRFSA_GetRelayName);
@@ -227,7 +204,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using GetTerminalNamePtr = decltype(&niRFSA_GetTerminalName);
   using GetUserDataPtr = decltype(&niRFSA_GetUserData);
   using InitPtr = decltype(&niRFSA_init);
-  using InitExtCalPtr = decltype(&niRFSA_InitExtCal);
   using InitWithOptionsPtr = decltype(&niRFSA_InitWithOptions);
   using InitializeExternalAlignmentPtr = decltype(&niRFSA_InitializeExternalAlignment);
   using InitiatePtr = decltype(&niRFSA_Initiate);
@@ -261,19 +237,11 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
-    CalAdjustCalTonePowerPtr CalAdjustCalTonePower;
-    CalAdjustDeviceGainPtr CalAdjustDeviceGain;
-    CalAdjustDownconverterGainPtr CalAdjustDownconverterGain;
-    CalAdjustIFAttenuationCalibrationPtr CalAdjustIFAttenuationCalibration;
-    CalAdjustIFResponseCalibrationPtr CalAdjustIFResponseCalibration;
-    CalSetTemperaturePtr CalSetTemperature;
     ChangeExtCalPasswordPtr ChangeExtCalPassword;
     CheckAcquisitionStatusPtr CheckAcquisitionStatus;
     ClearErrorPtr ClearError;
     ClearSelfCalibrateRangePtr ClearSelfCalibrateRange;
     ClosePtr Close;
-    CloseCalibrationStepPtr CloseCalibrationStep;
-    CloseExternalAlignmentStepPtr CloseExternalAlignmentStep;
     CommitPtr Commit;
     ConfigureAcquisitionTypePtr ConfigureAcquisitionType;
     ConfigureDeembeddingTableInterpolationLinearPtr ConfigureDeembeddingTableInterpolationLinear;
@@ -311,8 +279,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     ErrorMessagePtr ErrorMessage;
     ErrorQueryPtr ErrorQuery;
     ExportSignalPtr ExportSignal;
-    ExtCalStoreBaselineForSelfCalibrationPtr ExtCalStoreBaselineForSelfCalibration;
-    ExternalAlignmentAdjustPreselectorPtr ExternalAlignmentAdjustPreselector;
     FetchIQMultiRecordComplexF32Ptr FetchIQMultiRecordComplexF32;
     FetchIQMultiRecordComplexF64Ptr FetchIQMultiRecordComplexF64;
     FetchIQMultiRecordComplexI16Ptr FetchIQMultiRecordComplexI16;
@@ -335,7 +301,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     GetExtCalRecommendedIntervalPtr GetExtCalRecommendedInterval;
     GetFetchBacklogPtr GetFetchBacklog;
     GetFrequencyResponsePtr GetFrequencyResponse;
-    GetGainReferenceCalBaselinePtr GetGainReferenceCalBaseline;
     GetNormalizationCoefficientsPtr GetNormalizationCoefficients;
     GetNumberOfSpectralLinesPtr GetNumberOfSpectralLines;
     GetRelayNamePtr GetRelayName;
@@ -348,7 +313,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     GetTerminalNamePtr GetTerminalName;
     GetUserDataPtr GetUserData;
     InitPtr Init;
-    InitExtCalPtr InitExtCal;
     InitWithOptionsPtr InitWithOptions;
     InitializeExternalAlignmentPtr InitializeExternalAlignment;
     InitiatePtr Initiate;

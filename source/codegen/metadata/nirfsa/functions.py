@@ -9,181 +9,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'CalAdjustCalTonePower': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelList',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'measurement',
-                'type': 'ViReal64'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'CalAdjustDeviceGain': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelList',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'frequency',
-                'type': 'ViReal64'
-            },
-            {
-                'direction': 'in',
-                'name': 'gain',
-                'type': 'ViReal64'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'CalAdjustDownconverterGain': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelList',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'frequency',
-                'type': 'ViReal64'
-            },
-            {
-                'direction': 'in',
-                'name': 'gain',
-                'type': 'ViReal64'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'CalAdjustIFAttenuationCalibration': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelList',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'enum': 'IfFilter',
-                'name': 'ifFilter',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'numberOfAttenuators',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'attenuatorSettings',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfAttenuators'
-                },
-                'type': 'ViReal64[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'measurement',
-                'type': 'ViReal64'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'CalAdjustIFResponseCalibration': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelList',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'enum': 'IfFilter',
-                'name': 'ifFilter',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'rfFrequency',
-                'type': 'ViReal64'
-            },
-            {
-                'direction': 'in',
-                'name': 'bandWidth',
-                'type': 'ViReal64'
-            },
-            {
-                'direction': 'in',
-                'name': 'numberOfMeasurements',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'measurements',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfMeasurements'
-                },
-                'type': 'ViReal64[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'CalSetTemperature': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelList',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'temperature',
-                'type': 'ViReal64'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'ChangeExtCalPassword': {
         'parameters': [
             {
@@ -241,26 +66,6 @@ functions = {
     },
     'Close': {
         'cname': 'niRFSA_close',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'CloseCalibrationStep': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'CloseExternalAlignmentStep': {
         'parameters': [
             {
                 'direction': 'in',
@@ -1034,50 +839,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ExtCalStoreBaselineForSelfCalibration': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'password',
-                'type': 'ViString'
-            },
-            {
-                'direction': 'in',
-                'name': 'selfCalibrationStep',
-                'type': 'ViInt64'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'ExternalAlignmentAdjustPreselector': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'numberOfCoefficients',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'coefficients',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfCoefficients'
-                },
-                'type': 'ViReal64[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'FetchIQMultiRecordComplexF32': {
         'parameters': [
             {
@@ -1845,36 +1606,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetGainReferenceCalBaseline': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'bufferSize',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'name': 'gainReferenceCalConstants',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'bufferSize',
-                    'value_twist': 'numberOfGainReferenceCalConstants'
-                },
-                'type': 'ViReal64[]'
-            },
-            {
-                'direction': 'out',
-                'name': 'numberOfGainReferenceCalConstants',
-                'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'GetNormalizationCoefficients': {
         'parameters': [
             {
@@ -2219,31 +1950,6 @@ functions = {
                 'direction': 'in',
                 'name': 'reset',
                 'type': 'ViBoolean'
-            },
-            {
-                'direction': 'out',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'InitExtCal': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'resourceName',
-                'type': 'ViRsrc'
-            },
-            {
-                'direction': 'in',
-                'name': 'password',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'optionString',
-                'type': 'ViConstString'
             },
             {
                 'direction': 'out',

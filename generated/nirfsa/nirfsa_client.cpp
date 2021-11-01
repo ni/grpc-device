@@ -33,135 +33,6 @@ abort(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-CalAdjustCalTonePowerResponse
-cal_adjust_cal_tone_power(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& measurement)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CalAdjustCalTonePowerRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_list(channel_list);
-  request.set_measurement(measurement);
-
-  auto response = CalAdjustCalTonePowerResponse{};
-
-  raise_if_error(
-      stub->CalAdjustCalTonePower(&context, request, &response));
-
-  return response;
-}
-
-CalAdjustDeviceGainResponse
-cal_adjust_device_gain(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& frequency, const double& gain)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CalAdjustDeviceGainRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_list(channel_list);
-  request.set_frequency(frequency);
-  request.set_gain(gain);
-
-  auto response = CalAdjustDeviceGainResponse{};
-
-  raise_if_error(
-      stub->CalAdjustDeviceGain(&context, request, &response));
-
-  return response;
-}
-
-CalAdjustDownconverterGainResponse
-cal_adjust_downconverter_gain(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& frequency, const double& gain)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CalAdjustDownconverterGainRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_list(channel_list);
-  request.set_frequency(frequency);
-  request.set_gain(gain);
-
-  auto response = CalAdjustDownconverterGainResponse{};
-
-  raise_if_error(
-      stub->CalAdjustDownconverterGain(&context, request, &response));
-
-  return response;
-}
-
-CalAdjustIFAttenuationCalibrationResponse
-cal_adjust_if_attenuation_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<IfFilter, pb::int32>& if_filter, const std::vector<double>& attenuator_settings, const double& measurement)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CalAdjustIFAttenuationCalibrationRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_list(channel_list);
-  const auto if_filter_ptr = if_filter.get_if<IfFilter>();
-  const auto if_filter_raw_ptr = if_filter.get_if<pb::int32>();
-  if (if_filter_ptr) {
-    request.set_if_filter(*if_filter_ptr);
-  }
-  else if (if_filter_raw_ptr) {
-    request.set_if_filter_raw(*if_filter_raw_ptr);
-  }
-  copy_array(attenuator_settings, request.mutable_attenuator_settings());
-  request.set_measurement(measurement);
-
-  auto response = CalAdjustIFAttenuationCalibrationResponse{};
-
-  raise_if_error(
-      stub->CalAdjustIFAttenuationCalibration(&context, request, &response));
-
-  return response;
-}
-
-CalAdjustIFResponseCalibrationResponse
-cal_adjust_if_response_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<IfFilter, pb::int32>& if_filter, const double& rf_frequency, const double& band_width, const std::vector<double>& measurements)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CalAdjustIFResponseCalibrationRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_list(channel_list);
-  const auto if_filter_ptr = if_filter.get_if<IfFilter>();
-  const auto if_filter_raw_ptr = if_filter.get_if<pb::int32>();
-  if (if_filter_ptr) {
-    request.set_if_filter(*if_filter_ptr);
-  }
-  else if (if_filter_raw_ptr) {
-    request.set_if_filter_raw(*if_filter_raw_ptr);
-  }
-  request.set_rf_frequency(rf_frequency);
-  request.set_band_width(band_width);
-  copy_array(measurements, request.mutable_measurements());
-
-  auto response = CalAdjustIFResponseCalibrationResponse{};
-
-  raise_if_error(
-      stub->CalAdjustIFResponseCalibration(&context, request, &response));
-
-  return response;
-}
-
-CalSetTemperatureResponse
-cal_set_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& temperature)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CalSetTemperatureRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_list(channel_list);
-  request.set_temperature(temperature);
-
-  auto response = CalSetTemperatureResponse{};
-
-  raise_if_error(
-      stub->CalSetTemperature(&context, request, &response));
-
-  return response;
-}
-
 ChangeExtCalPasswordResponse
 change_ext_cal_password(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& old_password, const pb::string& new_password)
 {
@@ -240,38 +111,6 @@ close(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->Close(&context, request, &response));
-
-  return response;
-}
-
-CloseCalibrationStepResponse
-close_calibration_step(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CloseCalibrationStepRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = CloseCalibrationStepResponse{};
-
-  raise_if_error(
-      stub->CloseCalibrationStep(&context, request, &response));
-
-  return response;
-}
-
-CloseExternalAlignmentStepResponse
-close_external_alignment_step(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CloseExternalAlignmentStepRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = CloseExternalAlignmentStepResponse{};
-
-  raise_if_error(
-      stub->CloseExternalAlignmentStep(&context, request, &response));
 
   return response;
 }
@@ -1038,41 +877,6 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
   return response;
 }
 
-ExtCalStoreBaselineForSelfCalibrationResponse
-ext_cal_store_baseline_for_self_calibration(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& password, const pb::int64& self_calibration_step)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ExtCalStoreBaselineForSelfCalibrationRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_password(password);
-  request.set_self_calibration_step(self_calibration_step);
-
-  auto response = ExtCalStoreBaselineForSelfCalibrationResponse{};
-
-  raise_if_error(
-      stub->ExtCalStoreBaselineForSelfCalibration(&context, request, &response));
-
-  return response;
-}
-
-ExternalAlignmentAdjustPreselectorResponse
-external_alignment_adjust_preselector(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& coefficients)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ExternalAlignmentAdjustPreselectorRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  copy_array(coefficients, request.mutable_coefficients());
-
-  auto response = ExternalAlignmentAdjustPreselectorResponse{};
-
-  raise_if_error(
-      stub->ExternalAlignmentAdjustPreselector(&context, request, &response));
-
-  return response;
-}
-
 FetchIQMultiRecordComplexF32Response
 fetch_iq_multi_record_complex_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const pb::int64& starting_record, const pb::int64& number_of_records, const pb::int64& number_of_samples, const double& timeout)
 {
@@ -1476,22 +1280,6 @@ get_frequency_response(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   return response;
 }
 
-GetGainReferenceCalBaselineResponse
-get_gain_reference_cal_baseline(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetGainReferenceCalBaselineRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = GetGainReferenceCalBaselineResponse{};
-
-  raise_if_error(
-      stub->GetGainReferenceCalBaseline(&context, request, &response));
-
-  return response;
-}
-
 GetNormalizationCoefficientsResponse
 get_normalization_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list)
 {
@@ -1702,24 +1490,6 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
 
   raise_if_error(
       stub->Init(&context, request, &response));
-
-  return response;
-}
-
-InitExtCalResponse
-init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password, const pb::string& option_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = InitExtCalRequest{};
-  request.set_resource_name(resource_name);
-  request.set_password(password);
-  request.set_option_string(option_string);
-
-  auto response = InitExtCalResponse{};
-
-  raise_if_error(
-      stub->InitExtCal(&context, request, &response));
 
   return response;
 }
