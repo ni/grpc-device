@@ -86,7 +86,6 @@ NiRFSGLibrary::NiRFSGLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetExternalCalibrationLastDateAndTime = reinterpret_cast<GetExternalCalibrationLastDateAndTimePtr>(shared_library_.get_function_pointer("niRFSG_GetExternalCalibrationLastDateAndTime"));
   function_pointers_.GetSelfCalibrationDateAndTime = reinterpret_cast<GetSelfCalibrationDateAndTimePtr>(shared_library_.get_function_pointer("niRFSG_GetSelfCalibrationDateAndTime"));
   function_pointers_.GetSelfCalibrationTemperature = reinterpret_cast<GetSelfCalibrationTemperaturePtr>(shared_library_.get_function_pointer("niRFSG_GetSelfCalibrationTemperature"));
-  function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(shared_library_.get_function_pointer("niRFSG_GetStreamEndpointHandle"));
   function_pointers_.GetTerminalName = reinterpret_cast<GetTerminalNamePtr>(shared_library_.get_function_pointer("niRFSG_GetTerminalName"));
   function_pointers_.GetUserData = reinterpret_cast<GetUserDataPtr>(shared_library_.get_function_pointer("niRFSG_GetUserData"));
   function_pointers_.GetWaveformBurstStartLocations = reinterpret_cast<GetWaveformBurstStartLocationsPtr>(shared_library_.get_function_pointer("niRFSG_GetWaveformBurstStartLocations"));
@@ -132,7 +131,6 @@ NiRFSGLibrary::NiRFSGLibrary() : shared_library_(kLibraryName)
   function_pointers_.WriteArbWaveformComplexF64 = reinterpret_cast<WriteArbWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformComplexF64"));
   function_pointers_.WriteArbWaveformComplexI16 = reinterpret_cast<WriteArbWaveformComplexI16Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformComplexI16"));
   function_pointers_.WriteArbWaveformF32 = reinterpret_cast<WriteArbWaveformF32Ptr>(shared_library_.get_function_pointer("niRFSG_WriteArbWaveformF32"));
-  function_pointers_.WriteP2PEndpointI16 = reinterpret_cast<WriteP2PEndpointI16Ptr>(shared_library_.get_function_pointer("niRFSG_WriteP2PEndpointI16"));
   function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_.get_function_pointer("niRFSG_WriteScript"));
 }
 
@@ -927,18 +925,6 @@ ViStatus NiRFSGLibrary::GetSelfCalibrationTemperature(ViSession vi, ViInt32 modu
 #endif
 }
 
-ViStatus NiRFSGLibrary::GetStreamEndpointHandle(ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle)
-{
-  if (!function_pointers_.GetStreamEndpointHandle) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetStreamEndpointHandle.");
-  }
-#if defined(_MSC_VER)
-  return niRFSG_GetStreamEndpointHandle(vi, streamEndpoint, readerHandle);
-#else
-  return function_pointers_.GetStreamEndpointHandle(vi, streamEndpoint, readerHandle);
-#endif
-}
-
 ViStatus NiRFSGLibrary::GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[])
 {
   if (!function_pointers_.GetTerminalName) {
@@ -1468,18 +1454,6 @@ ViStatus NiRFSGLibrary::WriteArbWaveformF32(ViSession vi, ViConstString waveform
   return niRFSG_WriteArbWaveformF32(vi, waveformName, numberOfSamples, iData, qData, moreDataPending);
 #else
   return function_pointers_.WriteArbWaveformF32(vi, waveformName, numberOfSamples, iData, qData, moreDataPending);
-#endif
-}
-
-ViStatus NiRFSGLibrary::WriteP2PEndpointI16(ViSession vi, ViConstString streamEndpoint, ViInt32 numberOfSamples, ViInt16 endpointData[])
-{
-  if (!function_pointers_.WriteP2PEndpointI16) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteP2PEndpointI16.");
-  }
-#if defined(_MSC_VER)
-  return niRFSG_WriteP2PEndpointI16(vi, streamEndpoint, numberOfSamples, endpointData);
-#else
-  return function_pointers_.WriteP2PEndpointI16(vi, streamEndpoint, numberOfSamples, endpointData);
 #endif
 }
 

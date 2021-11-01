@@ -83,7 +83,6 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ViStatus GetExternalCalibrationLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second);
   ViStatus GetSelfCalibrationDateAndTime(ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second);
   ViStatus GetSelfCalibrationTemperature(ViSession vi, ViInt32 module, ViReal64* temperature);
-  ViStatus GetStreamEndpointHandle(ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle);
   ViStatus GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[]);
   ViStatus GetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize);
   ViStatus GetWaveformBurstStartLocations(ViSession vi, ViConstString channelName, ViInt32 numberOfLocations, ViReal64 locations[], ViInt32* requiredSize);
@@ -129,7 +128,6 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ViStatus WriteArbWaveformComplexF64(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumber_struct wfmData[], ViBoolean moreDataPending);
   ViStatus WriteArbWaveformComplexI16(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexI16_struct wfmData[]);
   ViStatus WriteArbWaveformF32(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal32 iData[], ViReal32 qData[], ViBoolean moreDataPending);
-  ViStatus WriteP2PEndpointI16(ViSession vi, ViConstString streamEndpoint, ViInt32 numberOfSamples, ViInt16 endpointData[]);
   ViStatus WriteScript(ViSession vi, ViConstString script);
 
  private:
@@ -198,7 +196,6 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using GetExternalCalibrationLastDateAndTimePtr = decltype(&niRFSG_GetExternalCalibrationLastDateAndTime);
   using GetSelfCalibrationDateAndTimePtr = decltype(&niRFSG_GetSelfCalibrationDateAndTime);
   using GetSelfCalibrationTemperaturePtr = decltype(&niRFSG_GetSelfCalibrationTemperature);
-  using GetStreamEndpointHandlePtr = decltype(&niRFSG_GetStreamEndpointHandle);
   using GetTerminalNamePtr = decltype(&niRFSG_GetTerminalName);
   using GetUserDataPtr = decltype(&niRFSG_GetUserData);
   using GetWaveformBurstStartLocationsPtr = decltype(&niRFSG_GetWaveformBurstStartLocations);
@@ -244,7 +241,6 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using WriteArbWaveformComplexF64Ptr = decltype(&niRFSG_WriteArbWaveformComplexF64);
   using WriteArbWaveformComplexI16Ptr = decltype(&niRFSG_WriteArbWaveformComplexI16);
   using WriteArbWaveformF32Ptr = decltype(&niRFSG_WriteArbWaveformF32);
-  using WriteP2PEndpointI16Ptr = decltype(&niRFSG_WriteP2PEndpointI16);
   using WriteScriptPtr = decltype(&niRFSG_WriteScript);
 
   typedef struct FunctionPointers {
@@ -313,7 +309,6 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
     GetExternalCalibrationLastDateAndTimePtr GetExternalCalibrationLastDateAndTime;
     GetSelfCalibrationDateAndTimePtr GetSelfCalibrationDateAndTime;
     GetSelfCalibrationTemperaturePtr GetSelfCalibrationTemperature;
-    GetStreamEndpointHandlePtr GetStreamEndpointHandle;
     GetTerminalNamePtr GetTerminalName;
     GetUserDataPtr GetUserData;
     GetWaveformBurstStartLocationsPtr GetWaveformBurstStartLocations;
@@ -359,7 +354,6 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
     WriteArbWaveformComplexF64Ptr WriteArbWaveformComplexF64;
     WriteArbWaveformComplexI16Ptr WriteArbWaveformComplexI16;
     WriteArbWaveformF32Ptr WriteArbWaveformF32;
-    WriteP2PEndpointI16Ptr WriteP2PEndpointI16;
     WriteScriptPtr WriteScript;
   } FunctionLoadStatus;
 

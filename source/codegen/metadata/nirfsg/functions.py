@@ -1389,26 +1389,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetStreamEndpointHandle': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'streamEndpoint',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'out',
-                'name': 'readerHandle',
-                'type': 'ViUInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'GetTerminalName': {
         'parameters': [
             {
@@ -2503,35 +2483,6 @@ functions = {
                 'direction': 'in',
                 'name': 'moreDataPending',
                 'type': 'ViBoolean'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'WriteP2PEndpointI16': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'streamEndpoint',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'numberOfSamples',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'endpointData',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfSamples'
-                },
-                'type': 'ViInt16[]'
             }
         ],
         'returns': 'ViStatus'

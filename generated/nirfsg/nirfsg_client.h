@@ -87,7 +87,6 @@ GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi
 GetExternalCalibrationLastDateAndTimeResponse get_external_calibration_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalibrationDateAndTimeResponse get_self_calibration_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Module, pb::int32>& module);
 GetSelfCalibrationTemperatureResponse get_self_calibration_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Module, pb::int32>& module);
-GetStreamEndpointHandleResponse get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint);
 GetTerminalNameResponse get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RoutedSignal, pb::int32>& signal, const simple_variant<SignalIdentifier, std::string>& signal_identifier);
 GetUserDataResponse get_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& identifier);
 GetWaveformBurstStartLocationsResponse get_waveform_burst_start_locations(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
@@ -131,7 +130,6 @@ WriteArbWaveformComplexF32Response write_arb_waveform_complex_f32(const StubPtr&
 WriteArbWaveformComplexF64Response write_arb_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumber>& wfm_data, const bool& more_data_pending);
 WriteArbWaveformComplexI16Response write_arb_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexI16>& wfm_data);
 WriteArbWaveformF32Response write_arb_waveform_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<float>& i_data, const std::vector<float>& q_data, const bool& more_data_pending);
-WriteP2PEndpointI16Response write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint, const std::vector<pb::int32>& endpoint_data);
 WriteScriptResponse write_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& script);
 
 } // namespace nirfsg_grpc::experimental::client

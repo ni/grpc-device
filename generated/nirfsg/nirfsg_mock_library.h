@@ -82,7 +82,6 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   MOCK_METHOD(ViStatus, GetExternalCalibrationLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second), (override));
   MOCK_METHOD(ViStatus, GetSelfCalibrationDateAndTime, (ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second), (override));
   MOCK_METHOD(ViStatus, GetSelfCalibrationTemperature, (ViSession vi, ViInt32 module, ViReal64* temperature), (override));
-  MOCK_METHOD(ViStatus, GetStreamEndpointHandle, (ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle), (override));
   MOCK_METHOD(ViStatus, GetTerminalName, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[]), (override));
   MOCK_METHOD(ViStatus, GetUserData, (ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize), (override));
   MOCK_METHOD(ViStatus, GetWaveformBurstStartLocations, (ViSession vi, ViConstString channelName, ViInt32 numberOfLocations, ViReal64 locations[], ViInt32* requiredSize), (override));
@@ -128,7 +127,6 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   MOCK_METHOD(ViStatus, WriteArbWaveformComplexF64, (ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumber_struct wfmData[], ViBoolean moreDataPending), (override));
   MOCK_METHOD(ViStatus, WriteArbWaveformComplexI16, (ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexI16_struct wfmData[]), (override));
   MOCK_METHOD(ViStatus, WriteArbWaveformF32, (ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal32 iData[], ViReal32 qData[], ViBoolean moreDataPending), (override));
-  MOCK_METHOD(ViStatus, WriteP2PEndpointI16, (ViSession vi, ViConstString streamEndpoint, ViInt32 numberOfSamples, ViInt16 endpointData[]), (override));
   MOCK_METHOD(ViStatus, WriteScript, (ViSession vi, ViConstString script), (override));
 };
 
