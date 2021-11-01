@@ -1494,24 +1494,6 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
   return response;
 }
 
-InitExtCalResponse
-init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password, const pb::string& option_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = InitExtCalRequest{};
-  request.set_resource_name(resource_name);
-  request.set_password(password);
-  request.set_option_string(option_string);
-
-  auto response = InitExtCalResponse{};
-
-  raise_if_error(
-      stub->InitExtCal(&context, request, &response));
-
-  return response;
-}
-
 InitWithOptionsResponse
 init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset, const pb::string& option_string)
 {

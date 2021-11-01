@@ -98,7 +98,6 @@ NiRFSALibrary::NiRFSALibrary() : shared_library_(kLibraryName)
   function_pointers_.GetTerminalName = reinterpret_cast<GetTerminalNamePtr>(shared_library_.get_function_pointer("niRFSA_GetTerminalName"));
   function_pointers_.GetUserData = reinterpret_cast<GetUserDataPtr>(shared_library_.get_function_pointer("niRFSA_GetUserData"));
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niRFSA_init"));
-  function_pointers_.InitExtCal = reinterpret_cast<InitExtCalPtr>(shared_library_.get_function_pointer("niRFSA_InitExtCal"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niRFSA_InitWithOptions"));
   function_pointers_.InitializeExternalAlignment = reinterpret_cast<InitializeExternalAlignmentPtr>(shared_library_.get_function_pointer("niRFSA_InitializeExternalAlignment"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niRFSA_Initiate"));
@@ -1063,18 +1062,6 @@ ViStatus NiRFSALibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean r
   return niRFSA_init(resourceName, idQuery, reset, vi);
 #else
   return function_pointers_.Init(resourceName, idQuery, reset, vi);
-#endif
-}
-
-ViStatus NiRFSALibrary::InitExtCal(ViRsrc resourceName, ViConstString password, ViConstString optionString, ViSession* vi)
-{
-  if (!function_pointers_.InitExtCal) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_InitExtCal.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_InitExtCal(resourceName, password, optionString, vi);
-#else
-  return function_pointers_.InitExtCal(resourceName, password, optionString, vi);
 #endif
 }
 

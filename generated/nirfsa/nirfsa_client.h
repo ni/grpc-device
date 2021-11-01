@@ -99,7 +99,6 @@ GetStreamEndpointHandleResponse get_stream_endpoint_handle(const StubPtr& stub, 
 GetTerminalNameResponse get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& signal, const pb::string& signal_identifier, const pb::int32& buffer_size);
 GetUserDataResponse get_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& identifier);
 InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset);
-InitExtCalResponse init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password, const pb::string& option_string);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset, const pb::string& option_string);
 InitializeExternalAlignmentResponse initialize_external_alignment(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string);
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);

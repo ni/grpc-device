@@ -95,7 +95,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[]);
   ViStatus GetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize);
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi);
-  ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViConstString optionString, ViSession* vi);
   ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViConstString optionString, ViSession* vi);
   ViStatus InitializeExternalAlignment(ViRsrc resourceName, ViConstString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
@@ -205,7 +204,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using GetTerminalNamePtr = decltype(&niRFSA_GetTerminalName);
   using GetUserDataPtr = decltype(&niRFSA_GetUserData);
   using InitPtr = decltype(&niRFSA_init);
-  using InitExtCalPtr = decltype(&niRFSA_InitExtCal);
   using InitWithOptionsPtr = decltype(&niRFSA_InitWithOptions);
   using InitializeExternalAlignmentPtr = decltype(&niRFSA_InitializeExternalAlignment);
   using InitiatePtr = decltype(&niRFSA_Initiate);
@@ -315,7 +313,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     GetTerminalNamePtr GetTerminalName;
     GetUserDataPtr GetUserData;
     InitPtr Init;
-    InitExtCalPtr InitExtCal;
     InitWithOptionsPtr InitWithOptions;
     InitializeExternalAlignmentPtr InitializeExternalAlignment;
     InitiatePtr Initiate;

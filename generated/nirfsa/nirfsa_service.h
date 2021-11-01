@@ -110,7 +110,6 @@ public:
   ::grpc::Status GetTerminalName(::grpc::ServerContext* context, const GetTerminalNameRequest* request, GetTerminalNameResponse* response) override;
   ::grpc::Status GetUserData(::grpc::ServerContext* context, const GetUserDataRequest* request, GetUserDataResponse* response) override;
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
-  ::grpc::Status InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response) override;
   ::grpc::Status InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response) override;
   ::grpc::Status InitializeExternalAlignment(::grpc::ServerContext* context, const InitializeExternalAlignmentRequest* request, InitializeExternalAlignmentResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;

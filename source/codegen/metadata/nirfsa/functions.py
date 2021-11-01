@@ -1959,31 +1959,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'InitExtCal': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'resourceName',
-                'type': 'ViRsrc'
-            },
-            {
-                'direction': 'in',
-                'name': 'password',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'optionString',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'out',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'InitWithOptions': {
         'init_method': True,
         'parameters': [

@@ -2292,31 +2292,6 @@ namespace nirfsa_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFSAService::InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      auto password = request->password().c_str();
-      auto option_string = request->option_string().c_str();
-      ViSession vi {};
-      auto status = library_->InitExtCal(resource_name, password, option_string, &vi);
-      response->set_status(status);
-      if (status == 0) {
-        auto session_id = session_repository_->resolve_session_id(vi);
-        response->mutable_vi()->set_id(session_id);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
   {
     if (context->IsCancelled()) {
