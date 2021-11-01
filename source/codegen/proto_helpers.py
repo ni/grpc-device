@@ -24,7 +24,7 @@ def get_enum_definitions(enums_to_define, enums):
   for enum_name in (e for e in enums if e in enums_to_define):
     enum = enums[enum_name]
     allow_alias = should_allow_alias(enum)
-    enum_value_prefix = enum.get("enum-value-prefix", common_helpers.pascal_to_snake(enum_name).upper())
+    enum_value_prefix = common_helpers.get_enum_value_prefix(enum_name, enum)
     if enum.get("generate-mappings", False):
       values = [{"name": f"{enum_value_prefix}_{value['name']}", "value": index + 1} for index, value in enumerate(enum["values"])]
     else:
@@ -105,6 +105,13 @@ def get_enum_parameters(parameter, parameter_name, parameter_type, is_array, use
       "type": mapped_type,
       "grpc_field_number": grpc_mapped_field_number
     })
+  if 'bitfield_as_enum_array' in parameter:
+    enum_parameters.append({
+      "name": f"{parameter_name}_array",
+      "type": f"repeated {parameter['bitfield_as_enum_array']}",
+      "grpc_field_number": generate_parameter_field_number(parameter, used_indexes, "_array")
+    })
+
   grpc_raw_field_number = generate_parameter_field_number(parameter, used_indexes, "_raw")
   enum_parameters.append({
     "name": f"{parameter_name}_raw",

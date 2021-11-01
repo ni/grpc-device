@@ -1621,10 +1621,10 @@ enums = {
             }
         ]
     },
-    'SelfCalibrateStepsToOmit': {
+    'SelfCalibrateSteps': {
         'values': [
             {
-                'name': 'OMIT_NONE',
+                'name': 'NONE',
                 'value': 0
             },
             {

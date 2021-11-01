@@ -127,8 +127,8 @@ ResetWithDefaultsResponse reset_with_defaults(const StubPtr& stub, const nidevic
 ResetWithOptionsResponse reset_with_options(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ResetWithOptionsStepsToOmit, pb::uint64>& steps_to_omit);
 RevisionQueryResponse revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SelfCalResponse self_cal(const StubPtr& stub, const nidevice_grpc::Session& vi);
-SelfCalibrateResponse self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateStepsToOmit, pb::int64>& steps_to_omit);
-SelfCalibrateRangeResponse self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateStepsToOmit, pb::int64>& steps_to_omit, const double& min_frequency, const double& max_frequency, const double& min_reference_level, const double& max_reference_level);
+SelfCalibrateResponse self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateSteps, pb::int64>& steps_to_omit);
+SelfCalibrateRangeResponse self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateSteps, pb::int64>& steps_to_omit, const double& min_frequency, const double& max_frequency, const double& min_reference_level, const double& max_reference_level);
 SelfTestResponse self_test(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SendSoftwareEdgeTriggerResponse send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Signal, pb::int32>& trigger, const pb::string& trigger_identifier);
 SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiRFSAAttributes& attribute_id, const bool& value);

@@ -34,6 +34,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean);
   ViStatus GetANumber(ViSession vi, ViInt16* aNumber);
   ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]);
+  ViStatus GetBitfieldAsEnumArray(ViInt64* flags);
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   ViStatus GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
   ViStatus GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize);
@@ -111,6 +112,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetABooleanPtr = decltype(&niFake_GetABoolean);
   using GetANumberPtr = decltype(&niFake_GetANumber);
   using GetAStringOfFixedMaximumSizePtr = decltype(&niFake_GetAStringOfFixedMaximumSize);
+  using GetBitfieldAsEnumArrayPtr = decltype(&niFake_GetBitfieldAsEnumArray);
   using GetAnIviDanceStringPtr = decltype(&niFake_GetAnIviDanceString);
   using GetAnIviDanceWithATwistArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistArray);
   using GetAnIviDanceWithATwistArrayOfCustomTypePtr = decltype(&niFake_GetAnIviDanceWithATwistArrayOfCustomType);
@@ -188,6 +190,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetABooleanPtr GetABoolean;
     GetANumberPtr GetANumber;
     GetAStringOfFixedMaximumSizePtr GetAStringOfFixedMaximumSize;
+    GetBitfieldAsEnumArrayPtr GetBitfieldAsEnumArray;
     GetAnIviDanceStringPtr GetAnIviDanceString;
     GetAnIviDanceWithATwistArrayPtr GetAnIviDanceWithATwistArray;
     GetAnIviDanceWithATwistArrayOfCustomTypePtr GetAnIviDanceWithATwistArrayOfCustomType;

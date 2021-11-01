@@ -425,6 +425,35 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetBitfieldAsEnumArray(::grpc::ServerContext* context, const GetBitfieldAsEnumArrayRequest* request, GetBitfieldAsEnumArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViInt64 flags {};
+      auto status = library_->GetBitfieldAsEnumArray(&flags);
+      response->set_status(status);
+      if (status == 0) {
+        if (flags & 0x1)
+          response->add_flags_array(Bitfield::BITFIELD_FLAG_A);
+        if (flags & 0x2)
+          response->add_flags_array(Bitfield::BITFIELD_FLAG_B);
+        if (flags & 0x4)
+          response->add_flags_array(Bitfield::BITFIELD_FLAG_C);
+        if (flags & 0x8)
+          response->add_flags_array(Bitfield::BITFIELD_FLAG_D);
+        response->set_flags_raw(flags);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetAnIviDanceString(::grpc::ServerContext* context, const GetAnIviDanceStringRequest* request, GetAnIviDanceStringResponse* response)
   {
     if (context->IsCancelled()) {

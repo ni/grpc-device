@@ -611,6 +611,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   has_mapped_enum = 'mapped-enum' in parameter
   has_unmapped_enum = 'enum' in parameter
+  is_bitfield_as_enum_array = 'bitfield_as_enum_array' in parameter
   if has_mapped_enum:
     mapped_enum_name = parameter["mapped-enum"]
     map_name = mapped_enum_name.lower() + "_output_map_"
@@ -654,6 +655,12 @@ ${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_na
 %       else:
         response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %       endif
+%     endif
+%     if is_bitfield_as_enum_array:
+%       for flag_value, flag_enum_name in service_helpers.get_bitfield_value_to_name_mapping(parameter, enums).items():
+        if (${parameter_name} & ${hex(flag_value)})
+          response->add_${parameter_name}_array(${flag_enum_name});
+%       endfor
 %     endif
 %     if not uses_raw_output_as_read_buffer: # Set data to raw, unless we *got* the data from raw.
         response->set_${parameter_name}_raw(${parameter_name});

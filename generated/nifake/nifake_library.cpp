@@ -37,6 +37,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetABoolean = reinterpret_cast<GetABooleanPtr>(shared_library_.get_function_pointer("niFake_GetABoolean"));
   function_pointers_.GetANumber = reinterpret_cast<GetANumberPtr>(shared_library_.get_function_pointer("niFake_GetANumber"));
   function_pointers_.GetAStringOfFixedMaximumSize = reinterpret_cast<GetAStringOfFixedMaximumSizePtr>(shared_library_.get_function_pointer("niFake_GetAStringOfFixedMaximumSize"));
+  function_pointers_.GetBitfieldAsEnumArray = reinterpret_cast<GetBitfieldAsEnumArrayPtr>(shared_library_.get_function_pointer("niFake_GetBitfieldAsEnumArray"));
   function_pointers_.GetAnIviDanceString = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceString"));
   function_pointers_.GetAnIviDanceWithATwistArray = reinterpret_cast<GetAnIviDanceWithATwistArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArray"));
   function_pointers_.GetAnIviDanceWithATwistArrayOfCustomType = reinterpret_cast<GetAnIviDanceWithATwistArrayOfCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArrayOfCustomType"));
@@ -298,6 +299,18 @@ ViStatus NiFakeLibrary::GetAStringOfFixedMaximumSize(ViSession vi, ViChar aStrin
   return niFake_GetAStringOfFixedMaximumSize(vi, aString);
 #else
   return function_pointers_.GetAStringOfFixedMaximumSize(vi, aString);
+#endif
+}
+
+ViStatus NiFakeLibrary::GetBitfieldAsEnumArray(ViInt64* flags)
+{
+  if (!function_pointers_.GetBitfieldAsEnumArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetBitfieldAsEnumArray.");
+  }
+#if defined(_MSC_VER)
+  return niFake_GetBitfieldAsEnumArray(flags);
+#else
+  return function_pointers_.GetBitfieldAsEnumArray(flags);
 #endif
 }
 

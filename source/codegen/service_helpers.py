@@ -348,3 +348,16 @@ def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
         for e in function_enums 
         if should_generate_mappings(e)
     ]
+
+
+def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int, str]:
+    enum_name = parameter["bitfield_as_enum_array"]
+    enum = enums[enum_name]
+    enum_value_prefix = common_helpers.get_enum_value_prefix(enum_name, enum)
+    enum_qualified_name_prefix = f"{enum_name}::{enum_value_prefix}"
+
+    return {
+        v["value"]: f"{enum_qualified_name_prefix}_{v['name']}"
+        for v in enum["values"]
+        if v["value"] != 0 # zero values can't be flags!
+    }

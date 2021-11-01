@@ -13,7 +13,7 @@
 // fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
 static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 
-//Adding operator for matching Custom Structs
+// Adding operator for matching Custom Structs
 bool operator==(const CustomStruct& first, const CustomStruct& second)
 {
   return first.structInt == second.structInt && first.structDouble == second.structDouble;
@@ -41,8 +41,10 @@ using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Args;
 using ::testing::DoAll;
+using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
+using ::testing::IsEmpty;
 using ::testing::Pointee;
 using ::testing::Return;
 using ::testing::SetArgPointee;
@@ -1683,7 +1685,7 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptViSessionArray_CallsAcceptViSession
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-//Test for ivi-dance-with-a-twist mechanism
+// Test for ivi-dance-with-a-twist mechanism
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIviDanceWithATwistArray)
 {
   nidevice_grpc::SessionRepository session_repository;
@@ -1974,7 +1976,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithChangingS
   EXPECT_EQ(response.actual_size(), expected_new_size);
 }
 
-//Test for ivi-dance-with-a-twist mechanism
+// Test for ivi-dance-with-a-twist mechanism
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayOfCustomType_CallsGetAnIviDanceWithATwistArrayOfCustomType)
 {
   nidevice_grpc::SessionRepository session_repository;
@@ -2331,6 +2333,45 @@ TEST(NiFakeServiceTests, FakeService_SetCustomStruct_PassesCustomStruct)
   service_holder.service.SetCustomType(&service_holder.context, &request, &response);
 
   EXPECT_EQ(0, response.status());
+}
+
+TEST(NiFakeServiceTests, GetBitfieldAsEnumArray_ZeroBitfield_ReturnsEmptyArray)
+{
+  constexpr auto ZERO_BITFIELD = 0x0;
+  FakeServiceHolder service_holder;
+  EXPECT_CALL(service_holder.library, GetBitfieldAsEnumArray(_))
+      .WillOnce(
+          DoAll(
+              SetArgPointee<0>(ZERO_BITFIELD),
+              Return(kDriverSuccess)));
+  auto request = GetBitfieldAsEnumArrayRequest{};
+  auto response = GetBitfieldAsEnumArrayResponse{};
+  service_holder.service.GetBitfieldAsEnumArray(&service_holder.context, &request, &response);
+
+  EXPECT_EQ(0, response.status());
+  EXPECT_THAT(response.flags_array(), IsEmpty());
+  EXPECT_EQ(ZERO_BITFIELD, response.flags_raw());
+}
+
+TEST(NiFakeServiceTests, GetBitfieldAsEnumArray_MultipleFlagsSet_ReturnsArrayOfFlags)
+{
+  constexpr google::protobuf::int64 A_AND_C = 0x1ULL | 0x4ULL;
+  const auto EXPECTED = std::vector<Bitfield>{Bitfield::BITFIELD_FLAG_A, Bitfield::BITFIELD_FLAG_C};
+  FakeServiceHolder service_holder;
+  EXPECT_CALL(service_holder.library, GetBitfieldAsEnumArray(_))
+      .WillOnce(
+          DoAll(
+              SetArgPointee<0>(A_AND_C),
+              Return(kDriverSuccess)));
+  auto request = GetBitfieldAsEnumArrayRequest{};
+  auto response = GetBitfieldAsEnumArrayResponse{};
+  service_holder.service.GetBitfieldAsEnumArray(&service_holder.context, &request, &response);
+
+  EXPECT_EQ(0, response.status());
+  EXPECT_THAT(
+      response.flags_array(),
+      ElementsAre(Bitfield::BITFIELD_FLAG_A, Bitfield::BITFIELD_FLAG_C));
+  EXPECT_EQ(A_AND_C, response.flags_raw());
 }
 
 }  // namespace unit

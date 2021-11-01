@@ -2709,7 +2709,27 @@ namespace nirfsa_grpc {
       response->set_status(status);
       if (status == 0) {
         response->set_self_cal_valid(self_cal_valid);
-        response->set_valid_steps(valid_steps);
+        if (valid_steps & 0x1)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_ALIGNMENT);
+        if (valid_steps & 0x2)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_GAIN_REFERENCE);
+        if (valid_steps & 0x4)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_IF_FLATNESS);
+        if (valid_steps & 0x8)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL);
+        if (valid_steps & 0x10)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_LO_SELF_CAL);
+        if (valid_steps & 0x20)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_AMPLITUDE_ACCURACY);
+        if (valid_steps & 0x40)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_RESIDUAL_LO_POWER);
+        if (valid_steps & 0x80)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_IMAGE_SUPPRESSION);
+        if (valid_steps & 0x100)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_SYNTHESIZER_ALIGNMENT);
+        if (valid_steps & 0x200)
+          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_DC_OFFSET);
+        response->set_valid_steps_raw(valid_steps);
       }
       return ::grpc::Status::OK;
     }

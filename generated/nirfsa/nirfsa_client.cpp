@@ -2004,13 +2004,13 @@ self_cal(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SelfCalibrateResponse
-self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateStepsToOmit, pb::int64>& steps_to_omit)
+self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateSteps, pb::int64>& steps_to_omit)
 {
   ::grpc::ClientContext context;
 
   auto request = SelfCalibrateRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto steps_to_omit_ptr = steps_to_omit.get_if<SelfCalibrateStepsToOmit>();
+  const auto steps_to_omit_ptr = steps_to_omit.get_if<SelfCalibrateSteps>();
   const auto steps_to_omit_raw_ptr = steps_to_omit.get_if<pb::int64>();
   if (steps_to_omit_ptr) {
     request.set_steps_to_omit(*steps_to_omit_ptr);
@@ -2028,13 +2028,13 @@ self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const simp
 }
 
 SelfCalibrateRangeResponse
-self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateStepsToOmit, pb::int64>& steps_to_omit, const double& min_frequency, const double& max_frequency, const double& min_reference_level, const double& max_reference_level)
+self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateSteps, pb::int64>& steps_to_omit, const double& min_frequency, const double& max_frequency, const double& min_reference_level, const double& max_reference_level)
 {
   ::grpc::ClientContext context;
 
   auto request = SelfCalibrateRangeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto steps_to_omit_ptr = steps_to_omit.get_if<SelfCalibrateStepsToOmit>();
+  const auto steps_to_omit_ptr = steps_to_omit.get_if<SelfCalibrateSteps>();
   const auto steps_to_omit_raw_ptr = steps_to_omit.get_if<pb::int64>();
   if (steps_to_omit_ptr) {
     request.set_steps_to_omit(*steps_to_omit_ptr);
