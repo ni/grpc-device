@@ -483,20 +483,20 @@ enum ResetWithOptionsStepsToOmit {
   RESET_WITH_OPTIONS_STEPS_TO_OMIT_DEEMBEDDING_TABLES = 2;
 }
 
-enum SelfCalibrateStepsToOmit {
+enum SelfCalibrateSteps {
   option allow_alias = true;
-  SELF_CALIBRATE_STEPS_TO_OMIT_UNSPECIFIED = 0;
-  SELF_CALIBRATE_STEPS_TO_OMIT_OMIT_NONE = 0;
-  SELF_CALIBRATE_STEPS_TO_OMIT_ALIGNMENT = 1;
-  SELF_CALIBRATE_STEPS_TO_OMIT_GAIN_REFERENCE = 2;
-  SELF_CALIBRATE_STEPS_TO_OMIT_IF_FLATNESS = 4;
-  SELF_CALIBRATE_STEPS_TO_OMIT_DIGITIZER_SELF_CAL = 8;
-  SELF_CALIBRATE_STEPS_TO_OMIT_LO_SELF_CAL = 16;
-  SELF_CALIBRATE_STEPS_TO_OMIT_AMPLITUDE_ACCURACY = 32;
-  SELF_CALIBRATE_STEPS_TO_OMIT_RESIDUAL_LO_POWER = 64;
-  SELF_CALIBRATE_STEPS_TO_OMIT_IMAGE_SUPPRESSION = 128;
-  SELF_CALIBRATE_STEPS_TO_OMIT_SYNTHESIZER_ALIGNMENT = 256;
-  SELF_CALIBRATE_STEPS_TO_OMIT_DC_OFFSET = 512;
+  SELF_CALIBRATE_STEPS_UNSPECIFIED = 0;
+  SELF_CALIBRATE_STEPS_NONE = 0;
+  SELF_CALIBRATE_STEPS_ALIGNMENT = 1;
+  SELF_CALIBRATE_STEPS_GAIN_REFERENCE = 2;
+  SELF_CALIBRATE_STEPS_IF_FLATNESS = 4;
+  SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL = 8;
+  SELF_CALIBRATE_STEPS_LO_SELF_CAL = 16;
+  SELF_CALIBRATE_STEPS_AMPLITUDE_ACCURACY = 32;
+  SELF_CALIBRATE_STEPS_RESIDUAL_LO_POWER = 64;
+  SELF_CALIBRATE_STEPS_IMAGE_SUPPRESSION = 128;
+  SELF_CALIBRATE_STEPS_SYNTHESIZER_ALIGNMENT = 256;
+  SELF_CALIBRATE_STEPS_DC_OFFSET = 512;
 }
 
 enum Signal {
@@ -1668,7 +1668,8 @@ message IsSelfCalValidRequest {
 message IsSelfCalValidResponse {
   int32 status = 1;
   bool self_cal_valid = 2;
-  int64 valid_steps = 3;
+  repeated SelfCalibrateSteps valid_steps_array = 3;
+  int64 valid_steps_raw = 4;
 }
 
 message PerformThermalCorrectionRequest {
@@ -1785,7 +1786,7 @@ message SelfCalResponse {
 message SelfCalibrateRequest {
   nidevice_grpc.Session vi = 1;
   oneof steps_to_omit_enum {
-    SelfCalibrateStepsToOmit steps_to_omit = 2;
+    SelfCalibrateSteps steps_to_omit = 2;
     int64 steps_to_omit_raw = 3;
   }
 }
@@ -1797,7 +1798,7 @@ message SelfCalibrateResponse {
 message SelfCalibrateRangeRequest {
   nidevice_grpc.Session vi = 1;
   oneof steps_to_omit_enum {
-    SelfCalibrateStepsToOmit steps_to_omit = 2;
+    SelfCalibrateSteps steps_to_omit = 2;
     int64 steps_to_omit_raw = 3;
   }
   double min_frequency = 4;

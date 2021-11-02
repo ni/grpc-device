@@ -38,7 +38,11 @@ def is_array(dataType: str):
 
 
 def is_enum(parameter: dict):
-    return "enum" in parameter or "mapped-enum" in parameter
+    return (
+        "enum" in parameter 
+        or "mapped-enum" in parameter 
+        or "bitfield_as_enum_array" in parameter
+    )
 
 
 def is_custom_struct(parameter: dict) -> bool:
@@ -363,6 +367,8 @@ def get_function_enums(functions):
                 function_enums.add(parameter['enum'])
             if 'mapped-enum' in parameter:
                 function_enums.add(parameter['mapped-enum'])
+            if 'bitfield_as_enum_array' in parameter:
+                function_enums.add(parameter['bitfield_as_enum_array'])
     return sorted(function_enums)
 
 
@@ -766,3 +772,7 @@ def get_additional_headers(config: dict, including_from_file: str) -> List[str]:
         for header, required_by in additional_header_requirements.items()
         if including_from_file in required_by
     )
+
+
+def get_enum_value_prefix(enum_name: str, enum: dict) -> str:
+    return enum.get("enum-value-prefix", pascal_to_snake(enum_name).upper())

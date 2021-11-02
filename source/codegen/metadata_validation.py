@@ -58,6 +58,7 @@ PARAM_SCHEMA = Schema(
         Optional('type'): str,
         Optional('grpc_type'): str,
         Optional('documentation'): DOCUMENTATION_SCHEMA,
+        Optional('bitfield_as_enum_array'): str,
         Optional('enum'): str,
         Optional('size'): SIZE_SCHEMA,
         Optional('default_value'): Or(str, bool, int, float, None),

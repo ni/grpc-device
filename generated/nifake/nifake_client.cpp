@@ -290,6 +290,21 @@ get_a_string_of_fixed_maximum_size(const StubPtr& stub, const nidevice_grpc::Ses
   return response;
 }
 
+GetBitfieldAsEnumArrayResponse
+get_bitfield_as_enum_array(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetBitfieldAsEnumArrayRequest{};
+
+  auto response = GetBitfieldAsEnumArrayResponse{};
+
+  raise_if_error(
+      stub->GetBitfieldAsEnumArray(&context, request, &response));
+
+  return response;
+}
+
 GetAnIviDanceStringResponse
 get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {

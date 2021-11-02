@@ -21,6 +21,26 @@ enums = {
             }
         ]
     },
+    'Bitfield': {
+        'values': [
+            {
+                'name': 'FLAG_A',
+                'value': 1,
+            },
+            {
+                'name': 'FLAG_B',
+                'value': 2,
+            },
+            {
+                'name': 'FLAG_C',
+                'value': 4,
+            },
+            {
+                'name': 'FLAG_D',
+                'value': 8,
+            },
+        ]
+    },
     'Color': {
         'values': [
             {

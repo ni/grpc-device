@@ -32,6 +32,7 @@ service NiFake {
   rpc GetABoolean(GetABooleanRequest) returns (GetABooleanResponse);
   rpc GetANumber(GetANumberRequest) returns (GetANumberResponse);
   rpc GetAStringOfFixedMaximumSize(GetAStringOfFixedMaximumSizeRequest) returns (GetAStringOfFixedMaximumSizeResponse);
+  rpc GetBitfieldAsEnumArray(GetBitfieldAsEnumArrayRequest) returns (GetBitfieldAsEnumArrayResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
   rpc GetAnIviDanceWithATwistArray(GetAnIviDanceWithATwistArrayRequest) returns (GetAnIviDanceWithATwistArrayResponse);
   rpc GetAnIviDanceWithATwistArrayOfCustomType(GetAnIviDanceWithATwistArrayOfCustomTypeRequest) returns (GetAnIviDanceWithATwistArrayOfCustomTypeResponse);
@@ -97,6 +98,14 @@ enum NiFakeAttributes {
   NIFAKE_ATTRIBUTE_READ_WRITE_INTEGER_WITH_CONVERTER = 1000008;
   NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY = 1000009;
   NIFAKE_ATTRIBUTE_READ_WRITE_STRING_REPEATED_CAPABILITY = 1000010;
+}
+
+enum Bitfield {
+  BITFIELD_UNSPECIFIED = 0;
+  BITFIELD_FLAG_A = 1;
+  BITFIELD_FLAG_B = 2;
+  BITFIELD_FLAG_C = 4;
+  BITFIELD_FLAG_D = 8;
 }
 
 enum Color {
@@ -307,6 +316,15 @@ message GetAStringOfFixedMaximumSizeRequest {
 message GetAStringOfFixedMaximumSizeResponse {
   int32 status = 1;
   string a_string = 2;
+}
+
+message GetBitfieldAsEnumArrayRequest {
+}
+
+message GetBitfieldAsEnumArrayResponse {
+  int32 status = 1;
+  repeated Bitfield flags_array = 2;
+  int64 flags_raw = 3;
 }
 
 message GetAnIviDanceStringRequest {

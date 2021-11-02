@@ -560,9 +560,19 @@ TEST_F(NiRFSADriverApiTests, TwoSessions_SetupTclkSyncPulseSenderSynchronization
 TEST_F(NiRFSADriverApiTests, SelfCalibrateWithStepsToOmit_Succeeds)
 {
   auto session = init_session(stub(), PXI_5663E);
-  const auto response = client::self_calibrate(stub(), session, SelfCalibrateStepsToOmit::SELF_CALIBRATE_STEPS_TO_OMIT_ALIGNMENT);
+  const auto response = client::self_calibrate(stub(), session, SelfCalibrateSteps::SELF_CALIBRATE_STEPS_ALIGNMENT);
 
   EXPECT_SUCCESS(session, response);
+}
+
+TEST_F(NiRFSADriverApiTests, IsSelfCalValid)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  const auto response = client::is_self_cal_valid(stub(), session);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_THAT(response.valid_steps_array(), ElementsAre(SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL));
+  EXPECT_EQ(NIRFSA_VAL_SELF_CAL_DIGITIZER_SELF_CAL, response.valid_steps_raw());
 }
 
 TEST_F(NiRFSADriverApiTests, SelfTest_Succeeds)

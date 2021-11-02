@@ -2043,6 +2043,7 @@ functions = {
                 'type': 'ViBoolean'
             },
             {
+                'bitfield_as_enum_array': 'SelfCalibrateSteps',
                 'direction': 'out',
                 'name': 'validSteps',
                 'type': 'ViInt64'
@@ -2312,7 +2313,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SelfCalibrateStepsToOmit',
+                'enum': 'SelfCalibrateSteps',
                 'name': 'stepsToOmit',
                 'type': 'ViInt64'
             }
@@ -2328,7 +2329,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SelfCalibrateStepsToOmit',
+                'enum': 'SelfCalibrateSteps',
                 'name': 'stepsToOmit',
                 'type': 'ViInt64'
             },

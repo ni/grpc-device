@@ -541,6 +541,17 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetBitfieldAsEnumArray': {
+        'parameters': [
+            {
+                'bitfield_as_enum_array': 'Bitfield',
+                'direction': 'out',
+                'name': 'flags',
+                'type': 'ViInt64',
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAnIviDanceString': {
         'codegen_method': 'public',
         'documentation': {

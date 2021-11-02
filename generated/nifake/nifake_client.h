@@ -38,6 +38,7 @@ FetchWaveformResponse fetch_waveform(const StubPtr& stub, const nidevice_grpc::S
 GetABooleanResponse get_a_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetANumberResponse get_a_number(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAStringOfFixedMaximumSizeResponse get_a_string_of_fixed_maximum_size(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetBitfieldAsEnumArrayResponse get_bitfield_as_enum_array(const StubPtr& stub);
 GetAnIviDanceStringResponse get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceWithATwistArrayResponse get_an_ivi_dance_with_a_twist_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& a_string);
 GetAnIviDanceWithATwistArrayOfCustomTypeResponse get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi);
