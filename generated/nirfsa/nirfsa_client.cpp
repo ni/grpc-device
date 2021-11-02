@@ -33,24 +33,6 @@ abort(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-ChangeExtCalPasswordResponse
-change_ext_cal_password(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& old_password, const pb::string& new_password)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ChangeExtCalPasswordRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_old_password(old_password);
-  request.set_new_password(new_password);
-
-  auto response = ChangeExtCalPasswordResponse{};
-
-  raise_if_error(
-      stub->ChangeExtCalPassword(&context, request, &response));
-
-  return response;
-}
-
 CheckAcquisitionStatusResponse
 check_acquisition_status(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {

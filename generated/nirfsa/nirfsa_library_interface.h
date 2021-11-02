@@ -17,7 +17,6 @@ class NiRFSALibraryInterface {
   virtual ~NiRFSALibraryInterface() {}
 
   virtual ViStatus Abort(ViSession vi) = 0;
-  virtual ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword) = 0;
   virtual ViStatus CheckAcquisitionStatus(ViSession vi, ViBoolean* isDone) = 0;
   virtual ViStatus ClearError(ViSession vi) = 0;
   virtual ViStatus ClearSelfCalibrateRange(ViSession vi) = 0;

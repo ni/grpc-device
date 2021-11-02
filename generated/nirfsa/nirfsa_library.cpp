@@ -22,7 +22,6 @@ NiRFSALibrary::NiRFSALibrary() : shared_library_(kLibraryName)
     return;
   }
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niRFSA_Abort"));
-  function_pointers_.ChangeExtCalPassword = reinterpret_cast<ChangeExtCalPasswordPtr>(shared_library_.get_function_pointer("niRFSA_ChangeExtCalPassword"));
   function_pointers_.CheckAcquisitionStatus = reinterpret_cast<CheckAcquisitionStatusPtr>(shared_library_.get_function_pointer("niRFSA_CheckAcquisitionStatus"));
   function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niRFSA_ClearError"));
   function_pointers_.ClearSelfCalibrateRange = reinterpret_cast<ClearSelfCalibrateRangePtr>(shared_library_.get_function_pointer("niRFSA_ClearSelfCalibrateRange"));
@@ -150,18 +149,6 @@ ViStatus NiRFSALibrary::Abort(ViSession vi)
   return niRFSA_Abort(vi);
 #else
   return function_pointers_.Abort(vi);
-#endif
-}
-
-ViStatus NiRFSALibrary::ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword)
-{
-  if (!function_pointers_.ChangeExtCalPassword) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_ChangeExtCalPassword.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_ChangeExtCalPassword(vi, oldPassword, newPassword);
-#else
-  return function_pointers_.ChangeExtCalPassword(vi, oldPassword, newPassword);
 #endif
 }
 
