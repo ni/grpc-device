@@ -603,8 +603,14 @@ class AttributeGroup:
         return categorized_attributes
 
 
-def get_attribute_enum_name(group_name, data_type):
-    return f'{group_name}{data_type}Attributes'
+def get_attribute_enum_suffix(config: dict) -> str:
+    use_legacy_prefix = use_legacy_attribute_prefix(config)
+    return "Attributes" if use_legacy_prefix else "Attribute"
+
+
+def get_attribute_enum_name(group_name: str, data_type: str, config: dict) -> str:
+    attribute_suffix = get_attribute_enum_suffix(config)
+    return f'{group_name}{data_type}{attribute_suffix}'
 
 
 def get_attribute_groups(data):
@@ -645,7 +651,11 @@ def get_grpc_type_name_for_identifier(data_type, config):
     return ensure_pascal_case(grpc_type)
 
 
-def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
+def get_grpc_type_from_ivi(
+    type: str,
+    is_array: bool,
+    driver_name_pascal: str, 
+    config: dict) -> str:
     add_repeated = is_array
     if 'ViSession' in type:
         type = 'nidevice_grpc.Session'
@@ -670,7 +680,7 @@ def get_grpc_type_from_ivi(type, is_array, driver_name_pascal):
     if 'ViReal32' in type:
         type = 'float'
     if 'ViAttr' in type:
-        type = driver_name_pascal + "Attributes"
+        type = get_attribute_enum_name(driver_name_pascal, "", config)
     if 'ViInt8' in type:
         if is_array:
             type = "bytes"
@@ -729,7 +739,12 @@ def get_grpc_type(data_type, config):
     return get_grpc_type_from_ivi(
         data_type,
         is_array(data_type),
-        service_class_prefix)
+        service_class_prefix,
+        config)
+
+
+def use_legacy_attribute_prefix(config: dict) -> bool:
+    return config.get('use_legacy_attribute_prefix', False)
 
 
 def get_split_attributes_by_type(config):

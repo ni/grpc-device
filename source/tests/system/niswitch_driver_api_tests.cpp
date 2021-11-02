@@ -172,7 +172,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
     return response.relay_position();
   }
 
-  ViReal64 get_real64_attribute(const char* channel_name, niswitch::NiSwitchAttributes attribute_id)
+  ViReal64 get_real64_attribute(const char* channel_name, niswitch::NiSwitchAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     niswitch::GetAttributeViReal64Request request;
@@ -188,7 +188,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  std::string get_string_attribute(const char* channel_name, niswitch::NiSwitchAttributes attribute_id)
+  std::string get_string_attribute(const char* channel_name, niswitch::NiSwitchAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     niswitch::GetAttributeViStringRequest request;
@@ -241,7 +241,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchReset_SendRequest_ResetCompletesSuccessful
 TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal64AttributeMatches)
 {
   const char* channel_name = "";
-  const niswitch::NiSwitchAttributes attribute_to_set = niswitch::NiSwitchAttributes::NISWITCH_ATTRIBUTE_SCAN_DELAY;
+  const niswitch::NiSwitchAttribute attribute_to_set = niswitch::NiSwitchAttribute::NISWITCH_ATTRIBUTE_SCAN_DELAY;
   const ViReal64 expected_value = 402.24;
   ::grpc::ClientContext context;
   niswitch::SetAttributeViReal64Request request;
@@ -262,7 +262,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal
 TEST_F(NiSwitchDriverApiTest, NiSwitchSetViStringAttribute_SendRequest_GetViStringAttributeMatches)
 {
   const char* channel_name = "";
-  const niswitch::NiSwitchAttributes attribute_to_set = niswitch::NiSwitchAttributes::NISWITCH_ATTRIBUTE_SCAN_LIST;
+  const niswitch::NiSwitchAttribute attribute_to_set = niswitch::NiSwitchAttribute::NISWITCH_ATTRIBUTE_SCAN_LIST;
   const ViString expected_value = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3";
   ::grpc::ClientContext context;
   niswitch::SetAttributeViStringRequest request;

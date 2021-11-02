@@ -51,7 +51,7 @@ finish_sync_pulse_sender_synchronize(const StubPtr& stub, const std::vector<nide
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttributes& attribute_id)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -69,7 +69,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& sessi
 }
 
 GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttributes& attribute_id)
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -87,7 +87,7 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& sess
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttributes& attribute_id)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -152,7 +152,7 @@ is_done(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttributes& attribute_id, const double& value_raw)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const double& value_raw)
 {
   ::grpc::ClientContext context;
 
@@ -171,7 +171,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& sessi
 }
 
 SetAttributeViSessionResponse
-set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttributes& attribute_id, const nidevice_grpc::Session& value)
+set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const nidevice_grpc::Session& value)
 {
   ::grpc::ClientContext context;
 
@@ -190,7 +190,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& sess
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttributes& attribute_id, const pb::string& value_raw)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const pb::string& value_raw)
 {
   ::grpc::ClientContext context;
 

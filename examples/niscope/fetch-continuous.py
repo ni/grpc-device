@@ -127,7 +127,7 @@ try :
     CheckForError(vi, (client.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
         vi = vi,
         channel_list = "",
-        attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_FETCH_RELATIVE_TO,
+        attribute_id = niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_FETCH_RELATIVE_TO,
         value = niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_FETCH_RELATIVE_TO_VAL_READ_POINTER
         ))).status)
  

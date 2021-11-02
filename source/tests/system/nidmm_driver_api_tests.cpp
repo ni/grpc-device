@@ -106,7 +106,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
     return response.error_message();
   }
 
-  ViBoolean get_bool_attribute(const char* channel_name, dmm::NiDmmAttributes attribute_id)
+  ViBoolean get_bool_attribute(const char* channel_name, dmm::NiDmmAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     dmm::GetAttributeViBooleanRequest request;
@@ -122,7 +122,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  ViInt32 get_int32_attribute(const char* channel_name, dmm::NiDmmAttributes attribute_id)
+  ViInt32 get_int32_attribute(const char* channel_name, dmm::NiDmmAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     dmm::GetAttributeViInt32Request request;
@@ -138,7 +138,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  ViReal64 get_real64_attribute(const char* channel_name, dmm::NiDmmAttributes attribute_id)
+  ViReal64 get_real64_attribute(const char* channel_name, dmm::NiDmmAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     dmm::GetAttributeViReal64Request request;
@@ -246,7 +246,7 @@ TEST_F(NiDmmDriverApiTest, Reset_CompletesSuccessfully)
 TEST_F(NiDmmDriverApiTest, SetViReal64Attribute_GetViReal64Attribute_ValueMatchesSetValue)
 {
   const char* channel_name = "";
-  const dmm::NiDmmAttributes attribute_to_set = dmm::NiDmmAttributes::NIDMM_ATTRIBUTE_TRIGGER_DELAY;
+  const dmm::NiDmmAttribute attribute_to_set = dmm::NiDmmAttribute::NIDMM_ATTRIBUTE_TRIGGER_DELAY;
   const ViReal64 expected_value = 42.24;
   ::grpc::ClientContext context;
   dmm::SetAttributeViReal64Request request;
@@ -266,7 +266,7 @@ TEST_F(NiDmmDriverApiTest, SetViReal64Attribute_GetViReal64Attribute_ValueMatche
 TEST_F(NiDmmDriverApiTest, SetViInt32Attribute_GetViInt32Attribute_ValueMatchesSetValue)
 {
   const char* channel_name = "";
-  const dmm::NiDmmAttributes attribute_to_set = dmm::NiDmmAttributes::NIDMM_ATTRIBUTE_SAMPLE_COUNT;
+  const dmm::NiDmmAttribute attribute_to_set = dmm::NiDmmAttribute::NIDMM_ATTRIBUTE_SAMPLE_COUNT;
   const ViInt32 expected_value = 4;
   ::grpc::ClientContext context;
   dmm::SetAttributeViInt32Request request;
@@ -286,7 +286,7 @@ TEST_F(NiDmmDriverApiTest, SetViInt32Attribute_GetViInt32Attribute_ValueMatchesS
 TEST_F(NiDmmDriverApiTest, SetViBooleanAttribute_GetViBooleanAttribute_ValueMatchesSetValue)
 {
   const char* channel_name = "";
-  const dmm::NiDmmAttributes attribute_to_set = dmm::NiDmmAttributes::NIDMM_ATTRIBUTE_SIMULATE;
+  const dmm::NiDmmAttribute attribute_to_set = dmm::NiDmmAttribute::NIDMM_ATTRIBUTE_SIMULATE;
   const ViBoolean expected_value = true;
   ::grpc::ClientContext context;
   dmm::SetAttributeViBooleanRequest request;
@@ -340,7 +340,7 @@ TEST_F(NiDmmDriverApiTest, ExportConfiguredCurrentSource_ResetAndImportConfigura
   reset();
   import_attribute_configuration_buffer(exported_configuration_response);
 
-  double set_value = get_real64_attribute("", dmm::NiDmmAttributes::NIDMM_ATTRIBUTE_CURRENT_SOURCE);
+  double set_value = get_real64_attribute("", dmm::NiDmmAttribute::NIDMM_ATTRIBUTE_CURRENT_SOURCE);
   EXPECT_EQ(expected_value, set_value);
 }
 

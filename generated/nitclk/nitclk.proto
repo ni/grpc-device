@@ -33,7 +33,7 @@ service NiTClk {
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
 }
 
-enum NiTClkAttributes {
+enum NiTClkAttribute {
   NITCLK_ATTRIBUTE_UNSPECIFIED = 0;
   NITCLK_ATTRIBUTE_SYNC_PULSE_SOURCE = 1;
   NITCLK_ATTRIBUTE_EXPORTED_SYNC_PULSE_OUTPUT_TERMINAL = 2;
@@ -69,7 +69,7 @@ message FinishSyncPulseSenderSynchronizeResponse {
 message GetAttributeViReal64Request {
   nidevice_grpc.Session session = 1;
   string channel_name = 2;
-  NiTClkAttributes attribute_id = 3;
+  NiTClkAttribute attribute_id = 3;
 }
 
 message GetAttributeViReal64Response {
@@ -80,7 +80,7 @@ message GetAttributeViReal64Response {
 message GetAttributeViSessionRequest {
   nidevice_grpc.Session session = 1;
   string channel_name = 2;
-  NiTClkAttributes attribute_id = 3;
+  NiTClkAttribute attribute_id = 3;
 }
 
 message GetAttributeViSessionResponse {
@@ -91,7 +91,7 @@ message GetAttributeViSessionResponse {
 message GetAttributeViStringRequest {
   nidevice_grpc.Session session = 1;
   string channel_name = 2;
-  NiTClkAttributes attribute_id = 3;
+  NiTClkAttribute attribute_id = 3;
 }
 
 message GetAttributeViStringResponse {
@@ -127,7 +127,7 @@ message IsDoneResponse {
 message SetAttributeViReal64Request {
   nidevice_grpc.Session session = 1;
   string channel_name = 2;
-  NiTClkAttributes attribute_id = 3;
+  NiTClkAttribute attribute_id = 3;
   double value_raw = 4;
 }
 
@@ -138,7 +138,7 @@ message SetAttributeViReal64Response {
 message SetAttributeViSessionRequest {
   nidevice_grpc.Session session = 1;
   string channel_name = 2;
-  NiTClkAttributes attribute_id = 3;
+  NiTClkAttribute attribute_id = 3;
   nidevice_grpc.Session value = 4;
 }
 
@@ -149,7 +149,7 @@ message SetAttributeViSessionResponse {
 message SetAttributeViStringRequest {
   nidevice_grpc.Session session = 1;
   string channel_name = 2;
-  NiTClkAttributes attribute_id = 3;
+  NiTClkAttribute attribute_id = 3;
   string value_raw = 4;
 }
 

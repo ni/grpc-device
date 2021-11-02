@@ -123,7 +123,7 @@ service NiRFSA {
   rpc SetUserData(SetUserDataRequest) returns (SetUserDataResponse);
 }
 
-enum NiRFSAAttributes {
+enum NiRFSAAttribute {
   NIRFSA_ATTRIBUTE_UNSPECIFIED = 0;
   NIRFSA_ATTRIBUTE_RANGE_CHECK = 1050002;
   NIRFSA_ATTRIBUTE_QUERY_INSTRUMENT_STATUS = 1050003;
@@ -1057,7 +1057,7 @@ message ConfigureSpectrumFrequencyStartStopResponse {
 message CreateConfigurationListRequest {
   nidevice_grpc.Session vi = 1;
   string list_name = 2;
-  repeated NiRFSAAttributes list_attribute_ids = 3;
+  repeated NiRFSAAttribute list_attribute_ids = 3;
   bool set_as_active_list = 4;
 }
 
@@ -1301,7 +1301,7 @@ message FetchIQSingleRecordComplexI16Response {
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
 }
 
 message GetAttributeViBooleanResponse {
@@ -1312,7 +1312,7 @@ message GetAttributeViBooleanResponse {
 message GetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt32Response {
@@ -1323,7 +1323,7 @@ message GetAttributeViInt32Response {
 message GetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt64Response {
@@ -1334,7 +1334,7 @@ message GetAttributeViInt64Response {
 message GetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
 }
 
 message GetAttributeViReal64Response {
@@ -1345,7 +1345,7 @@ message GetAttributeViReal64Response {
 message GetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
 }
 
 message GetAttributeViSessionResponse {
@@ -1356,7 +1356,7 @@ message GetAttributeViSessionResponse {
 message GetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
 }
 
 message GetAttributeViStringResponse {
@@ -1719,7 +1719,7 @@ message ResetResponse {
 message ResetAttributeRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
 }
 
 message ResetAttributeResponse {
@@ -1826,7 +1826,7 @@ message SendSoftwareEdgeTriggerResponse {
 message SetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
   bool value = 4;
 }
 
@@ -1837,7 +1837,7 @@ message SetAttributeViBooleanResponse {
 message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSAInt32AttributeValues value = 4;
     sint32 value_raw = 5;
@@ -1851,7 +1851,7 @@ message SetAttributeViInt32Response {
 message SetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
   int64 value_raw = 4;
 }
 
@@ -1862,7 +1862,7 @@ message SetAttributeViInt64Response {
 message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
   double value_raw = 4;
 }
 
@@ -1873,7 +1873,7 @@ message SetAttributeViReal64Response {
 message SetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
   nidevice_grpc.Session value = 4;
 }
 
@@ -1884,7 +1884,7 @@ message SetAttributeViSessionResponse {
 message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSAAttributes attribute_id = 3;
+  NiRFSAAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSAStringAttributeValuesMapped value_mapped = 4;
     string value_raw = 5;

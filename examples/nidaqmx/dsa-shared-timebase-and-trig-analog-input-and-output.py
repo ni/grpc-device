@@ -221,40 +221,40 @@ async def main():
                 # your hardware device manual for further information on whether this method
                 # of synchronization is supported for your particular device.
                 await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                    task=leader_input_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_REF_CLK_SRC,
+                    task=leader_input_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
                     value="PXI_Clk10")))
                 await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                    task=leader_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_REF_CLK_SRC,
+                    task=leader_output_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
                     value="PXI_Clk10")))
                 await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                    task=follower_input_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_REF_CLK_SRC,
+                    task=follower_input_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
                     value="PXI_Clk10")))
                 await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                    task=follower_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_REF_CLK_SRC,
+                    task=follower_output_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
                     value="PXI_Clk10")))
             else:
                 # Sample clock
                 # Note: If you are using PXI DSA devices, the leader device must reside in PXI Slot 2.
                 timebase_source = await get_terminal_name_with_dev_prefix(task=leader_input_task, terminal_name="SampleClockTimebase")
                 await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                    task=leader_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
+                    task=leader_output_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
                     value=timebase_source)))
                 await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                    task=follower_input_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
+                    task=follower_input_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
                     value=timebase_source)))
                 await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                    task=follower_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
+                    task=follower_output_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
                     value=timebase_source)))
 
             sync_pulse_source = await get_terminal_name_with_dev_prefix(task=leader_input_task, terminal_name="SyncPulse")
             await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                task=leader_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
+                task=leader_output_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
                 value=sync_pulse_source)))
             await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                task=follower_input_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
+                task=follower_input_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
                 value=sync_pulse_source)))
             await raise_if_error_async(client.SetTimingAttributeString(nidaqmx_types.SetTimingAttributeStringRequest(
-                task=follower_output_task, attribute=nidaqmx_types.TimingStringAttributes.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
+                task=follower_output_task, attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
                 value=sync_pulse_source)))
 
             # DAQmx Configure Start Trigger code

@@ -6,7 +6,7 @@
 %>
 
 ## Define a proto enum capturing attributes from the metadata.
-<%def name="define_attribute_enum(group_name, sub_group, attributes)">\
+<%def name="define_attribute_enum(group_name, sub_group, attributes, config)">\
 <%
   attribute_value_prefix = group_name.upper() + "_ATTRIBUTE"
 
@@ -20,7 +20,7 @@
   unspecified_attribute_value_prefix = disambiguated_attribute_value_prefix
   attribute_value_prefix = disambiguated_attribute_value_prefix if sub_group == "Reset" else attribute_value_prefix
 %>\
-enum ${common_helpers.get_attribute_enum_name(group_name, sub_group)} {
+enum ${common_helpers.get_attribute_enum_name(group_name, sub_group, config)} {
   ${unspecified_attribute_value_prefix}_UNSPECIFIED = 0;
 % for attribute in attributes:
 <%

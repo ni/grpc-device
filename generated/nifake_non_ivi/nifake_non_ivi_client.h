@@ -23,9 +23,9 @@ using namespace nidevice_grpc::experimental::client;
 
 
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& handle);
-GetMarbleAttributeDoubleResponse get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttributes, pb::int32>& attribute);
-GetMarbleAttributeInt32Response get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attributes, pb::int32>& attribute);
-GetMarbleAttributeInt32ArrayResponse get_marble_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32ArrayAttributes, pb::int32>& attribute);
+GetMarbleAttributeDoubleResponse get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute);
+GetMarbleAttributeInt32Response get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attribute, pb::int32>& attribute);
+GetMarbleAttributeInt32ArrayResponse get_marble_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32ArrayAttribute, pb::int32>& attribute);
 InitResponse init(const StubPtr& stub, const pb::string& session_name);
 InitWithHandleNameAsSessionNameResponse init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& handle_name);
 InputArraysWithNarrowIntegerTypesResponse input_arrays_with_narrow_integer_types(const StubPtr& stub, const std::vector<pb::uint32>& u16_array, const std::vector<pb::int32>& i16_array, const std::vector<pb::int32>& i8_array);
@@ -40,9 +40,9 @@ InputTimestampResponse input_timestamp(const StubPtr& stub, const google::protob
 OutputTimestampResponse output_timestamp(const StubPtr& stub);
 InputVarArgsResponse input_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<StringAndEnum>& string_and_enums);
 OutputVarArgsResponse output_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<pb::string>& channel_names);
-ResetMarbleAttributeResponse reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleResetAttributes, pb::int32>& attribute);
-SetMarbleAttributeDoubleResponse set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttributes, pb::int32>& attribute, const double& value);
-SetMarbleAttributeInt32Response set_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attributes, pb::int32>& attribute, const simple_variant<MarbleInt32AttributeValues, pb::int32>& value);
+ResetMarbleAttributeResponse reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleResetAttribute, pb::int32>& attribute);
+SetMarbleAttributeDoubleResponse set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute, const double& value);
+SetMarbleAttributeInt32Response set_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attribute, pb::int32>& attribute, const simple_variant<MarbleInt32AttributeValues, pb::int32>& value);
 SetColorsResponse set_colors(const StubPtr& stub, const std::vector<pb::int32>& colors, const pb::int32& size);
 GetStructsWithCoercionResponse get_structs_with_coercion(const StubPtr& stub, const pb::int32& number_of_structs);
 SetStructsWithCoercionResponse set_structs_with_coercion(const StubPtr& stub, const std::vector<StructWithCoercion>& structs);

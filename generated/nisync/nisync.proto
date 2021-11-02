@@ -88,7 +88,7 @@ service NiSync {
   rpc CalAdjustDDSInitialPhase(CalAdjustDDSInitialPhaseRequest) returns (CalAdjustDDSInitialPhaseResponse);
 }
 
-enum NiSyncAttributes {
+enum NiSyncAttribute {
   NISYNC_ATTRIBUTE_UNSPECIFIED = 0;
   NISYNC_ATTRIBUTE_INTF_NUM = 1150000;
   NISYNC_ATTRIBUTE_SERIAL_NUM = 1150001;
@@ -693,7 +693,7 @@ message GetTimeReferenceNamesResponse {
 message GetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
-  NiSyncAttributes attribute = 3;
+  NiSyncAttribute attribute = 3;
 }
 
 message GetAttributeViInt32Response {
@@ -704,7 +704,7 @@ message GetAttributeViInt32Response {
 message GetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
-  NiSyncAttributes attribute = 3;
+  NiSyncAttribute attribute = 3;
 }
 
 message GetAttributeViReal64Response {
@@ -715,7 +715,7 @@ message GetAttributeViReal64Response {
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
-  NiSyncAttributes attribute = 3;
+  NiSyncAttribute attribute = 3;
 }
 
 message GetAttributeViBooleanResponse {
@@ -726,7 +726,7 @@ message GetAttributeViBooleanResponse {
 message GetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
-  NiSyncAttributes attribute = 3;
+  NiSyncAttribute attribute = 3;
 }
 
 message GetAttributeViStringResponse {
@@ -737,7 +737,7 @@ message GetAttributeViStringResponse {
 message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
-  NiSyncAttributes attribute = 3;
+  NiSyncAttribute attribute = 3;
   sint32 value_raw = 4;
 }
 
@@ -748,7 +748,7 @@ message SetAttributeViInt32Response {
 message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
-  NiSyncAttributes attribute = 3;
+  NiSyncAttribute attribute = 3;
   double value_raw = 4;
 }
 
@@ -759,7 +759,7 @@ message SetAttributeViReal64Response {
 message SetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
-  NiSyncAttributes attribute = 3;
+  NiSyncAttribute attribute = 3;
   bool value = 4;
 }
 
@@ -770,7 +770,7 @@ message SetAttributeViBooleanResponse {
 message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string active_item = 2;
-  NiSyncAttributes attribute = 3;
+  NiSyncAttribute attribute = 3;
   string value_raw = 4;
 }
 

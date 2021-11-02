@@ -88,7 +88,7 @@ try :
     # Specify when the measure unit should acquire measurements.
     configure_measure_when = client.SetAttributeViInt32(nidcpower_types.SetAttributeViInt32Request(
         vi = vi,
-        attribute_id = nidcpower_types.NiDCPowerAttributes.NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
+        attribute_id = nidcpower_types.NiDCPowerAttribute.NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
         attribute_value = nidcpower_types.NiDCPowerInt32AttributeValues.NIDCPOWER_INT32_MEASURE_WHEN_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE
     ))
     CheckForError(vi, configure_measure_when.status)
@@ -103,7 +103,7 @@ try :
     # Sspecify how many measurements compose a measure record.
     configure_measure_record_length = client.SetAttributeViInt32(nidcpower_types.SetAttributeViInt32Request(
         vi = vi,
-        attribute_id = nidcpower_types.NiDCPowerAttributes.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH,
+        attribute_id = nidcpower_types.NiDCPowerAttribute.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH,
         attribute_value = record_length
     ))
     CheckForError(vi, configure_measure_record_length.status)
@@ -111,7 +111,7 @@ try :
     # Specify whether to take continuous measurements. Set it to False for continuous measurement.
     configure_measure_record_length_is_finite = client.SetAttributeViBoolean(nidcpower_types.SetAttributeViBooleanRequest(
         vi = vi,
-        attribute_id = nidcpower_types.NiDCPowerAttributes.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH_IS_FINITE,
+        attribute_id = nidcpower_types.NiDCPowerAttribute.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH_IS_FINITE,
         attribute_value = False
     ))
     CheckForError(vi, configure_measure_record_length_is_finite.status)
@@ -125,7 +125,7 @@ try :
     # get measure_record_delta_time.
     get_measure_record_delta_time = client.GetAttributeViReal64(nidcpower_types.GetAttributeViReal64Request(
        vi = vi,
-       attribute_id =  nidcpower_types.NiDCPowerAttributes.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_DELTA_TIME
+       attribute_id =  nidcpower_types.NiDCPowerAttribute.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_DELTA_TIME
     ))
     CheckForError(vi, get_measure_record_delta_time.status)
 

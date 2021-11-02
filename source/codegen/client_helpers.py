@@ -73,6 +73,7 @@ def is_basic_type(grpc_type: str) -> bool:
     grpc_type in PROTOBUF_PRIM_TYPES
     or grpc_type in PROTOBUF_TYPE_TO_CPP_TYPE
     or grpc_type.endswith("Attributes")
+    or grpc_type.endswith("Attribute")
   )
 
 

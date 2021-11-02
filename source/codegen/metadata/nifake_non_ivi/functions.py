@@ -19,7 +19,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'MarbleAttributes',
+                'grpc_type': 'MarbleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -40,7 +40,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'MarbleAttributes',
+                'grpc_type': 'MarbleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -61,7 +61,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'MarbleAttributes',
+                'grpc_type': 'MarbleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -429,7 +429,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'MarbleAttributes',
+                'grpc_type': 'MarbleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -445,7 +445,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'MarbleAttributes',
+                'grpc_type': 'MarbleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -466,7 +466,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'MarbleAttributes',
+                'grpc_type': 'MarbleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },

@@ -29,7 +29,7 @@ AcceptViUInt32ArrayResponse accept_vi_uint32_array(const StubPtr& stub, const ni
 BoolArrayOutputFunctionResponse bool_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 BoolArrayInputFunctionResponse bool_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements, const std::vector<bool>& an_array);
 CommandWithReservedParamResponse command_with_reserved_param(const StubPtr& stub, const nidevice_grpc::Session& vi);
-CreateConfigurationListResponse create_configuration_list(const StubPtr& stub, const std::vector<NiFakeAttributes>& list_attribute_ids);
+CreateConfigurationListResponse create_configuration_list(const StubPtr& stub, const std::vector<NiFakeAttribute>& list_attribute_ids);
 DoubleAllTheNumsResponse double_all_the_nums(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& numbers);
 EnumArrayOutputFunctionResponse enum_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 EnumInputFunctionWithDefaultsResponse enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Turtle, pb::int32>& a_turtle);
@@ -48,12 +48,12 @@ GetAnIviDanceWithATwistStringStrlenBugResponse get_an_ivi_dance_with_a_twist_str
 GetArraySizeForCustomCodeResponse get_array_size_for_custom_code(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetArrayUsingIviDanceResponse get_array_using_ivi_dance(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetArrayViUInt8WithEnumResponse get_array_vi_uint8_with_enum(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_len);
-GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttributes& attribute_id);
-GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttributes& attribute_id);
-GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttributes& attribute_id);
-GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttributes& attribute_id);
+GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
+GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
+GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
+GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
 GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& attribute_id);
-GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttributes& attribute_id);
+GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
 GetCalDateAndTimeResponse get_cal_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& cal_type);
 GetCalIntervalResponse get_cal_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetCustomTypeResponse get_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi);

@@ -112,12 +112,12 @@ ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer
 ExportAttributeConfigurationFileResponse export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal);
 FetchMultipleResponse fetch_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& timeout, const pb::int32& count);
-GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
-GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id);
+GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
+GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
+GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
+GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
+GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
+GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
 GetChannelNameResponse get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index);
 GetChannelNameFromStringResponse get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& index);
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -147,12 +147,12 @@ ResetWithDefaultsResponse reset_with_defaults(const StubPtr& stub, const nidevic
 RevisionQueryResponse revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SelfTestResponse self_test(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SendSoftwareEdgeTriggerResponse send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& trigger);
-SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const bool& attribute_value);
-SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const simple_variant<NiDCPowerInt32AttributeValues, pb::int32>& attribute_value);
-SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const pb::int64& attribute_value_raw);
-SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const simple_variant<NiDCPowerReal64AttributeValues, double>& attribute_value);
-SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const nidevice_grpc::Session& attribute_value);
-SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttributes& attribute_id, const pb::string& attribute_value_raw);
+SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const bool& attribute_value);
+SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const simple_variant<NiDCPowerInt32AttributeValues, pb::int32>& attribute_value);
+SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const pb::int64& attribute_value_raw);
+SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const simple_variant<NiDCPowerReal64AttributeValues, double>& attribute_value);
+SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const nidevice_grpc::Session& attribute_value);
+SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const pb::string& attribute_value_raw);
 SetSequenceResponse set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& values, const std::vector<double>& source_delays);
 WaitForEventResponse wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout);
 

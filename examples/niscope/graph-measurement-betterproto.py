@@ -127,7 +127,7 @@ async def ConfigureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, v
     # Setup and Edge Trigger
     set_trigger_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
-        attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
+        attribute_id = niscope_grpc.NiScopeAttribute.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
         value_raw = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_TRIGGER_TYPE_VAL_EDGE_TRIGGER
     )
     await CheckStatus(scope_service, vi, set_trigger_result)
@@ -145,7 +145,7 @@ async def ConfigureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, v
     set_units_result = await scope_service.set_attribute_vi_int32(
         vi = vi,
         channel_list = channels,
-        attribute_id = niscope_grpc.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+        attribute_id = niscope_grpc.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
         value_raw = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
     )
     await CheckStatus(scope_service, vi, set_units_result)

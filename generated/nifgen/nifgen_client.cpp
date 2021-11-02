@@ -88,7 +88,7 @@ allocate_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
 }
 
 CheckAttributeViBooleanResponse
-check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const bool& attribute_value)
+check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const bool& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -107,7 +107,7 @@ check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViInt32Response
-check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const simple_variant<NiFgenInt32AttributeValues, pb::int32>& attribute_value)
+check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenInt32AttributeValues, pb::int32>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -133,7 +133,7 @@ check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViInt64Response
-check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const pb::int64& attribute_value_raw)
+check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::int64& attribute_value_raw)
 {
   ::grpc::ClientContext context;
 
@@ -152,7 +152,7 @@ check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViReal64Response
-check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
+check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -178,7 +178,7 @@ check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 CheckAttributeViSessionResponse
-check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const nidevice_grpc::Session& attribute_value)
+check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -197,7 +197,7 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViStringResponse
-check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const pb::string& attribute_value_raw)
+check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::string& attribute_value_raw)
 {
   ::grpc::ClientContext context;
 
@@ -1354,7 +1354,7 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
 }
 
 GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id)
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1372,7 +1372,7 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id)
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1390,7 +1390,7 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViInt64Response
-get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id)
+get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1408,7 +1408,7 @@ get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1426,7 +1426,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id)
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1444,7 +1444,7 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -1908,7 +1908,7 @@ reset(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ResetAttributeResponse
-reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id)
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
@@ -2080,7 +2080,7 @@ send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const bool& attribute_value)
+set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const bool& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2099,7 +2099,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const simple_variant<NiFgenInt32AttributeValues, pb::int32>& attribute_value)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenInt32AttributeValues, pb::int32>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2125,7 +2125,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViInt64Response
-set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const pb::int64& attribute_value_raw)
+set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::int64& attribute_value_raw)
 {
   ::grpc::ClientContext context;
 
@@ -2144,7 +2144,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2170,7 +2170,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViSessionResponse
-set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const nidevice_grpc::Session& attribute_value)
+set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2189,7 +2189,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttributes& attribute_id, const pb::string& attribute_value_raw)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::string& attribute_value_raw)
 {
   ::grpc::ClientContext context;
 

@@ -19,7 +19,7 @@ service NiFakeExtension {
   rpc AddCoolFunctionality(AddCoolFunctionalityRequest) returns (AddCoolFunctionalityResponse);
 }
 
-enum NiFakeExtensionAttributes {
+enum NiFakeExtensionAttribute {
   NIFAKEEXTENSION_ATTRIBUTE_UNSPECIFIED = 0;
 }
 

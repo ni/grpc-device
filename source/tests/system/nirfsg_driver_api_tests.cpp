@@ -204,18 +204,18 @@ TEST_F(NiRFSGDriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
   auto set_response = client::set_attribute_vi_string(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL,
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL,
       NiRFSGStringAttributeValuesMapped::NIRFSG_STRING_REF_CLOCK_OUTPUT_TERM_REF_OUT);
   auto get_response = client::get_attribute_vi_string(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -231,18 +231,18 @@ TEST_F(NiRFSGDriverApiTests, SetAutomaticThermalCorrection_UpdatesSuccessfully)
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_AUTOMATIC_THERMAL_CORRECTION);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_AUTOMATIC_THERMAL_CORRECTION);
   auto set_response = client::set_attribute_vi_int32(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_AUTOMATIC_THERMAL_CORRECTION,
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_AUTOMATIC_THERMAL_CORRECTION,
       NiRFSGInt32AttributeValues::NIRFSG_INT32_ENABLE_VALUES_DISABLE);
   auto get_response = client::get_attribute_vi_int32(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_AUTOMATIC_THERMAL_CORRECTION);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_AUTOMATIC_THERMAL_CORRECTION);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -273,18 +273,18 @@ TEST_F(NiRFSGDriverApiTests, DisableIQImpairment_IQImpairmentIsDisabled)
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_IMPAIRMENT_ENABLED);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_IQ_IMPAIRMENT_ENABLED);
   auto set_response = client::set_attribute_vi_boolean(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_IMPAIRMENT_ENABLED,
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_IQ_IMPAIRMENT_ENABLED,
       false);
   auto get_response = client::get_attribute_vi_boolean(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_IMPAIRMENT_ENABLED);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_IQ_IMPAIRMENT_ENABLED);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -301,18 +301,18 @@ TEST_F(NiRFSGDriverApiTests, ReconfigureIQRate_UpdatesIQRateSuccessfully)
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_RATE);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_IQ_RATE);
   auto set_response = client::set_attribute_vi_real64(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_RATE,
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_IQ_RATE,
       NEW_RATE);
   auto get_response = client::get_attribute_vi_real64(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_RATE);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_IQ_RATE);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -329,18 +329,18 @@ TEST_F(NiRFSGDriverApiTests, SetHostDMABufferSize_UpdatesHostDMABufferSizeSucces
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_HOST_DMA_BUFFER_SIZE);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_HOST_DMA_BUFFER_SIZE);
   auto set_response = client::set_attribute_vi_int64(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_HOST_DMA_BUFFER_SIZE,
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_HOST_DMA_BUFFER_SIZE,
       NEW_VALUE);
   auto get_response = client::get_attribute_vi_int64(
       stub(),
       session,
       "",
-      NiRFSGAttributes::NIRFSG_ATTRIBUTE_HOST_DMA_BUFFER_SIZE);
+      NiRFSGAttribute::NIRFSG_ATTRIBUTE_HOST_DMA_BUFFER_SIZE);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -445,8 +445,8 @@ TEST_F(NiRFSGDriverApiTests, WriteArbWaveformF32_Succeeds)
   auto session = init_session(stub(), PXI_5820);
   auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationMode::GENERATION_MODE_ARB_WAVEFORM);
   auto configure_power_level_type = client::configure_power_level_type(stub(), session, PowerLevelType::POWER_LEVEL_TYPE_PEAK_POWER);
-  auto configure_iq_port_level = client::set_attribute_vi_real64(stub(), session, "", NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_OUT_PORT_LEVEL, 0.2);
-  auto configure_gain = client::set_attribute_vi_real64(stub(), session, "", NiRFSGAttributes::NIRFSG_ATTRIBUTE_ARB_PRE_FILTER_GAIN, -20);
+  auto configure_iq_port_level = client::set_attribute_vi_real64(stub(), session, "", NiRFSGAttribute::NIRFSG_ATTRIBUTE_IQ_OUT_PORT_LEVEL, 0.2);
+  auto configure_gain = client::set_attribute_vi_real64(stub(), session, "", NiRFSGAttribute::NIRFSG_ATTRIBUTE_ARB_PRE_FILTER_GAIN, -20);
   auto point1 = nidevice_grpc::NIComplexNumberF32();
   point1.set_real(0.7f);
   point1.set_imaginary(-0.7f);

@@ -840,7 +840,7 @@ get_time_reference_names(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 GetAttributeViInt32Response
-get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttributes& attribute)
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -858,7 +858,7 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 GetAttributeViReal64Response
-get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttributes& attribute)
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -876,7 +876,7 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViBooleanResponse
-get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttributes& attribute)
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -894,7 +894,7 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttributes& attribute)
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute)
 {
   ::grpc::ClientContext context;
 
@@ -912,7 +912,7 @@ get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttributes& attribute, const pb::int32& value_raw)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const pb::int32& value_raw)
 {
   ::grpc::ClientContext context;
 
@@ -931,7 +931,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttributes& attribute, const double& value_raw)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const double& value_raw)
 {
   ::grpc::ClientContext context;
 
@@ -950,7 +950,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViBooleanResponse
-set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttributes& attribute, const bool& value)
+set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const bool& value)
 {
   ::grpc::ClientContext context;
 
@@ -969,7 +969,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttributes& attribute, const pb::string& value_raw)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const pb::string& value_raw)
 {
   ::grpc::ClientContext context;
 

@@ -837,7 +837,7 @@ TEST_F(NiFakeNonIviServiceTests, OutputTimestamp_KnownValue)
 
 TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeDouble_Succeeds)
 {
-  const auto ATTRIBUTE = MarbleDoubleAttributes::MARBLE_ATTRIBUTE_WEIGHT;
+  const auto ATTRIBUTE = MarbleDoubleAttribute::MARBLE_ATTRIBUTE_WEIGHT;
   const auto VALUE = 1.2345;
   EXPECT_CALL(library_, SetMarbleAttributeDouble(_, ATTRIBUTE, VALUE))
       .WillOnce(Return(kDriverSuccess));
@@ -853,7 +853,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeDouble_Succeeds)
 
 TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32_Succeeds)
 {
-  const auto ATTRIBUTE = MarbleInt32Attributes::MARBLE_ATTRIBUTE_COLOR;
+  const auto ATTRIBUTE = MarbleInt32Attribute::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_GREEN;
   EXPECT_CALL(library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
       .WillOnce(Return(kDriverSuccess));
@@ -869,7 +869,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32_Succeeds)
 
 TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32Raw_Succeeds)
 {
-  const auto ATTRIBUTE = MarbleInt32Attributes::MARBLE_ATTRIBUTE_COLOR;
+  const auto ATTRIBUTE = MarbleInt32Attribute::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = 9999;
   EXPECT_CALL(library_, SetMarbleAttributeInt32(_, ATTRIBUTE, VALUE))
       .WillOnce(Return(kDriverSuccess));
@@ -885,7 +885,7 @@ TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeInt32Raw_Succeeds)
 
 TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32Enum_ReturnsValueAndValueRaw)
 {
-  const auto ATTRIBUTE = MarbleInt32Attributes::MARBLE_ATTRIBUTE_COLOR;
+  const auto ATTRIBUTE = MarbleInt32Attribute::MARBLE_ATTRIBUTE_COLOR;
   const auto VALUE = MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_AQUA;
   EXPECT_CALL(library_, GetMarbleAttributeInt32(_, ATTRIBUTE, _))
       .WillOnce(DoAll(SetArgPointee<2>(VALUE), Return(kDriverSuccess)));
@@ -929,7 +929,7 @@ auto get_value_raw_vector(const TResponse& response)
 
 TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32ArrayNonEnum_ReturnsValueRawAndUnspecifiedValue)
 {
-  const auto ATTRIBUTE = MarbleInt32ArrayAttributes::MARBLE_ATTRIBUTE_TEN_RANDOM_NUMBERS;
+  const auto ATTRIBUTE = MarbleInt32ArrayAttribute::MARBLE_ATTRIBUTE_TEN_RANDOM_NUMBERS;
   int VALUE[] = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
   EXPECT_CALL(library_, GetMarbleAttributeInt32Array(_, ATTRIBUTE, _))
       .WillOnce(DoAll(SetArrayArgument<2>(VALUE, VALUE + 10), Return(kDriverSuccess)));
@@ -950,7 +950,7 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32ArrayNonEnum_ReturnsValu
 
 TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32NonEnum_ReturnsValueRawAndUnspecifiedValue)
 {
-  const auto ATTRIBUTE = MarbleInt32Attributes::MARBLE_ATTRIBUTE_NUMBER_OF_FAILED_ATTEMPTS;
+  const auto ATTRIBUTE = MarbleInt32Attribute::MARBLE_ATTRIBUTE_NUMBER_OF_FAILED_ATTEMPTS;
   const auto VALUE = 1000;
   EXPECT_CALL(library_, GetMarbleAttributeInt32(_, ATTRIBUTE, _))
       .WillOnce(DoAll(SetArgPointee<2>(VALUE), Return(kDriverSuccess)));
@@ -967,7 +967,7 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32NonEnum_ReturnsValueRawA
 
 TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32ArrayEnum_ReturnsValueAndValueRaw)
 {
-  const auto ATTRIBUTE = MarbleInt32ArrayAttributes::MARBLE_ATTRIBUTE_TEN_FAVORITE_COLORS;
+  const auto ATTRIBUTE = MarbleInt32ArrayAttribute::MARBLE_ATTRIBUTE_TEN_FAVORITE_COLORS;
   int VALUE[] = {
       MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
       MarbleInt32AttributeValues::MARBLE_INT32_BEAUTIFUL_COLOR_BLACK,
@@ -999,7 +999,7 @@ TEST_F(NiFakeNonIviServiceTests, GetMarbleAttributeInt32ArrayEnum_ReturnsValueAn
 
 TEST_F(NiFakeNonIviServiceTests, ResetMarbleAttribute_Succeeds)
 {
-  const auto ATTRIBUTE = MarbleResetAttributes::MARBLE_RESET_ATTRIBUTE_WEIGHT;
+  const auto ATTRIBUTE = MarbleResetAttribute::MARBLE_RESET_ATTRIBUTE_WEIGHT;
   EXPECT_CALL(library_, ResetMarbleAttribute(_, ATTRIBUTE))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
@@ -1013,7 +1013,7 @@ TEST_F(NiFakeNonIviServiceTests, ResetMarbleAttribute_Succeeds)
 
 TEST_F(NiFakeNonIviServiceTests, SetMarbleAttributeRaw_PassesAttributeAndValueToLibrary)
 {
-  const auto RAW_ATTRIBUTE = static_cast<int32>(MarbleDoubleAttributes::MARBLE_ATTRIBUTE_WEIGHT);
+  const auto RAW_ATTRIBUTE = static_cast<int32>(MarbleDoubleAttribute::MARBLE_ATTRIBUTE_WEIGHT);
   const auto DOUBLE_VALUE = 1.234;
   EXPECT_CALL(library_, SetMarbleAttributeDouble(_, RAW_ATTRIBUTE, DOUBLE_VALUE))
       .WillOnce(Return(kDriverSuccess));
@@ -1069,7 +1069,7 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, SetMarbleAttributeRawWi
 
 TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, SetMarbleAttributeWithTypeCastedInvalidAttribute_PassesZeroAttributeToLibrary)
 {
-  const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleDoubleAttributes>(9999);
+  const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleDoubleAttribute>(9999);
   const auto DOUBLE_VALUE = 1.234;
   EXPECT_CALL(library_, SetMarbleAttributeDouble(_, 0, DOUBLE_VALUE))
       .WillOnce(Return(kDriverSuccess));
@@ -1099,7 +1099,7 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, GetMarbleAttributeRawWi
 
 TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, GetMarbleAttributeWithTypeCastedInvalidAttribute_PassesZeroAttributeToLibrary)
 {
-  const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleDoubleAttributes>(9999);
+  const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleDoubleAttribute>(9999);
   EXPECT_CALL(library_, GetMarbleAttributeDouble(_, 0, _))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;
@@ -1127,7 +1127,7 @@ TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ResetMarbleAttributeRaw
 
 TEST_F(NiFakeNonIviServiceAllowUndefinedAttributesTests, ResetMarbleAttributeWithTypeCastedInvalidAttribute_PassesZeroAttributeToLibrary)
 {
-  const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleResetAttributes>(9999);
+  const auto CASTED_INVALID_ATTRIBUTE = static_cast<MarbleResetAttribute>(9999);
   EXPECT_CALL(library_, ResetMarbleAttribute(_, 0))
       .WillOnce(Return(kDriverSuccess));
   ::grpc::ServerContext context;

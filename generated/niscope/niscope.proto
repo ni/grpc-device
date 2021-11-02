@@ -107,7 +107,7 @@ service NiScope {
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
 }
 
-enum NiScopeAttributes {
+enum NiScopeAttribute {
   NISCOPE_ATTRIBUTE_UNSPECIFIED = 0;
   NISCOPE_ATTRIBUTE_RANGE_CHECK = 1050002;
   NISCOPE_ATTRIBUTE_QUERY_INSTRUMENT_STATUS = 1050003;
@@ -887,7 +887,7 @@ message CalSelfCalibrateResponse {
 message CheckAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   bool value = 4;
 }
 
@@ -898,7 +898,7 @@ message CheckAttributeViBooleanResponse {
 message CheckAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   oneof value_enum {
     NiScopeInt32AttributeValues value = 5;
     sint32 value_raw = 4;
@@ -912,7 +912,7 @@ message CheckAttributeViInt32Response {
 message CheckAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   oneof value_enum {
     NiScopeInt64AttributeValues value = 5;
     int64 value_raw = 4;
@@ -926,7 +926,7 @@ message CheckAttributeViInt64Response {
 message CheckAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   oneof value_enum {
     NiScopeReal64AttributeValues value = 5;
     double value_raw = 4;
@@ -940,7 +940,7 @@ message CheckAttributeViReal64Response {
 message CheckAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   nidevice_grpc.Session value = 4;
 }
 
@@ -951,7 +951,7 @@ message CheckAttributeViSessionResponse {
 message CheckAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   string value_raw = 4;
 }
 
@@ -1448,7 +1448,7 @@ message FetchMeasurementStatsResponse {
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
 }
 
 message GetAttributeViBooleanResponse {
@@ -1459,7 +1459,7 @@ message GetAttributeViBooleanResponse {
 message GetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt32Response {
@@ -1470,7 +1470,7 @@ message GetAttributeViInt32Response {
 message GetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt64Response {
@@ -1481,7 +1481,7 @@ message GetAttributeViInt64Response {
 message GetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
 }
 
 message GetAttributeViReal64Response {
@@ -1492,7 +1492,7 @@ message GetAttributeViReal64Response {
 message GetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
 }
 
 message GetAttributeViSessionResponse {
@@ -1503,7 +1503,7 @@ message GetAttributeViSessionResponse {
 message GetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
 }
 
 message GetAttributeViStringResponse {
@@ -1772,7 +1772,7 @@ message SendSoftwareTriggerEdgeResponse {
 message SetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   bool value = 4;
 }
 
@@ -1783,7 +1783,7 @@ message SetAttributeViBooleanResponse {
 message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   oneof value_enum {
     NiScopeInt32AttributeValues value = 5;
     sint32 value_raw = 4;
@@ -1797,7 +1797,7 @@ message SetAttributeViInt32Response {
 message SetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   oneof value_enum {
     NiScopeInt64AttributeValues value = 5;
     int64 value_raw = 4;
@@ -1811,7 +1811,7 @@ message SetAttributeViInt64Response {
 message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   oneof value_enum {
     NiScopeReal64AttributeValues value = 5;
     double value_raw = 4;
@@ -1825,7 +1825,7 @@ message SetAttributeViReal64Response {
 message SetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   nidevice_grpc.Session value = 4;
 }
 
@@ -1836,7 +1836,7 @@ message SetAttributeViSessionResponse {
 message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
-  NiScopeAttributes attribute_id = 3;
+  NiScopeAttribute attribute_id = 3;
   string value_raw = 4;
 }
 
