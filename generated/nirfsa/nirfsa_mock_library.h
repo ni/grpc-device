@@ -18,7 +18,6 @@ namespace unit {
 class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, ChangeExtCalPassword, (ViSession vi, ViConstString oldPassword, ViConstString newPassword), (override));
   MOCK_METHOD(ViStatus, CheckAcquisitionStatus, (ViSession vi, ViBoolean* isDone), (override));
   MOCK_METHOD(ViStatus, ClearError, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ClearSelfCalibrateRange, (ViSession vi), (override));

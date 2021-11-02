@@ -23,7 +23,6 @@ using namespace nidevice_grpc::experimental::client;
 
 
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ChangeExtCalPasswordResponse change_ext_cal_password(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& old_password, const pb::string& new_password);
 CheckAcquisitionStatusResponse check_acquisition_status(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ClearErrorResponse clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ClearSelfCalibrateRangeResponse clear_self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi);

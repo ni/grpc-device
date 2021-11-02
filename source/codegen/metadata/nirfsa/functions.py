@@ -9,26 +9,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ChangeExtCalPassword': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'oldPassword',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'newPassword',
-                'type': 'ViConstString'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'CheckAcquisitionStatus': {
         'parameters': [
             {

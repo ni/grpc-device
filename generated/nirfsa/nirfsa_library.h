@@ -19,7 +19,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
 
   ::grpc::Status check_function_exists(std::string functionName);
   ViStatus Abort(ViSession vi);
-  ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword);
   ViStatus CheckAcquisitionStatus(ViSession vi, ViBoolean* isDone);
   ViStatus ClearError(ViSession vi);
   ViStatus ClearSelfCalibrateRange(ViSession vi);
@@ -128,7 +127,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
 
  private:
   using AbortPtr = decltype(&niRFSA_Abort);
-  using ChangeExtCalPasswordPtr = decltype(&niRFSA_ChangeExtCalPassword);
   using CheckAcquisitionStatusPtr = decltype(&niRFSA_CheckAcquisitionStatus);
   using ClearErrorPtr = decltype(&niRFSA_ClearError);
   using ClearSelfCalibrateRangePtr = decltype(&niRFSA_ClearSelfCalibrateRange);
@@ -237,7 +235,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
-    ChangeExtCalPasswordPtr ChangeExtCalPassword;
     CheckAcquisitionStatusPtr CheckAcquisitionStatus;
     ClearErrorPtr ClearError;
     ClearSelfCalibrateRangePtr ClearSelfCalibrateRange;
