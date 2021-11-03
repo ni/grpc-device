@@ -120,7 +120,7 @@ set(codegen_scripts
 # Populated in the api loop below.
 set(nidriver_service_srcs "")
 set(nidriver_client_srcs "")
-
+set(nidriver_proto_srcs "")
 
 foreach(api ${nidrivers})
   set(codegen_dependencies
@@ -250,12 +250,8 @@ foreach(api ${nidrivers})
       "${proto_srcs_dir}/${api}.grpc.pb.h"
   )
   if(NOT api MATCHES "^nifake.*")
-    set(nidriver_service_srcs
-      ${nidriver_service_srcs}
-      "${proto_srcs_dir}/${api}.pb.cc"
-      "${proto_srcs_dir}/${api}.grpc.pb.cc")
-    set(nidriver_client_srcs
-      ${nidriver_client_srcs}
+    set(nidriver_proto_srcs
+      ${nidriver_proto_srcs}
       "${proto_srcs_dir}/${api}.pb.cc"
       "${proto_srcs_dir}/${api}.grpc.pb.cc")
   endif()
@@ -284,12 +280,21 @@ target_link_libraries(core_server
   nlohmann_json::nlohmann_json
 )
 
+add_library(driver_protos
+  ${nidriver_proto_srcs}
+)
+
+target_link_libraries(driver_protos
+  ${_GRPC_GRPCPP}
+)
+
 add_library(driver_clients
   ${nidriver_client_srcs}
 )
 
 target_link_libraries(driver_clients
   core_server
+  driver_protos
 )
 
 add_library(driver_services)
@@ -302,6 +307,7 @@ target_sources(driver_services
 
 target_link_libraries(driver_services
   core_server
+  driver_protos
 )
 
 add_executable(ni_grpc_device_server
