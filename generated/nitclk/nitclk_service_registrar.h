@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <niTClk.h>
+#include <niTClk.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;

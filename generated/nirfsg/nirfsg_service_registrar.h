@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <niRFSG.h>
+#include <niRFSG.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;

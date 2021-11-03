@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <NIDAQmx.h>
+#include <NIDAQmx.h> // for TaskHandle
 
 namespace grpc {
 class ServerBuilder;

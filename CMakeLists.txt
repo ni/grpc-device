@@ -93,7 +93,7 @@ set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_
 set(codegen_scripts
   "${codegen_dir}/client_helpers.py"
   "${codegen_dir}/common_helpers.py"
-  "${codegen_dir}/generate_server_glue.py"
+  "${codegen_dir}/generate_shared_service_files.py"
   "${codegen_dir}/generate_service.py"
   "${codegen_dir}/service_helpers.py"
   "${codegen_dir}/proto_helpers.py"
@@ -168,14 +168,14 @@ foreach(api ${nidrivers})
     DEPENDS ${proto_dependencies})
 endforeach()
 
-set(gen_server_glue_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_server_glue.py ${metadata_dir}/ -o ${service_output_dir}/)
 add_custom_command(
   OUTPUT 
     ${service_output_dir}/register_all_services.cpp
     ${service_output_dir}/register_all_services.h
-  ${gen_server_glue_command}
+  COMMAND 
+    ${PYTHON_EXE} ${codegen_dir}/generate_shared_service_files.py ${metadata_dir}/ -o ${service_output_dir}/
   COMMENT 
-    "Generating server glue files."
+    "Generating shared service files"
   DEPENDS
     ${proto_dependencies}
 )

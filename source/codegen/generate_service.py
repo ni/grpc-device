@@ -1,14 +1,11 @@
-from pathlib import Path
 import os
 import argparse
-import importlib
-import importlib.util
 import metadata_mutation
 import metadata_validation
 from mako.lookup import TemplateLookup
 
 import common_helpers
-from template_helpers import instantiate_mako_template, write_if_changed
+from template_helpers import instantiate_mako_template, load_metadata, write_if_changed
 
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
@@ -47,10 +44,7 @@ def mutate_metadata(metadata: dict):
 
 
 def generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
-    metadata_path = Path(metadata_dir)
-    module = importlib.import_module("metadata." + metadata_path.name)
-
-    metadata = module.metadata
+    metadata = load_metadata(metadata_dir)
     metadata_validation.validate_metadata(metadata)
     if validate_only:
         return

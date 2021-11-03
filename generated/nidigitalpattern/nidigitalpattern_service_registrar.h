@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <niDigital.h>
+#include <niDigital.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;

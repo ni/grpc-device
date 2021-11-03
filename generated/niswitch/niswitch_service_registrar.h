@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <niswitch.h>
+#include <niswitch.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;

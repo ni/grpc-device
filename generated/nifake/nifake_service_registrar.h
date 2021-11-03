@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <niFake.h>
+#include <niFake.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;

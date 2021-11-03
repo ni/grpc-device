@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <niFakeNonIvi.h>
+#include <niFakeNonIvi.h> // for FakeHandle
 
 namespace grpc {
 class ServerBuilder;

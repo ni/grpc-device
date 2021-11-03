@@ -6,6 +6,7 @@ config = data["config"]
 
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_REGISTRAR_H")
 namespace = f"{config['namespace_component']}_grpc"
+resource_handle_type = service_helpers.get_resource_handle_type(config)
 resource_repository_type = service_helpers.get_shared_resource_repository_ptr_type(config)
 %>\
 
@@ -21,7 +22,7 @@ resource_repository_type = service_helpers.get_shared_resource_repository_ptr_ty
 
 #include <memory>
 
-#include <${config["c_header"]}>
+#include <${config["c_header"]}> // for ${resource_handle_type}
 
 namespace grpc {
 class ServerBuilder;

@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <nisync.h>
+#include <nisync.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;

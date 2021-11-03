@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <nidcpower.h>
+#include <nidcpower.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;

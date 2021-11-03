@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <niFgen.h>
+#include <niFgen.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;
