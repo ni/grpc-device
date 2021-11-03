@@ -93,8 +93,8 @@ set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_
 set(codegen_scripts
   "${codegen_dir}/client_helpers.py"
   "${codegen_dir}/common_helpers.py"
-  "${codegen_dir}/generate_shared_service_files.py"
   "${codegen_dir}/generate_service.py"
+  "${codegen_dir}/generate_shared_service_files.py"
   "${codegen_dir}/service_helpers.py"
   "${codegen_dir}/proto_helpers.py"
   "${codegen_dir}/metadata_mutation.py"
@@ -108,13 +108,13 @@ set(codegen_scripts
   "${codegen_dir}/templates/mock_library.h.mako"
   "${codegen_dir}/templates/proto.mako"
   "${codegen_dir}/templates/proto_helpers.mako"
+  "${codegen_dir}/templates/register_all_services.h.mako"
+  "${codegen_dir}/templates/register_all_services.cpp.mako"  
   "${codegen_dir}/templates/service.cpp.mako"
   "${codegen_dir}/templates/service_helpers.mako"
   "${codegen_dir}/templates/service.h.mako"
   "${codegen_dir}/templates/service_registrar.h.mako"
   "${codegen_dir}/templates/service_registrar.cpp.mako"  
-  "${codegen_dir}/templates/register_all_services.h.mako"
-  "${codegen_dir}/templates/register_all_services.cpp.mako"  
   )
 
 # Populated in the api loop below.
@@ -262,22 +262,22 @@ foreach(api ${nidrivers})
 endforeach()
 
 add_executable(ni_grpc_device_server
-  "source/server/core_server.cpp"
-  "source/server/core_service_registrar.cpp"
-  "source/server/device_enumerator.cpp"
-  "source/server/feature_toggles.cpp"
-  "source/server/logging.cpp"
-  "source/server/semaphore.cpp"
-  "source/server/server_configuration_parser.cpp"
-  "source/server/server_security_configuration.cpp"
-  "source/server/session_repository.cpp"
-  "source/server/session_utilities_service.cpp"
-  "source/server/shared_library.cpp"
-  "source/server/syscfg_library.cpp"
-  ${nidevice_proto_srcs}
-  ${session_proto_srcs}
-  ${session_grpc_srcs}
-  ${nidriver_service_srcs})
+   "source/server/core_server.cpp"
+   "source/server/core_service_registrar.cpp"
+   "source/server/device_enumerator.cpp"
+   "source/server/feature_toggles.cpp"
+   "source/server/logging.cpp"
+   "source/server/semaphore.cpp"
+   "source/server/server_configuration_parser.cpp"
+   "source/server/server_security_configuration.cpp"
+   "source/server/session_repository.cpp"
+   "source/server/session_utilities_service.cpp"
+   "source/server/shared_library.cpp"
+   "source/server/syscfg_library.cpp"
+   ${nidevice_proto_srcs}
+   ${session_proto_srcs}
+   ${session_grpc_srcs}
+   ${nidriver_service_srcs})
 
 if(CMAKE_SYSTEM_NAME STREQUAL Linux)
   target_sources(ni_grpc_device_server
@@ -286,12 +286,12 @@ if(CMAKE_SYSTEM_NAME STREQUAL Linux)
 endif()
 
 target_link_libraries(ni_grpc_device_server
-  ${_REFLECTION}
-  ${_GRPC_GRPCPP}
-  ${_PROTOBUF_LIBPROTOBUF}
-  ${CMAKE_DL_LIBS}
-  nlohmann_json::nlohmann_json
-  )
+   ${_REFLECTION}
+   ${_GRPC_GRPCPP}
+   ${_PROTOBUF_LIBPROTOBUF}
+   ${CMAKE_DL_LIBS}
+   nlohmann_json::nlohmann_json
+   )
 
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
 
@@ -355,11 +355,11 @@ add_executable(IntegrationTestsRunner
     find_package(Threads REQUIRED)
 
 target_link_libraries(IntegrationTestsRunner
-  gtest
-  gmock
-  ${_GRPC_GRPCPP}
-  ${CMAKE_DL_LIBS}
-  Threads::Threads)
+    gtest
+    gmock
+    ${_GRPC_GRPCPP}
+    ${CMAKE_DL_LIBS}
+    Threads::Threads)
 
 add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")
@@ -415,12 +415,12 @@ target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake_non_ivi")
 
 target_link_libraries(UnitTestsRunner
-  gtest
-  gmock
-  ${_GRPC_GRPCPP}
-  ${CMAKE_DL_LIBS}
-  Threads::Threads
-  nlohmann_json::nlohmann_json)
+    gtest
+    gmock
+    ${_GRPC_GRPCPP}
+    ${CMAKE_DL_LIBS}
+    Threads::Threads
+    nlohmann_json::nlohmann_json)
 
 #----------------------------------------------------------------------
 # Copy test asset certificates to binary output certs sub-directory
@@ -471,10 +471,10 @@ add_executable(SystemTestsRunner
     ${nidriver_client_srcs})
 
 target_link_libraries(SystemTestsRunner
-  gtest
-  gmock
-  ${_GRPC_GRPCPP}
-  ${CMAKE_DL_LIBS})
+    gtest
+    gmock
+    ${_GRPC_GRPCPP}
+    ${CMAKE_DL_LIBS})
 
 if(WIN32)
     target_link_libraries(SystemTestsRunner Delayimp nidaqmx nidcpower niDigital nidmm niFgen niRFSA niRFSG niScope niswitch nisync niTClk)
