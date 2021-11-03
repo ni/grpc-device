@@ -19,6 +19,7 @@ repository_type_to_local_name = {
 #include "register_all_services.h"
 
 #include <string>
+#include <vector>
 
 #include <server/core_service_registrar.h>
 #include <server/session_repository.h>
