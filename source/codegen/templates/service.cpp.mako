@@ -59,7 +59,7 @@ namespace ${config["namespace_component"]}_grpc {
   ${service_class_prefix}Service::${service_class_prefix}Service(
       ${service_class_prefix}LibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const ${service_class_prefix}FeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -130,15 +130,11 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
 % endif
 
 % endfor
-  bool ${service_class_prefix}Service::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
 <%
   feature_toggles = service_helpers.get_feature_toggles(config)
 %>\
-  ${service_class_prefix}Service::${service_class_prefix}FeatureToggles::${service_class_prefix}FeatureToggles(
+  ${service_class_prefix}FeatureToggles::${service_class_prefix}FeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
 <%block filter="common_helpers.trim_trailing_comma()">\
     : is_enabled(

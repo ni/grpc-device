@@ -161,7 +161,7 @@ FeatureToggles ServerConfigurationParser::parse_feature_toggles() const
       throw InvalidFeatureToggleException(ex.what());
     }
   }
-  return FeatureToggles(std::move(map));
+  return FeatureToggles(std::move(map), FeatureToggles::CodeReadiness::kRelease);
 }
 
 std::string ServerConfigurationParser::parse_key_from_security_section(const char* key) const

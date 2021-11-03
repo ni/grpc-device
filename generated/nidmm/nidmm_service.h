@@ -23,6 +23,14 @@
 
 namespace nidmm_grpc {
 
+struct NiDmmFeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  NiDmmFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+};
+
 class NiDmmService final : public NiDmm::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
@@ -30,7 +38,7 @@ public:
   NiDmmService(
     NiDmmLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
-    const nidevice_grpc::FeatureToggles& feature_toggles = {});
+    const NiDmmFeatureToggles& feature_toggles = {});
   virtual ~NiDmmService();
   
   ::grpc::Status Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response) override;
@@ -121,19 +129,9 @@ public:
   ::grpc::Status SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response) override;
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
-
-  bool is_enabled();
 private:
   NiDmmLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-
-  struct NiDmmFeatureToggles
-  {
-    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-    NiDmmFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
-
-    bool is_enabled;
-  };
 
   NiDmmFeatureToggles feature_toggles_;
 };

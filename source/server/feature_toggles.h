@@ -14,19 +14,24 @@ class FeatureToggles {
     kUnspecified
   };
   enum class CodeReadiness {
-    kRelease,
-    kNextRelease,
-    kIncomplete,
-    kPrototype
+    kPrototype = 0,
+    kIncomplete = 1,
+    kNextRelease = 2,
+    kRelease = 3,
   };
 
   FeatureToggles() {}
-  FeatureToggles(FeatureToggleConfigurationMap&& map) : map_(map) {}
+  FeatureToggles(FeatureToggleConfigurationMap&& map, CodeReadiness app_readiness = CodeReadiness::kRelease)
+      : map_(map),
+        app_readiness_(app_readiness) {}
   FeatureState get_feature_state(const std::string& feature_name) const;
-  bool is_feature_enabled(const std::string& feature_name, CodeReadiness feature_readiness) const;
+  bool is_feature_enabled(
+      const std::string& feature_name,
+      CodeReadiness feature_readiness) const;
 
  private:
   FeatureToggleConfigurationMap map_;
+  CodeReadiness app_readiness_ = CodeReadiness::kRelease;
 };
 }  // namespace nidevice_grpc
 

@@ -24,7 +24,7 @@ namespace niswitch_grpc {
   NiSwitchService::NiSwitchService(
       NiSwitchLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiSwitchFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -1678,12 +1678,8 @@ namespace niswitch_grpc {
     }
   }
 
-  bool NiSwitchService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiSwitchService::NiSwitchFeatureToggles::NiSwitchFeatureToggles(
+  NiSwitchFeatureToggles::NiSwitchFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("niswitch", CodeReadiness::kRelease))

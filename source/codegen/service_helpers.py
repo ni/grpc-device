@@ -361,3 +361,13 @@ def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int
         for v in enum["values"]
         if v["value"] != 0 # zero values can't be flags!
     }
+
+
+def get_resource_handle_type(config: dict) -> str:
+    return config.get("resource_handle_type", "ViSession")
+
+
+def get_shared_resource_repository_ptr_type(config: dict) -> str:
+    resource_handle_type = get_resource_handle_type(config)
+    resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
+    return f"std::shared_ptr<{resource_repository_type}>"

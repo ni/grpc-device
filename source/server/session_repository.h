@@ -1,13 +1,16 @@
 #ifndef NIDEVICE_GRPC_SESSION_REPOSITORY
 #define NIDEVICE_GRPC_SESSION_REPOSITORY
 
-#include <grpcpp/grpcpp.h>
-#include <session.grpc.pb.h>
-
 #include <atomic>
+#include <map>
 #include <shared_mutex>
 
 #include "semaphore.h"
+
+namespace grpc {
+class ServerContext;
+class Status;
+}  // namespace grpc
 
 namespace nidevice_grpc {
 

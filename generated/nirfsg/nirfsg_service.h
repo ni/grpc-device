@@ -23,6 +23,14 @@
 
 namespace nirfsg_grpc {
 
+struct NiRFSGFeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  NiRFSGFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+};
+
 class NiRFSGService final : public NiRFSG::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
@@ -30,7 +38,7 @@ public:
   NiRFSGService(
     NiRFSGLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
-    const nidevice_grpc::FeatureToggles& feature_toggles = {});
+    const NiRFSGFeatureToggles& feature_toggles = {});
   virtual ~NiRFSGService();
   
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
@@ -142,8 +150,6 @@ public:
   ::grpc::Status WriteArbWaveformComplexI16(::grpc::ServerContext* context, const WriteArbWaveformComplexI16Request* request, WriteArbWaveformComplexI16Response* response) override;
   ::grpc::Status WriteArbWaveformF32(::grpc::ServerContext* context, const WriteArbWaveformF32Request* request, WriteArbWaveformF32Response* response) override;
   ::grpc::Status WriteScript(::grpc::ServerContext* context, const WriteScriptRequest* request, WriteScriptResponse* response) override;
-
-  bool is_enabled();
 private:
   NiRFSGLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
@@ -163,14 +169,6 @@ private:
   std::map<std::string, std::int32_t> signalidentifier_output_map_ { {"", 1},{"scriptTrigger0", 2},{"scriptTrigger1", 3},{"scriptTrigger2", 4},{"scriptTrigger3", 5},{"marker0", 6},{"marker1", 7},{"marker2", 8},{"marker3", 9}, };
   std::map<std::int32_t, std::string> triggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PFI2"},{4, "PFI3"},{5, "PXI_Trig0"},{6, "PXI_Trig1"},{7, "PXI_Trig2"},{8, "PXI_Trig3"},{9, "PXI_Trig4"},{10, "PXI_Trig5"},{11, "PXI_Trig6"},{12, "PXI_Trig7"},{13, "PXI_STAR"},{14, "PXIe_DStarB"},{15, "Sync_Start"},{16, "Sync_Script"},{17, "TrigIn"}, };
   std::map<std::string, std::int32_t> triggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PFI2", 3},{"PFI3", 4},{"PXI_Trig0", 5},{"PXI_Trig1", 6},{"PXI_Trig2", 7},{"PXI_Trig3", 8},{"PXI_Trig4", 9},{"PXI_Trig5", 10},{"PXI_Trig6", 11},{"PXI_Trig7", 12},{"PXI_STAR", 13},{"PXIe_DStarB", 14},{"Sync_Start", 15},{"Sync_Script", 16},{"TrigIn", 17}, };
-
-  struct NiRFSGFeatureToggles
-  {
-    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-    NiRFSGFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
-
-    bool is_enabled;
-  };
 
   NiRFSGFeatureToggles feature_toggles_;
 };

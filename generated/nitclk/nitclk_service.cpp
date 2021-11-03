@@ -24,7 +24,7 @@ namespace nitclk_grpc {
   NiTClkService::NiTClkService(
       NiTClkLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiTClkFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -399,12 +399,8 @@ namespace nitclk_grpc {
     }
   }
 
-  bool NiTClkService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiTClkService::NiTClkFeatureToggles::NiTClkFeatureToggles(
+  NiTClkFeatureToggles::NiTClkFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nitclk", CodeReadiness::kRelease))

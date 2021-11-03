@@ -24,7 +24,7 @@ namespace nidmm_grpc {
   NiDmmService::NiDmmService(
       NiDmmLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiDmmFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -2598,12 +2598,8 @@ namespace nidmm_grpc {
     }
   }
 
-  bool NiDmmService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiDmmService::NiDmmFeatureToggles::NiDmmFeatureToggles(
+  NiDmmFeatureToggles::NiDmmFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nidmm", CodeReadiness::kRelease))

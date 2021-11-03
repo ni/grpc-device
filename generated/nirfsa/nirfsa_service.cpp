@@ -25,7 +25,7 @@ namespace nirfsa_grpc {
   NiRFSAService::NiRFSAService(
       NiRFSALibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiRFSAFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -3019,12 +3019,8 @@ namespace nirfsa_grpc {
     }
   }
 
-  bool NiRFSAService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiRFSAService::NiRFSAFeatureToggles::NiRFSAFeatureToggles(
+  NiRFSAFeatureToggles::NiRFSAFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nirfsa", CodeReadiness::kNextRelease))

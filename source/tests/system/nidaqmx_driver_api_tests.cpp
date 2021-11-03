@@ -1,3 +1,4 @@
+#include <NIDAQmx.h>
 #include <gmock/gmock.h>
 #include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
@@ -6,11 +7,11 @@
 #include <cstring>
 #include <random>
 #include <stdexcept>
+#include <vector>
 
 #include "device_server.h"
 #include "enumerate_devices.h"
 #include "nidaqmx/nidaqmx_client.h"
-#include "nidaqmx/nidaqmx_service.h"
 
 using namespace ::testing;
 using namespace nidaqmx_grpc;

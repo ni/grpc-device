@@ -23,6 +23,14 @@
 
 namespace nifgen_grpc {
 
+struct NiFgenFeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  NiFgenFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+};
+
 class NiFgenService final : public NiFgen::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
@@ -30,7 +38,7 @@ public:
   NiFgenService(
     NiFgenLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
-    const nidevice_grpc::FeatureToggles& feature_toggles = {});
+    const NiFgenFeatureToggles& feature_toggles = {});
   virtual ~NiFgenService();
   
   ::grpc::Status AbortGeneration(::grpc::ServerContext* context, const AbortGenerationRequest* request, AbortGenerationResponse* response) override;
@@ -164,19 +172,9 @@ public:
   ::grpc::Status WriteWaveformComplexF64(::grpc::ServerContext* context, const WriteWaveformComplexF64Request* request, WriteWaveformComplexF64Response* response) override;
   ::grpc::Status WriteNamedWaveformComplexF64(::grpc::ServerContext* context, const WriteNamedWaveformComplexF64Request* request, WriteNamedWaveformComplexF64Response* response) override;
   ::grpc::Status WriteNamedWaveformComplexI16(::grpc::ServerContext* context, const WriteNamedWaveformComplexI16Request* request, WriteNamedWaveformComplexI16Response* response) override;
-
-  bool is_enabled();
 private:
   NiFgenLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-
-  struct NiFgenFeatureToggles
-  {
-    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-    NiFgenFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
-
-    bool is_enabled;
-  };
 
   NiFgenFeatureToggles feature_toggles_;
 };

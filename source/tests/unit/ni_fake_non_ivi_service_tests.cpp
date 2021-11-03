@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include <nifake_non_ivi/nifake_non_ivi_mock_library.h>
 #include <nifake_non_ivi/nifake_non_ivi_service.h>
+#include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 
 #include <iostream>
@@ -170,7 +171,10 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
       : session_repository_(),
         resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
         library_(),
-        service_(&library_, resource_repository_, feature_toggles)
+        service_(
+            &library_,
+            resource_repository_,
+            feature_toggles)
   {
   }
 
@@ -1154,22 +1158,20 @@ TEST_F(NiFakeNonIviServiceTests, SetColors_PassesColorsArrayToLibrary)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-struct NiFakeNonIviServiceEnabledToggleTests : public NiFakeNonIviServiceTests {
-  NiFakeNonIviServiceEnabledToggleTests()
-      : NiFakeNonIviServiceTests(
-            nidevice_grpc::FeatureToggles({{"nifake_non_ivi", true}}))
-  {
-  }
-};
-
-TEST_F(NiFakeNonIviServiceEnabledToggleTests, UnreleasedServiceWithToggleEnabled_IsEnabled_ReturnsTrue)
+TEST_F(NiFakeNonIviServiceTests, UnreleasedServiceWithToggleEnabled_IsEnabled_ReturnsTrue)
 {
-  EXPECT_TRUE(service_.is_enabled());
+  const auto feature_toggles = nidevice_grpc::FeatureToggles({{"nifake_non_ivi", true}});
+  const auto fake_toggles = NiFakeNonIviFeatureToggles{feature_toggles};
+
+  EXPECT_TRUE(fake_toggles.is_enabled);
 }
 
 TEST_F(NiFakeNonIviServiceTests, UnreleasedServiceWithNoToggles_IsEnabled_ReturnsFalse)
 {
-  EXPECT_FALSE(service_.is_enabled());
+  const auto feature_toggles = nidevice_grpc::FeatureToggles();
+  const auto fake_toggles = NiFakeNonIviFeatureToggles{feature_toggles};
+
+  EXPECT_FALSE(fake_toggles.is_enabled);
 }
 
 TEST_F(NiFakeNonIviServiceTests, GetStructsWithCoercion_ReturnsInRangeData)

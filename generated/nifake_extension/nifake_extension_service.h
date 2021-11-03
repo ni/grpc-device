@@ -23,6 +23,14 @@
 
 namespace nifake_extension_grpc {
 
+struct NiFakeExtensionFeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  NiFakeExtensionFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+};
+
 class NiFakeExtensionService final : public NiFakeExtension::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
@@ -30,23 +38,13 @@ public:
   NiFakeExtensionService(
     NiFakeExtensionLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
-    const nidevice_grpc::FeatureToggles& feature_toggles = {});
+    const NiFakeExtensionFeatureToggles& feature_toggles = {});
   virtual ~NiFakeExtensionService();
   
   ::grpc::Status AddCoolFunctionality(::grpc::ServerContext* context, const AddCoolFunctionalityRequest* request, AddCoolFunctionalityResponse* response) override;
-
-  bool is_enabled();
 private:
   NiFakeExtensionLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-
-  struct NiFakeExtensionFeatureToggles
-  {
-    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-    NiFakeExtensionFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
-
-    bool is_enabled;
-  };
 
   NiFakeExtensionFeatureToggles feature_toggles_;
 };

@@ -23,6 +23,14 @@
 
 namespace niscope_grpc {
 
+struct NiScopeFeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  NiScopeFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+};
+
 class NiScopeService final : public NiScope::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
@@ -30,7 +38,7 @@ public:
   NiScopeService(
     NiScopeLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
-    const nidevice_grpc::FeatureToggles& feature_toggles = {});
+    const NiScopeFeatureToggles& feature_toggles = {});
   virtual ~NiScopeService();
   
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
@@ -121,19 +129,9 @@ public:
   ::grpc::Status SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response) override;
   ::grpc::Status SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response) override;
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
-
-  bool is_enabled();
 private:
   NiScopeLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-
-  struct NiScopeFeatureToggles
-  {
-    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-    NiScopeFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
-
-    bool is_enabled;
-  };
 
   NiScopeFeatureToggles feature_toggles_;
 };

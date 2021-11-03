@@ -93,6 +93,7 @@ set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_
 set(codegen_scripts
   "${codegen_dir}/client_helpers.py"
   "${codegen_dir}/common_helpers.py"
+  "${codegen_dir}/generate_server_glue.py"
   "${codegen_dir}/generate_service.py"
   "${codegen_dir}/service_helpers.py"
   "${codegen_dir}/proto_helpers.py"
@@ -109,7 +110,12 @@ set(codegen_scripts
   "${codegen_dir}/templates/proto_helpers.mako"
   "${codegen_dir}/templates/service.cpp.mako"
   "${codegen_dir}/templates/service_helpers.mako"
-  "${codegen_dir}/templates/service.h.mako")
+  "${codegen_dir}/templates/service.h.mako"
+  "${codegen_dir}/templates/service_registrar.h.mako"
+  "${codegen_dir}/templates/service_registrar.cpp.mako"  
+  "${codegen_dir}/templates/register_all_services.h.mako"
+  "${codegen_dir}/templates/register_all_services.cpp.mako"  
+  )
 
 # Populated in the api loop below.
 set(nidriver_service_srcs "")
@@ -136,12 +142,16 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}_mock_library.h
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/${api}_service.cpp
-    ${service_output_dir}/${api}/${api}_service.h)
+    ${service_output_dir}/${api}/${api}_service.h
+    ${service_output_dir}/${api}/${api}_service_registrar.cpp
+    ${service_output_dir}/${api}/${api}_service_registrar.h
+  )
   set(gen_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (NOT api MATCHES "^nifake.*")
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${service_output_dir}/${api}/${api}_service.cpp"
+      "${service_output_dir}/${api}/${api}_service_registrar.cpp"
       "${service_output_dir}/${api}/${api}_library.cpp"
       "${custom_dir}/${api}_service.custom.cpp")
     set(nidriver_client_srcs
@@ -157,6 +167,18 @@ foreach(api ${nidrivers})
     COMMENT "Generating proto file and service for ${api}"
     DEPENDS ${proto_dependencies})
 endforeach()
+
+set(gen_server_glue_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_server_glue.py ${metadata_dir}/ -o ${service_output_dir}/)
+add_custom_command(
+  OUTPUT 
+    ${service_output_dir}/register_all_services.cpp
+    ${service_output_dir}/register_all_services.h
+  ${gen_server_glue_command}
+  COMMENT 
+    "Generating server glue files."
+  DEPENDS
+    ${proto_dependencies}
+)
 
 #----------------------------------------------------------------------
 # Proto file
@@ -232,25 +254,59 @@ foreach(api ${nidrivers})
       ${nidriver_service_srcs}
       "${proto_srcs_dir}/${api}.pb.cc"
       "${proto_srcs_dir}/${api}.grpc.pb.cc")
+    set(nidriver_client_srcs
+      ${nidriver_client_srcs}
+      "${proto_srcs_dir}/${api}.pb.cc"
+      "${proto_srcs_dir}/${api}.grpc.pb.cc")
   endif()
 endforeach()
 
+add_library(core_server
+  "source/server/core_service_registrar.cpp"
+  "source/server/device_enumerator.cpp"
+  "source/server/feature_toggles.cpp"
+  "source/server/logging.cpp"
+  "source/server/semaphore.cpp"
+  "source/server/server_configuration_parser.cpp"
+  "source/server/server_security_configuration.cpp"
+  "source/server/session_repository.cpp"
+  "source/server/semaphore.cpp"
+  "source/server/session_utilities_service.cpp"
+  "source/server/shared_library.cpp"
+  "source/server/syscfg_library.cpp"
+  ${nidevice_proto_srcs}
+  ${session_proto_srcs}
+  ${session_grpc_srcs}
+)
+
+target_link_libraries(core_server
+  ${_GRPC_GRPCPP}
+  nlohmann_json::nlohmann_json
+)
+
+add_library(driver_clients
+  ${nidriver_client_srcs}
+)
+
+target_link_libraries(driver_clients
+  core_server
+)
+
+add_library(driver_services)
+target_sources(driver_services
+  PRIVATE
+    ${nidriver_service_srcs}
+  PUBLIC
+    ${service_output_dir}/register_all_services.cpp
+)
+
+target_link_libraries(driver_services
+  core_server
+)
+
 add_executable(ni_grpc_device_server
-   "source/server/core_server.cpp"
-   "source/server/device_enumerator.cpp"
-   "source/server/feature_toggles.cpp"
-   "source/server/logging.cpp"
-   "source/server/semaphore.cpp"
-   "source/server/server_configuration_parser.cpp"
-   "source/server/server_security_configuration.cpp"
-   "source/server/session_repository.cpp"
-   "source/server/session_utilities_service.cpp"
-   "source/server/shared_library.cpp"
-   "source/server/syscfg_library.cpp"
-   ${nidevice_proto_srcs}
-   ${session_proto_srcs}
-   ${session_grpc_srcs}
-   ${nidriver_service_srcs})
+  "source/server/core_server.cpp"
+)
 
 if(CMAKE_SYSTEM_NAME STREQUAL Linux)
   target_sources(ni_grpc_device_server
@@ -259,19 +315,20 @@ if(CMAKE_SYSTEM_NAME STREQUAL Linux)
 endif()
 
 target_link_libraries(ni_grpc_device_server
-   ${_REFLECTION}
-   ${_GRPC_GRPCPP}
-   ${_PROTOBUF_LIBPROTOBUF}
-   ${CMAKE_DL_LIBS}
-   nlohmann_json::nlohmann_json
-   )
+  core_server
+  driver_services
+  ${_REFLECTION}
+  ${_GRPC_GRPCPP}
+  ${_PROTOBUF_LIBPROTOBUF}
+  ${CMAKE_DL_LIBS}
+  )
 
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
 
 if(WIN32)
-  target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen niScope niRFSA niRFSG niswitch nisync niTClk)
-  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
-  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+  target_link_libraries(driver_services Delayimp nidaqmx nidcpower niDigital nidmm niFgen niScope niRFSA niRFSG niswitch nisync niTClk)
+  set_target_properties(driver_services PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+  set(driver_services CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -303,15 +360,6 @@ add_executable(IntegrationTestsRunner
     "source/tests/integration/ni_fake_non_ivi_service_tests_endtoend.cpp"
     "source/tests/integration/session_utilities_service_tests.cpp"
     "source/tests/integration/session_utilities_service_tests_endtoend.cpp"
-    "source/server/device_enumerator.cpp"
-    "source/server/feature_toggles.cpp"
-    "source/server/semaphore.cpp"
-    "source/server/session_repository.cpp"
-    "source/server/session_utilities_service.cpp"
-    "source/server/shared_library.cpp"
-    ${nidevice_proto_srcs}
-    ${session_proto_srcs}
-    ${session_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
@@ -328,11 +376,14 @@ add_executable(IntegrationTestsRunner
     find_package(Threads REQUIRED)
 
 target_link_libraries(IntegrationTestsRunner
-    gtest
-    gmock
-    ${_GRPC_GRPCPP}
-    ${CMAKE_DL_LIBS}
-    Threads::Threads)
+  core_server
+  driver_services
+  gtest
+  gmock
+  ${_GRPC_GRPCPP}
+  ${CMAKE_DL_LIBS}
+  Threads::Threads
+)
 
 add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")
@@ -351,17 +402,6 @@ add_executable(UnitTestsRunner
     "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
-    "source/server/device_enumerator.cpp"
-    "source/server/feature_toggles.cpp"
-    "source/server/semaphore.cpp"
-    "source/server/server_configuration_parser.cpp"
-    "source/server/server_security_configuration.cpp"
-    "source/server/session_repository.cpp"
-    "source/server/shared_library.cpp"
-    "source/server/syscfg_library.cpp"
-    ${nidevice_proto_srcs}
-    ${session_proto_srcs}
-    ${session_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_extension.pb.cc"
@@ -388,12 +428,14 @@ target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake_non_ivi")
 
 target_link_libraries(UnitTestsRunner
-    gtest
-    gmock
-    ${_GRPC_GRPCPP}
-    ${CMAKE_DL_LIBS}
-    Threads::Threads
-    nlohmann_json::nlohmann_json)
+  core_server
+  driver_services
+  gtest
+  gmock
+  ${_GRPC_GRPCPP}
+  ${CMAKE_DL_LIBS}
+  Threads::Threads
+  nlohmann_json::nlohmann_json)
 
 #----------------------------------------------------------------------
 # Copy test asset certificates to binary output certs sub-directory
@@ -429,30 +471,22 @@ add_executable(SystemTestsRunner
     "source/tests/system/nisync_driver_api_tests.cpp"
     "source/tests/system/nisync_session_tests.cpp"
     "source/tests/system/nitclk_driver_api_tests.cpp"
-    "source/server/device_enumerator.cpp"
-    "source/server/feature_toggles.cpp"
-    "source/server/session_repository.cpp"
-    "source/server/semaphore.cpp"
-    "source/server/session_utilities_service.cpp"
-    "source/server/shared_library.cpp"
-    "source/server/syscfg_library.cpp"
-    ${nidevice_proto_srcs}
-    ${session_proto_srcs}
-    ${session_grpc_srcs}
-    ${nidriver_service_srcs}
-    ${nidriver_client_srcs})
+)
 
 target_link_libraries(SystemTestsRunner
-    gtest
-    gmock
-    ${_GRPC_GRPCPP}
-    ${CMAKE_DL_LIBS})
+  core_server
+  driver_clients
+  driver_services
+  gtest
+  gmock
+  ${_GRPC_GRPCPP}
+  ${CMAKE_DL_LIBS})
 
-if(WIN32)
-    target_link_libraries(SystemTestsRunner Delayimp nidaqmx nidcpower niDigital nidmm niFgen niRFSA niRFSG niScope niswitch nisync niTClk)
-    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
-    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
-endif()
+# if(WIN32)
+#     target_link_libraries(SystemTestsRunner Delayimp nidaqmx nidcpower niDigital nidmm niFgen niRFSA niRFSG niScope niswitch nisync niTClk)
+#     set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+#     set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+# endif()
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )

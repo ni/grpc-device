@@ -1,25 +1,6 @@
-#include <nidaqmx/nidaqmx_library.h>
-#include <nidaqmx/nidaqmx_service.h>
-#include <nidcpower/nidcpower_library.h>
-#include <nidcpower/nidcpower_service.h>
-#include <nidigitalpattern/nidigitalpattern_library.h>
-#include <nidigitalpattern/nidigitalpattern_service.h>
-#include <nidmm/nidmm_library.h>
-#include <nidmm/nidmm_service.h>
-#include <nifgen/nifgen_library.h>
-#include <nifgen/nifgen_service.h>
-#include <nirfsa/nirfsa_library.h>
-#include <nirfsa/nirfsa_service.h>
-#include <nirfsg/nirfsg_library.h>
-#include <nirfsg/nirfsg_service.h>
-#include <niscope/niscope_library.h>
-#include <niscope/niscope_service.h>
-#include <niswitch/niswitch_library.h>
-#include <niswitch/niswitch_service.h>
-#include <nisync/nisync_library.h>
-#include <nisync/nisync_service.h>
-#include <nitclk/nitclk_library.h>
-#include <nitclk/nitclk_service.h>
+#include <grpcpp/ext/proto_server_reflection_plugin.h>
+#include <grpcpp/grpcpp.h>
+#include <register_all_services.h>
 
 #include <mutex>
 
@@ -27,8 +8,6 @@
 #include "logging.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
-#include "session_utilities_service.h"
-#include "syscfg_library.h"
 
 #if defined(__GNUC__)
   #include "linux/daemonize.h"
@@ -91,69 +70,11 @@ static void RunServer(const ServerConfiguration& config)
   int listeningPort = 0;
   nidevice_grpc::ServerSecurityConfiguration server_security_config(config.server_cert, config.server_key, config.root_cert);
   builder.AddListeningPort(config.server_address, server_security_config.get_credentials(), &listeningPort);
-  // Register services available on the server.
-  nidevice_grpc::SessionRepository session_repository;
-  nidevice_grpc::SysCfgLibrary syscfg_library;
-  nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_library);
-  nidevice_grpc::SessionUtilitiesService core_service(&session_repository, &device_enumerator);
-  builder.RegisterService(&core_service);
-
-  using MIResourceRepository = nidevice_grpc::SessionResourceRepository<ViSession>;
-  auto mi_shared_resource_repository = std::make_shared<MIResourceRepository>(&session_repository);
-
-  nidigitalpattern_grpc::NiDigitalLibrary nidigital_library;
-  nidigitalpattern_grpc::NiDigitalService nidigital_service(&nidigital_library, mi_shared_resource_repository);
-  builder.RegisterService(&nidigital_service);
-
-  niscope_grpc::NiScopeLibrary niscope_library;
-  niscope_grpc::NiScopeService niscope_service(&niscope_library, mi_shared_resource_repository);
-  builder.RegisterService(&niscope_service);
-
-  niswitch_grpc::NiSwitchLibrary niswitch_library;
-  niswitch_grpc::NiSwitchService niswitch_service(&niswitch_library, mi_shared_resource_repository);
-  builder.RegisterService(&niswitch_service);
-
-  nidmm_grpc::NiDmmLibrary nidmm_library;
-  nidmm_grpc::NiDmmService nidmm_service(&nidmm_library, mi_shared_resource_repository);
-  builder.RegisterService(&nidmm_service);
-
-  nisync_grpc::NiSyncLibrary nisync_library;
-  nisync_grpc::NiSyncService nisync_service(&nisync_library, mi_shared_resource_repository);
-  builder.RegisterService(&nisync_service);
-
-  nitclk_grpc::NiTClkLibrary nitclk_library;
-  nitclk_grpc::NiTClkService nitclk_service(&nitclk_library, mi_shared_resource_repository);
-  builder.RegisterService(&nitclk_service);
-  
-  nidcpower_grpc::NiDCPowerLibrary nidcpower_library;
-  nidcpower_grpc::NiDCPowerService nidcpower_service(&nidcpower_library, mi_shared_resource_repository);
-  builder.RegisterService(&nidcpower_service);
-
-  nirfsg_grpc::NiRFSGLibrary nirfsg_library;
-  nirfsg_grpc::NiRFSGService nirfsg_service(&nirfsg_library, mi_shared_resource_repository, config.feature_toggles);
-  if (nirfsg_service.is_enabled()) {
-    builder.RegisterService(&nirfsg_service);
-  }
-
-  nifgen_grpc::NiFgenLibrary nifgen_library;
-  nifgen_grpc::NiFgenService nifgen_service(&nifgen_library, mi_shared_resource_repository);
-  builder.RegisterService(&nifgen_service);
-
-  nidaqmx_grpc::NiDAQmxLibrary nidaqmx_library;
-  using DAQmxResourceRepository = nidevice_grpc::SessionResourceRepository<TaskHandle>;
-  auto daq_resource_repository = std::make_shared<DAQmxResourceRepository>(&session_repository);
-  nidaqmx_grpc::NiDAQmxService nidaqmx_service(&nidaqmx_library, daq_resource_repository, config.feature_toggles);
-
-  if (nidaqmx_service.is_enabled()) {
-    builder.RegisterService(&nidaqmx_service);
-  }
-
-  nirfsa_grpc::NiRFSALibrary nirfsa_library;
-  nirfsa_grpc::NiRFSAService nirfsa_service(&nirfsa_library, mi_shared_resource_repository, config.feature_toggles);
-
-  if (nirfsa_service.is_enabled()) {
-    builder.RegisterService(&nirfsa_service);
-  }
+  //
+  auto services = nidevice_grpc::register_all_services(
+      builder,
+      config.feature_toggles,
+      nidevice_grpc::FeatureToggles::CodeReadiness::kRelease);
 
   builder.SetMaxSendMessageSize(config.max_message_size);
   builder.SetMaxReceiveMessageSize(config.max_message_size);
@@ -194,9 +115,6 @@ static void RunServer(const ServerConfiguration& config)
       "Security is configured with %s%s.", security_description, tls_description);
   // This call will block until another thread shuts down the server.
   server->Wait();
-  // This code is currently unreachable, but if the call to wait exits, we need to clean up the service here.
-  session_repository.reset_server();
-  device_enumerator.clear_syscfg_session();
 }
 
 struct Options {

@@ -24,7 +24,7 @@ namespace niscope_grpc {
   NiScopeService::NiScopeService(
       NiScopeLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiScopeFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -2339,12 +2339,8 @@ namespace niscope_grpc {
     }
   }
 
-  bool NiScopeService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiScopeService::NiScopeFeatureToggles::NiScopeFeatureToggles(
+  NiScopeFeatureToggles::NiScopeFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("niscope", CodeReadiness::kRelease))

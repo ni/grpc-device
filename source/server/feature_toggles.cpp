@@ -17,11 +17,9 @@ bool FeatureToggles::is_feature_enabled(
     FeatureToggles::CodeReadiness feature_readiness) const
 {
   auto toggle_state = get_feature_state(feature_name);
-  switch (feature_readiness) {
-    case CodeReadiness::kRelease:
-      return toggle_state != FeatureState::kDisabled;
-    default:
-      return toggle_state == FeatureState::kEnabled;
+  if (feature_readiness >= app_readiness_) {
+    return toggle_state != FeatureState::kDisabled;
   }
+  return toggle_state == FeatureState::kEnabled;
 }
 }  // namespace nidevice_grpc
