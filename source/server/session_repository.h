@@ -2,6 +2,7 @@
 #define NIDEVICE_GRPC_SESSION_REPOSITORY
 
 #include <atomic>
+#include <functional>
 #include <map>
 #include <shared_mutex>
 
