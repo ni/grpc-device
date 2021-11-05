@@ -28,7 +28,7 @@ namespace tests {
 namespace system {
 
 const auto PXI_5652 = "5652";
-const auto PXI_5840 = "5840";
+const auto PXI_5820 = "5820";
 const auto PXI_5841 = "5841";
 
 const int krfsgDriverApiSuccess = 0;
@@ -442,10 +442,11 @@ TEST_F(NiRFSGDriverApiTests, WriteArbWaveformI16_Succeeds)
 
 TEST_F(NiRFSGDriverApiTests, WriteArbWaveformF32_Succeeds)
 {
-  auto session = init_session(stub(), PXI_5841);
-  auto configure_rf = client::configure_rf(stub(), session, 1e9, -5);
+  auto session = init_session(stub(), PXI_5820);
   auto configure_generation_mode = client::configure_generation_mode(stub(), session, GenerationMode::GENERATION_MODE_ARB_WAVEFORM);
   auto configure_power_level_type = client::configure_power_level_type(stub(), session, PowerLevelType::POWER_LEVEL_TYPE_PEAK_POWER);
+  auto configure_iq_port_level = client::set_attribute_vi_real64(stub(), session, "", NiRFSGAttributes::NIRFSG_ATTRIBUTE_IQ_OUT_PORT_LEVEL, 0.2);
+  auto configure_gain = client::set_attribute_vi_real64(stub(), session, "", NiRFSGAttributes::NIRFSG_ATTRIBUTE_ARB_PRE_FILTER_GAIN, -20);
   auto point1 = nidevice_grpc::NIComplexNumberF32();
   point1.set_real(0.7f);
   point1.set_imaginary(-0.7f);
@@ -458,7 +459,19 @@ TEST_F(NiRFSGDriverApiTests, WriteArbWaveformF32_Succeeds)
   auto point4 = nidevice_grpc::NIComplexNumberF32();
   point4.set_real(-1.0);
   point4.set_imaginary(0);
-  std::vector<nidevice_grpc::NIComplexNumberF32> waveform = {point1, point2, point3, point4};
+  auto point5 = nidevice_grpc::NIComplexNumberF32();
+  point5.set_real(1.0);
+  point5.set_imaginary(0);
+  auto point6 = nidevice_grpc::NIComplexNumberF32();
+  point6.set_real(0);
+  point6.set_imaginary(-1.0f);
+  auto point7 = nidevice_grpc::NIComplexNumberF32();
+  point7.set_real(0.7f);
+  point7.set_imaginary(0.7f);
+  auto point8 = nidevice_grpc::NIComplexNumberF32();
+  point8.set_real(-0.7f);
+  point8.set_imaginary(-0.7f);
+  std::vector<nidevice_grpc::NIComplexNumberF32> waveform = {point1, point2, point3, point4, point5, point6, point7, point8};
   auto write_waveform = client::write_arb_waveform_complex_f32(stub(), session, "waveform", waveform, false);
   auto initiate = client::initiate(stub(), session);
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -467,9 +480,10 @@ TEST_F(NiRFSGDriverApiTests, WriteArbWaveformF32_Succeeds)
   auto disable_output = client::configure_output_enabled(stub(), session, false);
   auto close = client::close(stub(), session);
 
-  EXPECT_SUCCESS(session, configure_rf);
   EXPECT_SUCCESS(session, configure_generation_mode);
   EXPECT_SUCCESS(session, configure_power_level_type);
+  EXPECT_SUCCESS(session, configure_iq_port_level);
+  EXPECT_SUCCESS(session, configure_gain);
   EXPECT_SUCCESS(session, write_waveform);
   EXPECT_SUCCESS(session, initiate);
   EXPECT_SUCCESS(session, check_status);
