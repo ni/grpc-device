@@ -43,7 +43,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -68,7 +68,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -93,7 +93,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -118,7 +118,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -143,7 +143,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -168,7 +168,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1043,7 +1043,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1068,7 +1068,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1093,7 +1093,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1118,7 +1118,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1143,7 +1143,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1168,7 +1168,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2018,7 +2018,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2043,7 +2043,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2068,7 +2068,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2093,7 +2093,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2118,7 +2118,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2143,7 +2143,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {

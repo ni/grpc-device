@@ -84,9 +84,9 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViBoolean value = request->value();
-      auto status = library_->CheckAttributeViBoolean(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViBoolean(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -106,7 +106,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt32 value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::CheckAttributeViInt32Request::ValueEnumCase::kValue: {
@@ -123,7 +123,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -143,9 +143,9 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt64 value = request->value_raw();
-      auto status = library_->CheckAttributeViInt64(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViInt64(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -165,7 +165,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViReal64 value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValue: {
@@ -182,7 +182,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -202,10 +202,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       auto value_grpc_session = request->value();
       ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
-      auto status = library_->CheckAttributeViSession(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViSession(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -225,7 +225,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViConstString value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::CheckAttributeViStringRequest::ValueEnumCase::kValueMapped: {
@@ -246,7 +246,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->CheckAttributeViString(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViString(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1591,9 +1591,9 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViBoolean value {};
-      auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -1616,9 +1616,9 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt32 value {};
-      auto status = library_->GetAttributeViInt32(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -1641,9 +1641,9 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt64 value {};
-      auto status = library_->GetAttributeViInt64(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -1666,9 +1666,9 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViReal64 value {};
-      auto status = library_->GetAttributeViReal64(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
         response->set_value(value);
@@ -1691,9 +1691,9 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViSession value {};
-      auto status = library_->GetAttributeViSession(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &value);
       response->set_status(status);
       if (status == 0) {
         auto session_id = session_repository_->resolve_session_id(value);
@@ -1717,10 +1717,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
 
       while (true) {
-        auto status = library_->GetAttributeViString(vi, channel_name, attribute, 0, nullptr);
+        auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1731,7 +1731,7 @@ namespace nirfsg_grpc {
         if (buf_size > 0) {
             value.resize(buf_size - 1);
         }
-        status = library_->GetAttributeViString(vi, channel_name, attribute, buf_size, (ViChar*)value.data());
+        status = library_->GetAttributeViString(vi, channel_name, attribute_id, buf_size, (ViChar*)value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buf_size)) {
           // buffer is now too small, try again
           continue;
@@ -2815,9 +2815,9 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViBoolean value = request->value();
-      auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2837,7 +2837,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt32 value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::SetAttributeViInt32Request::ValueEnumCase::kValue: {
@@ -2854,7 +2854,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->SetAttributeViInt32(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2874,9 +2874,9 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt64 value = request->value_raw();
-      auto status = library_->SetAttributeViInt64(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViInt64(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2896,7 +2896,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViReal64 value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::kValue: {
@@ -2913,7 +2913,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->SetAttributeViReal64(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2933,10 +2933,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       auto value_grpc_session = request->value();
       ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
-      auto status = library_->SetAttributeViSession(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViSession(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2956,7 +2956,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViConstString value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::SetAttributeViStringRequest::ValueEnumCase::kValueMapped: {
@@ -2977,7 +2977,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->SetAttributeViString(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
