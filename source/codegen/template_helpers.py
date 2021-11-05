@@ -26,7 +26,7 @@ def write_if_changed(output_file_path: str, new_contents: str) -> None:
             f.write(new_contents)
 
 
-def load_metadata(metadata_dir: str, ) -> dict:
+def load_metadata(metadata_dir: str) -> dict:
     metadata_path = Path(metadata_dir)
     module = import_module("metadata." + metadata_path.name)
 

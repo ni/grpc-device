@@ -99,6 +99,7 @@ set(codegen_scripts
   "${codegen_dir}/proto_helpers.py"
   "${codegen_dir}/metadata_mutation.py"
   "${codegen_dir}/metadata_validation.py"
+  "${codegen_dir}/template_helpers.py"
   "${codegen_dir}/templates/client.cpp.mako"
   "${codegen_dir}/templates/client.h.mako"
   "${codegen_dir}/templates/client_helpers.mako"
