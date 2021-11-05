@@ -21,8 +21,7 @@ namespace ${namespace} {
 
 std::shared_ptr<void> register_all_services(
   grpc::ServerBuilder& server_builder,
-  const nidevice_grpc::FeatureToggles& feature_toggles,
-  nidevice_grpc::FeatureToggles::CodeReadiness code_readiness);
+  const nidevice_grpc::FeatureToggles& feature_toggles);
 
 } // ${namespace}
 

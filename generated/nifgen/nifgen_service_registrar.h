@@ -23,8 +23,7 @@ using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& server_builder, 
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
-  const nidevice_grpc::FeatureToggles& feature_toggles,
-  CodeReadiness code_readiness);
+  const nidevice_grpc::FeatureToggles& feature_toggles);
 
 } // nifgen_grpc
 

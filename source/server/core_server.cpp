@@ -71,10 +71,7 @@ static void RunServer(const ServerConfiguration& config)
   nidevice_grpc::ServerSecurityConfiguration server_security_config(config.server_cert, config.server_key, config.root_cert);
   builder.AddListeningPort(config.server_address, server_security_config.get_credentials(), &listeningPort);
 
-  auto services = nidevice_grpc::register_all_services(
-      builder,
-      config.feature_toggles,
-      nidevice_grpc::FeatureToggles::CodeReadiness::kRelease);
+  auto services = nidevice_grpc::register_all_services(builder, config.feature_toggles);
 
   builder.SetMaxSendMessageSize(config.max_message_size);
   builder.SetMaxReceiveMessageSize(config.max_message_size);

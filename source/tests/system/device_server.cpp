@@ -9,6 +9,8 @@ namespace ni {
 namespace tests {
 namespace system {
 
+using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+
 DeviceServerInterface::~DeviceServerInterface() {}
 
 class DeviceServer : public DeviceServerInterface {
@@ -33,8 +35,8 @@ DeviceServer::DeviceServer()
       services_(
           nidevice_grpc::register_all_services(
               builder_,
-              {},
-              nidevice_grpc::FeatureToggles::CodeReadiness::kRelease)),
+              // Tests run with NextRelease CodeReadiness.
+              nidevice_grpc::FeatureToggles({}, CodeReadiness::kNextRelease))),
       server_(builder_.BuildAndStart()),
       channel_(server_->InProcessChannel(::grpc::ChannelArguments())),
       session_stub_(nidevice_grpc::SessionUtilities::NewStub(channel_))

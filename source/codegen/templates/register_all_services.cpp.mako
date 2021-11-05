@@ -32,8 +32,7 @@ namespace ${namespace} {
 
 std::shared_ptr<void> register_all_services(
   grpc::ServerBuilder& server_builder,
-  const nidevice_grpc::FeatureToggles& feature_toggles,
-  nidevice_grpc::FeatureToggles::CodeReadiness code_readiness)
+  const nidevice_grpc::FeatureToggles& feature_toggles)
 {
   auto service_vector = std::make_shared<std::vector<std::shared_ptr<void>>>();
 
@@ -57,8 +56,7 @@ std::shared_ptr<void> register_all_services(
     ${namespace}::register_service(
       server_builder, 
       ${resource_repository_local_name},
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
 % endfor
 
   return service_vector;

@@ -32,8 +32,7 @@ struct LibraryAndService {
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& builder, 
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
-  const nidevice_grpc::FeatureToggles& feature_toggles,
-  CodeReadiness code_readiness)
+  const nidevice_grpc::FeatureToggles& feature_toggles)
 {
   auto toggles = NiDCPowerFeatureToggles(feature_toggles);
 

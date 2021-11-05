@@ -27,8 +27,7 @@ namespace nidevice_grpc {
 
 std::shared_ptr<void> register_all_services(
   grpc::ServerBuilder& server_builder,
-  const nidevice_grpc::FeatureToggles& feature_toggles,
-  nidevice_grpc::FeatureToggles::CodeReadiness code_readiness)
+  const nidevice_grpc::FeatureToggles& feature_toggles)
 {
   auto service_vector = std::make_shared<std::vector<std::shared_ptr<void>>>();
 
@@ -45,68 +44,57 @@ std::shared_ptr<void> register_all_services(
     nidaqmx_grpc::register_service(
       server_builder, 
       task_handle_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     nidcpower_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     nidigitalpattern_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     nidmm_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     nifgen_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     nirfsa_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     nirfsg_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     niscope_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     niswitch_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     nisync_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
   service_vector->push_back(
     nitclk_grpc::register_service(
       server_builder, 
       vi_session_repository,
-      feature_toggles,
-      code_readiness));
+      feature_toggles));
 
   return service_vector;
 }
