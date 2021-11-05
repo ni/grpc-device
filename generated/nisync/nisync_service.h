@@ -23,6 +23,14 @@
 
 namespace nisync_grpc {
 
+struct NiSyncFeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  NiSyncFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+};
+
 class NiSyncService final : public NiSync::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
@@ -30,7 +38,7 @@ public:
   NiSyncService(
     NiSyncLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
-    const nidevice_grpc::FeatureToggles& feature_toggles = {});
+    const NiSyncFeatureToggles& feature_toggles = {});
   virtual ~NiSyncService();
   
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
@@ -103,19 +111,9 @@ public:
   ::grpc::Status CalAdjustClk10PhaseVoltage(::grpc::ServerContext* context, const CalAdjustClk10PhaseVoltageRequest* request, CalAdjustClk10PhaseVoltageResponse* response) override;
   ::grpc::Status CalAdjustDDSStartPulsePhaseVoltage(::grpc::ServerContext* context, const CalAdjustDDSStartPulsePhaseVoltageRequest* request, CalAdjustDDSStartPulsePhaseVoltageResponse* response) override;
   ::grpc::Status CalAdjustDDSInitialPhase(::grpc::ServerContext* context, const CalAdjustDDSInitialPhaseRequest* request, CalAdjustDDSInitialPhaseResponse* response) override;
-
-  bool is_enabled();
 private:
   NiSyncLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-
-  struct NiSyncFeatureToggles
-  {
-    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-    NiSyncFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
-
-    bool is_enabled;
-  };
 
   NiSyncFeatureToggles feature_toggles_;
 };

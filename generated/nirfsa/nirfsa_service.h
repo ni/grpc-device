@@ -23,6 +23,14 @@
 
 namespace nirfsa_grpc {
 
+struct NiRFSAFeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  NiRFSAFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+};
+
 class NiRFSAService final : public NiRFSA::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
@@ -30,7 +38,7 @@ public:
   NiRFSAService(
     NiRFSALibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
-    const nidevice_grpc::FeatureToggles& feature_toggles = {});
+    const NiRFSAFeatureToggles& feature_toggles = {});
   virtual ~NiRFSAService();
   
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
@@ -137,8 +145,6 @@ public:
   ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
   ::grpc::Status SetCalUserDefinedInfo(::grpc::ServerContext* context, const SetCalUserDefinedInfoRequest* request, SetCalUserDefinedInfoResponse* response) override;
   ::grpc::Status SetUserData(::grpc::ServerContext* context, const SetUserDataRequest* request, SetUserDataResponse* response) override;
-
-  bool is_enabled();
 private:
   NiRFSALibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
@@ -152,14 +158,6 @@ private:
   std::map<std::string, std::int32_t> pxichassisclk10source_output_map_ { {"None", 1},{"OnboardClock", 2},{"RefIn", 3}, };
   std::map<std::int32_t, std::string> refclocksource_input_map_ { {1, "None"},{2, "OnboardClock"},{3, "RefIn"},{4, "PXI_Clk"},{5, "ClkIn"},{6, "RefIn2"},{7, "PXI_ClkMaster"}, };
   std::map<std::string, std::int32_t> refclocksource_output_map_ { {"None", 1},{"OnboardClock", 2},{"RefIn", 3},{"PXI_Clk", 4},{"ClkIn", 5},{"RefIn2", 6},{"PXI_ClkMaster", 7}, };
-
-  struct NiRFSAFeatureToggles
-  {
-    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-    NiRFSAFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
-
-    bool is_enabled;
-  };
 
   NiRFSAFeatureToggles feature_toggles_;
 };

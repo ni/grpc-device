@@ -1,8 +1,8 @@
-from functions import functions
-from attributes import attributes
-from enums import enums
-from enums_addon import enums_validation_suppressions
-from config import config
+from .functions import functions
+from .attributes import attributes
+from .enums import enums
+from .enums_addon import enums_validation_suppressions
+from .config import config
 
 metadata = {
     "functions" : functions,

@@ -14,9 +14,7 @@ include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H"
 namespace_prefix = config["namespace_component"] + "_grpc::"
 custom_types = common_helpers.get_custom_types(config)
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
-resource_handle_type = config.get("resource_handle_type", "ViSession")
-resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
-resource_repository_ptr = f"std::shared_ptr<{resource_repository_type}>"
+resource_repository_ptr = service_helpers.get_shared_resource_repository_ptr_type(config)
 
 async_functions = service_helpers.get_async_functions(functions)
 has_async_functions = any(async_functions)
@@ -49,6 +47,17 @@ for async_function in async_functions.keys():
 
 namespace ${config["namespace_component"]}_grpc {
 
+struct ${service_class_prefix}FeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  ${service_class_prefix}FeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+% for toggle in service_helpers.get_feature_toggles(config):
+  bool ${service_helpers.get_toggle_member_name(toggle)};
+% endfor
+};
+
 class ${service_class_prefix}Service final : public ${base_class_name} {
 public:
   using ResourceRepositorySharedPtr = ${resource_repository_ptr};
@@ -56,7 +65,7 @@ public:
   ${service_class_prefix}Service(
     ${service_class_prefix}LibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
-    const nidevice_grpc::FeatureToggles& feature_toggles = {});
+    const ${service_class_prefix}FeatureToggles& feature_toggles = {});
   virtual ~${service_class_prefix}Service();
   
 % for function in common_helpers.filter_proto_rpc_functions(functions):
@@ -72,8 +81,6 @@ public:
   ::grpc::Status ${method_name}(::grpc::ServerContext* context, const ${request_type}* request, ${response_type}* response) override;
 % endif
 % endfor
-
-  bool is_enabled();
 private:
   ${driver_library_interface}* library_;
   ResourceRepositorySharedPtr session_repository_;
@@ -91,17 +98,6 @@ private:
   std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${service_helpers.get_input_lookup_values(enums[enum])} };
   std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };
 % endfor
-
-  struct ${service_class_prefix}FeatureToggles
-  {
-    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-    ${service_class_prefix}FeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
-
-    bool is_enabled;
-% for toggle in service_helpers.get_feature_toggles(config):
-    bool ${service_helpers.get_toggle_member_name(toggle)};
-% endfor
-  };
 
   ${service_class_prefix}FeatureToggles feature_toggles_;
 };

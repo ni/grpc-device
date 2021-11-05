@@ -24,7 +24,7 @@ namespace nirfsg_grpc {
   NiRFSGService::NiRFSGService(
       NiRFSGLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiRFSGFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -3236,12 +3236,8 @@ namespace nirfsg_grpc {
     }
   }
 
-  bool NiRFSGService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiRFSGService::NiRFSGFeatureToggles::NiRFSGFeatureToggles(
+  NiRFSGFeatureToggles::NiRFSGFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nirfsg", CodeReadiness::kNextRelease))

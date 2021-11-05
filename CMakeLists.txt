@@ -94,10 +94,12 @@ set(codegen_scripts
   "${codegen_dir}/client_helpers.py"
   "${codegen_dir}/common_helpers.py"
   "${codegen_dir}/generate_service.py"
+  "${codegen_dir}/generate_shared_service_files.py"
   "${codegen_dir}/service_helpers.py"
   "${codegen_dir}/proto_helpers.py"
   "${codegen_dir}/metadata_mutation.py"
   "${codegen_dir}/metadata_validation.py"
+  "${codegen_dir}/template_helpers.py"
   "${codegen_dir}/templates/client.cpp.mako"
   "${codegen_dir}/templates/client.h.mako"
   "${codegen_dir}/templates/client_helpers.mako"
@@ -107,14 +109,18 @@ set(codegen_scripts
   "${codegen_dir}/templates/mock_library.h.mako"
   "${codegen_dir}/templates/proto.mako"
   "${codegen_dir}/templates/proto_helpers.mako"
+  "${codegen_dir}/templates/register_all_services.h.mako"
+  "${codegen_dir}/templates/register_all_services.cpp.mako"  
   "${codegen_dir}/templates/service.cpp.mako"
   "${codegen_dir}/templates/service_helpers.mako"
-  "${codegen_dir}/templates/service.h.mako")
+  "${codegen_dir}/templates/service.h.mako"
+  "${codegen_dir}/templates/service_registrar.h.mako"
+  "${codegen_dir}/templates/service_registrar.cpp.mako"  
+  )
 
 # Populated in the api loop below.
 set(nidriver_service_srcs "")
 set(nidriver_client_srcs "")
-
 
 foreach(api ${nidrivers})
   set(codegen_dependencies
@@ -136,12 +142,16 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}_mock_library.h
     ${service_output_dir}/${api}/${api}.proto
     ${service_output_dir}/${api}/${api}_service.cpp
-    ${service_output_dir}/${api}/${api}_service.h)
+    ${service_output_dir}/${api}/${api}_service.h
+    ${service_output_dir}/${api}/${api}_service_registrar.cpp
+    ${service_output_dir}/${api}/${api}_service_registrar.h
+  )
   set(gen_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (NOT api MATCHES "^nifake.*")
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${service_output_dir}/${api}/${api}_service.cpp"
+      "${service_output_dir}/${api}/${api}_service_registrar.cpp"
       "${service_output_dir}/${api}/${api}_library.cpp"
       "${custom_dir}/${api}_service.custom.cpp")
     set(nidriver_client_srcs
@@ -157,6 +167,23 @@ foreach(api ${nidrivers})
     COMMENT "Generating proto file and service for ${api}"
     DEPENDS ${proto_dependencies})
 endforeach()
+
+add_custom_command(
+  OUTPUT 
+    ${service_output_dir}/register_all_services.cpp
+    ${service_output_dir}/register_all_services.h
+  COMMAND 
+    ${PYTHON_EXE} ${codegen_dir}/generate_shared_service_files.py ${metadata_dir}/ -o ${service_output_dir}/
+  COMMENT 
+    "Generating shared service files"
+  DEPENDS
+    ${proto_dependencies}
+)
+
+set(nidriver_service_srcs
+    ${nidriver_service_srcs}
+    ${service_output_dir}/register_all_services.cpp
+)
 
 #----------------------------------------------------------------------
 # Proto file
@@ -237,6 +264,7 @@ endforeach()
 
 add_executable(ni_grpc_device_server
    "source/server/core_server.cpp"
+   "source/server/core_service_registrar.cpp"
    "source/server/device_enumerator.cpp"
    "source/server/feature_toggles.cpp"
    "source/server/logging.cpp"
@@ -406,6 +434,7 @@ add_custom_command(
 
 add_executable(SystemTestsRunner
     "source/tests/utilities/run_all_tests.cpp"
+    "source/server/core_service_registrar.cpp"
     "source/tests/system/device_server.cpp"
     "source/tests/system/enumerate_devices.cpp"
     "source/tests/system/session_utilities_service_tests.cpp"

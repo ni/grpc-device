@@ -23,6 +23,14 @@
 
 namespace nitclk_grpc {
 
+struct NiTClkFeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  NiTClkFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+};
+
 class NiTClkService final : public NiTClk::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
@@ -30,7 +38,7 @@ public:
   NiTClkService(
     NiTClkLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
-    const nidevice_grpc::FeatureToggles& feature_toggles = {});
+    const NiTClkFeatureToggles& feature_toggles = {});
   virtual ~NiTClkService();
   
   ::grpc::Status ConfigureForHomogeneousTriggers(::grpc::ServerContext* context, const ConfigureForHomogeneousTriggersRequest* request, ConfigureForHomogeneousTriggersResponse* response) override;
@@ -48,19 +56,9 @@ public:
   ::grpc::Status Synchronize(::grpc::ServerContext* context, const SynchronizeRequest* request, SynchronizeResponse* response) override;
   ::grpc::Status SynchronizeToSyncPulseSender(::grpc::ServerContext* context, const SynchronizeToSyncPulseSenderRequest* request, SynchronizeToSyncPulseSenderResponse* response) override;
   ::grpc::Status WaitUntilDone(::grpc::ServerContext* context, const WaitUntilDoneRequest* request, WaitUntilDoneResponse* response) override;
-
-  bool is_enabled();
 private:
   NiTClkLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-
-  struct NiTClkFeatureToggles
-  {
-    using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
-    NiTClkFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles);
-
-    bool is_enabled;
-  };
 
   NiTClkFeatureToggles feature_toggles_;
 };

@@ -24,7 +24,7 @@ namespace nifake_grpc {
   NiFakeService::NiFakeService(
       NiFakeLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiFakeFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -1925,12 +1925,8 @@ namespace nifake_grpc {
     }
   }
 
-  bool NiFakeService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiFakeService::NiFakeFeatureToggles::NiFakeFeatureToggles(
+  NiFakeFeatureToggles::NiFakeFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nifake", CodeReadiness::kRelease))

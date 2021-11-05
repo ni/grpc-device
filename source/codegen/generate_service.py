@@ -1,54 +1,24 @@
-import sys
 import os
 import argparse
-import importlib
-import importlib.util
-import mako.template
 import metadata_mutation
 import metadata_validation
 from mako.lookup import TemplateLookup
 
 import common_helpers
+from template_helpers import instantiate_mako_template, load_metadata, write_if_changed
 
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
-    current_dir = os.path.dirname(__file__)
-    template_file_path = os.path.join(
-        current_dir, "templates", template_file_name)
-    template_directory = os.path.dirname(template_file_path)
     module_name = metadata["config"]["module_name"]
     output_dir = os.path.join(gen_dir, module_name)
     file_name = module_name + generated_file_suffix
     output_file_path = os.path.join(output_dir, file_name)
 
     os.makedirs(output_dir, exist_ok=True)
-    template_lookup = TemplateLookup(directories=template_directory + "/")
-    template = mako.template.Template(
-        filename=template_file_path, lookup=template_lookup)
+    template = instantiate_mako_template(template_file_name)
     write_if_changed(
         output_file_path,
         template.render(data=metadata))
-
-
-def read_file_contents(output_file_path: str) -> str:
-    try:
-        with open(output_file_path, "r", newline="") as f:
-            return f.read()
-    except FileNotFoundError:
-        return ""
-
-
-def write_if_changed(output_file_path: str, new_contents: str) -> None:
-    """Write new_contents to output_file_path if new_contents != the contents
-    of output_file_path.
-
-    This prevents downstream recompiles when codegen runs but does not change
-    a given file.
-    """
-    old_contents = read_file_contents(output_file_path)
-    if old_contents != new_contents:
-        with open(output_file_path, "w+", newline="") as f:
-            f.write(new_contents)
 
 
 def mutate_metadata(metadata: dict):
@@ -74,14 +44,7 @@ def mutate_metadata(metadata: dict):
 
 
 def generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
-    sys.path.append(metadata_dir)
-    init_file = os.path.join(metadata_dir, "__init__.py")
-
-    spec = importlib.util.spec_from_file_location("metadata", init_file)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-
-    metadata = module.metadata
+    metadata = load_metadata(metadata_dir)
     metadata_validation.validate_metadata(metadata)
     if validate_only:
         return
@@ -93,6 +56,16 @@ def generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
     generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)
     generate_service_file(metadata, "service.cpp.mako",
                           "_service.cpp", gen_dir)
+    generate_service_file(
+        metadata,
+        "service_registrar.h.mako",
+        "_service_registrar.h",
+        gen_dir)
+    generate_service_file(
+        metadata,
+        "service_registrar.cpp.mako",
+        "_service_registrar.cpp", 
+        gen_dir)
     generate_service_file(metadata, "library_interface.h.mako",
                           "_library_interface.h", gen_dir)
     generate_service_file(metadata, "library.cpp.mako",

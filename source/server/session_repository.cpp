@@ -1,5 +1,7 @@
 #include "session_repository.h"
 
+#include <grpcpp/grpcpp.h>
+
 namespace nidevice_grpc {
 
 SessionRepository::SessionRepository()

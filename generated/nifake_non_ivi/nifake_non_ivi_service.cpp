@@ -24,7 +24,7 @@ namespace nifake_non_ivi_grpc {
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiFakeNonIviFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -864,12 +864,8 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
-  bool NiFakeNonIviService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiFakeNonIviService::NiFakeNonIviFeatureToggles::NiFakeNonIviFeatureToggles(
+  NiFakeNonIviFeatureToggles::NiFakeNonIviFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nifake_non_ivi", CodeReadiness::kNextRelease)),

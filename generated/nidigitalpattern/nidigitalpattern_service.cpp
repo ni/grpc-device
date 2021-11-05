@@ -24,7 +24,7 @@ namespace nidigitalpattern_grpc {
   NiDigitalService::NiDigitalService(
       NiDigitalLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiDigitalFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -3660,12 +3660,8 @@ namespace nidigitalpattern_grpc {
     }
   }
 
-  bool NiDigitalService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiDigitalService::NiDigitalFeatureToggles::NiDigitalFeatureToggles(
+  NiDigitalFeatureToggles::NiDigitalFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nidigitalpattern", CodeReadiness::kRelease))

@@ -24,7 +24,7 @@ namespace nidcpower_grpc {
   NiDCPowerService::NiDCPowerService(
       NiDCPowerLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiDCPowerFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -3472,12 +3472,8 @@ namespace nidcpower_grpc {
     }
   }
 
-  bool NiDCPowerService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiDCPowerService::NiDCPowerFeatureToggles::NiDCPowerFeatureToggles(
+  NiDCPowerFeatureToggles::NiDCPowerFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nidcpower", CodeReadiness::kRelease))

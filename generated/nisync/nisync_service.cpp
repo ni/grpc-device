@@ -24,7 +24,7 @@ namespace nisync_grpc {
   NiSyncService::NiSyncService(
       NiSyncLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
-      const nidevice_grpc::FeatureToggles& feature_toggles)
+      const NiSyncFeatureToggles& feature_toggles)
       : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
   {
   }
@@ -1672,12 +1672,8 @@ namespace nisync_grpc {
     }
   }
 
-  bool NiSyncService::is_enabled()
-  {
-    return feature_toggles_.is_enabled;
-  }
 
-  NiSyncService::NiSyncFeatureToggles::NiSyncFeatureToggles(
+  NiSyncFeatureToggles::NiSyncFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
         feature_toggles.is_feature_enabled("nisync", CodeReadiness::kRelease))
