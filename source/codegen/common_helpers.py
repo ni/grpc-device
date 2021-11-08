@@ -776,3 +776,8 @@ def get_additional_headers(config: dict, including_from_file: str) -> List[str]:
 
 def get_enum_value_prefix(enum_name: str, enum: dict) -> str:
     return enum.get("enum-value-prefix", pascal_to_snake(enum_name).upper())
+
+
+def get_driver_readiness(config: dict) -> str:
+    return config.get('code_readiness', 'Release')
+    

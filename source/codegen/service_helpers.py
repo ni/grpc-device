@@ -324,7 +324,7 @@ def get_toggle_member_name(fully_qualified_toggle_name: str) -> str:
 
 
 def get_driver_service_readiness(config: dict) -> str:
-    readiness = config.get('code_readiness', 'Release')
+    readiness = common_helpers.get_driver_readiness(config)
     return to_cpp_readiness(readiness)
 
 

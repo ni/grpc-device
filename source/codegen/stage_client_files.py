@@ -1,0 +1,148 @@
+from argparse import ArgumentParser
+from pathlib import Path
+from shutil import copy2, copytree
+from tempfile import TemporaryDirectory
+from typing import Dict, Iterable, List
+
+from common_helpers import get_driver_readiness
+from template_helpers import load_metadata
+
+
+class _ArtifactReadiness():
+  """
+  Helper class to determine whether a Path with a module-named artifact directory
+  is release-ready.
+  """
+  _module_to_readiness = Dict[str, str]
+
+  def __init__(self, metadata_dir: Path):
+    modules = [
+      load_metadata(p)
+      for p in metadata_dir.iterdir()
+      if p.is_dir() and not "fake" in p.name
+    ]
+
+    self._module_to_readiness = {
+      d["config"]["module_name"]: get_driver_readiness(d["config"])
+      for d in modules
+    }
+
+  def is_release_ready(self, module_path: Path) -> bool:
+    """
+    Determine release-readiness by checking the name of the module_path directory
+    against code_readiness for the module_name in config.py.
+    """
+    module_name = module_path.name
+    if "fake" in module_name:
+      return False
+
+    if "session" == module_name:
+      return True
+
+    if not module_name in self._module_to_readiness:
+      raise KeyError(f"No module config.py metadata for module_name: {module_path}")
+
+    return self._module_to_readiness[module_name] == "Release"
+
+
+  def get_release_ready_subdirs(self, directory: Path) -> Iterable[Path]:
+    """
+    Return all subdirectories of directory for which is_release_ready is True.
+    """
+    return (
+      d 
+      for d in directory.iterdir()
+      if d.is_dir() and self.is_release_ready(d)
+    )
+  
+
+class ArtifactLocations():
+  repo_root: Path
+
+  def __init__(self, repo_root: Path):
+    self.repo_root = repo_root
+
+  @property
+  def examples(self) -> Path:
+    return self.repo_root / "examples"
+  
+  @property
+  def generated_files(self) -> Path:
+    return self.repo_root / "generated"
+
+  @property
+  def shared_protos(self) -> Path:
+    return self.repo_root / "source" / "protobuf"
+
+  @property
+  def metadata_dir(self) -> Path:
+    return self.repo_root / "source" / "codegen" / "metadata"
+
+
+def _get_release_proto_files(
+  artifact_locations: ArtifactLocations,
+  readiness: _ArtifactReadiness
+) -> List[Path]:
+
+  release_driver_dirs = readiness.get_release_ready_subdirs(artifact_locations.generated_files)
+  return [
+    proto
+    for d in release_driver_dirs
+    for proto in d.glob("*.proto")
+  ]
+
+
+def _get_release_example_directories(
+  artifact_locations: ArtifactLocations,
+  readiness: _ArtifactReadiness
+) -> List[Path]:
+
+  return readiness.get_release_ready_subdirs(artifact_locations.examples)
+
+
+def stage_client_files(artifact_locations: ArtifactLocations, output_path: Path):
+  readiness = _ArtifactReadiness(artifact_locations.metadata_dir)
+
+  proto_path = output_path / "proto"
+  proto_path.mkdir(parents=True)
+
+  for file in artifact_locations.shared_protos.iterdir():
+    copy2(file, proto_path)
+
+  for file in _get_release_proto_files(artifact_locations, readiness):
+    copy2(file, proto_path)
+
+  examples_path = output_path / "examples"
+  examples_path.mkdir(parents=True)
+
+  for dir in _get_release_example_directories(artifact_locations, readiness):
+    copytree(dir, examples_path / dir.name)
+
+  copy2(artifact_locations.repo_root / "LICENSE", output_path)
+  copy2(artifact_locations.repo_root / "ThirdPartyNotices.txt", output_path)
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser(
+        description="Stage client files for NI driver API gRPC services.")
+    parser.add_argument(
+        "--output", 
+        "-o", 
+        help="The path to the top-level directory to stage the client files. Must be empty or non-existent.")
+    
+    args = parser.parse_args()
+    repo_root = Path(__file__).parent.parent.parent
+
+    if args.output:
+      stage_client_files(ArtifactLocations(repo_root), Path(args.output))
+    else:
+      print("""
+***No --output directory specified.***
+Performing Dry Run.
+        """)
+      with TemporaryDirectory() as tempdir:
+        tempdirpath = Path(tempdir)
+        stage_client_files(ArtifactLocations(repo_root), tempdirpath)
+        created_files = (f for f in tempdirpath.glob("**/*") if not f.is_dir())
+        for out_file in created_files:
+          print(out_file.relative_to(tempdirpath))
