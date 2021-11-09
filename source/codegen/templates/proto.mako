@@ -46,7 +46,7 @@ service ${service_class_prefix} {
 
 % for group in common_helpers.get_attribute_groups(data):
 %   for define_attribute_enum, attributes in group.get_attributes_split_by_sub_group().items():
-${mako_helper.define_attribute_enum(group.name, define_attribute_enum, attributes)}\
+${mako_helper.define_attribute_enum(group.name, define_attribute_enum, attributes, config)}\
 %   endfor
 % endfor
 ${mako_helper.define_function_enums(function_enums)}\

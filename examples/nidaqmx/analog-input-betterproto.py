@@ -93,7 +93,7 @@ async def main():
         
         response = await daq_service.get_task_attribute_u_int32(
             task=task,
-            attribute_raw=nidaqmx_grpc.TaskUInt32Attributes.TASK_ATTRIBUTE_NUM_CHANS)
+            attribute_raw=nidaqmx_grpc.TaskUInt32Attribute.TASK_ATTRIBUTE_NUM_CHANS)
         await raise_if_error(response)
         number_of_channels = response.value
 

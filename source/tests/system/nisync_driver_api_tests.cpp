@@ -218,7 +218,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::SetAttributeViInt32Request request;
     nisync::SetAttributeViInt32Response response;
     request.set_active_item(activeItem);
-    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.set_value_raw(value);
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->SetAttributeViInt32(&clientContext, request, &response);
@@ -232,7 +232,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::GetAttributeViInt32Request request;
     nisync::GetAttributeViInt32Response response;
     request.set_active_item(activeItem);
-    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->GetAttributeViInt32(&clientContext, request, &response);
     *valueOut = response.value();
@@ -246,7 +246,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::SetAttributeViStringRequest request;
     nisync::SetAttributeViStringResponse response;
     request.set_active_item(activeItem);
-    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.set_value_raw(value);
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->SetAttributeViString(&clientContext, request, &response);
@@ -260,7 +260,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::GetAttributeViStringRequest request;
     nisync::GetAttributeViStringResponse response;
     request.set_active_item(activeItem);
-    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->GetAttributeViString(&clientContext, request, &response);
     *valueOut = response.value();
@@ -274,7 +274,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::SetAttributeViBooleanRequest request;
     nisync::SetAttributeViBooleanResponse response;
     request.set_active_item(activeItem);
-    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.set_value(value);
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->SetAttributeViBoolean(&clientContext, request, &response);
@@ -288,7 +288,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::GetAttributeViBooleanRequest request;
     nisync::GetAttributeViBooleanResponse response;
     request.set_active_item(activeItem);
-    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->GetAttributeViBoolean(&clientContext, request, &response);
     *valueOut = response.value();
@@ -302,7 +302,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::SetAttributeViReal64Request request;
     nisync::SetAttributeViReal64Response response;
     request.set_active_item(activeItem);
-    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.set_value_raw(value);
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->SetAttributeViReal64(&clientContext, request, &response);
@@ -316,7 +316,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::GetAttributeViReal64Request request;
     nisync::GetAttributeViReal64Response response;
     request.set_active_item(activeItem);
-    request.set_attribute(static_cast<nisync::NiSyncAttributes>(attribute));
+    request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.mutable_vi()->set_id(driver_session_->id());
     auto grpcStatus = GetStub()->GetAttributeViReal64(&clientContext, request, &response);
     *valueOut = response.value();

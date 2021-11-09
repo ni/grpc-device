@@ -151,7 +151,7 @@ service NiDCPower {
   rpc WaitForEvent(WaitForEventRequest) returns (WaitForEventResponse);
 }
 
-enum NiDCPowerAttributes {
+enum NiDCPowerAttribute {
   NIDCPOWER_ATTRIBUTE_UNSPECIFIED = 0;
   NIDCPOWER_ATTRIBUTE_RANGE_CHECK = 1050002;
   NIDCPOWER_ATTRIBUTE_QUERY_INSTRUMENT_STATUS = 1050003;
@@ -1407,7 +1407,7 @@ message FetchMultipleResponse {
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
 }
 
 message GetAttributeViBooleanResponse {
@@ -1418,7 +1418,7 @@ message GetAttributeViBooleanResponse {
 message GetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt32Response {
@@ -1429,7 +1429,7 @@ message GetAttributeViInt32Response {
 message GetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt64Response {
@@ -1440,7 +1440,7 @@ message GetAttributeViInt64Response {
 message GetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
 }
 
 message GetAttributeViReal64Response {
@@ -1451,7 +1451,7 @@ message GetAttributeViReal64Response {
 message GetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
 }
 
 message GetAttributeViSessionResponse {
@@ -1462,7 +1462,7 @@ message GetAttributeViSessionResponse {
 message GetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
 }
 
 message GetAttributeViStringResponse {
@@ -1768,7 +1768,7 @@ message SendSoftwareEdgeTriggerResponse {
 message SetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
   bool attribute_value = 4;
 }
 
@@ -1779,7 +1779,7 @@ message SetAttributeViBooleanResponse {
 message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
   oneof attribute_value_enum {
     NiDCPowerInt32AttributeValues attribute_value = 4;
     sint32 attribute_value_raw = 5;
@@ -1793,7 +1793,7 @@ message SetAttributeViInt32Response {
 message SetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
   int64 attribute_value_raw = 4;
 }
 
@@ -1804,7 +1804,7 @@ message SetAttributeViInt64Response {
 message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
   oneof attribute_value_enum {
     NiDCPowerReal64AttributeValues attribute_value = 4;
     double attribute_value_raw = 5;
@@ -1818,7 +1818,7 @@ message SetAttributeViReal64Response {
 message SetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
   nidevice_grpc.Session attribute_value = 4;
 }
 
@@ -1829,7 +1829,7 @@ message SetAttributeViSessionResponse {
 message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiDCPowerAttributes attribute_id = 3;
+  NiDCPowerAttribute attribute_id = 3;
   string attribute_value_raw = 4;
 }
 

@@ -513,7 +513,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViBoolean_CallsGetAttributeVi
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  nifake_grpc::NiFakeAttributes attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_BOOL;
+  nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_BOOL;
   bool attribute_value = true;
   EXPECT_CALL(library, GetAttributeViBoolean(kTestViSession, Pointee(*kTestChannelName), attribute_id, _))
       .WillOnce(DoAll(SetArgPointee<3>(attribute_value), Return(kDriverSuccess)));
@@ -538,7 +538,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt32_CallsGetAttributeViIn
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  nifake_grpc::NiFakeAttributes attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_INTEGER;
+  nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_INTEGER;
   std::int32_t attribute_value = 12345;
   EXPECT_CALL(library, GetAttributeViInt32(kTestViSession, Pointee(*kTestChannelName), attribute_id, _))
       .WillOnce(DoAll(SetArgPointee<3>(attribute_value), Return(kDriverSuccess)));
@@ -563,7 +563,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViInt64_CallsGetAttributeViIn
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  nifake_grpc::NiFakeAttributes attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_INT64;
+  nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_INT64;
   std::int64_t attribute_value = -12345;
   EXPECT_CALL(library, GetAttributeViInt64(kTestViSession, Pointee(*kTestChannelName), attribute_id, _))
       .WillOnce(DoAll(SetArgPointee<3>(attribute_value), Return(kDriverSuccess)));
@@ -588,7 +588,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViReal64_CallsGetAttributeViR
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  nifake_grpc::NiFakeAttributes attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
+  nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
   double attribute_value = 12.345;
   EXPECT_CALL(library, GetAttributeViReal64(kTestViSession, Pointee(*kTestChannelName), attribute_id, _))
       .WillOnce(DoAll(SetArgPointee<3>(attribute_value), Return(kDriverSuccess)));
@@ -647,7 +647,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  nifake_grpc::NiFakeAttributes attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
+  nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
   std::int32_t months = 24;
   EXPECT_CALL(library, GetCalInterval(kTestViSession, _))
       .WillOnce(DoAll(SetArgPointee<1>(months), Return(kDriverSuccess)));
@@ -1480,7 +1480,7 @@ TEST(NiFakeServiceTests, NiFakeService_GetAttributeViString_CallsGetAttributeViS
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  nifake_grpc::NiFakeAttributes attributeId = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
+  nifake_grpc::NiFakeAttribute attributeId = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
   ViChar attribute_char_array[] = {'H', 'E', 'L', 'L', 'O', '\0'};
   ViInt32 expected_size = sizeof(attribute_char_array);
   // ivi-dance call
@@ -2287,7 +2287,7 @@ TEST(NiFakeServiceTests, FakeService_ReadDataWithInOutIviTwist_DoesTwistAndRetur
 
 TEST(NiFakeServiceTests, FakeService_CreateConfigurationList_PassesAttributeArray)
 {
-  const auto ATTRIBUTES = std::vector<NiFakeAttributes>{NiFakeAttributes::NIFAKE_ATTRIBUTE_READ_WRITE_BOOL, NiFakeAttributes::NIFAKE_ATTRIBUTE_READ_WRITE_COLOR};
+  const auto ATTRIBUTES = std::vector<NiFakeAttribute>{NiFakeAttribute::NIFAKE_ATTRIBUTE_READ_WRITE_BOOL, NiFakeAttribute::NIFAKE_ATTRIBUTE_READ_WRITE_COLOR};
   FakeServiceHolder service_holder;
   EXPECT_CALL(service_holder.library, CreateConfigurationList(_, _))
       .With(Args<1, 0>(ElementsAreArray(ATTRIBUTES.data(), ATTRIBUTES.size())))

@@ -405,7 +405,7 @@ service NiDAQmx {
   rpc WriteToTEDSFromFile(WriteToTEDSFromFileRequest) returns (WriteToTEDSFromFileResponse);
 }
 
-enum BufferUInt32Attributes {
+enum BufferUInt32Attribute {
   BUFFER_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   BUFFER_ATTRIBUTE_INPUT_BUF_SIZE = 6252;
   BUFFER_ATTRIBUTE_OUTPUT_BUF_SIZE = 6253;
@@ -413,31 +413,31 @@ enum BufferUInt32Attributes {
   BUFFER_ATTRIBUTE_OUTPUT_ONBRD_BUF_SIZE = 8971;
 }
 
-enum BufferResetAttributes {
+enum BufferResetAttribute {
   BUFFER_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   BUFFER_RESET_ATTRIBUTE_INPUT_BUF_SIZE = 6252;
   BUFFER_RESET_ATTRIBUTE_OUTPUT_BUF_SIZE = 6253;
   BUFFER_RESET_ATTRIBUTE_OUTPUT_ONBRD_BUF_SIZE = 8971;
 }
 
-enum CalibrationInfoBoolAttributes {
+enum CalibrationInfoBoolAttribute {
   CALIBRATIONINFO_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   CALIBRATIONINFO_ATTRIBUTE_SELF_CAL_SUPPORTED = 6240;
 }
 
-enum CalibrationInfoStringAttributes {
+enum CalibrationInfoStringAttribute {
   CALIBRATIONINFO_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   CALIBRATIONINFO_ATTRIBUTE_CAL_USER_DEFINED_INFO = 6241;
 }
 
-enum CalibrationInfoDoubleAttributes {
+enum CalibrationInfoDoubleAttribute {
   CALIBRATIONINFO_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   CALIBRATIONINFO_ATTRIBUTE_SELF_CAL_LAST_TEMP = 6244;
   CALIBRATIONINFO_ATTRIBUTE_EXT_CAL_LAST_TEMP = 6247;
   CALIBRATIONINFO_ATTRIBUTE_CAL_DEV_TEMP = 8763;
 }
 
-enum CalibrationInfoUInt32Attributes {
+enum CalibrationInfoUInt32Attribute {
   CALIBRATIONINFO_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   CALIBRATIONINFO_ATTRIBUTE_EXT_CAL_RECOMMENDED_INTERVAL = 6248;
   CALIBRATIONINFO_ATTRIBUTE_CAL_USER_DEFINED_INFO_MAX_SIZE = 6428;
@@ -445,7 +445,7 @@ enum CalibrationInfoUInt32Attributes {
   CALIBRATIONINFO_ATTRIBUTE_CAL_RECOMMENDED_ACC_CONNECTION_COUNT_LIMIT = 12268;
 }
 
-enum ChannelInt32Attributes {
+enum ChannelInt32Attribute {
   CHANNEL_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   CHANNEL_ATTRIBUTE_AI_RAW_SAMP_JUSTIFICATION = 80;
   CHANNEL_ATTRIBUTE_AI_COUPLING = 100;
@@ -647,7 +647,7 @@ enum ChannelInt32Attributes {
   CHANNEL_ATTRIBUTE_CI_FILTER_DELAY_UNITS = 12732;
 }
 
-enum ChannelDoubleAttributes {
+enum ChannelDoubleAttribute {
   CHANNEL_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   CHANNEL_ATTRIBUTE_AI_IMPEDANCE = 98;
   CHANNEL_ATTRIBUTE_AI_AC_EXCIT_FREQ = 257;
@@ -827,7 +827,7 @@ enum ChannelDoubleAttributes {
   CHANNEL_ATTRIBUTE_AO_COMMON_MODE_OFFSET = 12748;
 }
 
-enum ChannelResetAttributes {
+enum ChannelResetAttribute {
   CHANNEL_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   CHANNEL_RESET_ATTRIBUTE_AI_IMPEDANCE = 98;
   CHANNEL_RESET_ATTRIBUTE_AI_COUPLING = 100;
@@ -1384,7 +1384,7 @@ enum ChannelResetAttributes {
   CHANNEL_RESET_ATTRIBUTE_AO_COMMON_MODE_OFFSET = 12748;
 }
 
-enum ChannelBoolAttributes {
+enum ChannelBoolAttribute {
   CHANNEL_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   CHANNEL_ATTRIBUTE_AI_DITHER_ENABLE = 104;
   CHANNEL_ATTRIBUTE_AI_BRIDGE_SHUNT_CAL_ENABLE = 148;
@@ -1484,7 +1484,7 @@ enum ChannelBoolAttributes {
   CHANNEL_ATTRIBUTE_CI_FILTER_ENABLE = 12727;
 }
 
-enum ChannelStringAttributes {
+enum ChannelStringAttribute {
   CHANNEL_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   CHANNEL_ATTRIBUTE_CI_CTR_TIMEBASE_SRC = 323;
   CHANNEL_ATTRIBUTE_CO_CTR_TIMEBASE_SRC = 825;
@@ -1548,7 +1548,7 @@ enum ChannelStringAttributes {
   CHANNEL_ATTRIBUTE_CI_COUNT_EDGES_GATE_DIG_FLTR_TIMEBASE_SRC = 12531;
 }
 
-enum ChannelUInt32Attributes {
+enum ChannelUInt32Attribute {
   CHANNEL_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   CHANNEL_ATTRIBUTE_CI_FREQ_DIV = 327;
   CHANNEL_ATTRIBUTE_CI_COUNT = 328;
@@ -1596,7 +1596,7 @@ enum ChannelUInt32Attributes {
   CHANNEL_ATTRIBUTE_CI_FILTER_ORDER = 12730;
 }
 
-enum ChannelDoubleArrayAttributes {
+enum ChannelDoubleArrayAttribute {
   CHANNEL_DOUBLE_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   CHANNEL_ATTRIBUTE_AI_DEV_SCALING_COEFF = 6448;
   CHANNEL_ATTRIBUTE_AO_DEV_SCALING_COEFF = 6449;
@@ -1613,7 +1613,7 @@ enum ChannelDoubleArrayAttributes {
   CHANNEL_ATTRIBUTE_AI_DIG_FLTR_COEFF = 12487;
 }
 
-enum DeviceStringAttributes {
+enum DeviceStringAttribute {
   DEVICE_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   DEVICE_ATTRIBUTE_PRODUCT_TYPE = 1585;
   DEVICE_ATTRIBUTE_AI_PHYSICAL_CHANS = 8990;
@@ -1637,7 +1637,7 @@ enum DeviceStringAttributes {
   DEVICE_ATTRIBUTE_FIELD_DAQ_BANK_DEV_NAMES = 12664;
 }
 
-enum DeviceUInt32Attributes {
+enum DeviceUInt32Attribute {
   DEVICE_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   DEVICE_ATTRIBUTE_SERIAL_NUM = 1586;
   DEVICE_ATTRIBUTE_PRODUCT_NUM = 8989;
@@ -1664,7 +1664,7 @@ enum DeviceUInt32Attributes {
   DEVICE_ATTRIBUTE_DO_NUM_SAMP_TIMING_ENGINES = 12648;
 }
 
-enum DeviceBoolAttributes {
+enum DeviceBoolAttribute {
   DEVICE_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   DEVICE_ATTRIBUTE_IS_SIMULATED = 8906;
   DEVICE_ATTRIBUTE_ANLG_TRIG_SUPPORTED = 10628;
@@ -1680,7 +1680,7 @@ enum DeviceBoolAttributes {
   DEVICE_ATTRIBUTE_NAV_UTC_OFFSET_READY = 12335;
 }
 
-enum DeviceInt32Attributes {
+enum DeviceInt32Attribute {
   DEVICE_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   DEVICE_ATTRIBUTE_BUS_TYPE = 8998;
   DEVICE_ATTRIBUTE_PRODUCT_CATEGORY = 10665;
@@ -1691,7 +1691,7 @@ enum DeviceInt32Attributes {
   DEVICE_ATTRIBUTE_NAV_CURRENT_UTC_OFFSET = 12336;
 }
 
-enum DeviceInt32ArrayAttributes {
+enum DeviceInt32ArrayAttribute {
   DEVICE_INT32_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   DEVICE_ATTRIBUTE_AI_TRIG_USAGE = 10630;
   DEVICE_ATTRIBUTE_AO_TRIG_USAGE = 10631;
@@ -1713,7 +1713,7 @@ enum DeviceInt32ArrayAttributes {
   DEVICE_ATTRIBUTE_AI_DIG_FLTR_TYPES = 12551;
 }
 
-enum DeviceDoubleAttributes {
+enum DeviceDoubleAttribute {
   DEVICE_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   DEVICE_ATTRIBUTE_AI_MAX_SINGLE_CHAN_RATE = 10636;
   DEVICE_ATTRIBUTE_AI_MAX_MULTI_CHAN_RATE = 10637;
@@ -1733,7 +1733,7 @@ enum DeviceDoubleAttributes {
   DEVICE_ATTRIBUTE_NAV_VDOP = 12340;
 }
 
-enum DeviceDoubleArrayAttributes {
+enum DeviceDoubleArrayAttribute {
   DEVICE_DOUBLE_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   DEVICE_ATTRIBUTE_AI_VOLTAGE_RNGS = 10640;
   DEVICE_ATTRIBUTE_AI_CURRENT_RNGS = 10641;
@@ -1754,13 +1754,13 @@ enum DeviceDoubleArrayAttributes {
   DEVICE_ATTRIBUTE_AI_CHARGE_RNGS = 12561;
 }
 
-enum DeviceUInt32ArrayAttributes {
+enum DeviceUInt32ArrayAttribute {
   DEVICE_UINT32_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   DEVICE_ATTRIBUTE_ACCESSORY_PRODUCT_NUMS = 12142;
   DEVICE_ATTRIBUTE_ACCESSORY_SERIAL_NUMS = 12143;
 }
 
-enum ExportSignalDoubleAttributes {
+enum ExportSignalDoubleAttribute {
   EXPORTSIGNAL_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   EXPORTSIGNAL_ATTRIBUTE_START_TRIG_DELAY = 1409;
   EXPORTSIGNAL_ATTRIBUTE_START_TRIG_PULSE_WIDTH = 1414;
@@ -1780,7 +1780,7 @@ enum ExportSignalDoubleAttributes {
   EXPORTSIGNAL_ATTRIBUTE_HSHK_EVENT_PULSE_WIDTH = 8897;
 }
 
-enum ExportSignalStringAttributes {
+enum ExportSignalStringAttribute {
   EXPORTSIGNAL_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   EXPORTSIGNAL_ATTRIBUTE_START_TRIG_OUTPUT_TERM = 1412;
   EXPORTSIGNAL_ATTRIBUTE_REF_TRIG_OUTPUT_TERM = 1424;
@@ -1804,7 +1804,7 @@ enum ExportSignalStringAttributes {
   EXPORTSIGNAL_ATTRIBUTE_HSHK_EVENT_OUTPUT_TERM = 8890;
 }
 
-enum ExportSignalResetAttributes {
+enum ExportSignalResetAttribute {
   EXPORTSIGNAL_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   EXPORTSIGNAL_RESET_ATTRIBUTE_START_TRIG_OUTPUT_TERM = 1412;
   EXPORTSIGNAL_RESET_ATTRIBUTE_START_TRIG_PULSE_POLARITY = 1413;
@@ -1870,7 +1870,7 @@ enum ExportSignalResetAttributes {
   EXPORTSIGNAL_RESET_ATTRIBUTE_RDY_FOR_XFER_EVENT_DEASSERT_COND_CUSTOM_THRESHOLD = 10596;
 }
 
-enum ExportSignalInt32Attributes {
+enum ExportSignalInt32Attribute {
   EXPORTSIGNAL_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   EXPORTSIGNAL_ATTRIBUTE_START_TRIG_PULSE_POLARITY = 1413;
   EXPORTSIGNAL_ATTRIBUTE_REF_TRIG_PULSE_POLARITY = 1425;
@@ -1912,55 +1912,55 @@ enum ExportSignalInt32Attributes {
   EXPORTSIGNAL_ATTRIBUTE_RDY_FOR_XFER_EVENT_DEASSERT_COND = 10595;
 }
 
-enum ExportSignalBoolAttributes {
+enum ExportSignalBoolAttribute {
   EXPORTSIGNAL_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   EXPORTSIGNAL_ATTRIBUTE_ADV_CMPLT_EVENT_ENABLE = 5706;
   EXPORTSIGNAL_ATTRIBUTE_HSHK_EVENT_INTERLOCKED_ASSERT_ON_START = 8894;
 }
 
-enum ExportSignalUInt32Attributes {
+enum ExportSignalUInt32Attribute {
   EXPORTSIGNAL_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   EXPORTSIGNAL_ATTRIBUTE_20_MHZ_TIMEBASE_DIVIDE_DOWN_BY_N = 5718;
   EXPORTSIGNAL_ATTRIBUTE_RDY_FOR_XFER_EVENT_DEASSERT_COND_CUSTOM_THRESHOLD = 10596;
 }
 
-enum PersistedChannelStringAttributes {
+enum PersistedChannelStringAttribute {
   PERSISTEDCHANNEL_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   PERSISTEDCHANNEL_ATTRIBUTE_ACTIVE_CHAN = 8911;
   PERSISTEDCHANNEL_ATTRIBUTE_AUTHOR = 8912;
 }
 
-enum PersistedChannelBoolAttributes {
+enum PersistedChannelBoolAttribute {
   PERSISTEDCHANNEL_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   PERSISTEDCHANNEL_ATTRIBUTE_ALLOW_INTERACTIVE_EDITING = 8913;
   PERSISTEDCHANNEL_ATTRIBUTE_ALLOW_INTERACTIVE_DELETION = 8914;
 }
 
-enum PersistedScaleStringAttributes {
+enum PersistedScaleStringAttribute {
   PERSISTEDSCALE_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   PERSISTEDSCALE_ATTRIBUTE_ACTIVE_SCALE = 8915;
   PERSISTEDSCALE_ATTRIBUTE_AUTHOR = 8916;
 }
 
-enum PersistedScaleBoolAttributes {
+enum PersistedScaleBoolAttribute {
   PERSISTEDSCALE_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   PERSISTEDSCALE_ATTRIBUTE_ALLOW_INTERACTIVE_EDITING = 8917;
   PERSISTEDSCALE_ATTRIBUTE_ALLOW_INTERACTIVE_DELETION = 8918;
 }
 
-enum PersistedTaskStringAttributes {
+enum PersistedTaskStringAttribute {
   PERSISTEDTASK_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   PERSISTEDTASK_ATTRIBUTE_ACTIVE_TASK = 8907;
   PERSISTEDTASK_ATTRIBUTE_AUTHOR = 8908;
 }
 
-enum PersistedTaskBoolAttributes {
+enum PersistedTaskBoolAttribute {
   PERSISTEDTASK_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   PERSISTEDTASK_ATTRIBUTE_ALLOW_INTERACTIVE_EDITING = 8909;
   PERSISTEDTASK_ATTRIBUTE_ALLOW_INTERACTIVE_DELETION = 8910;
 }
 
-enum PhysicalChannelUInt32Attributes {
+enum PhysicalChannelUInt32Attribute {
   PHYSICALCHANNEL_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_TEDS_MFG_ID = 8666;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_TEDS_MODEL_NUM = 8667;
@@ -1970,23 +1970,23 @@ enum PhysicalChannelUInt32Attributes {
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_DO_PORT_WIDTH = 10663;
 }
 
-enum PhysicalChannelStringAttributes {
+enum PhysicalChannelStringAttribute {
   PHYSICALCHANNEL_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_TEDS_VERSION_LETTER = 8670;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AI_INPUT_SRCS = 12248;
 }
 
-enum PhysicalChannelBytesAttributes {
+enum PhysicalChannelBytesAttribute {
   PHYSICALCHANNEL_BYTES_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_TEDS_BIT_STREAM = 8671;
 }
 
-enum PhysicalChannelUInt32ArrayAttributes {
+enum PhysicalChannelUInt32ArrayAttribute {
   PHYSICALCHANNEL_UINT32_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_TEDS_TEMPLATE_I_DS = 8847;
 }
 
-enum PhysicalChannelInt32ArrayAttributes {
+enum PhysicalChannelInt32ArrayAttribute {
   PHYSICALCHANNEL_INT32_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AI_TERM_CFGS = 9026;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AO_TERM_CFGS = 10659;
@@ -2001,7 +2001,7 @@ enum PhysicalChannelInt32ArrayAttributes {
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AI_SENSOR_POWER_TYPES = 12665;
 }
 
-enum PhysicalChannelBoolAttributes {
+enum PhysicalChannelBoolAttribute {
   PHYSICALCHANNEL_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_DI_SAMP_CLK_SUPPORTED = 10661;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_DI_CHANGE_DETECT_SUPPORTED = 10662;
@@ -2015,7 +2015,7 @@ enum PhysicalChannelBoolAttributes {
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AI_SENSOR_POWER_OVERCURRENT = 12669;
 }
 
-enum PhysicalChannelResetAttributes {
+enum PhysicalChannelResetAttribute {
   PHYSICALCHANNEL_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_RESET_ATTRIBUTE_PHYSICAL_CHAN_AO_MANUAL_CONTROL_ENABLE = 10782;
   PHYSICALCHANNEL_RESET_ATTRIBUTE_AO_POWER_AMP_CHANNEL_ENABLE = 12386;
@@ -2024,7 +2024,7 @@ enum PhysicalChannelResetAttributes {
   PHYSICALCHANNEL_RESET_ATTRIBUTE_PHYSICAL_CHAN_AI_POWER_CONTROL_TYPE = 12654;
 }
 
-enum PhysicalChannelDoubleAttributes {
+enum PhysicalChannelDoubleAttribute {
   PHYSICALCHANNEL_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AO_MANUAL_CONTROL_AMPLITUDE = 10783;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AO_MANUAL_CONTROL_FREQ = 10784;
@@ -2033,18 +2033,18 @@ enum PhysicalChannelDoubleAttributes {
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AI_POWER_CONTROL_VOLTAGE = 12652;
 }
 
-enum PhysicalChannelDoubleArrayAttributes {
+enum PhysicalChannelDoubleArrayAttribute {
   PHYSICALCHANNEL_DOUBLE_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_ATTRIBUTE_AO_POWER_AMP_SCALING_COEFF = 12387;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AI_SENSOR_POWER_VOLTAGE_RANGE_VALS = 12666;
 }
 
-enum PhysicalChannelInt32Attributes {
+enum PhysicalChannelInt32Attribute {
   PHYSICALCHANNEL_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   PHYSICALCHANNEL_ATTRIBUTE_PHYSICAL_CHAN_AI_POWER_CONTROL_TYPE = 12654;
 }
 
-enum ReadInt32Attributes {
+enum ReadInt32Attribute {
   READ_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   READ_ATTRIBUTE_OVERWRITE = 4625;
   READ_ATTRIBUTE_RELATIVE_TO = 6410;
@@ -2054,7 +2054,7 @@ enum ReadInt32Attributes {
   READ_ATTRIBUTE_LOGGING_TDMS_OPERATION = 11975;
 }
 
-enum ReadResetAttributes {
+enum ReadResetAttribute {
   READ_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   READ_RESET_ATTRIBUTE_OVERWRITE = 4625;
   READ_RESET_ATTRIBUTE_READ_ALL_AVAIL_SAMP = 4629;
@@ -2074,7 +2074,7 @@ enum ReadResetAttributes {
   READ_RESET_ATTRIBUTE_LOGGING_SAMPS_PER_FILE = 12260;
 }
 
-enum ReadBoolAttributes {
+enum ReadBoolAttribute {
   READ_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   READ_ATTRIBUTE_READ_ALL_AVAIL_SAMP = 4629;
   READ_ATTRIBUTE_AUTO_START = 6182;
@@ -2096,7 +2096,7 @@ enum ReadBoolAttributes {
   READ_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS_EXIST = 12690;
 }
 
-enum ReadUInt64Attributes {
+enum ReadUInt64Attribute {
   READ_UINT64_ATTRIBUTE_UNSPECIFIED = 0;
   READ_ATTRIBUTE_CURR_READ_POS = 4641;
   READ_ATTRIBUTE_TOTAL_SAMP_PER_CHAN_ACQUIRED = 6442;
@@ -2104,7 +2104,7 @@ enum ReadUInt64Attributes {
   READ_ATTRIBUTE_LOGGING_SAMPS_PER_FILE = 12260;
 }
 
-enum ReadUInt32Attributes {
+enum ReadUInt32Attribute {
   READ_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   READ_ATTRIBUTE_AVAIL_SAMP_PER_CHAN = 4643;
   READ_ATTRIBUTE_RAW_DATA_WIDTH = 8570;
@@ -2113,7 +2113,7 @@ enum ReadUInt32Attributes {
   READ_ATTRIBUTE_LOGGING_FILE_WRITE_SIZE = 12227;
 }
 
-enum ReadStringAttributes {
+enum ReadStringAttribute {
   READ_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   READ_ATTRIBUTE_CHANNELS_TO_READ = 6179;
   READ_ATTRIBUTE_OVERLOADED_CHANS = 8565;
@@ -2134,17 +2134,17 @@ enum ReadStringAttributes {
   READ_ATTRIBUTE_POWER_SUPPLY_FAULT_CHANS = 12691;
 }
 
-enum ReadDoubleAttributes {
+enum ReadDoubleAttribute {
   READ_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   READ_ATTRIBUTE_SLEEP_TIME = 8880;
 }
 
-enum RealTimeUInt32Attributes {
+enum RealTimeUInt32Attribute {
   REALTIME_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   REALTIME_ATTRIBUTE_NUM_OF_WARMUP_ITERS = 8941;
 }
 
-enum RealTimeResetAttributes {
+enum RealTimeResetAttribute {
   REALTIME_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   REALTIME_RESET_ATTRIBUTE_NUM_OF_WARMUP_ITERS = 8941;
   REALTIME_RESET_ATTRIBUTE_CONV_LATE_ERRORS_TO_WARNINGS = 8942;
@@ -2153,25 +2153,25 @@ enum RealTimeResetAttributes {
   REALTIME_RESET_ATTRIBUTE_WRITE_RECOVERY_MODE = 8986;
 }
 
-enum RealTimeBoolAttributes {
+enum RealTimeBoolAttribute {
   REALTIME_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   REALTIME_ATTRIBUTE_CONV_LATE_ERRORS_TO_WARNINGS = 8942;
   REALTIME_ATTRIBUTE_REPORT_MISSED_SAMP = 8985;
 }
 
-enum RealTimeInt32Attributes {
+enum RealTimeInt32Attribute {
   REALTIME_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   REALTIME_ATTRIBUTE_WAIT_FOR_NEXT_SAMP_CLK_WAIT_MODE = 8943;
   REALTIME_ATTRIBUTE_WRITE_RECOVERY_MODE = 8986;
 }
 
-enum ScaleStringAttributes {
+enum ScaleStringAttribute {
   SCALE_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   SCALE_ATTRIBUTE_DESCR = 4646;
   SCALE_ATTRIBUTE_SCALED_UNITS = 6427;
 }
 
-enum ScaleDoubleAttributes {
+enum ScaleDoubleAttribute {
   SCALE_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   SCALE_ATTRIBUTE_LIN_SLOPE = 4647;
   SCALE_ATTRIBUTE_LIN_Y_INTERCEPT = 4648;
@@ -2181,7 +2181,7 @@ enum ScaleDoubleAttributes {
   SCALE_ATTRIBUTE_MAP_PRE_SCALED_MIN = 4658;
 }
 
-enum ScaleDoubleArrayAttributes {
+enum ScaleDoubleArrayAttribute {
   SCALE_DOUBLE_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   SCALE_ATTRIBUTE_POLY_FORWARD_COEFF = 4660;
   SCALE_ATTRIBUTE_POLY_REVERSE_COEFF = 4661;
@@ -2189,13 +2189,13 @@ enum ScaleDoubleArrayAttributes {
   SCALE_ATTRIBUTE_TABLE_PRE_SCALED_VALS = 4663;
 }
 
-enum ScaleInt32Attributes {
+enum ScaleInt32Attribute {
   SCALE_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   SCALE_ATTRIBUTE_PRE_SCALED_UNITS = 6391;
   SCALE_ATTRIBUTE_TYPE = 6441;
 }
 
-enum SystemStringAttributes {
+enum SystemStringAttribute {
   SYSTEM_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   SYSTEM_ATTRIBUTE_GLOBAL_CHANS = 4709;
   SYSTEM_ATTRIBUTE_SCALES = 4710;
@@ -2203,32 +2203,32 @@ enum SystemStringAttributes {
   SYSTEM_ATTRIBUTE_DEV_NAMES = 6459;
 }
 
-enum SystemUInt32Attributes {
+enum SystemUInt32Attribute {
   SYSTEM_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   SYSTEM_ATTRIBUTE_NIDAQ_MAJOR_VERSION = 4722;
   SYSTEM_ATTRIBUTE_NIDAQ_MINOR_VERSION = 6435;
   SYSTEM_ATTRIBUTE_NIDAQ_UPDATE_VERSION = 12066;
 }
 
-enum TaskStringAttributes {
+enum TaskStringAttribute {
   TASK_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   TASK_ATTRIBUTE_CHANNELS = 4723;
   TASK_ATTRIBUTE_NAME = 4726;
   TASK_ATTRIBUTE_DEVICES = 8974;
 }
 
-enum TaskBoolAttributes {
+enum TaskBoolAttribute {
   TASK_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   TASK_ATTRIBUTE_COMPLETE = 4724;
 }
 
-enum TaskUInt32Attributes {
+enum TaskUInt32Attribute {
   TASK_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   TASK_ATTRIBUTE_NUM_CHANS = 8577;
   TASK_ATTRIBUTE_NUM_DEVICES = 10682;
 }
 
-enum TimingInt32Attributes {
+enum TimingInt32Attribute {
   TIMING_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   TIMING_ATTRIBUTE_SAMP_QUANT_SAMP_MODE = 4864;
   TIMING_ATTRIBUTE_SAMP_CLK_ACTIVE_EDGE = 4865;
@@ -2248,7 +2248,7 @@ enum TimingInt32Attributes {
   TIMING_ATTRIBUTE_FIRST_SAMP_CLK_TIMESCALE = 12675;
 }
 
-enum TimingResetAttributes {
+enum TimingResetAttribute {
   TIMING_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   TIMING_RESET_ATTRIBUTE_SAMP_QUANT_SAMP_MODE = 4864;
   TIMING_RESET_ATTRIBUTE_SAMP_CLK_ACTIVE_EDGE = 4865;
@@ -2309,7 +2309,7 @@ enum TimingResetAttributes {
   TIMING_RESET_ATTRIBUTE_FIRST_SAMP_CLK_OFFSET = 12714;
 }
 
-enum TimingDoubleAttributes {
+enum TimingDoubleAttribute {
   TIMING_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_RATE = 4867;
   TIMING_ATTRIBUTE_REF_CLK_RATE = 4885;
@@ -2331,7 +2331,7 @@ enum TimingDoubleAttributes {
   TIMING_ATTRIBUTE_FIRST_SAMP_CLK_OFFSET = 12714;
 }
 
-enum TimingUInt32Attributes {
+enum TimingUInt32Attribute {
   TIMING_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_MASTER_TIMEBASE_DIV = 4869;
   TIMING_ATTRIBUTE_AI_CONV_TIMEBASE_DIV = 4917;
@@ -2340,7 +2340,7 @@ enum TimingUInt32Attributes {
   TIMING_ATTRIBUTE_SYNC_CLK_INTERVAL = 12158;
 }
 
-enum TimingStringAttributes {
+enum TimingStringAttribute {
   TIMING_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC = 4872;
   TIMING_ATTRIBUTE_REF_CLK_SRC = 4886;
@@ -2357,12 +2357,12 @@ enum TimingStringAttributes {
   TIMING_ATTRIBUTE_SYNC_PULSE_TERM = 12165;
 }
 
-enum TimingUInt64Attributes {
+enum TimingUInt64Attribute {
   TIMING_UINT64_ATTRIBUTE_UNSPECIFIED = 0;
   TIMING_ATTRIBUTE_SAMP_QUANT_SAMP_PER_CHAN = 4880;
 }
 
-enum TimingBoolAttributes {
+enum TimingBoolAttribute {
   TIMING_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   TIMING_ATTRIBUTE_ON_DEMAND_SIMULTANEOUS_AO_ENABLE = 8608;
   TIMING_ATTRIBUTE_SAMP_CLK_DIG_FLTR_ENABLE = 8734;
@@ -2375,14 +2375,14 @@ enum TimingBoolAttributes {
   TIMING_ATTRIBUTE_FIRST_SAMP_TIMESTAMP_ENABLE = 12601;
 }
 
-enum TimingTimestampAttributes {
+enum TimingTimestampAttribute {
   TIMING_TIMESTAMP_ATTRIBUTE_UNSPECIFIED = 0;
   TIMING_ATTRIBUTE_SYNC_PULSE_TIME_WHEN = 12599;
   TIMING_ATTRIBUTE_FIRST_SAMP_TIMESTAMP_VAL = 12602;
   TIMING_ATTRIBUTE_FIRST_SAMP_CLK_WHEN = 12674;
 }
 
-enum TriggerInt32Attributes {
+enum TriggerInt32Attribute {
   TRIGGER_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   TRIGGER_ATTRIBUTE_DIG_EDGE_ADV_TRIG_EDGE = 4960;
   TRIGGER_ATTRIBUTE_ADV_TRIG_TYPE = 4965;
@@ -2420,7 +2420,7 @@ enum TriggerInt32Attributes {
   TRIGGER_ATTRIBUTE_ARM_START_TRIG_TIMESTAMP_TIMESCALE = 12597;
 }
 
-enum TriggerResetAttributes {
+enum TriggerResetAttribute {
   TRIGGER_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   TRIGGER_RESET_ATTRIBUTE_DIG_EDGE_ADV_TRIG_EDGE = 4960;
   TRIGGER_RESET_ATTRIBUTE_DIG_EDGE_ADV_TRIG_SRC = 4962;
@@ -2567,7 +2567,7 @@ enum TriggerResetAttributes {
   TRIGGER_RESET_ATTRIBUTE_START_TRIG_TIMESTAMP_ENABLE = 12618;
 }
 
-enum TriggerStringAttributes {
+enum TriggerStringAttribute {
   TRIGGER_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   TRIGGER_ATTRIBUTE_DIG_EDGE_ADV_TRIG_SRC = 4962;
   TRIGGER_ATTRIBUTE_ANLG_LVL_PAUSE_TRIG_SRC = 4976;
@@ -2606,7 +2606,7 @@ enum TriggerStringAttributes {
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_REF_TRIG_SRCS = 12582;
 }
 
-enum TriggerDoubleAttributes {
+enum TriggerDoubleAttribute {
   TRIGGER_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   TRIGGER_ATTRIBUTE_ANLG_LVL_PAUSE_TRIG_HYST = 4968;
   TRIGGER_ATTRIBUTE_ANLG_LVL_PAUSE_TRIG_LVL = 4969;
@@ -2648,14 +2648,14 @@ enum TriggerDoubleAttributes {
   TRIGGER_ATTRIBUTE_REF_TRIG_RETRIGGER_WIN = 12575;
 }
 
-enum TriggerUInt32Attributes {
+enum TriggerUInt32Attribute {
   TRIGGER_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   TRIGGER_ATTRIBUTE_REF_TRIG_PRETRIG_SAMPLES = 5189;
   TRIGGER_ATTRIBUTE_START_TRIG_MAX_NUM_TRIGS_TO_DETECT = 12572;
   TRIGGER_ATTRIBUTE_REF_TRIG_MAX_NUM_TRIGS_TO_DETECT = 12576;
 }
 
-enum TriggerBoolAttributes {
+enum TriggerBoolAttribute {
   TRIGGER_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   TRIGGER_ATTRIBUTE_START_TRIG_RETRIGGERABLE = 6415;
   TRIGGER_ATTRIBUTE_DIG_EDGE_START_TRIG_DIG_FLTR_ENABLE = 8739;
@@ -2687,7 +2687,7 @@ enum TriggerBoolAttributes {
   TRIGGER_ATTRIBUTE_START_TRIG_TIMESTAMP_ENABLE = 12618;
 }
 
-enum TriggerTimestampAttributes {
+enum TriggerTimestampAttribute {
   TRIGGER_TIMESTAMP_ATTRIBUTE_UNSPECIFIED = 0;
   TRIGGER_ATTRIBUTE_START_TRIG_TRIG_WHEN = 12365;
   TRIGGER_ATTRIBUTE_REF_TRIG_TIMESTAMP_VAL = 12591;
@@ -2696,7 +2696,7 @@ enum TriggerTimestampAttributes {
   TRIGGER_ATTRIBUTE_START_TRIG_TIMESTAMP_VAL = 12619;
 }
 
-enum TriggerInt32ArrayAttributes {
+enum TriggerInt32ArrayAttribute {
   TRIGGER_INT32_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_START_TRIG_SLOPES = 12578;
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_START_TRIG_COUPLINGS = 12581;
@@ -2704,7 +2704,7 @@ enum TriggerInt32ArrayAttributes {
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_REF_TRIG_COUPLINGS = 12586;
 }
 
-enum TriggerDoubleArrayAttributes {
+enum TriggerDoubleArrayAttribute {
   TRIGGER_DOUBLE_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_START_TRIG_LVLS = 12579;
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_START_TRIG_HYSTS = 12580;
@@ -2712,7 +2712,7 @@ enum TriggerDoubleArrayAttributes {
   TRIGGER_ATTRIBUTE_ANLG_MULTI_EDGE_REF_TRIG_HYSTS = 12585;
 }
 
-enum WatchdogInt32Attributes {
+enum WatchdogInt32Attribute {
   WATCHDOG_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   WATCHDOG_ATTRIBUTE_EXPIR_TRIG_TYPE = 8611;
   WATCHDOG_ATTRIBUTE_DIG_EDGE_WATCHDOG_EXPIR_TRIG_EDGE = 8613;
@@ -2721,7 +2721,7 @@ enum WatchdogInt32Attributes {
   WATCHDOG_ATTRIBUTE_CO_EXPIR_STATE = 12384;
 }
 
-enum WatchdogResetAttributes {
+enum WatchdogResetAttribute {
   WATCHDOG_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   WATCHDOG_RESET_ATTRIBUTE_EXPIR_TRIG_TYPE = 8611;
   WATCHDOG_RESET_ATTRIBUTE_DIG_EDGE_WATCHDOG_EXPIR_TRIG_SRC = 8612;
@@ -2734,24 +2734,24 @@ enum WatchdogResetAttributes {
   WATCHDOG_RESET_ATTRIBUTE_CO_EXPIR_STATE = 12384;
 }
 
-enum WatchdogStringAttributes {
+enum WatchdogStringAttribute {
   WATCHDOG_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   WATCHDOG_ATTRIBUTE_DIG_EDGE_WATCHDOG_EXPIR_TRIG_SRC = 8612;
 }
 
-enum WatchdogBoolAttributes {
+enum WatchdogBoolAttribute {
   WATCHDOG_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   WATCHDOG_ATTRIBUTE_HAS_EXPIRED = 8616;
   WATCHDOG_ATTRIBUTE_EXPIR_TRIG_TRIG_ON_NETWORK_CONN_LOSS = 12381;
 }
 
-enum WatchdogDoubleAttributes {
+enum WatchdogDoubleAttribute {
   WATCHDOG_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   WATCHDOG_ATTRIBUTE_TIMEOUT = 8617;
   WATCHDOG_ATTRIBUTE_AO_EXPIR_STATE = 12383;
 }
 
-enum WriteInt32Attributes {
+enum WriteInt32Attribute {
   WRITE_INT32_ATTRIBUTE_UNSPECIFIED = 0;
   WRITE_ATTRIBUTE_REGEN_MODE = 5203;
   WRITE_ATTRIBUTE_RELATIVE_TO = 6412;
@@ -2759,7 +2759,7 @@ enum WriteInt32Attributes {
   WRITE_ATTRIBUTE_WAIT_MODE = 8881;
 }
 
-enum WriteResetAttributes {
+enum WriteResetAttribute {
   WRITE_RESET_ATTRIBUTE_UNSPECIFIED = 0;
   WRITE_RESET_ATTRIBUTE_REGEN_MODE = 5203;
   WRITE_RESET_ATTRIBUTE_RELATIVE_TO = 6412;
@@ -2769,13 +2769,13 @@ enum WriteResetAttributes {
   WRITE_RESET_ATTRIBUTE_NEXT_WRITE_IS_LAST = 10604;
 }
 
-enum WriteUInt64Attributes {
+enum WriteUInt64Attribute {
   WRITE_UINT64_ATTRIBUTE_UNSPECIFIED = 0;
   WRITE_ATTRIBUTE_CURR_WRITE_POS = 5208;
   WRITE_ATTRIBUTE_TOTAL_SAMP_PER_CHAN_GENERATED = 6443;
 }
 
-enum WriteUInt32Attributes {
+enum WriteUInt32Attribute {
   WRITE_UINT32_ATTRIBUTE_UNSPECIFIED = 0;
   WRITE_ATTRIBUTE_SPACE_AVAIL = 5216;
   WRITE_ATTRIBUTE_RAW_DATA_WIDTH = 8573;
@@ -2783,12 +2783,12 @@ enum WriteUInt32Attributes {
   WRITE_ATTRIBUTE_DIGITAL_LINES_BYTES_PER_CHAN = 8575;
 }
 
-enum WriteDoubleAttributes {
+enum WriteDoubleAttribute {
   WRITE_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
   WRITE_ATTRIBUTE_SLEEP_TIME = 8882;
 }
 
-enum WriteBoolAttributes {
+enum WriteBoolAttribute {
   WRITE_BOOL_ATTRIBUTE_UNSPECIFIED = 0;
   WRITE_ATTRIBUTE_NEXT_WRITE_IS_LAST = 10604;
   WRITE_ATTRIBUTE_OVERCURRENT_CHANS_EXIST = 10728;
@@ -2801,7 +2801,7 @@ enum WriteBoolAttributes {
   WRITE_ATTRIBUTE_SYNC_UNLOCKED_CHANS_EXIST = 12607;
 }
 
-enum WriteStringAttributes {
+enum WriteStringAttribute {
   WRITE_STRING_ATTRIBUTE_UNSPECIFIED = 0;
   WRITE_ATTRIBUTE_OVERCURRENT_CHANS = 10729;
   WRITE_ATTRIBUTE_OPEN_CURRENT_LOOP_CHANS = 10731;
@@ -6897,7 +6897,7 @@ message GetAutoConfiguredCDAQSyncConnectionsResponse {
 message GetBufferAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    BufferUInt32Attributes attribute = 2;
+    BufferUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -6910,7 +6910,7 @@ message GetBufferAttributeUInt32Response {
 message GetCalInfoAttributeBoolRequest {
   string device_name = 1;
   oneof attribute_enum {
-    CalibrationInfoBoolAttributes attribute = 2;
+    CalibrationInfoBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -6923,7 +6923,7 @@ message GetCalInfoAttributeBoolResponse {
 message GetCalInfoAttributeDoubleRequest {
   string device_name = 1;
   oneof attribute_enum {
-    CalibrationInfoDoubleAttributes attribute = 2;
+    CalibrationInfoDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -6936,7 +6936,7 @@ message GetCalInfoAttributeDoubleResponse {
 message GetCalInfoAttributeStringRequest {
   string device_name = 1;
   oneof attribute_enum {
-    CalibrationInfoStringAttributes attribute = 2;
+    CalibrationInfoStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -6949,7 +6949,7 @@ message GetCalInfoAttributeStringResponse {
 message GetCalInfoAttributeUInt32Request {
   string device_name = 1;
   oneof attribute_enum {
-    CalibrationInfoUInt32Attributes attribute = 2;
+    CalibrationInfoUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -6963,7 +6963,7 @@ message GetChanAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelBoolAttributes attribute = 3;
+    ChannelBoolAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -6977,7 +6977,7 @@ message GetChanAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelDoubleAttributes attribute = 3;
+    ChannelDoubleAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -6991,7 +6991,7 @@ message GetChanAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelDoubleArrayAttributes attribute = 3;
+    ChannelDoubleArrayAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7005,7 +7005,7 @@ message GetChanAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelInt32Attributes attribute = 3;
+    ChannelInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7020,7 +7020,7 @@ message GetChanAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelStringAttributes attribute = 3;
+    ChannelStringAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7034,7 +7034,7 @@ message GetChanAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelUInt32Attributes attribute = 3;
+    ChannelUInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7047,7 +7047,7 @@ message GetChanAttributeUInt32Response {
 message GetDeviceAttributeBoolRequest {
   string device_name = 1;
   oneof attribute_enum {
-    DeviceBoolAttributes attribute = 2;
+    DeviceBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7060,7 +7060,7 @@ message GetDeviceAttributeBoolResponse {
 message GetDeviceAttributeDoubleRequest {
   string device_name = 1;
   oneof attribute_enum {
-    DeviceDoubleAttributes attribute = 2;
+    DeviceDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7073,7 +7073,7 @@ message GetDeviceAttributeDoubleResponse {
 message GetDeviceAttributeDoubleArrayRequest {
   string device_name = 1;
   oneof attribute_enum {
-    DeviceDoubleArrayAttributes attribute = 2;
+    DeviceDoubleArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7086,7 +7086,7 @@ message GetDeviceAttributeDoubleArrayResponse {
 message GetDeviceAttributeInt32Request {
   string device_name = 1;
   oneof attribute_enum {
-    DeviceInt32Attributes attribute = 2;
+    DeviceInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7100,7 +7100,7 @@ message GetDeviceAttributeInt32Response {
 message GetDeviceAttributeInt32ArrayRequest {
   string device_name = 1;
   oneof attribute_enum {
-    DeviceInt32ArrayAttributes attribute = 2;
+    DeviceInt32ArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7114,7 +7114,7 @@ message GetDeviceAttributeInt32ArrayResponse {
 message GetDeviceAttributeStringRequest {
   string device_name = 1;
   oneof attribute_enum {
-    DeviceStringAttributes attribute = 2;
+    DeviceStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7127,7 +7127,7 @@ message GetDeviceAttributeStringResponse {
 message GetDeviceAttributeUInt32Request {
   string device_name = 1;
   oneof attribute_enum {
-    DeviceUInt32Attributes attribute = 2;
+    DeviceUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7140,7 +7140,7 @@ message GetDeviceAttributeUInt32Response {
 message GetDeviceAttributeUInt32ArrayRequest {
   string device_name = 1;
   oneof attribute_enum {
-    DeviceUInt32ArrayAttributes attribute = 2;
+    DeviceUInt32ArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7199,7 +7199,7 @@ message GetErrorStringResponse {
 message GetExportedSignalAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalBoolAttributes attribute = 2;
+    ExportSignalBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7212,7 +7212,7 @@ message GetExportedSignalAttributeBoolResponse {
 message GetExportedSignalAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalDoubleAttributes attribute = 2;
+    ExportSignalDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7225,7 +7225,7 @@ message GetExportedSignalAttributeDoubleResponse {
 message GetExportedSignalAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalInt32Attributes attribute = 2;
+    ExportSignalInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7239,7 +7239,7 @@ message GetExportedSignalAttributeInt32Response {
 message GetExportedSignalAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalStringAttributes attribute = 2;
+    ExportSignalStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7252,7 +7252,7 @@ message GetExportedSignalAttributeStringResponse {
 message GetExportedSignalAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalUInt32Attributes attribute = 2;
+    ExportSignalUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7321,7 +7321,7 @@ message GetNthTaskReadChannelResponse {
 message GetPersistedChanAttributeBoolRequest {
   string channel = 1;
   oneof attribute_enum {
-    PersistedChannelBoolAttributes attribute = 2;
+    PersistedChannelBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7334,7 +7334,7 @@ message GetPersistedChanAttributeBoolResponse {
 message GetPersistedChanAttributeStringRequest {
   string channel = 1;
   oneof attribute_enum {
-    PersistedChannelStringAttributes attribute = 2;
+    PersistedChannelStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7347,7 +7347,7 @@ message GetPersistedChanAttributeStringResponse {
 message GetPersistedScaleAttributeBoolRequest {
   string scale_name = 1;
   oneof attribute_enum {
-    PersistedScaleBoolAttributes attribute = 2;
+    PersistedScaleBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7360,7 +7360,7 @@ message GetPersistedScaleAttributeBoolResponse {
 message GetPersistedScaleAttributeStringRequest {
   string scale_name = 1;
   oneof attribute_enum {
-    PersistedScaleStringAttributes attribute = 2;
+    PersistedScaleStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7373,7 +7373,7 @@ message GetPersistedScaleAttributeStringResponse {
 message GetPersistedTaskAttributeBoolRequest {
   string task_name = 1;
   oneof attribute_enum {
-    PersistedTaskBoolAttributes attribute = 2;
+    PersistedTaskBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7386,7 +7386,7 @@ message GetPersistedTaskAttributeBoolResponse {
 message GetPersistedTaskAttributeStringRequest {
   string task_name = 1;
   oneof attribute_enum {
-    PersistedTaskStringAttributes attribute = 2;
+    PersistedTaskStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7399,7 +7399,7 @@ message GetPersistedTaskAttributeStringResponse {
 message GetPhysicalChanAttributeBoolRequest {
   string physical_channel = 1;
   oneof attribute_enum {
-    PhysicalChannelBoolAttributes attribute = 2;
+    PhysicalChannelBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7412,7 +7412,7 @@ message GetPhysicalChanAttributeBoolResponse {
 message GetPhysicalChanAttributeBytesRequest {
   string physical_channel = 1;
   oneof attribute_enum {
-    PhysicalChannelBytesAttributes attribute = 2;
+    PhysicalChannelBytesAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7425,7 +7425,7 @@ message GetPhysicalChanAttributeBytesResponse {
 message GetPhysicalChanAttributeDoubleRequest {
   string physical_channel = 1;
   oneof attribute_enum {
-    PhysicalChannelDoubleAttributes attribute = 2;
+    PhysicalChannelDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7438,7 +7438,7 @@ message GetPhysicalChanAttributeDoubleResponse {
 message GetPhysicalChanAttributeDoubleArrayRequest {
   string physical_channel = 1;
   oneof attribute_enum {
-    PhysicalChannelDoubleArrayAttributes attribute = 2;
+    PhysicalChannelDoubleArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7451,7 +7451,7 @@ message GetPhysicalChanAttributeDoubleArrayResponse {
 message GetPhysicalChanAttributeInt32Request {
   string physical_channel = 1;
   oneof attribute_enum {
-    PhysicalChannelInt32Attributes attribute = 2;
+    PhysicalChannelInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7465,7 +7465,7 @@ message GetPhysicalChanAttributeInt32Response {
 message GetPhysicalChanAttributeInt32ArrayRequest {
   string physical_channel = 1;
   oneof attribute_enum {
-    PhysicalChannelInt32ArrayAttributes attribute = 2;
+    PhysicalChannelInt32ArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7479,7 +7479,7 @@ message GetPhysicalChanAttributeInt32ArrayResponse {
 message GetPhysicalChanAttributeStringRequest {
   string physical_channel = 1;
   oneof attribute_enum {
-    PhysicalChannelStringAttributes attribute = 2;
+    PhysicalChannelStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7492,7 +7492,7 @@ message GetPhysicalChanAttributeStringResponse {
 message GetPhysicalChanAttributeUInt32Request {
   string physical_channel = 1;
   oneof attribute_enum {
-    PhysicalChannelUInt32Attributes attribute = 2;
+    PhysicalChannelUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7505,7 +7505,7 @@ message GetPhysicalChanAttributeUInt32Response {
 message GetPhysicalChanAttributeUInt32ArrayRequest {
   string physical_channel = 1;
   oneof attribute_enum {
-    PhysicalChannelUInt32ArrayAttributes attribute = 2;
+    PhysicalChannelUInt32ArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7518,7 +7518,7 @@ message GetPhysicalChanAttributeUInt32ArrayResponse {
 message GetReadAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadBoolAttributes attribute = 2;
+    ReadBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7531,7 +7531,7 @@ message GetReadAttributeBoolResponse {
 message GetReadAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadDoubleAttributes attribute = 2;
+    ReadDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7544,7 +7544,7 @@ message GetReadAttributeDoubleResponse {
 message GetReadAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadInt32Attributes attribute = 2;
+    ReadInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7558,7 +7558,7 @@ message GetReadAttributeInt32Response {
 message GetReadAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadStringAttributes attribute = 2;
+    ReadStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7571,7 +7571,7 @@ message GetReadAttributeStringResponse {
 message GetReadAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadUInt32Attributes attribute = 2;
+    ReadUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7584,7 +7584,7 @@ message GetReadAttributeUInt32Response {
 message GetReadAttributeUInt64Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadUInt64Attributes attribute = 2;
+    ReadUInt64Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7597,7 +7597,7 @@ message GetReadAttributeUInt64Response {
 message GetRealTimeAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    RealTimeBoolAttributes attribute = 2;
+    RealTimeBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7610,7 +7610,7 @@ message GetRealTimeAttributeBoolResponse {
 message GetRealTimeAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    RealTimeInt32Attributes attribute = 2;
+    RealTimeInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7624,7 +7624,7 @@ message GetRealTimeAttributeInt32Response {
 message GetRealTimeAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    RealTimeUInt32Attributes attribute = 2;
+    RealTimeUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7646,7 +7646,7 @@ message GetRefTrigTimestampValResponse {
 message GetScaleAttributeDoubleRequest {
   string scale_name = 1;
   oneof attribute_enum {
-    ScaleDoubleAttributes attribute = 2;
+    ScaleDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7659,7 +7659,7 @@ message GetScaleAttributeDoubleResponse {
 message GetScaleAttributeDoubleArrayRequest {
   string scale_name = 1;
   oneof attribute_enum {
-    ScaleDoubleArrayAttributes attribute = 2;
+    ScaleDoubleArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7672,7 +7672,7 @@ message GetScaleAttributeDoubleArrayResponse {
 message GetScaleAttributeInt32Request {
   string scale_name = 1;
   oneof attribute_enum {
-    ScaleInt32Attributes attribute = 2;
+    ScaleInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7686,7 +7686,7 @@ message GetScaleAttributeInt32Response {
 message GetScaleAttributeStringRequest {
   string scale_name = 1;
   oneof attribute_enum {
-    ScaleStringAttributes attribute = 2;
+    ScaleStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7738,7 +7738,7 @@ message GetSyncPulseTimeWhenResponse {
 
 message GetSystemInfoAttributeStringRequest {
   oneof attribute_enum {
-    SystemStringAttributes attribute = 1;
+    SystemStringAttribute attribute = 1;
     int32 attribute_raw = 2;
   }
 }
@@ -7750,7 +7750,7 @@ message GetSystemInfoAttributeStringResponse {
 
 message GetSystemInfoAttributeUInt32Request {
   oneof attribute_enum {
-    SystemUInt32Attributes attribute = 1;
+    SystemUInt32Attribute attribute = 1;
     int32 attribute_raw = 2;
   }
 }
@@ -7763,7 +7763,7 @@ message GetSystemInfoAttributeUInt32Response {
 message GetTaskAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TaskBoolAttributes attribute = 2;
+    TaskBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7776,7 +7776,7 @@ message GetTaskAttributeBoolResponse {
 message GetTaskAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TaskStringAttributes attribute = 2;
+    TaskStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7789,7 +7789,7 @@ message GetTaskAttributeStringResponse {
 message GetTaskAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TaskUInt32Attributes attribute = 2;
+    TaskUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7802,7 +7802,7 @@ message GetTaskAttributeUInt32Response {
 message GetTimingAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingBoolAttributes attribute = 2;
+    TimingBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7815,7 +7815,7 @@ message GetTimingAttributeBoolResponse {
 message GetTimingAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingDoubleAttributes attribute = 2;
+    TimingDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7829,7 +7829,7 @@ message GetTimingAttributeExBoolRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingBoolAttributes attribute = 3;
+    TimingBoolAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7843,7 +7843,7 @@ message GetTimingAttributeExDoubleRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingDoubleAttributes attribute = 3;
+    TimingDoubleAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7857,7 +7857,7 @@ message GetTimingAttributeExInt32Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingInt32Attributes attribute = 3;
+    TimingInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7872,7 +7872,7 @@ message GetTimingAttributeExStringRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingStringAttributes attribute = 3;
+    TimingStringAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7886,7 +7886,7 @@ message GetTimingAttributeExTimestampRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingTimestampAttributes attribute = 3;
+    TimingTimestampAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7900,7 +7900,7 @@ message GetTimingAttributeExUInt32Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingUInt32Attributes attribute = 3;
+    TimingUInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7914,7 +7914,7 @@ message GetTimingAttributeExUInt64Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingUInt64Attributes attribute = 3;
+    TimingUInt64Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -7927,7 +7927,7 @@ message GetTimingAttributeExUInt64Response {
 message GetTimingAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingInt32Attributes attribute = 2;
+    TimingInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7941,7 +7941,7 @@ message GetTimingAttributeInt32Response {
 message GetTimingAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingStringAttributes attribute = 2;
+    TimingStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7954,7 +7954,7 @@ message GetTimingAttributeStringResponse {
 message GetTimingAttributeTimestampRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingTimestampAttributes attribute = 2;
+    TimingTimestampAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7967,7 +7967,7 @@ message GetTimingAttributeTimestampResponse {
 message GetTimingAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingUInt32Attributes attribute = 2;
+    TimingUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7980,7 +7980,7 @@ message GetTimingAttributeUInt32Response {
 message GetTimingAttributeUInt64Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingUInt64Attributes attribute = 2;
+    TimingUInt64Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -7993,7 +7993,7 @@ message GetTimingAttributeUInt64Response {
 message GetTrigAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerBoolAttributes attribute = 2;
+    TriggerBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8006,7 +8006,7 @@ message GetTrigAttributeBoolResponse {
 message GetTrigAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerDoubleAttributes attribute = 2;
+    TriggerDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8019,7 +8019,7 @@ message GetTrigAttributeDoubleResponse {
 message GetTrigAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerDoubleArrayAttributes attribute = 2;
+    TriggerDoubleArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8032,7 +8032,7 @@ message GetTrigAttributeDoubleArrayResponse {
 message GetTrigAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerInt32Attributes attribute = 2;
+    TriggerInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8046,7 +8046,7 @@ message GetTrigAttributeInt32Response {
 message GetTrigAttributeInt32ArrayRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerInt32ArrayAttributes attribute = 2;
+    TriggerInt32ArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8060,7 +8060,7 @@ message GetTrigAttributeInt32ArrayResponse {
 message GetTrigAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerStringAttributes attribute = 2;
+    TriggerStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8073,7 +8073,7 @@ message GetTrigAttributeStringResponse {
 message GetTrigAttributeTimestampRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerTimestampAttributes attribute = 2;
+    TriggerTimestampAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8086,7 +8086,7 @@ message GetTrigAttributeTimestampResponse {
 message GetTrigAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerUInt32Attributes attribute = 2;
+    TriggerUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8100,7 +8100,7 @@ message GetWatchdogAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   oneof attribute_enum {
-    WatchdogBoolAttributes attribute = 3;
+    WatchdogBoolAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -8114,7 +8114,7 @@ message GetWatchdogAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   oneof attribute_enum {
-    WatchdogDoubleAttributes attribute = 3;
+    WatchdogDoubleAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -8128,7 +8128,7 @@ message GetWatchdogAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   oneof attribute_enum {
-    WatchdogInt32Attributes attribute = 3;
+    WatchdogInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -8143,7 +8143,7 @@ message GetWatchdogAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   oneof attribute_enum {
-    WatchdogStringAttributes attribute = 3;
+    WatchdogStringAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -8156,7 +8156,7 @@ message GetWatchdogAttributeStringResponse {
 message GetWriteAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteBoolAttributes attribute = 2;
+    WriteBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8169,7 +8169,7 @@ message GetWriteAttributeBoolResponse {
 message GetWriteAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteDoubleAttributes attribute = 2;
+    WriteDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8182,7 +8182,7 @@ message GetWriteAttributeDoubleResponse {
 message GetWriteAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteInt32Attributes attribute = 2;
+    WriteInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8196,7 +8196,7 @@ message GetWriteAttributeInt32Response {
 message GetWriteAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteStringAttributes attribute = 2;
+    WriteStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8209,7 +8209,7 @@ message GetWriteAttributeStringResponse {
 message GetWriteAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteUInt32Attributes attribute = 2;
+    WriteUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8222,7 +8222,7 @@ message GetWriteAttributeUInt32Response {
 message GetWriteAttributeUInt64Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteUInt64Attributes attribute = 2;
+    WriteUInt64Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8662,7 +8662,7 @@ message ReserveNetworkDeviceResponse {
 message ResetBufferAttributeRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    BufferResetAttributes attribute = 2;
+    BufferResetAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8675,7 +8675,7 @@ message ResetChanAttributeRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelResetAttributes attribute = 3;
+    ChannelResetAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -8695,7 +8695,7 @@ message ResetDeviceResponse {
 message ResetExportedSignalAttributeRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalResetAttributes attribute = 2;
+    ExportSignalResetAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8707,7 +8707,7 @@ message ResetExportedSignalAttributeResponse {
 message ResetReadAttributeRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadResetAttributes attribute = 2;
+    ReadResetAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8719,7 +8719,7 @@ message ResetReadAttributeResponse {
 message ResetRealTimeAttributeRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    RealTimeResetAttributes attribute = 2;
+    RealTimeResetAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8731,7 +8731,7 @@ message ResetRealTimeAttributeResponse {
 message ResetTimingAttributeRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingResetAttributes attribute = 2;
+    TimingResetAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8744,7 +8744,7 @@ message ResetTimingAttributeExRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingResetAttributes attribute = 3;
+    TimingResetAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -8756,7 +8756,7 @@ message ResetTimingAttributeExResponse {
 message ResetTrigAttributeRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerResetAttributes attribute = 2;
+    TriggerResetAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8769,7 +8769,7 @@ message ResetWatchdogAttributeRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   oneof attribute_enum {
-    WatchdogResetAttributes attribute = 3;
+    WatchdogResetAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
 }
@@ -8781,7 +8781,7 @@ message ResetWatchdogAttributeResponse {
 message ResetWriteAttributeRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteResetAttributes attribute = 2;
+    WriteResetAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
 }
@@ -8908,7 +8908,7 @@ message SetArmStartTrigTrigWhenResponse {
 message SetBufferAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    BufferUInt32Attributes attribute = 2;
+    BufferUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint32 value = 4;
@@ -8921,7 +8921,7 @@ message SetBufferAttributeUInt32Response {
 message SetCalInfoAttributeBoolRequest {
   string device_name = 1;
   oneof attribute_enum {
-    CalibrationInfoBoolAttributes attribute = 2;
+    CalibrationInfoBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   bool value = 4;
@@ -8934,7 +8934,7 @@ message SetCalInfoAttributeBoolResponse {
 message SetCalInfoAttributeDoubleRequest {
   string device_name = 1;
   oneof attribute_enum {
-    CalibrationInfoDoubleAttributes attribute = 2;
+    CalibrationInfoDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   double value = 4;
@@ -8947,7 +8947,7 @@ message SetCalInfoAttributeDoubleResponse {
 message SetCalInfoAttributeStringRequest {
   string device_name = 1;
   oneof attribute_enum {
-    CalibrationInfoStringAttributes attribute = 2;
+    CalibrationInfoStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   string value = 4;
@@ -8960,7 +8960,7 @@ message SetCalInfoAttributeStringResponse {
 message SetCalInfoAttributeUInt32Request {
   string device_name = 1;
   oneof attribute_enum {
-    CalibrationInfoUInt32Attributes attribute = 2;
+    CalibrationInfoUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint32 value = 4;
@@ -8974,7 +8974,7 @@ message SetChanAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelBoolAttributes attribute = 3;
+    ChannelBoolAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   bool value = 5;
@@ -8988,7 +8988,7 @@ message SetChanAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelDoubleAttributes attribute = 3;
+    ChannelDoubleAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   double value = 5;
@@ -9002,7 +9002,7 @@ message SetChanAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelDoubleArrayAttributes attribute = 3;
+    ChannelDoubleArrayAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   repeated double value = 5;
@@ -9016,7 +9016,7 @@ message SetChanAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelInt32Attributes attribute = 3;
+    ChannelInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
   oneof value_enum {
@@ -9033,7 +9033,7 @@ message SetChanAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelStringAttributes attribute = 3;
+    ChannelStringAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   string value = 5;
@@ -9047,7 +9047,7 @@ message SetChanAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   string channel = 2;
   oneof attribute_enum {
-    ChannelUInt32Attributes attribute = 3;
+    ChannelUInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
   uint32 value = 5;
@@ -9090,7 +9090,7 @@ message SetDigitalPullUpPullDownStatesResponse {
 message SetExportedSignalAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalBoolAttributes attribute = 2;
+    ExportSignalBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   bool value = 4;
@@ -9103,7 +9103,7 @@ message SetExportedSignalAttributeBoolResponse {
 message SetExportedSignalAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalDoubleAttributes attribute = 2;
+    ExportSignalDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   double value = 4;
@@ -9116,7 +9116,7 @@ message SetExportedSignalAttributeDoubleResponse {
 message SetExportedSignalAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalInt32Attributes attribute = 2;
+    ExportSignalInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   oneof value_enum {
@@ -9132,7 +9132,7 @@ message SetExportedSignalAttributeInt32Response {
 message SetExportedSignalAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalStringAttributes attribute = 2;
+    ExportSignalStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   string value = 4;
@@ -9145,7 +9145,7 @@ message SetExportedSignalAttributeStringResponse {
 message SetExportedSignalAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ExportSignalUInt32Attributes attribute = 2;
+    ExportSignalUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint32 value = 4;
@@ -9167,7 +9167,7 @@ message SetFirstSampClkWhenResponse {
 message SetReadAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadBoolAttributes attribute = 2;
+    ReadBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   bool value = 4;
@@ -9180,7 +9180,7 @@ message SetReadAttributeBoolResponse {
 message SetReadAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadDoubleAttributes attribute = 2;
+    ReadDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   double value = 4;
@@ -9193,7 +9193,7 @@ message SetReadAttributeDoubleResponse {
 message SetReadAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadInt32Attributes attribute = 2;
+    ReadInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   oneof value_enum {
@@ -9209,7 +9209,7 @@ message SetReadAttributeInt32Response {
 message SetReadAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadStringAttributes attribute = 2;
+    ReadStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   string value = 4;
@@ -9222,7 +9222,7 @@ message SetReadAttributeStringResponse {
 message SetReadAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadUInt32Attributes attribute = 2;
+    ReadUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint32 value = 4;
@@ -9235,7 +9235,7 @@ message SetReadAttributeUInt32Response {
 message SetReadAttributeUInt64Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    ReadUInt64Attributes attribute = 2;
+    ReadUInt64Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint64 value = 4;
@@ -9248,7 +9248,7 @@ message SetReadAttributeUInt64Response {
 message SetRealTimeAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    RealTimeBoolAttributes attribute = 2;
+    RealTimeBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   bool value = 4;
@@ -9261,7 +9261,7 @@ message SetRealTimeAttributeBoolResponse {
 message SetRealTimeAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    RealTimeInt32Attributes attribute = 2;
+    RealTimeInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   oneof value_enum {
@@ -9277,7 +9277,7 @@ message SetRealTimeAttributeInt32Response {
 message SetRealTimeAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    RealTimeUInt32Attributes attribute = 2;
+    RealTimeUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint32 value = 4;
@@ -9290,7 +9290,7 @@ message SetRealTimeAttributeUInt32Response {
 message SetScaleAttributeDoubleRequest {
   string scale_name = 1;
   oneof attribute_enum {
-    ScaleDoubleAttributes attribute = 2;
+    ScaleDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   double value = 4;
@@ -9303,7 +9303,7 @@ message SetScaleAttributeDoubleResponse {
 message SetScaleAttributeDoubleArrayRequest {
   string scale_name = 1;
   oneof attribute_enum {
-    ScaleDoubleArrayAttributes attribute = 2;
+    ScaleDoubleArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   repeated double value = 4;
@@ -9316,7 +9316,7 @@ message SetScaleAttributeDoubleArrayResponse {
 message SetScaleAttributeInt32Request {
   string scale_name = 1;
   oneof attribute_enum {
-    ScaleInt32Attributes attribute = 2;
+    ScaleInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   oneof value_enum {
@@ -9332,7 +9332,7 @@ message SetScaleAttributeInt32Response {
 message SetScaleAttributeStringRequest {
   string scale_name = 1;
   oneof attribute_enum {
-    ScaleStringAttributes attribute = 2;
+    ScaleStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   string value = 4;
@@ -9363,7 +9363,7 @@ message SetSyncPulseTimeWhenResponse {
 message SetTimingAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingBoolAttributes attribute = 2;
+    TimingBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   bool value = 4;
@@ -9376,7 +9376,7 @@ message SetTimingAttributeBoolResponse {
 message SetTimingAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingDoubleAttributes attribute = 2;
+    TimingDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   double value = 4;
@@ -9390,7 +9390,7 @@ message SetTimingAttributeExBoolRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingBoolAttributes attribute = 3;
+    TimingBoolAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   bool value = 5;
@@ -9404,7 +9404,7 @@ message SetTimingAttributeExDoubleRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingDoubleAttributes attribute = 3;
+    TimingDoubleAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   double value = 5;
@@ -9418,7 +9418,7 @@ message SetTimingAttributeExInt32Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingInt32Attributes attribute = 3;
+    TimingInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
   oneof value_enum {
@@ -9435,7 +9435,7 @@ message SetTimingAttributeExStringRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingStringAttributes attribute = 3;
+    TimingStringAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   string value = 5;
@@ -9449,7 +9449,7 @@ message SetTimingAttributeExTimestampRequest {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingTimestampAttributes attribute = 3;
+    TimingTimestampAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   google.protobuf.Timestamp value = 5;
@@ -9463,7 +9463,7 @@ message SetTimingAttributeExUInt32Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingUInt32Attributes attribute = 3;
+    TimingUInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
   uint32 value = 5;
@@ -9477,7 +9477,7 @@ message SetTimingAttributeExUInt64Request {
   nidevice_grpc.Session task = 1;
   string device_names = 2;
   oneof attribute_enum {
-    TimingUInt64Attributes attribute = 3;
+    TimingUInt64Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
   uint64 value = 5;
@@ -9490,7 +9490,7 @@ message SetTimingAttributeExUInt64Response {
 message SetTimingAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingInt32Attributes attribute = 2;
+    TimingInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   oneof value_enum {
@@ -9506,7 +9506,7 @@ message SetTimingAttributeInt32Response {
 message SetTimingAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingStringAttributes attribute = 2;
+    TimingStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   string value = 4;
@@ -9519,7 +9519,7 @@ message SetTimingAttributeStringResponse {
 message SetTimingAttributeTimestampRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingTimestampAttributes attribute = 2;
+    TimingTimestampAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   google.protobuf.Timestamp value = 4;
@@ -9532,7 +9532,7 @@ message SetTimingAttributeTimestampResponse {
 message SetTimingAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingUInt32Attributes attribute = 2;
+    TimingUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint32 value = 4;
@@ -9545,7 +9545,7 @@ message SetTimingAttributeUInt32Response {
 message SetTimingAttributeUInt64Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TimingUInt64Attributes attribute = 2;
+    TimingUInt64Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint64 value = 4;
@@ -9558,7 +9558,7 @@ message SetTimingAttributeUInt64Response {
 message SetTrigAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerBoolAttributes attribute = 2;
+    TriggerBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   bool value = 4;
@@ -9571,7 +9571,7 @@ message SetTrigAttributeBoolResponse {
 message SetTrigAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerDoubleAttributes attribute = 2;
+    TriggerDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   double value = 4;
@@ -9584,7 +9584,7 @@ message SetTrigAttributeDoubleResponse {
 message SetTrigAttributeDoubleArrayRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerDoubleArrayAttributes attribute = 2;
+    TriggerDoubleArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   repeated double value = 4;
@@ -9597,7 +9597,7 @@ message SetTrigAttributeDoubleArrayResponse {
 message SetTrigAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerInt32Attributes attribute = 2;
+    TriggerInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   oneof value_enum {
@@ -9613,7 +9613,7 @@ message SetTrigAttributeInt32Response {
 message SetTrigAttributeInt32ArrayRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerInt32ArrayAttributes attribute = 2;
+    TriggerInt32ArrayAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   repeated int32 value = 4;
@@ -9626,7 +9626,7 @@ message SetTrigAttributeInt32ArrayResponse {
 message SetTrigAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerStringAttributes attribute = 2;
+    TriggerStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   string value = 4;
@@ -9639,7 +9639,7 @@ message SetTrigAttributeStringResponse {
 message SetTrigAttributeTimestampRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerTimestampAttributes attribute = 2;
+    TriggerTimestampAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   google.protobuf.Timestamp value = 4;
@@ -9652,7 +9652,7 @@ message SetTrigAttributeTimestampResponse {
 message SetTrigAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    TriggerUInt32Attributes attribute = 2;
+    TriggerUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint32 value = 4;
@@ -9666,7 +9666,7 @@ message SetWatchdogAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   oneof attribute_enum {
-    WatchdogBoolAttributes attribute = 3;
+    WatchdogBoolAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   bool value = 5;
@@ -9680,7 +9680,7 @@ message SetWatchdogAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   oneof attribute_enum {
-    WatchdogDoubleAttributes attribute = 3;
+    WatchdogDoubleAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   double value = 5;
@@ -9694,7 +9694,7 @@ message SetWatchdogAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   oneof attribute_enum {
-    WatchdogInt32Attributes attribute = 3;
+    WatchdogInt32Attribute attribute = 3;
     int32 attribute_raw = 4;
   }
   oneof value_enum {
@@ -9711,7 +9711,7 @@ message SetWatchdogAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   string lines = 2;
   oneof attribute_enum {
-    WatchdogStringAttributes attribute = 3;
+    WatchdogStringAttribute attribute = 3;
     int32 attribute_raw = 4;
   }
   string value = 5;
@@ -9724,7 +9724,7 @@ message SetWatchdogAttributeStringResponse {
 message SetWriteAttributeBoolRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteBoolAttributes attribute = 2;
+    WriteBoolAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   bool value = 4;
@@ -9737,7 +9737,7 @@ message SetWriteAttributeBoolResponse {
 message SetWriteAttributeDoubleRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteDoubleAttributes attribute = 2;
+    WriteDoubleAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   double value = 4;
@@ -9750,7 +9750,7 @@ message SetWriteAttributeDoubleResponse {
 message SetWriteAttributeInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteInt32Attributes attribute = 2;
+    WriteInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   oneof value_enum {
@@ -9766,7 +9766,7 @@ message SetWriteAttributeInt32Response {
 message SetWriteAttributeStringRequest {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteStringAttributes attribute = 2;
+    WriteStringAttribute attribute = 2;
     int32 attribute_raw = 3;
   }
   string value = 4;
@@ -9779,7 +9779,7 @@ message SetWriteAttributeStringResponse {
 message SetWriteAttributeUInt32Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteUInt32Attributes attribute = 2;
+    WriteUInt32Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint32 value = 4;
@@ -9792,7 +9792,7 @@ message SetWriteAttributeUInt32Response {
 message SetWriteAttributeUInt64Request {
   nidevice_grpc.Session task = 1;
   oneof attribute_enum {
-    WriteUInt64Attributes attribute = 2;
+    WriteUInt64Attribute attribute = 2;
     int32 attribute_raw = 3;
   }
   uint64 value = 4;

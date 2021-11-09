@@ -85,7 +85,7 @@ service NiFake {
   rpc ViInt16ArrayInputFunction(ViInt16ArrayInputFunctionRequest) returns (ViInt16ArrayInputFunctionResponse);
 }
 
-enum NiFakeAttributes {
+enum NiFakeAttribute {
   NIFAKE_ATTRIBUTE_UNSPECIFIED = 0;
   NIFAKE_ATTRIBUTE_READ_WRITE_BOOL = 1000000;
   NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE = 1000001;
@@ -232,7 +232,7 @@ message CommandWithReservedParamResponse {
 }
 
 message CreateConfigurationListRequest {
-  repeated NiFakeAttributes list_attribute_ids = 1;
+  repeated NiFakeAttribute list_attribute_ids = 1;
 }
 
 message CreateConfigurationListResponse {
@@ -416,7 +416,7 @@ message GetArrayViUInt8WithEnumResponse {
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiFakeAttributes attribute_id = 3;
+  NiFakeAttribute attribute_id = 3;
 }
 
 message GetAttributeViBooleanResponse {
@@ -427,7 +427,7 @@ message GetAttributeViBooleanResponse {
 message GetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiFakeAttributes attribute_id = 3;
+  NiFakeAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt32Response {
@@ -438,7 +438,7 @@ message GetAttributeViInt32Response {
 message GetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiFakeAttributes attribute_id = 3;
+  NiFakeAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt64Response {
@@ -449,7 +449,7 @@ message GetAttributeViInt64Response {
 message GetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiFakeAttributes attribute_id = 3;
+  NiFakeAttribute attribute_id = 3;
 }
 
 message GetAttributeViReal64Response {
@@ -470,7 +470,7 @@ message GetAttributeViSessionResponse {
 message GetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiFakeAttributes attribute_id = 3;
+  NiFakeAttribute attribute_id = 3;
 }
 
 message GetAttributeViStringResponse {

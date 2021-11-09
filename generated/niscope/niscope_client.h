@@ -33,12 +33,12 @@ AutoSetupResponse auto_setup(const StubPtr& stub, const nidevice_grpc::Session& 
 CableSenseSignalStartResponse cable_sense_signal_start(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CableSenseSignalStopResponse cable_sense_signal_stop(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CalSelfCalibrateResponse cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<Option, pb::int32>& option);
-CheckAttributeViBooleanResponse check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const bool& value);
-CheckAttributeViInt32Response check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const simple_variant<NiScopeInt32AttributeValues, pb::int32>& value);
-CheckAttributeViInt64Response check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value);
-CheckAttributeViReal64Response check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const simple_variant<NiScopeReal64AttributeValues, double>& value);
-CheckAttributeViSessionResponse check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const nidevice_grpc::Session& value);
-CheckAttributeViStringResponse check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const pb::string& value_raw);
+CheckAttributeViBooleanResponse check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const bool& value);
+CheckAttributeViInt32Response check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt32AttributeValues, pb::int32>& value);
+CheckAttributeViInt64Response check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value);
+CheckAttributeViReal64Response check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeReal64AttributeValues, double>& value);
+CheckAttributeViSessionResponse check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const nidevice_grpc::Session& value);
+CheckAttributeViStringResponse check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value_raw);
 ClearWaveformMeasurementStatsResponse clear_waveform_measurement_stats(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<ClearableMeasurement, pb::int32>& clearable_measurement_function);
 ClearWaveformProcessingResponse clear_waveform_processing(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -73,12 +73,12 @@ FetchComplexResponse fetch_complex(const StubPtr& stub, const nidevice_grpc::Ses
 FetchComplexBinary16Response fetch_complex_binary16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& num_samples);
 FetchMeasurementResponse fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const simple_variant<ScalarMeasurement, pb::int32>& scalar_meas_function);
 FetchMeasurementStatsResponse fetch_measurement_stats(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const simple_variant<ScalarMeasurement, pb::int32>& scalar_meas_function);
-GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id);
-GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id);
-GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id);
-GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id);
-GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id);
-GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id);
+GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id);
+GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id);
+GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id);
+GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id);
+GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id);
+GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id);
 GetChannelNameResponse get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index);
 GetChannelNameFromStringResponse get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& index);
 GetEqualizationFilterCoefficientsResponse get_equalization_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel, const pb::int32& number_of_coefficients);
@@ -104,12 +104,12 @@ SampleModeResponse sample_mode(const StubPtr& stub, const nidevice_grpc::Session
 SampleRateResponse sample_rate(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SelfTestResponse self_test(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SendSoftwareTriggerEdgeResponse send_software_trigger_edge(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<WhichTrigger, pb::int32>& which_trigger);
-SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const bool& value);
-SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const simple_variant<NiScopeInt32AttributeValues, pb::int32>& value);
-SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value);
-SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const simple_variant<NiScopeReal64AttributeValues, double>& value);
-SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const nidevice_grpc::Session& value);
-SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttributes& attribute_id, const pb::string& value_raw);
+SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const bool& value);
+SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt32AttributeValues, pb::int32>& value);
+SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value);
+SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeReal64AttributeValues, double>& value);
+SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const nidevice_grpc::Session& value);
+SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value_raw);
 
 } // namespace niscope_grpc::experimental::client
 

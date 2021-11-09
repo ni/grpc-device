@@ -67,12 +67,12 @@ namespace nifake_non_ivi_grpc {
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nifake_non_ivi_grpc::MarbleDoubleAttributes_IsValid(attribute) ? attribute : 0;
+          attribute = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -109,12 +109,12 @@ namespace nifake_non_ivi_grpc {
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nifake_non_ivi_grpc::MarbleInt32Attributes_IsValid(attribute) ? attribute : 0;
+          attribute = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -157,12 +157,12 @@ namespace nifake_non_ivi_grpc {
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nifake_non_ivi_grpc::MarbleInt32ArrayAttributes_IsValid(attribute) ? attribute : 0;
+          attribute = nifake_non_ivi_grpc::MarbleInt32ArrayAttribute_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32ArrayAttributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32ArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -677,12 +677,12 @@ namespace nifake_non_ivi_grpc {
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nifake_non_ivi_grpc::MarbleResetAttributes_IsValid(attribute) ? attribute : 0;
+          attribute = nifake_non_ivi_grpc::MarbleResetAttribute_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleResetAttributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -715,12 +715,12 @@ namespace nifake_non_ivi_grpc {
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nifake_non_ivi_grpc::MarbleDoubleAttributes_IsValid(attribute) ? attribute : 0;
+          attribute = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -754,12 +754,12 @@ namespace nifake_non_ivi_grpc {
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nifake_non_ivi_grpc::MarbleInt32Attributes_IsValid(attribute) ? attribute : 0;
+          attribute = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) ? attribute : 0;
           break;
         }
         case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attributes_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }

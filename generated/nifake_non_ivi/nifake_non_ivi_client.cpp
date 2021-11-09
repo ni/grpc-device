@@ -34,13 +34,13 @@ close(const StubPtr& stub, const nidevice_grpc::Session& handle)
 }
 
 GetMarbleAttributeDoubleResponse
-get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttributes, pb::int32>& attribute)
+get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetMarbleAttributeDoubleRequest{};
   request.mutable_handle()->CopyFrom(handle);
-  const auto attribute_ptr = attribute.get_if<MarbleDoubleAttributes>();
+  const auto attribute_ptr = attribute.get_if<MarbleDoubleAttribute>();
   const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
   if (attribute_ptr) {
     request.set_attribute(*attribute_ptr);
@@ -58,13 +58,13 @@ get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& h
 }
 
 GetMarbleAttributeInt32Response
-get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attributes, pb::int32>& attribute)
+get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetMarbleAttributeInt32Request{};
   request.mutable_handle()->CopyFrom(handle);
-  const auto attribute_ptr = attribute.get_if<MarbleInt32Attributes>();
+  const auto attribute_ptr = attribute.get_if<MarbleInt32Attribute>();
   const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
   if (attribute_ptr) {
     request.set_attribute(*attribute_ptr);
@@ -82,13 +82,13 @@ get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& ha
 }
 
 GetMarbleAttributeInt32ArrayResponse
-get_marble_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32ArrayAttributes, pb::int32>& attribute)
+get_marble_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32ArrayAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = GetMarbleAttributeInt32ArrayRequest{};
   request.mutable_handle()->CopyFrom(handle);
-  const auto attribute_ptr = attribute.get_if<MarbleInt32ArrayAttributes>();
+  const auto attribute_ptr = attribute.get_if<MarbleInt32ArrayAttribute>();
   const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
   if (attribute_ptr) {
     request.set_attribute(*attribute_ptr);
@@ -323,13 +323,13 @@ output_var_args(const StubPtr& stub, const pb::string& input_name, const std::ve
 }
 
 ResetMarbleAttributeResponse
-reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleResetAttributes, pb::int32>& attribute)
+reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleResetAttribute, pb::int32>& attribute)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetMarbleAttributeRequest{};
   request.mutable_handle()->CopyFrom(handle);
-  const auto attribute_ptr = attribute.get_if<MarbleResetAttributes>();
+  const auto attribute_ptr = attribute.get_if<MarbleResetAttribute>();
   const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
   if (attribute_ptr) {
     request.set_attribute(*attribute_ptr);
@@ -347,13 +347,13 @@ reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle
 }
 
 SetMarbleAttributeDoubleResponse
-set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttributes, pb::int32>& attribute, const double& value)
+set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetMarbleAttributeDoubleRequest{};
   request.mutable_handle()->CopyFrom(handle);
-  const auto attribute_ptr = attribute.get_if<MarbleDoubleAttributes>();
+  const auto attribute_ptr = attribute.get_if<MarbleDoubleAttribute>();
   const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
   if (attribute_ptr) {
     request.set_attribute(*attribute_ptr);
@@ -372,13 +372,13 @@ set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& h
 }
 
 SetMarbleAttributeInt32Response
-set_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attributes, pb::int32>& attribute, const simple_variant<MarbleInt32AttributeValues, pb::int32>& value)
+set_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attribute, pb::int32>& attribute, const simple_variant<MarbleInt32AttributeValues, pb::int32>& value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetMarbleAttributeInt32Request{};
   request.mutable_handle()->CopyFrom(handle);
-  const auto attribute_ptr = attribute.get_if<MarbleInt32Attributes>();
+  const auto attribute_ptr = attribute.get_if<MarbleInt32Attribute>();
   const auto attribute_raw_ptr = attribute.get_if<pb::int32>();
   if (attribute_ptr) {
     request.set_attribute(*attribute_ptr);

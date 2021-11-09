@@ -128,7 +128,7 @@ service NiRFSG {
   rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
 }
 
-enum NiRFSGAttributes {
+enum NiRFSGAttribute {
   NIRFSG_ATTRIBUTE_UNSPECIFIED = 0;
   NIRFSG_ATTRIBUTE_RANGE_CHECK = 1050002;
   NIRFSG_ATTRIBUTE_QUERY_INSTRUMENT_STATUS = 1050003;
@@ -788,7 +788,7 @@ message AllocateArbWaveformResponse {
 message CheckAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   bool value = 4;
 }
 
@@ -799,7 +799,7 @@ message CheckAttributeViBooleanResponse {
 message CheckAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGInt32AttributeValues value = 4;
     sint32 value_raw = 5;
@@ -813,7 +813,7 @@ message CheckAttributeViInt32Response {
 message CheckAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   int64 value_raw = 4;
 }
 
@@ -824,7 +824,7 @@ message CheckAttributeViInt64Response {
 message CheckAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGReal64AttributeValues value = 4;
     double value_raw = 5;
@@ -838,7 +838,7 @@ message CheckAttributeViReal64Response {
 message CheckAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   nidevice_grpc.Session value = 4;
 }
 
@@ -849,7 +849,7 @@ message CheckAttributeViSessionResponse {
 message CheckAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGStringAttributeValuesMapped value_mapped = 4;
     string value_raw = 5;
@@ -1183,7 +1183,7 @@ message ConfigureUpconverterPLLSettlingTimeResponse {
 message CreateConfigurationListRequest {
   nidevice_grpc.Session vi = 1;
   string list_name = 2;
-  repeated NiRFSGAttributes configuration_list_attributes = 3;
+  repeated NiRFSGAttribute configuration_list_attributes = 3;
   bool set_as_active_list = 4;
 }
 
@@ -1355,7 +1355,7 @@ message ExportSignalResponse {
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViBooleanResponse {
@@ -1366,7 +1366,7 @@ message GetAttributeViBooleanResponse {
 message GetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt32Response {
@@ -1377,7 +1377,7 @@ message GetAttributeViInt32Response {
 message GetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt64Response {
@@ -1388,7 +1388,7 @@ message GetAttributeViInt64Response {
 message GetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViReal64Response {
@@ -1399,7 +1399,7 @@ message GetAttributeViReal64Response {
 message GetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViSessionResponse {
@@ -1410,7 +1410,7 @@ message GetAttributeViSessionResponse {
 message GetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViStringResponse {
@@ -1656,7 +1656,7 @@ message ResetResponse {
 message ResetAttributeRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message ResetAttributeResponse {
@@ -1787,7 +1787,7 @@ message SetArbWaveformNextWritePositionResponse {
 message SetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   bool value = 4;
 }
 
@@ -1798,7 +1798,7 @@ message SetAttributeViBooleanResponse {
 message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGInt32AttributeValues value = 4;
     sint32 value_raw = 5;
@@ -1812,7 +1812,7 @@ message SetAttributeViInt32Response {
 message SetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   int64 value_raw = 4;
 }
 
@@ -1823,7 +1823,7 @@ message SetAttributeViInt64Response {
 message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGReal64AttributeValues value = 4;
     double value_raw = 5;
@@ -1837,7 +1837,7 @@ message SetAttributeViReal64Response {
 message SetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   nidevice_grpc.Session value = 4;
 }
 
@@ -1848,7 +1848,7 @@ message SetAttributeViSessionResponse {
 message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttributes attribute_id = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGStringAttributeValuesMapped value_mapped = 4;
     string value_raw = 5;

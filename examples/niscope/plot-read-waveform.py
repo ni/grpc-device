@@ -114,7 +114,7 @@ try:
     result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
         vi = vi,
         channel_list = channels,
-        attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+        attribute_id = niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
         value = niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_VOLTS
     ))
     CheckForError(vi, result.status)

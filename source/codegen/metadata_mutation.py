@@ -161,7 +161,8 @@ class AttributeAccessorExpander:
             param_type = parameter['grpc_type']
             # All attribute parameters must have a grpc_type of {group_name}Attributes.
             # In MI, this is added during metadata mutation of ViAttr types.
-            potential_attribute_name = common_helpers.strip_suffix(param_type, 'Attributes')
+            attr_suffix = common_helpers.get_attribute_enum_suffix(self._config)
+            potential_attribute_name = common_helpers.strip_suffix(param_type, attr_suffix)
             if potential_attribute_name in self._attribute_type_map:
                 return AttributeReferencingParameter(potential_attribute_name, parameter)
             return None
@@ -193,11 +194,17 @@ class AttributeAccessorExpander:
                     value_param['type'],
                     self._config)
             if common_helpers.supports_raw_attributes(self._config):
-                attribute_param['enum'] = common_helpers.get_attribute_enum_name(group, sub_group)
+                attribute_param['enum'] = common_helpers.get_attribute_enum_name(
+                    group,
+                    sub_group,
+                    self._config)
                 attribute_param['grpc_type'] = 'int32'
                 attribute_param['raw_attribute'] = True
             else:
-                attribute_param['grpc_type'] = common_helpers.get_attribute_enum_name(group, sub_group)
+                attribute_param['grpc_type'] = common_helpers.get_attribute_enum_name(
+                    group,
+                    sub_group,
+                    self._config)
 
 
     def expand_attribute_value_params(self, func):

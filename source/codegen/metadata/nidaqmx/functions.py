@@ -6047,7 +6047,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'BufferAttributes',
+                'grpc_type': 'BufferAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6069,7 +6069,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'CalibrationInfoAttributes',
+                'grpc_type': 'CalibrationInfoAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6098,7 +6098,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'CalibrationInfoAttributes',
+                'grpc_type': 'CalibrationInfoAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6127,7 +6127,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'CalibrationInfoAttributes',
+                'grpc_type': 'CalibrationInfoAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6158,7 +6158,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'CalibrationInfoAttributes',
+                'grpc_type': 'CalibrationInfoAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6192,7 +6192,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6226,7 +6226,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6260,7 +6260,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6296,7 +6296,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6330,7 +6330,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6366,7 +6366,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6395,7 +6395,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'DeviceAttributes',
+                'grpc_type': 'DeviceAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6424,7 +6424,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'DeviceAttributes',
+                'grpc_type': 'DeviceAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6453,7 +6453,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'DeviceAttributes',
+                'grpc_type': 'DeviceAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6484,7 +6484,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'DeviceAttributes',
+                'grpc_type': 'DeviceAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6513,7 +6513,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'DeviceAttributes',
+                'grpc_type': 'DeviceAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6544,7 +6544,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'DeviceAttributes',
+                'grpc_type': 'DeviceAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6575,7 +6575,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'DeviceAttributes',
+                'grpc_type': 'DeviceAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6604,7 +6604,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'DeviceAttributes',
+                'grpc_type': 'DeviceAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6771,7 +6771,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6800,7 +6800,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6829,7 +6829,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6858,7 +6858,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -6889,7 +6889,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7054,7 +7054,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PersistedChannelAttributes',
+                'grpc_type': 'PersistedChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7083,7 +7083,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PersistedChannelAttributes',
+                'grpc_type': 'PersistedChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7114,7 +7114,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PersistedScaleAttributes',
+                'grpc_type': 'PersistedScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7143,7 +7143,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PersistedScaleAttributes',
+                'grpc_type': 'PersistedScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7174,7 +7174,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PersistedTaskAttributes',
+                'grpc_type': 'PersistedTaskAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7203,7 +7203,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PersistedTaskAttributes',
+                'grpc_type': 'PersistedTaskAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7234,7 +7234,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PhysicalChannelAttributes',
+                'grpc_type': 'PhysicalChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7263,7 +7263,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PhysicalChannelAttributes',
+                'grpc_type': 'PhysicalChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7294,7 +7294,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PhysicalChannelAttributes',
+                'grpc_type': 'PhysicalChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7323,7 +7323,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PhysicalChannelAttributes',
+                'grpc_type': 'PhysicalChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7354,7 +7354,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PhysicalChannelAttributes',
+                'grpc_type': 'PhysicalChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7383,7 +7383,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PhysicalChannelAttributes',
+                'grpc_type': 'PhysicalChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7414,7 +7414,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PhysicalChannelAttributes',
+                'grpc_type': 'PhysicalChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7445,7 +7445,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PhysicalChannelAttributes',
+                'grpc_type': 'PhysicalChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7474,7 +7474,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'PhysicalChannelAttributes',
+                'grpc_type': 'PhysicalChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7505,7 +7505,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7534,7 +7534,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7563,7 +7563,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7592,7 +7592,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7623,7 +7623,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7652,7 +7652,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7681,7 +7681,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'RealTimeAttributes',
+                'grpc_type': 'RealTimeAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7710,7 +7710,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'RealTimeAttributes',
+                'grpc_type': 'RealTimeAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7739,7 +7739,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'RealTimeAttributes',
+                'grpc_type': 'RealTimeAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7783,7 +7783,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ScaleAttributes',
+                'grpc_type': 'ScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7812,7 +7812,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ScaleAttributes',
+                'grpc_type': 'ScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7843,7 +7843,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ScaleAttributes',
+                'grpc_type': 'ScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7872,7 +7872,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ScaleAttributes',
+                'grpc_type': 'ScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -7978,7 +7978,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SystemAttributes',
+                'grpc_type': 'SystemAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8004,7 +8004,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'SystemAttributes',
+                'grpc_type': 'SystemAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8033,7 +8033,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TaskAttributes',
+                'grpc_type': 'TaskAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8062,7 +8062,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TaskAttributes',
+                'grpc_type': 'TaskAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8093,7 +8093,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TaskAttributes',
+                'grpc_type': 'TaskAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8122,7 +8122,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8151,7 +8151,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8185,7 +8185,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8219,7 +8219,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8253,7 +8253,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8287,7 +8287,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8323,7 +8323,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8357,7 +8357,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8391,7 +8391,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8420,7 +8420,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8449,7 +8449,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8480,7 +8480,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8509,7 +8509,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8538,7 +8538,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8567,7 +8567,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8596,7 +8596,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8625,7 +8625,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8656,7 +8656,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8685,7 +8685,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8716,7 +8716,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8747,7 +8747,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8776,7 +8776,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8810,7 +8810,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WatchdogAttributes',
+                'grpc_type': 'WatchdogAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8844,7 +8844,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WatchdogAttributes',
+                'grpc_type': 'WatchdogAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8878,7 +8878,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WatchdogAttributes',
+                'grpc_type': 'WatchdogAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8912,7 +8912,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WatchdogAttributes',
+                'grpc_type': 'WatchdogAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8943,7 +8943,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -8972,7 +8972,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -9001,7 +9001,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -9030,7 +9030,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -9061,7 +9061,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -9090,7 +9090,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -10467,7 +10467,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'BufferAttributes',
+                'grpc_type': 'BufferAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10488,7 +10488,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10514,7 +10514,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10530,7 +10530,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10546,7 +10546,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'RealTimeAttributes',
+                'grpc_type': 'RealTimeAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10562,7 +10562,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10583,7 +10583,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10599,7 +10599,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10620,7 +10620,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WatchdogAttributes',
+                'grpc_type': 'WatchdogAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10636,7 +10636,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             }
@@ -10925,7 +10925,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'BufferAttributes',
+                'grpc_type': 'BufferAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -10947,7 +10947,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'CalibrationInfoAttributes',
+                'grpc_type': 'CalibrationInfoAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -10976,7 +10976,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'CalibrationInfoAttributes',
+                'grpc_type': 'CalibrationInfoAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11005,7 +11005,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'CalibrationInfoAttributes',
+                'grpc_type': 'CalibrationInfoAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11034,7 +11034,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'CalibrationInfoAttributes',
+                'grpc_type': 'CalibrationInfoAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11068,7 +11068,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11102,7 +11102,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11136,7 +11136,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11172,7 +11172,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11206,7 +11206,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11240,7 +11240,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ChannelAttributes',
+                'grpc_type': 'ChannelAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11351,7 +11351,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11380,7 +11380,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11409,7 +11409,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11438,7 +11438,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11467,7 +11467,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ExportSignalAttributes',
+                'grpc_type': 'ExportSignalAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11511,7 +11511,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11540,7 +11540,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11569,7 +11569,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11598,7 +11598,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11627,7 +11627,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11656,7 +11656,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ReadAttributes',
+                'grpc_type': 'ReadAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11685,7 +11685,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'RealTimeAttributes',
+                'grpc_type': 'RealTimeAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11714,7 +11714,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'RealTimeAttributes',
+                'grpc_type': 'RealTimeAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11743,7 +11743,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'RealTimeAttributes',
+                'grpc_type': 'RealTimeAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11772,7 +11772,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ScaleAttributes',
+                'grpc_type': 'ScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11801,7 +11801,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ScaleAttributes',
+                'grpc_type': 'ScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11832,7 +11832,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ScaleAttributes',
+                'grpc_type': 'ScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11861,7 +11861,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'ScaleAttributes',
+                'grpc_type': 'ScaleAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11920,7 +11920,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11949,7 +11949,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -11983,7 +11983,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12017,7 +12017,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12051,7 +12051,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12085,7 +12085,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12119,7 +12119,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12153,7 +12153,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12187,7 +12187,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12216,7 +12216,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12245,7 +12245,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12274,7 +12274,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12303,7 +12303,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12332,7 +12332,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TimingAttributes',
+                'grpc_type': 'TimingAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12361,7 +12361,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12390,7 +12390,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12419,7 +12419,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12450,7 +12450,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12479,7 +12479,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12510,7 +12510,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12539,7 +12539,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12568,7 +12568,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'TriggerAttributes',
+                'grpc_type': 'TriggerAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12602,7 +12602,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WatchdogAttributes',
+                'grpc_type': 'WatchdogAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12636,7 +12636,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WatchdogAttributes',
+                'grpc_type': 'WatchdogAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12670,7 +12670,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WatchdogAttributes',
+                'grpc_type': 'WatchdogAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12704,7 +12704,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WatchdogAttributes',
+                'grpc_type': 'WatchdogAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12733,7 +12733,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12762,7 +12762,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12791,7 +12791,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12820,7 +12820,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12849,7 +12849,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },
@@ -12878,7 +12878,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'WriteAttributes',
+                'grpc_type': 'WriteAttribute',
                 'name': 'attribute',
                 'type': 'int32'
             },

@@ -922,7 +922,7 @@ TEST_F(NiDAQmxDriverApiTests, LinearScale_GetSlopeAttribute_ReturnsInitialSlopeV
   auto response = client::get_scale_attribute_double(
       stub(),
       SCALE_NAME,
-      ScaleDoubleAttributes::SCALE_ATTRIBUTE_LIN_SLOPE);
+      ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
 
   EXPECT_SUCCESS(response);
   EXPECT_NEAR(SLOPE, response.value(), .0001);
@@ -936,13 +936,13 @@ TEST_F(NiDAQmxDriverApiTests, SetYInterceptAttribute_GetYInterceptAttribute_Retu
   auto set_response = client::set_scale_attribute_double(
       stub(),
       SCALE_NAME,
-      ScaleDoubleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT,
+      ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT,
       Y_INTERCEPT);
 
   auto response = client::get_scale_attribute_double(
       stub(),
       SCALE_NAME,
-      ScaleDoubleAttributes::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT);
+      ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_Y_INTERCEPT);
 
   EXPECT_SUCCESS(set_response);
   EXPECT_SUCCESS(response);
@@ -957,13 +957,13 @@ TEST_F(NiDAQmxDriverApiTests, SetPreScaledUnits_GetPreScaledUnits_ReturnsAttribu
   auto set_response = client::set_scale_attribute_int32(
       stub(),
       SCALE_NAME,
-      ScaleInt32Attributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS,
+      ScaleInt32Attribute::SCALE_ATTRIBUTE_PRE_SCALED_UNITS,
       ScaleInt32AttributeValues::SCALE_INT32_UNITS_PRE_SCALED_RPM);
 
   auto response = client::get_scale_attribute_int32(
       stub(),
       SCALE_NAME,
-      ScaleInt32Attributes::SCALE_ATTRIBUTE_PRE_SCALED_UNITS);
+      ScaleInt32Attribute::SCALE_ATTRIBUTE_PRE_SCALED_UNITS);
 
   EXPECT_SUCCESS(set_response);
   EXPECT_SUCCESS(response);
@@ -979,13 +979,13 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
   auto set_response = client::set_scale_attribute_string(
       stub(),
       SCALE_NAME,
-      ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
+      ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS);
 
   auto response = client::get_scale_attribute_double(
       stub(),
       SCALE_NAME,
-      (ScaleDoubleAttributes)ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS);
+      (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
 
   EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
 }
@@ -998,13 +998,13 @@ TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
   auto set_response = client::set_scale_attribute_string(
       stub(),
       SCALE_NAME,
-      ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS,
+      ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS);
 
   auto response = client::get_scale_attribute_string(
       stub(),
       SCALE_NAME,
-      ScaleStringAttributes::SCALE_ATTRIBUTE_SCALED_UNITS);
+      ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
 
   EXPECT_SUCCESS(set_response);
   EXPECT_SUCCESS(response);
@@ -1020,13 +1020,13 @@ TEST_F(NiDAQmxDriverApiTests, SetPolynomialForwardCoefficients_GetPolynomialForw
   auto set_response = client::set_scale_attribute_double_array(
       stub(),
       SCALE_NAME,
-      ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
+      ScaleDoubleArrayAttribute::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF,
       COEFFICIENTS);
 
   auto response = client::get_scale_attribute_double_array(
       stub(),
       SCALE_NAME,
-      ScaleDoubleArrayAttributes::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF);
+      ScaleDoubleArrayAttribute::SCALE_ATTRIBUTE_POLY_FORWARD_COEFF);
 
   EXPECT_SUCCESS(set_response);
   EXPECT_SUCCESS(response);
@@ -1469,7 +1469,7 @@ TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupport
 TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBufferSize)
 {
   create_di_chan();
-  auto ATTRIBUTE = BufferUInt32Attributes::BUFFER_ATTRIBUTE_INPUT_BUF_SIZE;
+  auto ATTRIBUTE = BufferUInt32Attribute::BUFFER_ATTRIBUTE_INPUT_BUF_SIZE;
 
   auto get_response = client::get_buffer_attribute_uint32(
       stub(),
@@ -1488,7 +1488,7 @@ TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBuffer
   auto reset_response = client::reset_buffer_attribute(
       stub(),
       task(),
-      BufferResetAttributes::BUFFER_RESET_ATTRIBUTE_INPUT_BUF_SIZE);
+      BufferResetAttribute::BUFFER_RESET_ATTRIBUTE_INPUT_BUF_SIZE);
   auto read_after_reset_response = client::get_buffer_attribute_uint32(
       stub(),
       task(),
@@ -1505,7 +1505,7 @@ TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBuffer
 
 TEST_F(NiDAQmxDriverApiTests, GetAISupportMeasurementTypes_ResultIncludesCurrentAndVoltage)
 {
-  const auto ATTRIBUTE = DeviceInt32ArrayAttributes::DEVICE_ATTRIBUTE_AI_SUPPORTED_MEAS_TYPES;
+  const auto ATTRIBUTE = DeviceInt32ArrayAttribute::DEVICE_ATTRIBUTE_AI_SUPPORTED_MEAS_TYPES;
   auto response = client::get_device_attribute_int32_array(stub(), DEVICE_NAME, ATTRIBUTE);
 
   EXPECT_SUCCESS(response);
@@ -1527,7 +1527,7 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_GetAOMax_ReturnsAOMax)
       stub(),
       task(),
       CHANNEL_NAME,
-      ChannelDoubleAttributes::CHANNEL_ATTRIBUTE_AO_MAX);
+      ChannelDoubleAttribute::CHANNEL_ATTRIBUTE_AO_MAX);
 
   EXPECT_SUCCESS(response);
   EXPECT_NEAR(AO_MAX, response.value(), 0.0001);
@@ -1543,18 +1543,18 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_SetAndGetAllowConnToGround_SucceedsAndRe
       stub(),
       task(),
       CHANNEL_NAME,
-      ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
+      ChannelBoolAttribute::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
   auto set_response = client::set_chan_attribute_bool(
       stub(),
       task(),
       CHANNEL_NAME,
-      ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND,
+      ChannelBoolAttribute::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND,
       true);
   auto get_response = client::get_chan_attribute_bool(
       stub(),
       task(),
       CHANNEL_NAME,
-      ChannelBoolAttributes::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
+      ChannelBoolAttribute::CHANNEL_ATTRIBUTE_AO_DAC_REF_ALLOW_CONN_TO_GND);
 
   EXPECT_SUCCESS(set_response);
   EXPECT_SUCCESS(set_response);
@@ -1573,7 +1573,7 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_GetAOOutputType_SucceedsAndReturnsVoltag
       stub(),
       task(),
       CHANNEL_NAME,
-      ChannelInt32Attributes::CHANNEL_ATTRIBUTE_AO_OUTPUT_TYPE);
+      ChannelInt32Attribute::CHANNEL_ATTRIBUTE_AO_OUTPUT_TYPE);
 
   EXPECT_SUCCESS(response);
   EXPECT_EQ(
@@ -1588,9 +1588,9 @@ TEST_F(NiDAQmxDriverApiTests, TaskWithChannel_GetTaskAttributes_ReturnsCorrectRe
       create_ao_voltage_chan_request(-1.0, 1.0, CHANNEL_NAME));
   start_task();
 
-  auto num_chans_response = client::get_task_attribute_uint32(stub(), task(), TaskUInt32Attributes::TASK_ATTRIBUTE_NUM_CHANS);
-  auto channels_response = client::get_task_attribute_string(stub(), task(), TaskStringAttributes::TASK_ATTRIBUTE_CHANNELS);
-  auto complete_response = client::get_task_attribute_bool(stub(), task(), TaskBoolAttributes::TASK_ATTRIBUTE_COMPLETE);
+  auto num_chans_response = client::get_task_attribute_uint32(stub(), task(), TaskUInt32Attribute::TASK_ATTRIBUTE_NUM_CHANS);
+  auto channels_response = client::get_task_attribute_string(stub(), task(), TaskStringAttribute::TASK_ATTRIBUTE_CHANNELS);
+  auto complete_response = client::get_task_attribute_bool(stub(), task(), TaskBoolAttribute::TASK_ATTRIBUTE_COMPLETE);
 
   EXPECT_SUCCESS(num_chans_response);
   EXPECT_SUCCESS(channels_response);
@@ -1608,9 +1608,9 @@ TEST_F(NiDAQmxDriverApiTests, AIChannelWithSampleClock_ReconfigureRate_UpdatesRa
   auto cfg_request = create_cfg_samp_clk_timing_request(INITIAL_RATE, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_CONT_SAMPS, 1U);
   cfg_samp_clk_timing(cfg_request);
 
-  auto initial_response = client::get_timing_attribute_double(stub(), task(), TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
-  auto set_response = client::set_timing_attribute_double(stub(), task(), TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE, RECONFIGURED_RATE);
-  auto get_response = client::get_timing_attribute_double(stub(), task(), TimingDoubleAttributes::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
+  auto initial_response = client::get_timing_attribute_double(stub(), task(), TimingDoubleAttribute::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
+  auto set_response = client::set_timing_attribute_double(stub(), task(), TimingDoubleAttribute::TIMING_ATTRIBUTE_SAMP_CLK_RATE, RECONFIGURED_RATE);
+  auto get_response = client::get_timing_attribute_double(stub(), task(), TimingDoubleAttribute::TIMING_ATTRIBUTE_SAMP_CLK_RATE);
 
   EXPECT_SUCCESS(initial_response);
   EXPECT_SUCCESS(set_response);
@@ -1624,9 +1624,9 @@ TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureOverwrite_UpdatesOverwriteSuc
   const auto NEW_VALUE = ReadInt32AttributeValues::READ_INT32_OVERWRITE_MODE1_OVERWRITE_UNREAD_SAMPS;
   create_ai_voltage_chan(-5.0, 5.0);
 
-  auto initial_response = client::get_read_attribute_int32(stub(), task(), ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE);
-  auto set_response = client::set_read_attribute_int32(stub(), task(), ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE, NEW_VALUE);
-  auto get_response = client::get_read_attribute_int32(stub(), task(), ReadInt32Attributes::READ_ATTRIBUTE_OVERWRITE);
+  auto initial_response = client::get_read_attribute_int32(stub(), task(), ReadInt32Attribute::READ_ATTRIBUTE_OVERWRITE);
+  auto set_response = client::set_read_attribute_int32(stub(), task(), ReadInt32Attribute::READ_ATTRIBUTE_OVERWRITE, NEW_VALUE);
+  auto get_response = client::get_read_attribute_int32(stub(), task(), ReadInt32Attribute::READ_ATTRIBUTE_OVERWRITE);
 
   EXPECT_SUCCESS(initial_response);
   EXPECT_SUCCESS(set_response);
@@ -1640,9 +1640,9 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_ReconfigureSleepTime_UpdatesSleepTimeSuc
   const auto NEW_VALUE = 100.0;
   create_ao_voltage_chan(-10.0, 10.0);
 
-  auto initial_response = client::get_write_attribute_double(stub(), task(), WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME);
-  auto set_response = client::set_write_attribute_double(stub(), task(), WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME, NEW_VALUE);
-  auto get_response = client::get_write_attribute_double(stub(), task(), WriteDoubleAttributes::WRITE_ATTRIBUTE_SLEEP_TIME);
+  auto initial_response = client::get_write_attribute_double(stub(), task(), WriteDoubleAttribute::WRITE_ATTRIBUTE_SLEEP_TIME);
+  auto set_response = client::set_write_attribute_double(stub(), task(), WriteDoubleAttribute::WRITE_ATTRIBUTE_SLEEP_TIME, NEW_VALUE);
+  auto get_response = client::get_write_attribute_double(stub(), task(), WriteDoubleAttribute::WRITE_ATTRIBUTE_SLEEP_TIME);
 
   EXPECT_SUCCESS(initial_response);
   EXPECT_SUCCESS(set_response);
@@ -1653,7 +1653,7 @@ TEST_F(NiDAQmxDriverApiTests, AOChannel_ReconfigureSleepTime_UpdatesSleepTimeSuc
 
 TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureSampQuantSampsPerChan_UpdatesSampQuantSampsPerChanSuccessfully)
 {
-  const auto SAMPS_PER_CHAN_ATTRIBUTE = TimingUInt64Attributes::TIMING_ATTRIBUTE_SAMP_QUANT_SAMP_PER_CHAN;
+  const auto SAMPS_PER_CHAN_ATTRIBUTE = TimingUInt64Attribute::TIMING_ATTRIBUTE_SAMP_QUANT_SAMP_PER_CHAN;
   const auto RECONFIGURED_SAMPS_PER_CHAN = 2000ULL;
   create_ai_voltage_chan(-10.0, 10.0);
 

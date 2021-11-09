@@ -291,18 +291,18 @@ TEST_F(NiRFSADriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
   auto set_response = client::set_attribute_vi_string(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL,
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL,
       NiRFSAStringAttributeValuesMapped::NIRFSA_STRING_REF_CLOCK_OUT_TERMINAL_REF_OUT);
   auto get_response = client::get_attribute_vi_string(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -318,18 +318,18 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFFTWindowType_UpdatesFFTWindowSuccessful
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE);
   auto set_response = client::set_attribute_vi_int32(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE,
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE,
       NiRFSAInt32AttributeValues::NIRFSA_INT32_FFT_WINDOW_TYPE_GAUSSIAN);
   auto get_response = client::get_attribute_vi_int32(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_FFT_WINDOW_TYPE);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -360,18 +360,18 @@ TEST_F(NiRFSADriverApiTests, DisableFractionalResampling_FractionalResamplingIsD
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_ENABLE_FRACTIONAL_RESAMPLING);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_ENABLE_FRACTIONAL_RESAMPLING);
   auto set_response = client::set_attribute_vi_boolean(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_ENABLE_FRACTIONAL_RESAMPLING,
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_ENABLE_FRACTIONAL_RESAMPLING,
       false);
   auto get_response = client::get_attribute_vi_boolean(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_ENABLE_FRACTIONAL_RESAMPLING);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_ENABLE_FRACTIONAL_RESAMPLING);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -388,18 +388,18 @@ TEST_F(NiRFSADriverApiTests, ReconfigureIQRate_UpdatesIQRateSuccessfully)
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_IQ_RATE);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_IQ_RATE);
   auto set_response = client::set_attribute_vi_real64(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_IQ_RATE,
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_IQ_RATE,
       NEW_RATE);
   auto get_response = client::get_attribute_vi_real64(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_IQ_RATE);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_IQ_RATE);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -416,18 +416,18 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFetchOffset_UpdatesFetchOffsetSuccessful
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FETCH_OFFSET);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_FETCH_OFFSET);
   auto set_response = client::set_attribute_vi_int64(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FETCH_OFFSET,
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_FETCH_OFFSET,
       NEW_OFFSET);
   auto get_response = client::get_attribute_vi_int64(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_FETCH_OFFSET);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_FETCH_OFFSET);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -447,22 +447,22 @@ TEST_F(NiRFSADriverApiTests, DISABLED_ReconfigureDowncoverterMode_UpdatesDowncon
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_SIGNAL_BANDWIDTH,
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_SIGNAL_BANDWIDTH,
       1e4);
-  const auto initial_response = client::get_attribute_vi_int32(stub(), session, "", NiRFSAAttributes::NIRFSA_ATTRIBUTE_DOWNCONVERTER_FREQUENCY_OFFSET_MODE);
+  const auto initial_response = client::get_attribute_vi_int32(stub(), session, "", NiRFSAAttribute::NIRFSA_ATTRIBUTE_DOWNCONVERTER_FREQUENCY_OFFSET_MODE);
   // Toggle the mode since it persists between sessions.
   const auto new_mode = (initial_response.value() == USER_DEFINED) ? ENABLED : USER_DEFINED;
   const auto set_response = client::set_attribute_vi_int32(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_DOWNCONVERTER_FREQUENCY_OFFSET_MODE,
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_DOWNCONVERTER_FREQUENCY_OFFSET_MODE,
       new_mode);
   const auto get_response = client::get_attribute_vi_int32(
       stub(),
       session,
       "",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_DOWNCONVERTER_FREQUENCY_OFFSET_MODE);
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_DOWNCONVERTER_FREQUENCY_OFFSET_MODE);
 
   EXPECT_SUCCESS(session, initial_response);
   EXPECT_SUCCESS(session, set_response);
@@ -479,7 +479,7 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationList_Succeeds)
       stub(),
       session,
       LIST_NAME,
-      {NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttributes::NIRFSA_ATTRIBUTE_DEVICE_INSTANTANEOUS_BANDWIDTH},
+      {NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttribute::NIRFSA_ATTRIBUTE_DEVICE_INSTANTANEOUS_BANDWIDTH},
       true);
 
   EXPECT_SUCCESS(session, response);
@@ -493,7 +493,7 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_Reports
       stub(),
       session,
       LIST_NAME,
-      {NiRFSAAttributes::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttributes::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
+      {NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttribute::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
       true);
 
   EXPECT_RFSA_ERROR(IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED, "Attribute or property not supported.", session, response);
@@ -615,9 +615,9 @@ TEST_F(NiRFSADriverApiTests, DISABLED_GetDeembeddingCompensationGain_Succeeds)
       stub(),
       session,
       "if1",
-      NiRFSAAttributes::NIRFSA_ATTRIBUTE_DEEMBEDDING_TYPE,
+      NiRFSAAttribute::NIRFSA_ATTRIBUTE_DEEMBEDDING_TYPE,
       NiRFSAInt32AttributeValues::NIRFSA_INT32_DEEMBEDDING_TYPE_SCALAR);
-  const auto compensation_gain = client::get_attribute_vi_real64(stub(), session, "", NiRFSAAttributes::NIRFSA_ATTRIBUTE_DEEMBEDDING_COMPENSATION_GAIN);
+  const auto compensation_gain = client::get_attribute_vi_real64(stub(), session, "", NiRFSAAttribute::NIRFSA_ATTRIBUTE_DEEMBEDDING_COMPENSATION_GAIN);
 
   EXPECT_NEAR(0.0, compensation_gain.value(), 1e-6);
   EXPECT_SUCCESS(session, compensation_gain);

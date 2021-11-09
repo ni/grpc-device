@@ -109,7 +109,7 @@ try:
     # Setup an Edge Trigger
     result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
         vi = vi,
-        attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
+        attribute_id = niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
         value = niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_TRIGGER_TYPE_VAL_EDGE_TRIGGER
     ))
     CheckForError(vi, result.status)
@@ -127,7 +127,7 @@ try:
     result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
         vi = vi,
         channel_list = channels,
-        attribute_id = niscope_types.NiScopeAttributes.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+        attribute_id = niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
         value = niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
     ))
     CheckForError(vi, result.status)
