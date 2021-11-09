@@ -100,6 +100,13 @@ jobs:
           message(FATAL_ERROR "Build failed")
         endif()
 
+    # The generated source in git must match the output of workflow builds.
+    # If this step fails, something is changing during build. Either:
+    # 1. Fix non-deterministic codegen, OR
+    # 2. Build locally to ensure generated files are up-to-date.
+    - name: Check for files dirtied by codegen
+      run: git diff --exit-code
+
     - name: Run Tests
       shell: cmake -P {0}
       run: |

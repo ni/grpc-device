@@ -6,7 +6,7 @@ from template_helpers import instantiate_mako_template, write_if_changed, load_m
 def generate_register_all_services(metadata_dir: Path, output_dir: Path) -> None:
   driver_modules = [
     load_metadata(p)
-    for p in metadata_dir.iterdir()
+    for p in sorted(metadata_dir.iterdir())
     if p.is_dir() and not "fake" in p.name
   ]
 
