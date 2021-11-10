@@ -43,18 +43,18 @@ endif()
 # This is only needed for local builds - GitHub builds install the
 # necessary dependencies (from python_build_modules.txt) in the .yml files.
 #----------------------------------------------------------------------
-find_package(Python3 COMPONENTS Interpreter)
-if(NOT ${Python3_FOUND})
-  message(WARNING "Python3 not found. Python3 is required for code generation.")
-endif()
-if (NOT IS_GITHUB_BUILD)
-  CreateVirtualEnvironment(venv
-    REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/python_build_modules.txt
-    OUT_PYTHON_EXE PYTHON_EXE
-  )
-else()
-  set(PYTHON_EXE ${Python3_EXECUTABLE})
-endif()
+# find_package(Python3 COMPONENTS Interpreter)
+# if(NOT ${Python3_FOUND})
+#   message(WARNING "Python3 not found. Python3 is required for code generation.")
+# endif()
+# if (NOT IS_GITHUB_BUILD)
+#   CreateVirtualEnvironment(venv
+#     REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/python_build_modules.txt
+#     OUT_PYTHON_EXE PYTHON_EXE
+#   )
+# else()
+#   set(PYTHON_EXE ${Python3_EXECUTABLE})
+# endif()
 
 #----------------------------------------------------------------------
 # Use C++17 (needed for shared_mutex support on Linux)
@@ -146,7 +146,7 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}_service_registrar.cpp
     ${service_output_dir}/${api}/${api}_service_registrar.h
   )
-  set(gen_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
+  # set(gen_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
   if (NOT api MATCHES "^nifake.*")
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
@@ -159,26 +159,26 @@ foreach(api ${nidrivers})
       "${service_output_dir}/${api}/${api}_client.cpp")
   endif()
   set(proto_dependencies ${codegen_dependencies} ${codegen_scripts})
-  if (NOT IS_GITHUB_BUILD)
-    set(proto_dependencies ${proto_dependencies} venv)
-  endif()
-  add_custom_command(OUTPUT ${output_files}
-    ${gen_command}
-    COMMENT "Generating proto file and service for ${api}"
-    DEPENDS ${proto_dependencies})
+  # if (NOT IS_GITHUB_BUILD)
+  #   set(proto_dependencies ${proto_dependencies} venv)
+  # endif()
+  # add_custom_command(OUTPUT ${output_files}
+  #   ${gen_command}
+  #   COMMENT "Generating proto file and service for ${api}"
+  #   DEPENDS ${proto_dependencies})
 endforeach()
 
-add_custom_command(
-  OUTPUT 
-    ${service_output_dir}/register_all_services.cpp
-    ${service_output_dir}/register_all_services.h
-  COMMAND 
-    ${PYTHON_EXE} ${codegen_dir}/generate_shared_service_files.py ${metadata_dir}/ -o ${service_output_dir}/
-  COMMENT 
-    "Generating shared service files"
-  DEPENDS
-    ${proto_dependencies}
-)
+# add_custom_command(
+#   OUTPUT 
+#     ${service_output_dir}/register_all_services.cpp
+#     ${service_output_dir}/register_all_services.h
+#   COMMAND 
+#     ${PYTHON_EXE} ${codegen_dir}/generate_shared_service_files.py ${metadata_dir}/ -o ${service_output_dir}/
+#   COMMENT 
+#     "Generating shared service files"
+#   DEPENDS
+#     ${proto_dependencies}
+# )
 
 set(nidriver_service_srcs
     ${nidriver_service_srcs}
