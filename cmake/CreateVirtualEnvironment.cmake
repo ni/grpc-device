@@ -3,7 +3,7 @@
 CreateVirtualEnvironment
 ------------------------
 Function that creates a virtual Python environment with specific requirements.
-From https://schemingdeveloper.com/2020/07/02/how-to-create-a-new-python-virtual-environment-in-cmake/
+Inspired by https://schemingdeveloper.com/2020/07/02/how-to-create-a-new-python-virtual-environment-in-cmake/
 
 Author: zoodinger
 License: WTFPL
@@ -16,14 +16,6 @@ Required Arguments:
 Optional Arguments:
     REQUIREMENTS_TXT (string):
         Path to requirements.txt list to install with pip
-    REQUIREMENTS (list of strings):
-        Any additional requirements to install with pip that aren't part of
-        requirements.txt, e.g. local packages
-    SOURCES (list of string):
-        Any sources that local packages depend on.
-    PREFIX (string):
-        Path where the environment will be placed at. Can be relative (under
-        ${CMAKE_BINARY_DIR}) or absolute.
     ENV_NAME (string)
         The name of the virtual environment. Unless otherwise specified, this
         is the same as TARGET.
@@ -32,87 +24,55 @@ Optional Arguments:
 Optional Output Arguments:
     OUT_PYTHON_EXE (output variable):
         Stores the path to the python executable of the virtual environment.
-    OUT_BINARY_DIR (output variable):
-        Stores the directory of any scripts / executables that are created as
-        part of the environment, such as python[.exe], pip[.exe], activate, etc.
-    OUT_VENV_DIR
-        Stores the root path of the virtual environment.
 
 #]=============================================================================]
 
 function(CreateVirtualEnvironment TARGET)
-    set(KEYWORD_ARGS REQUIREMENTS_TXT PREFIX ENV_NAME
-            OUT_PYTHON_EXE OUT_BINARY_DIR OUT_VENV_DIR)
+    set(
+        KEYWORD_ARGS 
+            REQUIREMENTS_TXT 
+            ENV_NAME
+            OUT_PYTHON_EXE
+    )
 
-    set(MULTI_ARGS SOURCES REQUIREMENTS)
-
-    cmake_parse_arguments(ARG "" "${KEYWORD_ARGS}" "${MULTI_ARGS}" ${ARGN})
+    cmake_parse_arguments(ARG "" "${KEYWORD_ARGS}" "" ${ARGN})
 
     if (NOT ARG_ENV_NAME)
         set(ARG_ENV_NAME ${TARGET})
     endif ()
 
+    if (NOT ARG_REQUIREMENTS_TXT)
+        set(ARG_REQUIREMENTS_TXT "requirements.txt")
+    endif()
+
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
-    if (ARG_PREFIX)
-        if (IS_ABSOLUTE ${ARG_PREFIX})
-            set(VENV ${ARG_PREFIX}/${ARG_ENV_NAME})
-        else ()
-            set(VENV ${CMAKE_BINARY_DIR}/${ARG_PREFIX}/${ARG_ENV_NAME})
-        endif ()
-    else ()
-        set(VENV ${CMAKE_BINARY_DIR}/${ARG_ENV_NAME})
-    endif ()
+    set(VENV ${CMAKE_BINARY_DIR}/${ARG_ENV_NAME})
 
     if (WIN32)
-        set(BIN_DIR ${VENV}/Scripts)
-        set(PYTHON ${BIN_DIR}/python.exe)
+        set(PYTHON ${VENV}/Scripts/python.exe)
     else ()
-        set(BIN_DIR ${VENV}/bin)
-        set(PYTHON ${BIN_DIR}/python)
+        set(PYTHON ${VENV}/bin/python)
     endif ()
 
-    set(INSTALL_CMD ${BIN_DIR}/pip install --disable-pip-version-check)
-
-    if (ARG_REQUIREMENTS_TXT)
-        set(REQUIREMENTS -r ${ARG_REQUIREMENTS_TXT})
-    endif()
-
-    set(REQUIREMENTS ${REQUIREMENTS} "${ARG_REQUIREMENTS}")
-
-    if (REQUIREMENTS)
-        set(INSTALL_CMD ${BIN_DIR}/pip install --disable-pip-version-check)
-        set(INSTALL_CMD ${INSTALL_CMD} ${REQUIREMENTS})
-    else()
-        set(INSTALL_CMD "")
-    endif()
-
-    set(CFG_FILE ${VENV}/pyvenv.cfg)
+    set(CREATE_VENV_PY ${CMAKE_SOURCE_DIR}/cmake/createvenv.py)
+    set(VENV_CREATION_COMPLETE ${VENV}/creation.complete.txt)
     add_custom_command(
-            OUTPUT ${CFG_FILE}
-            COMMAND ${Python3_EXECUTABLE} -m venv ${VENV}
-            DEPENDS ${ARG_REQUIREMENTS_TXT}
-    )
-    set(OUTPUT_FILE ${VENV}/environment.txt)
-    add_custom_command(
-            OUTPUT ${OUTPUT_FILE}
-            COMMAND ${INSTALL_CMD}
-            COMMAND ${BIN_DIR}/pip freeze > ${OUTPUT_FILE}
-            DEPENDS ${CFG_FILE} ${ARG_SOURCES} ${ARG_REQUIREMENTS_TXT}
+        OUTPUT 
+            ${VENV_CREATION_COMPLETE}
+        COMMAND 
+            ${Python3_EXECUTABLE} ${CREATE_VENV_PY} ${VENV} ${ARG_REQUIREMENTS_TXT}
+        COMMAND
+            ${CMAKE_COMMAND} -E touch ${VENV_CREATION_COMPLETE}
+        DEPENDS 
+            ${ARG_REQUIREMENTS_TXT} ${CREATE_VENV_PY}
+        VERBATIM
     )
 
-    add_custom_target(${TARGET} DEPENDS ${OUTPUT_FILE})
-
-    if (ARG_OUT_VENV_DIR)
-        set(${ARG_OUT_VENV_DIR} ${VENV} PARENT_SCOPE)
-    endif ()
+    add_custom_target(${TARGET} DEPENDS ${VENV_CREATION_COMPLETE})
 
     if (ARG_OUT_PYTHON_EXE)
         set(${ARG_OUT_PYTHON_EXE} ${PYTHON} PARENT_SCOPE)
-    endif ()
-
-    if (ARG_OUT_BINARY_DIR)
-        set(${ARG_OUT_BINARY_DIR} ${BIN_DIR} PARENT_SCOPE)
     endif ()
 
 endfunction()
