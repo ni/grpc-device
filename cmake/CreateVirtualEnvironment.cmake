@@ -3,7 +3,7 @@
 CreateVirtualEnvironment
 ------------------------
 Function that creates a virtual Python environment with specific requirements.
-Inspired by https://schemingdeveloper.com/2020/07/02/how-to-create-a-new-python-virtual-environment-in-cmake/
+Derived from https://schemingdeveloper.com/2020/07/02/how-to-create-a-new-python-virtual-environment-in-cmake/
 
 Author: zoodinger
 License: WTFPL
@@ -28,11 +28,10 @@ Optional Output Arguments:
 #]=============================================================================]
 
 function(CreateVirtualEnvironment TARGET)
-    set(
-        KEYWORD_ARGS 
-            REQUIREMENTS_TXT 
-            ENV_NAME
-            OUT_PYTHON_EXE
+    set(KEYWORD_ARGS 
+        REQUIREMENTS_TXT 
+        ENV_NAME
+        OUT_PYTHON_EXE
     )
 
     cmake_parse_arguments(ARG "" "${KEYWORD_ARGS}" "" ${ARGN})
