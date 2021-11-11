@@ -38,23 +38,14 @@ else()
   set(_PROTOBUF_LIBPROTOBUF libprotobuf)
 endif()
 
-#----------------------------------------------------------------------
-# Set up virtual environment for the build system
-# This is only needed for local builds - GitHub builds install the
-# necessary dependencies (from python_build_modules.txt) in the .yml files.
-#----------------------------------------------------------------------
-find_package(Python3 COMPONENTS Interpreter)
-if(NOT ${Python3_FOUND})
-  message(WARNING "Python3 not found. Python3 is required for code generation.")
-endif()
-if (NOT IS_GITHUB_BUILD)
-  CreateVirtualEnvironment(venv
-    REQUIREMENTS_TXT ${CMAKE_SOURCE_DIR}/python_build_modules.txt
-    OUT_PYTHON_EXE PYTHON_EXE
-  )
-else()
-  set(PYTHON_EXE ${Python3_EXECUTABLE})
-endif()
+CreateVirtualEnvironment(virtual_environment
+  REQUIREMENTS_TXT 
+    ${CMAKE_SOURCE_DIR}/python_build_requirements.txt
+  ENV_NAME
+    venv
+  OUT_PYTHON_EXE 
+    PYTHON_EXE
+)
 
 #----------------------------------------------------------------------
 # Use C++17 (needed for shared_mutex support on Linux)
@@ -158,10 +149,7 @@ foreach(api ${nidrivers})
       ${nidriver_client_srcs}
       "${service_output_dir}/${api}/${api}_client.cpp")
   endif()
-  set(proto_dependencies ${codegen_dependencies} ${codegen_scripts})
-  if (NOT IS_GITHUB_BUILD)
-    set(proto_dependencies ${proto_dependencies} venv)
-  endif()
+  set(proto_dependencies ${codegen_dependencies} ${codegen_scripts} virtual_environment)
   add_custom_command(OUTPUT ${output_files}
     ${gen_command}
     COMMENT "Generating proto file and service for ${api}"
