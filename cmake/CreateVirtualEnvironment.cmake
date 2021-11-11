@@ -49,9 +49,9 @@ function(CreateVirtualEnvironment TARGET)
     set(VENV ${CMAKE_BINARY_DIR}/${ARG_ENV_NAME})
 
     if (WIN32)
-        set(PYTHON ${VENV}/Scripts/python.exe)
+        set(PYTHON_VENV_EXE ${VENV}/Scripts/python.exe)
     else ()
-        set(PYTHON ${VENV}/bin/python)
+        set(PYTHON_VENV_EXE ${VENV}/bin/python)
     endif ()
 
     set(ENVIRONMENT_CREATED ${VENV}/environment.txt)
@@ -66,11 +66,11 @@ function(CreateVirtualEnvironment TARGET)
         # The new venv just has python.exe, so this won't work.
         # This script will always use <venv>\Scripts\python.exe.
         COMMAND
-            ${PYTHON} -m ensurepip --upgrade --default-pip
+            ${PYTHON_VENV_EXE} -m ensurepip --upgrade --default-pip
         COMMAND
-            ${PYTHON} -m pip install -r  ${ARG_REQUIREMENTS_TXT}
+            ${PYTHON_VENV_EXE} -m pip install -r  ${ARG_REQUIREMENTS_TXT}
         COMMAND
-            ${PYTHON} -m pip freeze > ${ENVIRONMENT_CREATED}
+            ${PYTHON_VENV_EXE} -m pip freeze > ${ENVIRONMENT_CREATED}
         DEPENDS 
             ${ARG_REQUIREMENTS_TXT}
         VERBATIM
@@ -79,7 +79,7 @@ function(CreateVirtualEnvironment TARGET)
     add_custom_target(${TARGET} DEPENDS ${ENVIRONMENT_CREATED})
 
     if (ARG_OUT_PYTHON_EXE)
-        set(${ARG_OUT_PYTHON_EXE} ${PYTHON} PARENT_SCOPE)
+        set(${ARG_OUT_PYTHON_EXE} ${PYTHON_VENV_EXE} PARENT_SCOPE)
     endif ()
 
 endfunction()
