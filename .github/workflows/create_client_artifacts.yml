@@ -34,7 +34,7 @@ jobs:
         python-version: '3.x'
 
     - name: Install build dependencies
-      run: python -m pip install -r python_build_modules.txt
+      run: python -m pip install -r python_build_requirements.txt
 
     - name: Stage Client Files
       run: |
