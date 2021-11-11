@@ -55,21 +55,29 @@ function(CreateVirtualEnvironment TARGET)
         set(PYTHON ${VENV}/bin/python)
     endif ()
 
-    set(CREATE_VENV_PY ${CMAKE_SOURCE_DIR}/cmake/createvenv.py)
-    set(VENV_CREATION_COMPLETE ${VENV}/creation.complete.txt)
+    set(ENVIRONMENT_CREATED ${VENV}/environment.txt)
     add_custom_command(
         OUTPUT 
-            ${VENV_CREATION_COMPLETE}
+            ${ENVIRONMENT_CREATED}
         COMMAND 
-            ${Python3_EXECUTABLE} ${CREATE_VENV_PY} ${VENV} ${ARG_REQUIREMENTS_TXT}
+            ${Python3_EXECUTABLE} -m venv --without-pip ${VENV}
+        # Workaround for https://bugs.python.org/issue43749, which hopefully is fixed in cpython 3.11.
+        # The default venv create will use the exe name, which is python3.exe in some environments
+        # (i.e., GH runners, see https://github.com/actions/virtual-environments/issues/2690).
+        # The new venv just has python.exe, so this won't work.
+        # This script will always use <venv>\Scripts\python.exe.
         COMMAND
-            ${CMAKE_COMMAND} -E touch ${VENV_CREATION_COMPLETE}
+            ${PYTHON} -m ensurepip --upgrade --default-pip
+        COMMAND
+            ${PYTHON} -m pip install -r  ${ARG_REQUIREMENTS_TXT}
+        COMMAND
+            ${PYTHON} -m pip freeze > ${ENVIRONMENT_CREATED}
         DEPENDS 
-            ${ARG_REQUIREMENTS_TXT} ${CREATE_VENV_PY}
+            ${ARG_REQUIREMENTS_TXT}
         VERBATIM
     )
 
-    add_custom_target(${TARGET} DEPENDS ${VENV_CREATION_COMPLETE})
+    add_custom_target(${TARGET} DEPENDS ${ENVIRONMENT_CREATED})
 
     if (ARG_OUT_PYTHON_EXE)
         set(${ARG_OUT_PYTHON_EXE} ${PYTHON} PARENT_SCOPE)
