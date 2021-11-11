@@ -58,13 +58,14 @@ function(CreateVirtualEnvironment TARGET)
     add_custom_command(
         OUTPUT 
             ${ENVIRONMENT_CREATED}
+        # Use --without-pip + ensurepip to create a venv with pip as separate steps.
+        # Workaround for https://bugs.python.org/issue43749, which hopefully is fixed in cpython 3.11.
+        # See also: https://github.com/actions/virtual-environments/issues/2690
+        # The ensurepip in default venv creation uses the invoking python exe name. In some environments
+        # this will be python3.exe instead of python.exe, which does not work in cpython venvs <=3.10.
+        # This code will always use <venv>/Scripts/python.exe to call ensurepip.
         COMMAND 
             ${Python3_EXECUTABLE} -m venv --without-pip ${VENV}
-        # Workaround for https://bugs.python.org/issue43749, which hopefully is fixed in cpython 3.11.
-        # The default venv create will use the exe name, which is python3.exe in some environments
-        # (i.e., GH runners, see https://github.com/actions/virtual-environments/issues/2690).
-        # The new venv just has python.exe, so this won't work.
-        # This script will always use <venv>\Scripts\python.exe.
         COMMAND
             ${PYTHON_VENV_EXE} -m ensurepip --upgrade --default-pip
         COMMAND
