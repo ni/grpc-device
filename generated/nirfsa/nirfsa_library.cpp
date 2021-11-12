@@ -98,7 +98,6 @@ NiRFSALibrary::NiRFSALibrary() : shared_library_(kLibraryName)
   function_pointers_.GetUserData = reinterpret_cast<GetUserDataPtr>(shared_library_.get_function_pointer("niRFSA_GetUserData"));
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niRFSA_init"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niRFSA_InitWithOptions"));
-  function_pointers_.InitializeExternalAlignment = reinterpret_cast<InitializeExternalAlignmentPtr>(shared_library_.get_function_pointer("niRFSA_InitializeExternalAlignment"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niRFSA_Initiate"));
   function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_.get_function_pointer("niRFSA_InvalidateAllAttributes"));
   function_pointers_.IsSelfCalValid = reinterpret_cast<IsSelfCalValidPtr>(shared_library_.get_function_pointer("niRFSA_IsSelfCalValid"));
@@ -1061,18 +1060,6 @@ ViStatus NiRFSALibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, 
   return niRFSA_InitWithOptions(resourceName, idQuery, reset, optionString, vi);
 #else
   return function_pointers_.InitWithOptions(resourceName, idQuery, reset, optionString, vi);
-#endif
-}
-
-ViStatus NiRFSALibrary::InitializeExternalAlignment(ViRsrc resourceName, ViConstString optionString, ViSession* vi)
-{
-  if (!function_pointers_.InitializeExternalAlignment) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_InitializeExternalAlignment.");
-  }
-#if defined(_MSC_VER)
-  return niRFSA_InitializeExternalAlignment(resourceName, optionString, vi);
-#else
-  return function_pointers_.InitializeExternalAlignment(resourceName, optionString, vi);
 #endif
 }
 

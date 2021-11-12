@@ -1970,26 +1970,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'InitializeExternalAlignment': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'resourceName',
-                'type': 'ViRsrc'
-            },
-            {
-                'direction': 'in',
-                'name': 'optionString',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'out',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'Initiate': {
         'parameters': [
             {

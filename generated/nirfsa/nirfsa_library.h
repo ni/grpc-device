@@ -95,7 +95,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus GetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize);
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi);
   ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViConstString optionString, ViSession* vi);
-  ViStatus InitializeExternalAlignment(ViRsrc resourceName, ViConstString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
   ViStatus InvalidateAllAttributes(ViSession vi);
   ViStatus IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps);
@@ -203,7 +202,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using GetUserDataPtr = decltype(&niRFSA_GetUserData);
   using InitPtr = decltype(&niRFSA_init);
   using InitWithOptionsPtr = decltype(&niRFSA_InitWithOptions);
-  using InitializeExternalAlignmentPtr = decltype(&niRFSA_InitializeExternalAlignment);
   using InitiatePtr = decltype(&niRFSA_Initiate);
   using InvalidateAllAttributesPtr = decltype(&niRFSA_InvalidateAllAttributes);
   using IsSelfCalValidPtr = decltype(&niRFSA_IsSelfCalValid);
@@ -311,7 +309,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     GetUserDataPtr GetUserData;
     InitPtr Init;
     InitWithOptionsPtr InitWithOptions;
-    InitializeExternalAlignmentPtr InitializeExternalAlignment;
     InitiatePtr Initiate;
     InvalidateAllAttributesPtr InvalidateAllAttributes;
     IsSelfCalValidPtr IsSelfCalValid;

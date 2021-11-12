@@ -94,7 +94,6 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, GetUserData, (ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize), (override));
   MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViConstString optionString, ViSession* vi), (override));
-  MOCK_METHOD(ViStatus, InitializeExternalAlignment, (ViRsrc resourceName, ViConstString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, Initiate, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, IsSelfCalValid, (ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps), (override));
