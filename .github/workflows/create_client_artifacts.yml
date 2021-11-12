@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - 'releases/**'
+  pull_request:
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 jobs:
@@ -34,7 +36,7 @@ jobs:
         python-version: '3.x'
 
     - name: Install build dependencies
-      run: python -m pip install -r python_build_modules.txt
+      run: python -m pip install -r python_build_requirements.txt
 
     - name: Stage Client Files
       run: |
@@ -47,7 +49,7 @@ jobs:
 
     - name: Upload Linux Client Files Artifact
       uses: actions/upload-artifact@v2
-      if: ${{ runner.os == 'Linux' }}
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
         name: ni-grpc-device-client-Linux
         path: ni-grpc-device-client.tar.gz
@@ -55,7 +57,7 @@ jobs:
 
     - name: Upload Windows Client Files Artifact
       uses: actions/upload-artifact@v2
-      if: ${{ runner.os == 'Windows' }}
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
       with:
         name: ni-grpc-device-client
         path: |
