@@ -99,7 +99,6 @@ GetTerminalNameResponse get_terminal_name(const StubPtr& stub, const nidevice_gr
 GetUserDataResponse get_user_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& identifier);
 InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset, const pb::string& option_string);
-InitializeExternalAlignmentResponse initialize_external_alignment(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string);
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsSelfCalValidResponse is_self_cal_valid(const StubPtr& stub, const nidevice_grpc::Session& vi);

@@ -1495,23 +1495,6 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
   return response;
 }
 
-InitializeExternalAlignmentResponse
-initialize_external_alignment(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = InitializeExternalAlignmentRequest{};
-  request.set_resource_name(resource_name);
-  request.set_option_string(option_string);
-
-  auto response = InitializeExternalAlignmentResponse{};
-
-  raise_if_error(
-      stub->InitializeExternalAlignment(&context, request, &response));
-
-  return response;
-}
-
 InitiateResponse
 initiate(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {

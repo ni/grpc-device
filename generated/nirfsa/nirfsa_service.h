@@ -118,7 +118,6 @@ public:
   ::grpc::Status GetUserData(::grpc::ServerContext* context, const GetUserDataRequest* request, GetUserDataResponse* response) override;
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
   ::grpc::Status InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response) override;
-  ::grpc::Status InitializeExternalAlignment(::grpc::ServerContext* context, const InitializeExternalAlignmentRequest* request, InitializeExternalAlignmentResponse* response) override;
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
   ::grpc::Status IsSelfCalValid(::grpc::ServerContext* context, const IsSelfCalValidRequest* request, IsSelfCalValidResponse* response) override;

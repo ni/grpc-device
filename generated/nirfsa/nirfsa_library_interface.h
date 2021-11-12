@@ -93,7 +93,6 @@ class NiRFSALibraryInterface {
   virtual ViStatus GetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize) = 0;
   virtual ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi) = 0;
   virtual ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViConstString optionString, ViSession* vi) = 0;
-  virtual ViStatus InitializeExternalAlignment(ViRsrc resourceName, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
   virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;
   virtual ViStatus IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps) = 0;

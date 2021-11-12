@@ -94,7 +94,6 @@ service NiRFSA {
   rpc GetUserData(GetUserDataRequest) returns (GetUserDataResponse);
   rpc Init(InitRequest) returns (InitResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
-  rpc InitializeExternalAlignment(InitializeExternalAlignmentRequest) returns (InitializeExternalAlignmentResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsSelfCalValid(IsSelfCalValidRequest) returns (IsSelfCalValidResponse);
@@ -1620,16 +1619,6 @@ message InitWithOptionsRequest {
 }
 
 message InitWithOptionsResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
-}
-
-message InitializeExternalAlignmentRequest {
-  string resource_name = 1;
-  string option_string = 2;
-}
-
-message InitializeExternalAlignmentResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
 }
