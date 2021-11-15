@@ -684,8 +684,19 @@ enum NiRFmxSpecAnDoubleArrayAttribute {
   NIRFMXSPECAN_ATTRIBUTE_PHASENOISE_RESULTS_INTEGRATED_NOISE_JITTER = 1245212;
 }
 
+enum Boolean {
+  option allow_alias = true;
+  BOOLEAN_UNSPECIFIED = 0;
+  BOOLEAN_FALSE = 0;
+  BOOLEAN_TRUE = 1;
+}
+
 message CloseRequest {
   nidevice_grpc.Session instrument_handle = 1;
+  oneof force_destroy_enum {
+    Boolean force_destroy = 2;
+    int32 force_destroy_raw = 3;
+  }
 }
 
 message CloseResponse {

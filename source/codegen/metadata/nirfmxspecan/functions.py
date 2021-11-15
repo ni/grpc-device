@@ -8,8 +8,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'hardcoded_value': 'RFMXSPECAN_VAL_FALSE',
-                'include_in_proto': False,
+                'enum': 'Boolean',
                 'name': 'forceDestroy',
                 'type': 'int32',
             }

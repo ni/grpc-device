@@ -40,7 +40,22 @@ namespace nirfmxspecan_grpc {
     try {
       auto instrument_handle_grpc_session = request->instrument_handle();
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
-      auto force_destroy = RFMXSPECAN_VAL_FALSE;
+      int32 force_destroy;
+      switch (request->force_destroy_enum_case()) {
+        case nirfmxspecan_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroy: {
+          force_destroy = static_cast<int32>(request->force_destroy());
+          break;
+        }
+        case nirfmxspecan_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroyRaw: {
+          force_destroy = static_cast<int32>(request->force_destroy_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CloseRequest::ForceDestroyEnumCase::FORCE_DESTROY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for force_destroy was not specified or out of range");
+          break;
+        }
+      }
+
       session_repository_->remove_session(instrument_handle);
       auto status = library_->Close(instrument_handle, force_destroy);
       response->set_status(status);

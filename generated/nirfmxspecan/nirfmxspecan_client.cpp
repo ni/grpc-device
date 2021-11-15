@@ -18,12 +18,20 @@
 namespace nirfmxspecan_grpc::experimental::client {
 
 CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+close(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const simple_variant<Boolean, pb::int32>& force_destroy)
 {
   ::grpc::ClientContext context;
 
   auto request = CloseRequest{};
   request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  const auto force_destroy_ptr = force_destroy.get_if<Boolean>();
+  const auto force_destroy_raw_ptr = force_destroy.get_if<pb::int32>();
+  if (force_destroy_ptr) {
+    request.set_force_destroy(*force_destroy_ptr);
+  }
+  else if (force_destroy_raw_ptr) {
+    request.set_force_destroy_raw(*force_destroy_raw_ptr);
+  }
 
   auto response = CloseResponse{};
 

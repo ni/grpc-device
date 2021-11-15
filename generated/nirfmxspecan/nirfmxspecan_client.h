@@ -22,7 +22,7 @@ using StubPtr = std::unique_ptr<NiRFmxSpecAn::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
-CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle);
+CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const simple_variant<Boolean, pb::int32>& force_destroy);
 InitializeResponse initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string);
 
 } // namespace nirfmxspecan_grpc::experimental::client
