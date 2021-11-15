@@ -315,13 +315,12 @@ configure_iq_carrier_frequency(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 ConfigureIQPowerEdgeRefTriggerResponse
-configure_iq_power_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& source, const double& level, const simple_variant<AnalogSlope, pb::int32>& slope, const pb::int64& pretrigger_samples)
+configure_iq_power_edge_ref_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& level, const simple_variant<AnalogSlope, pb::int32>& slope, const pb::int64& pretrigger_samples)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureIQPowerEdgeRefTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_source(source);
   request.set_level(level);
   const auto slope_ptr = slope.get_if<AnalogSlope>();
   const auto slope_raw_ptr = slope.get_if<pb::int32>();

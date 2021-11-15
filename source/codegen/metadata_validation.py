@@ -202,10 +202,14 @@ def validate_function(function_name: str, metadata: dict):
                     # This is technically legal in other cdses but we should only need it for hardcoded values/callback tokens
                     if 'hardcoded_value' not in parameter and 'callback_token' not in parameter:
                         raise Exception(
-                            f"parameter {parameter['name']} is pointer but not hardcoded_value!")
+                            f"parameter {parameter['name']} is pointer but not hardcoded_value or callback_token!")
                     if parameter.get('include_in_proto', True):
                         raise Exception(
                             f"parameter {parameter['name']} is pointer but is include_in_proto!")
+                if 'hardcoded_value' in parameter:
+                    if parameter.get('include_in_proto', True):
+                        raise Exception(
+                            f"parameter {parameter['name']} has hardcoded_value but is include_in_proto!")
                 if parameter.get('size', {}).get('mechanism', None) == 'ivi-dance-with-a-twist':
                     size = parameter['size']
                     ivi_dance_with_a_twist_params.append(parameter['name'])
