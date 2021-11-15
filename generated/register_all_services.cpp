@@ -16,6 +16,7 @@
 #include "nidigitalpattern/nidigitalpattern_service_registrar.h"
 #include "nidmm/nidmm_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
+#include "nirfmxspecan/nirfmxspecan_service_registrar.h"
 #include "nirfsa/nirfsa_service_registrar.h"
 #include "nirfsg/nirfsg_service_registrar.h"
 #include "niscope/niscope_service_registrar.h"
@@ -39,6 +40,7 @@ std::shared_ptr<void> register_all_services(
 
   auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository.get());
   auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository.get());
+  auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository.get());
 
   service_vector->push_back(
     nidaqmx_grpc::register_service(
@@ -64,6 +66,11 @@ std::shared_ptr<void> register_all_services(
     nifgen_grpc::register_service(
       server_builder, 
       vi_session_repository,
+      feature_toggles));
+  service_vector->push_back(
+    nirfmxspecan_grpc::register_service(
+      server_builder, 
+      ni_r_fmx_instr_handle_repository,
       feature_toggles));
   service_vector->push_back(
     nirfsa_grpc::register_service(

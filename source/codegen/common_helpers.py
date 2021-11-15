@@ -39,8 +39,8 @@ def is_array(dataType: str):
 
 def is_enum(parameter: dict):
     return (
-        "enum" in parameter 
-        or "mapped-enum" in parameter 
+        "enum" in parameter
+        or "mapped-enum" in parameter
         or "bitfield_as_enum_array" in parameter
     )
 
@@ -68,6 +68,7 @@ _NIDEVICE_COMMON_MESSAGE_TYPES = (
 _WELL_KNOWN_MESSAGE_TYPES = (
     "google.protobuf.Timestamp",
 )
+
 
 def is_nidevice_common_message_type(parameter: dict) -> bool:
     grpc_type = get_underlying_grpc_type(parameter)
@@ -111,8 +112,8 @@ def get_input_and_output_custom_types(functions):
     output_custom_types = set()
     for function in functions:
         struct_params = [
-            p 
-            for p in functions[function]["parameters"] 
+            p
+            for p in functions[function]["parameters"]
             if is_custom_struct(p)
         ]
         for parameter in struct_params:
@@ -312,6 +313,9 @@ def pascal_to_camel(pascal_string):
 
     # Normal case: NormalCase -> normalCase
     match = re.fullmatch(r"([A-Z])(.*)", pascal_string)
+    if not match:
+        # Must start with a lowercase letter already
+        return pascal_string
     return match[1].lower() + match[2]
 
 
@@ -652,10 +656,10 @@ def get_grpc_type_name_for_identifier(data_type, config):
 
 
 def get_grpc_type_from_ivi(
-    type: str,
-    is_array: bool,
-    driver_name_pascal: str, 
-    config: dict) -> str:
+        type: str,
+        is_array: bool,
+        driver_name_pascal: str,
+        config: dict) -> str:
     add_repeated = is_array
     if 'ViSession' in type:
         type = 'nidevice_grpc.Session'
@@ -795,4 +799,3 @@ def get_enum_value_prefix(enum_name: str, enum: dict) -> str:
 
 def get_driver_readiness(config: dict) -> str:
     return config.get('code_readiness', 'Release')
-    

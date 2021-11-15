@@ -9,6 +9,7 @@
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next((parameter for parameter in output_parameters if parameter['grpc_type'] == 'nidevice_grpc.Session'), None)
+  output_parameters_to_initialize = [p for p in output_parameters if p['grpc_type'] != 'nidevice_grpc.Session']
   resource_handle_type = session_output_param['type']
   session_output_var_name = common_helpers.camel_to_snake(session_output_param['cppName'])
   close_function_call = function_data['custom_close'] if 'custom_close' in function_data else f"{config['close_function']}(id)"
@@ -17,6 +18,7 @@
   session_field_name = next(explicit_session_params, 'session_name')
 %>\
 ${initialize_input_params(function_name, parameters)}
+${initialize_output_params(output_parameters_to_initialize)}\
       auto init_lambda = [&] () {
         ${resource_handle_type} ${session_output_var_name};
 % if common_helpers.can_mock_function(parameters):
