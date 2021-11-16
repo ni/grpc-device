@@ -111,7 +111,10 @@ typedef struct NIComplexSingle_struct {
 // Please visit ni.com/info and enter the Info Code NI_BTF for more information
 #ifndef CVITime_DECLARED
 #define CVITime_DECLARED
-typedef struct CVITime { unsigned __int64 lsb; __int64 msb; } CVITime;
+typedef struct CVITime {
+  uInt64 lsb;
+  uInt64 msb;
+} CVITime;
 #endif
 #ifndef CVIAbsoluteTime_DECLARED
 #define CVIAbsoluteTime_DECLARED
