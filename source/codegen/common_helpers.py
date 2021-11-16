@@ -300,6 +300,8 @@ def snake_to_pascal(snake_string):
 def pascal_to_camel(pascal_string):
     '''Returns a camelString for a given PascalString.'''
     pascal_string = normalize_leading_special_case_pascal_tokens(pascal_string)
+    if not is_actually_pascal(pascal_string):
+        return pascal_string
 
     # Full string all-caps: IEPE -> iepe. HTTP2 -> http2.
     match = re.fullmatch(r"([A-Z]+[0-9]*)", pascal_string)
@@ -313,9 +315,6 @@ def pascal_to_camel(pascal_string):
 
     # Normal case: NormalCase -> normalCase
     match = re.fullmatch(r"([A-Z])(.*)", pascal_string)
-    if not match:
-        # Must start with a lowercase letter already
-        return pascal_string
     return match[1].lower() + match[2]
 
 
