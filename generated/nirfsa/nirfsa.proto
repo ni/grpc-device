@@ -916,13 +916,12 @@ message ConfigureIQCarrierFrequencyResponse {
 
 message ConfigureIQPowerEdgeRefTriggerRequest {
   nidevice_grpc.Session vi = 1;
-  string source = 2;
-  double level = 3;
+  double level = 2;
   oneof slope_enum {
-    AnalogSlope slope = 4;
-    sint32 slope_raw = 5;
+    AnalogSlope slope = 3;
+    sint32 slope_raw = 4;
   }
-  int64 pretrigger_samples = 6;
+  int64 pretrigger_samples = 5;
 }
 
 message ConfigureIQPowerEdgeRefTriggerResponse {

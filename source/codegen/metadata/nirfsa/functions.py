@@ -248,6 +248,7 @@ functions = {
             {
                 'direction': 'in',
                 'hardcoded_value': '"0"',
+                'include_in_proto': False,
                 'name': 'source',
                 'type': 'ViConstString'
             },
