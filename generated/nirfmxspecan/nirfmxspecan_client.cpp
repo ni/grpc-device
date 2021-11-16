@@ -41,6 +41,39 @@ close(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, cons
   return response;
 }
 
+GetErrorResponse
+get_error(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetErrorRequest{};
+  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+
+  auto response = GetErrorResponse{};
+
+  raise_if_error(
+      stub->GetError(&context, request, &response));
+
+  return response;
+}
+
+GetErrorStringResponse
+get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::int32& error_code)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetErrorStringRequest{};
+  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.set_error_code(error_code);
+
+  auto response = GetErrorStringResponse{};
+
+  raise_if_error(
+      stub->GetErrorString(&context, request, &response));
+
+  return response;
+}
+
 InitializeResponse
 initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string)
 {

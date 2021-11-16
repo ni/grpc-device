@@ -6,9 +6,9 @@
 #include "nirfmxspecan_library.h"
 
 #if defined(_MSC_VER)
-static const char* kLibraryName = "nicaiu.dll";
+static const char* kLibraryName = "niRFmxSpecAn.dll";
 #else
-static const char* kLibraryName = "libnidaqmx.so.1";
+static const char* kLibraryName = "libnirfmxspecan.so.1";
 #endif
 
 namespace nirfmxspecan_grpc {
@@ -22,6 +22,8 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
     return;
   }
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("RFmxSpecAn_Close"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxSpecAn_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxSpecAn_GetErrorString"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxSpecAn_Initialize"));
 }
 
@@ -45,6 +47,30 @@ int32 NiRFmxSpecAnLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 force
   return RFmxSpecAn_Close(instrumentHandle, forceDestroy);
 #else
   return function_pointers_.Close(instrumentHandle, forceDestroy);
+#endif
+}
+
+int32 NiRFmxSpecAnLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetError) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetError.");
+  }
+#if defined(_MSC_VER)
+  return RFmxSpecAn_GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+#else
+  return function_pointers_.GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+#endif
+}
+
+int32 NiRFmxSpecAnLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetErrorString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetErrorString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxSpecAn_GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+#else
+  return function_pointers_.GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
 #endif
 }
 

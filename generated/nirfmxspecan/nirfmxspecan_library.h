@@ -19,14 +19,20 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
 
   ::grpc::Status check_function_exists(std::string functionName);
   int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy);
+  int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
+  int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
   int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession);
 
  private:
   using ClosePtr = decltype(&RFmxSpecAn_Close);
+  using GetErrorPtr = decltype(&RFmxSpecAn_GetError);
+  using GetErrorStringPtr = decltype(&RFmxSpecAn_GetErrorString);
   using InitializePtr = decltype(&RFmxSpecAn_Initialize);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
+    GetErrorPtr GetError;
+    GetErrorStringPtr GetErrorString;
     InitializePtr Initialize;
   } FunctionLoadStatus;
 

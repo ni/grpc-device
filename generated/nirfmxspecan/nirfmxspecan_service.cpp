@@ -18,6 +18,9 @@ namespace nirfmxspecan_grpc {
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
 
+  const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
+
   NiRFmxSpecAnService::NiRFmxSpecAnService(
       NiRFmxSpecAnLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
@@ -60,6 +63,91 @@ namespace nirfmxspecan_grpc {
       auto status = library_->Close(instrument_handle, force_destroy);
       response->set_status(status);
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_handle_grpc_session = request->instrument_handle();
+      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+
+      while (true) {
+        auto status = library_->GetError(instrument_handle, nullptr, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 error_description_buffer_size = status;
+      
+        int32 error_code {};
+        std::string error_description;
+        if (error_description_buffer_size > 0) {
+            error_description.resize(error_description_buffer_size - 1);
+        }
+        status = library_->GetError(instrument_handle, &error_code, error_description_buffer_size, (char*)error_description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_error_code(error_code);
+          response->set_error_description(error_description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_handle_grpc_session = request->instrument_handle();
+      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      int32 error_code = request->error_code();
+
+      while (true) {
+        auto status = library_->GetErrorString(instrument_handle, error_code, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 error_description_buffer_size = status;
+      
+        std::string error_description;
+        if (error_description_buffer_size > 0) {
+            error_description.resize(error_description_buffer_size - 1);
+        }
+        status = library_->GetErrorString(instrument_handle, error_code, error_description_buffer_size, (char*)error_description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_error_description(error_description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        }
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

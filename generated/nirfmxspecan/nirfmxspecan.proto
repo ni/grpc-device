@@ -17,6 +17,8 @@ import "session.proto";
 
 service NiRFmxSpecAn {
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc Initialize(InitializeRequest) returns (InitializeResponse);
 }
 
@@ -701,6 +703,26 @@ message CloseRequest {
 
 message CloseResponse {
   int32 status = 1;
+}
+
+message GetErrorRequest {
+  nidevice_grpc.Session instrument_handle = 1;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  int32 error_code = 2;
+  string error_description = 3;
+}
+
+message GetErrorStringRequest {
+  nidevice_grpc.Session instrument_handle = 1;
+  int32 error_code = 2;
+}
+
+message GetErrorStringResponse {
+  int32 status = 1;
+  string error_description = 2;
 }
 
 message InitializeRequest {

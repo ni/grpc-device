@@ -23,6 +23,8 @@ using namespace nidevice_grpc::experimental::client;
 
 
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const simple_variant<Boolean, pb::int32>& force_destroy);
+GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle);
+GetErrorStringResponse get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::int32& error_code);
 InitializeResponse initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string);
 
 } // namespace nirfmxspecan_grpc::experimental::client

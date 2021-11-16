@@ -34,18 +34,18 @@ config = {
     'library_info': {
         'Linux': {
             '64bit': {
-                'name': 'nidaqmx',
+                'name': 'nirfmxspecan',
                 'type': 'cdll',
                 'abi_version': '1'
             }
         },
         'Windows': {
             '32bit': {
-                'name': 'nicaiu.dll',
+                'name': 'niRFmxSpecAn.dll',
                 'type': 'windll'
             },
             '64bit': {
-                'name': 'nicaiu.dll',
+                'name': 'niRFmxSpecAn.dll',
                 'type': 'cdll'
             }
         }

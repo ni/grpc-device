@@ -16,6 +16,8 @@ class NiRFmxSpecAnLibraryInterface {
   virtual ~NiRFmxSpecAnLibraryInterface() {}
 
   virtual int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy) = 0;
+  virtual int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;
+  virtual int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;
   virtual int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) = 0;
 };
 
