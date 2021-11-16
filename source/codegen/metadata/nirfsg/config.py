@@ -14,7 +14,7 @@ config = {
         'task': 'generation'
     },
     'custom_types': [],
-    'code_readiness': 'NextRelease',
+    'code_readiness': 'Release',
     'driver_name': 'NI-RFSG',
     'extra_errors_used': [
     ],

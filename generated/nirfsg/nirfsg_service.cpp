@@ -3240,7 +3240,7 @@ namespace nirfsg_grpc {
   NiRFSGFeatureToggles::NiRFSGFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfsg", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfsg", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfsg_grpc

@@ -121,7 +121,7 @@ config = {
     'additional_headers': { 'custom/nirfsa_aliases.h': ['service.cpp', 'library_interface.h'] },
     'driver_name': 'NI-RFSA',
     'init_function': 'InitWithOptions',
-    'code_readiness': 'NextRelease',
+    'code_readiness': 'Release',
     'library_info': {
         'Linux': {
             '64bit': {

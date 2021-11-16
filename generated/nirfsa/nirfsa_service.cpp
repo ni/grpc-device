@@ -2999,7 +2999,7 @@ namespace nirfsa_grpc {
   NiRFSAFeatureToggles::NiRFSAFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfsa", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfsa", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfsa_grpc
