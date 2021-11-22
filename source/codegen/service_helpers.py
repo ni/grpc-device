@@ -72,7 +72,7 @@ def create_standard_arg(parameter):
     elif not is_output and common_helpers.is_pointer_parameter(parameter) and 'hardcoded_value' not in parameter:
         return f'&{parameter_name}_copy, '
     elif common_helpers.is_enum(parameter) and parameter["type"] == 'char[]':
-        return f'{parameter_name}.data(), '
+        return f'const_cast<char*>({parameter_name}.data()), '
     else:
         if is_array and common_helpers.is_struct(parameter):
             parameter_name = parameter_name + ".data()"

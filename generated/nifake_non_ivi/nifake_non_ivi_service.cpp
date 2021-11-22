@@ -892,7 +892,7 @@ namespace nifake_non_ivi_grpc {
         }
       }
 
-      auto status = library_->InputStringValuedEnum(a_name.data());
+      auto status = library_->InputStringValuedEnum(const_cast<char*>(a_name.data()));
       response->set_status(status);
       return ::grpc::Status::OK;
     }
