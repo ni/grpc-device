@@ -452,5 +452,28 @@ set_structs_with_coercion(const StubPtr& stub, const std::vector<StructWithCoerc
   return response;
 }
 
+InputStringValuedEnumResponse
+input_string_valued_enum(const StubPtr& stub, const simple_variant<MobileOSNames, std::string>& a_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InputStringValuedEnumRequest{};
+  const auto a_name_ptr = a_name.get_if<MobileOSNames>();
+  const auto a_name_raw_ptr = a_name.get_if<std::string>();
+  if (a_name_ptr) {
+    request.set_a_name_mapped(*a_name_ptr);
+  }
+  else if (a_name_raw_ptr) {
+    request.set_a_name_raw(*a_name_raw_ptr);
+  }
+
+  auto response = InputStringValuedEnumResponse{};
+
+  raise_if_error(
+      stub->InputStringValuedEnum(&context, request, &response));
+
+  return response;
+}
+
 
 } // namespace nifake_non_ivi_grpc::experimental::client

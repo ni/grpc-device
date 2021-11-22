@@ -864,6 +864,43 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InputStringValuedEnum(::grpc::ServerContext* context, const InputStringValuedEnumRequest* request, InputStringValuedEnumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      std::string a_name;
+      switch (request->a_name_enum_case()) {
+        case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameMapped: {
+          auto a_name_imap_it = mobileosnames_input_map_.find(request->a_name_mapped());
+          if (a_name_imap_it == mobileosnames_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_name_mapped was not specified or out of range.");
+          }
+          a_name = a_name_imap_it->second;
+          break;
+        }
+        case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameRaw: {
+          a_name = request->a_name_raw();
+          break;
+        }
+        case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::A_NAME_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_name was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->InputStringValuedEnum(a_name.data());
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
 
   NiFakeNonIviFeatureToggles::NiFakeNonIviFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

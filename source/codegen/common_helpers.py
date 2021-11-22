@@ -495,7 +495,10 @@ def get_twist_value(parameters):
     for p in parameters:
         if is_array(p['type']):
             size = p.get('size', {})
-            return size.get('value_twist', None)
+            value_twist = size.get('value_twist', None)
+            if value_twist is not None:
+                return value_twist
+    return None
 
 
 def is_ivi_dance_array_with_a_twist_param(parameter):

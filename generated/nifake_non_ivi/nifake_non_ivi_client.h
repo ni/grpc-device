@@ -46,6 +46,7 @@ SetMarbleAttributeInt32Response set_marble_attribute_int32(const StubPtr& stub, 
 SetColorsResponse set_colors(const StubPtr& stub, const std::vector<pb::int32>& colors, const pb::int32& size);
 GetStructsWithCoercionResponse get_structs_with_coercion(const StubPtr& stub, const pb::int32& number_of_structs);
 SetStructsWithCoercionResponse set_structs_with_coercion(const StubPtr& stub, const std::vector<StructWithCoercion>& structs);
+InputStringValuedEnumResponse input_string_valued_enum(const StubPtr& stub, const simple_variant<MobileOSNames, std::string>& a_name);
 
 } // namespace nifake_non_ivi_grpc::experimental::client
 

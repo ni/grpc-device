@@ -532,5 +532,16 @@ functions = {
             },
         ],
         'returns': 'int32'
+    },
+    'InputStringValuedEnum': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'enum': 'MobileOSNames',
+                'name': 'aName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
     }
 }

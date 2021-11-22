@@ -55,6 +55,33 @@ def create_args_for_callback(parameters):
     ])
 
 
+def create_standard_arg(parameter):
+    parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+    is_array = common_helpers.is_array(parameter['type'])
+    is_output = common_helpers.is_output_parameter(parameter)
+    if is_output and common_helpers.is_string_arg(parameter):
+        type_without_brackets = common_helpers.get_underlying_type_name(
+            parameter['type'])
+        return f'({type_without_brackets}*){parameter_name}.data(), '
+    elif parameter['type'] in {"ViBoolean[]", "ViSession[]", "ViInt16[]"}:
+        return f'{parameter_name}.data(), '
+    elif 'callback_params' in parameter:
+        return f'CallbackRouter::handle_callback, '
+    elif 'callback_token' in parameter:
+        return f'handler->token(), '
+    elif not is_output and common_helpers.is_pointer_parameter(parameter) and 'hardcoded_value' not in parameter:
+        return f'&{parameter_name}_copy, '
+    elif common_helpers.is_enum(parameter) and parameter["type"] == 'char[]':
+        return f'{parameter_name}.data(), '
+    else:
+        if is_array and common_helpers.is_struct(parameter):
+            parameter_name = parameter_name + ".data()"
+        elif not is_array and is_output:
+            parameter_name = f'&{parameter_name}'
+        elif get_c_element_type_for_array_that_needs_coercion(parameter) is not None:
+            parameter_name = parameter_name + ".data()"
+        return f'{parameter_name}, '
+
 def create_args(parameters):
     result = ''
     is_twist_mechanism = common_helpers.has_ivi_dance_with_a_twist_param(
@@ -86,26 +113,8 @@ def create_args(parameters):
                         result += f'get_{parameter["name"]}_if({parameter_name}, {i}), '
                     else:
                         result += f'get_{parameter["name"]}_if({parameter["name"]}Vector, {i}), '
-        elif is_output and common_helpers.is_string_arg(parameter):
-            type_without_brackets = common_helpers.get_underlying_type_name(
-                parameter['type'])
-            result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
-        elif parameter['type'] in {"ViBoolean[]", "ViSession[]", "ViInt16[]"}:
-            result = f'{result}{parameter_name}.data(), '
-        elif 'callback_params' in parameter:
-            result = f'{result}CallbackRouter::handle_callback, '
-        elif 'callback_token' in parameter:
-            result = f'{result}handler->token(), '
-        elif not is_output and common_helpers.is_pointer_parameter(parameter) and 'hardcoded_value' not in parameter:
-            result = f'{result}&{parameter_name}_copy, '
         else:
-            if is_array and common_helpers.is_struct(parameter):
-                parameter_name = parameter_name + ".data()"
-            elif not is_array and is_output:
-                result = f'{result}&'
-            elif get_c_element_type_for_array_that_needs_coercion(parameter) is not None:
-                parameter_name = parameter_name + ".data()"
-            result = f'{result}{parameter_name}, '
+            result = f'{result}{create_standard_arg(parameter)}'
     return result[:-2]
 
 
@@ -117,8 +126,7 @@ def create_args_for_ivi_dance(parameters):
         elif common_helpers.is_output_parameter(parameter):
             result = f'{result}nullptr, '
         else:
-            result = result + \
-                common_helpers.camel_to_snake(parameter['cppName']) + ', '
+            result = result + create_standard_arg(parameter)
     return result[:-2]
 
 
@@ -136,7 +144,7 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
         elif parameter.get('is_size_param', False):
             result = f'{result}0, '
         else:
-            result = result + common_helpers.camel_to_snake(name) + ', '
+            result = result + create_standard_arg(parameter)
     return result[:-2]
 
 
@@ -173,6 +181,15 @@ def expand_varargs_parameters(parameters):
             new_parameters.append({'cppName': f'{p["name"]}{i}'})
     return new_parameters
 
+
+def create_library_argument(parameter):
+    parameter_type = parameter.get('type', '')
+    # This is a hack. niRFmxInstr.h typdefs int8 as "char" (instead of "signed char"), but our
+    # header parser assumes int8 is a signed char. So just cast the pointer types
+    # back to int8.
+    if parameter_type == 'signed char[]' or (parameter_type == 'signed char' and parameter.get('direction', '') == 'out'):
+        return f"reinterpret_cast<int8*>({parameter['cppName']})"
+    return parameter['cppName']
 
 def create_param(parameter, expand_varargs=True, repeated_parameters=None):
     type = parameter['type']

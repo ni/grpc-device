@@ -41,6 +41,7 @@ service NiFakeNonIvi {
   rpc SetColors(SetColorsRequest) returns (SetColorsResponse);
   rpc GetStructsWithCoercion(GetStructsWithCoercionRequest) returns (GetStructsWithCoercionResponse);
   rpc SetStructsWithCoercion(SetStructsWithCoercionRequest) returns (SetStructsWithCoercionResponse);
+  rpc InputStringValuedEnum(InputStringValuedEnumRequest) returns (InputStringValuedEnumResponse);
 }
 
 enum MarbleInt32ArrayAttribute {
@@ -71,6 +72,13 @@ enum BeautifulColor {
   BEAUTIFUL_COLOR_AQUA = 43;
   BEAUTIFUL_COLOR_GREEN = 45;
   BEAUTIFUL_COLOR_BLACK = 42;
+}
+
+enum MobileOSNames {
+  MOBILE_OS_NAMES_UNSPECIFIED = 0;
+  MOBILE_OS_NAMES_ANDROID = 1;
+  MOBILE_OS_NAMES_IOS = 2;
+  MOBILE_OS_NAMES_NONE = 3;
 }
 
 enum MarbleInt32AttributeValues {
@@ -338,6 +346,17 @@ message SetStructsWithCoercionRequest {
 }
 
 message SetStructsWithCoercionResponse {
+  int32 status = 1;
+}
+
+message InputStringValuedEnumRequest {
+  oneof a_name_enum {
+    MobileOSNames a_name_mapped = 1;
+    string a_name_raw = 2;
+  }
+}
+
+message InputStringValuedEnumResponse {
   int32 status = 1;
 }
 
