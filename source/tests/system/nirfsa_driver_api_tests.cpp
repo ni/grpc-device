@@ -437,6 +437,7 @@ TEST_F(NiRFSADriverApiTests, ReconfigureFetchOffset_UpdatesFetchOffsetSuccessful
 }
 
 // NOTE: disabled because this test requires a 58XX device. Simulating a 58XX hangs on shutdown.
+// FIXED in RFSA 21.5 (in development as of this comment).
 TEST_F(NiRFSADriverApiTests, DISABLED_ReconfigureDowncoverterMode_UpdatesDownconverterModeSuccessfully)
 {
   constexpr auto USER_DEFINED = NiRFSAInt32AttributeValues::NIRFSA_INT32_DOWNCONVERTER_FREQUENCY_OFFSET_MODE_USER_DEFINED;
@@ -607,6 +608,7 @@ TEST_F(NiRFSADriverApiTests, GetCalUserDefinedInfo_Succeeds)
 }
 
 // NOTE: disabled because this test requires a 58XX device. Simulating a 58XX hangs on shutdown.
+// FIXED in RFSA 21.5 (in development as of this comment).
 TEST_F(NiRFSADriverApiTests, DISABLED_GetDeembeddingCompensationGain_Succeeds)
 {
   auto session = init_session(stub(), "5830");
