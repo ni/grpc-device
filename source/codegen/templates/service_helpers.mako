@@ -358,10 +358,8 @@ ${initialize_standard_input_param(function_name, parameter)}
       switch (request->${field_name}_enum_case()) {
 % if has_unmapped_enum:
         case ${one_of_case_prefix}::k${pascal_field_name}: {
-%   if parameter['type'] in ["ViConstString", "ViString"]:
+%   if parameter['grpc_type'] == "string":
           ${parameter_name} = const_cast<${parameter['type']}>((${enum_request_snippet}).c_str());
-%   elif parameter['type'] == "char[]":
-          ${parameter_name} = ${enum_request_snippet};
 %   else:
           ${parameter_name} = static_cast<${parameter['type']}>(${enum_request_snippet});
 %   endif
