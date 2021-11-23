@@ -82,6 +82,7 @@ def create_standard_arg(parameter):
             parameter_name = parameter_name + ".data()"
         return f'{parameter_name}, '
 
+
 def create_args(parameters):
     result = ''
     is_twist_mechanism = common_helpers.has_ivi_dance_with_a_twist_param(
@@ -181,15 +182,6 @@ def expand_varargs_parameters(parameters):
             new_parameters.append({'cppName': f'{p["name"]}{i}'})
     return new_parameters
 
-
-def create_library_argument(parameter):
-    parameter_type = parameter.get('type', '')
-    # This is a hack. niRFmxInstr.h typdefs int8 as "char" (instead of "signed char"), but our
-    # header parser assumes int8 is a signed char. So just cast the pointer types
-    # back to int8.
-    if parameter_type == 'signed char[]' or (parameter_type == 'signed char' and parameter.get('direction', '') == 'out'):
-        return f"reinterpret_cast<int8*>({parameter['cppName']})"
-    return parameter['cppName']
 
 def create_param(parameter, expand_varargs=True, repeated_parameters=None):
     type = parameter['type']
@@ -347,22 +339,22 @@ def get_driver_service_readiness(config: dict) -> str:
 
 def to_cpp_readiness(user_readiness: str) -> str:
     return f'CodeReadiness::k{user_readiness}'
-    
+
 
 def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
     def get_enum_or_default(enum_name: str) -> dict:
         # Enums that are added during metadata mutation (like attributes)
         # may not be in the enum dictionary. Assume they don't generate-mappings.
         return enums.get(enum_name, {})
-    
+
     def should_generate_mappings(enum_name: str) -> bool:
         enum = get_enum_or_default(enum_name)
         return enum.get("generate-mappings", False)
 
     function_enums = common_helpers.get_function_enums(functions)
     return [
-        e 
-        for e in function_enums 
+        e
+        for e in function_enums
         if should_generate_mappings(e)
     ]
 
@@ -376,7 +368,7 @@ def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int
     return {
         v["value"]: f"{enum_qualified_name_prefix}_{v['name']}"
         for v in enum["values"]
-        if v["value"] != 0 # zero values can't be flags!
+        if v["value"] != 0  # zero values can't be flags!
     }
 
 
