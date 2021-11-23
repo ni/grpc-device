@@ -337,6 +337,7 @@ ${initialize_standard_input_param(function_name, parameter)}
   enums = data['enums']
   namespace_prefix = config["namespace_component"] + "_grpc::"
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  parameter_type_pointer = parameter['type'].replace('[]','*')
   field_name = common_helpers.camel_to_snake(parameter["name"])
   pascal_field_name = common_helpers.snake_to_pascal(field_name)
   one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{pascal_field_name}EnumCase'
@@ -352,9 +353,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 
   raw_request_snippet = f'request->{field_name}_raw()'
   validate_attribute_enum = parameter.get("raw_attribute", False)
-  variable_type = "std::string" if parameter['type'] == 'char[]' else parameter['type']
 %>\
-      ${variable_type} ${parameter_name};
+      ${parameter_type_pointer} ${parameter_name};
       switch (request->${field_name}_enum_case()) {
 % if has_unmapped_enum:
         case ${one_of_case_prefix}::k${pascal_field_name}: {
@@ -379,10 +379,8 @@ ${initialize_standard_input_param(function_name, parameter)}
           if (${mapped_enum_iterator_name} == ${map_name}.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name}_mapped was not specified or out of range.");
           }
-%   if parameter['type'] in ["ViConstString", "ViString"]:
-          ${parameter_name} = const_cast<${parameter['type']}>((${f'{mapped_enum_iterator_name}->second'}).c_str());
-%   elif parameter['type'] == "char[]":
-          ${parameter_name} = ${f'{mapped_enum_iterator_name}->second'};
+%   if parameter['grpc_type'] == "string":
+          ${parameter_name} = const_cast<${parameter_type_pointer}>((${f'{mapped_enum_iterator_name}->second'}).c_str());
 %   else:
           ${parameter_name} = static_cast<${parameter['type']}>(${f'{mapped_enum_iterator_name}->second'});
 %   endif
@@ -390,10 +388,8 @@ ${initialize_standard_input_param(function_name, parameter)}
         }
 % endif
         case ${one_of_case_prefix}::k${pascal_field_name}Raw: {
-% if parameter['type'] in ["ViConstString", "ViString"]:
-          ${parameter_name} = const_cast<${parameter['type']}>(${raw_request_snippet}.c_str());
-% elif parameter['type'] == "char[]":
-          ${parameter_name} = ${raw_request_snippet};
+% if parameter['grpc_type'] == "string":
+          ${parameter_name} = const_cast<${parameter_type_pointer}>(${raw_request_snippet}.c_str());
 % else:
           ${parameter_name} = static_cast<${parameter['type']}>(${raw_request_snippet});
 % endif
