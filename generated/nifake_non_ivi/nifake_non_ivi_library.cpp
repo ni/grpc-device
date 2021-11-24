@@ -45,6 +45,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetColors = reinterpret_cast<SetColorsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetColors"));
   function_pointers_.GetStructsWithCoercion = reinterpret_cast<GetStructsWithCoercionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetStructsWithCoercion"));
   function_pointers_.SetStructsWithCoercion = reinterpret_cast<SetStructsWithCoercionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetStructsWithCoercion"));
+  function_pointers_.InputStringValuedEnum = reinterpret_cast<InputStringValuedEnumPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputStringValuedEnum"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -343,6 +344,18 @@ int32 NiFakeNonIviLibrary::SetStructsWithCoercion(StructWithCoercion_struct stru
   return niFakeNonIvi_SetStructsWithCoercion(structs);
 #else
   return function_pointers_.SetStructsWithCoercion(structs);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::InputStringValuedEnum(char aName[])
+{
+  if (!function_pointers_.InputStringValuedEnum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputStringValuedEnum.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_InputStringValuedEnum(aName);
+#else
+  return function_pointers_.InputStringValuedEnum(aName);
 #endif
 }
 

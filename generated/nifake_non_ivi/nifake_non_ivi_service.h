@@ -66,9 +66,12 @@ public:
   ::grpc::Status SetColors(::grpc::ServerContext* context, const SetColorsRequest* request, SetColorsResponse* response) override;
   ::grpc::Status GetStructsWithCoercion(::grpc::ServerContext* context, const GetStructsWithCoercionRequest* request, GetStructsWithCoercionResponse* response) override;
   ::grpc::Status SetStructsWithCoercion(::grpc::ServerContext* context, const SetStructsWithCoercionRequest* request, SetStructsWithCoercionResponse* response) override;
+  ::grpc::Status InputStringValuedEnum(::grpc::ServerContext* context, const InputStringValuedEnumRequest* request, InputStringValuedEnumResponse* response) override;
 private:
   NiFakeNonIviLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
+  std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };
 
   NiFakeNonIviFeatureToggles feature_toggles_;
 };

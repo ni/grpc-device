@@ -42,6 +42,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 SetColors(int32 colors[3], int32 size);
   int32 GetStructsWithCoercion(int32 numberOfStructs, StructWithCoercion_struct structs[]);
   int32 SetStructsWithCoercion(StructWithCoercion_struct structs[3]);
+  int32 InputStringValuedEnum(char aName[]);
 
  private:
   using ClosePtr = decltype(&niFakeNonIvi_Close);
@@ -68,6 +69,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using SetColorsPtr = decltype(&niFakeNonIvi_SetColors);
   using GetStructsWithCoercionPtr = decltype(&niFakeNonIvi_GetStructsWithCoercion);
   using SetStructsWithCoercionPtr = decltype(&niFakeNonIvi_SetStructsWithCoercion);
+  using InputStringValuedEnumPtr = decltype(&niFakeNonIvi_InputStringValuedEnum);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
@@ -94,6 +96,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     SetColorsPtr SetColors;
     GetStructsWithCoercionPtr GetStructsWithCoercion;
     SetStructsWithCoercionPtr SetStructsWithCoercion;
+    InputStringValuedEnumPtr InputStringValuedEnum;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

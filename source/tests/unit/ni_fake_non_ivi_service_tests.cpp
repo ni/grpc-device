@@ -1373,6 +1373,35 @@ TEST_F(NiFakeNonIviServiceTests, OutputArraysWithPassedInByPtrMechanism_SizeIsTo
   EXPECT_EQ(SOME_ERROR, response.status());
 }
 
+TEST_F(NiFakeNonIviServiceTests, InputStringValuedEnum_PassMappedEnum_CorrectStringPassedToFunction)
+{
+  EXPECT_CALL(library_, InputStringValuedEnum(StrEq("iOS")))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  InputStringValuedEnumRequest request;
+  request.set_a_name_mapped(MobileOSNames::MOBILE_OS_NAMES_IOS);
+  InputStringValuedEnumResponse response;
+
+  service_.InputStringValuedEnum(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, InputStringValuedEnum_PassNonMappedValue_CorrectStringPassedToFunction)
+{
+  EXPECT_CALL(library_, InputStringValuedEnum(StrEq("Windows Phone")))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  InputStringValuedEnumRequest request;
+  request.set_a_name_raw("Windows Phone");
+  InputStringValuedEnumResponse response;
+
+  service_.InputStringValuedEnum(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

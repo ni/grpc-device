@@ -50,7 +50,7 @@ def is_decomposable_enum(parameter: dict):
   This is because protobuf does not support oneof on repeated types, so the standard
   input decomposition does not work for arrays.
   """
-  return common_helpers.is_enum(parameter) and not is_array_input(parameter)
+  return common_helpers.is_enum(parameter) and not (is_array_input(parameter) and parameter["grpc_type"] != "string")
 
 
 def get_message_parameter_definitions(parameters):
@@ -58,7 +58,8 @@ def get_message_parameter_definitions(parameters):
   parameter_definitions = []
   used_indexes = []
   for parameter in parameters:
-    is_array = common_helpers.is_array(parameter["type"])
+    is_array = common_helpers.is_array(
+        parameter["type"]) and not parameter["grpc_type"] == "string"
     parameter_name = common_helpers.camel_to_snake(parameter["name"])
     parameter_type = get_parameter_type(parameter)
     if is_decomposable_enum(parameter):

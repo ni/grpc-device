@@ -20,5 +20,22 @@ enums = {
                 'value': 42
             }
         ]
-    }
+    },
+    'MobileOSNames': {
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'ANDROID',
+                'value': 'Android'
+            },
+            {
+                'name': 'IOS',
+                'value': 'iOS'
+            },
+            {
+                'name': 'NONE',
+                'value': 'None'
+            }
+        ]
+    },
 }

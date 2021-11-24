@@ -55,6 +55,32 @@ def create_args_for_callback(parameters):
     ])
 
 
+def create_standard_arg(parameter):
+    parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+    is_array = common_helpers.is_array(parameter['type'])
+    is_output = common_helpers.is_output_parameter(parameter)
+    if is_output and common_helpers.is_string_arg(parameter):
+        type_without_brackets = common_helpers.get_underlying_type_name(
+            parameter['type'])
+        return f'({type_without_brackets}*){parameter_name}.data(), '
+    elif parameter['type'] in {"ViBoolean[]", "ViSession[]", "ViInt16[]"}:
+        return f'{parameter_name}.data(), '
+    elif 'callback_params' in parameter:
+        return f'CallbackRouter::handle_callback, '
+    elif 'callback_token' in parameter:
+        return f'handler->token(), '
+    elif not is_output and common_helpers.is_pointer_parameter(parameter) and 'hardcoded_value' not in parameter:
+        return f'&{parameter_name}_copy, '
+    else:
+        if is_array and common_helpers.is_struct(parameter):
+            parameter_name = parameter_name + ".data()"
+        elif not is_array and is_output:
+            parameter_name = f'&{parameter_name}'
+        elif get_c_element_type_for_array_that_needs_coercion(parameter) is not None:
+            parameter_name = parameter_name + ".data()"
+        return f'{parameter_name}, '
+
+
 def create_args(parameters):
     result = ''
     is_twist_mechanism = common_helpers.has_ivi_dance_with_a_twist_param(
@@ -86,26 +112,8 @@ def create_args(parameters):
                         result += f'get_{parameter["name"]}_if({parameter_name}, {i}), '
                     else:
                         result += f'get_{parameter["name"]}_if({parameter["name"]}Vector, {i}), '
-        elif is_output and common_helpers.is_string_arg(parameter):
-            type_without_brackets = common_helpers.get_underlying_type_name(
-                parameter['type'])
-            result = f'{result}({type_without_brackets}*){parameter_name}.data(), '
-        elif parameter['type'] in {"ViBoolean[]", "ViSession[]", "ViInt16[]"}:
-            result = f'{result}{parameter_name}.data(), '
-        elif 'callback_params' in parameter:
-            result = f'{result}CallbackRouter::handle_callback, '
-        elif 'callback_token' in parameter:
-            result = f'{result}handler->token(), '
-        elif not is_output and common_helpers.is_pointer_parameter(parameter) and 'hardcoded_value' not in parameter:
-            result = f'{result}&{parameter_name}_copy, '
         else:
-            if is_array and common_helpers.is_struct(parameter):
-                parameter_name = parameter_name + ".data()"
-            elif not is_array and is_output:
-                result = f'{result}&'
-            elif get_c_element_type_for_array_that_needs_coercion(parameter) is not None:
-                parameter_name = parameter_name + ".data()"
-            result = f'{result}{parameter_name}, '
+            result = f'{result}{create_standard_arg(parameter)}'
     return result[:-2]
 
 
@@ -117,8 +125,7 @@ def create_args_for_ivi_dance(parameters):
         elif common_helpers.is_output_parameter(parameter):
             result = f'{result}nullptr, '
         else:
-            result = result + \
-                common_helpers.camel_to_snake(parameter['cppName']) + ', '
+            result = result + create_standard_arg(parameter)
     return result[:-2]
 
 
@@ -136,7 +143,7 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
         elif parameter.get('is_size_param', False):
             result = f'{result}0, '
         else:
-            result = result + common_helpers.camel_to_snake(name) + ', '
+            result = result + create_standard_arg(parameter)
     return result[:-2]
 
 
@@ -330,22 +337,22 @@ def get_driver_service_readiness(config: dict) -> str:
 
 def to_cpp_readiness(user_readiness: str) -> str:
     return f'CodeReadiness::k{user_readiness}'
-    
+
 
 def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
     def get_enum_or_default(enum_name: str) -> dict:
         # Enums that are added during metadata mutation (like attributes)
         # may not be in the enum dictionary. Assume they don't generate-mappings.
         return enums.get(enum_name, {})
-    
+
     def should_generate_mappings(enum_name: str) -> bool:
         enum = get_enum_or_default(enum_name)
         return enum.get("generate-mappings", False)
 
     function_enums = common_helpers.get_function_enums(functions)
     return [
-        e 
-        for e in function_enums 
+        e
+        for e in function_enums
         if should_generate_mappings(e)
     ]
 
@@ -359,7 +366,7 @@ def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int
     return {
         v["value"]: f"{enum_qualified_name_prefix}_{v['name']}"
         for v in enum["values"]
-        if v["value"] != 0 # zero values can't be flags!
+        if v["value"] != 0  # zero values can't be flags!
     }
 
 
