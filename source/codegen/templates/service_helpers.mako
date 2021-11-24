@@ -572,7 +572,8 @@ ${initialize_standard_input_param(function_name, parameter)}
       response->mutable_${parameter_name}_raw()->Resize(${size}, 0);
       ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}_raw()->mutable_data());
 ## uInt32 requires cast because of int vs long in that typedef vs uint32_t
-%     elif underlying_param_type in ['ViAddr', 'ViInt32', 'ViUInt32', 'ViUInt16', 'uInt32', 'int32']:
+## uInt64 reuqires cast because of "long long" versus protobuf's "long" on Linux
+%     elif underlying_param_type in ['ViAddr', 'ViInt32', 'ViUInt32', 'ViUInt16', 'uInt32', 'int32', 'uInt64']:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
       ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}()->mutable_data());
 %     else:

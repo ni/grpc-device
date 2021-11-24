@@ -6813,7 +6813,7 @@ namespace nirfmxspecan_grpc {
         int32 array_size = status;
       
         response->mutable_attr_val()->Resize(array_size, 0);
-        uInt64* attr_val = response->mutable_attr_val()->mutable_data();
+        uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
         int32 actual_array_size {};
         status = library_->GetAttributeU64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
