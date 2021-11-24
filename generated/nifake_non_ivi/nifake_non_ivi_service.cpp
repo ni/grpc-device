@@ -872,18 +872,18 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      std::string a_name;
+      char* a_name;
       switch (request->a_name_enum_case()) {
         case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameMapped: {
           auto a_name_imap_it = mobileosnames_input_map_.find(request->a_name_mapped());
           if (a_name_imap_it == mobileosnames_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_name_mapped was not specified or out of range.");
           }
-          a_name = a_name_imap_it->second;
+          a_name = const_cast<char*>((a_name_imap_it->second).c_str());
           break;
         }
         case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameRaw: {
-          a_name = request->a_name_raw();
+          a_name = const_cast<char*>(request->a_name_raw().c_str());
           break;
         }
         case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::A_NAME_ENUM_NOT_SET: {
@@ -892,7 +892,7 @@ namespace nifake_non_ivi_grpc {
         }
       }
 
-      auto status = library_->InputStringValuedEnum(const_cast<char*>(a_name.data()));
+      auto status = library_->InputStringValuedEnum(a_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
