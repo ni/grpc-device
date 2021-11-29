@@ -33,4 +33,52 @@ typedef struct NIComplexI16_struct {
 } NIComplexI16;
 #endif
 
+// Structs from niRFmxInstr.h
+
+#ifndef _NI_float64_DEFINED_
+  #define _NI_float64_DEFINED_
+typedef double float64;
+#endif
+
+#ifndef _NI_float32_DEFINED_
+  #define _NI_float32_DEFINED_
+typedef float float32;
+#endif
+
+#if !defined(_NIComplexSinglePrecision)
+  #define _NIComplexSinglePrecision
+
+  #ifndef _WIN64
+    #pragma pack(push, 1)
+  #endif
+
+typedef struct NIComplexSingle_struct {
+  float32 real;
+  float32 imaginary;
+} NIComplexSingle;
+
+  #ifndef _WIN64
+    #pragma pack(pop)
+  #endif
+
+#endif
+
+#if !defined(_NIComplexDoublePrecision)
+  #define _NIComplexDoublePrecision
+
+  #ifndef _WIN64
+    #pragma pack(push, 1)
+  #endif
+
+typedef struct NIComplexDouble_struct {
+  float64 real;
+  float64 imaginary;
+} NIComplexDouble;
+
+  #ifndef _WIN64
+    #pragma pack(pop)
+  #endif
+
+#endif
+
 #endif /* NIDEVICE_GRPC_DEVICE_COMMON_TYPES_H */

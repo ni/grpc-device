@@ -438,7 +438,7 @@ attributes = {
         'type': 'int32'
     },
     1052706: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the total integrated power, in dBm, of all the active carriers measured when you set the RFMXSPECAN_ATTR_ACP_POWER_UNITS attribute to RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM.         \n\nReturns the power spectral density, in dBm/Hz, based on the power in all the active carriers measured when you set the RFMXSPECAN_ATTR_ACP_POWER_UNITS attribute to RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM_PER_HZ.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_ACPGetResultsTotalCarrierPower\n'
         },
@@ -446,7 +446,7 @@ attributes = {
         'type': 'float64'
     },
     1052707: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the frequency bin spacing of the spectrum acquired by the measurement. This value is expressed in Hz.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_ACPGetResultsFrequencyResolution\n'
         },
@@ -454,7 +454,7 @@ attributes = {
         'type': 'float64'
     },
     1052708: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the center frequency of the carrier relative to the Center Frequency attribute. This value is expressed in Hz.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsCarrierFrequency\n"
         },
@@ -462,7 +462,7 @@ attributes = {
         'type': 'float64'
     },
     1052709: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the frequency range, over which the measurement integrates the carrier power. This value is expressed in Hz.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsCarrierIntegrationBandwidth\n"
         },
@@ -470,7 +470,7 @@ attributes = {
         'type': 'float64'
     },
     1052710: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the measured carrier power.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \nThe carrier power is reported in dBm when you set the RFMXSPECAN_ATTR_ACP_POWER_UNITS attribute to RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_ACP_POWER_UNITS attribute to RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM_PER_HZ.\n \nGet Function: RFmxSpecAn_ACPGetResultsCarrierAbsolutePower\n"
         },
@@ -478,7 +478,7 @@ attributes = {
         'type': 'float64'
     },
     1052711: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the carrier power measured relative to the total carrier power of all active carriers. This value is expressed in dB.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsCarrierTotalRelativePower\n"
         },
@@ -486,7 +486,7 @@ attributes = {
         'type': 'float64'
     },
     1052712: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the index of the carrier used as a reference to define the center frequency of the lower (negative) offset channel. Lower offset channels are channels that are to the left of the carrier.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsLowerOffsetFrequencyReferenceCarrier\n"
         },
@@ -494,7 +494,7 @@ attributes = {
         'type': 'int32'
     },
     1052713: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the center frequency of the lower offset channel relative to the center frequency of the closest carrier. The offset frequency has a negative value.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsLowerOffsetFrequency\n"
         },
@@ -502,7 +502,7 @@ attributes = {
         'type': 'float64'
     },
     1052714: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the integration bandwidth used to measure the power in the lower offset channel.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsLowerOffsetIntegrationBandwidth\n"
         },
@@ -510,7 +510,7 @@ attributes = {
         'type': 'float64'
     },
     1052715: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the index of the carrier used as the power reference to measure the lower (negative) offset channel relative power.\n \nA value of -1 indicates that the total power of all active carriers is used as the reference power. The measurement uses the RFMXSPECAN_ATTR_ACP_OFFSET_POWER_REFERENCE_CARRIER attribute to set the power reference.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_ACPGetResultsLowerOffsetPowerReferenceCarrier\n"
         },
@@ -518,7 +518,7 @@ attributes = {
         'type': 'int32'
     },
     1052716: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the lower offset channel power.\n \nThe offset channel power is reported in dBm when you set the RFMXSPECAN_ATTR_ACP_POWER_UNITS attribute to RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_ACP_POWER_UNITS attribute to RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_ACPGetResultsLowerOffsetAbsolutePower\n"
         },
@@ -526,7 +526,7 @@ attributes = {
         'type': 'float64'
     },
     1052717: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the lower offset channel power measured relative to the integrated power of the power reference carrier. This value is expressed in dB.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsLowerOffsetRelativePower\n"
         },
@@ -534,7 +534,7 @@ attributes = {
         'type': 'float64'
     },
     1052718: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the index of the carrier used as a reference to define the center frequency of the upper (positive) offset channel. Upper offset channels are channels that are to the right of the carrier.         \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsUpperOffsetFrequencyReferenceCarrier\n"
         },
@@ -542,7 +542,7 @@ attributes = {
         'type': 'int32'
     },
     1052719: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the center frequency of the upper offset channel relative to the center frequency of the closest carrier. The offset frequency has a positive value.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsUpperOffsetFrequency\n"
         },
@@ -550,7 +550,7 @@ attributes = {
         'type': 'float64'
     },
     1052720: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the integration bandwidth used to measure the power in the upper offset channel.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsUpperOffsetIntegrationBandwidth\n"
         },
@@ -558,7 +558,7 @@ attributes = {
         'type': 'float64'
     },
     1052721: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the index of the carrier used as the power reference to measure the upper (positive) offset channel relative power.\n \nA value of -1 indicates that the total power of all active carriers is used as the reference power. The measurement uses the RFMXSPECAN_ATTR_ACP_OFFSET_POWER_REFERENCE_CARRIER attribute to set the power reference.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_ACPGetResultsUpperOffsetPowerReferenceCarrier\n"
         },
@@ -566,7 +566,7 @@ attributes = {
         'type': 'int32'
     },
     1052722: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the upper offset channel power.\n \nThe offset channel power is reported in dBm when you set the RFMXSPECAN_ATTR_ACP_POWER_UNITS attribute to RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_ACP_POWER_UNITS attribute to RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_ACPGetResultsUpperOffsetAbsolutePower\n"
         },
@@ -574,7 +574,7 @@ attributes = {
         'type': 'float64'
     },
     1052723: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the upper offset channel power measured relative to the integrated power of the power reference carrier. This value is expressed in dB.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_ACPGetResultsUpperOffsetRelativePower\n"
         },
@@ -794,7 +794,7 @@ attributes = {
         'type': 'int32'
     },
     1056782: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the average power of all the samples. This value is expressed in dBm. If you set the RFMXSPECAN_ATTR_CCDF_THRESHOLD_ENABLED attribute to RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_TRUE, samples above the threshold are measured.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CCDFGetResultsMeanPower\n'
         },
@@ -802,7 +802,7 @@ attributes = {
         'type': 'float64'
     },
     1056783: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the percentage of samples that have more power than the mean power.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CCDFGetResultsMeanPowerPercentile\n'
         },
@@ -810,7 +810,7 @@ attributes = {
         'type': 'float64'
     },
     1056784: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the power above the mean power, over which 10% of the total samples in the signal are present. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CCDFGetResultsTenPercentPower\n'
         },
@@ -818,7 +818,7 @@ attributes = {
         'type': 'float64'
     },
     1056785: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the power above the mean power, over which 1% of the total samples in the signal are present. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CCDFGetResultsOnePercentPower\n'
         },
@@ -826,7 +826,7 @@ attributes = {
         'type': 'float64'
     },
     1056786: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the power above the mean power, over which 0.1% of the total samples in the signal are present. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CCDFGetResultsOneTenthPercentPower\n'
         },
@@ -834,7 +834,7 @@ attributes = {
         'type': 'float64'
     },
     1056787: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the power above the mean power, over which 0.01% of the total samples in the signal are present. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CCDFGetResultsOneHundredthPercentPower\n'
         },
@@ -842,7 +842,7 @@ attributes = {
         'type': 'float64'
     },
     1056788: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the power above the mean power, over which 0.001% of the total samples in the signal are present. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CCDFGetResultsOneThousandthPercentPower\n'
         },
@@ -850,7 +850,7 @@ attributes = {
         'type': 'float64'
     },
     1056789: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the power above the mean power, over which 0.0001% of the total samples in the signal are present. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CCDFGetResultsOneTenThousandthPercentPower\n'
         },
@@ -858,7 +858,7 @@ attributes = {
         'type': 'float64'
     },
     1056790: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the peak power of the acquired signal, relative to the mean power.\n \nYou do not need to use a selector string to configure or read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_CCDFGetResultsPeakPower\n'
         },
@@ -866,7 +866,7 @@ attributes = {
         'type': 'float64'
     },
     1056791: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the total number of samples measured. The total number of samples includes only the samples above the threshold, when you set the RFMXSPECAN_ATTR_CCDF_THRESHOLD_ENABLED attribute to RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_TRUE.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CCDFGetResultsMeasuredSampleCount\n'
         },
@@ -1017,7 +1017,7 @@ attributes = {
         'type': 'int32'
     },
     1060885: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the carrier power measured in the integration bandwidth that you specify in the RFMXSPECAN_ATTR_CHP_CARRIER_INTEGRATION_BANDWIDTH attribute. This value is expressed in dBm.\n \nUse 'carrier(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_CHPGetResultsCarrierAbsolutePower\n"
         },
@@ -1025,7 +1025,7 @@ attributes = {
         'type': 'float64'
     },
     1060886: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the power spectral density of the channel. This value is expressed in dBm/Hz.\n \nUse 'carrier(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_CHPGetResultsCarrierPSD\n"
         },
@@ -1033,7 +1033,7 @@ attributes = {
         'type': 'float64'
     },
     1060887: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the frequency bin spacing of the spectrum acquired by the measurement. This value is expressed in Hz.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CHPGetResultsFrequencyResolution\n'
         },
@@ -1057,7 +1057,7 @@ attributes = {
         'type': 'float64'
     },
     1060890: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the total integrated carrier power of all carriers, in dBm.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_CHPGetResultsTotalCarrierPower\n'
         },
@@ -1065,7 +1065,7 @@ attributes = {
         'type': 'float64'
     },
     1060891: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the center frequency of the carrier relative to the Center Frequency attribute. This value is expressed in Hz.\n \nUse 'carrier(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_CHPGetResultsCarrierFrequency\n"
         },
@@ -1073,7 +1073,7 @@ attributes = {
         'type': 'float64'
     },
     1060892: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the frequency range over which the measurement integrates the carrier power. This value is expressed in Hz.\n \nUse 'carrier(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_CHPGetResultsCarrierIntegrationBandwidth\n"
         },
@@ -1081,7 +1081,7 @@ attributes = {
         'type': 'float64'
     },
     1060893: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the carrier power measured relative to the total carrier power of all carriers. This value is expressed in dB.\n \nUse 'carrier(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_CHPGetResultsCarrierRelativePower\n"
         },
@@ -1269,7 +1269,7 @@ attributes = {
         'type': 'int32'
     },
     1064977: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the signal frequency relative to the RF center frequency. Only samples above the threshold are used when you set the RFMXSPECAN_ATTR_FCNT_THRESHOLD_ENABLED attribute to RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_TRUE.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_FCntGetResultsAverageRelativeFrequency\n'
         },
@@ -1277,7 +1277,7 @@ attributes = {
         'type': 'float64'
     },
     1064978: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the net phase of the vector sum of the I/Q samples used for frequency measurement.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_FCntGetResultsMeanPhase\n'
         },
@@ -1285,7 +1285,7 @@ attributes = {
         'type': 'float64'
     },
     1064979: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the RF signal frequency. Only samples above the threshold are used when you set the RFMXSPECAN_ATTR_FCNT_THRESHOLD_ENABLED attribute to RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_TRUE.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_FCntGetResultsAverageAbsoluteFrequency\n'
         },
@@ -1293,7 +1293,7 @@ attributes = {
         'type': 'float64'
     },
     1064980: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the two-sample deviation of the measured frequency.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_FCntGetResultsAllanDeviation\n'
         },
@@ -1426,7 +1426,7 @@ attributes = {
         'type': 'int32'
     },
     1069073: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the frequency used as the fundamental frequency. This value is expressed in Hz.\n \nYou do not need to use a selector string to configure or read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_HarmGetResultsFundamentalFrequency\n'
         },
@@ -1434,7 +1434,7 @@ attributes = {
         'type': 'float64'
     },
     1069074: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the average power measured at the fundamental frequency. This value is expressed in dBm.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_HarmGetResultsAverageFundamentalPower\n'
         },
@@ -1442,7 +1442,7 @@ attributes = {
         'type': 'float64'
     },
     1069075: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the total harmonics distortion (THD), measured as a percentage of the power in the fundamental signal.\n \nTHD (%) = SQRT (Total power of all enabled harmonics - Power in fundamental) * 100 / Power in fundamental        \n\nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_HarmGetResultsTotalHarmonicDistortion\n'
         },
@@ -1450,7 +1450,7 @@ attributes = {
         'type': 'float64'
     },
     1069076: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the RF frequency of the harmonic. This value is expressed in Hz.        \n\nUse 'harmonic(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_HarmGetResultsHarmonicFrequency\n"
         },
@@ -1458,7 +1458,7 @@ attributes = {
         'type': 'float64'
     },
     1069077: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the resolution bandwidth (RBW) which is used by the harmonic measurement, for the harmonic specified by the selector string. This value is expressed in Hz.        \n\nUse 'harmonic(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_HarmGetResultsHarmonicRBW\n"
         },
@@ -1466,7 +1466,7 @@ attributes = {
         'type': 'float64'
     },
     1069078: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the average absolute power measured at the harmonic specified by the selector string. This value is expressed in dBm.        \n\nUse 'harmonic(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_HarmGetResultsHarmonicAverageAbsolutePower\n"
         },
@@ -1474,7 +1474,7 @@ attributes = {
         'type': 'float64'
     },
     1069079: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the average power relative to the fundamental power measured at the harmonic specified by the selector string. This value is expressed in dB.         \n\nUse 'harmonic(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_HarmGetResultsHarmonicAverageRelativePower\n"
         },
@@ -1634,7 +1634,7 @@ attributes = {
         'type': 'int32'
     },
     1073171: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the bandwidth that occupies the percentage of the total power of the signal that you specify in the RFMXSPECAN_ATTR_OBW_BANDWIDTH_PERCENTAGE attribute. This value is expressed in Hz.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_OBWGetResultsOccupiedBandwidth\n'
         },
@@ -1642,7 +1642,7 @@ attributes = {
         'type': 'float64'
     },
     1073172: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the total integrated power, in dBm, of the averaged spectrum acquired by the OBW measurement when you set the RFMXSPECAN_ATTR_OBW_POWER_UNITS attribute to RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM. The RFMXSPECAN_ATTR_OBW_RESULTS_AVERAGE_POWER attribute returns the power spectral density, in dBm/Hz,  when you set the RFMXSPECAN_ATTR_OBW_POWER_UNITS attribute to RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM_PER_HZ.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_OBWGetResultsAveragePower\n'
         },
@@ -1650,7 +1650,7 @@ attributes = {
         'type': 'float64'
     },
     1073173: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the start frequency of the OBW. This value is expressed in Hz.\n \nThe OBW is calculated using the following formula: OBW = stop frequency - start frequency        \n\nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_OBWGetResultsStartFrequency\n'
         },
@@ -1658,7 +1658,7 @@ attributes = {
         'type': 'float64'
     },
     1073174: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the stop frequency of the OBW. This value is expressed in Hz.\n \nThe OBW is calculated using the following formula: OBW = stop frequency - start frequency        \n\nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_OBWGetResultsStopFrequency\n'
         },
@@ -1666,7 +1666,7 @@ attributes = {
         'type': 'float64'
     },
     1073175: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the frequency bin spacing of the spectrum acquired by the OBW measurement. This value is expressed in Hz.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_OBWGetResultsFrequencyResolution\n'
         },
@@ -1758,7 +1758,7 @@ attributes = {
         'type': 'int32'
     },
     1077258: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the mean phase of the segment, relative to the phase of the reference segment. This value is expressed in degrees.       \n\n\n \nUse 'segment(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_PAVTGetResultsMeanRelativePhase\n"
         },
@@ -1766,7 +1766,7 @@ attributes = {
         'type': 'float64'
     },
     1077259: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the mean amplitude of the segment, relative to the amplitude of the reference segment. This value is expressed in dB.      \n\nMean Relative Amplitude = ai - ar      \n\nai is the absolute amplitude of the segment i, expressed in dBm      \n\nar is the absolute amplitude of the reference segment r, expressed in dBm     \n\nwhere,\n\nr = 1, if Segment0 is configured as Frequency Error Measurement segment\n\nr = 0, otherwise\n \nUse 'segment(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_PAVTGetResultsMeanRelativeAmplitude\n"
         },
@@ -1791,7 +1791,7 @@ attributes = {
         'type': 'float64'
     },
     1077262: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the mean absolute amplitude of the segment. This value is expressed in dBm.\n \nUse 'segment(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_PAVTGetResultsMeanAbsoluteAmplitude\n"
         },
@@ -1799,7 +1799,7 @@ attributes = {
         'type': 'float64'
     },
     1077263: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the mean absolute phase of the segment. This value is expressed in degrees.\n \nUse 'segment(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_PAVTGetResultsMeanAbsolutePhase\n"
         },
@@ -1841,7 +1841,7 @@ attributes = {
         'type': 'int32'
     },
     1077268: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the mean frequency error of the segment. This value is expressed in Hz\n \nUse 'segment(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_PAVTGetResultsFrequencyErrorMean\n"
         },
@@ -2188,7 +2188,7 @@ attributes = {
         'type': 'int32'
     },
     1081384: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the total integrated power, in dBm, of all the enabled carriers measured when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM. Returns the power spectral density, in dBm/Hz, when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_SEMGetResultsTotalCarrierPower\n'
         },
@@ -2196,16 +2196,16 @@ attributes = {
         'type': 'float64'
     },
     1081385: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Indicates the overall measurement status based on the measurement limits and the fail criteria that you set in the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute for each offset segment.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_SEMGetResultsCompositeMeasurementStatus\n'
         },
-        'enum': 'SemResultsCompositeMeasurementStatus',
+        'enum': 'SemCompositeMeasurementStatus',
         'name': 'SEM_RESULTS_COMPOSITE_MEASUREMENT_STATUS',
         'type': 'int32'
     },
     1081386: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the frequency bin spacing of the spectrum acquired by the measurement. This value is expressed in Hz.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_SEMGetResultsFrequencyResolution\n'
         },
@@ -2213,7 +2213,7 @@ attributes = {
         'type': 'float64'
     },
     1081387: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the center frequency of the carrier relative to the Center Frequency attribute. This value is expressed in Hz.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsCarrierFrequency\n"
         },
@@ -2221,7 +2221,7 @@ attributes = {
         'type': 'float64'
     },
     1081388: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the frequency range, over which the measurement integrates the carrier power. This value is expressed in Hz.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsCarrierIntegrationBandwidth\n"
         },
@@ -2229,7 +2229,7 @@ attributes = {
         'type': 'float64'
     },
     1081389: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the carrier power.\n \nThe carrier power is reported in dBm when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsCarrierAbsolutePower\n"
         },
@@ -2237,7 +2237,7 @@ attributes = {
         'type': 'float64'
     },
     1081390: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the carrier power relative to the total carrier power of all enabled carriers. This value is expressed in dB.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsCarrierTotalRelativePower\n"
         },
@@ -2245,7 +2245,7 @@ attributes = {
         'type': 'float64'
     },
     1081391: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the peak power in the carrier channel.\n \nThe power is reported in dBm when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsCarrierPeakAbsolutePower\n"
         },
@@ -2253,7 +2253,7 @@ attributes = {
         'type': 'float64'
     },
     1081392: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the frequency at which the peak power occurs in the carrier channel. This value is expressed in Hz.        \n\nUse 'carrier(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsCarrierPeakFrequency\n"
         },
@@ -2261,7 +2261,7 @@ attributes = {
         'type': 'float64'
     },
     1081393: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the start frequency of the lower (negative) offset segment. This value is expressed in Hz.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetStartFrequency\n"
         },
@@ -2269,7 +2269,7 @@ attributes = {
         'type': 'float64'
     },
     1081394: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the stop frequency of the lower (negative) offset segment. This value is expressed in Hz.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetStopFrequency\n"
         },
@@ -2277,7 +2277,7 @@ attributes = {
         'type': 'float64'
     },
     1081395: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the index of the carrier that was used as the power reference to define the lower (negative) offset segment relative power. The reference carrier is the carrier that has an offset closest to the offset segment.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetPowerReferenceCarrier\n"
         },
@@ -2285,7 +2285,7 @@ attributes = {
         'type': 'int32'
     },
     1081396: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the power measured in the lower (negative) offset segment.\n \nThe power is reported in dBm when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetTotalAbsolutePower\n"
         },
@@ -2293,7 +2293,7 @@ attributes = {
         'type': 'float64'
     },
     1081397: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the power measured in the lower (negative) offset segment relative to either the integrated or peak power of the reference carrier.\n \nWhen you set the RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE attribute to RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_INTEGRATION, the reference carrier power is the total power in the reference carrier. When you set the RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE attribute to RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_PEAK, the reference carrier power is the peak power in the reference carrier.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetTotalRelativePower\n"
         },
@@ -2301,7 +2301,7 @@ attributes = {
         'type': 'float64'
     },
     1081398: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the peak power measured in the lower (negative) offset segment.\n \nThe power is reported in dBm when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetPeakAbsolutePower\n"
         },
@@ -2309,7 +2309,7 @@ attributes = {
         'type': 'float64'
     },
     1081399: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the peak power measured in the lower (negative) offset segment relative to the integrated or peak power of the reference carrier.\n \nWhen you set the RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE attribute to RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_INTEGRATION, the reference carrier power is the total power in the reference carrier. When you set the RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE attribute to RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_PEAK, the reference carrier power is the peak power in the reference carrier.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetPeakRelativePower\n"
         },
@@ -2317,7 +2317,7 @@ attributes = {
         'type': 'float64'
     },
     1081400: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the frequency at which the peak power occurred in the lower offset segment. This value is expressed in Hz.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetPeakFrequency\n"
         },
@@ -2325,7 +2325,7 @@ attributes = {
         'type': 'float64'
     },
     1081401: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the margin from the limit mask value that you set in the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute. This value is expressed in dB. Margin is defined as the maximum difference between the spectrum and the limit mask.\n \nWhen you set the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute to Absolute, the margin is with reference to the absolute limit mask.        \n\nWhen you set the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute to Relative, the margin is with reference to the relative limit mask.        \n\nWhen you set the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute to Abs AND Rel, the margin is the maximum of the margins referenced to the absolute and relative limit masks.        \n\nWhen you set the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute to Abs OR Rel, the margin is the minimum of the margins referenced to the absolute and relative limit masks.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetMargin\n"
         },
@@ -2333,7 +2333,7 @@ attributes = {
         'type': 'float64'
     },
     1081402: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the power, at which the margin occurred in the lower (negative) offset segment.\n \nThe power is reported in dBm when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetMarginAbsolutePower\n"
         },
@@ -2341,7 +2341,7 @@ attributes = {
         'type': 'float64'
     },
     1081403: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the power at which the margin occurred in the lower (negative) offset segment relative to the integrated or peak power of the reference carrier. This value is expressed in dB.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetMarginRelativePower\n"
         },
@@ -2349,7 +2349,7 @@ attributes = {
         'type': 'float64'
     },
     1081404: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the frequency at which the margin occurred in the lower (negative) offset segment. This value is expressed in Hz.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetMarginFrequency\n"
         },
@@ -2357,16 +2357,16 @@ attributes = {
         'type': 'float64'
     },
     1081405: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Indicates the lower offset segment measurement status based on measurement limits and the fail criteria that you specify in the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsLowerOffsetMeasurementStatus\n"
         },
-        'enum': 'SemResultsLowerOffsetMeasurementStatus',
+        'enum': 'SemLowerOffsetMeasurementStatus',
         'name': 'SEM_RESULTS_LOWER_OFFSET_MEASUREMENT_STATUS',
         'type': 'int32'
     },
     1081406: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the start frequency of the upper (positive) offset segment. This value is expressed in Hz.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetStartFrequency\n"
         },
@@ -2374,7 +2374,7 @@ attributes = {
         'type': 'float64'
     },
     1081407: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the stop frequency of the upper (positive) offset segment. This value is expressed in Hz.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetStopFrequency\n"
         },
@@ -2382,7 +2382,7 @@ attributes = {
         'type': 'float64'
     },
     1081408: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the index of the carrier that was used as the power reference to define the upper (positive) offset segment relative power. The reference carrier is the carrier that has an offset closest to the offset segment.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetPowerReferenceCarrier\n"
         },
@@ -2390,7 +2390,7 @@ attributes = {
         'type': 'int32'
     },
     1081409: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the offset segment power measured in the upper (positive) offset segment.\n \nThe power is reported in dBm when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetTotalAbsolutePower\n"
         },
@@ -2398,7 +2398,7 @@ attributes = {
         'type': 'float64'
     },
     1081410: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the power measured in the upper (positive) offset segment relative to the integrated or peak power of the reference carrier.        \n\n When you set the RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE attribute to RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_INTEGRATION, the reference carrier power is the total power in the reference carrier. When you set the RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE attribute to RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_PEAK, the reference carrier power is the peak power in the reference.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetTotalRelativePower\n"
         },
@@ -2406,7 +2406,7 @@ attributes = {
         'type': 'float64'
     },
     1081411: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the peak power measured in the upper (positive) offset segment.\n \nThe power is reported in dBm when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetPeakAbsolutePower\n"
         },
@@ -2414,7 +2414,7 @@ attributes = {
         'type': 'float64'
     },
     1081412: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the peak power measured in the upper (positive) offset segment relative to the integrated or peak power of the reference carrier.         \n\nWhen you set the RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE attribute to RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_INTEGRATION, the reference carrier power is the total power in the reference carrier. When you set the RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE attribute to RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_PEAK, the reference carrier power is the peak power in the reference carrier.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetPeakRelativePower\n"
         },
@@ -2422,7 +2422,7 @@ attributes = {
         'type': 'float64'
     },
     1081413: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the frequency at which the peak power occurred in the upper offset segment. This value is expressed in Hz.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetPeakFrequency\n"
         },
@@ -2430,7 +2430,7 @@ attributes = {
         'type': 'float64'
     },
     1081414: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the margin from the limit mask value that you set in the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute. This value is expressed in dB. Margin is defined as the maximum difference between the spectrum and the limit mask.\n \nWhen you set the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute to Absolute, the margin is with reference to the absolute limit mask.        \n\nWhen you set the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute to Relative, the margin is with reference to the relative limit mask.        \n\nWhen you set the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute to Abs AND Rel, the margin is the maximum of the margin referenced to the absolute and relative limit masks.        \n\nWhen you set the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute to Abs OR Rel, the margin is the minimum of the margin referenced to the absolute and relative limit masks.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetMargin\n"
         },
@@ -2438,7 +2438,7 @@ attributes = {
         'type': 'float64'
     },
     1081415: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the power, at which the margin occurred in the upper (positive) offset segment.\n \nThe power is reported in dBm when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM, and in dBm/Hz when you set the RFMXSPECAN_ATTR_SEM_POWER_UNITS attribute to RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ.        \n\nUse 'offset(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetMarginAbsolutePower\n"
         },
@@ -2446,7 +2446,7 @@ attributes = {
         'type': 'float64'
     },
     1081416: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the power at which the margin occurred in the upper (positive) offset segment relative to the integrated or peak power of the reference carrier. This value is expressed in dB.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetMarginRelativePower\n"
         },
@@ -2454,7 +2454,7 @@ attributes = {
         'type': 'float64'
     },
     1081417: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the frequency at which the margin occurred in the upper (positive)  offset. This value is expressed in Hz.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetMarginFrequency\n"
         },
@@ -2462,11 +2462,11 @@ attributes = {
         'type': 'float64'
     },
     1081418: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Indicates the upper offset measurement status based on measurement limits and the fail criteria that you specify in the RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK attribute.        \n\nUse 'offset(n)' as the selector string to read this result.\n \n\n \nGet Function: RFmxSpecAn_SEMGetResultsUpperOffsetMeasurementStatus\n"
         },
-        'enum': 'SemResultsUpperOffsetMeasurementStatus',
+        'enum': 'SemUpperOffsetMeasurementStatus',
         'name': 'SEM_RESULTS_UPPER_OFFSET_MEASUREMENT_STATUS',
         'type': 'int32'
     },
@@ -2634,7 +2634,7 @@ attributes = {
         'type': 'int32'
     },
     1085458: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the peak amplitude, of the averaged spectrum.\n \nWhen you set the RFMXSPECAN_ATTR_SPECTRUM_SPAN attribute to 0, the measurement returns the peak amplitude in the time domain power trace.        \n\nThe amplitude is reported in units specified by the value of the RFMXSPECAN_ATTR_SPECTRUM_POWER_UNITS attribute.         \n\nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_SpectrumGetResultsPeakAmplitude\n'
         },
@@ -2642,7 +2642,7 @@ attributes = {
         'type': 'float64'
     },
     1085459: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the frequency at the peak amplitude of the averaged spectrum. This value is expressed in Hz. This attribute is not valid if you set the RFMXSPECAN_ATTR_SPECTRUM_SPAN attribute to 0.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_SpectrumGetResultsPeakFrequency\n'
         },
@@ -2650,7 +2650,7 @@ attributes = {
         'type': 'float64'
     },
     1085460: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the frequency bin spacing of the spectrum acquired by the measurement. This value is expressed in Hz. This attribute is not valid if you set the RFMXSPECAN_ATTR_SPECTRUM_SPAN attribute to 0.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_SpectrumGetResultsFrequencyResolution\n'
         },
@@ -2956,16 +2956,16 @@ attributes = {
         'type': 'int32'
     },
     1089561: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Indicates the overall measurement status.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nSupported devices: PXIe-5665/5668\n \nGet Function: RFmxSpecAn_SpurGetResultsMeasurementStatus\n'
         },
-        'enum': 'SpurResultsMeasurementStatus',
+        'enum': 'SpurMeasurementStatus',
         'name': 'SPUR_RESULTS_MEASUREMENT_STATUS',
         'type': 'int32'
     },
     1089562: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the frequency of the detected spurious emissions (Spur). This value is expressed in Hz.        \n\nUse 'range(n)/spur(k)' as the selector string to read this result.\n \n\n \nSupported devices: PXIe-5665/5668\n \nGet Function: RFmxSpecAn_SpurGetResultsRangeFrequency\n"
         },
@@ -2973,7 +2973,7 @@ attributes = {
         'type': 'float64'
     },
     1089563: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the amplitude of the detected spurious emissions (Spur). This value is expressed in dBm.        \n\nUse 'range(n)/spur(k)' as the selector string to read this result.\n \n\n \nSupported devices: PXIe-5665/5668\n \nGet Function: RFmxSpecAn_SpurGetResultsRangeAmplitude\n"
         },
@@ -2981,7 +2981,7 @@ attributes = {
         'type': 'float64'
     },
     1089564: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the threshold used to calculate the margin of the detected spurious emissions (Spur). This value is expressed in dBm. The measurement calculates the threshold using the absolute limit line specified by the RFMXSPECAN_ATTR_SPUR_RANGE_ABSOLUTE_LIMIT_MODE attribute.        \n\nUse 'range(n)/spur(k)' as the selector string to read this result.\n \n\n \nSupported devices: PXIe-5665/5668\n \nGet Function: RFmxSpecAn_SpurGetResultsRangeAbsoluteLimit\n"
         },
@@ -2989,7 +2989,7 @@ attributes = {
         'type': 'float64'
     },
     1089565: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the difference between the amplitude and the absolute limit of the detected spurious emissions (Spur) at the Spur frequency.        \n\nUse 'range(n)/spur(k)' as the selector string to read this result.\n \n\n \nSupported devices: PXIe-5665/5668\n \nGet Function: RFmxSpecAn_SpurGetResultsRangeMargin\n"
         },
@@ -2997,16 +2997,16 @@ attributes = {
         'type': 'float64'
     },
     1089566: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Indicates the measurement status for the frequency range.        \n\nUse 'range(n)' as the selector string to read this result.\n \n\n \nSupported devices: PXIe-5665/5668\n \nGet Function: RFmxSpecAn_SpurGetResultsRangeMeasurementStatus\n"
         },
-        'enum': 'SpurResultsRangeMeasurementStatus',
+        'enum': 'SpurRangeStatus',
         'name': 'SPUR_RESULTS_RANGE_MEASUREMENT_STATUS',
         'type': 'int32'
     },
     1089567: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the number of detected spurious emissions (Spur) in the specified frequency range.        \n\nUse 'range(n)' as the selector string to read this result.\n \n\n \nSupported devices: PXIe-5665/5668\n \nGet Function: RFmxSpecAn_SpurGetResultsRangeNumberOfDetectedSpurs\n"
         },
@@ -3207,7 +3207,7 @@ attributes = {
         'type': 'int32'
     },
     1093649: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the mean power of the signal. This value is expressed in dBm. Only the samples above the threshold are used by the measurement when you set the RFMXSPECAN_ATTR_TXP_THRESHOLD_ENABLED attribute to RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_TRUE. When you set the RFMXSPECAN_ATTR_TXP_AVERAGING_ENABLED attribute to RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_TRUE, the mean power is measured using the power trace averaged over multiple acquisitions.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_TXPGetResultsAverageMeanPower\n'
         },
@@ -3215,7 +3215,7 @@ attributes = {
         'type': 'float64'
     },
     1093650: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the ratio of the peak power of the signal to the mean power. Only the samples above the threshold are used by the measurement when you set the RFMXSPECAN_ATTR_TXP_THRESHOLD_ENABLED attribute to RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_TRUE. When you set the RFMXSPECAN_ATTR_TXP_AVERAGING_ENABLED attribute to RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_TRUE, the peak and mean powers are measured using the power trace averaged over multiple acquisitions.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_TXPGetResultsPeaktoAverageRatio\n'
         },
@@ -3223,7 +3223,7 @@ attributes = {
         'type': 'float64'
     },
     1093651: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the maximum power of the averaged power trace. This value is expressed in dBm.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_TXPGetResultsMaximumPower\n'
         },
@@ -3231,7 +3231,7 @@ attributes = {
         'type': 'float64'
     },
     1093652: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the minimum power of the averaged power trace. This value is expressed in dBm.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_TXPGetResultsMinimumPower\n'
         },
@@ -3414,8 +3414,24 @@ attributes = {
         'name': 'AMPM_NUMBER_OF_ANALYSIS_THREADS',
         'type': 'int32'
     },
+    1105940: {
+        'access': 'read-write',
+        'documentation': {
+            'description': '\r\n  "Returns the coefficients of the polynomial that approximates the measured AM-to-AM characteristic of the device under test.\\n\\n"\r\r\n  "Pass the selector string as Empty to read this attribute for the default signal and result instance. Refer to the Selector String topic for information about the string syntax for named signals.\\n\\n"\r\r\n  "Get Function:RFmxSpecAn_AMPMGetResultsAMToAMCurveFitCoefficients"\r'
+        },
+        'name': 'AMPM_RESULTS_AM_TO_AM_CURVE_FIT_COEFFICIENTS',
+        'type': 'float32[]'
+    },
+    1105941: {
+        'access': 'read-write',
+        'documentation': {
+            'description': '\r\n  "Returns the coefficients of the polynomial that approximates the measured AM-to-PM characteristic of the device under test.\\n\\n"\r\r\n  "Pass the selector string as Empty to read this attribute for the default signal and result instance. Refer to the Selector String topic for information about the string syntax for named signals.\\n\\n"\r\r\n  "Get Function:RFmxSpecAn_AMPMGetResultsAMToPMCurveFitCoefficients"\r\r\n  ""\r'
+        },
+        'name': 'AMPM_RESULTS_AM_TO_PM_CURVE_FIT_COEFFICIENTS',
+        'type': 'float32[]'
+    },
     1105942: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the average linear gain of the device under test, computed by rejecting signal samples containing gain compression. This value is expressed in dB.\n \n\n \nGet Function: RFmxSpecAn_AMPMGetResultsMeanLinearGain\n'
         },
@@ -3423,7 +3439,7 @@ attributes = {
         'type': 'float64'
     },
     1105943: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the mean phase error of the acquired signal relative to the reference waveform caused by the device under test. This value is expressed in degrees.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_AMPMGetResultsMeanPhaseError\n'
         },
@@ -3431,7 +3447,7 @@ attributes = {
         'type': 'float64'
     },
     1105944: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the ratio, as a percentage, of l2 norm of difference between the normalized reference and acquired waveforms, to the l2 norm of the normalized reference waveform.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_AMPMGetResultsMeanRMSEVM\n'
         },
@@ -3439,7 +3455,7 @@ attributes = {
         'type': 'float64'
     },
     1105945: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the approximation error of the polynomial approximation of the measured device under test AM-to-AM characteristic. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_AMPMGetResultsAMToAMCurveFitResidual\n'
         },
@@ -3447,7 +3463,7 @@ attributes = {
         'type': 'float64'
     },
     1105946: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the approximation error of the polynomial approximation of the measured AM-to-PM characteristic of the device under test. This value is expressed in degrees.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_AMPMGetResultsAMToPMCurveFitResidual\n'
         },
@@ -3455,7 +3471,7 @@ attributes = {
         'type': 'float64'
     },
     1105947: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the peak-to-peak deviation of the device under test gain. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_AMPMGetResultsGainErrorRange\n'
         },
@@ -3463,7 +3479,7 @@ attributes = {
         'type': 'float64'
     },
     1105948: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the peak-to-peak deviation of the phase distortion of the acquired signal relative to the reference waveform caused by the device under test. This value is expressed in degrees.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_AMPMGetResultsPhaseErrorRange\n'
         },
@@ -3471,7 +3487,7 @@ attributes = {
         'type': 'float64'
     },
     1105949: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the theoretical output power at which the device under test gain drops by 1 dB from its mean linear gain. This value is expressed in dBm. This attribute returns NaN when the AM-to-AM characteristics of the device under test are flat.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_AMPMGetResults1dBCompressionPoint\n'
         },
@@ -3522,7 +3538,7 @@ attributes = {
         'type': 'float64[]'
     },
     1105958: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the theoretical input power at which the device gain drops by the compression level, specified through RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_LEVEL attribute, from its mean linear gain. This value is expressed in dBm.\n \nYou do not need to use a selector string to configure or read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_AMPMGetResultsInputCompressionPoint\n'
         },
@@ -3530,12 +3546,20 @@ attributes = {
         'type': 'float64[]'
     },
     1105959: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the theoretical output power at which the device gain drops by the compression level, specified through RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_LEVEL attribute, from its mean linear gain. This value is expressed in dBm.\n \nYou do not need to use a selector string to configure or read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_AMPMGetResultsOutputCompressionPoint\n'
         },
         'name': 'AMPM_RESULTS_OUTPUT_COMPRESSION_POINT',
         'type': 'float64[]'
+    },
+    1105960: {
+        'access': 'read-write',
+        'documentation': {
+            'description': '\r\n  "Specifies the input power array, in dBm, for the predistortion lookup table when you set the RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_DPD_MODEL attribute to RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_LOOKUP_TABLE.\\n\\n"\r\r\n  "Pass the selector string as Empty to configure or read this attribute for the default signal instance. Refer to the Selector String topic for information about the string syntax for named signals. \\n\\n"\r\r\n  "Get Function: RFmxSpecAn_DPDGetApplyDPDUserLookupTableInputPower\\n"\r\r\n  "Set Function: RFmxSpecAn_DPDSetApplyDPDUserLookupTableInputPower\\n"\r'
+        },
+        'name': 'DPD_APPLY_DPD_USER_LOOKUP_TABLE_INPUT_POWER',
+        'type': 'float32[]'
     },
     1105961: {
         'access': 'read-write',
@@ -3990,7 +4014,7 @@ attributes = {
         'type': 'int32'
     },
     1110067: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the average gain of the device under test. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_DPDGetResultsAverageGain\n'
         },
@@ -4245,7 +4269,7 @@ attributes = {
         'type': 'float64'
     },
     1110111: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the normalized mean-squared DPD modeling error when you set the RFMXSPECAN_ATTR_DPD_NMSE_ENABLED attribute to RFMXSPECAN_VAL_DPD_NMSE_ENABLED_TRUE. This value is expressed in dB. NaN is returned when the RFMXSPECAN_ATTR_DPD_NMSE_ENABLED attribute is set to RFMXSPECAN_VAL_DPD_NMSE_ENABLED_FALSE.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_DPDGetResultsNMSE\n'
         },
@@ -4597,7 +4621,7 @@ attributes = {
         'type': 'int32'
     },
     1114143: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the peak power measured around the lower tone frequency when you set the RFMXSPECAN_ATTR_IM_LOCAL_PEAK_SEARCH_ENABLED attribute to RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_TRUE. This value is expressed in dBm. When you set the RFMXSPECAN_ATTR_IM_LOCAL_PEAK_SEARCH_ENABLED attribute to RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_FALSE, the measurement returns the power at the lower tone frequency.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_IMGetResultsFundamentalLowerTonePower\n'
         },
@@ -4605,7 +4629,7 @@ attributes = {
         'type': 'float64'
     },
     1114145: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the peak power measured around the upper tone frequency when you set the RFMXSPECAN_ATTR_IM_LOCAL_PEAK_SEARCH_ENABLED attribute to RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_TRUE. This value is expressed in dBm. When you set the RFMXSPECAN_ATTR_IM_LOCAL_PEAK_SEARCH_ENABLED attribute to RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_FALSE, the measurement returns the power at the upper tone frequency.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_IMGetResultsFundamentalUpperTonePower\n'
         },
@@ -4613,7 +4637,7 @@ attributes = {
         'type': 'float64'
     },
     1114146: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the order of the intermod.\n \nUse 'intermod(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_IMGetResultsIntermodOrder\n"
         },
@@ -4621,7 +4645,7 @@ attributes = {
         'type': 'int32'
     },
     1114148: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the peak power measured around the lower intermod frequency when you set the RFMXSPECAN_ATTR_IM_LOCAL_PEAK_SEARCH_ENABLED attribute to RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_TRUE. This value is expressed in dBm. When you set the RFMXSPECAN_ATTR_IM_LOCAL_PEAK_SEARCH_ENABLED attribute to RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_FALSE, the measurement returns the power at the lower intermod frequency.\n \nUse 'intermod(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_IMGetResultsLowerIntermodPower\n"
         },
@@ -4629,7 +4653,7 @@ attributes = {
         'type': 'float64'
     },
     1114150: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the peak power measured around the upper intermod frequency when you set the RFMXSPECAN_ATTR_IM_LOCAL_PEAK_SEARCH_ENABLED attribute to RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_TRUE. This value is expressed in dBm. When you set the RFMXSPECAN_ATTR_IM_LOCAL_PEAK_SEARCH_ENABLED attribute to RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_FALSE, the measurement returns the power at the upper intermod frequency.\n \nUse 'intermod(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_IMGetResultsUpperIntermodPower\n"
         },
@@ -4637,7 +4661,7 @@ attributes = {
         'type': 'float64'
     },
     1114151: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the lower output intercept power. This value is expressed in dBm. Refer to the IM topic for more information about this result.\n \nUse 'intermod(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_IMGetResultsLowerOutputInterceptPower\n"
         },
@@ -4645,7 +4669,7 @@ attributes = {
         'type': 'float64'
     },
     1114152: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the upper output intercept power. This value is expressed in dBm. Refer to the IM topic for more information about this result.\n \nUse 'intermod(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_IMGetResultsUpperOutputInterceptPower\n"
         },
@@ -4653,7 +4677,7 @@ attributes = {
         'type': 'float64'
     },
     1114153: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': " Returns the worst case output intercept power which is equal to the minimum of the values of the IM Results Upper Output Intercept Power and IM Results Lower Output Intercept Power results. This value is expressed in dBm.\n \nUse 'intermod(n)' as the selector string to read this result.\n \nGet Function: RFmxSpecAn_IMGetResultsWorstCaseOutputInterceptPower\n"
         },
@@ -4926,7 +4950,7 @@ attributes = {
         'type': 'int32'
     },
     1179682: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns an array of the noise figures of the DUT measured at the frequencies specified by the RFMXSPECAN_ATTR_NF_FREQUENCY_LIST attribute. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_NFGetResultsDUTNoiseFigure\n'
         },
@@ -4934,7 +4958,7 @@ attributes = {
         'type': 'float64[]'
     },
     1179683: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns an array of the equivalent thermal noise temperatures of the DUT measured at the frequencies specified by the RFMXSPECAN_ATTR_NF_FREQUENCY_LIST attribute. This value is expressed in kelvin.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_NFGetResultsDUTNoiseTemperature\n'
         },
@@ -4942,7 +4966,7 @@ attributes = {
         'type': 'float64[]'
     },
     1179684: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns an array of the available gains of the DUT measured at the frequencies specified by the RFMXSPECAN_ATTR_NF_FREQUENCY_LIST attribute. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_NFGetResultsDUTGain\n'
         },
@@ -4950,7 +4974,7 @@ attributes = {
         'type': 'float64[]'
     },
     1179685: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns an array of the noise figures of the analyzer measured at the frequencies specified by the RFMXSPECAN_ATTR_NF_FREQUENCY_LIST attribute. This value is expressed in dB.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_NFGetResultsAnalyzerNoiseFigure\n'
         },
@@ -4958,7 +4982,7 @@ attributes = {
         'type': 'float64[]'
     },
     1179686: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns an array of the measurement Y-Factors measured at the frequencies specified by the RFMXSPECAN_ATTR_NF_FREQUENCY_LIST attribute. This value is expressed in dB. A valid result is returned only when you set the RFMXSPECAN_ATTR_NF_MEASUREMENT_METHOD attribute to RFMXSPECAN_VAL_NF_MEASUREMENT_METHOD_Y_FACTOR.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_NFGetResultsMeasurementYFactor\n'
         },
@@ -4966,7 +4990,7 @@ attributes = {
         'type': 'float64[]'
     },
     1179687: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns an array of the calibration Y-Factors measured at the frequencies specified by the RFMXSPECAN_ATTR_NF_FREQUENCY_LIST attribute. This value is expressed in dB. A valid result is returned only when you set the RFMXSPECAN_ATTR_NF_MEASUREMENT_METHOD attribute to RFMXSPECAN_VAL_NF_MEASUREMENT_METHOD_Y_FACTOR.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_NFGetResultsCalibrationYFactor\n'
         },
@@ -4974,7 +4998,7 @@ attributes = {
         'type': 'float64[]'
     },
     1179688: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the array of powers measured at the frequencies specified by the RFMXSPECAN_ATTR_NF_FREQUENCY_LIST attribute, when the noise source is enabled. This value is expressed in dBm. A valid result is returned only when you set the RFMXSPECAN_ATTR_NF_MEASUREMENT_METHOD attribute to RFMXSPECAN_VAL_NF_MEASUREMENT_METHOD_Y_FACTOR.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_NFGetResultsYFactorHotPower\n'
         },
@@ -4982,7 +5006,7 @@ attributes = {
         'type': 'float64[]'
     },
     1179689: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the array of powers measured at the frequencies specified by the RFMXSPECAN_ATTR_NF_FREQUENCY_LIST attribute, when the noise source is disabled. This value is expressed in dBm. A valid result is returned only when you set the RFMXSPECAN_ATTR_NF_MEASUREMENT_METHOD attribute to RFMXSPECAN_VAL_NF_MEASUREMENT_METHOD_Y_FACTOR.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_NFGetResultsYFactorColdPower\n'
         },
@@ -4990,7 +5014,7 @@ attributes = {
         'type': 'float64[]'
     },
     1179690: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the power measured at the frequencies specified by the RFMXSPECAN_ATTR_NF_FREQUENCY_LIST attribute. This value is expressed in dBm. A valid result is returned only when you set the RFMXSPECAN_ATTR_NF_MEASUREMENT_METHOD attribute to Cold-source.\n \nYou do not need to use a selector string to read this result for default signal and result instance. Refer to the Selector Strings topic for information about the string syntax for named signals and results.\n \nGet Function: RFmxSpecAn_NFGetResultsColdSourcePower\n'
         },
@@ -5102,6 +5126,11 @@ attributes = {
         },
         'name': 'NF_EXTERNAL_PREAMP_GAIN',
         'type': 'float64[]'
+    },
+    1179705: {
+        'access': 'read-write',
+        'name': 'NF_DEVICE_TEMPERATURE_TOLERANCE',
+        'type': 'float64'
     },
     1179706: {
         'access': 'read-write',
@@ -5303,7 +5332,7 @@ attributes = {
         'type': 'int32'
     },
     1245205: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the measured carrier power.\n \nYou do not need to use a selector string to read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_PhaseNoiseGetResultsCarrierPower\n'
         },
@@ -5311,7 +5340,7 @@ attributes = {
         'type': 'float64'
     },
     1245206: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the measured carrier frequency.\n \nYou do not need to use a selector string to read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_PhaseNoiseGetResultsCarrierFrequency\n'
         },
@@ -5319,7 +5348,7 @@ attributes = {
         'type': 'float64'
     },
     1245207: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the phase noise corresponding to the PhaseNoise Spot Noise Frequency List attribute  by using the smoothed log plot trace.\n \nYou do not need to use a selector string to read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_PhaseNoiseGetResultsSpotPhaseNoise\n'
         },
@@ -5327,7 +5356,7 @@ attributes = {
         'type': 'float64[]'
     },
     1245208: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the integrated phase noise.\n \nYou do not need to use a selector string to read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_PhaseNoiseGetResultsIntegratedPhaseNoise\n'
         },
@@ -5335,7 +5364,7 @@ attributes = {
         'type': 'float64[]'
     },
     1245209: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the residual PM in radians.\n \nYou do not need to use a selector string to read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_PhaseNoiseGetResultsResidualPMInRadian\n'
         },
@@ -5343,7 +5372,7 @@ attributes = {
         'type': 'float64[]'
     },
     1245210: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the residual PM in degrees.\n \nYou do not need to use a selector string to read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_PhaseNoiseGetResultsResidualPMInDegree\n'
         },
@@ -5351,7 +5380,7 @@ attributes = {
         'type': 'float64[]'
     },
     1245211: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the residual FM in Hz.\n \nYou do not need to use a selector string to read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_PhaseNoiseGetResultsResidualFM\n'
         },
@@ -5359,7 +5388,7 @@ attributes = {
         'type': 'float64[]'
     },
     1245212: {
-        'access': 'read only',
+        'access': 'read-write',
         'documentation': {
             'description': ' Returns the jitter in seconds.\n \nYou do not need to use a selector string to read this attribute for the default signal instance. Refer to the Selector Strings topic for information about the string syntax for named signals.\n \nGet Function: RFmxSpecAn_PhaseNoiseGetResultsJitter\n'
         },
@@ -5399,5 +5428,15 @@ attributes = {
         },
         'name': 'PHASENOISE_CANCELLATION_THRESHOLD',
         'type': 'float64'
+    },
+    1245217: {
+        'access': 'read-write',
+        'name': 'PHASENOISE_CANCELLATION_FREQUENCY',
+        'type': 'float32[]'
+    },
+    1245218: {
+        'access': 'read-write',
+        'name': 'PHASENOISE_CANCELLATION_REFERENCE_PHASE_NOISE',
+        'type': 'float32[]'
     }
 }

@@ -16,7 +16,7 @@ config = {
         "float64": "double",
         "int16": "int32",
         "int32": "int32",
-        "int64_t": "int64",
+        "int64": "int64",
         "niRFmxInstrHandle": "nidevice_grpc.Session",
         "int8": "int32",
         "uInt16": "uint32",

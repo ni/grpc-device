@@ -85,6 +85,22 @@ inline NIComplexNumberF32_struct convert_from_grpc(const nidevice_grpc::NIComple
 }
 
 template <>
+inline void convert_to_grpc(const NIComplexSingle_struct& input, nidevice_grpc::NIComplexNumberF32* output)
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+template <>
+inline NIComplexSingle_struct convert_from_grpc(const nidevice_grpc::NIComplexNumberF32& input)
+{
+  auto output = NIComplexSingle_struct();
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
+}
+
+template <>
 inline void convert_to_grpc(const NIComplexNumber_struct& input, nidevice_grpc::NIComplexNumber* output)
 {
   output->set_real(input.real);
@@ -95,6 +111,22 @@ template <>
 inline NIComplexNumber_struct convert_from_grpc(const nidevice_grpc::NIComplexNumber& input)
 {
   auto output = NIComplexNumber_struct();
+  output.real = input.real();
+  output.imaginary = input.imaginary();
+  return output;
+}
+
+template <>
+inline void convert_to_grpc(const NIComplexDouble_struct& input, nidevice_grpc::NIComplexNumber* output)
+{
+  output->set_real(input.real);
+  output->set_imaginary(input.imaginary);
+}
+
+template <>
+inline NIComplexDouble_struct convert_from_grpc(const nidevice_grpc::NIComplexNumber& input)
+{
+  auto output = NIComplexDouble_struct();
   output.real = input.real();
   output.imaginary = input.imaginary();
   return output;
