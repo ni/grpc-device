@@ -1196,7 +1196,7 @@ int32 NiRFmxSpecAnLibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle,
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iQ[], int32 arraySize, int32 reset, int64_t reserved)
+int32 NiRFmxSpecAnLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iQ[], int32 arraySize, int32 reset, int64 reserved)
 {
   if (!function_pointers_.AnalyzeIQ1Waveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AnalyzeIQ1Waveform.");
@@ -1208,7 +1208,7 @@ int32 NiRFmxSpecAnLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 I[], float32 Q[], int32 arraySize, int32 reset, int64_t reserved)
+int32 NiRFmxSpecAnLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 I[], float32 Q[], int32 arraySize, int32 reset, int64 reserved)
 {
   if (!function_pointers_.AnalyzeIQ1WaveformSplit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AnalyzeIQ1WaveformSplit.");
@@ -1220,7 +1220,7 @@ int32 NiRFmxSpecAnLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentH
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64_t reserved)
+int32 NiRFmxSpecAnLibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
 {
   if (!function_pointers_.AnalyzeSpectrum1Waveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AnalyzeSpectrum1Waveform.");
@@ -2636,7 +2636,7 @@ int32 NiRFmxSpecAnLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHand
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64_t* attrVal)
+int32 NiRFmxSpecAnLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
 {
   if (!function_pointers_.GetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeI64.");
@@ -2648,7 +2648,7 @@ int32 NiRFmxSpecAnLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, c
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64_t attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxSpecAnLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetAttributeI64Array.");
@@ -3188,7 +3188,7 @@ int32 NiRFmxSpecAnLibrary::IQCfgBandwidth(niRFmxInstrHandle instrumentHandle, ch
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64_t samplesToRead, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxSpecAnLibrary::IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.IQFetchData) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQFetchData.");
@@ -3200,7 +3200,7 @@ int32 NiRFmxSpecAnLibrary::IQFetchData(niRFmxInstrHandle instrumentHandle, char 
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64_t samplesToRead, float64* t0, float64* dt, float32 I[], float32 Q[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxSpecAnLibrary::IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, float64* t0, float64* dt, float32 I[], float32 Q[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.IQFetchDataSplit) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQFetchDataSplit.");
@@ -4808,7 +4808,7 @@ int32 NiRFmxSpecAnLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHand
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64_t attrVal)
+int32 NiRFmxSpecAnLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
 {
   if (!function_pointers_.SetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeI64.");
@@ -4820,7 +4820,7 @@ int32 NiRFmxSpecAnLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, c
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64_t attrVal[], int32 arraySize)
+int32 NiRFmxSpecAnLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_SetAttributeI64Array.");

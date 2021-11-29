@@ -2159,7 +2159,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'reserved',
-                'type': 'int64_t'
+                'type': 'int64'
             }
         ],
         'returns': 'int32'
@@ -2222,7 +2222,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'reserved',
-                'type': 'int64_t'
+                'type': 'int64'
             }
         ],
         'returns': 'int32'
@@ -2276,7 +2276,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'reserved',
-                'type': 'int64_t'
+                'type': 'int64'
             }
         ],
         'returns': 'int32'
@@ -6133,7 +6133,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'attrVal',
-                'type': 'int64_t'
+                'type': 'int64'
             }
         ],
         'returns': 'int32'
@@ -6162,7 +6162,7 @@ functions = {
                     'mechanism': 'ivi-dance',
                     'value': 'arraySize'
                 },
-                'type': 'int64_t[]'
+                'type': 'int64[]'
             },
             {
                 'direction': 'in',
@@ -7761,7 +7761,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'samplesToRead',
-                'type': 'int64_t'
+                'type': 'int64'
             },
             {
                 'direction': 'out',
@@ -7821,7 +7821,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'samplesToRead',
-                'type': 'int64_t'
+                'type': 'int64'
             },
             {
                 'direction': 'out',
@@ -12323,7 +12323,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'attrVal',
-                'type': 'int64_t'
+                'type': 'int64'
             }
         ],
         'returns': 'int32'
@@ -12352,7 +12352,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'int64_t[]'
+                'type': 'int64[]'
             },
             {
                 'direction': 'in',

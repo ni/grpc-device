@@ -2268,7 +2268,7 @@ namespace nirfmxspecan_grpc {
       auto i_q = convert_from_grpc<NIComplexSingle>(request->i_q());
       int32 array_size = static_cast<int32>(request->i_q().size());
       int32 reset = request->reset();
-      int64_t reserved = request->reserved();
+      int64 reserved = request->reserved();
       auto status = library_->AnalyzeIQ1Waveform(instrument_handle, selector_string, result_name, x0, dx, i_q.data(), array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2299,7 +2299,7 @@ namespace nirfmxspecan_grpc {
       }
       int32 array_size = static_cast<int32>(request->q().size());
       int32 reset = request->reset();
-      int64_t reserved = request->reserved();
+      int64 reserved = request->reserved();
       auto status = library_->AnalyzeIQ1WaveformSplit(instrument_handle, selector_string, result_name, x0, dx, i, q, array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2326,7 +2326,7 @@ namespace nirfmxspecan_grpc {
       auto spectrum = const_cast<float32*>(request->spectrum().data());
       int32 array_size = static_cast<int32>(request->spectrum().size());
       int32 reset = request->reset();
-      int64_t reserved = request->reserved();
+      int64 reserved = request->reserved();
       auto status = library_->AnalyzeSpectrum1Waveform(instrument_handle, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6447,7 +6447,7 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      int64_t attr_val {};
+      int64 attr_val {};
       auto status = library_->GetAttributeI64(instrument_handle, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
@@ -6482,7 +6482,7 @@ namespace nirfmxspecan_grpc {
         int32 array_size = status;
       
         response->mutable_attr_val()->Resize(array_size, 0);
-        int64_t* attr_val = response->mutable_attr_val()->mutable_data();
+        int64* attr_val = response->mutable_attr_val()->mutable_data();
         int32 actual_array_size {};
         status = library_->GetAttributeI64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
@@ -8155,7 +8155,7 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 record_to_fetch = request->record_to_fetch();
-      int64_t samples_to_read = request->samples_to_read();
+      int64 samples_to_read = request->samples_to_read();
       float64 t0 {};
       float64 dt {};
       int32 actual_array_size {};
@@ -8207,7 +8207,7 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 record_to_fetch = request->record_to_fetch();
-      int64_t samples_to_read = request->samples_to_read();
+      int64 samples_to_read = request->samples_to_read();
       float64 t0 {};
       float64 dt {};
       int32 actual_array_size {};
@@ -12676,7 +12676,7 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      int64_t attr_val = request->attr_val();
+      int64 attr_val = request->attr_val();
       auto status = library_->SetAttributeI64(instrument_handle, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -12698,7 +12698,7 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      auto attr_val = const_cast<int64_t*>(request->attr_val().data());
+      auto attr_val = const_cast<int64*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
