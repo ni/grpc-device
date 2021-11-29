@@ -485,7 +485,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 % elif grpc_type == 'nidevice_grpc.Session':
       auto ${parameter_name}_grpc_session = ${request_snippet};
       ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
-% elif c_type in ['ViAddr[]', 'ViInt32[]', 'ViUInt32[]', 'int32[]', 'uInt32[]', "ViAttr[]", "uInt64[]"]:
+% elif c_type in ['ViAddr[]', 'ViInt32[]', 'ViUInt32[]', 'int32[]', 'uInt32[]', "ViAttr[]", "uInt64[]", "int64[]"]:
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 %elif c_type in ['const int32[]', 'const uInt32[]']:
       auto ${parameter_name} = reinterpret_cast<${c_type_pointer}>(${request_snippet}.data());\
@@ -573,7 +573,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}_raw()->mutable_data());
 ## uInt32 requires cast because of int vs long in that typedef vs uint32_t
 ## uInt64 reuqires cast because of "long long" versus protobuf's "long" on Linux
-%     elif underlying_param_type in ['ViAddr', 'ViInt32', 'ViUInt32', 'ViUInt16', 'uInt32', 'int32', 'uInt64']:
+%     elif underlying_param_type in ['ViAddr', 'ViInt32', 'ViUInt32', 'ViUInt16', 'uInt32', 'int32', 'uInt64', 'int64']:
       response->mutable_${parameter_name}()->Resize(${size}, 0);
       ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}()->mutable_data());
 %     else:

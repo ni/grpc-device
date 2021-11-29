@@ -6482,7 +6482,7 @@ namespace nirfmxspecan_grpc {
         int32 array_size = status;
       
         response->mutable_attr_val()->Resize(array_size, 0);
-        int64* attr_val = response->mutable_attr_val()->mutable_data();
+        int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
         int32 actual_array_size {};
         status = library_->GetAttributeI64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
@@ -12698,7 +12698,7 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      auto attr_val = const_cast<int64*>(request->attr_val().data());
+      auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
