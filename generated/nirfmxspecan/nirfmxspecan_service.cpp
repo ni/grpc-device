@@ -12924,7 +12924,7 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      auto attr_val = const_cast<uInt64*>(request->attr_val().data());
+      auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
