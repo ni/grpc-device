@@ -11,13 +11,15 @@ For more detailed information on the server and API design refer to the [wiki](h
 |NI Driver|Minimum Version Tested (Windows)|Minimum Version Tested (Linux) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Minimum Version Tested (Linux RT)|
 | :------------------------ | :------| :------------ | :------------ |
 | NI-DAQmx                  | 21.0.0 | 21.0.0        | 21.0.0        |
-| NI-DCPOWER                | 20.6.0 | 20.1.0        | 20.7.0        |
-| NI-DIGITAL PATTERN DRIVER | 20.6.0 | Not Supported | Not Supported |
+| NI-DCPower                | 20.6.0 | 20.1.0        | 20.7.0        |
+| NI-Digital Pattern Driver | 20.6.0 | Not Supported | Not Supported |
 | NI-DMM                    | 20.0.0 | 20.1.0        | 20.5.0        |
 | NI-FGEN                   | 20.0.0 | Not Supported | Not Supported |
+| NI-RFSA                   | 21.0.0 | 21.0.0        | Not Supported |
+| NI-RFSG                   | 21.0.0 | 21.0.0        | Not Supported |
 | NI-SCOPE                  | 20.7.0 | 20.1.0        | 20.7.0        |
 | NI-SWITCH                 | 20.0.0 | 20.1.0        | 20.5.0        |
-| NI-TCLK                   | 20.7.0 | 20.0.0        | 20.7.0        |
+| NI-TClk                   | 20.7.0 | 20.0.0        | 20.7.0        |
 
 ## Build Status
 ![Linux Build](https://github.com/ni/grpc-device/workflows/Build%20Matrix/badge.svg)
