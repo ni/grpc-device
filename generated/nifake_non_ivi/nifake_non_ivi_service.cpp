@@ -11,7 +11,6 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include "custom/nidaqmx_conversions.h"
 #include <server/converters.h>
 #include <server/callback_router.h>
 #include <server/server_reactor.h>

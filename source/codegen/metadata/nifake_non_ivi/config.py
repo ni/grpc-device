@@ -53,7 +53,6 @@ config = {
             ],
         }
     ],
-    'additional_headers': { 'custom/nidaqmx_conversions.h': ['service.cpp'] },
     'type_to_grpc_type': {
         'FakeHandle': 'nidevice_grpc.Session',
         'char[]': 'string',
