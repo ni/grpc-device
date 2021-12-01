@@ -1598,22 +1598,6 @@ timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since1970, c
   return response;
 }
 
-UnregisterExternalRFSubsystemCallbacksResponse
-unregister_external_rf_subsystem_callbacks(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnregisterExternalRFSubsystemCallbacksRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
-
-  auto response = UnregisterExternalRFSubsystemCallbacksResponse{};
-
-  raise_if_error(
-      stub->UnregisterExternalRFSubsystemCallbacks(&context, request, &response));
-
-  return response;
-}
-
 ValuesFromTimestampResponse
 values_from_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& timestamp)
 {

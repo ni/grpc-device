@@ -110,7 +110,6 @@ SetAttributeU64ArrayResponse set_attribute_u64_array(const StubPtr& stub, const 
 SetAttributeU8Response set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const pb::int32& attribute_id, const pb::uint32& attr_val);
 SetAttributeU8ArrayResponse set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const pb::int32& attribute_id, const pb::string& attr_val);
 TimestampFromValuesResponse timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since1970, const double& fractional_seconds);
-UnregisterExternalRFSubsystemCallbacksResponse unregister_external_rf_subsystem_callbacks(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle);
 ValuesFromTimestampResponse values_from_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& timestamp);
 WaitForAcquisitionCompleteResponse wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const double& timeout);
 

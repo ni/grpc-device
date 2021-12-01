@@ -109,7 +109,6 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeU8"));
   function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_SetAttributeU8Array"));
   function_pointers_.TimestampFromValues = reinterpret_cast<TimestampFromValuesPtr>(shared_library_.get_function_pointer("RFmxInstr_TimestampFromValues"));
-  function_pointers_.UnregisterExternalRFSubsystemCallbacks = reinterpret_cast<UnregisterExternalRFSubsystemCallbacksPtr>(shared_library_.get_function_pointer("RFmxInstr_UnregisterExternalRFSubsystemCallbacks"));
   function_pointers_.ValuesFromTimestamp = reinterpret_cast<ValuesFromTimestampPtr>(shared_library_.get_function_pointer("RFmxInstr_ValuesFromTimestamp"));
   function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_.get_function_pointer("RFmxInstr_WaitForAcquisitionComplete"));
 }
@@ -1178,18 +1177,6 @@ int32 NiRFmxInstrLibrary::TimestampFromValues(int64 secondsSince1970, float64 fr
   return RFmxInstr_TimestampFromValues(secondsSince1970, fractionalSeconds, timestamp);
 #else
   return function_pointers_.TimestampFromValues(secondsSince1970, fractionalSeconds, timestamp);
-#endif
-}
-
-int32 NiRFmxInstrLibrary::UnregisterExternalRFSubsystemCallbacks(niRFmxInstrHandle instrumentHandle)
-{
-  if (!function_pointers_.UnregisterExternalRFSubsystemCallbacks) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_UnregisterExternalRFSubsystemCallbacks.");
-  }
-#if defined(_MSC_VER)
-  return RFmxInstr_UnregisterExternalRFSubsystemCallbacks(instrumentHandle);
-#else
-  return function_pointers_.UnregisterExternalRFSubsystemCallbacks(instrumentHandle);
 #endif
 }
 

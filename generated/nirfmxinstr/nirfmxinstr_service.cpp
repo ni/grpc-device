@@ -2456,25 +2456,6 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxInstrService::UnregisterExternalRFSubsystemCallbacks(::grpc::ServerContext* context, const UnregisterExternalRFSubsystemCallbacksRequest* request, UnregisterExternalRFSubsystemCallbacksResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
-      auto status = library_->UnregisterExternalRFSubsystemCallbacks(instrument_handle);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::ValuesFromTimestamp(::grpc::ServerContext* context, const ValuesFromTimestampRequest* request, ValuesFromTimestampResponse* response)
   {
     if (context->IsCancelled()) {

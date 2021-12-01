@@ -106,7 +106,6 @@ service NiRFmxInstr {
   rpc SetAttributeU8(SetAttributeU8Request) returns (SetAttributeU8Response);
   rpc SetAttributeU8Array(SetAttributeU8ArrayRequest) returns (SetAttributeU8ArrayResponse);
   rpc TimestampFromValues(TimestampFromValuesRequest) returns (TimestampFromValuesResponse);
-  rpc UnregisterExternalRFSubsystemCallbacks(UnregisterExternalRFSubsystemCallbacksRequest) returns (UnregisterExternalRFSubsystemCallbacksResponse);
   rpc ValuesFromTimestamp(ValuesFromTimestampRequest) returns (ValuesFromTimestampResponse);
   rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
 }
@@ -1088,14 +1087,6 @@ message TimestampFromValuesRequest {
 message TimestampFromValuesResponse {
   int32 status = 1;
   google.protobuf.Timestamp timestamp = 2;
-}
-
-message UnregisterExternalRFSubsystemCallbacksRequest {
-  nidevice_grpc.Session instrument_handle = 1;
-}
-
-message UnregisterExternalRFSubsystemCallbacksResponse {
-  int32 status = 1;
 }
 
 message ValuesFromTimestampRequest {

@@ -106,7 +106,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 SetAttributeU8(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal);
   int32 SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal[], int32 arraySize);
   int32 TimestampFromValues(int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp);
-  int32 UnregisterExternalRFSubsystemCallbacks(niRFmxInstrHandle instrumentHandle);
   int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds);
   int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout);
 
@@ -199,7 +198,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using SetAttributeU8Ptr = decltype(&RFmxInstr_SetAttributeU8);
   using SetAttributeU8ArrayPtr = decltype(&RFmxInstr_SetAttributeU8Array);
   using TimestampFromValuesPtr = decltype(&RFmxInstr_TimestampFromValues);
-  using UnregisterExternalRFSubsystemCallbacksPtr = decltype(&RFmxInstr_UnregisterExternalRFSubsystemCallbacks);
   using ValuesFromTimestampPtr = decltype(&RFmxInstr_ValuesFromTimestamp);
   using WaitForAcquisitionCompletePtr = decltype(&RFmxInstr_WaitForAcquisitionComplete);
 
@@ -292,7 +290,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     SetAttributeU8Ptr SetAttributeU8;
     SetAttributeU8ArrayPtr SetAttributeU8Array;
     TimestampFromValuesPtr TimestampFromValues;
-    UnregisterExternalRFSubsystemCallbacksPtr UnregisterExternalRFSubsystemCallbacks;
     ValuesFromTimestampPtr ValuesFromTimestamp;
     WaitForAcquisitionCompletePtr WaitForAcquisitionComplete;
   } FunctionLoadStatus;

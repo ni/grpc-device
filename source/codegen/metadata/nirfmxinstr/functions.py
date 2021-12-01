@@ -2361,16 +2361,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'UnregisterExternalRFSubsystemCallbacks': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            }
-        ],
-        'returns': 'int32'
-    },
     'ValuesFromTimestamp': {
         'parameters': [
             {

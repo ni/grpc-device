@@ -103,7 +103,6 @@ class NiRFmxInstrLibraryInterface {
   virtual int32 SetAttributeU8(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal) = 0;
   virtual int32 SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal[], int32 arraySize) = 0;
   virtual int32 TimestampFromValues(int64 secondsSince1970, float64 fractionalSeconds, CVIAbsoluteTime* timestamp) = 0;
-  virtual int32 UnregisterExternalRFSubsystemCallbacks(niRFmxInstrHandle instrumentHandle) = 0;
   virtual int32 ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* secondsSince1970, float64* fractionalSeconds) = 0;
   virtual int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout) = 0;
 };
