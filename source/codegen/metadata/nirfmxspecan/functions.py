@@ -5910,6 +5910,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -5935,6 +5936,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -5974,6 +5976,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -5999,6 +6002,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6038,6 +6042,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6063,6 +6068,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6088,6 +6094,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6127,6 +6134,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6152,6 +6160,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6191,6 +6200,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6217,6 +6227,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6257,6 +6268,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6296,6 +6308,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6335,6 +6348,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6369,6 +6383,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6394,6 +6409,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6419,6 +6435,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6458,6 +6475,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6497,6 +6515,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -6522,6 +6541,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -10524,6 +10544,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             }
@@ -12115,6 +12136,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12140,6 +12162,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12174,6 +12197,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12199,6 +12223,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12233,6 +12258,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12258,6 +12284,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12283,6 +12310,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12317,6 +12345,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12342,6 +12371,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12376,6 +12406,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12402,6 +12433,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12437,6 +12469,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12471,6 +12504,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12505,6 +12539,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12530,6 +12565,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12555,6 +12591,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12580,6 +12617,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12614,6 +12652,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12648,6 +12687,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -12673,6 +12713,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'NiRFmxSpecAnAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
