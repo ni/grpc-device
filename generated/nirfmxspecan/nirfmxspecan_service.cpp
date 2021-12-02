@@ -6249,25 +6249,24 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeF32Array(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeF32Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        response->mutable_attr_val()->Resize(array_size, 0);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
         float32* attr_val = response->mutable_attr_val()->mutable_data();
-        int32 actual_array_size {};
+        auto array_size = actual_array_size;
         status = library_->GetAttributeF32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6315,25 +6314,24 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeF64Array(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeF64Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        response->mutable_attr_val()->Resize(array_size, 0);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
         float64* attr_val = response->mutable_attr_val()->mutable_data();
-        int32 actual_array_size {};
+        auto array_size = actual_array_size;
         status = library_->GetAttributeF64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6406,25 +6404,24 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeI32Array(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeI32Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        response->mutable_attr_val()->Resize(array_size, 0);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
         int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val()->mutable_data());
-        int32 actual_array_size {};
+        auto array_size = actual_array_size;
         status = library_->GetAttributeI32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6472,25 +6469,24 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeI64Array(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeI64Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        response->mutable_attr_val()->Resize(array_size, 0);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
         int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
-        int32 actual_array_size {};
+        auto array_size = actual_array_size;
         status = library_->GetAttributeI64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6538,33 +6534,32 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeI8Array(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeI8Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        std::vector<int8> attr_val(array_size);
-        int32 actual_array_size {};
+        std::vector<int8> attr_val(actual_array_size);
+        auto array_size = actual_array_size;
         status = library_->GetAttributeI8Array(instrument_handle, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
           response->mutable_attr_val()->Clear();
-          response->mutable_attr_val()->Reserve(array_size);
+          response->mutable_attr_val()->Reserve(actual_array_size);
           std::transform(
             attr_val.begin(),
-            attr_val.begin() + array_size,
+            attr_val.begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
             [&](auto x) { 
                 return x;
             });
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6587,25 +6582,30 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeNIComplexDoubleArray(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeNIComplexDoubleArray(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        std::vector<NIComplexDouble> attr_val(array_size, NIComplexDouble());
-        int32 actual_array_size {};
+        std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
+        auto array_size = actual_array_size;
         status = library_->GetAttributeNIComplexDoubleArray(instrument_handle, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
           convert_to_grpc(attr_val, response->mutable_attr_val());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_attr_val()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6628,25 +6628,30 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeNIComplexSingleArray(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeNIComplexSingleArray(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        std::vector<NIComplexSingle> attr_val(array_size, NIComplexSingle());
-        int32 actual_array_size {};
+        std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
         status = library_->GetAttributeNIComplexSingleArray(instrument_handle, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
           convert_to_grpc(attr_val, response->mutable_attr_val());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_attr_val()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6762,25 +6767,24 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeU32Array(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeU32Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        response->mutable_attr_val()->Resize(array_size, 0);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
-        int32 actual_array_size {};
+        auto array_size = actual_array_size;
         status = library_->GetAttributeU32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6803,25 +6807,24 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeU64Array(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeU64Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        response->mutable_attr_val()->Resize(array_size, 0);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
-        int32 actual_array_size {};
+        auto array_size = actual_array_size;
         status = library_->GetAttributeU64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6869,25 +6872,24 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-
+      int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeU8Array(instrument_handle, selector_string, attribute_id, nullptr, 0, nullptr);
+        auto status = library_->GetAttributeU8Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        int32 array_size = status;
-      
-        std::string attr_val(array_size, '\0');
-        int32 actual_array_size {};
+        std::string attr_val(actual_array_size, '\0');
+        auto array_size = actual_array_size;
         status = library_->GetAttributeU8Array(instrument_handle, selector_string, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status == 0) {
           response->set_attr_val(attr_val);
+          response->mutable_attr_val()->resize(actual_array_size);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;

@@ -5942,8 +5942,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'float32[]'
             },
@@ -6006,8 +6007,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'float64[]'
             },
@@ -6095,8 +6097,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'int32[]'
             },
@@ -6159,8 +6162,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'int64[]'
             },
@@ -6225,8 +6229,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'int8[]'
             },
@@ -6264,8 +6269,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexDouble[]'
             },
@@ -6303,8 +6309,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
             },
@@ -6426,8 +6433,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'uInt32[]'
             },
@@ -6465,8 +6473,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'uInt64[]'
             },
@@ -6529,8 +6538,9 @@ functions = {
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'uInt8[]'
             },
