@@ -28,7 +28,6 @@ config = {
         "NIComplexDouble": "nidevice_grpc.NIComplexNumber",
         "CVIAbsoluteTime": "google.protobuf.Timestamp",
     },
-    'split_attributes_by_type': True,
     'code_readiness': 'NextRelease',
     'feature_toggles': {},
     'driver_name': 'NI-RFMXINSTR',

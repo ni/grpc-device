@@ -248,7 +248,7 @@ def expand_attribute_function_value_param(function, enums, attribute_enums_by_ty
             value_param['name'] = value_param['name'] + "_raw"
 
 def get_attribute_function_value_param(function):
-    return next((param for param in function["parameters"] if param["name"] in {"value", "attributeValue"}), None)
+    return next((param for param in function["parameters"] if param["name"] in {"value", "attributeValue", "attrVal"}), None)
 
 def get_attribute_values_enum_name(group_name, type, is_mapped=False):
     enum_name_suffix = "Mapped" if is_mapped else "" 

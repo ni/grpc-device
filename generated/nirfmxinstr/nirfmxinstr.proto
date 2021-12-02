@@ -110,13 +110,21 @@ service NiRFmxInstr {
   rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
 }
 
-enum NiRFmxInstrStringAttribute {
-  NIRFMXINSTR_STRING_ATTRIBUTE_UNSPECIFIED = 0;
+enum NiRFmxInstrAttribute {
+  NIRFMXINSTR_ATTRIBUTE_UNSPECIFIED = 0;
   NIRFMXINSTR_ATTRIBUTE_TRIGGER_EXPORT_OUTPUT_TERMINAL = 35;
   NIRFMXINSTR_ATTRIBUTE_TRIGGER_TERMINAL_NAME = 36;
+  NIRFMXINSTR_ATTRIBUTE_RF_HIGHPASS_FILTER_FREQUENCY = 49;
+  NIRFMXINSTR_ATTRIBUTE_LO_SHARING_MODE = 68;
+  NIRFMXINSTR_ATTRIBUTE_LO_VCO_FREQUENCY_STEP_SIZE = 80;
+  NIRFMXINSTR_ATTRIBUTE_THERMAL_CORRECTION_HEADROOM_RANGE = 94;
+  NIRFMXINSTR_ATTRIBUTE_NUMBER_OF_LO_SHARING_GROUPS = 97;
+  NIRFMXINSTR_ATTRIBUTE_START_TRIGGER_TYPE = 98;
   NIRFMXINSTR_ATTRIBUTE_START_TRIGGER_DIGITAL_EDGE_SOURCE = 99;
+  NIRFMXINSTR_ATTRIBUTE_START_TRIGGER_DIGITAL_EDGE = 100;
   NIRFMXINSTR_ATTRIBUTE_START_TRIGGER_EXPORT_OUTPUT_TERMINAL = 101;
   NIRFMXINSTR_ATTRIBUTE_START_TRIGGER_TERMINAL_NAME = 102;
+  NIRFMXINSTR_ATTRIBUTE_ADVANCE_TRIGGER_TYPE = 103;
   NIRFMXINSTR_ATTRIBUTE_ADVANCE_TRIGGER_DIGITAL_EDGE_SOURCE = 104;
   NIRFMXINSTR_ATTRIBUTE_ADVANCE_TRIGGER_EXPORT_OUTPUT_TERMINAL = 105;
   NIRFMXINSTR_ATTRIBUTE_ADVANCE_TRIGGER_TERMINAL_NAME = 106;
@@ -130,26 +138,30 @@ enum NiRFmxInstrStringAttribute {
   NIRFMXINSTR_ATTRIBUTE_END_OF_RECORD_EVENT_TERMINAL_NAME = 114;
   NIRFMXINSTR_ATTRIBUTE_DONE_EVENT_OUTPUT_TERMINAL = 115;
   NIRFMXINSTR_ATTRIBUTE_DONE_EVENT_TERMINAL_NAME = 116;
-}
-
-enum NiRFmxInstrDoubleAttribute {
-  NIRFMXINSTR_DOUBLE_ATTRIBUTE_UNSPECIFIED = 0;
-  NIRFMXINSTR_ATTRIBUTE_RF_HIGHPASS_FILTER_FREQUENCY = 49;
-  NIRFMXINSTR_ATTRIBUTE_LO_VCO_FREQUENCY_STEP_SIZE = 80;
-  NIRFMXINSTR_ATTRIBUTE_THERMAL_CORRECTION_HEADROOM_RANGE = 94;
+  NIRFMXINSTR_ATTRIBUTE_SELF_CALIBRATION_VALIDITY_CHECK = 117;
   NIRFMXINSTR_ATTRIBUTE_SELF_CALIBRATION_VALIDITY_CHECK_TIME_INTERVAL = 118;
   NIRFMXINSTR_ATTRIBUTE_TEMPERATURE_READ_INTERVAL = 119;
   NIRFMXINSTR_ATTRIBUTE_THERMAL_CORRECTION_TEMPERATURE_RESOLUTION = 120;
 }
 
-enum NiRFmxInstrInt32Attribute {
-  NIRFMXINSTR_INT32_ATTRIBUTE_UNSPECIFIED = 0;
-  NIRFMXINSTR_ATTRIBUTE_LO_SHARING_MODE = 68;
-  NIRFMXINSTR_ATTRIBUTE_NUMBER_OF_LO_SHARING_GROUPS = 97;
-  NIRFMXINSTR_ATTRIBUTE_START_TRIGGER_TYPE = 98;
-  NIRFMXINSTR_ATTRIBUTE_START_TRIGGER_DIGITAL_EDGE = 100;
-  NIRFMXINSTR_ATTRIBUTE_ADVANCE_TRIGGER_TYPE = 103;
-  NIRFMXINSTR_ATTRIBUTE_SELF_CALIBRATION_VALIDITY_CHECK = 117;
+enum NiRFmxInstrInt32AttributeValues {
+  option allow_alias = true;
+  NIRFMXINSTR_INT32_UNSPECIFIED = 0;
+  NIRFMXINSTR_INT32_ADVANCE_TRIGGER_TYPE_NONE = 0;
+  NIRFMXINSTR_INT32_ADVANCE_TRIGGER_TYPE_DIGITAL_EDGE = 1;
+  NIRFMXINSTR_INT32_ADVANCE_TRIGGER_TYPE_SOFTWARE = 3;
+  NIRFMXINSTR_INT32_LO_SHARING_MODE_DISABLED = 0;
+  NIRFMXINSTR_INT32_LO_SHARING_MODE_ONBOARD_STAR = 1;
+  NIRFMXINSTR_INT32_LO_SHARING_MODE_ONBOARD_DAISY_CHAIN = 2;
+  NIRFMXINSTR_INT32_LO_SHARING_MODE_EXTERNAL_STAR = 3;
+  NIRFMXINSTR_INT32_LO_SHARING_MODE_EXTERNAL_DAISY_CHAIN = 4;
+  NIRFMXINSTR_INT32_SELF_CALIBRATION_VALIDITY_CHECK_OFF = 0;
+  NIRFMXINSTR_INT32_SELF_CALIBRATION_VALIDITY_CHECK_ENABLED = 1;
+  NIRFMXINSTR_INT32_START_TRIGGER_DIGITAL_EDGE_RISING_EDGE = 0;
+  NIRFMXINSTR_INT32_START_TRIGGER_DIGITAL_EDGE_FALLING_EDGE = 1;
+  NIRFMXINSTR_INT32_START_TRIGGER_TYPE_NONE = 0;
+  NIRFMXINSTR_INT32_START_TRIGGER_TYPE_DIGITAL_EDGE = 1;
+  NIRFMXINSTR_INT32_START_TRIGGER_TYPE_SOFTWARE = 3;
 }
 
 message BuildCalibrationPlaneStringRequest {
@@ -393,7 +405,7 @@ message ExportSignalResponse {
 message GetAttributeF32Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeF32Response {
@@ -404,7 +416,7 @@ message GetAttributeF32Response {
 message GetAttributeF32ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeF32ArrayResponse {
@@ -416,7 +428,7 @@ message GetAttributeF32ArrayResponse {
 message GetAttributeF64Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeF64Response {
@@ -427,7 +439,7 @@ message GetAttributeF64Response {
 message GetAttributeF64ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeF64ArrayResponse {
@@ -439,7 +451,7 @@ message GetAttributeF64ArrayResponse {
 message GetAttributeI16Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeI16Response {
@@ -450,30 +462,32 @@ message GetAttributeI16Response {
 message GetAttributeI32Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeI32Response {
   int32 status = 1;
-  int32 attr_val = 2;
+  NiRFmxInstrInt32AttributeValues attr_val = 2;
+  int32 attr_val_raw = 3;
 }
 
 message GetAttributeI32ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeI32ArrayResponse {
   int32 status = 1;
-  repeated int32 attr_val = 2;
-  int32 actual_array_size = 3;
+  repeated NiRFmxInstrInt32AttributeValues attr_val = 2;
+  repeated int32 attr_val_raw = 3;
+  int32 actual_array_size = 4;
 }
 
 message GetAttributeI64Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeI64Response {
@@ -484,7 +498,7 @@ message GetAttributeI64Response {
 message GetAttributeI64ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeI64ArrayResponse {
@@ -496,7 +510,7 @@ message GetAttributeI64ArrayResponse {
 message GetAttributeI8Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeI8Response {
@@ -507,7 +521,7 @@ message GetAttributeI8Response {
 message GetAttributeI8ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeI8ArrayResponse {
@@ -519,7 +533,7 @@ message GetAttributeI8ArrayResponse {
 message GetAttributeNIComplexDoubleArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeNIComplexDoubleArrayResponse {
@@ -531,7 +545,7 @@ message GetAttributeNIComplexDoubleArrayResponse {
 message GetAttributeNIComplexSingleArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeNIComplexSingleArrayResponse {
@@ -543,7 +557,7 @@ message GetAttributeNIComplexSingleArrayResponse {
 message GetAttributeStringRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeStringResponse {
@@ -554,7 +568,7 @@ message GetAttributeStringResponse {
 message GetAttributeU16Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeU16Response {
@@ -565,7 +579,7 @@ message GetAttributeU16Response {
 message GetAttributeU32Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeU32Response {
@@ -576,7 +590,7 @@ message GetAttributeU32Response {
 message GetAttributeU32ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeU32ArrayResponse {
@@ -588,7 +602,7 @@ message GetAttributeU32ArrayResponse {
 message GetAttributeU64ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeU64ArrayResponse {
@@ -600,7 +614,7 @@ message GetAttributeU64ArrayResponse {
 message GetAttributeU8Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeU8Response {
@@ -611,7 +625,7 @@ message GetAttributeU8Response {
 message GetAttributeU8ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message GetAttributeU8ArrayResponse {
@@ -769,7 +783,7 @@ message LoadSParameterExternalAttenuationTableFromS2PFileResponse {
 message ResetAttributeRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
 }
 
 message ResetAttributeResponse {
@@ -862,7 +876,7 @@ message SendSoftwareEdgeStartTriggerResponse {
 message SetAttributeF32Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   float attr_val = 4;
 }
 
@@ -873,7 +887,7 @@ message SetAttributeF32Response {
 message SetAttributeF32ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   repeated float attr_val = 4;
 }
 
@@ -884,7 +898,7 @@ message SetAttributeF32ArrayResponse {
 message SetAttributeF64Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   double attr_val = 4;
 }
 
@@ -895,7 +909,7 @@ message SetAttributeF64Response {
 message SetAttributeF64ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   repeated double attr_val = 4;
 }
 
@@ -906,7 +920,7 @@ message SetAttributeF64ArrayResponse {
 message SetAttributeI16Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   int32 attr_val = 4;
 }
 
@@ -917,8 +931,11 @@ message SetAttributeI16Response {
 message SetAttributeI32Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
-  int32 attr_val = 4;
+  NiRFmxInstrAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxInstrInt32AttributeValues attr_val = 4;
+    int32 attr_val_raw = 5;
+  }
 }
 
 message SetAttributeI32Response {
@@ -928,8 +945,8 @@ message SetAttributeI32Response {
 message SetAttributeI32ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
-  repeated int32 attr_val = 4;
+  NiRFmxInstrAttribute attribute_id = 3;
+  repeated NiRFmxInstrInt32AttributeValues attr_val = 4;
 }
 
 message SetAttributeI32ArrayResponse {
@@ -939,7 +956,7 @@ message SetAttributeI32ArrayResponse {
 message SetAttributeI64Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   int64 attr_val = 4;
 }
 
@@ -950,7 +967,7 @@ message SetAttributeI64Response {
 message SetAttributeI64ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   repeated int64 attr_val = 4;
 }
 
@@ -961,7 +978,7 @@ message SetAttributeI64ArrayResponse {
 message SetAttributeI8Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   int32 attr_val = 4;
 }
 
@@ -972,7 +989,7 @@ message SetAttributeI8Response {
 message SetAttributeI8ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   repeated int32 attr_val = 4;
 }
 
@@ -983,7 +1000,7 @@ message SetAttributeI8ArrayResponse {
 message SetAttributeNIComplexDoubleArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   repeated nidevice_grpc.NIComplexNumber attr_val = 4;
 }
 
@@ -994,7 +1011,7 @@ message SetAttributeNIComplexDoubleArrayResponse {
 message SetAttributeNIComplexSingleArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   repeated nidevice_grpc.NIComplexNumberF32 attr_val = 4;
 }
 
@@ -1005,7 +1022,7 @@ message SetAttributeNIComplexSingleArrayResponse {
 message SetAttributeStringRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   string attr_val = 4;
 }
 
@@ -1016,7 +1033,7 @@ message SetAttributeStringResponse {
 message SetAttributeU16Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   uint32 attr_val = 4;
 }
 
@@ -1027,7 +1044,7 @@ message SetAttributeU16Response {
 message SetAttributeU32Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   uint32 attr_val = 4;
 }
 
@@ -1038,7 +1055,7 @@ message SetAttributeU32Response {
 message SetAttributeU32ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   repeated uint32 attr_val = 4;
 }
 
@@ -1049,7 +1066,7 @@ message SetAttributeU32ArrayResponse {
 message SetAttributeU64ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   repeated uint64 attr_val = 4;
 }
 
@@ -1060,7 +1077,7 @@ message SetAttributeU64ArrayResponse {
 message SetAttributeU8Request {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   uint32 attr_val = 4;
 }
 
@@ -1071,7 +1088,7 @@ message SetAttributeU8Response {
 message SetAttributeU8ArrayRequest {
   nidevice_grpc.Session instrument_handle = 1;
   string channel_name = 2;
-  int32 attribute_id = 3;
+  NiRFmxInstrAttribute attribute_id = 3;
   bytes attr_val = 4;
 }
 
