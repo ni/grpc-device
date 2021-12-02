@@ -76,19 +76,21 @@ async def main():
                         terminal_config=nidaqmx_types.InputTermCfgWithDefault.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
                         units=nidaqmx_types.VoltageUnits2.VOLTAGE_UNITS2_VOLTS)))
 
+            TOTAL_SAMPLES_PER_CHANNEL = 1000
+            SAMPLES_PER_CHANNEL_PER_READ = 100
             await raise_if_error_async(
                 client.CfgSampClkTiming(
                     nidaqmx_types.CfgSampClkTimingRequest(
                         task=task,
                         sample_mode=nidaqmx_types.AcquisitionType.ACQUISITION_TYPE_FINITE_SAMPS,
-                        samps_per_chan=1000,
+                        samps_per_chan=TOTAL_SAMPLES_PER_CHANNEL,
                         active_edge=nidaqmx_types.Edge1.EDGE1_RISING,
                         rate=100)))
 
             every_n_samples_stream = client.RegisterEveryNSamplesEvent(
                 nidaqmx_types.RegisterEveryNSamplesEventRequest(
                     task=task,
-                    n_samples=100,
+                    n_samples=SAMPLES_PER_CHANNEL_PER_READ,
                     every_n_samples_event_type=nidaqmx_types.EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER))
 
             # Wait for initial_metadata to ensure that the callback is registered before starting the task.
@@ -106,28 +108,43 @@ async def main():
                         task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS)))
 
             number_of_channels = response.value
-
             async def read_data():
-                async for every_n_samples_response in every_n_samples_stream:
-                    await raise_if_error(every_n_samples_response)
-                    read_response: nidaqmx_types.ReadAnalogF64Response = await raise_if_error_async(
-                        client.ReadAnalogF64(
-                            nidaqmx_types.ReadAnalogF64Request(
-                                task=task,
-                                num_samps_per_chan=100,
-                                fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                array_size_in_samps=number_of_channels * 100)))
+                samps_per_chan_read = 0
 
-                    print(
-                        f"Acquired {len(read_response.read_array)} samples",
-                        f"({read_response.samps_per_chan_read} samples per channel)")
-                    print("Read Data:", read_response.read_array[:10])
+                try:
+                    async for every_n_samples_response in every_n_samples_stream:
+                        await raise_if_error(every_n_samples_response)
+                        read_response: nidaqmx_types.ReadAnalogF64Response = await raise_if_error_async(
+                            client.ReadAnalogF64(
+                                nidaqmx_types.ReadAnalogF64Request(
+                                    task=task,
+                                    num_samps_per_chan=SAMPLES_PER_CHANNEL_PER_READ,
+                                    fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
+                                    array_size_in_samps=number_of_channels * SAMPLES_PER_CHANNEL_PER_READ)))
+                
+                        print(
+                            f"Acquired {len(read_response.read_array)} samples",
+                            f"({read_response.samps_per_chan_read} samples per channel)")
+                        print("Read Data:", read_response.read_array[:10])
+
+                        # Unregister the event stream when all samples are read.
+                        samps_per_chan_read += read_response.samps_per_chan_read
+                        if samps_per_chan_read >= TOTAL_SAMPLES_PER_CHANNEL:
+                            every_n_samples_stream.cancel()
+                except asyncio.CancelledError:
+                    pass
 
             async def wait_for_done():
-                async for done_response in done_event_stream:
-                    every_n_samples_stream.cancel()
-                    done_event_stream.cancel()
-                    await raise_if_error(done_response)
+                try:
+                    async for done_response in done_event_stream:
+                        done_event_stream.cancel()
+                        # Cancel the acquisition if there's an error, otherwise let it continue
+                        # until all samples are read.
+                        if done_response.status:
+                            every_n_samples_stream.cancel()
+                        await raise_if_error(done_response)
+                except asyncio.CancelledError:
+                    pass
 
             await asyncio.gather(read_data(), wait_for_done())
 
