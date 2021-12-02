@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 config = {
     'api_version': '21.0.0',
-    'c_header': 'niRFmxSpecAn.h',
-    'c_function_prefix': 'RFmxSpecAn_',
-    'service_class_prefix': 'NiRFmxSpecAn',
-    'java_package': 'com.ni.grpc.nirfmxspecan',
-    'csharp_namespace': 'NationalInstruments.Grpc.NiRFmxSpecAn',
-    'namespace_component': 'nirfmxspecan',
+    'c_header': 'niRFmxInstr.h',
+    'c_function_prefix': 'RFmxInstr_',
+    'service_class_prefix': 'NiRFmxInstr',
+    'java_package': 'com.ni.grpc.nirfmxinstr',
+    'csharp_namespace': 'NationalInstruments.Grpc.NiRFmxInstr',
+    'namespace_component': 'nirfmxinstr',
     'close_function': 'Close',
     'custom_types': [],
     'additional_headers': {},
@@ -26,10 +26,11 @@ config = {
         "uInt8[]": "bytes",
         "NIComplexSingle": "nidevice_grpc.NIComplexNumberF32",
         "NIComplexDouble": "nidevice_grpc.NIComplexNumber",
+        "CVIAbsoluteTime": "google.protobuf.Timestamp",
     },
     'code_readiness': 'NextRelease',
     'feature_toggles': {},
-    'driver_name': 'NI-RFMXSPECAN',
+    'driver_name': 'NI-RFMXINSTR',
     'extra_errors_used': [
     ],
     'init_function': 'Initialize',
@@ -37,24 +38,24 @@ config = {
     'library_info': {
         'Linux': {
             '64bit': {
-                'name': 'nirfmxspecan',
+                'name': 'nirfmxinstr',
                 'type': 'cdll',
                 'abi_version': '1'
             }
         },
         'Windows': {
             '32bit': {
-                'name': 'niRFmxSpecAn.dll',
+                'name': 'niRFmxInstr.dll',
                 'type': 'windll'
             },
             '64bit': {
-                'name': 'niRFmxSpecAn.dll',
+                'name': 'niRFmxInstr.dll',
                 'type': 'cdll'
             }
         }
     },
     'metadata_version': '0.1',
-    'module_name': 'nirfmxspecan',
-    'session_class_description': 'An NI-RFmxSpecAn instrument handle',
+    'module_name': 'nirfmxinstr',
+    'session_class_description': 'An NI-RFmxInstr instrument handle',
     'session_handle_parameter_name': 'instrumentHandle'
 }

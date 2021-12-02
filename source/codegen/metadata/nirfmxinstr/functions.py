@@ -1,0 +1,2440 @@
+functions = {
+    'BuildCalibrationPlaneString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'calibrationPlaneName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorString',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildInstrumentString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'instrumentNumber',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildLOString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'loIndex',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildModuleString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'moduleName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'BuildPortString': {
+        'cname': 'RFmxInstr_BuildPortString2',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'portName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'deviceName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelNumber',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgExternalAttenuationInterpolationLinear': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'format',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgExternalAttenuationInterpolationNearest': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgExternalAttenuationInterpolationSpline': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgExternalAttenuationTable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequency',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'externalAttenuation',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgFrequencyReference': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequencyReferenceSource',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequencyReferenceFrequency',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgMechanicalAttenuation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'mechanicalAttenuationAuto',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'mechanicalAttenuationValue',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgRFAttenuation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'rfAttenuationAuto',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'rfAttenuationValue',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgSParameterExternalAttenuationTable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequency',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'frequencyArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequencyArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameters',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'sParameterTableSize'
+                },
+                'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameterTableSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfPorts',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameterOrientation',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CfgSParameterExternalAttenuationType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameterType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CheckAcquisitionStatus': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'acquisitionDone',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CheckIfListExists': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'listName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'listExists',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'personality',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CheckIfSignalConfigurationExists': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'signalName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'signalConfigurationExists',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'personality',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'Close': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'forceDestroy',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DeleteAllExternalAttenuationTables': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DeleteExternalAttenuationTable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DisableCalibrationPlane': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'EnableCalibrationPlane': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ExportSignal': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'exportSignalSource',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'exportSignalOutputTerminal',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeF32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'float32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeF32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeF64Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeI16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'int16'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeI32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeI32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeI64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeI64Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'int64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeI8': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'coerced': True,
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'int8'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeI8Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'coerced': True,
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'int8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeNIComplexDoubleArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeNIComplexSingleArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeU16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'uInt16'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeU32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeU64Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'uInt64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeU8': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'type': 'uInt8'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAttributeU8Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetAvailablePorts': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'availablePorts',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'arraySize'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetError': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorCode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'errorDescriptionBufferSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorDescription',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'errorDescriptionBufferSize'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetErrorString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'errorCode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'errorDescriptionBufferSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorDescription',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'errorDescriptionBufferSize'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetExternalAttenuationTableActualValue': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'externalAttenuation',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetNIRFSASession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'niRfsaSession',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetNIRFSASessionArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'nirfsaSessions',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSelfCalibrateLastDateAndTime': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selfCalibrateStep',
+                'type': 'int64'
+            },
+            {
+                'direction': 'out',
+                'name': 'timestamp',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSelfCalibrateLastTemperature': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selfCalibrateStep',
+                'type': 'int64'
+            },
+            {
+                'direction': 'out',
+                'name': 'temperature',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'Initialize': {
+        'custom_close': 'Close(id, RFMXINSTR_VAL_FALSE)',
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'optionString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'handleOut',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'isNewSession',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'InitializeFromNIRFSASession': {
+        'custom_close': 'Close(id, RFMXINSTR_VAL_FALSE)',
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'nirfsaSession',
+                'type': 'uInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'handleOut',
+                'type': 'niRFmxInstrHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'InitializeFromNIRFSASessionArray': {
+        'custom_close': 'Close(id, RFMXINSTR_VAL_FALSE)',
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'nirfsaSessions',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfNIRFSASessions'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfNIRFSASessions',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'handleOut',
+                'type': 'niRFmxInstrHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IsSelfCalibrateValid': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'selfCalibrateValid',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'validSteps',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'LoadAllConfigurations': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'loadRFInstrConfiguration',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'LoadSParameterExternalAttenuationTableFromS2PFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's2PFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sParameterOrientation',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetAttribute': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetDriver': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetEntireSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ResetToDefault': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SaveAllConfigurations': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SelectActiveExternalAttenuationTable': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SelfCalibrate': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'stepsToOmit',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SelfCalibrateRange': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'stepsToOmit',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'minimumFrequency',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maximumFrequency',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'minimumReferenceLevel',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'maximumReferenceLevel',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SendSoftwareEdgeAdvanceTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SendSoftwareEdgeStartTrigger': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeF32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'float32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeF32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeF64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeF64Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeI16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'int16'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeI32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeI32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeI64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeI64Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'int64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeI8': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'coerced': True,
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'int8'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeI8Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'coerced': True,
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'int8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeNIComplexDoubleArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeNIComplexSingleArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeU16': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'uInt16'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeU32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeU32Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'uInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeU64Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'uInt64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeU8': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'type': 'uInt8'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetAttributeU8Array': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxInstrAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TimestampFromValues': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'secondsSince1970',
+                'type': 'int64'
+            },
+            {
+                'direction': 'in',
+                'name': 'fractionalSeconds',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'timestamp',
+                'type': 'CVIAbsoluteTime'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ValuesFromTimestamp': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'timestamp',
+                'type': 'CVIAbsoluteTime'
+            },
+            {
+                'direction': 'out',
+                'name': 'secondsSince1970',
+                'type': 'int64'
+            },
+            {
+                'direction': 'out',
+                'name': 'fractionalSeconds',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'WaitForAcquisitionComplete': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    }
+}

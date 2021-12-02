@@ -2,7 +2,6 @@
 import common_helpers
 import service_helpers
 
-namespace = "nidevice_grpc"
 driver_configs = [data["config"] for data in drivers]
 module_names = [config["module_name"] for config in driver_configs]
 handle_types = [service_helpers.get_resource_handle_type(config) for config in driver_configs]
@@ -28,7 +27,7 @@ repository_type_to_local_name = {
 #include "${module_name}/${module_name}_service_registrar.h"
 % endfor
 
-namespace ${namespace} {
+namespace nidevice_grpc {
 
 std::shared_ptr<void> register_all_services(
   grpc::ServerBuilder& server_builder,
@@ -62,4 +61,4 @@ std::shared_ptr<void> register_all_services(
   return service_vector;
 }
 
-} // ${namespace}
+} // nidevice_grpc

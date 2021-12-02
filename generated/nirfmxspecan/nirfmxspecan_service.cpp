@@ -6383,7 +6383,13 @@ namespace nirfmxspecan_grpc {
       auto status = library_->GetAttributeI32(instrument_handle, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
-        response->set_attr_val(attr_val);
+        auto checked_convert_attr_val = [](auto raw_value) {
+          bool raw_value_is_valid = nirfmxspecan_grpc::NiRFmxSpecAnInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nirfmxspecan_grpc::NiRFmxSpecAnInt32AttributeValues>(valid_enum_value);
+        };
+        response->set_attr_val(checked_convert_attr_val(attr_val));
+        response->set_attr_val_raw(attr_val);
       }
       return ::grpc::Status::OK;
     }
@@ -6411,8 +6417,8 @@ namespace nirfmxspecan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_attr_val()->Resize(actual_array_size, 0);
-        int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val()->mutable_data());
+        response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
+        int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
         auto array_size = actual_array_size;
         status = library_->GetAttributeI32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
@@ -6421,6 +6427,20 @@ namespace nirfmxspecan_grpc {
         }
         response->set_status(status);
         if (status == 0) {
+          auto checked_convert_attr_val = [](auto raw_value) {
+            bool raw_value_is_valid = nirfmxspecan_grpc::NiRFmxSpecAnInt32AttributeValues_IsValid(raw_value);
+            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+            return static_cast<nirfmxspecan_grpc::NiRFmxSpecAnInt32AttributeValues>(valid_enum_value);
+          };
+          response->mutable_attr_val()->Clear();
+          response->mutable_attr_val()->Reserve(actual_array_size);
+          std::transform(
+            response->attr_val_raw().begin(),
+            response->attr_val_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+            [&](auto x) { 
+                return checked_convert_attr_val(x);
+            });
           response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
@@ -12633,7 +12653,22 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      int32 attr_val = request->attr_val();
+      int32 attr_val;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxspecan_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrVal: {
+          attr_val = static_cast<int32>(request->attr_val());
+          break;
+        }
+        case nirfmxspecan_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrValRaw: {
+          attr_val = static_cast<int32>(request->attr_val_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SetAttributeI32Request::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeI32(instrument_handle, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -12655,7 +12690,15 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      auto attr_val = const_cast<int32*>(reinterpret_cast<const int32*>(request->attr_val().data()));
+      auto attr_val_vector = std::vector<int32>();
+      attr_val_vector.reserve(request->attr_val().size());
+      std::transform(
+        request->attr_val().begin(),
+        request->attr_val().end(),
+        std::back_inserter(attr_val_vector),
+        [](auto x) { return x; });
+      auto attr_val = attr_val_vector.data();
+
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
@@ -12837,7 +12880,26 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      char* attr_val = (char*)request->attr_val().c_str();
+      char* attr_val;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxspecan_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
+          auto attr_val_imap_it = nirfmxspecancharattributevaluesmapped_input_map_.find(request->attr_val_mapped());
+          if (attr_val_imap_it == nirfmxspecancharattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val_mapped was not specified or out of range.");
+          }
+          attr_val = const_cast<char*>((attr_val_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxspecan_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValRaw: {
+          attr_val = const_cast<char*>(request->attr_val_raw().c_str());
+          break;
+        }
+        case nirfmxspecan_grpc::SetAttributeStringRequest::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeString(instrument_handle, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
