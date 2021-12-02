@@ -439,6 +439,7 @@ add_executable(SystemTestsRunner
     "source/tests/system/nirfsa_driver_api_tests.cpp"
     "source/tests/system/nirfsg_driver_api_tests.cpp"
     "source/tests/system/nirfsg_session_tests.cpp"
+    "source/tests/system/nirfmxspecan_driver_api_tests.cpp"
     "source/tests/system/nirfmxspecan_session_tests.cpp"
     "source/tests/system/niscope_driver_api_tests.cpp"
     "source/tests/system/niscope_session_tests.cpp"
