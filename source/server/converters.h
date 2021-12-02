@@ -2,6 +2,7 @@
 #define NIDEVICE_GRPC_DEVICE_CONVERTERS_H
 
 #include <google/protobuf/repeated_field.h>
+#include <google/protobuf/util/time_util.h>
 #include <nidevice.pb.h>          // For common grpc types.
 #include <server/common_types.h>  // For common C types.
 #include <server/exceptions.h>
@@ -170,6 +171,35 @@ inline void convert_to_grpc(const SmtSpectrumInfoType& input, nidevice_grpc::Smt
   output->set_window(input.window);
   output->set_window_size(input.windowSize);
   output->set_fft_size(input.FFTSize);
+}
+
+const int64 SecondsFromCVI1904EpochTo1970Epoch = 2082844800LL;
+const double TwoToSixtyFour = (double)(1 << 31) * (double)(1 << 31) * (double)(1 << 2);
+const double NanosecondsPerSecond = 1000000000.0;
+
+template <>
+inline void convert_to_grpc(const CVIAbsoluteTime& value, google::protobuf::Timestamp* timestamp)
+{
+  // msb is whole seconds after 12:00 a.m., Friday, January 1, 1904, Universal Time
+  time_t unixTime = static_cast<time_t>(value.cviTime.msb - SecondsFromCVI1904EpochTo1970Epoch);
+  google::protobuf::Timestamp temp_timestamp = google::protobuf::util::TimeUtil::TimeTToTimestamp(unixTime);
+
+  timestamp->set_seconds(temp_timestamp.seconds());
+  // lsb is positive fractions (2^64) of a second
+  // This is losing some precision since doubles have 52 bits of precision.
+  // But there are only 10^9 nanoseconds in a second which is ~31 bits of precision,
+  // so it's still good enough for our purposes.
+  timestamp->set_nanos(static_cast<int32>((static_cast<double>(value.cviTime.lsb) * NanosecondsPerSecond) / TwoToSixtyFour));
+}
+
+template <>
+inline CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& value)
+{
+  time_t unixTime = google::protobuf::util::TimeUtil::TimestampToTimeT(value);
+  CVIAbsoluteTime cviTime;
+  cviTime.cviTime.msb = static_cast<int64>(unixTime + SecondsFromCVI1904EpochTo1970Epoch);
+  cviTime.cviTime.lsb = static_cast<uInt64>((static_cast<double>(value.nanos()) / NanosecondsPerSecond) * TwoToSixtyFour);
+  return cviTime;
 }
 
 }  // namespace converters
