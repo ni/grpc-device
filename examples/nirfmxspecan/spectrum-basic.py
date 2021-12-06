@@ -72,7 +72,7 @@ def raise_if_error(response):
     if response.status != 0:
         error_response = client.GetError(
             nirfmxspecan_types.GetErrorRequest(
-                instrument_handle=instr,
+                instrument=instr,
             )
         )
         raise Exception(f"Error: {error_response.error_description}")
@@ -88,12 +88,12 @@ try:
             )
         )
     )
-    instr = init_response.handle_out
+    instr = init_response.instrument
 
     raise_if_error(
         client.CfgRF(
             nirfmxspecan_types.CfgRFRequest(
-                instrument_handle=instr, selector_string="",
+                instrument=instr, selector_string="",
                 center_frequency=1e9, reference_level=0, external_attenuation=0
             )
         )
@@ -102,7 +102,7 @@ try:
     raise_if_error(
         client.SpectrumCfgSpan(
             nirfmxspecan_types.SpectrumCfgSpanRequest(
-                instrument_handle=instr, selector_string="", span=1e6
+                instrument=instr, selector_string="", span=1e6
             )
         )
     )
@@ -110,9 +110,9 @@ try:
     raise_if_error(
         client.SpectrumCfgRBWFilter(
             nirfmxspecan_types.SpectrumCfgRBWFilterRequest(
-                instrument_handle=instr, selector_string="",
+                instrument=instr, selector_string="",
                 rbw_auto=nirfmxspecan_types.SPECTRUM_RBW_AUTO_BANDWIDTH_TRUE,
-                rb_w=100e3,
+                rbw=100e3,
                 rbw_filter_type=nirfmxspecan_types.SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN
             )
         )
@@ -121,7 +121,7 @@ try:
     raise_if_error(
         client.SpectrumCfgAveraging(
             nirfmxspecan_types.SpectrumCfgAveragingRequest(
-                instrument_handle=instr, selector_string="",
+                instrument=instr, selector_string="",
                 averaging_enabled=nirfmxspecan_types.SPECTRUM_AVERAGING_ENABLED_FALSE,
                 averaging_count=10,
                 averaging_type=nirfmxspecan_types.SPECTRUM_AVERAGING_TYPE_RMS
@@ -132,7 +132,7 @@ try:
     read_response = raise_if_error(
         client.SpectrumRead(
             nirfmxspecan_types.SpectrumReadRequest(
-                instrument_handle=instr, selector_string="", timeout=10.0
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
@@ -148,4 +148,4 @@ try:
 finally:
     if instr:
         client.Close(nirfmxspecan_types.CloseRequest(
-            instrument_handle=instr, force_destroy=nirfmxspecan_types.BOOLEAN_FALSE))
+            instrument=instr, force_destroy=nirfmxspecan_types.BOOLEAN_FALSE))

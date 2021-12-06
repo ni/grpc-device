@@ -247,12 +247,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
       int32 format = request->format();
-      auto status = library_->CfgExternalAttenuationInterpolationLinear(instrument_handle, selector_string, table_name, format);
+      auto status = library_->CfgExternalAttenuationInterpolationLinear(instrument, selector_string, table_name, format);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -269,11 +269,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
-      auto status = library_->CfgExternalAttenuationInterpolationNearest(instrument_handle, selector_string, table_name);
+      auto status = library_->CfgExternalAttenuationInterpolationNearest(instrument, selector_string, table_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -290,11 +290,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
-      auto status = library_->CfgExternalAttenuationInterpolationSpline(instrument_handle, selector_string, table_name);
+      auto status = library_->CfgExternalAttenuationInterpolationSpline(instrument, selector_string, table_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -311,8 +311,8 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
@@ -321,7 +321,7 @@ namespace nirfmxinstr_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields frequency and external_attenuation do not match");
       }
       int32 array_size = static_cast<int32>(request->external_attenuation().size());
-      auto status = library_->CfgExternalAttenuationTable(instrument_handle, selector_string, table_name, frequency, external_attenuation, array_size);
+      auto status = library_->CfgExternalAttenuationTable(instrument, selector_string, table_name, frequency, external_attenuation, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -338,12 +338,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       char* frequency_reference_source = (char*)request->frequency_reference_source().c_str();
       float64 frequency_reference_frequency = request->frequency_reference_frequency();
-      auto status = library_->CfgFrequencyReference(instrument_handle, channel_name, frequency_reference_source, frequency_reference_frequency);
+      auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -360,12 +360,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 mechanical_attenuation_auto = request->mechanical_attenuation_auto();
       float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
-      auto status = library_->CfgMechanicalAttenuation(instrument_handle, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
+      auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -382,12 +382,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 rf_attenuation_auto = request->rf_attenuation_auto();
       float64 rf_attenuation_value = request->rf_attenuation_value();
-      auto status = library_->CfgRFAttenuation(instrument_handle, channel_name, rf_attenuation_auto, rf_attenuation_value);
+      auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -404,8 +404,8 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
@@ -414,7 +414,7 @@ namespace nirfmxinstr_grpc {
       int32 s_parameter_table_size = static_cast<int32>(request->s_parameters().size());
       int32 number_of_ports = request->number_of_ports();
       int32 s_parameter_orientation = request->s_parameter_orientation();
-      auto status = library_->CfgSParameterExternalAttenuationTable(instrument_handle, selector_string, table_name, frequency, frequency_array_size, s_parameters.data(), s_parameter_table_size, number_of_ports, s_parameter_orientation);
+      auto status = library_->CfgSParameterExternalAttenuationTable(instrument, selector_string, table_name, frequency, frequency_array_size, s_parameters.data(), s_parameter_table_size, number_of_ports, s_parameter_orientation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -431,11 +431,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 s_parameter_type = request->s_parameter_type();
-      auto status = library_->CfgSParameterExternalAttenuationType(instrument_handle, selector_string, s_parameter_type);
+      auto status = library_->CfgSParameterExternalAttenuationType(instrument, selector_string, s_parameter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -452,10 +452,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       int32 acquisition_done {};
-      auto status = library_->CheckAcquisitionStatus(instrument_handle, &acquisition_done);
+      auto status = library_->CheckAcquisitionStatus(instrument, &acquisition_done);
       response->set_status(status);
       if (status == 0) {
         response->set_acquisition_done(acquisition_done);
@@ -475,12 +475,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* list_name = (char*)request->list_name().c_str();
       int32 list_exists {};
       int32 personality {};
-      auto status = library_->CheckIfListExists(instrument_handle, list_name, &list_exists, &personality);
+      auto status = library_->CheckIfListExists(instrument, list_name, &list_exists, &personality);
       response->set_status(status);
       if (status == 0) {
         response->set_list_exists(list_exists);
@@ -501,12 +501,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
       int32 signal_configuration_exists {};
       int32 personality {};
-      auto status = library_->CheckIfSignalConfigurationExists(instrument_handle, signal_name, &signal_configuration_exists, &personality);
+      auto status = library_->CheckIfSignalConfigurationExists(instrument, signal_name, &signal_configuration_exists, &personality);
       response->set_status(status);
       if (status == 0) {
         response->set_signal_configuration_exists(signal_configuration_exists);
@@ -527,11 +527,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       int32 force_destroy = request->force_destroy();
-      session_repository_->remove_session(instrument_handle);
-      auto status = library_->Close(instrument_handle, force_destroy);
+      session_repository_->remove_session(instrument);
+      auto status = library_->Close(instrument, force_destroy);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -548,10 +548,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->DeleteAllExternalAttenuationTables(instrument_handle, selector_string);
+      auto status = library_->DeleteAllExternalAttenuationTables(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -568,11 +568,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
-      auto status = library_->DeleteExternalAttenuationTable(instrument_handle, selector_string, table_name);
+      auto status = library_->DeleteExternalAttenuationTable(instrument, selector_string, table_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -589,10 +589,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->DisableCalibrationPlane(instrument_handle, selector_string);
+      auto status = library_->DisableCalibrationPlane(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -609,10 +609,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->EnableCalibrationPlane(instrument_handle, selector_string);
+      auto status = library_->EnableCalibrationPlane(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -629,11 +629,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       int32 export_signal_source = request->export_signal_source();
       char* export_signal_output_terminal = (char*)request->export_signal_output_terminal().c_str();
-      auto status = library_->ExportSignal(instrument_handle, export_signal_source, export_signal_output_terminal);
+      auto status = library_->ExportSignal(instrument, export_signal_source, export_signal_output_terminal);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -650,12 +650,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
-      auto status = library_->GetAttributeF32(instrument_handle, channel_name, attribute_id, &attr_val);
+      auto status = library_->GetAttributeF32(instrument, channel_name, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -675,13 +675,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeF32Array(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeF32Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -689,7 +689,7 @@ namespace nirfmxinstr_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float32* attr_val = response->mutable_attr_val()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->GetAttributeF32Array(instrument_handle, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeF32Array(instrument, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -715,12 +715,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
-      auto status = library_->GetAttributeF64(instrument_handle, channel_name, attribute_id, &attr_val);
+      auto status = library_->GetAttributeF64(instrument, channel_name, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -740,13 +740,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeF64Array(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeF64Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -754,7 +754,7 @@ namespace nirfmxinstr_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float64* attr_val = response->mutable_attr_val()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->GetAttributeF64Array(instrument_handle, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeF64Array(instrument, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -780,12 +780,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int16 attr_val {};
-      auto status = library_->GetAttributeI16(instrument_handle, channel_name, attribute_id, &attr_val);
+      auto status = library_->GetAttributeI16(instrument, channel_name, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -805,12 +805,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
-      auto status = library_->GetAttributeI32(instrument_handle, channel_name, attribute_id, &attr_val);
+      auto status = library_->GetAttributeI32(instrument, channel_name, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         auto checked_convert_attr_val = [](auto raw_value) {
@@ -836,13 +836,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeI32Array(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeI32Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -850,7 +850,7 @@ namespace nirfmxinstr_grpc {
         response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
         int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeI32Array(instrument_handle, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeI32Array(instrument, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -890,12 +890,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
-      auto status = library_->GetAttributeI64(instrument_handle, channel_name, attribute_id, &attr_val);
+      auto status = library_->GetAttributeI64(instrument, channel_name, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -915,13 +915,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeI64Array(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeI64Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -929,7 +929,7 @@ namespace nirfmxinstr_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeI64Array(instrument_handle, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeI64Array(instrument, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -955,12 +955,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int8 attr_val {};
-      auto status = library_->GetAttributeI8(instrument_handle, channel_name, attribute_id, &attr_val);
+      auto status = library_->GetAttributeI8(instrument, channel_name, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -980,20 +980,20 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeI8Array(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeI8Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<int8> attr_val(actual_array_size);
         auto array_size = actual_array_size;
-        status = library_->GetAttributeI8Array(instrument_handle, channel_name, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        status = library_->GetAttributeI8Array(instrument, channel_name, attribute_id, attr_val.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1028,20 +1028,20 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeNIComplexDoubleArray(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeNIComplexDoubleArray(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeNIComplexDoubleArray(instrument_handle, channel_name, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        status = library_->GetAttributeNIComplexDoubleArray(instrument, channel_name, attribute_id, attr_val.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1074,20 +1074,20 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeNIComplexSingleArray(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeNIComplexSingleArray(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeNIComplexSingleArray(instrument_handle, channel_name, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        status = library_->GetAttributeNIComplexSingleArray(instrument, channel_name, attribute_id, attr_val.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1120,13 +1120,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
 
       while (true) {
-        auto status = library_->GetAttributeString(instrument_handle, channel_name, attribute_id, 0, nullptr);
+        auto status = library_->GetAttributeString(instrument, channel_name, attribute_id, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1137,7 +1137,7 @@ namespace nirfmxinstr_grpc {
         if (array_size > 0) {
             attr_val.resize(array_size - 1);
         }
-        status = library_->GetAttributeString(instrument_handle, channel_name, attribute_id, array_size, (char*)attr_val.data());
+        status = library_->GetAttributeString(instrument, channel_name, attribute_id, array_size, (char*)attr_val.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -1163,12 +1163,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val {};
-      auto status = library_->GetAttributeU16(instrument_handle, channel_name, attribute_id, &attr_val);
+      auto status = library_->GetAttributeU16(instrument, channel_name, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -1188,12 +1188,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val {};
-      auto status = library_->GetAttributeU32(instrument_handle, channel_name, attribute_id, &attr_val);
+      auto status = library_->GetAttributeU32(instrument, channel_name, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -1213,13 +1213,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeU32Array(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeU32Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1227,7 +1227,7 @@ namespace nirfmxinstr_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeU32Array(instrument_handle, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeU32Array(instrument, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1253,13 +1253,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeU64Array(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeU64Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1267,7 +1267,7 @@ namespace nirfmxinstr_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeU64Array(instrument_handle, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeU64Array(instrument, channel_name, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1293,12 +1293,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val {};
-      auto status = library_->GetAttributeU8(instrument_handle, channel_name, attribute_id, &attr_val);
+      auto status = library_->GetAttributeU8(instrument, channel_name, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -1318,20 +1318,20 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeU8Array(instrument_handle, channel_name, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeU8Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::string attr_val(actual_array_size, '\0');
         auto array_size = actual_array_size;
-        status = library_->GetAttributeU8Array(instrument_handle, channel_name, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
+        status = library_->GetAttributeU8Array(instrument, channel_name, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1358,12 +1358,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
 
       while (true) {
-        auto status = library_->GetAvailablePorts(instrument_handle, selector_string, 0, nullptr);
+        auto status = library_->GetAvailablePorts(instrument, selector_string, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1374,7 +1374,7 @@ namespace nirfmxinstr_grpc {
         if (array_size > 0) {
             available_ports.resize(array_size - 1);
         }
-        status = library_->GetAvailablePorts(instrument_handle, selector_string, array_size, (char*)available_ports.data());
+        status = library_->GetAvailablePorts(instrument, selector_string, array_size, (char*)available_ports.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -1400,11 +1400,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
 
       while (true) {
-        auto status = library_->GetError(instrument_handle, nullptr, 0, nullptr);
+        auto status = library_->GetError(instrument, nullptr, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1416,7 +1416,7 @@ namespace nirfmxinstr_grpc {
         if (error_description_buffer_size > 0) {
             error_description.resize(error_description_buffer_size - 1);
         }
-        status = library_->GetError(instrument_handle, &error_code, error_description_buffer_size, (char*)error_description.data());
+        status = library_->GetError(instrument, &error_code, error_description_buffer_size, (char*)error_description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -1443,12 +1443,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       int32 error_code = request->error_code();
 
       while (true) {
-        auto status = library_->GetErrorString(instrument_handle, error_code, 0, nullptr);
+        auto status = library_->GetErrorString(instrument, error_code, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1459,7 +1459,7 @@ namespace nirfmxinstr_grpc {
         if (error_description_buffer_size > 0) {
             error_description.resize(error_description_buffer_size - 1);
         }
-        status = library_->GetErrorString(instrument_handle, error_code, error_description_buffer_size, (char*)error_description.data());
+        status = library_->GetErrorString(instrument, error_code, error_description_buffer_size, (char*)error_description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -1485,11 +1485,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 external_attenuation {};
-      auto status = library_->GetExternalAttenuationTableActualValue(instrument_handle, selector_string, &external_attenuation);
+      auto status = library_->GetExternalAttenuationTableActualValue(instrument, selector_string, &external_attenuation);
       response->set_status(status);
       if (status == 0) {
         response->set_external_attenuation(external_attenuation);
@@ -1509,10 +1509,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       uInt32 ni_rfsa_session {};
-      auto status = library_->GetNIRFSASession(instrument_handle, &ni_rfsa_session);
+      auto status = library_->GetNIRFSASession(instrument, &ni_rfsa_session);
       response->set_status(status);
       if (status == 0) {
         response->set_ni_rfsa_session(ni_rfsa_session);
@@ -1532,11 +1532,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetNIRFSASessionArray(instrument_handle, nullptr, 0, &actual_array_size);
+        auto status = library_->GetNIRFSASessionArray(instrument, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1544,7 +1544,7 @@ namespace nirfmxinstr_grpc {
         response->mutable_nirfsa_sessions()->Resize(actual_array_size, 0);
         uInt32* nirfsa_sessions = reinterpret_cast<uInt32*>(response->mutable_nirfsa_sessions()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->GetNIRFSASessionArray(instrument_handle, nirfsa_sessions, array_size, &actual_array_size);
+        status = library_->GetNIRFSASessionArray(instrument, nirfsa_sessions, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1570,12 +1570,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int64 self_calibrate_step = request->self_calibrate_step();
       CVIAbsoluteTime timestamp {};
-      auto status = library_->GetSelfCalibrateLastDateAndTime(instrument_handle, selector_string, self_calibrate_step, &timestamp);
+      auto status = library_->GetSelfCalibrateLastDateAndTime(instrument, selector_string, self_calibrate_step, &timestamp);
       response->set_status(status);
       if (status == 0) {
         convert_to_grpc(timestamp, response->mutable_timestamp());
@@ -1595,12 +1595,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int64 self_calibrate_step = request->self_calibrate_step();
       float64 temperature {};
-      auto status = library_->GetSelfCalibrateLastTemperature(instrument_handle, selector_string, self_calibrate_step, &temperature);
+      auto status = library_->GetSelfCalibrateLastTemperature(instrument, selector_string, self_calibrate_step, &temperature);
       response->set_status(status);
       if (status == 0) {
         response->set_temperature(temperature);
@@ -1625,9 +1625,9 @@ namespace nirfmxinstr_grpc {
 
       int32 is_new_session {};
       auto init_lambda = [&] () {
-        niRFmxInstrHandle handle_out;
-        int status = library_->Initialize(resource_name, option_string, &handle_out, &is_new_session);
-        return std::make_tuple(status, handle_out);
+        niRFmxInstrHandle instrument;
+        int status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
+        return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
@@ -1635,7 +1635,7 @@ namespace nirfmxinstr_grpc {
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_handle_out()->set_id(session_id);
+        response->mutable_instrument()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -1655,9 +1655,9 @@ namespace nirfmxinstr_grpc {
       uInt32 nirfsa_session = request->nirfsa_session();
 
       auto init_lambda = [&] () {
-        niRFmxInstrHandle handle_out;
-        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &handle_out);
-        return std::make_tuple(status, handle_out);
+        niRFmxInstrHandle instrument;
+        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
@@ -1665,7 +1665,7 @@ namespace nirfmxinstr_grpc {
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_handle_out()->set_id(session_id);
+        response->mutable_instrument()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -1686,9 +1686,9 @@ namespace nirfmxinstr_grpc {
       int32 number_of_nirfsa_sessions = static_cast<int32>(request->nirfsa_sessions().size());
 
       auto init_lambda = [&] () {
-        niRFmxInstrHandle handle_out;
-        int status = library_->InitializeFromNIRFSASessionArray(nirfsa_sessions, number_of_nirfsa_sessions, &handle_out);
-        return std::make_tuple(status, handle_out);
+        niRFmxInstrHandle instrument;
+        int status = library_->InitializeFromNIRFSASessionArray(nirfsa_sessions, number_of_nirfsa_sessions, &instrument);
+        return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
@@ -1696,7 +1696,7 @@ namespace nirfmxinstr_grpc {
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_handle_out()->set_id(session_id);
+        response->mutable_instrument()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -1713,12 +1713,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 self_calibrate_valid {};
       int32 valid_steps {};
-      auto status = library_->IsSelfCalibrateValid(instrument_handle, selector_string, &self_calibrate_valid, &valid_steps);
+      auto status = library_->IsSelfCalibrateValid(instrument, selector_string, &self_calibrate_valid, &valid_steps);
       response->set_status(status);
       if (status == 0) {
         response->set_self_calibrate_valid(self_calibrate_valid);
@@ -1739,11 +1739,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* file_path = (char*)request->file_path().c_str();
       int32 load_rf_instr_configuration = request->load_rf_instr_configuration();
-      auto status = library_->LoadAllConfigurations(instrument_handle, file_path, load_rf_instr_configuration);
+      auto status = library_->LoadAllConfigurations(instrument, file_path, load_rf_instr_configuration);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1760,13 +1760,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
       char* s2_p_file_path = (char*)request->s2_p_file_path().c_str();
       int32 s_parameter_orientation = request->s_parameter_orientation();
-      auto status = library_->LoadSParameterExternalAttenuationTableFromS2PFile(instrument_handle, selector_string, table_name, s2_p_file_path, s_parameter_orientation);
+      auto status = library_->LoadSParameterExternalAttenuationTableFromS2PFile(instrument, selector_string, table_name, s2_p_file_path, s_parameter_orientation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1783,11 +1783,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
-      auto status = library_->ResetAttribute(instrument_handle, channel_name, attribute_id);
+      auto status = library_->ResetAttribute(instrument, channel_name, attribute_id);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1804,9 +1804,9 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
-      auto status = library_->ResetDriver(instrument_handle);
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      auto status = library_->ResetDriver(instrument);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1823,9 +1823,9 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
-      auto status = library_->ResetEntireSession(instrument_handle);
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      auto status = library_->ResetEntireSession(instrument);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1842,9 +1842,9 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
-      auto status = library_->ResetToDefault(instrument_handle);
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      auto status = library_->ResetToDefault(instrument);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1861,10 +1861,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* file_path = (char*)request->file_path().c_str();
-      auto status = library_->SaveAllConfigurations(instrument_handle, file_path);
+      auto status = library_->SaveAllConfigurations(instrument, file_path);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1881,11 +1881,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
-      auto status = library_->SelectActiveExternalAttenuationTable(instrument_handle, selector_string, table_name);
+      auto status = library_->SelectActiveExternalAttenuationTable(instrument, selector_string, table_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1902,11 +1902,11 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 steps_to_omit = request->steps_to_omit();
-      auto status = library_->SelfCalibrate(instrument_handle, selector_string, steps_to_omit);
+      auto status = library_->SelfCalibrate(instrument, selector_string, steps_to_omit);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1923,15 +1923,15 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 steps_to_omit = request->steps_to_omit();
       float64 minimum_frequency = request->minimum_frequency();
       float64 maximum_frequency = request->maximum_frequency();
       float64 minimum_reference_level = request->minimum_reference_level();
       float64 maximum_reference_level = request->maximum_reference_level();
-      auto status = library_->SelfCalibrateRange(instrument_handle, selector_string, steps_to_omit, minimum_frequency, maximum_frequency, minimum_reference_level, maximum_reference_level);
+      auto status = library_->SelfCalibrateRange(instrument, selector_string, steps_to_omit, minimum_frequency, maximum_frequency, minimum_reference_level, maximum_reference_level);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1948,9 +1948,9 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
-      auto status = library_->SendSoftwareEdgeAdvanceTrigger(instrument_handle);
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      auto status = library_->SendSoftwareEdgeAdvanceTrigger(instrument);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1967,9 +1967,9 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
-      auto status = library_->SendSoftwareEdgeStartTrigger(instrument_handle);
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      auto status = library_->SendSoftwareEdgeStartTrigger(instrument);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1986,12 +1986,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val = request->attr_val();
-      auto status = library_->SetAttributeF32(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeF32(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2008,13 +2008,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeF32Array(instrument_handle, channel_name, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeF32Array(instrument, channel_name, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2031,12 +2031,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val = request->attr_val();
-      auto status = library_->SetAttributeF64(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeF64(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2053,13 +2053,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeF64Array(instrument_handle, channel_name, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeF64Array(instrument, channel_name, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2076,12 +2076,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int16 attr_val = request->attr_val();
-      auto status = library_->SetAttributeI16(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeI16(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2098,8 +2098,8 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val;
@@ -2118,7 +2118,7 @@ namespace nirfmxinstr_grpc {
         }
       }
 
-      auto status = library_->SetAttributeI32(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeI32(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2135,8 +2135,8 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_vector = std::vector<int32>();
@@ -2149,7 +2149,7 @@ namespace nirfmxinstr_grpc {
       auto attr_val = attr_val_vector.data();
 
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeI32Array(instrument_handle, channel_name, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeI32Array(instrument, channel_name, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2166,12 +2166,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val = request->attr_val();
-      auto status = library_->SetAttributeI64(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeI64(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2188,13 +2188,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeI64Array(instrument_handle, channel_name, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeI64Array(instrument, channel_name, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2211,12 +2211,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int8 attr_val = request->attr_val();
-      auto status = library_->SetAttributeI8(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeI8(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2236,8 +2236,8 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -2259,7 +2259,7 @@ namespace nirfmxinstr_grpc {
         });
 
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeI8Array(instrument_handle, channel_name, attribute_id, attr_val.data(), array_size);
+      auto status = library_->SetAttributeI8Array(instrument, channel_name, attribute_id, attr_val.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2279,13 +2279,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeNIComplexDoubleArray(instrument_handle, channel_name, attribute_id, attr_val.data(), array_size);
+      auto status = library_->SetAttributeNIComplexDoubleArray(instrument, channel_name, attribute_id, attr_val.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2302,13 +2302,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeNIComplexSingleArray(instrument_handle, channel_name, attribute_id, attr_val.data(), array_size);
+      auto status = library_->SetAttributeNIComplexSingleArray(instrument, channel_name, attribute_id, attr_val.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2325,12 +2325,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       char* attr_val = (char*)request->attr_val().c_str();
-      auto status = library_->SetAttributeString(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeString(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2347,12 +2347,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val = request->attr_val();
-      auto status = library_->SetAttributeU16(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeU16(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2369,12 +2369,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val = request->attr_val();
-      auto status = library_->SetAttributeU32(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeU32(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2391,13 +2391,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeU32Array(instrument_handle, channel_name, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeU32Array(instrument, channel_name, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2414,13 +2414,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeU64Array(instrument_handle, channel_name, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeU64Array(instrument, channel_name, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2437,12 +2437,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val = request->attr_val();
-      auto status = library_->SetAttributeU8(instrument_handle, channel_name, attribute_id, attr_val);
+      auto status = library_->SetAttributeU8(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2459,13 +2459,13 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeU8Array(instrument_handle, channel_name, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeU8Array(instrument, channel_name, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2529,10 +2529,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       float64 timeout = request->timeout();
-      auto status = library_->WaitForAcquisitionComplete(instrument_handle, timeout);
+      auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

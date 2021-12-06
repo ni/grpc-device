@@ -76,7 +76,7 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model, c
 nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
 {
   auto response = init(stub, model, resource_name);
-  auto session = response.handle_out();
+  auto session = response.instrument();
   EXPECT_SUCCESS(response);
   return session;
 }

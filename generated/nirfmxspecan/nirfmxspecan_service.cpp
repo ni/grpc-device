@@ -41,8 +41,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -77,7 +77,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->ACPCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->ACPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -94,13 +94,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
       int32 number_of_offsets = request->number_of_offsets();
       float64 channel_spacing = request->channel_spacing();
-      auto status = library_->ACPCfgCarrierAndOffsets(instrument_handle, selector_string, integration_bandwidth, number_of_offsets, channel_spacing);
+      auto status = library_->ACPCfgCarrierAndOffsets(instrument, selector_string, integration_bandwidth, number_of_offsets, channel_spacing);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -117,11 +117,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 carrier_frequency = request->carrier_frequency();
-      auto status = library_->ACPCfgCarrierFrequency(instrument_handle, selector_string, carrier_frequency);
+      auto status = library_->ACPCfgCarrierFrequency(instrument, selector_string, carrier_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -138,11 +138,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
-      auto status = library_->ACPCfgCarrierIntegrationBandwidth(instrument_handle, selector_string, integration_bandwidth);
+      auto status = library_->ACPCfgCarrierIntegrationBandwidth(instrument, selector_string, integration_bandwidth);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -159,8 +159,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 carrier_mode;
       switch (request->carrier_mode_enum_case()) {
@@ -178,7 +178,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->ACPCfgCarrierMode(instrument_handle, selector_string, carrier_mode);
+      auto status = library_->ACPCfgCarrierMode(instrument, selector_string, carrier_mode);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -195,8 +195,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rrc_filter_enabled;
       switch (request->rrc_filter_enabled_enum_case()) {
@@ -215,7 +215,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 rrc_alpha = request->rrc_alpha();
-      auto status = library_->ACPCfgCarrierRRCFilter(instrument_handle, selector_string, rrc_filter_enabled, rrc_alpha);
+      auto status = library_->ACPCfgCarrierRRCFilter(instrument, selector_string, rrc_filter_enabled, rrc_alpha);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -232,8 +232,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -252,7 +252,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 fft_padding = request->fft_padding();
-      auto status = library_->ACPCfgFFT(instrument_handle, selector_string, fft_window, fft_padding);
+      auto status = library_->ACPCfgFFT(instrument, selector_string, fft_window, fft_padding);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -269,8 +269,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_method;
       switch (request->measurement_method_enum_case()) {
@@ -288,7 +288,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->ACPCfgMeasurementMethod(instrument_handle, selector_string, measurement_method);
+      auto status = library_->ACPCfgMeasurementMethod(instrument, selector_string, measurement_method);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -305,8 +305,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_compensation_enabled;
       switch (request->noise_compensation_enabled_enum_case()) {
@@ -324,7 +324,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->ACPCfgNoiseCompensationEnabled(instrument_handle, selector_string, noise_compensation_enabled);
+      auto status = library_->ACPCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -341,11 +341,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_carriers = request->number_of_carriers();
-      auto status = library_->ACPCfgNumberOfCarriers(instrument_handle, selector_string, number_of_carriers);
+      auto status = library_->ACPCfgNumberOfCarriers(instrument, selector_string, number_of_carriers);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -362,11 +362,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_offsets = request->number_of_offsets();
-      auto status = library_->ACPCfgNumberOfOffsets(instrument_handle, selector_string, number_of_offsets);
+      auto status = library_->ACPCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -383,8 +383,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 offset_frequency = request->offset_frequency();
       int32 offset_sideband;
@@ -419,7 +419,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->ACPCfgOffset(instrument_handle, selector_string, offset_frequency, offset_sideband, offset_enabled);
+      auto status = library_->ACPCfgOffset(instrument, selector_string, offset_frequency, offset_sideband, offset_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -436,8 +436,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto offset_frequency = const_cast<float64*>(request->offset_frequency().data());
       auto offset_sideband_vector = std::vector<int32>();
@@ -465,7 +465,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields offset_sideband and offset_enabled do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->offset_enabled().size());
-      auto status = library_->ACPCfgOffsetArray(instrument_handle, selector_string, offset_frequency, offset_sideband, offset_enabled, number_of_elements);
+      auto status = library_->ACPCfgOffsetArray(instrument, selector_string, offset_frequency, offset_sideband, offset_enabled, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -482,8 +482,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 offset_frequency_definition;
       switch (request->offset_frequency_definition_enum_case()) {
@@ -501,7 +501,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->ACPCfgOffsetFrequencyDefinition(instrument_handle, selector_string, offset_frequency_definition);
+      auto status = library_->ACPCfgOffsetFrequencyDefinition(instrument, selector_string, offset_frequency_definition);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -518,11 +518,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
-      auto status = library_->ACPCfgOffsetIntegrationBandwidth(instrument_handle, selector_string, integration_bandwidth);
+      auto status = library_->ACPCfgOffsetIntegrationBandwidth(instrument, selector_string, integration_bandwidth);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -539,12 +539,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto integration_bandwidth = const_cast<float64*>(request->integration_bandwidth().data());
       int32 number_of_elements = static_cast<int32>(request->integration_bandwidth().size());
-      auto status = library_->ACPCfgOffsetIntegrationBandwidthArray(instrument_handle, selector_string, integration_bandwidth, number_of_elements);
+      auto status = library_->ACPCfgOffsetIntegrationBandwidthArray(instrument, selector_string, integration_bandwidth, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -561,8 +561,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 offset_reference_carrier;
       switch (request->offset_reference_carrier_enum_case()) {
@@ -581,7 +581,7 @@ namespace nirfmxspecan_grpc {
       }
 
       int32 offset_reference_specific = request->offset_reference_specific();
-      auto status = library_->ACPCfgOffsetPowerReference(instrument_handle, selector_string, offset_reference_carrier, offset_reference_specific);
+      auto status = library_->ACPCfgOffsetPowerReference(instrument, selector_string, offset_reference_carrier, offset_reference_specific);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -598,8 +598,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto offset_power_reference_carrier_vector = std::vector<int32>();
       offset_power_reference_carrier_vector.reserve(request->offset_power_reference_carrier().size());
@@ -615,7 +615,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields offset_power_reference_carrier and offset_power_reference_specific do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->offset_power_reference_specific().size());
-      auto status = library_->ACPCfgOffsetPowerReferenceArray(instrument_handle, selector_string, offset_power_reference_carrier, offset_power_reference_specific, number_of_elements);
+      auto status = library_->ACPCfgOffsetPowerReferenceArray(instrument, selector_string, offset_power_reference_carrier, offset_power_reference_specific, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -632,8 +632,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rrc_filter_enabled;
       switch (request->rrc_filter_enabled_enum_case()) {
@@ -652,7 +652,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 rrc_alpha = request->rrc_alpha();
-      auto status = library_->ACPCfgOffsetRRCFilter(instrument_handle, selector_string, rrc_filter_enabled, rrc_alpha);
+      auto status = library_->ACPCfgOffsetRRCFilter(instrument, selector_string, rrc_filter_enabled, rrc_alpha);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -669,8 +669,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto rrc_filter_enabled_vector = std::vector<int32>();
       rrc_filter_enabled_vector.reserve(request->rrc_filter_enabled().size());
@@ -686,7 +686,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rrc_filter_enabled and rrc_alpha do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->rrc_alpha().size());
-      auto status = library_->ACPCfgOffsetRRCFilterArray(instrument_handle, selector_string, rrc_filter_enabled, rrc_alpha, number_of_elements);
+      auto status = library_->ACPCfgOffsetRRCFilterArray(instrument, selector_string, rrc_filter_enabled, rrc_alpha, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -703,11 +703,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 relative_attenuation = request->relative_attenuation();
-      auto status = library_->ACPCfgOffsetRelativeAttenuation(instrument_handle, selector_string, relative_attenuation);
+      auto status = library_->ACPCfgOffsetRelativeAttenuation(instrument, selector_string, relative_attenuation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -724,12 +724,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto relative_attenuation = const_cast<float64*>(request->relative_attenuation().data());
       int32 number_of_elements = static_cast<int32>(request->relative_attenuation().size());
-      auto status = library_->ACPCfgOffsetRelativeAttenuationArray(instrument_handle, selector_string, relative_attenuation, number_of_elements);
+      auto status = library_->ACPCfgOffsetRelativeAttenuationArray(instrument, selector_string, relative_attenuation, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -746,8 +746,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 power_units;
       switch (request->power_units_enum_case()) {
@@ -765,7 +765,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->ACPCfgPowerUnits(instrument_handle, selector_string, power_units);
+      auto status = library_->ACPCfgPowerUnits(instrument, selector_string, power_units);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -782,8 +782,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -801,7 +801,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::ACPCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -818,7 +818,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->ACPCfgRBWFilter(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type);
+      auto status = library_->ACPCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -835,8 +835,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -855,7 +855,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 sweep_time_interval = request->sweep_time_interval();
-      auto status = library_->ACPCfgSweepTime(instrument_handle, selector_string, sweep_time_auto, sweep_time_interval);
+      auto status = library_->ACPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -872,8 +872,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
@@ -881,7 +881,7 @@ namespace nirfmxspecan_grpc {
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->ACPFetchAbsolutePowersTrace(instrument_handle, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->ACPFetchAbsolutePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -889,7 +889,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_absolute_powers_trace()->Resize(actual_array_size, 0);
         float32* absolute_powers_trace = response->mutable_absolute_powers_trace()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ACPFetchAbsolutePowersTrace(instrument_handle, selector_string, timeout, trace_index, &x0, &dx, absolute_powers_trace, array_size, &actual_array_size);
+        status = library_->ACPFetchAbsolutePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, absolute_powers_trace, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -917,15 +917,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
       float64 total_relative_power {};
       float64 carrier_offset {};
       float64 integration_bandwidth {};
-      auto status = library_->ACPFetchCarrierMeasurement(instrument_handle, selector_string, timeout, &absolute_power, &total_relative_power, &carrier_offset, &integration_bandwidth);
+      auto status = library_->ACPFetchCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &total_relative_power, &carrier_offset, &integration_bandwidth);
       response->set_status(status);
       if (status == 0) {
         response->set_absolute_power(absolute_power);
@@ -948,12 +948,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 frequency_resolution {};
-      auto status = library_->ACPFetchFrequencyResolution(instrument_handle, selector_string, timeout, &frequency_resolution);
+      auto status = library_->ACPFetchFrequencyResolution(instrument, selector_string, timeout, &frequency_resolution);
       response->set_status(status);
       if (status == 0) {
         response->set_frequency_resolution(frequency_resolution);
@@ -973,15 +973,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 lower_relative_power {};
       float64 upper_relative_power {};
       float64 lower_absolute_power {};
       float64 upper_absolute_power {};
-      auto status = library_->ACPFetchOffsetMeasurement(instrument_handle, selector_string, timeout, &lower_relative_power, &upper_relative_power, &lower_absolute_power, &upper_absolute_power);
+      auto status = library_->ACPFetchOffsetMeasurement(instrument, selector_string, timeout, &lower_relative_power, &upper_relative_power, &lower_absolute_power, &upper_absolute_power);
       response->set_status(status);
       if (status == 0) {
         response->set_lower_relative_power(lower_relative_power);
@@ -1004,13 +1004,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->ACPFetchOffsetMeasurementArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->ACPFetchOffsetMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1024,7 +1024,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_upper_absolute_power()->Resize(actual_array_size, 0);
         float64* upper_absolute_power = response->mutable_upper_absolute_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ACPFetchOffsetMeasurementArray(instrument_handle, selector_string, timeout, lower_relative_power, upper_relative_power, lower_absolute_power, upper_absolute_power, array_size, &actual_array_size);
+        status = library_->ACPFetchOffsetMeasurementArray(instrument, selector_string, timeout, lower_relative_power, upper_relative_power, lower_absolute_power, upper_absolute_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1053,8 +1053,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
@@ -1062,7 +1062,7 @@ namespace nirfmxspecan_grpc {
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->ACPFetchRelativePowersTrace(instrument_handle, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->ACPFetchRelativePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1070,7 +1070,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_relative_powers_trace()->Resize(actual_array_size, 0);
         float32* relative_powers_trace = response->mutable_relative_powers_trace()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ACPFetchRelativePowersTrace(instrument_handle, selector_string, timeout, trace_index, &x0, &dx, relative_powers_trace, array_size, &actual_array_size);
+        status = library_->ACPFetchRelativePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, relative_powers_trace, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1098,15 +1098,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->ACPFetchSpectrum(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->ACPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1114,7 +1114,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ACPFetchSpectrum(instrument_handle, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        status = library_->ACPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1142,12 +1142,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_carrier_power {};
-      auto status = library_->ACPFetchTotalCarrierPower(instrument_handle, selector_string, timeout, &total_carrier_power);
+      auto status = library_->ACPFetchTotalCarrierPower(instrument, selector_string, timeout, &total_carrier_power);
       response->set_status(status);
       if (status == 0) {
         response->set_total_carrier_power(total_carrier_power);
@@ -1167,8 +1167,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 carrier_absolute_power {};
@@ -1176,7 +1176,7 @@ namespace nirfmxspecan_grpc {
       float64 offset_ch0_upper_relative_power {};
       float64 offset_ch1_lower_relative_power {};
       float64 offset_ch1_upper_relative_power {};
-      auto status = library_->ACPRead(instrument_handle, selector_string, timeout, &carrier_absolute_power, &offset_ch0_lower_relative_power, &offset_ch0_upper_relative_power, &offset_ch1_lower_relative_power, &offset_ch1_upper_relative_power);
+      auto status = library_->ACPRead(instrument, selector_string, timeout, &carrier_absolute_power, &offset_ch0_lower_relative_power, &offset_ch0_upper_relative_power, &offset_ch1_lower_relative_power, &offset_ch1_upper_relative_power);
       response->set_status(status);
       if (status == 0) {
         response->set_carrier_absolute_power(carrier_absolute_power);
@@ -1200,11 +1200,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_calibration_data_valid {};
-      auto status = library_->ACPValidateNoiseCalibrationData(instrument_handle, selector_string, &noise_calibration_data_valid);
+      auto status = library_->ACPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       response->set_status(status);
       if (status == 0) {
         response->set_noise_calibration_data_valid(static_cast<nirfmxspecan_grpc::AcpNoiseCalibrationDataValid>(noise_calibration_data_valid));
@@ -1225,8 +1225,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 am_to_am_curve_fit_order = request->am_to_am_curve_fit_order();
       int32 am_to_am_curve_fit_type;
@@ -1245,7 +1245,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->AMPMCfgAMToAMCurveFit(instrument_handle, selector_string, am_to_am_curve_fit_order, am_to_am_curve_fit_type);
+      auto status = library_->AMPMCfgAMToAMCurveFit(instrument, selector_string, am_to_am_curve_fit_order, am_to_am_curve_fit_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1262,8 +1262,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 am_to_pm_curve_fit_order = request->am_to_pm_curve_fit_order();
       int32 am_to_pm_curve_fit_type;
@@ -1282,7 +1282,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->AMPMCfgAMToPMCurveFit(instrument_handle, selector_string, am_to_pm_curve_fit_order, am_to_pm_curve_fit_type);
+      auto status = library_->AMPMCfgAMToPMCurveFit(instrument, selector_string, am_to_pm_curve_fit_order, am_to_pm_curve_fit_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1299,8 +1299,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -1319,7 +1319,7 @@ namespace nirfmxspecan_grpc {
       }
 
       int32 averaging_count = request->averaging_count();
-      auto status = library_->AMPMCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count);
+      auto status = library_->AMPMCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1336,8 +1336,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 compression_point_enabled;
       switch (request->compression_point_enabled_enum_case()) {
@@ -1357,7 +1357,7 @@ namespace nirfmxspecan_grpc {
 
       auto compression_level = const_cast<float64*>(request->compression_level().data());
       int32 array_size = static_cast<int32>(request->compression_level().size());
-      auto status = library_->AMPMCfgCompressionPoints(instrument_handle, selector_string, compression_point_enabled, compression_level, array_size);
+      auto status = library_->AMPMCfgCompressionPoints(instrument, selector_string, compression_point_enabled, compression_level, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1374,11 +1374,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 dut_average_input_power = request->dut_average_input_power();
-      auto status = library_->AMPMCfgDUTAverageInputPower(instrument_handle, selector_string, dut_average_input_power);
+      auto status = library_->AMPMCfgDUTAverageInputPower(instrument, selector_string, dut_average_input_power);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1395,11 +1395,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
-      auto status = library_->AMPMCfgMeasurementInterval(instrument_handle, selector_string, measurement_interval);
+      auto status = library_->AMPMCfgMeasurementInterval(instrument, selector_string, measurement_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1416,8 +1416,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sample_rate_mode;
       switch (request->sample_rate_mode_enum_case()) {
@@ -1436,7 +1436,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 sample_rate = request->sample_rate();
-      auto status = library_->AMPMCfgMeasurementSampleRate(instrument_handle, selector_string, sample_rate_mode, sample_rate);
+      auto status = library_->AMPMCfgMeasurementSampleRate(instrument, selector_string, sample_rate_mode, sample_rate);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1453,8 +1453,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 reference_power_type;
       switch (request->reference_power_type_enum_case()) {
@@ -1472,7 +1472,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->AMPMCfgReferencePowerType(instrument_handle, selector_string, reference_power_type);
+      auto status = library_->AMPMCfgReferencePowerType(instrument, selector_string, reference_power_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1489,8 +1489,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
@@ -1528,7 +1528,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->AMPMCfgReferenceWaveform(instrument_handle, selector_string, x0, dx, reference_waveform.data(), array_size, idle_duration_present, signal_type);
+      auto status = library_->AMPMCfgReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size, idle_duration_present, signal_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1545,8 +1545,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
@@ -1588,7 +1588,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->AMPMCfgReferenceWaveformSplit(instrument_handle, selector_string, x0, dx, i, q, array_size, idle_duration_present, signal_type);
+      auto status = library_->AMPMCfgReferenceWaveformSplit(instrument, selector_string, x0, dx, i, q, array_size, idle_duration_present, signal_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1605,8 +1605,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 synchronization_method;
       switch (request->synchronization_method_enum_case()) {
@@ -1624,7 +1624,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->AMPMCfgSynchronizationMethod(instrument_handle, selector_string, synchronization_method);
+      auto status = library_->AMPMCfgSynchronizationMethod(instrument, selector_string, synchronization_method);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1641,8 +1641,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -1677,7 +1677,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->AMPMCfgThreshold(instrument_handle, selector_string, threshold_enabled, threshold_level, threshold_type);
+      auto status = library_->AMPMCfgThreshold(instrument, selector_string, threshold_enabled, threshold_level, threshold_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1694,13 +1694,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchAMToAMTrace(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchAMToAMTrace(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1712,7 +1712,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_curve_fit_am_to_am()->Resize(actual_array_size, 0);
         float32* curve_fit_am_to_am = response->mutable_curve_fit_am_to_am()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchAMToAMTrace(instrument_handle, selector_string, timeout, reference_powers, measured_am_to_am, curve_fit_am_to_am, array_size, &actual_array_size);
+        status = library_->AMPMFetchAMToAMTrace(instrument, selector_string, timeout, reference_powers, measured_am_to_am, curve_fit_am_to_am, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1740,13 +1740,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchAMToPMTrace(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchAMToPMTrace(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1758,7 +1758,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_curve_fit_am_to_pm()->Resize(actual_array_size, 0);
         float32* curve_fit_am_to_pm = response->mutable_curve_fit_am_to_pm()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchAMToPMTrace(instrument_handle, selector_string, timeout, reference_powers, measured_am_to_pm, curve_fit_am_to_pm, array_size, &actual_array_size);
+        status = library_->AMPMFetchAMToPMTrace(instrument, selector_string, timeout, reference_powers, measured_am_to_pm, curve_fit_am_to_pm, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1786,13 +1786,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchCompressionPoints(instrument_handle, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchCompressionPoints(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1802,7 +1802,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_output_compression_point()->Resize(actual_array_size, 0);
         float64* output_compression_point = response->mutable_output_compression_point()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchCompressionPoints(instrument_handle, selector_string, timeout, input_compression_point, output_compression_point, array_size, &actual_array_size);
+        status = library_->AMPMFetchCompressionPoints(instrument, selector_string, timeout, input_compression_point, output_compression_point, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1829,13 +1829,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchCurveFitCoefficients(instrument_handle, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchCurveFitCoefficients(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -1845,7 +1845,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_am_to_pm_coefficients()->Resize(actual_array_size, 0);
         float32* am_to_pm_coefficients = response->mutable_am_to_pm_coefficients()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchCurveFitCoefficients(instrument_handle, selector_string, timeout, am_to_am_coefficients, am_to_pm_coefficients, array_size, &actual_array_size);
+        status = library_->AMPMFetchCurveFitCoefficients(instrument, selector_string, timeout, am_to_am_coefficients, am_to_pm_coefficients, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1872,13 +1872,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 am_to_am_residual {};
       float64 am_to_pm_residual {};
-      auto status = library_->AMPMFetchCurveFitResidual(instrument_handle, selector_string, timeout, &am_to_am_residual, &am_to_pm_residual);
+      auto status = library_->AMPMFetchCurveFitResidual(instrument, selector_string, timeout, &am_to_am_residual, &am_to_pm_residual);
       response->set_status(status);
       if (status == 0) {
         response->set_am_to_am_residual(am_to_am_residual);
@@ -1899,14 +1899,14 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 mean_linear_gain {};
       float64 oned_b_compression_point {};
       float64 mean_rmsevm {};
-      auto status = library_->AMPMFetchDUTCharacteristics(instrument_handle, selector_string, timeout, &mean_linear_gain, &oned_b_compression_point, &mean_rmsevm);
+      auto status = library_->AMPMFetchDUTCharacteristics(instrument, selector_string, timeout, &mean_linear_gain, &oned_b_compression_point, &mean_rmsevm);
       response->set_status(status);
       if (status == 0) {
         response->set_mean_linear_gain(mean_linear_gain);
@@ -1928,14 +1928,14 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 gain_error_range {};
       float64 phase_error_range {};
       float64 mean_phase_error {};
-      auto status = library_->AMPMFetchError(instrument_handle, selector_string, timeout, &gain_error_range, &phase_error_range, &mean_phase_error);
+      auto status = library_->AMPMFetchError(instrument, selector_string, timeout, &gain_error_range, &phase_error_range, &mean_phase_error);
       response->set_status(status);
       if (status == 0) {
         response->set_gain_error_range(gain_error_range);
@@ -1957,22 +1957,22 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchProcessedMeanAcquiredWaveform(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchProcessedMeanAcquiredWaveform(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> processed_mean_acquired_waveform(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchProcessedMeanAcquiredWaveform(instrument_handle, selector_string, timeout, &x0, &dx, processed_mean_acquired_waveform.data(), array_size, &actual_array_size);
+        status = library_->AMPMFetchProcessedMeanAcquiredWaveform(instrument, selector_string, timeout, &x0, &dx, processed_mean_acquired_waveform.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2007,15 +2007,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchProcessedMeanAcquiredWaveformSplit(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchProcessedMeanAcquiredWaveformSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -2025,7 +2025,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_q()->Resize(actual_array_size, 0);
         float32* q = response->mutable_q()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchProcessedMeanAcquiredWaveformSplit(instrument_handle, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
+        status = library_->AMPMFetchProcessedMeanAcquiredWaveformSplit(instrument, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2054,22 +2054,22 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchProcessedReferenceWaveform(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchProcessedReferenceWaveform(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> processed_reference_waveform(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchProcessedReferenceWaveform(instrument_handle, selector_string, timeout, &x0, &dx, processed_reference_waveform.data(), array_size, &actual_array_size);
+        status = library_->AMPMFetchProcessedReferenceWaveform(instrument, selector_string, timeout, &x0, &dx, processed_reference_waveform.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2104,15 +2104,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchProcessedReferenceWaveformSplit(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchProcessedReferenceWaveformSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -2122,7 +2122,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_q()->Resize(actual_array_size, 0);
         float32* q = response->mutable_q()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchProcessedReferenceWaveformSplit(instrument_handle, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
+        status = library_->AMPMFetchProcessedReferenceWaveformSplit(instrument, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2151,15 +2151,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchRelativePhaseTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchRelativePhaseTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -2167,7 +2167,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_relative_phase()->Resize(actual_array_size, 0);
         float32* relative_phase = response->mutable_relative_phase()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchRelativePhaseTrace(instrument_handle, selector_string, timeout, &x0, &dx, relative_phase, array_size, &actual_array_size);
+        status = library_->AMPMFetchRelativePhaseTrace(instrument, selector_string, timeout, &x0, &dx, relative_phase, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2195,15 +2195,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->AMPMFetchRelativePowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->AMPMFetchRelativePowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -2211,7 +2211,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_relative_power()->Resize(actual_array_size, 0);
         float32* relative_power = response->mutable_relative_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->AMPMFetchRelativePowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, relative_power, array_size, &actual_array_size);
+        status = library_->AMPMFetchRelativePowerTrace(instrument, selector_string, timeout, &x0, &dx, relative_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -2239,10 +2239,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->AbortMeasurements(instrument_handle, selector_string);
+      auto status = library_->AbortMeasurements(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2259,17 +2259,17 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
-      auto i_q = convert_from_grpc<NIComplexSingle>(request->i_q());
-      int32 array_size = static_cast<int32>(request->i_q().size());
+      auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
+      int32 array_size = static_cast<int32>(request->iq().size());
       int32 reset = request->reset();
       int64 reserved = request->reserved();
-      auto status = library_->AnalyzeIQ1Waveform(instrument_handle, selector_string, result_name, x0, dx, i_q.data(), array_size, reset, reserved);
+      auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2286,8 +2286,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
       float64 x0 = request->x0();
@@ -2300,7 +2300,7 @@ namespace nirfmxspecan_grpc {
       int32 array_size = static_cast<int32>(request->q().size());
       int32 reset = request->reset();
       int64 reserved = request->reserved();
-      auto status = library_->AnalyzeIQ1WaveformSplit(instrument_handle, selector_string, result_name, x0, dx, i, q, array_size, reset, reserved);
+      auto status = library_->AnalyzeIQ1WaveformSplit(instrument, selector_string, result_name, x0, dx, i, q, array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2317,8 +2317,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
       float64 x0 = request->x0();
@@ -2327,7 +2327,7 @@ namespace nirfmxspecan_grpc {
       int32 array_size = static_cast<int32>(request->spectrum().size());
       int32 reset = request->reset();
       int64 reserved = request->reserved();
-      auto status = library_->AnalyzeSpectrum1Waveform(instrument_handle, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
+      auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2344,13 +2344,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 bandwidth = request->bandwidth();
       float64 measurement_interval = request->measurement_interval();
       float64 reference_level {};
-      auto status = library_->AutoLevel(instrument_handle, selector_string, bandwidth, measurement_interval, &reference_level);
+      auto status = library_->AutoLevel(instrument, selector_string, bandwidth, measurement_interval, &reference_level);
       response->set_status(status);
       if (status == 0) {
         response->set_reference_level(reference_level);
@@ -2845,11 +2845,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
-      auto status = library_->CCDFCfgMeasurementInterval(instrument_handle, selector_string, measurement_interval);
+      auto status = library_->CCDFCfgMeasurementInterval(instrument, selector_string, measurement_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2866,11 +2866,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_records = request->number_of_records();
-      auto status = library_->CCDFCfgNumberOfRecords(instrument_handle, selector_string, number_of_records);
+      auto status = library_->CCDFCfgNumberOfRecords(instrument, selector_string, number_of_records);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2887,10 +2887,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::CCDFCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -2908,7 +2908,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 rrc_alpha = request->rrc_alpha();
-      auto status = library_->CCDFCfgRBWFilter(instrument_handle, selector_string, rb_w, rbw_filter_type, rrc_alpha);
+      auto status = library_->CCDFCfgRBWFilter(instrument, selector_string, rbw, rbw_filter_type, rrc_alpha);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2925,8 +2925,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -2961,7 +2961,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->CCDFCfgThreshold(instrument_handle, selector_string, threshold_enabled, threshold_level, threshold_type);
+      auto status = library_->CCDFCfgThreshold(instrument, selector_string, threshold_enabled, threshold_level, threshold_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2978,8 +2978,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 ten_percent_power {};
@@ -2988,7 +2988,7 @@ namespace nirfmxspecan_grpc {
       float64 one_hundredth_percent_power {};
       float64 one_thousandth_percent_power {};
       float64 one_ten_thousandth_percent_power {};
-      auto status = library_->CCDFFetchBasicPowerProbabilities(instrument_handle, selector_string, timeout, &ten_percent_power, &one_percent_power, &one_tenth_percent_power, &one_hundredth_percent_power, &one_thousandth_percent_power, &one_ten_thousandth_percent_power);
+      auto status = library_->CCDFFetchBasicPowerProbabilities(instrument, selector_string, timeout, &ten_percent_power, &one_percent_power, &one_tenth_percent_power, &one_hundredth_percent_power, &one_thousandth_percent_power, &one_ten_thousandth_percent_power);
       response->set_status(status);
       if (status == 0) {
         response->set_ten_percent_power(ten_percent_power);
@@ -3013,15 +3013,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->CCDFFetchGaussianProbabilitiesTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->CCDFFetchGaussianProbabilitiesTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -3029,7 +3029,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_gaussian_probabilities()->Resize(actual_array_size, 0);
         float32* gaussian_probabilities = response->mutable_gaussian_probabilities()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->CCDFFetchGaussianProbabilitiesTrace(instrument_handle, selector_string, timeout, &x0, &dx, gaussian_probabilities, array_size, &actual_array_size);
+        status = library_->CCDFFetchGaussianProbabilitiesTrace(instrument, selector_string, timeout, &x0, &dx, gaussian_probabilities, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3057,15 +3057,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 mean_power {};
       float64 mean_power_percentile {};
       float64 peak_power {};
       int32 measured_samples_count {};
-      auto status = library_->CCDFFetchPower(instrument_handle, selector_string, timeout, &mean_power, &mean_power_percentile, &peak_power, &measured_samples_count);
+      auto status = library_->CCDFFetchPower(instrument, selector_string, timeout, &mean_power, &mean_power_percentile, &peak_power, &measured_samples_count);
       response->set_status(status);
       if (status == 0) {
         response->set_mean_power(mean_power);
@@ -3088,15 +3088,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->CCDFFetchProbabilitiesTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->CCDFFetchProbabilitiesTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -3104,7 +3104,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_probabilities()->Resize(actual_array_size, 0);
         float32* probabilities = response->mutable_probabilities()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->CCDFFetchProbabilitiesTrace(instrument_handle, selector_string, timeout, &x0, &dx, probabilities, array_size, &actual_array_size);
+        status = library_->CCDFFetchProbabilitiesTrace(instrument, selector_string, timeout, &x0, &dx, probabilities, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3132,15 +3132,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 mean_power {};
       float64 mean_power_percentile {};
       float64 peak_power {};
       int32 measured_samples_count {};
-      auto status = library_->CCDFRead(instrument_handle, selector_string, timeout, &mean_power, &mean_power_percentile, &peak_power, &measured_samples_count);
+      auto status = library_->CCDFRead(instrument, selector_string, timeout, &mean_power, &mean_power_percentile, &peak_power, &measured_samples_count);
       response->set_status(status);
       if (status == 0) {
         response->set_mean_power(mean_power);
@@ -3163,8 +3163,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -3199,7 +3199,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->CHPCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->CHPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3216,11 +3216,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 carrier_frequency = request->carrier_frequency();
-      auto status = library_->CHPCfgCarrierOffset(instrument_handle, selector_string, carrier_frequency);
+      auto status = library_->CHPCfgCarrierOffset(instrument, selector_string, carrier_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3237,8 +3237,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -3257,7 +3257,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 fft_padding = request->fft_padding();
-      auto status = library_->CHPCfgFFT(instrument_handle, selector_string, fft_window, fft_padding);
+      auto status = library_->CHPCfgFFT(instrument, selector_string, fft_window, fft_padding);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3274,11 +3274,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
-      auto status = library_->CHPCfgIntegrationBandwidth(instrument_handle, selector_string, integration_bandwidth);
+      auto status = library_->CHPCfgIntegrationBandwidth(instrument, selector_string, integration_bandwidth);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3295,11 +3295,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_carriers = request->number_of_carriers();
-      auto status = library_->CHPCfgNumberOfCarriers(instrument_handle, selector_string, number_of_carriers);
+      auto status = library_->CHPCfgNumberOfCarriers(instrument, selector_string, number_of_carriers);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3316,8 +3316,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -3335,7 +3335,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::CHPCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -3352,7 +3352,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->CHPCfgRBWFilter(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type);
+      auto status = library_->CHPCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3369,8 +3369,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rrc_filter_enabled;
       switch (request->rrc_filter_enabled_enum_case()) {
@@ -3389,7 +3389,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 rrc_alpha = request->rrc_alpha();
-      auto status = library_->CHPCfgRRCFilter(instrument_handle, selector_string, rrc_filter_enabled, rrc_alpha);
+      auto status = library_->CHPCfgRRCFilter(instrument, selector_string, rrc_filter_enabled, rrc_alpha);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3406,11 +3406,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 span = request->span();
-      auto status = library_->CHPCfgSpan(instrument_handle, selector_string, span);
+      auto status = library_->CHPCfgSpan(instrument, selector_string, span);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3427,8 +3427,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -3447,7 +3447,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 sweep_time_interval = request->sweep_time_interval();
-      auto status = library_->CHPCfgSweepTime(instrument_handle, selector_string, sweep_time_auto, sweep_time_interval);
+      auto status = library_->CHPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3464,18 +3464,18 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
-      float64 ps_d {};
+      float64 psd {};
       float64 relative_power {};
-      auto status = library_->CHPFetchCarrierMeasurement(instrument_handle, selector_string, timeout, &absolute_power, &ps_d, &relative_power);
+      auto status = library_->CHPFetchCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &psd, &relative_power);
       response->set_status(status);
       if (status == 0) {
         response->set_absolute_power(absolute_power);
-        response->set_ps_d(ps_d);
+        response->set_psd(psd);
         response->set_relative_power(relative_power);
       }
       return ::grpc::Status::OK;
@@ -3493,15 +3493,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->CHPFetchSpectrum(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->CHPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -3509,7 +3509,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->CHPFetchSpectrum(instrument_handle, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        status = library_->CHPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3537,12 +3537,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_carrier_power {};
-      auto status = library_->CHPFetchTotalCarrierPower(instrument_handle, selector_string, timeout, &total_carrier_power);
+      auto status = library_->CHPFetchTotalCarrierPower(instrument, selector_string, timeout, &total_carrier_power);
       response->set_status(status);
       if (status == 0) {
         response->set_total_carrier_power(total_carrier_power);
@@ -3562,17 +3562,17 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
-      float64 ps_d {};
-      auto status = library_->CHPRead(instrument_handle, selector_string, timeout, &absolute_power, &ps_d);
+      float64 psd {};
+      auto status = library_->CHPRead(instrument, selector_string, timeout, &absolute_power, &psd);
       response->set_status(status);
       if (status == 0) {
         response->set_absolute_power(absolute_power);
-        response->set_ps_d(ps_d);
+        response->set_psd(psd);
       }
       return ::grpc::Status::OK;
     }
@@ -3589,11 +3589,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_calibration_data_valid {};
-      auto status = library_->CHPValidateNoiseCalibrationData(instrument_handle, selector_string, &noise_calibration_data_valid);
+      auto status = library_->CHPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       response->set_status(status);
       if (status == 0) {
         response->set_noise_calibration_data_valid(static_cast<nirfmxspecan_grpc::ChpNoiseCalibrationDataValid>(noise_calibration_data_valid));
@@ -3614,8 +3614,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* digital_edge_source;
       switch (request->digital_edge_source_enum_case()) {
@@ -3655,7 +3655,7 @@ namespace nirfmxspecan_grpc {
 
       float64 trigger_delay = request->trigger_delay();
       int32 enable_trigger = request->enable_trigger();
-      auto status = library_->CfgDigitalEdgeTrigger(instrument_handle, selector_string, digital_edge_source, digital_edge, trigger_delay, enable_trigger);
+      auto status = library_->CfgDigitalEdgeTrigger(instrument, selector_string, digital_edge_source, digital_edge, trigger_delay, enable_trigger);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3672,11 +3672,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 external_attenuation = request->external_attenuation();
-      auto status = library_->CfgExternalAttenuation(instrument_handle, selector_string, external_attenuation);
+      auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3693,11 +3693,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 center_frequency = request->center_frequency();
-      auto status = library_->CfgFrequency(instrument_handle, selector_string, center_frequency);
+      auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3714,8 +3714,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       char* frequency_reference_source;
       switch (request->frequency_reference_source_enum_case()) {
@@ -3738,7 +3738,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 frequency_reference_frequency = request->frequency_reference_frequency();
-      auto status = library_->CfgFrequencyReference(instrument_handle, channel_name, frequency_reference_source, frequency_reference_frequency);
+      auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3755,8 +3755,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* iq_power_edge_source = (char*)request->iq_power_edge_source().c_str();
       float64 iq_power_edge_level = request->iq_power_edge_level();
@@ -3795,7 +3795,7 @@ namespace nirfmxspecan_grpc {
 
       float64 trigger_min_quiet_time_duration = request->trigger_min_quiet_time_duration();
       int32 enable_trigger = request->enable_trigger();
-      auto status = library_->CfgIQPowerEdgeTrigger(instrument_handle, selector_string, iq_power_edge_source, iq_power_edge_level, iq_power_edge_slope, trigger_delay, trigger_min_quiet_time_mode, trigger_min_quiet_time_duration, enable_trigger);
+      auto status = library_->CfgIQPowerEdgeTrigger(instrument, selector_string, iq_power_edge_source, iq_power_edge_level, iq_power_edge_slope, trigger_delay, trigger_min_quiet_time_mode, trigger_min_quiet_time_duration, enable_trigger);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3812,8 +3812,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 mechanical_attenuation_auto;
       switch (request->mechanical_attenuation_auto_enum_case()) {
@@ -3832,7 +3832,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
-      auto status = library_->CfgMechanicalAttenuation(instrument_handle, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
+      auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3849,13 +3849,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 center_frequency = request->center_frequency();
       float64 reference_level = request->reference_level();
       float64 external_attenuation = request->external_attenuation();
-      auto status = library_->CfgRF(instrument_handle, selector_string, center_frequency, reference_level, external_attenuation);
+      auto status = library_->CfgRF(instrument, selector_string, center_frequency, reference_level, external_attenuation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3872,8 +3872,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 rf_attenuation_auto;
       switch (request->rf_attenuation_auto_enum_case()) {
@@ -3892,7 +3892,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 rf_attenuation_value = request->rf_attenuation_value();
-      auto status = library_->CfgRFAttenuation(instrument_handle, channel_name, rf_attenuation_auto, rf_attenuation_value);
+      auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3909,11 +3909,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 reference_level = request->reference_level();
-      auto status = library_->CfgReferenceLevel(instrument_handle, selector_string, reference_level);
+      auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3930,12 +3930,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 trigger_delay = request->trigger_delay();
       int32 enable_trigger = request->enable_trigger();
-      auto status = library_->CfgSoftwareEdgeTrigger(instrument_handle, selector_string, trigger_delay, enable_trigger);
+      auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3952,11 +3952,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 is_done {};
-      auto status = library_->CheckMeasurementStatus(instrument_handle, selector_string, &is_done);
+      auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
       response->set_status(status);
       if (status == 0) {
         response->set_is_done(is_done);
@@ -3976,10 +3976,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->ClearAllNamedResults(instrument_handle, selector_string);
+      auto status = library_->ClearAllNamedResults(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3996,10 +3996,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->ClearNamedResult(instrument_handle, selector_string);
+      auto status = library_->ClearNamedResult(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4016,10 +4016,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->ClearNoiseCalibrationDatabase(instrument_handle, selector_string);
+      auto status = library_->ClearNoiseCalibrationDatabase(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4036,11 +4036,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* old_signal_name = (char*)request->old_signal_name().c_str();
       char* new_signal_name = (char*)request->new_signal_name().c_str();
-      auto status = library_->CloneSignalConfiguration(instrument_handle, old_signal_name, new_signal_name);
+      auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4057,8 +4057,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       int32 force_destroy;
       switch (request->force_destroy_enum_case()) {
         case nirfmxspecan_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroy: {
@@ -4075,8 +4075,8 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      session_repository_->remove_session(instrument_handle);
-      auto status = library_->Close(instrument_handle, force_destroy);
+      session_repository_->remove_session(instrument);
+      auto status = library_->Close(instrument, force_destroy);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4093,10 +4093,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->Commit(instrument_handle, selector_string);
+      auto status = library_->Commit(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4113,10 +4113,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* list_name = (char*)request->list_name().c_str();
-      auto status = library_->CreateList(instrument_handle, list_name);
+      auto status = library_->CreateList(instrument, list_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4133,11 +4133,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 created_step_index {};
-      auto status = library_->CreateListStep(instrument_handle, selector_string, &created_step_index);
+      auto status = library_->CreateListStep(instrument, selector_string, &created_step_index);
       response->set_status(status);
       if (status == 0) {
         response->set_created_step_index(created_step_index);
@@ -4157,10 +4157,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
-      auto status = library_->CreateSignalConfiguration(instrument_handle, signal_name);
+      auto status = library_->CreateSignalConfiguration(instrument, signal_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4177,8 +4177,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
@@ -4204,17 +4204,17 @@ namespace nirfmxspecan_grpc {
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
-      float64 pap_r {};
+      float64 papr {};
       float64 power_offset {};
       while (true) {
-        auto status = library_->DPDApplyDigitalPredistortion(instrument_handle, selector_string, x0_in, dx_in, waveform_in.data(), 0, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &pap_r, &power_offset);
+        auto status = library_->DPDApplyDigitalPredistortion(instrument, selector_string, x0_in, dx_in, waveform_in.data(), 0, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr, &power_offset);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> waveform_out(actual_array_size, NIComplexSingle());
         auto array_size_out = actual_array_size;
-        status = library_->DPDApplyDigitalPredistortion(instrument_handle, selector_string, x0_in, dx_in, waveform_in.data(), array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &pap_r, &power_offset);
+        status = library_->DPDApplyDigitalPredistortion(instrument, selector_string, x0_in, dx_in, waveform_in.data(), array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &papr, &power_offset);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -4232,7 +4232,7 @@ namespace nirfmxspecan_grpc {
             }
           }        
           response->set_actual_array_size(actual_array_size);
-          response->set_pap_r(pap_r);
+          response->set_papr(papr);
           response->set_power_offset(power_offset);
         }
         return ::grpc::Status::OK;
@@ -4251,8 +4251,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
@@ -4291,15 +4291,15 @@ namespace nirfmxspecan_grpc {
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
-      float64 pap_r {};
+      float64 papr {};
       float64 power_offset {};
-      auto status = library_->DPDApplyDigitalPredistortionSplit(instrument_handle, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &pap_r, &power_offset);
+      auto status = library_->DPDApplyDigitalPredistortionSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr, &power_offset);
       response->set_status(status);
       if (status == 0) {
         response->set_x0_out(x0_out);
         response->set_dx_out(dx_out);
         response->set_actual_array_size(actual_array_size);
-        response->set_pap_r(pap_r);
+        response->set_papr(papr);
         response->set_power_offset(power_offset);
       }
       return ::grpc::Status::OK;
@@ -4317,8 +4317,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
@@ -4343,16 +4343,16 @@ namespace nirfmxspecan_grpc {
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
-      float64 pap_r {};
+      float64 papr {};
       while (true) {
-        auto status = library_->DPDApplyPreDPDSignalConditioning(instrument_handle, selector_string, x0_in, dx_in, waveform_in.data(), 0, idle_duration_present, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &pap_r);
+        auto status = library_->DPDApplyPreDPDSignalConditioning(instrument, selector_string, x0_in, dx_in, waveform_in.data(), 0, idle_duration_present, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> waveform_out(actual_array_size, NIComplexSingle());
         auto array_size_out = actual_array_size;
-        status = library_->DPDApplyPreDPDSignalConditioning(instrument_handle, selector_string, x0_in, dx_in, waveform_in.data(), array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &pap_r);
+        status = library_->DPDApplyPreDPDSignalConditioning(instrument, selector_string, x0_in, dx_in, waveform_in.data(), array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &papr);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -4370,7 +4370,7 @@ namespace nirfmxspecan_grpc {
             }
           }        
           response->set_actual_array_size(actual_array_size);
-          response->set_pap_r(pap_r);
+          response->set_papr(papr);
         }
         return ::grpc::Status::OK;
       }
@@ -4388,8 +4388,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
@@ -4427,14 +4427,14 @@ namespace nirfmxspecan_grpc {
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
-      float64 pap_r {};
-      auto status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument_handle, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &pap_r);
+      float64 papr {};
+      auto status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr);
       response->set_status(status);
       if (status == 0) {
         response->set_x0_out(x0_out);
         response->set_dx_out(dx_out);
         response->set_actual_array_size(actual_array_size);
-        response->set_pap_r(pap_r);
+        response->set_papr(papr);
       }
       return ::grpc::Status::OK;
     }
@@ -4451,8 +4451,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 configuration_input;
       switch (request->configuration_input_enum_case()) {
@@ -4470,7 +4470,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgApplyDPDConfigurationInput(instrument_handle, selector_string, configuration_input);
+      auto status = library_->DPDCfgApplyDPDConfigurationInput(instrument, selector_string, configuration_input);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4487,8 +4487,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 lut_correction_type;
       switch (request->lut_correction_type_enum_case()) {
@@ -4506,7 +4506,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgApplyDPDLookupTableCorrectionType(instrument_handle, selector_string, lut_correction_type);
+      auto status = library_->DPDCfgApplyDPDLookupTableCorrectionType(instrument, selector_string, lut_correction_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4523,8 +4523,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 memory_model_correction_type;
       switch (request->memory_model_correction_type_enum_case()) {
@@ -4542,7 +4542,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgApplyDPDMemoryModelCorrectionType(instrument_handle, selector_string, memory_model_correction_type);
+      auto status = library_->DPDCfgApplyDPDMemoryModelCorrectionType(instrument, selector_string, memory_model_correction_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4559,12 +4559,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto dpd_polynomial = convert_from_grpc<NIComplexSingle>(request->dpd_polynomial());
       int32 array_size = static_cast<int32>(request->dpd_polynomial().size());
-      auto status = library_->DPDCfgApplyDPDUserDPDPolynomial(instrument_handle, selector_string, dpd_polynomial.data(), array_size);
+      auto status = library_->DPDCfgApplyDPDUserDPDPolynomial(instrument, selector_string, dpd_polynomial.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4581,8 +4581,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto i = const_cast<float32*>(request->i().data());
       auto q = const_cast<float32*>(request->q().data());
@@ -4590,7 +4590,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i and q do not match");
       }
       int32 array_size = static_cast<int32>(request->q().size());
-      auto status = library_->DPDCfgApplyDPDUserDPDPolynomialSplit(instrument_handle, selector_string, i, q, array_size);
+      auto status = library_->DPDCfgApplyDPDUserDPDPolynomialSplit(instrument, selector_string, i, q, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4607,8 +4607,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto lut_input_powers = const_cast<float32*>(request->lut_input_powers().data());
       auto lut_complex_gains = convert_from_grpc<NIComplexSingle>(request->lut_complex_gains());
@@ -4616,7 +4616,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields lut_input_powers and lut_complex_gains do not match");
       }
       int32 array_size = static_cast<int32>(request->lut_complex_gains().size());
-      auto status = library_->DPDCfgApplyDPDUserLookupTable(instrument_handle, selector_string, lut_input_powers, lut_complex_gains.data(), array_size);
+      auto status = library_->DPDCfgApplyDPDUserLookupTable(instrument, selector_string, lut_input_powers, lut_complex_gains.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4633,8 +4633,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto lut_input_powers = const_cast<float32*>(request->lut_input_powers().data());
       auto i = const_cast<float32*>(request->i().data());
@@ -4646,7 +4646,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i and q do not match");
       }
       int32 array_size = static_cast<int32>(request->q().size());
-      auto status = library_->DPDCfgApplyDPDUserLookupTableSplit(instrument_handle, selector_string, lut_input_powers, i, q, array_size);
+      auto status = library_->DPDCfgApplyDPDUserLookupTableSplit(instrument, selector_string, lut_input_powers, i, q, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4663,8 +4663,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -4683,7 +4683,7 @@ namespace nirfmxspecan_grpc {
       }
 
       int32 averaging_count = request->averaging_count();
-      auto status = library_->DPDCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count);
+      auto status = library_->DPDCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4700,8 +4700,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 dpd_model;
       switch (request->dpd_model_enum_case()) {
@@ -4719,7 +4719,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgDPDModel(instrument_handle, selector_string, dpd_model);
+      auto status = library_->DPDCfgDPDModel(instrument, selector_string, dpd_model);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4736,11 +4736,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 dut_average_input_power = request->dut_average_input_power();
-      auto status = library_->DPDCfgDUTAverageInputPower(instrument_handle, selector_string, dut_average_input_power);
+      auto status = library_->DPDCfgDUTAverageInputPower(instrument, selector_string, dut_average_input_power);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4757,8 +4757,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 memory_polynomial_lead_order = request->memory_polynomial_lead_order();
       int32 memory_polynomial_lag_order = request->memory_polynomial_lag_order();
@@ -4766,7 +4766,7 @@ namespace nirfmxspecan_grpc {
       int32 memory_polynomial_lag_memory_depth = request->memory_polynomial_lag_memory_depth();
       int32 memory_polynomial_maximum_lead = request->memory_polynomial_maximum_lead();
       int32 memory_polynomial_maximum_lag = request->memory_polynomial_maximum_lag();
-      auto status = library_->DPDCfgGeneralizedMemoryPolynomialCrossTerms(instrument_handle, selector_string, memory_polynomial_lead_order, memory_polynomial_lag_order, memory_polynomial_lead_memory_depth, memory_polynomial_lag_memory_depth, memory_polynomial_maximum_lead, memory_polynomial_maximum_lag);
+      auto status = library_->DPDCfgGeneralizedMemoryPolynomialCrossTerms(instrument, selector_string, memory_polynomial_lead_order, memory_polynomial_lag_order, memory_polynomial_lead_memory_depth, memory_polynomial_lag_memory_depth, memory_polynomial_maximum_lead, memory_polynomial_maximum_lag);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4783,8 +4783,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 iterative_dpd_enabled;
       switch (request->iterative_dpd_enabled_enum_case()) {
@@ -4802,7 +4802,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgIterativeDPDEnabled(instrument_handle, selector_string, iterative_dpd_enabled);
+      auto status = library_->DPDCfgIterativeDPDEnabled(instrument, selector_string, iterative_dpd_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4819,8 +4819,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 am_to_am_curve_fit_order = request->am_to_am_curve_fit_order();
       int32 am_to_am_curve_fit_type;
@@ -4839,7 +4839,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgLookupTableAMToAMCurveFit(instrument_handle, selector_string, am_to_am_curve_fit_order, am_to_am_curve_fit_type);
+      auto status = library_->DPDCfgLookupTableAMToAMCurveFit(instrument, selector_string, am_to_am_curve_fit_order, am_to_am_curve_fit_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4856,8 +4856,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 am_to_pm_curve_fit_order = request->am_to_pm_curve_fit_order();
       int32 am_to_pm_curve_fit_type;
@@ -4876,7 +4876,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgLookupTableAMToPMCurveFit(instrument_handle, selector_string, am_to_pm_curve_fit_order, am_to_pm_curve_fit_type);
+      auto status = library_->DPDCfgLookupTableAMToPMCurveFit(instrument, selector_string, am_to_pm_curve_fit_order, am_to_pm_curve_fit_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4893,11 +4893,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 step_size = request->step_size();
-      auto status = library_->DPDCfgLookupTableStepSize(instrument_handle, selector_string, step_size);
+      auto status = library_->DPDCfgLookupTableStepSize(instrument, selector_string, step_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4914,8 +4914,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -4950,7 +4950,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgLookupTableThreshold(instrument_handle, selector_string, threshold_enabled, threshold_level, threshold_type);
+      auto status = library_->DPDCfgLookupTableThreshold(instrument, selector_string, threshold_enabled, threshold_level, threshold_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4967,8 +4967,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 lookup_table_type;
       switch (request->lookup_table_type_enum_case()) {
@@ -4986,7 +4986,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgLookupTableType(instrument_handle, selector_string, lookup_table_type);
+      auto status = library_->DPDCfgLookupTableType(instrument, selector_string, lookup_table_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5003,11 +5003,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
-      auto status = library_->DPDCfgMeasurementInterval(instrument_handle, selector_string, measurement_interval);
+      auto status = library_->DPDCfgMeasurementInterval(instrument, selector_string, measurement_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5024,8 +5024,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sample_rate_mode;
       switch (request->sample_rate_mode_enum_case()) {
@@ -5044,7 +5044,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 sample_rate = request->sample_rate();
-      auto status = library_->DPDCfgMeasurementSampleRate(instrument_handle, selector_string, sample_rate_mode, sample_rate);
+      auto status = library_->DPDCfgMeasurementSampleRate(instrument, selector_string, sample_rate_mode, sample_rate);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5061,12 +5061,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 memory_polynomial_order = request->memory_polynomial_order();
       int32 memory_polynomial_memory_depth = request->memory_polynomial_memory_depth();
-      auto status = library_->DPDCfgMemoryPolynomial(instrument_handle, selector_string, memory_polynomial_order, memory_polynomial_memory_depth);
+      auto status = library_->DPDCfgMemoryPolynomial(instrument, selector_string, memory_polynomial_order, memory_polynomial_memory_depth);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5083,12 +5083,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto previous_dpd_polynomial = convert_from_grpc<NIComplexSingle>(request->previous_dpd_polynomial());
       int32 array_size = static_cast<int32>(request->previous_dpd_polynomial().size());
-      auto status = library_->DPDCfgPreviousDPDPolynomial(instrument_handle, selector_string, previous_dpd_polynomial.data(), array_size);
+      auto status = library_->DPDCfgPreviousDPDPolynomial(instrument, selector_string, previous_dpd_polynomial.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5105,8 +5105,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto i = const_cast<float32*>(request->i().data());
       auto q = const_cast<float32*>(request->q().data());
@@ -5114,7 +5114,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i and q do not match");
       }
       int32 array_size = static_cast<int32>(request->q().size());
-      auto status = library_->DPDCfgPreviousDPDPolynomialSplit(instrument_handle, selector_string, i, q, array_size);
+      auto status = library_->DPDCfgPreviousDPDPolynomialSplit(instrument, selector_string, i, q, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5131,8 +5131,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
@@ -5170,7 +5170,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgReferenceWaveform(instrument_handle, selector_string, x0, dx, reference_waveform.data(), array_size, idle_duration_present, signal_type);
+      auto status = library_->DPDCfgReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size, idle_duration_present, signal_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5187,8 +5187,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
@@ -5230,7 +5230,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgReferenceWaveformSplit(instrument_handle, selector_string, x0, dx, i, q, array_size, idle_duration_present, signal_type);
+      auto status = library_->DPDCfgReferenceWaveformSplit(instrument, selector_string, x0, dx, i, q, array_size, idle_duration_present, signal_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5247,8 +5247,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 synchronization_method;
       switch (request->synchronization_method_enum_case()) {
@@ -5266,7 +5266,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->DPDCfgSynchronizationMethod(instrument_handle, selector_string, synchronization_method);
+      auto status = library_->DPDCfgSynchronizationMethod(instrument, selector_string, synchronization_method);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5283,12 +5283,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 pre_cfrpapr {};
-      auto status = library_->DPDFetchApplyDPDPreCFRPAPR(instrument_handle, selector_string, timeout, &pre_cfrpapr);
+      auto status = library_->DPDFetchApplyDPDPreCFRPAPR(instrument, selector_string, timeout, &pre_cfrpapr);
       response->set_status(status);
       if (status == 0) {
         response->set_pre_cfrpapr(pre_cfrpapr);
@@ -5308,12 +5308,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_gain {};
-      auto status = library_->DPDFetchAverageGain(instrument_handle, selector_string, timeout, &average_gain);
+      auto status = library_->DPDFetchAverageGain(instrument, selector_string, timeout, &average_gain);
       response->set_status(status);
       if (status == 0) {
         response->set_average_gain(average_gain);
@@ -5333,20 +5333,20 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->DPDFetchDPDPolynomial(instrument_handle, selector_string, timeout, nullptr, 0, &actual_array_size);
+        auto status = library_->DPDFetchDPDPolynomial(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> dpd_polynomial(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->DPDFetchDPDPolynomial(instrument_handle, selector_string, timeout, dpd_polynomial.data(), array_size, &actual_array_size);
+        status = library_->DPDFetchDPDPolynomial(instrument, selector_string, timeout, dpd_polynomial.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5379,13 +5379,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->DPDFetchDPDPolynomialSplit(instrument_handle, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->DPDFetchDPDPolynomialSplit(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -5395,7 +5395,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_q()->Resize(actual_array_size, 0);
         float32* q = response->mutable_q()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->DPDFetchDPDPolynomialSplit(instrument_handle, selector_string, timeout, i, q, array_size, &actual_array_size);
+        status = library_->DPDFetchDPDPolynomialSplit(instrument, selector_string, timeout, i, q, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5422,13 +5422,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->DPDFetchLookupTable(instrument_handle, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->DPDFetchLookupTable(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -5437,7 +5437,7 @@ namespace nirfmxspecan_grpc {
         float32* input_powers = response->mutable_input_powers()->mutable_data();
         std::vector<NIComplexSingle> complex_gains(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->DPDFetchLookupTable(instrument_handle, selector_string, timeout, input_powers, complex_gains.data(), array_size, &actual_array_size);
+        status = library_->DPDFetchLookupTable(instrument, selector_string, timeout, input_powers, complex_gains.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5471,13 +5471,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->DPDFetchLookupTableSplit(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->DPDFetchLookupTableSplit(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -5489,7 +5489,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_q()->Resize(actual_array_size, 0);
         float32* q = response->mutable_q()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->DPDFetchLookupTableSplit(instrument_handle, selector_string, timeout, input_powers, i, q, array_size, &actual_array_size);
+        status = library_->DPDFetchLookupTableSplit(instrument, selector_string, timeout, input_powers, i, q, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5517,15 +5517,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 nms_e {};
-      auto status = library_->DPDFetchNMSE(instrument_handle, selector_string, timeout, &nms_e);
+      float64 nmse {};
+      auto status = library_->DPDFetchNMSE(instrument, selector_string, timeout, &nmse);
       response->set_status(status);
       if (status == 0) {
-        response->set_nms_e(nms_e);
+        response->set_nmse(nmse);
       }
       return ::grpc::Status::OK;
     }
@@ -5542,22 +5542,22 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->DPDFetchProcessedMeanAcquiredWaveform(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->DPDFetchProcessedMeanAcquiredWaveform(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> processed_mean_acquired_waveform(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->DPDFetchProcessedMeanAcquiredWaveform(instrument_handle, selector_string, timeout, &x0, &dx, processed_mean_acquired_waveform.data(), array_size, &actual_array_size);
+        status = library_->DPDFetchProcessedMeanAcquiredWaveform(instrument, selector_string, timeout, &x0, &dx, processed_mean_acquired_waveform.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5592,15 +5592,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->DPDFetchProcessedMeanAcquiredWaveformSplit(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->DPDFetchProcessedMeanAcquiredWaveformSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -5610,7 +5610,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_q()->Resize(actual_array_size, 0);
         float32* q = response->mutable_q()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->DPDFetchProcessedMeanAcquiredWaveformSplit(instrument_handle, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
+        status = library_->DPDFetchProcessedMeanAcquiredWaveformSplit(instrument, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5639,22 +5639,22 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->DPDFetchProcessedReferenceWaveform(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->DPDFetchProcessedReferenceWaveform(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> processed_reference_waveform(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->DPDFetchProcessedReferenceWaveform(instrument_handle, selector_string, timeout, &x0, &dx, processed_reference_waveform.data(), array_size, &actual_array_size);
+        status = library_->DPDFetchProcessedReferenceWaveform(instrument, selector_string, timeout, &x0, &dx, processed_reference_waveform.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5689,15 +5689,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->DPDFetchProcessedReferenceWaveformSplit(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->DPDFetchProcessedReferenceWaveformSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -5707,7 +5707,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_q()->Resize(actual_array_size, 0);
         float32* q = response->mutable_q()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->DPDFetchProcessedReferenceWaveformSplit(instrument_handle, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
+        status = library_->DPDFetchProcessedReferenceWaveformSplit(instrument, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5736,10 +5736,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* list_name = (char*)request->list_name().c_str();
-      auto status = library_->DeleteList(instrument_handle, list_name);
+      auto status = library_->DeleteList(instrument, list_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5756,10 +5756,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
-      auto status = library_->DeleteSignalConfiguration(instrument_handle, signal_name);
+      auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5776,10 +5776,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->DisableTrigger(instrument_handle, selector_string);
+      auto status = library_->DisableTrigger(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5796,8 +5796,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -5832,7 +5832,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->FCntCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->FCntCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5849,11 +5849,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
-      auto status = library_->FCntCfgMeasurementInterval(instrument_handle, selector_string, measurement_interval);
+      auto status = library_->FCntCfgMeasurementInterval(instrument, selector_string, measurement_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5870,10 +5870,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::FCntCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -5891,7 +5891,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 rrc_alpha = request->rrc_alpha();
-      auto status = library_->FCntCfgRBWFilter(instrument_handle, selector_string, rb_w, rbw_filter_type, rrc_alpha);
+      auto status = library_->FCntCfgRBWFilter(instrument, selector_string, rbw, rbw_filter_type, rrc_alpha);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5908,8 +5908,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -5944,7 +5944,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->FCntCfgThreshold(instrument_handle, selector_string, threshold_enabled, threshold_level, threshold_type);
+      auto status = library_->FCntCfgThreshold(instrument, selector_string, threshold_enabled, threshold_level, threshold_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5961,12 +5961,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 allan_deviation {};
-      auto status = library_->FCntFetchAllanDeviation(instrument_handle, selector_string, timeout, &allan_deviation);
+      auto status = library_->FCntFetchAllanDeviation(instrument, selector_string, timeout, &allan_deviation);
       response->set_status(status);
       if (status == 0) {
         response->set_allan_deviation(allan_deviation);
@@ -5986,15 +5986,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->FCntFetchFrequencyTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->FCntFetchFrequencyTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6002,7 +6002,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_frequency_trace()->Resize(actual_array_size, 0);
         float32* frequency_trace = response->mutable_frequency_trace()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->FCntFetchFrequencyTrace(instrument_handle, selector_string, timeout, &x0, &dx, frequency_trace, array_size, &actual_array_size);
+        status = library_->FCntFetchFrequencyTrace(instrument, selector_string, timeout, &x0, &dx, frequency_trace, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6030,14 +6030,14 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_relative_frequency {};
       float64 average_absolute_frequency {};
       float64 mean_phase {};
-      auto status = library_->FCntFetchMeasurement(instrument_handle, selector_string, timeout, &average_relative_frequency, &average_absolute_frequency, &mean_phase);
+      auto status = library_->FCntFetchMeasurement(instrument, selector_string, timeout, &average_relative_frequency, &average_absolute_frequency, &mean_phase);
       response->set_status(status);
       if (status == 0) {
         response->set_average_relative_frequency(average_relative_frequency);
@@ -6059,15 +6059,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->FCntFetchPhaseTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->FCntFetchPhaseTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6075,7 +6075,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_phase_trace()->Resize(actual_array_size, 0);
         float32* phase_trace = response->mutable_phase_trace()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->FCntFetchPhaseTrace(instrument_handle, selector_string, timeout, &x0, &dx, phase_trace, array_size, &actual_array_size);
+        status = library_->FCntFetchPhaseTrace(instrument, selector_string, timeout, &x0, &dx, phase_trace, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6103,15 +6103,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->FCntFetchPowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->FCntFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6119,7 +6119,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_power_trace()->Resize(actual_array_size, 0);
         float32* power_trace = response->mutable_power_trace()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->FCntFetchPowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, power_trace, array_size, &actual_array_size);
+        status = library_->FCntFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, power_trace, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6147,14 +6147,14 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_relative_frequency {};
       float64 average_absolute_frequency {};
       float64 mean_phase {};
-      auto status = library_->FCntRead(instrument_handle, selector_string, timeout, &average_relative_frequency, &average_absolute_frequency, &mean_phase);
+      auto status = library_->FCntRead(instrument, selector_string, timeout, &average_relative_frequency, &average_absolute_frequency, &mean_phase);
       response->set_status(status);
       if (status == 0) {
         response->set_average_relative_frequency(average_relative_frequency);
@@ -6176,13 +6176,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 actual_result_names_size {};
       int32 default_result_exists {};
       while (true) {
-        auto status = library_->GetAllNamedResultNames(instrument_handle, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
+        auto status = library_->GetAllNamedResultNames(instrument, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6192,7 +6192,7 @@ namespace nirfmxspecan_grpc {
             result_names.resize(actual_result_names_size - 1);
         }
         auto result_names_buffer_size = actual_result_names_size;
-        status = library_->GetAllNamedResultNames(instrument_handle, selector_string, (char*)result_names.data(), result_names_buffer_size, &actual_result_names_size, &default_result_exists);
+        status = library_->GetAllNamedResultNames(instrument, selector_string, (char*)result_names.data(), result_names_buffer_size, &actual_result_names_size, &default_result_exists);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6220,12 +6220,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
-      auto status = library_->GetAttributeF32(instrument_handle, selector_string, attribute_id, &attr_val);
+      auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -6245,13 +6245,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeF32Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6259,7 +6259,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float32* attr_val = response->mutable_attr_val()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->GetAttributeF32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6285,12 +6285,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
-      auto status = library_->GetAttributeF64(instrument_handle, selector_string, attribute_id, &attr_val);
+      auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -6310,13 +6310,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeF64Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6324,7 +6324,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float64* attr_val = response->mutable_attr_val()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->GetAttributeF64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6350,12 +6350,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int16 attr_val {};
-      auto status = library_->GetAttributeI16(instrument_handle, selector_string, attribute_id, &attr_val);
+      auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -6375,12 +6375,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
-      auto status = library_->GetAttributeI32(instrument_handle, selector_string, attribute_id, &attr_val);
+      auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         auto checked_convert_attr_val = [](auto raw_value) {
@@ -6406,13 +6406,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeI32Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6420,7 +6420,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
         int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeI32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6460,12 +6460,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
-      auto status = library_->GetAttributeI64(instrument_handle, selector_string, attribute_id, &attr_val);
+      auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -6485,13 +6485,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeI64Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6499,7 +6499,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeI64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6525,12 +6525,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int8 attr_val {};
-      auto status = library_->GetAttributeI8(instrument_handle, selector_string, attribute_id, &attr_val);
+      auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -6550,20 +6550,20 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeI8Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<int8> attr_val(actual_array_size);
         auto array_size = actual_array_size;
-        status = library_->GetAttributeI8Array(instrument_handle, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6598,20 +6598,20 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeNIComplexDoubleArray(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeNIComplexDoubleArray(instrument_handle, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6644,20 +6644,20 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeNIComplexSingleArray(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeNIComplexSingleArray(instrument_handle, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6690,13 +6690,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
 
       while (true) {
-        auto status = library_->GetAttributeString(instrument_handle, selector_string, attribute_id, 0, nullptr);
+        auto status = library_->GetAttributeString(instrument, selector_string, attribute_id, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6707,7 +6707,7 @@ namespace nirfmxspecan_grpc {
         if (array_size > 0) {
             attr_val.resize(array_size - 1);
         }
-        status = library_->GetAttributeString(instrument_handle, selector_string, attribute_id, array_size, (char*)attr_val.data());
+        status = library_->GetAttributeString(instrument, selector_string, attribute_id, array_size, (char*)attr_val.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -6733,12 +6733,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val {};
-      auto status = library_->GetAttributeU16(instrument_handle, selector_string, attribute_id, &attr_val);
+      auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -6758,12 +6758,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val {};
-      auto status = library_->GetAttributeU32(instrument_handle, selector_string, attribute_id, &attr_val);
+      auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -6783,13 +6783,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeU32Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6797,7 +6797,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeU32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6823,13 +6823,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeU64Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6837,7 +6837,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->GetAttributeU64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6863,12 +6863,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val {};
-      auto status = library_->GetAttributeU8(instrument_handle, selector_string, attribute_id, &attr_val);
+      auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
       response->set_status(status);
       if (status == 0) {
         response->set_attr_val(attr_val);
@@ -6888,20 +6888,20 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->GetAttributeU8Array(instrument_handle, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        auto status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::string attr_val(actual_array_size, '\0');
         auto array_size = actual_array_size;
-        status = library_->GetAttributeU8Array(instrument_handle, selector_string, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
+        status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -6928,11 +6928,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
 
       while (true) {
-        auto status = library_->GetError(instrument_handle, nullptr, 0, nullptr);
+        auto status = library_->GetError(instrument, nullptr, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6944,7 +6944,7 @@ namespace nirfmxspecan_grpc {
         if (error_description_buffer_size > 0) {
             error_description.resize(error_description_buffer_size - 1);
         }
-        status = library_->GetError(instrument_handle, &error_code, error_description_buffer_size, (char*)error_description.data());
+        status = library_->GetError(instrument, &error_code, error_description_buffer_size, (char*)error_description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -6971,12 +6971,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       int32 error_code = request->error_code();
 
       while (true) {
-        auto status = library_->GetErrorString(instrument_handle, error_code, 0, nullptr);
+        auto status = library_->GetErrorString(instrument, error_code, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -6987,7 +6987,7 @@ namespace nirfmxspecan_grpc {
         if (error_description_buffer_size > 0) {
             error_description.resize(error_description_buffer_size - 1);
         }
-        status = library_->GetErrorString(instrument_handle, error_code, error_description_buffer_size, (char*)error_description.data());
+        status = library_->GetErrorString(instrument, error_code, error_description_buffer_size, (char*)error_description.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -7013,8 +7013,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 auto_harmonics_setup_enabled;
       switch (request->auto_harmonics_setup_enabled_enum_case()) {
@@ -7032,7 +7032,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->HarmCfgAutoHarmonics(instrument_handle, selector_string, auto_harmonics_setup_enabled);
+      auto status = library_->HarmCfgAutoHarmonics(instrument, selector_string, auto_harmonics_setup_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7049,8 +7049,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -7085,7 +7085,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->HarmCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->HarmCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7102,11 +7102,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
-      auto status = library_->HarmCfgFundamentalMeasurementInterval(instrument_handle, selector_string, measurement_interval);
+      auto status = library_->HarmCfgFundamentalMeasurementInterval(instrument, selector_string, measurement_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7123,10 +7123,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::HarmCfgFundamentalRBWRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -7144,7 +7144,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 rrc_alpha = request->rrc_alpha();
-      auto status = library_->HarmCfgFundamentalRBW(instrument_handle, selector_string, rb_w, rbw_filter_type, rrc_alpha);
+      auto status = library_->HarmCfgFundamentalRBW(instrument, selector_string, rbw, rbw_filter_type, rrc_alpha);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7161,8 +7161,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 harmonic_order = request->harmonic_order();
       float64 harmonic_bandwidth = request->harmonic_bandwidth();
@@ -7183,7 +7183,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 harmonic_measurement_interval = request->harmonic_measurement_interval();
-      auto status = library_->HarmCfgHarmonic(instrument_handle, selector_string, harmonic_order, harmonic_bandwidth, harmonic_enabled, harmonic_measurement_interval);
+      auto status = library_->HarmCfgHarmonic(instrument, selector_string, harmonic_order, harmonic_bandwidth, harmonic_enabled, harmonic_measurement_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7200,8 +7200,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto harmonic_order = const_cast<int32*>(reinterpret_cast<const int32*>(request->harmonic_order().data()));
       auto harmonic_bandwidth = const_cast<float64*>(request->harmonic_bandwidth().data());
@@ -7225,7 +7225,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields harmonic_enabled and harmonic_measurement_interval do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->harmonic_measurement_interval().size());
-      auto status = library_->HarmCfgHarmonicArray(instrument_handle, selector_string, harmonic_order, harmonic_bandwidth, harmonic_enabled, harmonic_measurement_interval, number_of_elements);
+      auto status = library_->HarmCfgHarmonicArray(instrument, selector_string, harmonic_order, harmonic_bandwidth, harmonic_enabled, harmonic_measurement_interval, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7242,11 +7242,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_harmonics = request->number_of_harmonics();
-      auto status = library_->HarmCfgNumberOfHarmonics(instrument_handle, selector_string, number_of_harmonics);
+      auto status = library_->HarmCfgNumberOfHarmonics(instrument, selector_string, number_of_harmonics);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7263,20 +7263,20 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_relative_power {};
       float64 average_absolute_power {};
-      float64 rb_w {};
+      float64 rbw {};
       float64 frequency {};
-      auto status = library_->HarmFetchHarmonicMeasurement(instrument_handle, selector_string, timeout, &average_relative_power, &average_absolute_power, &rb_w, &frequency);
+      auto status = library_->HarmFetchHarmonicMeasurement(instrument, selector_string, timeout, &average_relative_power, &average_absolute_power, &rbw, &frequency);
       response->set_status(status);
       if (status == 0) {
         response->set_average_relative_power(average_relative_power);
         response->set_average_absolute_power(average_absolute_power);
-        response->set_rb_w(rb_w);
+        response->set_rbw(rbw);
         response->set_frequency(frequency);
       }
       return ::grpc::Status::OK;
@@ -7294,13 +7294,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->HarmFetchHarmonicMeasurementArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->HarmFetchHarmonicMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -7309,12 +7309,12 @@ namespace nirfmxspecan_grpc {
         float64* average_relative_power = response->mutable_average_relative_power()->mutable_data();
         response->mutable_average_absolute_power()->Resize(actual_array_size, 0);
         float64* average_absolute_power = response->mutable_average_absolute_power()->mutable_data();
-        response->mutable_rb_w()->Resize(actual_array_size, 0);
-        float64* rb_w = response->mutable_rb_w()->mutable_data();
+        response->mutable_rbw()->Resize(actual_array_size, 0);
+        float64* rbw = response->mutable_rbw()->mutable_data();
         response->mutable_frequency()->Resize(actual_array_size, 0);
         float64* frequency = response->mutable_frequency()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->HarmFetchHarmonicMeasurementArray(instrument_handle, selector_string, timeout, average_relative_power, average_absolute_power, rb_w, frequency, array_size, &actual_array_size);
+        status = library_->HarmFetchHarmonicMeasurementArray(instrument, selector_string, timeout, average_relative_power, average_absolute_power, rbw, frequency, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -7323,7 +7323,7 @@ namespace nirfmxspecan_grpc {
         if (status == 0) {
           response->mutable_average_relative_power()->Resize(actual_array_size, 0);
           response->mutable_average_absolute_power()->Resize(actual_array_size, 0);
-          response->mutable_rb_w()->Resize(actual_array_size, 0);
+          response->mutable_rbw()->Resize(actual_array_size, 0);
           response->mutable_frequency()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
@@ -7343,15 +7343,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->HarmFetchHarmonicPowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->HarmFetchHarmonicPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -7359,7 +7359,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_power()->Resize(actual_array_size, 0);
         float32* power = response->mutable_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->HarmFetchHarmonicPowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, power, array_size, &actual_array_size);
+        status = library_->HarmFetchHarmonicPowerTrace(instrument, selector_string, timeout, &x0, &dx, power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -7387,14 +7387,14 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_harmonic_distortion {};
       float64 average_fundamental_power {};
       float64 fundamental_frequency {};
-      auto status = library_->HarmFetchTHD(instrument_handle, selector_string, timeout, &total_harmonic_distortion, &average_fundamental_power, &fundamental_frequency);
+      auto status = library_->HarmFetchTHD(instrument, selector_string, timeout, &total_harmonic_distortion, &average_fundamental_power, &fundamental_frequency);
       response->set_status(status);
       if (status == 0) {
         response->set_total_harmonic_distortion(total_harmonic_distortion);
@@ -7416,13 +7416,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_harmonic_distortion {};
       float64 average_fundamental_power {};
-      auto status = library_->HarmRead(instrument_handle, selector_string, timeout, &total_harmonic_distortion, &average_fundamental_power);
+      auto status = library_->HarmRead(instrument, selector_string, timeout, &total_harmonic_distortion, &average_fundamental_power);
       response->set_status(status);
       if (status == 0) {
         response->set_total_harmonic_distortion(total_harmonic_distortion);
@@ -7443,8 +7443,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 auto_intermods_setup_enabled;
       switch (request->auto_intermods_setup_enabled_enum_case()) {
@@ -7463,7 +7463,7 @@ namespace nirfmxspecan_grpc {
       }
 
       int32 maximum_intermod_order = request->maximum_intermod_order();
-      auto status = library_->IMCfgAutoIntermodsSetup(instrument_handle, selector_string, auto_intermods_setup_enabled, maximum_intermod_order);
+      auto status = library_->IMCfgAutoIntermodsSetup(instrument, selector_string, auto_intermods_setup_enabled, maximum_intermod_order);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7480,8 +7480,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -7516,7 +7516,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->IMCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->IMCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7533,8 +7533,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -7553,7 +7553,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 fft_padding = request->fft_padding();
-      auto status = library_->IMCfgFFT(instrument_handle, selector_string, fft_window, fft_padding);
+      auto status = library_->IMCfgFFT(instrument, selector_string, fft_window, fft_padding);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7570,8 +7570,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 frequency_definition;
       switch (request->frequency_definition_enum_case()) {
@@ -7589,7 +7589,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->IMCfgFrequencyDefinition(instrument_handle, selector_string, frequency_definition);
+      auto status = library_->IMCfgFrequencyDefinition(instrument, selector_string, frequency_definition);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7606,12 +7606,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 lower_tone_frequency = request->lower_tone_frequency();
       float64 upper_tone_frequency = request->upper_tone_frequency();
-      auto status = library_->IMCfgFundamentalTones(instrument_handle, selector_string, lower_tone_frequency, upper_tone_frequency);
+      auto status = library_->IMCfgFundamentalTones(instrument, selector_string, lower_tone_frequency, upper_tone_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7628,8 +7628,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 intermod_order = request->intermod_order();
       float64 lower_intermod_frequency = request->lower_intermod_frequency();
@@ -7666,7 +7666,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->IMCfgIntermod(instrument_handle, selector_string, intermod_order, lower_intermod_frequency, upper_intermod_frequency, intermod_side, intermod_enabled);
+      auto status = library_->IMCfgIntermod(instrument, selector_string, intermod_order, lower_intermod_frequency, upper_intermod_frequency, intermod_side, intermod_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7683,8 +7683,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto intermod_order = const_cast<int32*>(reinterpret_cast<const int32*>(request->intermod_order().data()));
       auto lower_intermod_frequency = const_cast<float64*>(request->lower_intermod_frequency().data());
@@ -7720,7 +7720,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields intermod_side and intermod_enabled do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->intermod_enabled().size());
-      auto status = library_->IMCfgIntermodArray(instrument_handle, selector_string, intermod_order, lower_intermod_frequency, upper_intermod_frequency, intermod_side, intermod_enabled, number_of_elements);
+      auto status = library_->IMCfgIntermodArray(instrument, selector_string, intermod_order, lower_intermod_frequency, upper_intermod_frequency, intermod_side, intermod_enabled, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7737,8 +7737,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_method;
       switch (request->measurement_method_enum_case()) {
@@ -7756,7 +7756,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->IMCfgMeasurementMethod(instrument_handle, selector_string, measurement_method);
+      auto status = library_->IMCfgMeasurementMethod(instrument, selector_string, measurement_method);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7773,11 +7773,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_intermods = request->number_of_intermods();
-      auto status = library_->IMCfgNumberOfIntermods(instrument_handle, selector_string, number_of_intermods);
+      auto status = library_->IMCfgNumberOfIntermods(instrument, selector_string, number_of_intermods);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7794,8 +7794,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -7813,7 +7813,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::IMCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -7830,7 +7830,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->IMCfgRBWFilter(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type);
+      auto status = library_->IMCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7847,8 +7847,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -7867,7 +7867,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 sweep_time_interval = request->sweep_time_interval();
-      auto status = library_->IMCfgSweepTime(instrument_handle, selector_string, sweep_time_auto, sweep_time_interval);
+      auto status = library_->IMCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7884,13 +7884,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 lower_tone_power {};
       float64 upper_tone_power {};
-      auto status = library_->IMFetchFundamentalMeasurement(instrument_handle, selector_string, timeout, &lower_tone_power, &upper_tone_power);
+      auto status = library_->IMFetchFundamentalMeasurement(instrument, selector_string, timeout, &lower_tone_power, &upper_tone_power);
       response->set_status(status);
       if (status == 0) {
         response->set_lower_tone_power(lower_tone_power);
@@ -7911,15 +7911,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 intermod_order {};
       float64 worst_case_output_intercept_power {};
       float64 lower_output_intercept_power {};
       float64 upper_output_intercept_power {};
-      auto status = library_->IMFetchInterceptPower(instrument_handle, selector_string, timeout, &intermod_order, &worst_case_output_intercept_power, &lower_output_intercept_power, &upper_output_intercept_power);
+      auto status = library_->IMFetchInterceptPower(instrument, selector_string, timeout, &intermod_order, &worst_case_output_intercept_power, &lower_output_intercept_power, &upper_output_intercept_power);
       response->set_status(status);
       if (status == 0) {
         response->set_intermod_order(intermod_order);
@@ -7942,13 +7942,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->IMFetchInterceptPowerArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->IMFetchInterceptPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -7962,7 +7962,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_upper_output_intercept_power()->Resize(actual_array_size, 0);
         float64* upper_output_intercept_power = response->mutable_upper_output_intercept_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->IMFetchInterceptPowerArray(instrument_handle, selector_string, timeout, intermod_order, worst_case_output_intercept_power, lower_output_intercept_power, upper_output_intercept_power, array_size, &actual_array_size);
+        status = library_->IMFetchInterceptPowerArray(instrument, selector_string, timeout, intermod_order, worst_case_output_intercept_power, lower_output_intercept_power, upper_output_intercept_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -7991,14 +7991,14 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 intermod_order {};
       float64 lower_intermod_power {};
       float64 upper_intermod_power {};
-      auto status = library_->IMFetchIntermodMeasurement(instrument_handle, selector_string, timeout, &intermod_order, &lower_intermod_power, &upper_intermod_power);
+      auto status = library_->IMFetchIntermodMeasurement(instrument, selector_string, timeout, &intermod_order, &lower_intermod_power, &upper_intermod_power);
       response->set_status(status);
       if (status == 0) {
         response->set_intermod_order(intermod_order);
@@ -8020,13 +8020,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->IMFetchIntermodMeasurementArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->IMFetchIntermodMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -8038,7 +8038,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_upper_intermod_power()->Resize(actual_array_size, 0);
         float64* upper_intermod_power = response->mutable_upper_intermod_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->IMFetchIntermodMeasurementArray(instrument_handle, selector_string, timeout, intermod_order, lower_intermod_power, upper_intermod_power, array_size, &actual_array_size);
+        status = library_->IMFetchIntermodMeasurementArray(instrument, selector_string, timeout, intermod_order, lower_intermod_power, upper_intermod_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -8066,8 +8066,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 spectrum_index = request->spectrum_index();
@@ -8075,7 +8075,7 @@ namespace nirfmxspecan_grpc {
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->IMFetchSpectrum(instrument_handle, selector_string, timeout, spectrum_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->IMFetchSpectrum(instrument, selector_string, timeout, spectrum_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -8083,7 +8083,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->IMFetchSpectrum(instrument_handle, selector_string, timeout, spectrum_index, &x0, &dx, spectrum, array_size, &actual_array_size);
+        status = library_->IMFetchSpectrum(instrument, selector_string, timeout, spectrum_index, &x0, &dx, spectrum, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -8111,14 +8111,14 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 sample_rate = request->sample_rate();
       int32 number_of_records = request->number_of_records();
       float64 acquisition_time = request->acquisition_time();
       float64 pretrigger_time = request->pretrigger_time();
-      auto status = library_->IQCfgAcquisition(instrument_handle, selector_string, sample_rate, number_of_records, acquisition_time, pretrigger_time);
+      auto status = library_->IQCfgAcquisition(instrument, selector_string, sample_rate, number_of_records, acquisition_time, pretrigger_time);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8135,8 +8135,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 bandwidth_auto;
       switch (request->bandwidth_auto_enum_case()) {
@@ -8155,7 +8155,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 bandwidth = request->bandwidth();
-      auto status = library_->IQCfgBandwidth(instrument_handle, selector_string, bandwidth_auto, bandwidth);
+      auto status = library_->IQCfgBandwidth(instrument, selector_string, bandwidth_auto, bandwidth);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8172,8 +8172,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 record_to_fetch = request->record_to_fetch();
@@ -8182,14 +8182,14 @@ namespace nirfmxspecan_grpc {
       float64 dt {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->IQFetchData(instrument_handle, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, nullptr, 0, &actual_array_size);
+        auto status = library_->IQFetchData(instrument, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         std::vector<NIComplexSingle> data(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->IQFetchData(instrument_handle, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, data.data(), array_size, &actual_array_size);
+        status = library_->IQFetchData(instrument, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, data.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -8224,8 +8224,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 record_to_fetch = request->record_to_fetch();
@@ -8234,7 +8234,7 @@ namespace nirfmxspecan_grpc {
       float64 dt {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->IQFetchDataSplit(instrument_handle, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->IQFetchDataSplit(instrument, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -8244,7 +8244,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_q()->Resize(actual_array_size, 0);
         float32* q = response->mutable_q()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->IQFetchDataSplit(instrument_handle, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, i, q, array_size, &actual_array_size);
+        status = library_->IQFetchDataSplit(instrument, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, i, q, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -8273,11 +8273,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 records_done {};
-      auto status = library_->IQGetRecordsDone(instrument_handle, selector_string, &records_done);
+      auto status = library_->IQGetRecordsDone(instrument, selector_string, &records_done);
       response->set_status(status);
       if (status == 0) {
         response->set_records_done(records_done);
@@ -8302,9 +8302,9 @@ namespace nirfmxspecan_grpc {
 
       int32 is_new_session {};
       auto init_lambda = [&] () {
-        niRFmxInstrHandle handle_out;
-        int status = library_->Initialize(resource_name, option_string, &handle_out, &is_new_session);
-        return std::make_tuple(status, handle_out);
+        niRFmxInstrHandle instrument;
+        int status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
+        return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
@@ -8312,7 +8312,7 @@ namespace nirfmxspecan_grpc {
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_handle_out()->set_id(session_id);
+        response->mutable_instrument()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -8332,9 +8332,9 @@ namespace nirfmxspecan_grpc {
       uInt32 nirfsa_session = request->nirfsa_session();
 
       auto init_lambda = [&] () {
-        niRFmxInstrHandle handle_out;
-        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &handle_out);
-        return std::make_tuple(status, handle_out);
+        niRFmxInstrHandle instrument;
+        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
@@ -8342,7 +8342,7 @@ namespace nirfmxspecan_grpc {
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_handle_out()->set_id(session_id);
+        response->mutable_instrument()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -8359,11 +8359,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
-      auto status = library_->Initiate(instrument_handle, selector_string, result_name);
+      auto status = library_->Initiate(instrument, selector_string, result_name);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8380,11 +8380,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_markers = request->number_of_markers();
-      auto status = library_->MarkerCfgNumberOfMarkers(instrument_handle, selector_string, number_of_markers);
+      auto status = library_->MarkerCfgNumberOfMarkers(instrument, selector_string, number_of_markers);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8401,8 +8401,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 peak_excursion_enabled;
       switch (request->peak_excursion_enabled_enum_case()) {
@@ -8421,7 +8421,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 peak_excursion = request->peak_excursion();
-      auto status = library_->MarkerCfgPeakExcursion(instrument_handle, selector_string, peak_excursion_enabled, peak_excursion);
+      auto status = library_->MarkerCfgPeakExcursion(instrument, selector_string, peak_excursion_enabled, peak_excursion);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8438,11 +8438,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 reference_marker = request->reference_marker();
-      auto status = library_->MarkerCfgReferenceMarker(instrument_handle, selector_string, reference_marker);
+      auto status = library_->MarkerCfgReferenceMarker(instrument, selector_string, reference_marker);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8459,8 +8459,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -8479,7 +8479,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 threshold = request->threshold();
-      auto status = library_->MarkerCfgThreshold(instrument_handle, selector_string, threshold_enabled, threshold);
+      auto status = library_->MarkerCfgThreshold(instrument, selector_string, threshold_enabled, threshold);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8496,8 +8496,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 trace;
       switch (request->trace_enum_case()) {
@@ -8515,7 +8515,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->MarkerCfgTrace(instrument_handle, selector_string, trace);
+      auto status = library_->MarkerCfgTrace(instrument, selector_string, trace);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8532,8 +8532,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 marker_type;
       switch (request->marker_type_enum_case()) {
@@ -8551,7 +8551,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->MarkerCfgType(instrument_handle, selector_string, marker_type);
+      auto status = library_->MarkerCfgType(instrument, selector_string, marker_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8568,11 +8568,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 marker_x_location = request->marker_x_location();
-      auto status = library_->MarkerCfgXLocation(instrument_handle, selector_string, marker_x_location);
+      auto status = library_->MarkerCfgXLocation(instrument, selector_string, marker_x_location);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8589,12 +8589,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 marker_x_location {};
       float64 marker_y_location {};
-      auto status = library_->MarkerFetchXY(instrument_handle, selector_string, &marker_x_location, &marker_y_location);
+      auto status = library_->MarkerFetchXY(instrument, selector_string, &marker_x_location, &marker_y_location);
       response->set_status(status);
       if (status == 0) {
         response->set_marker_x_location(marker_x_location);
@@ -8615,8 +8615,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 next_peak;
       switch (request->next_peak_enum_case()) {
@@ -8635,7 +8635,7 @@ namespace nirfmxspecan_grpc {
       }
 
       int32 next_peak_found {};
-      auto status = library_->MarkerNextPeak(instrument_handle, selector_string, next_peak, &next_peak_found);
+      auto status = library_->MarkerNextPeak(instrument, selector_string, next_peak, &next_peak_found);
       response->set_status(status);
       if (status == 0) {
         response->set_next_peak_found(next_peak_found);
@@ -8655,11 +8655,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_peaks {};
-      auto status = library_->MarkerPeakSearch(instrument_handle, selector_string, &number_of_peaks);
+      auto status = library_->MarkerPeakSearch(instrument, selector_string, &number_of_peaks);
       response->set_status(status);
       if (status == 0) {
         response->set_number_of_peaks(number_of_peaks);
@@ -8679,8 +8679,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -8699,7 +8699,7 @@ namespace nirfmxspecan_grpc {
       }
 
       int32 averaging_count = request->averaging_count();
-      auto status = library_->NFCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count);
+      auto status = library_->NFCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8716,8 +8716,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 calibration_loss_compensation_enabled;
       switch (request->calibration_loss_compensation_enabled_enum_case()) {
@@ -8742,7 +8742,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields calibration_loss_frequency and calibration_loss do not match");
       }
       int32 array_size = static_cast<int32>(request->calibration_loss().size());
-      auto status = library_->NFCfgCalibrationLoss(instrument_handle, selector_string, calibration_loss_compensation_enabled, calibration_loss_frequency, calibration_loss, calibration_loss_temperature, array_size);
+      auto status = library_->NFCfgCalibrationLoss(instrument, selector_string, calibration_loss_compensation_enabled, calibration_loss_frequency, calibration_loss, calibration_loss_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8759,28 +8759,28 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto duts_parameters_frequency = const_cast<float64*>(request->duts_parameters_frequency().data());
-      auto dut_s21 = const_cast<float64*>(request->dut_s21().data());
-      auto dut_s12 = const_cast<float64*>(request->dut_s12().data());
-      auto dut_s11 = const_cast<float64*>(request->dut_s11().data());
-      auto dut_s22 = const_cast<float64*>(request->dut_s22().data());
-      if (request->duts_parameters_frequency().size() != request->dut_s22().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields duts_parameters_frequency and dut_s22 do not match");
+      auto duts21 = const_cast<float64*>(request->duts21().data());
+      auto duts12 = const_cast<float64*>(request->duts12().data());
+      auto duts11 = const_cast<float64*>(request->duts11().data());
+      auto duts22 = const_cast<float64*>(request->duts22().data());
+      if (request->duts_parameters_frequency().size() != request->duts22().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields duts_parameters_frequency and duts22 do not match");
       }
-      if (request->dut_s21().size() != request->dut_s22().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields dut_s21 and dut_s22 do not match");
+      if (request->duts21().size() != request->duts22().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields duts21 and duts22 do not match");
       }
-      if (request->dut_s12().size() != request->dut_s22().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields dut_s12 and dut_s22 do not match");
+      if (request->duts12().size() != request->duts22().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields duts12 and duts22 do not match");
       }
-      if (request->dut_s11().size() != request->dut_s22().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields dut_s11 and dut_s22 do not match");
+      if (request->duts11().size() != request->duts22().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields duts11 and duts22 do not match");
       }
-      int32 array_size = static_cast<int32>(request->dut_s22().size());
-      auto status = library_->NFCfgColdSourceDUTSParameters(instrument_handle, selector_string, duts_parameters_frequency, dut_s21, dut_s12, dut_s11, dut_s22, array_size);
+      int32 array_size = static_cast<int32>(request->duts22().size());
+      auto status = library_->NFCfgColdSourceDUTSParameters(instrument, selector_string, duts_parameters_frequency, duts21, duts12, duts11, duts22, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8797,8 +8797,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto termination_vswr = const_cast<float64*>(request->termination_vswr().data());
       auto termination_vswr_frequency = const_cast<float64*>(request->termination_vswr_frequency().data());
@@ -8807,7 +8807,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields termination_vswr and termination_vswr_frequency do not match");
       }
       int32 array_size = static_cast<int32>(request->termination_vswr_frequency().size());
-      auto status = library_->NFCfgColdSourceInputTermination(instrument_handle, selector_string, termination_vswr, termination_vswr_frequency, termination_temperature, array_size);
+      auto status = library_->NFCfgColdSourceInputTermination(instrument, selector_string, termination_vswr, termination_vswr_frequency, termination_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8824,8 +8824,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 cold_source_mode;
       switch (request->cold_source_mode_enum_case()) {
@@ -8843,7 +8843,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->NFCfgColdSourceMode(instrument_handle, selector_string, cold_source_mode);
+      auto status = library_->NFCfgColdSourceMode(instrument, selector_string, cold_source_mode);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8860,8 +8860,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 dut_input_loss_compensation_enabled;
       switch (request->dut_input_loss_compensation_enabled_enum_case()) {
@@ -8886,7 +8886,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields dut_input_loss_frequency and dut_input_loss do not match");
       }
       int32 array_size = static_cast<int32>(request->dut_input_loss().size());
-      auto status = library_->NFCfgDUTInputLoss(instrument_handle, selector_string, dut_input_loss_compensation_enabled, dut_input_loss_frequency, dut_input_loss, dut_input_loss_temperature, array_size);
+      auto status = library_->NFCfgDUTInputLoss(instrument, selector_string, dut_input_loss_compensation_enabled, dut_input_loss_frequency, dut_input_loss, dut_input_loss_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8903,8 +8903,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 dut_output_loss_compensation_enabled;
       switch (request->dut_output_loss_compensation_enabled_enum_case()) {
@@ -8929,7 +8929,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields dut_output_loss_frequency and dut_output_loss do not match");
       }
       int32 array_size = static_cast<int32>(request->dut_output_loss().size());
-      auto status = library_->NFCfgDUTOutputLoss(instrument_handle, selector_string, dut_output_loss_compensation_enabled, dut_output_loss_frequency, dut_output_loss, dut_output_loss_temperature, array_size);
+      auto status = library_->NFCfgDUTOutputLoss(instrument, selector_string, dut_output_loss_compensation_enabled, dut_output_loss_frequency, dut_output_loss, dut_output_loss_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8946,12 +8946,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto frequency_list = const_cast<float64*>(request->frequency_list().data());
       int32 array_size = static_cast<int32>(request->frequency_list().size());
-      auto status = library_->NFCfgFrequencyList(instrument_handle, selector_string, frequency_list, array_size);
+      auto status = library_->NFCfgFrequencyList(instrument, selector_string, frequency_list, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8968,13 +8968,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
       int32 number_of_points = request->number_of_points();
-      auto status = library_->NFCfgFrequencyListStartStopPoints(instrument_handle, selector_string, start_frequency, stop_frequency, number_of_points);
+      auto status = library_->NFCfgFrequencyListStartStopPoints(instrument, selector_string, start_frequency, stop_frequency, number_of_points);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8991,13 +8991,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
       float64 step_size = request->step_size();
-      auto status = library_->NFCfgFrequencyListStartStopStep(instrument_handle, selector_string, start_frequency, stop_frequency, step_size);
+      auto status = library_->NFCfgFrequencyListStartStopStep(instrument, selector_string, start_frequency, stop_frequency, step_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9014,11 +9014,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_bandwidth = request->measurement_bandwidth();
-      auto status = library_->NFCfgMeasurementBandwidth(instrument_handle, selector_string, measurement_bandwidth);
+      auto status = library_->NFCfgMeasurementBandwidth(instrument, selector_string, measurement_bandwidth);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9035,11 +9035,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
-      auto status = library_->NFCfgMeasurementInterval(instrument_handle, selector_string, measurement_interval);
+      auto status = library_->NFCfgMeasurementInterval(instrument, selector_string, measurement_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9056,8 +9056,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_method;
       switch (request->measurement_method_enum_case()) {
@@ -9075,7 +9075,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->NFCfgMeasurementMethod(instrument_handle, selector_string, measurement_method);
+      auto status = library_->NFCfgMeasurementMethod(instrument, selector_string, measurement_method);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9092,8 +9092,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 y_factor_mode;
       switch (request->y_factor_mode_enum_case()) {
@@ -9111,7 +9111,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->NFCfgYFactorMode(instrument_handle, selector_string, y_factor_mode);
+      auto status = library_->NFCfgYFactorMode(instrument, selector_string, y_factor_mode);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9128,18 +9128,18 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto enr_frequency = const_cast<float64*>(request->enr_frequency().data());
-      auto en_r = const_cast<float64*>(request->en_r().data());
+      auto enr = const_cast<float64*>(request->enr().data());
       float64 cold_temperature = request->cold_temperature();
       float64 off_temperature = request->off_temperature();
-      if (request->enr_frequency().size() != request->en_r().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields enr_frequency and en_r do not match");
+      if (request->enr_frequency().size() != request->enr().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields enr_frequency and enr do not match");
       }
-      int32 array_size = static_cast<int32>(request->en_r().size());
-      auto status = library_->NFCfgYFactorNoiseSourceENR(instrument_handle, selector_string, enr_frequency, en_r, cold_temperature, off_temperature, array_size);
+      int32 array_size = static_cast<int32>(request->enr().size());
+      auto status = library_->NFCfgYFactorNoiseSourceENR(instrument, selector_string, enr_frequency, enr, cold_temperature, off_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9156,8 +9156,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_source_loss_compensation_enabled;
       switch (request->noise_source_loss_compensation_enabled_enum_case()) {
@@ -9182,7 +9182,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields noise_source_loss_frequency and noise_source_loss do not match");
       }
       int32 array_size = static_cast<int32>(request->noise_source_loss().size());
-      auto status = library_->NFCfgYFactorNoiseSourceLoss(instrument_handle, selector_string, noise_source_loss_compensation_enabled, noise_source_loss_frequency, noise_source_loss, noise_source_loss_temperature, array_size);
+      auto status = library_->NFCfgYFactorNoiseSourceLoss(instrument, selector_string, noise_source_loss_compensation_enabled, noise_source_loss_frequency, noise_source_loss, noise_source_loss_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9199,11 +9199,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 settling_time = request->settling_time();
-      auto status = library_->NFCfgYFactorNoiseSourceSettlingTime(instrument_handle, selector_string, settling_time);
+      auto status = library_->NFCfgYFactorNoiseSourceSettlingTime(instrument, selector_string, settling_time);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9220,10 +9220,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* calibration_setup_id = (char*)request->calibration_setup_id().c_str();
-      auto status = library_->NFClearCalibrationDatabase(instrument_handle, calibration_setup_id);
+      auto status = library_->NFClearCalibrationDatabase(instrument, calibration_setup_id);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9240,13 +9240,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->NFFetchAnalyzerNoiseFigure(instrument_handle, selector_string, timeout, nullptr, 0, &actual_array_size);
+        auto status = library_->NFFetchAnalyzerNoiseFigure(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -9254,7 +9254,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_analyzer_noise_figure()->Resize(actual_array_size, 0);
         float64* analyzer_noise_figure = response->mutable_analyzer_noise_figure()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->NFFetchAnalyzerNoiseFigure(instrument_handle, selector_string, timeout, analyzer_noise_figure, array_size, &actual_array_size);
+        status = library_->NFFetchAnalyzerNoiseFigure(instrument, selector_string, timeout, analyzer_noise_figure, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -9280,13 +9280,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->NFFetchColdSourcePower(instrument_handle, selector_string, timeout, nullptr, 0, &actual_array_size);
+        auto status = library_->NFFetchColdSourcePower(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -9294,7 +9294,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_cold_source_power()->Resize(actual_array_size, 0);
         float64* cold_source_power = response->mutable_cold_source_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->NFFetchColdSourcePower(instrument_handle, selector_string, timeout, cold_source_power, array_size, &actual_array_size);
+        status = library_->NFFetchColdSourcePower(instrument, selector_string, timeout, cold_source_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -9320,13 +9320,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->NFFetchDUTNoiseFigureAndGain(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->NFFetchDUTNoiseFigureAndGain(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -9338,7 +9338,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_dut_gain()->Resize(actual_array_size, 0);
         float64* dut_gain = response->mutable_dut_gain()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->NFFetchDUTNoiseFigureAndGain(instrument_handle, selector_string, timeout, dut_noise_figure, dut_noise_temperature, dut_gain, array_size, &actual_array_size);
+        status = library_->NFFetchDUTNoiseFigureAndGain(instrument, selector_string, timeout, dut_noise_figure, dut_noise_temperature, dut_gain, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -9366,13 +9366,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->NFFetchYFactorPowers(instrument_handle, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->NFFetchYFactorPowers(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -9382,7 +9382,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_cold_power()->Resize(actual_array_size, 0);
         float64* cold_power = response->mutable_cold_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->NFFetchYFactorPowers(instrument_handle, selector_string, timeout, hot_power, cold_power, array_size, &actual_array_size);
+        status = library_->NFFetchYFactorPowers(instrument, selector_string, timeout, hot_power, cold_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -9409,13 +9409,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->NFFetchYFactors(instrument_handle, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->NFFetchYFactors(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -9425,7 +9425,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_calibration_y_factor()->Resize(actual_array_size, 0);
         float64* calibration_y_factor = response->mutable_calibration_y_factor()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->NFFetchYFactors(instrument_handle, selector_string, timeout, measurement_y_factor, calibration_y_factor, array_size, &actual_array_size);
+        status = library_->NFFetchYFactors(instrument, selector_string, timeout, measurement_y_factor, calibration_y_factor, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -9452,12 +9452,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
 
       while (true) {
-        auto status = library_->NFGetCalibrationSetupId(instrument_handle, selector_string, nullptr, 0);
+        auto status = library_->NFGetCalibrationSetupId(instrument, selector_string, nullptr, 0);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -9468,7 +9468,7 @@ namespace nirfmxspecan_grpc {
         if (array_size > 0) {
             attr_val.resize(array_size - 1);
         }
-        status = library_->NFGetCalibrationSetupId(instrument_handle, selector_string, (char*)attr_val.data(), array_size);
+        status = library_->NFGetCalibrationSetupId(instrument, selector_string, (char*)attr_val.data(), array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -9494,13 +9494,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 dut_max_gain = request->dut_max_gain();
       float64 dut_max_noise_figure = request->dut_max_noise_figure();
       float64 reference_level {};
-      auto status = library_->NFRecommendReferenceLevel(instrument_handle, selector_string, dut_max_gain, dut_max_noise_figure, &reference_level);
+      auto status = library_->NFRecommendReferenceLevel(instrument, selector_string, dut_max_gain, dut_max_noise_figure, &reference_level);
       response->set_status(status);
       if (status == 0) {
         response->set_reference_level(reference_level);
@@ -9520,11 +9520,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* attr_val = (char*)request->attr_val().c_str();
-      auto status = library_->NFSetCalibrationSetupId(instrument_handle, selector_string, attr_val);
+      auto status = library_->NFSetCalibrationSetupId(instrument, selector_string, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9541,11 +9541,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 calibration_data_valid {};
-      auto status = library_->NFValidateCalibrationData(instrument_handle, selector_string, &calibration_data_valid);
+      auto status = library_->NFValidateCalibrationData(instrument, selector_string, &calibration_data_valid);
       response->set_status(status);
       if (status == 0) {
         response->set_calibration_data_valid(static_cast<nirfmxspecan_grpc::NFCalibrationDataValid>(calibration_data_valid));
@@ -9566,8 +9566,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -9602,7 +9602,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->OBWCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->OBWCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9619,11 +9619,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 bandwidth_percentage = request->bandwidth_percentage();
-      auto status = library_->OBWCfgBandwidthPercentage(instrument_handle, selector_string, bandwidth_percentage);
+      auto status = library_->OBWCfgBandwidthPercentage(instrument, selector_string, bandwidth_percentage);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9640,8 +9640,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -9660,7 +9660,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 fft_padding = request->fft_padding();
-      auto status = library_->OBWCfgFFT(instrument_handle, selector_string, fft_window, fft_padding);
+      auto status = library_->OBWCfgFFT(instrument, selector_string, fft_window, fft_padding);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9677,8 +9677,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 power_units;
       switch (request->power_units_enum_case()) {
@@ -9696,7 +9696,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->OBWCfgPowerUnits(instrument_handle, selector_string, power_units);
+      auto status = library_->OBWCfgPowerUnits(instrument, selector_string, power_units);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9713,8 +9713,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -9732,7 +9732,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::OBWCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -9749,7 +9749,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->OBWCfgRBWFilter(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type);
+      auto status = library_->OBWCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9766,11 +9766,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 span = request->span();
-      auto status = library_->OBWCfgSpan(instrument_handle, selector_string, span);
+      auto status = library_->OBWCfgSpan(instrument, selector_string, span);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9787,8 +9787,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -9807,7 +9807,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 sweep_time_interval = request->sweep_time_interval();
-      auto status = library_->OBWCfgSweepTime(instrument_handle, selector_string, sweep_time_auto, sweep_time_interval);
+      auto status = library_->OBWCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9824,8 +9824,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 occupied_bandwidth {};
@@ -9833,7 +9833,7 @@ namespace nirfmxspecan_grpc {
       float64 frequency_resolution {};
       float64 start_frequency {};
       float64 stop_frequency {};
-      auto status = library_->OBWFetchMeasurement(instrument_handle, selector_string, timeout, &occupied_bandwidth, &average_power, &frequency_resolution, &start_frequency, &stop_frequency);
+      auto status = library_->OBWFetchMeasurement(instrument, selector_string, timeout, &occupied_bandwidth, &average_power, &frequency_resolution, &start_frequency, &stop_frequency);
       response->set_status(status);
       if (status == 0) {
         response->set_occupied_bandwidth(occupied_bandwidth);
@@ -9857,15 +9857,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->OBWFetchSpectrumTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->OBWFetchSpectrumTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -9873,7 +9873,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OBWFetchSpectrumTrace(instrument_handle, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        status = library_->OBWFetchSpectrumTrace(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -9901,8 +9901,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 occupied_bandwidth {};
@@ -9910,7 +9910,7 @@ namespace nirfmxspecan_grpc {
       float64 frequency_resolution {};
       float64 start_frequency {};
       float64 stop_frequency {};
-      auto status = library_->OBWRead(instrument_handle, selector_string, timeout, &occupied_bandwidth, &average_power, &frequency_resolution, &start_frequency, &stop_frequency);
+      auto status = library_->OBWRead(instrument, selector_string, timeout, &occupied_bandwidth, &average_power, &frequency_resolution, &start_frequency, &stop_frequency);
       response->set_status(status);
       if (status == 0) {
         response->set_occupied_bandwidth(occupied_bandwidth);
@@ -9934,11 +9934,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_bandwidth = request->measurement_bandwidth();
-      auto status = library_->PAVTCfgMeasurementBandwidth(instrument_handle, selector_string, measurement_bandwidth);
+      auto status = library_->PAVTCfgMeasurementBandwidth(instrument, selector_string, measurement_bandwidth);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9955,12 +9955,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurerment_offset = request->measurerment_offset();
       float64 measurerment_length = request->measurerment_length();
-      auto status = library_->PAVTCfgMeasurementInterval(instrument_handle, selector_string, measurerment_offset, measurerment_length);
+      auto status = library_->PAVTCfgMeasurementInterval(instrument, selector_string, measurerment_offset, measurerment_length);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9977,8 +9977,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_interval_mode;
       switch (request->measurement_interval_mode_enum_case()) {
@@ -9996,7 +9996,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->PAVTCfgMeasurementIntervalMode(instrument_handle, selector_string, measurement_interval_mode);
+      auto status = library_->PAVTCfgMeasurementIntervalMode(instrument, selector_string, measurement_interval_mode);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10013,8 +10013,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_location_type;
       switch (request->measurement_location_type_enum_case()) {
@@ -10032,7 +10032,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->PAVTCfgMeasurementLocationType(instrument_handle, selector_string, measurement_location_type);
+      auto status = library_->PAVTCfgMeasurementLocationType(instrument, selector_string, measurement_location_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10049,11 +10049,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_segments = request->number_of_segments();
-      auto status = library_->PAVTCfgNumberOfSegments(instrument_handle, selector_string, number_of_segments);
+      auto status = library_->PAVTCfgNumberOfSegments(instrument, selector_string, number_of_segments);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10070,12 +10070,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 segment_measurement_offset = request->segment_measurement_offset();
       float64 segment_measurement_length = request->segment_measurement_length();
-      auto status = library_->PAVTCfgSegmentMeasurementInterval(instrument_handle, selector_string, segment_measurement_offset, segment_measurement_length);
+      auto status = library_->PAVTCfgSegmentMeasurementInterval(instrument, selector_string, segment_measurement_offset, segment_measurement_length);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10092,8 +10092,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto segment_measurement_offset = const_cast<float64*>(request->segment_measurement_offset().data());
       auto segment_measurement_length = const_cast<float64*>(request->segment_measurement_length().data());
@@ -10101,7 +10101,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields segment_measurement_offset and segment_measurement_length do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->segment_measurement_length().size());
-      auto status = library_->PAVTCfgSegmentMeasurementIntervalArray(instrument_handle, selector_string, segment_measurement_offset, segment_measurement_length, number_of_elements);
+      auto status = library_->PAVTCfgSegmentMeasurementIntervalArray(instrument, selector_string, segment_measurement_offset, segment_measurement_length, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10118,12 +10118,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto segment_start_time = const_cast<float64*>(request->segment_start_time().data());
       int32 number_of_elements = static_cast<int32>(request->segment_start_time().size());
-      auto status = library_->PAVTCfgSegmentStartTimeList(instrument_handle, selector_string, segment_start_time, number_of_elements);
+      auto status = library_->PAVTCfgSegmentStartTimeList(instrument, selector_string, segment_start_time, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10140,13 +10140,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_segments = request->number_of_segments();
       float64 segment0_start_time = request->segment0_start_time();
       float64 segment_interval = request->segment_interval();
-      auto status = library_->PAVTCfgSegmentStartTimeStep(instrument_handle, selector_string, number_of_segments, segment0_start_time, segment_interval);
+      auto status = library_->PAVTCfgSegmentStartTimeStep(instrument, selector_string, number_of_segments, segment0_start_time, segment_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10163,8 +10163,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 segment_type;
       switch (request->segment_type_enum_case()) {
@@ -10182,7 +10182,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->PAVTCfgSegmentType(instrument_handle, selector_string, segment_type);
+      auto status = library_->PAVTCfgSegmentType(instrument, selector_string, segment_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10199,8 +10199,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto segment_type_vector = std::vector<int32>();
       segment_type_vector.reserve(request->segment_type().size());
@@ -10212,7 +10212,7 @@ namespace nirfmxspecan_grpc {
       auto segment_type = segment_type_vector.data();
 
       int32 number_of_elements = static_cast<int32>(request->segment_type().size());
-      auto status = library_->PAVTCfgSegmentTypeArray(instrument_handle, selector_string, segment_type, number_of_elements);
+      auto status = library_->PAVTCfgSegmentTypeArray(instrument, selector_string, segment_type, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10229,8 +10229,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
@@ -10238,7 +10238,7 @@ namespace nirfmxspecan_grpc {
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->PAVTFetchAmplitudeTrace(instrument_handle, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->PAVTFetchAmplitudeTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -10246,7 +10246,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_amplitude()->Resize(actual_array_size, 0);
         float32* amplitude = response->mutable_amplitude()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->PAVTFetchAmplitudeTrace(instrument_handle, selector_string, timeout, trace_index, &x0, &dx, amplitude, array_size, &actual_array_size);
+        status = library_->PAVTFetchAmplitudeTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, amplitude, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -10274,15 +10274,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 mean_relative_phase {};
       float64 mean_relative_amplitude {};
       float64 mean_absolute_phase {};
       float64 mean_absolute_amplitude {};
-      auto status = library_->PAVTFetchPhaseAndAmplitude(instrument_handle, selector_string, timeout, &mean_relative_phase, &mean_relative_amplitude, &mean_absolute_phase, &mean_absolute_amplitude);
+      auto status = library_->PAVTFetchPhaseAndAmplitude(instrument, selector_string, timeout, &mean_relative_phase, &mean_relative_amplitude, &mean_absolute_phase, &mean_absolute_amplitude);
       response->set_status(status);
       if (status == 0) {
         response->set_mean_relative_phase(mean_relative_phase);
@@ -10305,13 +10305,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->PAVTFetchPhaseAndAmplitudeArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->PAVTFetchPhaseAndAmplitudeArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -10325,7 +10325,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_mean_absolute_amplitude()->Resize(actual_array_size, 0);
         float64* mean_absolute_amplitude = response->mutable_mean_absolute_amplitude()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->PAVTFetchPhaseAndAmplitudeArray(instrument_handle, selector_string, timeout, mean_relative_phase, mean_relative_amplitude, mean_absolute_phase, mean_absolute_amplitude, array_size, &actual_array_size);
+        status = library_->PAVTFetchPhaseAndAmplitudeArray(instrument, selector_string, timeout, mean_relative_phase, mean_relative_amplitude, mean_absolute_phase, mean_absolute_amplitude, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -10354,8 +10354,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
@@ -10363,7 +10363,7 @@ namespace nirfmxspecan_grpc {
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->PAVTFetchPhaseTrace(instrument_handle, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->PAVTFetchPhaseTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -10371,7 +10371,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_phase()->Resize(actual_array_size, 0);
         float32* phase = response->mutable_phase()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->PAVTFetchPhaseTrace(instrument_handle, selector_string, timeout, trace_index, &x0, &dx, phase, array_size, &actual_array_size);
+        status = library_->PAVTFetchPhaseTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, phase, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -10399,13 +10399,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
       float64 rbw_percentage = request->rbw_percentage();
-      auto status = library_->PhaseNoiseCfgAutoRange(instrument_handle, selector_string, start_frequency, stop_frequency, rbw_percentage);
+      auto status = library_->PhaseNoiseCfgAutoRange(instrument, selector_string, start_frequency, stop_frequency, rbw_percentage);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10422,11 +10422,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_multiplier = request->averaging_multiplier();
-      auto status = library_->PhaseNoiseCfgAveragingMultiplier(instrument_handle, selector_string, averaging_multiplier);
+      auto status = library_->PhaseNoiseCfgAveragingMultiplier(instrument, selector_string, averaging_multiplier);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10443,8 +10443,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 cancellation_enabled;
       switch (request->cancellation_enabled_enum_case()) {
@@ -10469,7 +10469,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields frequency and reference_phase_noise do not match");
       }
       int32 array_size = static_cast<int32>(request->reference_phase_noise().size());
-      auto status = library_->PhaseNoiseCfgCancellation(instrument_handle, selector_string, cancellation_enabled, cancellation_threshold, frequency, reference_phase_noise, array_size);
+      auto status = library_->PhaseNoiseCfgCancellation(instrument, selector_string, cancellation_enabled, cancellation_threshold, frequency, reference_phase_noise, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10486,8 +10486,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 integrated_noise_range_definition;
       switch (request->integrated_noise_range_definition_enum_case()) {
@@ -10511,7 +10511,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields integrated_noise_start_frequency and integrated_noise_stop_frequency do not match");
       }
       int32 array_size = static_cast<int32>(request->integrated_noise_stop_frequency().size());
-      auto status = library_->PhaseNoiseCfgIntegratedNoise(instrument_handle, selector_string, integrated_noise_range_definition, integrated_noise_start_frequency, integrated_noise_stop_frequency, array_size);
+      auto status = library_->PhaseNoiseCfgIntegratedNoise(instrument, selector_string, integrated_noise_range_definition, integrated_noise_start_frequency, integrated_noise_stop_frequency, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10528,11 +10528,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_ranges = request->number_of_ranges();
-      auto status = library_->PhaseNoiseCfgNumberOfRanges(instrument_handle, selector_string, number_of_ranges);
+      auto status = library_->PhaseNoiseCfgNumberOfRanges(instrument, selector_string, number_of_ranges);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10549,8 +10549,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto range_start_frequency = const_cast<float64*>(request->range_start_frequency().data());
       auto range_stop_frequency = const_cast<float64*>(request->range_stop_frequency().data());
@@ -10566,7 +10566,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields range_rbw_percentage and range_averaging_count do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->range_averaging_count().size());
-      auto status = library_->PhaseNoiseCfgRangeArray(instrument_handle, selector_string, range_start_frequency, range_stop_frequency, range_rbw_percentage, range_averaging_count, number_of_elements);
+      auto status = library_->PhaseNoiseCfgRangeArray(instrument, selector_string, range_start_frequency, range_stop_frequency, range_rbw_percentage, range_averaging_count, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10583,8 +10583,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 range_definition;
       switch (request->range_definition_enum_case()) {
@@ -10602,7 +10602,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->PhaseNoiseCfgRangeDefinition(instrument_handle, selector_string, range_definition);
+      auto status = library_->PhaseNoiseCfgRangeDefinition(instrument, selector_string, range_definition);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10619,8 +10619,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 smoothing_type;
       switch (request->smoothing_type_enum_case()) {
@@ -10639,7 +10639,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 smoothing_percentage = request->smoothing_percentage();
-      auto status = library_->PhaseNoiseCfgSmoothing(instrument_handle, selector_string, smoothing_type, smoothing_percentage);
+      auto status = library_->PhaseNoiseCfgSmoothing(instrument, selector_string, smoothing_type, smoothing_percentage);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10656,12 +10656,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto frequency_list = const_cast<float64*>(request->frequency_list().data());
       int32 array_size = static_cast<int32>(request->frequency_list().size());
-      auto status = library_->PhaseNoiseCfgSpotNoiseFrequencyList(instrument_handle, selector_string, frequency_list, array_size);
+      auto status = library_->PhaseNoiseCfgSpotNoiseFrequencyList(instrument, selector_string, frequency_list, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10678,8 +10678,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 spur_removal_enabled;
       switch (request->spur_removal_enabled_enum_case()) {
@@ -10698,7 +10698,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 peak_excursion = request->peak_excursion();
-      auto status = library_->PhaseNoiseCfgSpurRemoval(instrument_handle, selector_string, spur_removal_enabled, peak_excursion);
+      auto status = library_->PhaseNoiseCfgSpurRemoval(instrument, selector_string, spur_removal_enabled, peak_excursion);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10715,13 +10715,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 carrier_frequency {};
       float64 carrier_power {};
-      auto status = library_->PhaseNoiseFetchCarrierMeasurement(instrument_handle, selector_string, timeout, &carrier_frequency, &carrier_power);
+      auto status = library_->PhaseNoiseFetchCarrierMeasurement(instrument, selector_string, timeout, &carrier_frequency, &carrier_power);
       response->set_status(status);
       if (status == 0) {
         response->set_carrier_frequency(carrier_frequency);
@@ -10742,13 +10742,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->PhaseNoiseFetchIntegratedNoise(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->PhaseNoiseFetchIntegratedNoise(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -10764,7 +10764,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_jitter()->Resize(actual_array_size, 0);
         float64* jitter = response->mutable_jitter()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->PhaseNoiseFetchIntegratedNoise(instrument_handle, selector_string, timeout, integrated_phase_noise, residual_pm_in_radian, residual_pm_in_degree, residual_fm, jitter, array_size, &actual_array_size);
+        status = library_->PhaseNoiseFetchIntegratedNoise(instrument, selector_string, timeout, integrated_phase_noise, residual_pm_in_radian, residual_pm_in_degree, residual_fm, jitter, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -10794,13 +10794,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->PhaseNoiseFetchMeasuredLogPlotTrace(instrument_handle, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->PhaseNoiseFetchMeasuredLogPlotTrace(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -10810,7 +10810,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_measured_phase_noise()->Resize(actual_array_size, 0);
         float32* measured_phase_noise = response->mutable_measured_phase_noise()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->PhaseNoiseFetchMeasuredLogPlotTrace(instrument_handle, selector_string, timeout, frequency, measured_phase_noise, array_size, &actual_array_size);
+        status = library_->PhaseNoiseFetchMeasuredLogPlotTrace(instrument, selector_string, timeout, frequency, measured_phase_noise, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -10837,13 +10837,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->PhaseNoiseFetchSmoothedLogPlotTrace(instrument_handle, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->PhaseNoiseFetchSmoothedLogPlotTrace(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -10853,7 +10853,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_smoothed_phase_noise()->Resize(actual_array_size, 0);
         float32* smoothed_phase_noise = response->mutable_smoothed_phase_noise()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->PhaseNoiseFetchSmoothedLogPlotTrace(instrument_handle, selector_string, timeout, frequency, smoothed_phase_noise, array_size, &actual_array_size);
+        status = library_->PhaseNoiseFetchSmoothedLogPlotTrace(instrument, selector_string, timeout, frequency, smoothed_phase_noise, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -10880,13 +10880,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->PhaseNoiseFetchSpotNoise(instrument_handle, selector_string, timeout, nullptr, 0, &actual_array_size);
+        auto status = library_->PhaseNoiseFetchSpotNoise(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -10894,7 +10894,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spot_phase_noise()->Resize(actual_array_size, 0);
         float64* spot_phase_noise = response->mutable_spot_phase_noise()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->PhaseNoiseFetchSpotNoise(instrument_handle, selector_string, timeout, spot_phase_noise, array_size, &actual_array_size);
+        status = library_->PhaseNoiseFetchSpotNoise(instrument, selector_string, timeout, spot_phase_noise, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -10920,11 +10920,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      auto status = library_->ResetAttribute(instrument_handle, selector_string, attribute_id);
+      auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10941,10 +10941,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto status = library_->ResetToDefault(instrument_handle, selector_string);
+      auto status = library_->ResetToDefault(instrument, selector_string);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10961,8 +10961,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -10997,7 +10997,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SEMCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->SEMCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11014,11 +11014,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 carrier_channel_bandwidth = request->carrier_channel_bandwidth();
-      auto status = library_->SEMCfgCarrierChannelBandwidth(instrument_handle, selector_string, carrier_channel_bandwidth);
+      auto status = library_->SEMCfgCarrierChannelBandwidth(instrument, selector_string, carrier_channel_bandwidth);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11035,8 +11035,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 carrier_enabled;
       switch (request->carrier_enabled_enum_case()) {
@@ -11054,7 +11054,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SEMCfgCarrierEnabled(instrument_handle, selector_string, carrier_enabled);
+      auto status = library_->SEMCfgCarrierEnabled(instrument, selector_string, carrier_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11071,11 +11071,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 carrier_frequency = request->carrier_frequency();
-      auto status = library_->SEMCfgCarrierFrequency(instrument_handle, selector_string, carrier_frequency);
+      auto status = library_->SEMCfgCarrierFrequency(instrument, selector_string, carrier_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11092,11 +11092,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
-      auto status = library_->SEMCfgCarrierIntegrationBandwidth(instrument_handle, selector_string, integration_bandwidth);
+      auto status = library_->SEMCfgCarrierIntegrationBandwidth(instrument, selector_string, integration_bandwidth);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11113,8 +11113,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -11132,7 +11132,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::SEMCfgCarrierRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -11149,7 +11149,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SEMCfgCarrierRBWFilter(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type);
+      auto status = library_->SEMCfgCarrierRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11166,8 +11166,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rrc_filter_enabled;
       switch (request->rrc_filter_enabled_enum_case()) {
@@ -11186,7 +11186,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 rrc_alpha = request->rrc_alpha();
-      auto status = library_->SEMCfgCarrierRRCFilter(instrument_handle, selector_string, rrc_filter_enabled, rrc_alpha);
+      auto status = library_->SEMCfgCarrierRRCFilter(instrument, selector_string, rrc_filter_enabled, rrc_alpha);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11203,8 +11203,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -11223,7 +11223,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 fft_padding = request->fft_padding();
-      auto status = library_->SEMCfgFFT(instrument_handle, selector_string, fft_window, fft_padding);
+      auto status = library_->SEMCfgFFT(instrument, selector_string, fft_window, fft_padding);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11240,11 +11240,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_carriers = request->number_of_carriers();
-      auto status = library_->SEMCfgNumberOfCarriers(instrument_handle, selector_string, number_of_carriers);
+      auto status = library_->SEMCfgNumberOfCarriers(instrument, selector_string, number_of_carriers);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11261,11 +11261,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_offsets = request->number_of_offsets();
-      auto status = library_->SEMCfgNumberOfOffsets(instrument_handle, selector_string, number_of_offsets);
+      auto status = library_->SEMCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11282,8 +11282,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 absolute_limit_mode;
       switch (request->absolute_limit_mode_enum_case()) {
@@ -11303,7 +11303,7 @@ namespace nirfmxspecan_grpc {
 
       float64 absolute_limit_start = request->absolute_limit_start();
       float64 absolute_limit_stop = request->absolute_limit_stop();
-      auto status = library_->SEMCfgOffsetAbsoluteLimit(instrument_handle, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop);
+      auto status = library_->SEMCfgOffsetAbsoluteLimit(instrument, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11320,8 +11320,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto absolute_limit_mode_vector = std::vector<int32>();
       absolute_limit_mode_vector.reserve(request->absolute_limit_mode().size());
@@ -11341,7 +11341,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields absolute_limit_start and absolute_limit_stop do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->absolute_limit_stop().size());
-      auto status = library_->SEMCfgOffsetAbsoluteLimitArray(instrument_handle, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop, number_of_elements);
+      auto status = library_->SEMCfgOffsetAbsoluteLimitArray(instrument, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11358,11 +11358,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 bandwidth_integral = request->bandwidth_integral();
-      auto status = library_->SEMCfgOffsetBandwidthIntegral(instrument_handle, selector_string, bandwidth_integral);
+      auto status = library_->SEMCfgOffsetBandwidthIntegral(instrument, selector_string, bandwidth_integral);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11379,8 +11379,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 offset_start_frequency = request->offset_start_frequency();
       float64 offset_stop_frequency = request->offset_stop_frequency();
@@ -11416,7 +11416,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SEMCfgOffsetFrequency(instrument_handle, selector_string, offset_start_frequency, offset_stop_frequency, offset_enabled, offset_sideband);
+      auto status = library_->SEMCfgOffsetFrequency(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_enabled, offset_sideband);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11433,8 +11433,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto offset_start_frequency = const_cast<float64*>(request->offset_start_frequency().data());
       auto offset_stop_frequency = const_cast<float64*>(request->offset_stop_frequency().data());
@@ -11466,7 +11466,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields offset_enabled and offset_sideband do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->offset_sideband().size());
-      auto status = library_->SEMCfgOffsetFrequencyArray(instrument_handle, selector_string, offset_start_frequency, offset_stop_frequency, offset_enabled, offset_sideband, number_of_elements);
+      auto status = library_->SEMCfgOffsetFrequencyArray(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_enabled, offset_sideband, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11483,8 +11483,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 offset_frequency_definition;
       switch (request->offset_frequency_definition_enum_case()) {
@@ -11502,7 +11502,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SEMCfgOffsetFrequencyDefinition(instrument_handle, selector_string, offset_frequency_definition);
+      auto status = library_->SEMCfgOffsetFrequencyDefinition(instrument, selector_string, offset_frequency_definition);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11519,8 +11519,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 limit_fail_mask;
       switch (request->limit_fail_mask_enum_case()) {
@@ -11538,7 +11538,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SEMCfgOffsetLimitFailMask(instrument_handle, selector_string, limit_fail_mask);
+      auto status = library_->SEMCfgOffsetLimitFailMask(instrument, selector_string, limit_fail_mask);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11555,8 +11555,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -11574,7 +11574,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::SEMCfgOffsetRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -11591,7 +11591,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SEMCfgOffsetRBWFilter(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type);
+      auto status = library_->SEMCfgOffsetRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11608,8 +11608,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto rbw_auto_vector = std::vector<int32>();
       rbw_auto_vector.reserve(request->rbw_auto().size());
@@ -11620,7 +11620,7 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto rbw_auto = rbw_auto_vector.data();
 
-      auto rb_w = const_cast<float64*>(request->rb_w().data());
+      auto rbw = const_cast<float64*>(request->rbw().data());
       auto rbw_filter_type_vector = std::vector<int32>();
       rbw_filter_type_vector.reserve(request->rbw_filter_type().size());
       std::transform(
@@ -11633,11 +11633,11 @@ namespace nirfmxspecan_grpc {
       if (request->rbw_auto().size() != request->rbw_filter_type().size()) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rbw_auto and rbw_filter_type do not match");
       }
-      if (request->rb_w().size() != request->rbw_filter_type().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rb_w and rbw_filter_type do not match");
+      if (request->rbw().size() != request->rbw_filter_type().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rbw and rbw_filter_type do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->rbw_filter_type().size());
-      auto status = library_->SEMCfgOffsetRBWFilterArray(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type, number_of_elements);
+      auto status = library_->SEMCfgOffsetRBWFilterArray(instrument, selector_string, rbw_auto, rbw, rbw_filter_type, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11654,11 +11654,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 relative_attenuation = request->relative_attenuation();
-      auto status = library_->SEMCfgOffsetRelativeAttenuation(instrument_handle, selector_string, relative_attenuation);
+      auto status = library_->SEMCfgOffsetRelativeAttenuation(instrument, selector_string, relative_attenuation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11675,12 +11675,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto relative_attenuation = const_cast<float64*>(request->relative_attenuation().data());
       int32 number_of_elements = static_cast<int32>(request->relative_attenuation().size());
-      auto status = library_->SEMCfgOffsetRelativeAttenuationArray(instrument_handle, selector_string, relative_attenuation, number_of_elements);
+      auto status = library_->SEMCfgOffsetRelativeAttenuationArray(instrument, selector_string, relative_attenuation, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11697,8 +11697,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 relative_limit_mode;
       switch (request->relative_limit_mode_enum_case()) {
@@ -11718,7 +11718,7 @@ namespace nirfmxspecan_grpc {
 
       float64 relative_limit_start = request->relative_limit_start();
       float64 relative_limit_stop = request->relative_limit_stop();
-      auto status = library_->SEMCfgOffsetRelativeLimit(instrument_handle, selector_string, relative_limit_mode, relative_limit_start, relative_limit_stop);
+      auto status = library_->SEMCfgOffsetRelativeLimit(instrument, selector_string, relative_limit_mode, relative_limit_start, relative_limit_stop);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11735,8 +11735,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto relative_limit_mode_vector = std::vector<int32>();
       relative_limit_mode_vector.reserve(request->relative_limit_mode().size());
@@ -11756,7 +11756,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields relative_limit_start and relative_limit_stop do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->relative_limit_stop().size());
-      auto status = library_->SEMCfgOffsetRelativeLimitArray(instrument_handle, selector_string, relative_limit_mode, relative_limit_start, relative_limit_stop, number_of_elements);
+      auto status = library_->SEMCfgOffsetRelativeLimitArray(instrument, selector_string, relative_limit_mode, relative_limit_start, relative_limit_stop, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11773,8 +11773,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 power_units;
       switch (request->power_units_enum_case()) {
@@ -11792,7 +11792,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SEMCfgPowerUnits(instrument_handle, selector_string, power_units);
+      auto status = library_->SEMCfgPowerUnits(instrument, selector_string, power_units);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11809,8 +11809,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 reference_type;
       switch (request->reference_type_enum_case()) {
@@ -11828,7 +11828,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SEMCfgReferenceType(instrument_handle, selector_string, reference_type);
+      auto status = library_->SEMCfgReferenceType(instrument, selector_string, reference_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11845,8 +11845,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -11865,7 +11865,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 sweep_time_interval = request->sweep_time_interval();
-      auto status = library_->SEMCfgSweepTime(instrument_handle, selector_string, sweep_time_auto, sweep_time_interval);
+      auto status = library_->SEMCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11882,15 +11882,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SEMFetchAbsoluteMaskTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->SEMFetchAbsoluteMaskTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -11898,7 +11898,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_absolute_mask()->Resize(actual_array_size, 0);
         float32* absolute_mask = response->mutable_absolute_mask()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SEMFetchAbsoluteMaskTrace(instrument_handle, selector_string, timeout, &x0, &dx, absolute_mask, array_size, &actual_array_size);
+        status = library_->SEMFetchAbsoluteMaskTrace(instrument, selector_string, timeout, &x0, &dx, absolute_mask, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -11926,15 +11926,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
       float64 peak_absolute_power {};
       float64 peak_frequency {};
       float64 total_relative_power {};
-      auto status = library_->SEMFetchCarrierMeasurement(instrument_handle, selector_string, timeout, &absolute_power, &peak_absolute_power, &peak_frequency, &total_relative_power);
+      auto status = library_->SEMFetchCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &peak_absolute_power, &peak_frequency, &total_relative_power);
       response->set_status(status);
       if (status == 0) {
         response->set_absolute_power(absolute_power);
@@ -11957,12 +11957,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 composite_measurement_status {};
-      auto status = library_->SEMFetchCompositeMeasurementStatus(instrument_handle, selector_string, timeout, &composite_measurement_status);
+      auto status = library_->SEMFetchCompositeMeasurementStatus(instrument, selector_string, timeout, &composite_measurement_status);
       response->set_status(status);
       if (status == 0) {
         response->set_composite_measurement_status(static_cast<nirfmxspecan_grpc::SemCompositeMeasurementStatus>(composite_measurement_status));
@@ -11983,12 +11983,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 frequency_resolution {};
-      auto status = library_->SEMFetchFrequencyResolution(instrument_handle, selector_string, timeout, &frequency_resolution);
+      auto status = library_->SEMFetchFrequencyResolution(instrument, selector_string, timeout, &frequency_resolution);
       response->set_status(status);
       if (status == 0) {
         response->set_frequency_resolution(frequency_resolution);
@@ -12008,8 +12008,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
@@ -12017,7 +12017,7 @@ namespace nirfmxspecan_grpc {
       float64 margin_frequency {};
       float64 margin_absolute_power {};
       float64 margin_relative_power {};
-      auto status = library_->SEMFetchLowerOffsetMargin(instrument_handle, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
+      auto status = library_->SEMFetchLowerOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
       response->set_status(status);
       if (status == 0) {
         response->set_measurement_status(static_cast<nirfmxspecan_grpc::SemLowerOffsetMeasurementStatus>(measurement_status));
@@ -12042,13 +12042,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SEMFetchLowerOffsetMarginArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->SEMFetchLowerOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -12064,7 +12064,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
         float64* margin_relative_power = response->mutable_margin_relative_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SEMFetchLowerOffsetMarginArray(instrument_handle, selector_string, timeout, measurement_status, margin, margin_frequency, margin_absolute_power, margin_relative_power, array_size, &actual_array_size);
+        status = library_->SEMFetchLowerOffsetMarginArray(instrument, selector_string, timeout, measurement_status, margin, margin_frequency, margin_absolute_power, margin_relative_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -12103,8 +12103,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_absolute_power {};
@@ -12112,7 +12112,7 @@ namespace nirfmxspecan_grpc {
       float64 peak_absolute_power {};
       float64 peak_frequency {};
       float64 peak_relative_power {};
-      auto status = library_->SEMFetchLowerOffsetPower(instrument_handle, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
+      auto status = library_->SEMFetchLowerOffsetPower(instrument, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
       response->set_status(status);
       if (status == 0) {
         response->set_total_absolute_power(total_absolute_power);
@@ -12136,13 +12136,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SEMFetchLowerOffsetPowerArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->SEMFetchLowerOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -12158,7 +12158,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_peak_relative_power()->Resize(actual_array_size, 0);
         float64* peak_relative_power = response->mutable_peak_relative_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SEMFetchLowerOffsetPowerArray(instrument_handle, selector_string, timeout, total_absolute_power, total_relative_power, peak_absolute_power, peak_frequency, peak_relative_power, array_size, &actual_array_size);
+        status = library_->SEMFetchLowerOffsetPowerArray(instrument, selector_string, timeout, total_absolute_power, total_relative_power, peak_absolute_power, peak_frequency, peak_relative_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -12188,15 +12188,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SEMFetchRelativeMaskTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->SEMFetchRelativeMaskTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -12204,7 +12204,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_relative_mask()->Resize(actual_array_size, 0);
         float32* relative_mask = response->mutable_relative_mask()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SEMFetchRelativeMaskTrace(instrument_handle, selector_string, timeout, &x0, &dx, relative_mask, array_size, &actual_array_size);
+        status = library_->SEMFetchRelativeMaskTrace(instrument, selector_string, timeout, &x0, &dx, relative_mask, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -12232,15 +12232,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SEMFetchSpectrum(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->SEMFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -12248,7 +12248,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SEMFetchSpectrum(instrument_handle, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        status = library_->SEMFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -12276,12 +12276,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_carrier_power {};
-      auto status = library_->SEMFetchTotalCarrierPower(instrument_handle, selector_string, timeout, &total_carrier_power);
+      auto status = library_->SEMFetchTotalCarrierPower(instrument, selector_string, timeout, &total_carrier_power);
       response->set_status(status);
       if (status == 0) {
         response->set_total_carrier_power(total_carrier_power);
@@ -12301,8 +12301,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
@@ -12310,7 +12310,7 @@ namespace nirfmxspecan_grpc {
       float64 margin_frequency {};
       float64 margin_absolute_power {};
       float64 margin_relative_power {};
-      auto status = library_->SEMFetchUpperOffsetMargin(instrument_handle, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
+      auto status = library_->SEMFetchUpperOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
       response->set_status(status);
       if (status == 0) {
         response->set_measurement_status(static_cast<nirfmxspecan_grpc::SemUpperOffsetMeasurementStatus>(measurement_status));
@@ -12335,13 +12335,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SEMFetchUpperOffsetMarginArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->SEMFetchUpperOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -12357,7 +12357,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
         float64* margin_relative_power = response->mutable_margin_relative_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SEMFetchUpperOffsetMarginArray(instrument_handle, selector_string, timeout, measurement_status, margin, margin_frequency, margin_absolute_power, margin_relative_power, array_size, &actual_array_size);
+        status = library_->SEMFetchUpperOffsetMarginArray(instrument, selector_string, timeout, measurement_status, margin, margin_frequency, margin_absolute_power, margin_relative_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -12396,8 +12396,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_absolute_power {};
@@ -12405,7 +12405,7 @@ namespace nirfmxspecan_grpc {
       float64 peak_absolute_power {};
       float64 peak_frequency {};
       float64 peak_relative_power {};
-      auto status = library_->SEMFetchUpperOffsetPower(instrument_handle, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
+      auto status = library_->SEMFetchUpperOffsetPower(instrument, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
       response->set_status(status);
       if (status == 0) {
         response->set_total_absolute_power(total_absolute_power);
@@ -12429,13 +12429,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SEMFetchUpperOffsetPowerArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->SEMFetchUpperOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -12451,7 +12451,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_peak_relative_power()->Resize(actual_array_size, 0);
         float64* peak_relative_power = response->mutable_peak_relative_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SEMFetchUpperOffsetPowerArray(instrument_handle, selector_string, timeout, total_absolute_power, total_relative_power, peak_absolute_power, peak_frequency, peak_relative_power, array_size, &actual_array_size);
+        status = library_->SEMFetchUpperOffsetPowerArray(instrument, selector_string, timeout, total_absolute_power, total_relative_power, peak_absolute_power, peak_frequency, peak_relative_power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -12481,8 +12481,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       uInt32 measurements;
       switch (request->measurements_enum_case()) {
@@ -12501,7 +12501,7 @@ namespace nirfmxspecan_grpc {
       }
 
       int32 enable_all_traces = request->enable_all_traces();
-      auto status = library_->SelectMeasurements(instrument_handle, selector_string, measurements, enable_all_traces);
+      auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12518,9 +12518,9 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
-      auto status = library_->SendSoftwareEdgeTrigger(instrument_handle);
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      auto status = library_->SendSoftwareEdgeTrigger(instrument);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12537,12 +12537,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val = request->attr_val();
-      auto status = library_->SetAttributeF32(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12559,13 +12559,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeF32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12582,12 +12582,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val = request->attr_val();
-      auto status = library_->SetAttributeF64(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12604,13 +12604,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeF64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12627,12 +12627,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int16 attr_val = request->attr_val();
-      auto status = library_->SetAttributeI16(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12649,8 +12649,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val;
@@ -12669,7 +12669,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SetAttributeI32(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeI32(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12686,8 +12686,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_vector = std::vector<int32>();
@@ -12700,7 +12700,7 @@ namespace nirfmxspecan_grpc {
       auto attr_val = attr_val_vector.data();
 
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeI32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12717,12 +12717,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val = request->attr_val();
-      auto status = library_->SetAttributeI64(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12739,13 +12739,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeI64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12762,12 +12762,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int8 attr_val = request->attr_val();
-      auto status = library_->SetAttributeI8(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12787,8 +12787,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -12810,7 +12810,7 @@ namespace nirfmxspecan_grpc {
         });
 
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeI8Array(instrument_handle, selector_string, attribute_id, attr_val.data(), array_size);
+      auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12830,13 +12830,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeNIComplexDoubleArray(instrument_handle, selector_string, attribute_id, attr_val.data(), array_size);
+      auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12853,13 +12853,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeNIComplexSingleArray(instrument_handle, selector_string, attribute_id, attr_val.data(), array_size);
+      auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12876,8 +12876,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       char* attr_val;
@@ -12900,7 +12900,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SetAttributeString(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12917,12 +12917,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val = request->attr_val();
-      auto status = library_->SetAttributeU16(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12939,12 +12939,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val = request->attr_val();
-      auto status = library_->SetAttributeU32(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12961,13 +12961,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeU32Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -12984,13 +12984,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeU64Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13007,12 +13007,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val = request->attr_val();
-      auto status = library_->SetAttributeU8(instrument_handle, selector_string, attribute_id, attr_val);
+      auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13029,13 +13029,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
       int32 array_size = static_cast<int32>(request->attr_val().size());
-      auto status = library_->SetAttributeU8Array(instrument_handle, selector_string, attribute_id, attr_val, array_size);
+      auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13052,8 +13052,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -13088,7 +13088,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SpectrumCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->SpectrumCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13105,8 +13105,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 detector_type;
       switch (request->detector_type_enum_case()) {
@@ -13125,7 +13125,7 @@ namespace nirfmxspecan_grpc {
       }
 
       int32 detector_points = request->detector_points();
-      auto status = library_->SpectrumCfgDetector(instrument_handle, selector_string, detector_type, detector_points);
+      auto status = library_->SpectrumCfgDetector(instrument, selector_string, detector_type, detector_points);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13142,8 +13142,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -13162,7 +13162,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 fft_padding = request->fft_padding();
-      auto status = library_->SpectrumCfgFFT(instrument_handle, selector_string, fft_window, fft_padding);
+      auto status = library_->SpectrumCfgFFT(instrument, selector_string, fft_window, fft_padding);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13179,12 +13179,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
-      auto status = library_->SpectrumCfgFrequencyStartStop(instrument_handle, selector_string, start_frequency, stop_frequency);
+      auto status = library_->SpectrumCfgFrequencyStartStop(instrument, selector_string, start_frequency, stop_frequency);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13201,8 +13201,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_compensation_enabled;
       switch (request->noise_compensation_enabled_enum_case()) {
@@ -13220,7 +13220,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SpectrumCfgNoiseCompensationEnabled(instrument_handle, selector_string, noise_compensation_enabled);
+      auto status = library_->SpectrumCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13237,8 +13237,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 spectrum_power_units;
       switch (request->spectrum_power_units_enum_case()) {
@@ -13256,7 +13256,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SpectrumCfgPowerUnits(instrument_handle, selector_string, spectrum_power_units);
+      auto status = library_->SpectrumCfgPowerUnits(instrument, selector_string, spectrum_power_units);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13273,8 +13273,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -13292,7 +13292,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::SpectrumCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -13309,7 +13309,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SpectrumCfgRBWFilter(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type);
+      auto status = library_->SpectrumCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13326,11 +13326,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 span = request->span();
-      auto status = library_->SpectrumCfgSpan(instrument_handle, selector_string, span);
+      auto status = library_->SpectrumCfgSpan(instrument, selector_string, span);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13347,8 +13347,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -13367,7 +13367,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 sweep_time_interval = request->sweep_time_interval();
-      auto status = library_->SpectrumCfgSweepTime(instrument_handle, selector_string, sweep_time_auto, sweep_time_interval);
+      auto status = library_->SpectrumCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13384,8 +13384,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 vbw_auto;
       switch (request->vbw_auto_enum_case()) {
@@ -13403,9 +13403,9 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 vb_w = request->vb_w();
+      float64 vbw = request->vbw();
       float64 vbw_to_rbw_ratio = request->vbw_to_rbw_ratio();
-      auto status = library_->SpectrumCfgVBWFilter(instrument_handle, selector_string, vbw_auto, vb_w, vbw_to_rbw_ratio);
+      auto status = library_->SpectrumCfgVBWFilter(instrument, selector_string, vbw_auto, vbw, vbw_to_rbw_ratio);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13422,14 +13422,14 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 peak_amplitude {};
       float64 peak_frequency {};
       float64 frequency_resolution {};
-      auto status = library_->SpectrumFetchMeasurement(instrument_handle, selector_string, timeout, &peak_amplitude, &peak_frequency, &frequency_resolution);
+      auto status = library_->SpectrumFetchMeasurement(instrument, selector_string, timeout, &peak_amplitude, &peak_frequency, &frequency_resolution);
       response->set_status(status);
       if (status == 0) {
         response->set_peak_amplitude(peak_amplitude);
@@ -13451,15 +13451,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SpectrumFetchPowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->SpectrumFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -13467,7 +13467,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_power()->Resize(actual_array_size, 0);
         float32* power = response->mutable_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SpectrumFetchPowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, power, array_size, &actual_array_size);
+        status = library_->SpectrumFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -13495,15 +13495,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SpectrumFetchSpectrum(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->SpectrumFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -13511,7 +13511,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SpectrumFetchSpectrum(instrument_handle, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        status = library_->SpectrumFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -13539,15 +13539,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SpectrumRead(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->SpectrumRead(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -13555,7 +13555,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SpectrumRead(instrument_handle, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        status = library_->SpectrumRead(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -13583,11 +13583,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_calibration_data_valid {};
-      auto status = library_->SpectrumValidateNoiseCalibrationData(instrument_handle, selector_string, &noise_calibration_data_valid);
+      auto status = library_->SpectrumValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       response->set_status(status);
       if (status == 0) {
         response->set_noise_calibration_data_valid(static_cast<nirfmxspecan_grpc::SpectrumNoiseCalibrationDataValid>(noise_calibration_data_valid));
@@ -13608,8 +13608,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -13644,7 +13644,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SpurCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->SpurCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13661,8 +13661,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -13680,7 +13680,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SpurCfgFFTWindowType(instrument_handle, selector_string, fft_window);
+      auto status = library_->SpurCfgFFTWindowType(instrument, selector_string, fft_window);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13697,11 +13697,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_ranges = request->number_of_ranges();
-      auto status = library_->SpurCfgNumberOfRanges(instrument_handle, selector_string, number_of_ranges);
+      auto status = library_->SpurCfgNumberOfRanges(instrument, selector_string, number_of_ranges);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13718,8 +13718,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 absolute_limit_mode;
       switch (request->absolute_limit_mode_enum_case()) {
@@ -13739,7 +13739,7 @@ namespace nirfmxspecan_grpc {
 
       float64 absolute_limit_start = request->absolute_limit_start();
       float64 absolute_limit_stop = request->absolute_limit_stop();
-      auto status = library_->SpurCfgRangeAbsoluteLimit(instrument_handle, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop);
+      auto status = library_->SpurCfgRangeAbsoluteLimit(instrument, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13756,8 +13756,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto absolute_limit_mode_vector = std::vector<int32>();
       absolute_limit_mode_vector.reserve(request->absolute_limit_mode().size());
@@ -13777,7 +13777,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields absolute_limit_start and absolute_limit_stop do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->absolute_limit_stop().size());
-      auto status = library_->SpurCfgRangeAbsoluteLimitArray(instrument_handle, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop, number_of_elements);
+      auto status = library_->SpurCfgRangeAbsoluteLimitArray(instrument, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13794,8 +13794,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 detector_type;
       switch (request->detector_type_enum_case()) {
@@ -13814,7 +13814,7 @@ namespace nirfmxspecan_grpc {
       }
 
       int32 detector_points = request->detector_points();
-      auto status = library_->SpurCfgRangeDetector(instrument_handle, selector_string, detector_type, detector_points);
+      auto status = library_->SpurCfgRangeDetector(instrument, selector_string, detector_type, detector_points);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13831,8 +13831,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto detector_type_vector = std::vector<int32>();
       detector_type_vector.reserve(request->detector_type().size());
@@ -13848,7 +13848,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields detector_type and detector_points do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->detector_points().size());
-      auto status = library_->SpurCfgRangeDetectorArray(instrument_handle, selector_string, detector_type, detector_points, number_of_elements);
+      auto status = library_->SpurCfgRangeDetectorArray(instrument, selector_string, detector_type, detector_points, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13865,8 +13865,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
@@ -13886,7 +13886,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SpurCfgRangeFrequency(instrument_handle, selector_string, start_frequency, stop_frequency, range_enabled);
+      auto status = library_->SpurCfgRangeFrequency(instrument, selector_string, start_frequency, stop_frequency, range_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13903,8 +13903,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto start_frequency = const_cast<float64*>(request->start_frequency().data());
       auto stop_frequency = const_cast<float64*>(request->stop_frequency().data());
@@ -13924,7 +13924,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields stop_frequency and range_enabled do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->range_enabled().size());
-      auto status = library_->SpurCfgRangeFrequencyArray(instrument_handle, selector_string, start_frequency, stop_frequency, range_enabled, number_of_elements);
+      auto status = library_->SpurCfgRangeFrequencyArray(instrument, selector_string, start_frequency, stop_frequency, range_enabled, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13941,11 +13941,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_spurs_to_report = request->number_of_spurs_to_report();
-      auto status = library_->SpurCfgRangeNumberOfSpursToReport(instrument_handle, selector_string, number_of_spurs_to_report);
+      auto status = library_->SpurCfgRangeNumberOfSpursToReport(instrument, selector_string, number_of_spurs_to_report);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13962,12 +13962,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto number_of_spurs_to_report = const_cast<int32*>(reinterpret_cast<const int32*>(request->number_of_spurs_to_report().data()));
       int32 number_of_elements = static_cast<int32>(request->number_of_spurs_to_report().size());
-      auto status = library_->SpurCfgRangeNumberOfSpursToReportArray(instrument_handle, selector_string, number_of_spurs_to_report, number_of_elements);
+      auto status = library_->SpurCfgRangeNumberOfSpursToReportArray(instrument, selector_string, number_of_spurs_to_report, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13984,12 +13984,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 threshold = request->threshold();
       float64 excursion = request->excursion();
-      auto status = library_->SpurCfgRangePeakCriteria(instrument_handle, selector_string, threshold, excursion);
+      auto status = library_->SpurCfgRangePeakCriteria(instrument, selector_string, threshold, excursion);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14006,8 +14006,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto threshold = const_cast<float64*>(request->threshold().data());
       auto excursion = const_cast<float64*>(request->excursion().data());
@@ -14015,7 +14015,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields threshold and excursion do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->excursion().size());
-      auto status = library_->SpurCfgRangePeakCriteriaArray(instrument_handle, selector_string, threshold, excursion, number_of_elements);
+      auto status = library_->SpurCfgRangePeakCriteriaArray(instrument, selector_string, threshold, excursion, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14032,8 +14032,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto rbw_auto_vector = std::vector<int32>();
       rbw_auto_vector.reserve(request->rbw_auto().size());
@@ -14044,7 +14044,7 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto rbw_auto = rbw_auto_vector.data();
 
-      auto rb_w = const_cast<float64*>(request->rb_w().data());
+      auto rbw = const_cast<float64*>(request->rbw().data());
       auto rbw_filter_type_vector = std::vector<int32>();
       rbw_filter_type_vector.reserve(request->rbw_filter_type().size());
       std::transform(
@@ -14057,11 +14057,11 @@ namespace nirfmxspecan_grpc {
       if (request->rbw_auto().size() != request->rbw_filter_type().size()) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rbw_auto and rbw_filter_type do not match");
       }
-      if (request->rb_w().size() != request->rbw_filter_type().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rb_w and rbw_filter_type do not match");
+      if (request->rbw().size() != request->rbw_filter_type().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rbw and rbw_filter_type do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->rbw_filter_type().size());
-      auto status = library_->SpurCfgRangeRBWArray(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type, number_of_elements);
+      auto status = library_->SpurCfgRangeRBWArray(instrument, selector_string, rbw_auto, rbw, rbw_filter_type, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14078,8 +14078,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -14097,7 +14097,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::SpurCfgRangeRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -14114,7 +14114,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->SpurCfgRangeRBWFilter(instrument_handle, selector_string, rbw_auto, rb_w, rbw_filter_type);
+      auto status = library_->SpurCfgRangeRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14131,11 +14131,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 relative_attenuation = request->relative_attenuation();
-      auto status = library_->SpurCfgRangeRelativeAttenuation(instrument_handle, selector_string, relative_attenuation);
+      auto status = library_->SpurCfgRangeRelativeAttenuation(instrument, selector_string, relative_attenuation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14152,12 +14152,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto relative_attenuation = const_cast<float64*>(request->relative_attenuation().data());
       int32 number_of_elements = static_cast<int32>(request->relative_attenuation().size());
-      auto status = library_->SpurCfgRangeRelativeAttenuationArray(instrument_handle, selector_string, relative_attenuation, number_of_elements);
+      auto status = library_->SpurCfgRangeRelativeAttenuationArray(instrument, selector_string, relative_attenuation, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14174,8 +14174,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -14194,7 +14194,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 sweep_time_interval = request->sweep_time_interval();
-      auto status = library_->SpurCfgRangeSweepTime(instrument_handle, selector_string, sweep_time_auto, sweep_time_interval);
+      auto status = library_->SpurCfgRangeSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14211,8 +14211,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto sweep_time_auto_vector = std::vector<int32>();
       sweep_time_auto_vector.reserve(request->sweep_time_auto().size());
@@ -14228,7 +14228,7 @@ namespace nirfmxspecan_grpc {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields sweep_time_auto and sweep_time_interval do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->sweep_time_interval().size());
-      auto status = library_->SpurCfgRangeSweepTimeArray(instrument_handle, selector_string, sweep_time_auto, sweep_time_interval, number_of_elements);
+      auto status = library_->SpurCfgRangeSweepTimeArray(instrument, selector_string, sweep_time_auto, sweep_time_interval, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14245,8 +14245,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 vbw_auto;
       switch (request->vbw_auto_enum_case()) {
@@ -14264,9 +14264,9 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 vb_w = request->vb_w();
+      float64 vbw = request->vbw();
       float64 vbw_to_rbw_ratio = request->vbw_to_rbw_ratio();
-      auto status = library_->SpurCfgRangeVBWFilter(instrument_handle, selector_string, vbw_auto, vb_w, vbw_to_rbw_ratio);
+      auto status = library_->SpurCfgRangeVBWFilter(instrument, selector_string, vbw_auto, vbw, vbw_to_rbw_ratio);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14283,8 +14283,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto vbw_auto_vector = std::vector<int32>();
       vbw_auto_vector.reserve(request->vbw_auto().size());
@@ -14295,16 +14295,16 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto vbw_auto = vbw_auto_vector.data();
 
-      auto vb_w = const_cast<float64*>(request->vb_w().data());
+      auto vbw = const_cast<float64*>(request->vbw().data());
       auto vbw_to_rbw_ratio = const_cast<float64*>(request->vbw_to_rbw_ratio().data());
       if (request->vbw_auto().size() != request->vbw_to_rbw_ratio().size()) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields vbw_auto and vbw_to_rbw_ratio do not match");
       }
-      if (request->vb_w().size() != request->vbw_to_rbw_ratio().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields vb_w and vbw_to_rbw_ratio do not match");
+      if (request->vbw().size() != request->vbw_to_rbw_ratio().size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields vbw and vbw_to_rbw_ratio do not match");
       }
       int32 number_of_elements = static_cast<int32>(request->vbw_to_rbw_ratio().size());
-      auto status = library_->SpurCfgRangeVBWFilterArray(instrument_handle, selector_string, vbw_auto, vb_w, vbw_to_rbw_ratio, number_of_elements);
+      auto status = library_->SpurCfgRangeVBWFilterArray(instrument, selector_string, vbw_auto, vbw, vbw_to_rbw_ratio, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14321,11 +14321,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 trace_range_index = request->trace_range_index();
-      auto status = library_->SpurCfgTraceRangeIndex(instrument_handle, selector_string, trace_range_index);
+      auto status = library_->SpurCfgTraceRangeIndex(instrument, selector_string, trace_range_index);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14342,13 +14342,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SpurFetchAllSpurs(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->SpurFetchAllSpurs(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -14364,7 +14364,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spur_range_index()->Resize(actual_array_size, 0);
         int32* spur_range_index = reinterpret_cast<int32*>(response->mutable_spur_range_index()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->SpurFetchAllSpurs(instrument_handle, selector_string, timeout, spur_frequency, spur_amplitude, spur_margin, spur_absolute_limit, spur_range_index, array_size, &actual_array_size);
+        status = library_->SpurFetchAllSpurs(instrument, selector_string, timeout, spur_frequency, spur_amplitude, spur_margin, spur_absolute_limit, spur_range_index, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -14394,12 +14394,12 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
-      auto status = library_->SpurFetchMeasurementStatus(instrument_handle, selector_string, timeout, &measurement_status);
+      auto status = library_->SpurFetchMeasurementStatus(instrument, selector_string, timeout, &measurement_status);
       response->set_status(status);
       if (status == 0) {
         response->set_measurement_status(static_cast<nirfmxspecan_grpc::SpurMeasurementStatus>(measurement_status));
@@ -14420,15 +14420,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SpurFetchRangeAbsoluteLimitTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->SpurFetchRangeAbsoluteLimitTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -14436,7 +14436,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_absolute_limit()->Resize(actual_array_size, 0);
         float32* absolute_limit = response->mutable_absolute_limit()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SpurFetchRangeAbsoluteLimitTrace(instrument_handle, selector_string, timeout, &x0, &dx, absolute_limit, array_size, &actual_array_size);
+        status = library_->SpurFetchRangeAbsoluteLimitTrace(instrument, selector_string, timeout, &x0, &dx, absolute_limit, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -14464,15 +14464,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SpurFetchRangeSpectrumTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->SpurFetchRangeSpectrumTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -14480,7 +14480,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_range_spectrum()->Resize(actual_array_size, 0);
         float32* range_spectrum = response->mutable_range_spectrum()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SpurFetchRangeSpectrumTrace(instrument_handle, selector_string, timeout, &x0, &dx, range_spectrum, array_size, &actual_array_size);
+        status = library_->SpurFetchRangeSpectrumTrace(instrument, selector_string, timeout, &x0, &dx, range_spectrum, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -14508,13 +14508,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 range_status {};
       int32 detected_spurs {};
-      auto status = library_->SpurFetchRangeStatus(instrument_handle, selector_string, timeout, &range_status, &detected_spurs);
+      auto status = library_->SpurFetchRangeStatus(instrument, selector_string, timeout, &range_status, &detected_spurs);
       response->set_status(status);
       if (status == 0) {
         response->set_range_status(static_cast<nirfmxspecan_grpc::SpurRangeStatus>(range_status));
@@ -14536,13 +14536,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SpurFetchRangeStatusArray(instrument_handle, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->SpurFetchRangeStatusArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -14552,7 +14552,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_number_of_detected_spurs()->Resize(actual_array_size, 0);
         int32* number_of_detected_spurs = reinterpret_cast<int32*>(response->mutable_number_of_detected_spurs()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->SpurFetchRangeStatusArray(instrument_handle, selector_string, timeout, range_status, number_of_detected_spurs, array_size, &actual_array_size);
+        status = library_->SpurFetchRangeStatusArray(instrument, selector_string, timeout, range_status, number_of_detected_spurs, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -14588,15 +14588,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 spur_frequency {};
       float64 spur_amplitude {};
       float64 spur_margin {};
       float64 spur_absolute_limit {};
-      auto status = library_->SpurFetchSpurMeasurement(instrument_handle, selector_string, timeout, &spur_frequency, &spur_amplitude, &spur_margin, &spur_absolute_limit);
+      auto status = library_->SpurFetchSpurMeasurement(instrument, selector_string, timeout, &spur_frequency, &spur_amplitude, &spur_margin, &spur_absolute_limit);
       response->set_status(status);
       if (status == 0) {
         response->set_spur_frequency(spur_frequency);
@@ -14619,13 +14619,13 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->SpurFetchSpurMeasurementArray(instrument_handle, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->SpurFetchSpurMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -14639,7 +14639,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_spur_margin()->Resize(actual_array_size, 0);
         float64* spur_margin = response->mutable_spur_margin()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->SpurFetchSpurMeasurementArray(instrument_handle, selector_string, timeout, spur_frequency, spur_amplitude, spur_absolute_limit, spur_margin, array_size, &actual_array_size);
+        status = library_->SpurFetchSpurMeasurementArray(instrument, selector_string, timeout, spur_frequency, spur_amplitude, spur_absolute_limit, spur_margin, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -14668,8 +14668,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -14704,7 +14704,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->TXPCfgAveraging(instrument_handle, selector_string, averaging_enabled, averaging_count, averaging_type);
+      auto status = library_->TXPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14721,11 +14721,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
-      auto status = library_->TXPCfgMeasurementInterval(instrument_handle, selector_string, measurement_interval);
+      auto status = library_->TXPCfgMeasurementInterval(instrument, selector_string, measurement_interval);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14742,10 +14742,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      float64 rb_w = request->rb_w();
+      float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
         case nirfmxspecan_grpc::TXPCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
@@ -14763,7 +14763,7 @@ namespace nirfmxspecan_grpc {
       }
 
       float64 rrc_alpha = request->rrc_alpha();
-      auto status = library_->TXPCfgRBWFilter(instrument_handle, selector_string, rb_w, rbw_filter_type, rrc_alpha);
+      auto status = library_->TXPCfgRBWFilter(instrument, selector_string, rbw, rbw_filter_type, rrc_alpha);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14780,8 +14780,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -14816,7 +14816,7 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      auto status = library_->TXPCfgThreshold(instrument_handle, selector_string, threshold_enabled, threshold_level, threshold_type);
+      auto status = library_->TXPCfgThreshold(instrument, selector_string, threshold_enabled, threshold_level, threshold_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14833,8 +14833,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 vbw_auto;
       switch (request->vbw_auto_enum_case()) {
@@ -14852,9 +14852,9 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      float64 vb_w = request->vb_w();
+      float64 vbw = request->vbw();
       float64 vbw_to_rbw_ratio = request->vbw_to_rbw_ratio();
-      auto status = library_->TXPCfgVBWFilter(instrument_handle, selector_string, vbw_auto, vb_w, vbw_to_rbw_ratio);
+      auto status = library_->TXPCfgVBWFilter(instrument, selector_string, vbw_auto, vbw, vbw_to_rbw_ratio);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14871,15 +14871,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_mean_power {};
       float64 peak_to_average_ratio {};
       float64 maximum_power {};
       float64 minimum_power {};
-      auto status = library_->TXPFetchMeasurement(instrument_handle, selector_string, timeout, &average_mean_power, &peak_to_average_ratio, &maximum_power, &minimum_power);
+      auto status = library_->TXPFetchMeasurement(instrument, selector_string, timeout, &average_mean_power, &peak_to_average_ratio, &maximum_power, &minimum_power);
       response->set_status(status);
       if (status == 0) {
         response->set_average_mean_power(average_mean_power);
@@ -14902,15 +14902,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->TXPFetchPowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        auto status = library_->TXPFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -14918,7 +14918,7 @@ namespace nirfmxspecan_grpc {
         response->mutable_power()->Resize(actual_array_size, 0);
         float32* power = response->mutable_power()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->TXPFetchPowerTrace(instrument_handle, selector_string, timeout, &x0, &dx, power, array_size, &actual_array_size);
+        status = library_->TXPFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, power, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -14946,15 +14946,15 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_mean_power {};
       float64 peak_to_average_ratio {};
       float64 maximum_power {};
       float64 minimum_power {};
-      auto status = library_->TXPRead(instrument_handle, selector_string, timeout, &average_mean_power, &peak_to_average_ratio, &maximum_power, &minimum_power);
+      auto status = library_->TXPRead(instrument, selector_string, timeout, &average_mean_power, &peak_to_average_ratio, &maximum_power, &minimum_power);
       response->set_status(status);
       if (status == 0) {
         response->set_average_mean_power(average_mean_power);
@@ -14977,10 +14977,10 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       float64 timeout = request->timeout();
-      auto status = library_->WaitForAcquisitionComplete(instrument_handle, timeout);
+      auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -14997,11 +14997,11 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      auto status = library_->WaitForMeasurementComplete(instrument_handle, selector_string, timeout);
+      auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

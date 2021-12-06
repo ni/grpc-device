@@ -104,12 +104,12 @@ build_port_string(const StubPtr& stub, const pb::string& selector_string, const 
 }
 
 CfgExternalAttenuationInterpolationLinearResponse
-cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::string& table_name, const pb::int32& format)
+cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::int32& format)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgExternalAttenuationInterpolationLinearRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
   request.set_format(format);
@@ -123,12 +123,12 @@ cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevic
 }
 
 CfgExternalAttenuationInterpolationNearestResponse
-cfg_external_attenuation_interpolation_nearest(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::string& table_name)
+cfg_external_attenuation_interpolation_nearest(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgExternalAttenuationInterpolationNearestRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
 
@@ -141,12 +141,12 @@ cfg_external_attenuation_interpolation_nearest(const StubPtr& stub, const nidevi
 }
 
 CfgExternalAttenuationInterpolationSplineResponse
-cfg_external_attenuation_interpolation_spline(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::string& table_name)
+cfg_external_attenuation_interpolation_spline(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgExternalAttenuationInterpolationSplineRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
 
@@ -159,12 +159,12 @@ cfg_external_attenuation_interpolation_spline(const StubPtr& stub, const nidevic
 }
 
 CfgExternalAttenuationTableResponse
-cfg_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::string& table_name, const std::vector<double>& frequency, const std::vector<double>& external_attenuation)
+cfg_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const std::vector<double>& frequency, const std::vector<double>& external_attenuation)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgExternalAttenuationTableRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
   copy_array(frequency, request.mutable_frequency());
@@ -179,12 +179,12 @@ cfg_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 CfgFrequencyReferenceResponse
-cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const pb::string& frequency_reference_source, const double& frequency_reference_frequency)
+cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::string& frequency_reference_source, const double& frequency_reference_frequency)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgFrequencyReferenceRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_frequency_reference_source(frequency_reference_source);
   request.set_frequency_reference_frequency(frequency_reference_frequency);
@@ -198,12 +198,12 @@ cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 CfgMechanicalAttenuationResponse
-cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const pb::int32& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
+cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgMechanicalAttenuationRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_mechanical_attenuation_auto(mechanical_attenuation_auto);
   request.set_mechanical_attenuation_value(mechanical_attenuation_value);
@@ -217,12 +217,12 @@ cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 CfgRFAttenuationResponse
-cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const pb::int32& rf_attenuation_auto, const double& rf_attenuation_value)
+cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& rf_attenuation_auto, const double& rf_attenuation_value)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgRFAttenuationRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_rf_attenuation_auto(rf_attenuation_auto);
   request.set_rf_attenuation_value(rf_attenuation_value);
@@ -236,12 +236,12 @@ cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 CfgSParameterExternalAttenuationTableResponse
-cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::string& table_name, const std::vector<double>& frequency, const std::vector<nidevice_grpc::NIComplexNumber>& s_parameters, const pb::int32& number_of_ports, const pb::int32& s_parameter_orientation)
+cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const std::vector<double>& frequency, const std::vector<nidevice_grpc::NIComplexNumber>& s_parameters, const pb::int32& number_of_ports, const pb::int32& s_parameter_orientation)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgSParameterExternalAttenuationTableRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
   copy_array(frequency, request.mutable_frequency());
@@ -258,12 +258,12 @@ cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_g
 }
 
 CfgSParameterExternalAttenuationTypeResponse
-cfg_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::int32& s_parameter_type)
+cfg_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& s_parameter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgSParameterExternalAttenuationTypeRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_s_parameter_type(s_parameter_type);
 
@@ -276,12 +276,12 @@ cfg_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_gr
 }
 
 CheckAcquisitionStatusResponse
-check_acquisition_status(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+check_acquisition_status(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
   ::grpc::ClientContext context;
 
   auto request = CheckAcquisitionStatusRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
 
   auto response = CheckAcquisitionStatusResponse{};
 
@@ -292,12 +292,12 @@ check_acquisition_status(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 CheckIfListExistsResponse
-check_if_list_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& list_name)
+check_if_list_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& list_name)
 {
   ::grpc::ClientContext context;
 
   auto request = CheckIfListExistsRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_list_name(list_name);
 
   auto response = CheckIfListExistsResponse{};
@@ -309,12 +309,12 @@ check_if_list_exists(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 CheckIfSignalConfigurationExistsResponse
-check_if_signal_configuration_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& signal_name)
+check_if_signal_configuration_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name)
 {
   ::grpc::ClientContext context;
 
   auto request = CheckIfSignalConfigurationExistsRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_signal_name(signal_name);
 
   auto response = CheckIfSignalConfigurationExistsResponse{};
@@ -326,12 +326,12 @@ check_if_signal_configuration_exists(const StubPtr& stub, const nidevice_grpc::S
 }
 
 CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::int32& force_destroy)
+close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& force_destroy)
 {
   ::grpc::ClientContext context;
 
   auto request = CloseRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_force_destroy(force_destroy);
 
   auto response = CloseResponse{};
@@ -343,12 +343,12 @@ close(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, cons
 }
 
 DeleteAllExternalAttenuationTablesResponse
-delete_all_external_attenuation_tables(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string)
+delete_all_external_attenuation_tables(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
 {
   ::grpc::ClientContext context;
 
   auto request = DeleteAllExternalAttenuationTablesRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
 
   auto response = DeleteAllExternalAttenuationTablesResponse{};
@@ -360,12 +360,12 @@ delete_all_external_attenuation_tables(const StubPtr& stub, const nidevice_grpc:
 }
 
 DeleteExternalAttenuationTableResponse
-delete_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::string& table_name)
+delete_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name)
 {
   ::grpc::ClientContext context;
 
   auto request = DeleteExternalAttenuationTableRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
 
@@ -378,12 +378,12 @@ delete_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 DisableCalibrationPlaneResponse
-disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string)
+disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
 {
   ::grpc::ClientContext context;
 
   auto request = DisableCalibrationPlaneRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
 
   auto response = DisableCalibrationPlaneResponse{};
@@ -395,12 +395,12 @@ disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 EnableCalibrationPlaneResponse
-enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string)
+enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
 {
   ::grpc::ClientContext context;
 
   auto request = EnableCalibrationPlaneRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
 
   auto response = EnableCalibrationPlaneResponse{};
@@ -412,12 +412,12 @@ enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::int32& export_signal_source, const pb::string& export_signal_output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& export_signal_source, const pb::string& export_signal_output_terminal)
 {
   ::grpc::ClientContext context;
 
   auto request = ExportSignalRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_export_signal_source(export_signal_source);
   request.set_export_signal_output_terminal(export_signal_output_terminal);
 
@@ -430,12 +430,12 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument_hand
 }
 
 GetAttributeF32Response
-get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeF32Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -448,12 +448,12 @@ get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 GetAttributeF32ArrayResponse
-get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeF32ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -466,12 +466,12 @@ get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeF64Response
-get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeF64Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -484,12 +484,12 @@ get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 GetAttributeF64ArrayResponse
-get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeF64ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -502,12 +502,12 @@ get_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeI16Response
-get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeI16Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -520,12 +520,12 @@ get_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 GetAttributeI32Response
-get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeI32Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -538,12 +538,12 @@ get_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 GetAttributeI32ArrayResponse
-get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeI32ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -556,12 +556,12 @@ get_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeI64Response
-get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeI64Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -574,12 +574,12 @@ get_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 GetAttributeI64ArrayResponse
-get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeI64ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -592,12 +592,12 @@ get_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeI8Response
-get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeI8Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -610,12 +610,12 @@ get_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument_h
 }
 
 GetAttributeI8ArrayResponse
-get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeI8ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -628,12 +628,12 @@ get_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 GetAttributeNIComplexDoubleArrayResponse
-get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeNIComplexDoubleArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -646,12 +646,12 @@ get_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 GetAttributeNIComplexSingleArrayResponse
-get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeNIComplexSingleArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -664,12 +664,12 @@ get_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 GetAttributeStringResponse
-get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeStringRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -682,12 +682,12 @@ get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 GetAttributeU16Response
-get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeU16Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -700,12 +700,12 @@ get_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 GetAttributeU32Response
-get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeU32Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -718,12 +718,12 @@ get_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 GetAttributeU32ArrayResponse
-get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeU32ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -736,12 +736,12 @@ get_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeU64ArrayResponse
-get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeU64ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -754,12 +754,12 @@ get_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 GetAttributeU8Response
-get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeU8Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -772,12 +772,12 @@ get_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument_h
 }
 
 GetAttributeU8ArrayResponse
-get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeU8ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -790,12 +790,12 @@ get_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 GetAvailablePortsResponse
-get_available_ports(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string)
+get_available_ports(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAvailablePortsRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
 
   auto response = GetAvailablePortsResponse{};
@@ -807,12 +807,12 @@ get_available_ports(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 }
 
 GetErrorResponse
-get_error(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+get_error(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
   ::grpc::ClientContext context;
 
   auto request = GetErrorRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
 
   auto response = GetErrorResponse{};
 
@@ -823,12 +823,12 @@ get_error(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
 }
 
 GetErrorStringResponse
-get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::int32& error_code)
+get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& error_code)
 {
   ::grpc::ClientContext context;
 
   auto request = GetErrorStringRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_error_code(error_code);
 
   auto response = GetErrorStringResponse{};
@@ -840,12 +840,12 @@ get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument_h
 }
 
 GetExternalAttenuationTableActualValueResponse
-get_external_attenuation_table_actual_value(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string)
+get_external_attenuation_table_actual_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
 {
   ::grpc::ClientContext context;
 
   auto request = GetExternalAttenuationTableActualValueRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
 
   auto response = GetExternalAttenuationTableActualValueResponse{};
@@ -857,12 +857,12 @@ get_external_attenuation_table_actual_value(const StubPtr& stub, const nidevice_
 }
 
 GetNIRFSASessionResponse
-get_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+get_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
   ::grpc::ClientContext context;
 
   auto request = GetNIRFSASessionRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
 
   auto response = GetNIRFSASessionResponse{};
 
@@ -873,12 +873,12 @@ get_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 GetNIRFSASessionArrayResponse
-get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
   ::grpc::ClientContext context;
 
   auto request = GetNIRFSASessionArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
 
   auto response = GetNIRFSASessionArrayResponse{};
 
@@ -889,12 +889,12 @@ get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 GetSelfCalibrateLastDateAndTimeResponse
-get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::int64& self_calibrate_step)
+get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int64& self_calibrate_step)
 {
   ::grpc::ClientContext context;
 
   auto request = GetSelfCalibrateLastDateAndTimeRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_self_calibrate_step(self_calibrate_step);
 
@@ -907,12 +907,12 @@ get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::
 }
 
 GetSelfCalibrateLastTemperatureResponse
-get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::int64& self_calibrate_step)
+get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int64& self_calibrate_step)
 {
   ::grpc::ClientContext context;
 
   auto request = GetSelfCalibrateLastTemperatureRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_self_calibrate_step(self_calibrate_step);
 
@@ -974,12 +974,12 @@ initialize_from_nirfsa_session_array(const StubPtr& stub, const std::vector<pb::
 }
 
 IsSelfCalibrateValidResponse
-is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string)
+is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
 {
   ::grpc::ClientContext context;
 
   auto request = IsSelfCalibrateValidRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
 
   auto response = IsSelfCalibrateValidResponse{};
@@ -991,12 +991,12 @@ is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 LoadAllConfigurationsResponse
-load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& file_path, const pb::int32& load_rf_instr_configuration)
+load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path, const pb::int32& load_rf_instr_configuration)
 {
   ::grpc::ClientContext context;
 
   auto request = LoadAllConfigurationsRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_file_path(file_path);
   request.set_load_rf_instr_configuration(load_rf_instr_configuration);
 
@@ -1009,12 +1009,12 @@ load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 LoadSParameterExternalAttenuationTableFromS2PFileResponse
-load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::string& table_name, const pb::string& s2_p_file_path, const pb::int32& s_parameter_orientation)
+load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::string& s2_p_file_path, const pb::int32& s_parameter_orientation)
 {
   ::grpc::ClientContext context;
 
   auto request = LoadSParameterExternalAttenuationTableFromS2PFileRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
   request.set_s2_p_file_path(s2_p_file_path);
@@ -1029,12 +1029,12 @@ load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, c
 }
 
 ResetAttributeResponse
-reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetAttributeRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
@@ -1047,12 +1047,12 @@ reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument_ha
 }
 
 ResetDriverResponse
-reset_driver(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+reset_driver(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetDriverRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
 
   auto response = ResetDriverResponse{};
 
@@ -1063,12 +1063,12 @@ reset_driver(const StubPtr& stub, const nidevice_grpc::Session& instrument_handl
 }
 
 ResetEntireSessionResponse
-reset_entire_session(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+reset_entire_session(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetEntireSessionRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
 
   auto response = ResetEntireSessionResponse{};
 
@@ -1079,12 +1079,12 @@ reset_entire_session(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 ResetToDefaultResponse
-reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
   ::grpc::ClientContext context;
 
   auto request = ResetToDefaultRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
 
   auto response = ResetToDefaultResponse{};
 
@@ -1095,12 +1095,12 @@ reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument_h
 }
 
 SaveAllConfigurationsResponse
-save_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& file_path)
+save_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path)
 {
   ::grpc::ClientContext context;
 
   auto request = SaveAllConfigurationsRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_file_path(file_path);
 
   auto response = SaveAllConfigurationsResponse{};
@@ -1112,12 +1112,12 @@ save_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SelectActiveExternalAttenuationTableResponse
-select_active_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::string& table_name)
+select_active_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name)
 {
   ::grpc::ClientContext context;
 
   auto request = SelectActiveExternalAttenuationTableRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
 
@@ -1130,12 +1130,12 @@ select_active_external_attenuation_table(const StubPtr& stub, const nidevice_grp
 }
 
 SelfCalibrateResponse
-self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::int32& steps_to_omit)
+self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& steps_to_omit)
 {
   ::grpc::ClientContext context;
 
   auto request = SelfCalibrateRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_steps_to_omit(steps_to_omit);
 
@@ -1148,12 +1148,12 @@ self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument_han
 }
 
 SelfCalibrateRangeResponse
-self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& selector_string, const pb::int32& steps_to_omit, const double& minimum_frequency, const double& maximum_frequency, const double& minimum_reference_level, const double& maximum_reference_level)
+self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& steps_to_omit, const double& minimum_frequency, const double& maximum_frequency, const double& minimum_reference_level, const double& maximum_reference_level)
 {
   ::grpc::ClientContext context;
 
   auto request = SelfCalibrateRangeRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_steps_to_omit(steps_to_omit);
   request.set_minimum_frequency(minimum_frequency);
@@ -1170,12 +1170,12 @@ self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 SendSoftwareEdgeAdvanceTriggerResponse
-send_software_edge_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+send_software_edge_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
   ::grpc::ClientContext context;
 
   auto request = SendSoftwareEdgeAdvanceTriggerRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
 
   auto response = SendSoftwareEdgeAdvanceTriggerResponse{};
 
@@ -1186,12 +1186,12 @@ send_software_edge_advance_trigger(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 SendSoftwareEdgeStartTriggerResponse
-send_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle)
+send_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
   ::grpc::ClientContext context;
 
   auto request = SendSoftwareEdgeStartTriggerRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
 
   auto response = SendSoftwareEdgeStartTriggerResponse{};
 
@@ -1202,12 +1202,12 @@ send_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 SetAttributeF32Response
-set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const float& attr_val)
+set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const float& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeF32Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1221,12 +1221,12 @@ set_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 SetAttributeF32ArrayResponse
-set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<float>& attr_val)
+set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<float>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeF32ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   copy_array(attr_val, request.mutable_attr_val());
@@ -1240,12 +1240,12 @@ set_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeF64Response
-set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const double& attr_val)
+set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const double& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeF64Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1259,12 +1259,12 @@ set_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 SetAttributeF64ArrayResponse
-set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<double>& attr_val)
+set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<double>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeF64ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   copy_array(attr_val, request.mutable_attr_val());
@@ -1278,12 +1278,12 @@ set_attribute_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeI16Response
-set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int32& attr_val)
+set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int32& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeI16Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1297,12 +1297,12 @@ set_attribute_i16(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 SetAttributeI32Response
-set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const simple_variant<NiRFmxInstrInt32AttributeValues, pb::int32>& attr_val)
+set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const simple_variant<NiRFmxInstrInt32AttributeValues, pb::int32>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeI32Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   const auto attr_val_ptr = attr_val.get_if<NiRFmxInstrInt32AttributeValues>();
@@ -1323,12 +1323,12 @@ set_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 SetAttributeI32ArrayResponse
-set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeI32ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   copy_array(attr_val, request.mutable_attr_val());
@@ -1342,12 +1342,12 @@ set_attribute_i32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeI64Response
-set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int64& attr_val)
+set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int64& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeI64Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1361,12 +1361,12 @@ set_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 SetAttributeI64ArrayResponse
-set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int64>& attr_val)
+set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int64>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeI64ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   copy_array(attr_val, request.mutable_attr_val());
@@ -1380,12 +1380,12 @@ set_attribute_i64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeI8Response
-set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int32& attr_val)
+set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::int32& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeI8Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1399,12 +1399,12 @@ set_attribute_i8(const StubPtr& stub, const nidevice_grpc::Session& instrument_h
 }
 
 SetAttributeI8ArrayResponse
-set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
+set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::int32>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeI8ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   copy_array(attr_val, request.mutable_attr_val());
@@ -1418,12 +1418,12 @@ set_attribute_i8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 SetAttributeNIComplexDoubleArrayResponse
-set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumber>& attr_val)
+set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumber>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeNIComplexDoubleArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   copy_array(attr_val, request.mutable_attr_val());
@@ -1437,12 +1437,12 @@ set_attribute_ni_complex_double_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 SetAttributeNIComplexSingleArrayResponse
-set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumberF32>& attr_val)
+set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<nidevice_grpc::NIComplexNumberF32>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeNIComplexSingleArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   copy_array(attr_val, request.mutable_attr_val());
@@ -1456,12 +1456,12 @@ set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 SetAttributeStringResponse
-set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::string& attr_val)
+set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::string& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeStringRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1475,12 +1475,12 @@ set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 SetAttributeU16Response
-set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
+set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeU16Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1494,12 +1494,12 @@ set_attribute_u16(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 SetAttributeU32Response
-set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
+set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeU32Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1513,12 +1513,12 @@ set_attribute_u32(const StubPtr& stub, const nidevice_grpc::Session& instrument_
 }
 
 SetAttributeU32ArrayResponse
-set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::uint32>& attr_val)
+set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::uint32>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeU32ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   copy_array(attr_val, request.mutable_attr_val());
@@ -1532,12 +1532,12 @@ set_attribute_u32_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeU64ArrayResponse
-set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::uint64>& attr_val)
+set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::uint64>& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeU64ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   copy_array(attr_val, request.mutable_attr_val());
@@ -1551,12 +1551,12 @@ set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SetAttributeU8Response
-set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
+set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeU8Request{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1570,12 +1570,12 @@ set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument_h
 }
 
 SetAttributeU8ArrayResponse
-set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::string& attr_val)
+set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::string& attr_val)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeU8ArrayRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
   request.set_attr_val(attr_val);
@@ -1622,12 +1622,12 @@ values_from_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& ti
 }
 
 WaitForAcquisitionCompleteResponse
-wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const double& timeout)
+wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout)
 {
   ::grpc::ClientContext context;
 
   auto request = WaitForAcquisitionCompleteRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_timeout(timeout);
 
   auto response = WaitForAcquisitionCompleteResponse{};
