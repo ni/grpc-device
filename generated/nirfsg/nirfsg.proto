@@ -398,8 +398,6 @@ enum DigitalEdgeConfigurationListStepTriggerSource {
 }
 
 enum DigitalEdgeEdge {
-  option allow_alias = true;
-  DIGITAL_EDGE_EDGE_UNSPECIFIED = 0;
   DIGITAL_EDGE_EDGE_RISING_EDGE = 0;
   DIGITAL_EDGE_EDGE_FALLING_EDGE = 1;
 }
@@ -489,8 +487,6 @@ enum RelativeTo {
 }
 
 enum ResetWithOptionsStepsToOmit {
-  option allow_alias = true;
-  RESET_WITH_OPTIONS_STEPS_TO_OMIT_UNSPECIFIED = 0;
   RESET_WITH_OPTIONS_STEPS_TO_OMIT_NONE = 0;
   RESET_WITH_OPTIONS_STEPS_TO_OMIT_WAVEFORMS = 1;
   RESET_WITH_OPTIONS_STEPS_TO_OMIT_SCRIPTS = 2;
@@ -518,8 +514,6 @@ enum SParameterOrientation {
 }
 
 enum SelfCalibrateRangeStepsToOmit {
-  option allow_alias = true;
-  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_UNSPECIFIED = 0;
   SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_OMIT_NONE = 0;
   SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_LO_SELF_CAL = 1;
   SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_POWER_LEVEL_ACCURACY = 2;

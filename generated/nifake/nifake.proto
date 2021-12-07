@@ -136,8 +136,6 @@ enum MobileOSNames {
 }
 
 enum Turtle {
-  option allow_alias = true;
-  TURTLE_UNSPECIFIED = 0;
   TURTLE_LEONARDO = 0;
   TURTLE_DONATELLO = 1;
   TURTLE_RAPHAEL = 2;

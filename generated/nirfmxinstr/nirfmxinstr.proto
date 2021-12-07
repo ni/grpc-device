@@ -219,8 +219,6 @@ enum Boolean {
 }
 
 enum ExportSignalSource {
-  option allow_alias = true;
-  EXPORT_SIGNAL_SOURCE_UNSPECIFIED = 0;
   EXPORT_SIGNAL_SOURCE_START_TRIGGER = 0;
   EXPORT_SIGNAL_SOURCE_REFERENCE_TRIGGER = 1;
   EXPORT_SIGNAL_SOURCE_ADVANCE_TRIGGER = 2;
@@ -251,8 +249,6 @@ enum LinearInterpolationFormat {
 }
 
 enum MechanicalAttenuationAuto {
-  option allow_alias = true;
-  MECHANICAL_ATTENUATION_AUTO_UNSPECIFIED = 0;
   MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
   MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
 }
@@ -276,15 +272,11 @@ enum Personality {
 }
 
 enum RFAttenuationAuto {
-  option allow_alias = true;
-  RF_ATTENUATION_AUTO_UNSPECIFIED = 0;
   RF_ATTENUATION_AUTO_FALSE = 0;
   RF_ATTENUATION_AUTO_TRUE = 1;
 }
 
 enum SParameterOrientation {
-  option allow_alias = true;
-  S_PARAMETER_ORIENTATION_UNSPECIFIED = 0;
   S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 0;
   S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 1;
 }

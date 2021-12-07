@@ -5,7 +5,8 @@ def should_allow_alias(enum):
   if enum.get("generate-mappings", False):
     return False
   enum_values = [e["value"] for e in enum["values"]]
-  return (0 in enum_values) or (len(enum_values) != len(set(enum_values)))
+  # aliases are allowed for zero-values if they are not first in the list.
+  return 0 in enum_values[1:] or len(enum_values) != len(set(enum_values))
 
 
 def generate_parameter_field_number(parameter, used_indexes, field_name_suffix=""):
@@ -34,8 +35,13 @@ def get_enum_definitions(enums_to_define, enums):
       "allow_alias": allow_alias,
       "values": values
     }
-    unspecified_value_name = f"{enum_value_prefix}_MAPPED_UNSPECIFIED" if enum_name.endswith("AttributeValuesMapped") else f"{enum_value_prefix}_UNSPECIFIED"
-    values.insert(0, {"name": unspecified_value_name, "value": 0})
+    # If the enum has a "natural" zero-value, don't add an UNSPECFIED zero value.
+    # AttributeValues enums may have a zero-value that is not first, in that case, still create the UNSPECIFIED
+    # enum. This is, in part, because proto requires the first element to be zero and also because "aggregate" enums
+    # like AttributeValues are expected to have aliases.
+    if values[0]["value"] != 0:
+      unspecified_value_name = f"{enum_value_prefix}_MAPPED_UNSPECIFIED" if enum_name.endswith("AttributeValuesMapped") else f"{enum_value_prefix}_UNSPECIFIED"
+      values.insert(0, {"name": unspecified_value_name, "value": 0})
     enum_definitions.update({enum_name: enum_definition})
   return enum_definitions
 

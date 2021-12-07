@@ -197,8 +197,6 @@ enum NiDmmAttribute {
 }
 
 enum AcquisitionStatus {
-  option allow_alias = true;
-  ACQUISITION_STATUS_UNSPECIFIED = 0;
   ACQUISITION_STATUS_NIDMM_VAL_RUNNING_ANTICOLLISION = 0;
   ACQUISITION_STATUS_NIDMM_VAL_FINISHED_WITH_BACKLOG = 1;
   ACQUISITION_STATUS_NIDMM_VAL_FINISHED_WITH_NO_BACKLOG = 2;
@@ -219,29 +217,21 @@ enum ApertureTime {
 }
 
 enum ApertureTimeUnits {
-  option allow_alias = true;
-  APERTURE_TIME_UNITS_UNSPECIFIED = 0;
   APERTURE_TIME_UNITS_NIDMM_VAL_SECONDS = 0;
   APERTURE_TIME_UNITS_NIDMM_VAL_POWER_LINE_CYCLES = 1;
 }
 
 enum CalibrationType {
-  option allow_alias = true;
-  CALIBRATION_TYPE_UNSPECIFIED = 0;
   CALIBRATION_TYPE_NIDMM_VAL_INTERNAL_AREA = 0;
   CALIBRATION_TYPE_NIDMM_VAL_EXTERNAL_AREA = 1;
 }
 
 enum CompensatedOhms {
-  option allow_alias = true;
-  COMPENSATED_OHMS_UNSPECIFIED = 0;
   COMPENSATED_OHMS_NIDMM_VAL_OFFSET_COMP_OHMS_OFF = 0;
   COMPENSATED_OHMS_NIDMM_VAL_OFFSET_COMP_OHMS_ON = 1;
 }
 
 enum Configuration4022 {
-  option allow_alias = true;
-  CONFIGURATION4022_UNSPECIFIED = 0;
   CONFIGURATION4022_NIDMM_4022_CONFIG_GUARD = 0;
   CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_100_NANOAMP = 2;
   CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_10_MICROAMP = 3;
@@ -250,8 +240,6 @@ enum Configuration4022 {
 }
 
 enum ControlCommit {
-  option allow_alias = true;
-  CONTROL_COMMIT_UNSPECIFIED = 0;
   CONTROL_COMMIT_NIDMM_VAL_CONTROL_COMMIT = 0;
 }
 
@@ -287,8 +275,6 @@ enum PowerLineFrequencies {
 }
 
 enum RtdType {
-  option allow_alias = true;
-  RTD_TYPE_UNSPECIFIED = 0;
   RTD_TYPE_NIDMM_VAL_TEMP_RTD_CUSTOM = 0;
   RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3750 = 1;
   RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3851 = 2;
@@ -299,8 +285,6 @@ enum RtdType {
 }
 
 enum SampleCount {
-  option allow_alias = true;
-  SAMPLE_COUNT_UNSPECIFIED = 0;
   SAMPLE_COUNT_NIDMM_VAL_SAMPLE_COUNT_INFINITE = 0;
 }
 
@@ -310,8 +294,6 @@ enum SampleInterval {
 }
 
 enum SampleTrigSlope {
-  option allow_alias = true;
-  SAMPLE_TRIG_SLOPE_UNSPECIFIED = 0;
   SAMPLE_TRIG_SLOPE_NIDMM_VAL_POSITIVE = 0;
   SAMPLE_TRIG_SLOPE_NIDMM_VAL_NEGATIVE = 1;
 }
@@ -358,8 +340,6 @@ enum TimeLimit {
 }
 
 enum TriggerCount {
-  option allow_alias = true;
-  TRIGGER_COUNT_UNSPECIFIED = 0;
   TRIGGER_COUNT_NIDMM_VAL_TRIG_COUNT_INFINITE = 0;
 }
 
@@ -370,8 +350,6 @@ enum TriggerDelays {
 }
 
 enum TriggerSlope {
-  option allow_alias = true;
-  TRIGGER_SLOPE_UNSPECIFIED = 0;
   TRIGGER_SLOPE_NIDMM_VAL_POSITIVE = 0;
   TRIGGER_SLOPE_NIDMM_VAL_NEGATIVE = 1;
 }

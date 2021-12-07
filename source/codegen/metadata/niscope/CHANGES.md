@@ -209,3 +209,8 @@ The following parameters were marked as `'include_in_proto': False` because they
 - `bufferSize` in `GetNormalizationCoefficients`
 - `bufferSize` in `GetScalingCoefficients`
 - `measurementWaveformSize` in `FetchArrayMeasurement`
+
+## enums.py
+
+Move all zero enums to the beginning of the list. proto requires that the first enum entry be zero. Moving only the zeor
+value is less intrusive than sorting.

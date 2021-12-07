@@ -683,15 +683,11 @@ enum NiRFmxNRAttribute {
 }
 
 enum AcpAveragingEnabled {
-  option allow_alias = true;
-  ACP_AVERAGING_ENABLED_UNSPECIFIED = 0;
   ACP_AVERAGING_ENABLED_FALSE = 0;
   ACP_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum AcpAveragingType {
-  option allow_alias = true;
-  ACP_AVERAGING_TYPE_UNSPECIFIED = 0;
   ACP_AVERAGING_TYPE_RMS = 0;
   ACP_AVERAGING_TYPE_LOG = 1;
   ACP_AVERAGING_TYPE_SCALAR = 2;
@@ -700,73 +696,53 @@ enum AcpAveragingType {
 }
 
 enum AcpMeasurementMethod {
-  option allow_alias = true;
-  ACP_MEASUREMENT_METHOD_UNSPECIFIED = 0;
   ACP_MEASUREMENT_METHOD_NORMAL = 0;
   ACP_MEASUREMENT_METHOD_DYNAMIC_RANGE = 1;
   ACP_MEASUREMENT_METHOD_SEQUENTIAL_FFT = 2;
 }
 
 enum AcpNoiseCalibrationDataValid {
-  option allow_alias = true;
-  ACP_NOISE_CALIBRATION_DATA_VALID_UNSPECIFIED = 0;
   ACP_NOISE_CALIBRATION_DATA_VALID_FALSE = 0;
   ACP_NOISE_CALIBRATION_DATA_VALID_TRUE = 1;
 }
 
 enum AcpNoiseCompensationEnabled {
-  option allow_alias = true;
-  ACP_NOISE_COMPENSATION_ENABLED_UNSPECIFIED = 0;
   ACP_NOISE_COMPENSATION_ENABLED_FALSE = 0;
   ACP_NOISE_COMPENSATION_ENABLED_TRUE = 1;
 }
 
 enum AcpPowerUnits {
-  option allow_alias = true;
-  ACP_POWER_UNITS_UNSPECIFIED = 0;
   ACP_POWER_UNITS_DBM = 0;
   ACP_POWER_UNITS_DBM_BY_HZ = 1;
 }
 
 enum AcpRbwAutoBandwidth {
-  option allow_alias = true;
-  ACP_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
   ACP_RBW_AUTO_BANDWIDTH_FALSE = 0;
   ACP_RBW_AUTO_BANDWIDTH_TRUE = 1;
 }
 
 enum AcpRbwFilterType {
-  option allow_alias = true;
-  ACP_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   ACP_RBW_FILTER_TYPE_FFT_BASED = 0;
   ACP_RBW_FILTER_TYPE_GAUSSIAN = 1;
   ACP_RBW_FILTER_TYPE_FLAT = 2;
 }
 
 enum AcpSweepTimeAuto {
-  option allow_alias = true;
-  ACP_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
   ACP_SWEEP_TIME_AUTO_FALSE = 0;
   ACP_SWEEP_TIME_AUTO_TRUE = 1;
 }
 
 enum Boolean {
-  option allow_alias = true;
-  BOOLEAN_UNSPECIFIED = 0;
   BOOLEAN_FALSE = 0;
   BOOLEAN_TRUE = 1;
 }
 
 enum ChpAveragingEnabled {
-  option allow_alias = true;
-  CHP_AVERAGING_ENABLED_UNSPECIFIED = 0;
   CHP_AVERAGING_ENABLED_FALSE = 0;
   CHP_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum ChpAveragingType {
-  option allow_alias = true;
-  CHP_AVERAGING_TYPE_UNSPECIFIED = 0;
   CHP_AVERAGING_TYPE_RMS = 0;
   CHP_AVERAGING_TYPE_LOG = 1;
   CHP_AVERAGING_TYPE_SCALAR = 2;
@@ -775,37 +751,27 @@ enum ChpAveragingType {
 }
 
 enum ChpNoiseCalibrationDataValid {
-  option allow_alias = true;
-  CHP_NOISE_CALIBRATION_DATA_VALID_UNSPECIFIED = 0;
   CHP_NOISE_CALIBRATION_DATA_VALID_FALSE = 0;
   CHP_NOISE_CALIBRATION_DATA_VALID_TRUE = 1;
 }
 
 enum ChpRbwAutoBandwidth {
-  option allow_alias = true;
-  CHP_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
   CHP_RBW_AUTO_BANDWIDTH_FALSE = 0;
   CHP_RBW_AUTO_BANDWIDTH_TRUE = 1;
 }
 
 enum ChpRbwFilterType {
-  option allow_alias = true;
-  CHP_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   CHP_RBW_FILTER_TYPE_FFT_BASED = 0;
   CHP_RBW_FILTER_TYPE_GAUSSIAN = 1;
   CHP_RBW_FILTER_TYPE_FLAT = 2;
 }
 
 enum ChpSweepTimeAuto {
-  option allow_alias = true;
-  CHP_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
   CHP_SWEEP_TIME_AUTO_FALSE = 0;
   CHP_SWEEP_TIME_AUTO_TRUE = 1;
 }
 
 enum DigitalEdgeTriggerEdge {
-  option allow_alias = true;
-  DIGITAL_EDGE_TRIGGER_EDGE_UNSPECIFIED = 0;
   DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE = 0;
   DIGITAL_EDGE_TRIGGER_EDGE_FALLING_EDGE = 1;
 }
@@ -821,8 +787,6 @@ enum FrequencyReferenceSource {
 }
 
 enum GNodeBCategory {
-  option allow_alias = true;
-  G_NODE_B_CATEGORY_UNSPECIFIED = 0;
   G_NODE_B_CATEGORY_WIDE_AREA_BASE_STATION_CATEGORY_A = 0;
   G_NODE_B_CATEGORY_WIDE_AREA_BASE_STATION_CATEGORY_B_OPTION1 = 1;
   G_NODE_B_CATEGORY_WIDE_AREA_BASE_STATION_CATEGORY_B_OPTION2 = 2;
@@ -833,15 +797,11 @@ enum GNodeBCategory {
 }
 
 enum IQPowerEdgeTriggerLevelType {
-  option allow_alias = true;
-  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_UNSPECIFIED = 0;
   IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
   IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
 }
 
 enum IQPowerEdgeTriggerSlope {
-  option allow_alias = true;
-  IQ_POWER_EDGE_TRIGGER_SLOPE_UNSPECIFIED = 0;
   IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE = 0;
   IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING_SLOPE = 1;
 }
@@ -858,43 +818,31 @@ enum MeasurementTypes {
 }
 
 enum MechanicalAttenuationAuto {
-  option allow_alias = true;
-  MECHANICAL_ATTENUATION_AUTO_UNSPECIFIED = 0;
   MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
   MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
 }
 
 enum ModAccCalibrationDataValid {
-  option allow_alias = true;
-  MOD_ACC_CALIBRATION_DATA_VALID_UNSPECIFIED = 0;
   MOD_ACC_CALIBRATION_DATA_VALID_FALSE = 0;
   MOD_ACC_CALIBRATION_DATA_VALID_TRUE = 1;
 }
 
 enum ModAccMeasurementMode {
-  option allow_alias = true;
-  MOD_ACC_MEASUREMENT_MODE_UNSPECIFIED = 0;
   MOD_ACC_MEASUREMENT_MODE_MEASURE = 0;
   MOD_ACC_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR = 1;
 }
 
 enum ModAccNoiseCompensationEnabled {
-  option allow_alias = true;
-  MOD_ACC_NOISE_COMPENSATION_ENABLED_UNSPECIFIED = 0;
   MOD_ACC_NOISE_COMPENSATION_ENABLED_FALSE = 0;
   MOD_ACC_NOISE_COMPENSATION_ENABLED_TRUE = 1;
 }
 
 enum ObwAveragingEnabled {
-  option allow_alias = true;
-  OBW_AVERAGING_ENABLED_UNSPECIFIED = 0;
   OBW_AVERAGING_ENABLED_FALSE = 0;
   OBW_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum ObwAveragingType {
-  option allow_alias = true;
-  OBW_AVERAGING_TYPE_UNSPECIFIED = 0;
   OBW_AVERAGING_TYPE_RMS = 0;
   OBW_AVERAGING_TYPE_LOG = 1;
   OBW_AVERAGING_TYPE_SCALAR = 2;
@@ -903,72 +851,52 @@ enum ObwAveragingType {
 }
 
 enum ObwRbwAutoBandwidth {
-  option allow_alias = true;
-  OBW_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
   OBW_RBW_AUTO_BANDWIDTH_FALSE = 0;
   OBW_RBW_AUTO_BANDWIDTH_TRUE = 1;
 }
 
 enum ObwRbwFilterType {
-  option allow_alias = true;
-  OBW_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   OBW_RBW_FILTER_TYPE_FFT_BASED = 0;
   OBW_RBW_FILTER_TYPE_GAUSSIAN = 1;
   OBW_RBW_FILTER_TYPE_FLAT = 2;
 }
 
 enum ObwSweepTimeAuto {
-  option allow_alias = true;
-  OBW_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
   OBW_SWEEP_TIME_AUTO_FALSE = 0;
   OBW_SWEEP_TIME_AUTO_TRUE = 1;
 }
 
 enum PvtAveragingEnabled {
-  option allow_alias = true;
-  PVT_AVERAGING_ENABLED_UNSPECIFIED = 0;
   PVT_AVERAGING_ENABLED_FALSE = 0;
   PVT_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum PvtAveragingType {
-  option allow_alias = true;
-  PVT_AVERAGING_TYPE_UNSPECIFIED = 0;
   PVT_AVERAGING_TYPE_RMS = 0;
   PVT_AVERAGING_TYPE_LOG = 1;
 }
 
 enum PvtMeasurementMethod {
-  option allow_alias = true;
-  PVT_MEASUREMENT_METHOD_UNSPECIFIED = 0;
   PVT_MEASUREMENT_METHOD_NORMAL = 0;
   PVT_MEASUREMENT_METHOD_DYNAMIC_RANGE = 1;
 }
 
 enum PvtMeasurementStatus {
-  option allow_alias = true;
-  PVT_MEASUREMENT_STATUS_UNSPECIFIED = 0;
   PVT_MEASUREMENT_STATUS_FAIL = 0;
   PVT_MEASUREMENT_STATUS_PASS = 1;
 }
 
 enum RFAttenuationAuto {
-  option allow_alias = true;
-  RF_ATTENUATION_AUTO_UNSPECIFIED = 0;
   RF_ATTENUATION_AUTO_FALSE = 0;
   RF_ATTENUATION_AUTO_TRUE = 1;
 }
 
 enum SemAveragingEnabled {
-  option allow_alias = true;
-  SEM_AVERAGING_ENABLED_UNSPECIFIED = 0;
   SEM_AVERAGING_ENABLED_FALSE = 0;
   SEM_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum SemAveragingType {
-  option allow_alias = true;
-  SEM_AVERAGING_TYPE_UNSPECIFIED = 0;
   SEM_AVERAGING_TYPE_RMS = 0;
   SEM_AVERAGING_TYPE_LOG = 1;
   SEM_AVERAGING_TYPE_SCALAR = 2;
@@ -977,22 +905,16 @@ enum SemAveragingType {
 }
 
 enum SemLowerOffsetMeasurementStatus {
-  option allow_alias = true;
-  SEM_LOWER_OFFSET_MEASUREMENT_STATUS_UNSPECIFIED = 0;
   SEM_LOWER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
   SEM_LOWER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
 }
 
 enum SemMeasurementStatus {
-  option allow_alias = true;
-  SEM_MEASUREMENT_STATUS_UNSPECIFIED = 0;
   SEM_MEASUREMENT_STATUS_FAIL = 0;
   SEM_MEASUREMENT_STATUS_PASS = 1;
 }
 
 enum SemOffsetLimitFailMask {
-  option allow_alias = true;
-  SEM_OFFSET_LIMIT_FAIL_MASK_UNSPECIFIED = 0;
   SEM_OFFSET_LIMIT_FAIL_MASK_ABS_AND_REL = 0;
   SEM_OFFSET_LIMIT_FAIL_MASK_ABS_OR_REL = 1;
   SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE = 2;
@@ -1000,31 +922,23 @@ enum SemOffsetLimitFailMask {
 }
 
 enum SemOffsetRbwFilterType {
-  option allow_alias = true;
-  SEM_OFFSET_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   SEM_OFFSET_RBW_FILTER_TYPE_FFT_BASED = 0;
   SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN = 1;
   SEM_OFFSET_RBW_FILTER_TYPE_FLAT = 2;
 }
 
 enum SemOffsetSideband {
-  option allow_alias = true;
-  SEM_OFFSET_SIDEBAND_UNSPECIFIED = 0;
   SEM_OFFSET_SIDEBAND_NEGATIVE = 0;
   SEM_OFFSET_SIDEBAND_POSITIVE = 1;
   SEM_OFFSET_SIDEBAND_BOTH = 2;
 }
 
 enum SemSweepTimeAuto {
-  option allow_alias = true;
-  SEM_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
   SEM_SWEEP_TIME_AUTO_FALSE = 0;
   SEM_SWEEP_TIME_AUTO_TRUE = 1;
 }
 
 enum SemUplinkMaskType {
-  option allow_alias = true;
-  SEM_UPLINK_MASK_TYPE_UNSPECIFIED = 0;
   SEM_UPLINK_MASK_TYPE_GENERAL = 0;
   SEM_UPLINK_MASK_TYPE_NS35 = 1;
   SEM_UPLINK_MASK_TYPE_CUSTOM = 2;
@@ -1037,22 +951,17 @@ enum SemUplinkMaskType {
 }
 
 enum SemUpperOffsetMeasurementStatus {
-  option allow_alias = true;
-  SEM_UPPER_OFFSET_MEASUREMENT_STATUS_UNSPECIFIED = 0;
   SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
   SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
 }
 
 enum TriggerMinimumQuietTimeMode {
-  option allow_alias = true;
-  TRIGGER_MINIMUM_QUIET_TIME_MODE_UNSPECIFIED = 0;
   TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
   TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
 }
 
 enum NiRFmxNRInt32AttributeValues {
   option allow_alias = true;
-  NIRFMXNR_INT32_UNSPECIFIED = 0;
   NIRFMXNR_INT32_ACP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY = 0;
   NIRFMXNR_INT32_ACP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN = 1;
   NIRFMXNR_INT32_ACP_AVERAGING_ENABLED_FALSE = 0;
