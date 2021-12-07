@@ -42,6 +42,7 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
   MOCK_METHOD(int32, GetStructsWithCoercion, (int32 numberOfStructs, StructWithCoercion_struct structs[]), (override));
   MOCK_METHOD(int32, SetStructsWithCoercion, (StructWithCoercion_struct structs[3]), (override));
   MOCK_METHOD(int32, InputStringValuedEnum, (char aName[]), (override));
+  MOCK_METHOD(int32, WriteBooleanArray, (int32 bools[], int32 size), (override));
 };
 
 }  // namespace unit

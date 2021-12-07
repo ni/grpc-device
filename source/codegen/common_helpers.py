@@ -92,7 +92,7 @@ def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
     """
     Returns true if the parameter data can be converted with convert_from_grpc and convert_to_grpc.
     """
-    return is_struct(parameter) or parameter["type"] == "ViBoolean[]"
+    return is_struct(parameter) or parameter["grpc_type"] == "repeated bool"
 
 
 def any_function_uses_timestamp(functions):

@@ -42,6 +42,7 @@ service NiFakeNonIvi {
   rpc GetStructsWithCoercion(GetStructsWithCoercionRequest) returns (GetStructsWithCoercionResponse);
   rpc SetStructsWithCoercion(SetStructsWithCoercionRequest) returns (SetStructsWithCoercionResponse);
   rpc InputStringValuedEnum(InputStringValuedEnumRequest) returns (InputStringValuedEnumResponse);
+  rpc WriteBooleanArray(WriteBooleanArrayRequest) returns (WriteBooleanArrayResponse);
 }
 
 enum MarbleInt32ArrayAttribute {
@@ -357,6 +358,14 @@ message InputStringValuedEnumRequest {
 }
 
 message InputStringValuedEnumResponse {
+  int32 status = 1;
+}
+
+message WriteBooleanArrayRequest {
+  repeated bool bools = 1;
+}
+
+message WriteBooleanArrayResponse {
   int32 status = 1;
 }
 

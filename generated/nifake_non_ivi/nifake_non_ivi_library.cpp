@@ -46,6 +46,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetStructsWithCoercion = reinterpret_cast<GetStructsWithCoercionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetStructsWithCoercion"));
   function_pointers_.SetStructsWithCoercion = reinterpret_cast<SetStructsWithCoercionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetStructsWithCoercion"));
   function_pointers_.InputStringValuedEnum = reinterpret_cast<InputStringValuedEnumPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputStringValuedEnum"));
+  function_pointers_.WriteBooleanArray = reinterpret_cast<WriteBooleanArrayPtr>(shared_library_.get_function_pointer("niFakeNonIvi_WriteBooleanArray"));
 }
 
 NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
@@ -356,6 +357,18 @@ int32 NiFakeNonIviLibrary::InputStringValuedEnum(char aName[])
   return niFakeNonIvi_InputStringValuedEnum(aName);
 #else
   return function_pointers_.InputStringValuedEnum(aName);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::WriteBooleanArray(int32 bools[], int32 size)
+{
+  if (!function_pointers_.WriteBooleanArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_WriteBooleanArray.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_WriteBooleanArray(bools, size);
+#else
+  return function_pointers_.WriteBooleanArray(bools, size);
 #endif
 }
 

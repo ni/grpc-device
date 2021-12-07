@@ -475,5 +475,21 @@ input_string_valued_enum(const StubPtr& stub, const simple_variant<MobileOSNames
   return response;
 }
 
+WriteBooleanArrayResponse
+write_boolean_array(const StubPtr& stub, const std::vector<bool>& bools)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteBooleanArrayRequest{};
+  copy_array(bools, request.mutable_bools());
+
+  auto response = WriteBooleanArrayResponse{};
+
+  raise_if_error(
+      stub->WriteBooleanArray(&context, request, &response));
+
+  return response;
+}
+
 
 } // namespace nifake_non_ivi_grpc::experimental::client

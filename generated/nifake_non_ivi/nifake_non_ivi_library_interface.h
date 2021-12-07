@@ -40,6 +40,7 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 GetStructsWithCoercion(int32 numberOfStructs, StructWithCoercion_struct structs[]) = 0;
   virtual int32 SetStructsWithCoercion(StructWithCoercion_struct structs[3]) = 0;
   virtual int32 InputStringValuedEnum(char aName[]) = 0;
+  virtual int32 WriteBooleanArray(int32 bools[], int32 size) = 0;
 };
 
 }  // namespace nifake_non_ivi_grpc

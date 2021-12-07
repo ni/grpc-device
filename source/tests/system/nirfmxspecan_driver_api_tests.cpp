@@ -91,8 +91,8 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SpectrumBasicFromExample_DataLooksReasonable)
   auto session = init_session(stub(), PXI_5663);
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1e9, 0, 0));
   EXPECT_SUCCESS(session, client::spectrum_cfg_span(stub(), session, "", 1e6));
-  EXPECT_SUCCESS(session, client::spectrum_cfg_rbw_filter(stub(), session, "", SpectrumAveragingEnabled::SPECTRUM_AVERAGING_ENABLED_TRUE, 100e3, SpectrumRbwFilterType::SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN));
-  EXPECT_SUCCESS(session, client::spectrum_cfg_averaging(stub(), session, "", SpectrumAveragingEnabled::SPECTRUM_AVERAGING_ENABLED_FALSE, 10, SpectrumAveragingType::SPECTRUM_AVERAGING_TYPE_RMS));
+  EXPECT_SUCCESS(session, client::spectrum_cfg_rbw_filter(stub(), session, "", true, 100e3, SpectrumRbwFilterType::SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN));
+  EXPECT_SUCCESS(session, client::spectrum_cfg_averaging(stub(), session, "", false, 10, SpectrumAveragingType::SPECTRUM_AVERAGING_TYPE_RMS));
 
   auto read_response = client::spectrum_read(stub(), session, "", 10.0);
 
