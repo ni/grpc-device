@@ -49,7 +49,7 @@ class NiRFmxSpecAnSessionTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     rfmxspecan::GetErrorRequest error_request;
-    error_request.mutable_instrument_handle()->set_id(session.id());
+    error_request.mutable_instrument()->set_id(session.id());
     rfmxspecan::GetErrorResponse error_response;
     ::grpc::Status status = GetStub()->GetError(&context, error_request, &error_response);
     EXPECT_TRUE(status.ok());
@@ -69,7 +69,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithDeviceAndSessionName_Create
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.handle_out().id());
+  EXPECT_NE(0, response.instrument().id());
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -79,7 +79,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithDeviceAndNoSessionName_Crea
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.handle_out().id());
+  EXPECT_NE(0, response.instrument().id());
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -89,7 +89,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithoutDevice_ReturnsDriverErro
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kInvalidRsrc, response.status());
-  EXPECT_EQ(0, response.handle_out().id());
+  EXPECT_EQ(0, response.instrument().id());
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -97,10 +97,10 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSess
   rfmxspecan::InitializeResponse init_response;
   call_initialize(kRFmxSpecAnTestRsrc, kRFmxSpecAnOptionsString, kRFmxSpecAnTestSession, &init_response);
 
-  nidevice_grpc::Session session = init_response.handle_out();
+  nidevice_grpc::Session session = init_response.instrument();
   ::grpc::ClientContext context;
   rfmxspecan::CloseRequest close_request;
-  close_request.mutable_instrument_handle()->set_id(session.id());
+  close_request.mutable_instrument()->set_id(session.id());
   close_request.set_force_destroy(nirfmxspecan_grpc::Boolean::BOOLEAN_FALSE);
   rfmxspecan::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
@@ -115,7 +115,7 @@ TEST_F(NiRFmxSpecAnSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserError
   call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &init_response);
   EXPECT_EQ(kInvalidRsrc, init_response.status());
 
-  nidevice_grpc::Session session = init_response.handle_out();
+  nidevice_grpc::Session session = init_response.instrument();
   expect_error_string(session, init_response.status(), kRFmxSpecAnErrorResourceNotFoundMessage);
 }
 
@@ -126,7 +126,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessio
 
   ::grpc::ClientContext context;
   rfmxspecan::CloseRequest request;
-  request.mutable_instrument_handle()->set_id(session.id());
+  request.mutable_instrument()->set_id(session.id());
   request.set_force_destroy(nirfmxspecan_grpc::Boolean::BOOLEAN_FALSE);
   rfmxspecan::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);

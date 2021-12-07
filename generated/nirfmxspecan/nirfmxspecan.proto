@@ -3032,7 +3032,7 @@ enum NiRFmxSpecAnCharAttributeValuesMapped {
 }
 
 message ACPCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     AcpAveragingEnabled averaging_enabled = 3;
@@ -3050,7 +3050,7 @@ message ACPCfgAveragingResponse {
 }
 
 message ACPCfgCarrierAndOffsetsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double integration_bandwidth = 3;
   int32 number_of_offsets = 4;
@@ -3062,7 +3062,7 @@ message ACPCfgCarrierAndOffsetsResponse {
 }
 
 message ACPCfgCarrierFrequencyRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double carrier_frequency = 3;
 }
@@ -3072,7 +3072,7 @@ message ACPCfgCarrierFrequencyResponse {
 }
 
 message ACPCfgCarrierIntegrationBandwidthRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double integration_bandwidth = 3;
 }
@@ -3082,7 +3082,7 @@ message ACPCfgCarrierIntegrationBandwidthResponse {
 }
 
 message ACPCfgCarrierModeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof carrier_mode_enum {
     AcpCarrierMode carrier_mode = 3;
@@ -3095,7 +3095,7 @@ message ACPCfgCarrierModeResponse {
 }
 
 message ACPCfgCarrierRRCFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rrc_filter_enabled_enum {
     AcpCarrierRrcFilterEnabled rrc_filter_enabled = 3;
@@ -3109,7 +3109,7 @@ message ACPCfgCarrierRRCFilterResponse {
 }
 
 message ACPCfgFFTRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof fft_window_enum {
     AcpFftWindow fft_window = 3;
@@ -3123,7 +3123,7 @@ message ACPCfgFFTResponse {
 }
 
 message ACPCfgMeasurementMethodRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof measurement_method_enum {
     AcpMeasurementMethod measurement_method = 3;
@@ -3136,7 +3136,7 @@ message ACPCfgMeasurementMethodResponse {
 }
 
 message ACPCfgNoiseCompensationEnabledRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof noise_compensation_enabled_enum {
     AcpNoiseCompensationEnabled noise_compensation_enabled = 3;
@@ -3149,7 +3149,7 @@ message ACPCfgNoiseCompensationEnabledResponse {
 }
 
 message ACPCfgNumberOfCarriersRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_carriers = 3;
 }
@@ -3159,7 +3159,7 @@ message ACPCfgNumberOfCarriersResponse {
 }
 
 message ACPCfgNumberOfOffsetsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_offsets = 3;
 }
@@ -3169,7 +3169,7 @@ message ACPCfgNumberOfOffsetsResponse {
 }
 
 message ACPCfgOffsetRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double offset_frequency = 3;
   oneof offset_sideband_enum {
@@ -3187,7 +3187,7 @@ message ACPCfgOffsetResponse {
 }
 
 message ACPCfgOffsetArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double offset_frequency = 3;
   repeated AcpOffsetSideband offset_sideband = 4;
@@ -3199,7 +3199,7 @@ message ACPCfgOffsetArrayResponse {
 }
 
 message ACPCfgOffsetFrequencyDefinitionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof offset_frequency_definition_enum {
     AcpOffsetFrequencyDefinition offset_frequency_definition = 3;
@@ -3212,7 +3212,7 @@ message ACPCfgOffsetFrequencyDefinitionResponse {
 }
 
 message ACPCfgOffsetIntegrationBandwidthRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double integration_bandwidth = 3;
 }
@@ -3222,7 +3222,7 @@ message ACPCfgOffsetIntegrationBandwidthResponse {
 }
 
 message ACPCfgOffsetIntegrationBandwidthArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double integration_bandwidth = 3;
 }
@@ -3232,7 +3232,7 @@ message ACPCfgOffsetIntegrationBandwidthArrayResponse {
 }
 
 message ACPCfgOffsetPowerReferenceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof offset_reference_carrier_enum {
     AcpOffsetPowerReferenceCarrier offset_reference_carrier = 3;
@@ -3246,7 +3246,7 @@ message ACPCfgOffsetPowerReferenceResponse {
 }
 
 message ACPCfgOffsetPowerReferenceArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated AcpOffsetPowerReferenceCarrier offset_power_reference_carrier = 3;
   repeated int32 offset_power_reference_specific = 4;
@@ -3257,7 +3257,7 @@ message ACPCfgOffsetPowerReferenceArrayResponse {
 }
 
 message ACPCfgOffsetRRCFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rrc_filter_enabled_enum {
     AcpOffsetRrcFilterEnabled rrc_filter_enabled = 3;
@@ -3271,7 +3271,7 @@ message ACPCfgOffsetRRCFilterResponse {
 }
 
 message ACPCfgOffsetRRCFilterArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated AcpOffsetRrcFilterEnabled rrc_filter_enabled = 3;
   repeated double rrc_alpha = 4;
@@ -3282,7 +3282,7 @@ message ACPCfgOffsetRRCFilterArrayResponse {
 }
 
 message ACPCfgOffsetRelativeAttenuationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double relative_attenuation = 3;
 }
@@ -3292,7 +3292,7 @@ message ACPCfgOffsetRelativeAttenuationResponse {
 }
 
 message ACPCfgOffsetRelativeAttenuationArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double relative_attenuation = 3;
 }
@@ -3302,7 +3302,7 @@ message ACPCfgOffsetRelativeAttenuationArrayResponse {
 }
 
 message ACPCfgPowerUnitsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof power_units_enum {
     AcpPowerUnits power_units = 3;
@@ -3315,13 +3315,13 @@ message ACPCfgPowerUnitsResponse {
 }
 
 message ACPCfgRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rbw_auto_enum {
     AcpRbwAutoBandwidth rbw_auto = 3;
     int32 rbw_auto_raw = 4;
   }
-  double rb_w = 5;
+  double rbw = 5;
   oneof rbw_filter_type_enum {
     AcpRbwFilterType rbw_filter_type = 6;
     int32 rbw_filter_type_raw = 7;
@@ -3333,7 +3333,7 @@ message ACPCfgRBWFilterResponse {
 }
 
 message ACPCfgSweepTimeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof sweep_time_auto_enum {
     AcpSweepTimeAuto sweep_time_auto = 3;
@@ -3347,7 +3347,7 @@ message ACPCfgSweepTimeResponse {
 }
 
 message ACPFetchAbsolutePowersTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
   int32 trace_index = 4;
@@ -3362,7 +3362,7 @@ message ACPFetchAbsolutePowersTraceResponse {
 }
 
 message ACPFetchCarrierMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3376,7 +3376,7 @@ message ACPFetchCarrierMeasurementResponse {
 }
 
 message ACPFetchFrequencyResolutionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3387,7 +3387,7 @@ message ACPFetchFrequencyResolutionResponse {
 }
 
 message ACPFetchOffsetMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3401,7 +3401,7 @@ message ACPFetchOffsetMeasurementResponse {
 }
 
 message ACPFetchOffsetMeasurementArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3416,7 +3416,7 @@ message ACPFetchOffsetMeasurementArrayResponse {
 }
 
 message ACPFetchRelativePowersTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
   int32 trace_index = 4;
@@ -3431,7 +3431,7 @@ message ACPFetchRelativePowersTraceResponse {
 }
 
 message ACPFetchSpectrumRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3445,7 +3445,7 @@ message ACPFetchSpectrumResponse {
 }
 
 message ACPFetchTotalCarrierPowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3456,7 +3456,7 @@ message ACPFetchTotalCarrierPowerResponse {
 }
 
 message ACPReadRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3471,7 +3471,7 @@ message ACPReadResponse {
 }
 
 message ACPValidateNoiseCalibrationDataRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -3482,7 +3482,7 @@ message ACPValidateNoiseCalibrationDataResponse {
 }
 
 message AMPMCfgAMToAMCurveFitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 am_to_am_curve_fit_order = 3;
   oneof am_to_am_curve_fit_type_enum {
@@ -3496,7 +3496,7 @@ message AMPMCfgAMToAMCurveFitResponse {
 }
 
 message AMPMCfgAMToPMCurveFitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 am_to_pm_curve_fit_order = 3;
   oneof am_to_pm_curve_fit_type_enum {
@@ -3510,7 +3510,7 @@ message AMPMCfgAMToPMCurveFitResponse {
 }
 
 message AMPMCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     AmpmAveragingEnabled averaging_enabled = 3;
@@ -3524,7 +3524,7 @@ message AMPMCfgAveragingResponse {
 }
 
 message AMPMCfgCompressionPointsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof compression_point_enabled_enum {
     AmpmCompressionPointEnabled compression_point_enabled = 3;
@@ -3538,7 +3538,7 @@ message AMPMCfgCompressionPointsResponse {
 }
 
 message AMPMCfgDUTAverageInputPowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double dut_average_input_power = 3;
 }
@@ -3548,7 +3548,7 @@ message AMPMCfgDUTAverageInputPowerResponse {
 }
 
 message AMPMCfgMeasurementIntervalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurement_interval = 3;
 }
@@ -3558,7 +3558,7 @@ message AMPMCfgMeasurementIntervalResponse {
 }
 
 message AMPMCfgMeasurementSampleRateRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof sample_rate_mode_enum {
     AmpmMeasurementSampleRateMode sample_rate_mode = 3;
@@ -3572,7 +3572,7 @@ message AMPMCfgMeasurementSampleRateResponse {
 }
 
 message AMPMCfgReferencePowerTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof reference_power_type_enum {
     AmpmReferencePowerType reference_power_type = 3;
@@ -3585,7 +3585,7 @@ message AMPMCfgReferencePowerTypeResponse {
 }
 
 message AMPMCfgReferenceWaveformRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double x0 = 3;
   double dx = 4;
@@ -3605,7 +3605,7 @@ message AMPMCfgReferenceWaveformResponse {
 }
 
 message AMPMCfgReferenceWaveformSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double x0 = 3;
   double dx = 4;
@@ -3626,7 +3626,7 @@ message AMPMCfgReferenceWaveformSplitResponse {
 }
 
 message AMPMCfgSynchronizationMethodRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof synchronization_method_enum {
     AmpmSynchronizationMethod synchronization_method = 3;
@@ -3639,7 +3639,7 @@ message AMPMCfgSynchronizationMethodResponse {
 }
 
 message AMPMCfgThresholdRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof threshold_enabled_enum {
     AmpmThresholdEnabled threshold_enabled = 3;
@@ -3657,7 +3657,7 @@ message AMPMCfgThresholdResponse {
 }
 
 message AMPMFetchAMToAMTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3671,7 +3671,7 @@ message AMPMFetchAMToAMTraceResponse {
 }
 
 message AMPMFetchAMToPMTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3685,7 +3685,7 @@ message AMPMFetchAMToPMTraceResponse {
 }
 
 message AMPMFetchCompressionPointsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3698,7 +3698,7 @@ message AMPMFetchCompressionPointsResponse {
 }
 
 message AMPMFetchCurveFitCoefficientsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3711,7 +3711,7 @@ message AMPMFetchCurveFitCoefficientsResponse {
 }
 
 message AMPMFetchCurveFitResidualRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3723,7 +3723,7 @@ message AMPMFetchCurveFitResidualResponse {
 }
 
 message AMPMFetchDUTCharacteristicsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3736,7 +3736,7 @@ message AMPMFetchDUTCharacteristicsResponse {
 }
 
 message AMPMFetchErrorRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3749,7 +3749,7 @@ message AMPMFetchErrorResponse {
 }
 
 message AMPMFetchProcessedMeanAcquiredWaveformRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3763,7 +3763,7 @@ message AMPMFetchProcessedMeanAcquiredWaveformResponse {
 }
 
 message AMPMFetchProcessedMeanAcquiredWaveformSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3778,7 +3778,7 @@ message AMPMFetchProcessedMeanAcquiredWaveformSplitResponse {
 }
 
 message AMPMFetchProcessedReferenceWaveformRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3792,7 +3792,7 @@ message AMPMFetchProcessedReferenceWaveformResponse {
 }
 
 message AMPMFetchProcessedReferenceWaveformSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3807,7 +3807,7 @@ message AMPMFetchProcessedReferenceWaveformSplitResponse {
 }
 
 message AMPMFetchRelativePhaseTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3821,7 +3821,7 @@ message AMPMFetchRelativePhaseTraceResponse {
 }
 
 message AMPMFetchRelativePowerTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -3835,7 +3835,7 @@ message AMPMFetchRelativePowerTraceResponse {
 }
 
 message AbortMeasurementsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -3844,12 +3844,12 @@ message AbortMeasurementsResponse {
 }
 
 message AnalyzeIQ1WaveformRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string result_name = 3;
   double x0 = 4;
   double dx = 5;
-  repeated nidevice_grpc.NIComplexNumberF32 i_q = 6;
+  repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
   int32 reset = 7;
   int64 reserved = 8;
 }
@@ -3859,7 +3859,7 @@ message AnalyzeIQ1WaveformResponse {
 }
 
 message AnalyzeIQ1WaveformSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string result_name = 3;
   double x0 = 4;
@@ -3875,7 +3875,7 @@ message AnalyzeIQ1WaveformSplitResponse {
 }
 
 message AnalyzeSpectrum1WaveformRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string result_name = 3;
   double x0 = 4;
@@ -3890,7 +3890,7 @@ message AnalyzeSpectrum1WaveformResponse {
 }
 
 message AutoLevelRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double bandwidth = 3;
   double measurement_interval = 4;
@@ -4026,7 +4026,7 @@ message BuildSpurString2Response {
 }
 
 message CCDFCfgMeasurementIntervalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurement_interval = 3;
 }
@@ -4036,7 +4036,7 @@ message CCDFCfgMeasurementIntervalResponse {
 }
 
 message CCDFCfgNumberOfRecordsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_records = 3;
 }
@@ -4046,9 +4046,9 @@ message CCDFCfgNumberOfRecordsResponse {
 }
 
 message CCDFCfgRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  double rb_w = 3;
+  double rbw = 3;
   oneof rbw_filter_type_enum {
     CcdfRbwFilterType rbw_filter_type = 4;
     int32 rbw_filter_type_raw = 5;
@@ -4061,7 +4061,7 @@ message CCDFCfgRBWFilterResponse {
 }
 
 message CCDFCfgThresholdRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof threshold_enabled_enum {
     CcdfThresholdEnabled threshold_enabled = 3;
@@ -4079,7 +4079,7 @@ message CCDFCfgThresholdResponse {
 }
 
 message CCDFFetchBasicPowerProbabilitiesRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4095,7 +4095,7 @@ message CCDFFetchBasicPowerProbabilitiesResponse {
 }
 
 message CCDFFetchGaussianProbabilitiesTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4109,7 +4109,7 @@ message CCDFFetchGaussianProbabilitiesTraceResponse {
 }
 
 message CCDFFetchPowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4123,7 +4123,7 @@ message CCDFFetchPowerResponse {
 }
 
 message CCDFFetchProbabilitiesTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4137,7 +4137,7 @@ message CCDFFetchProbabilitiesTraceResponse {
 }
 
 message CCDFReadRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4151,7 +4151,7 @@ message CCDFReadResponse {
 }
 
 message CHPCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     ChpAveragingEnabled averaging_enabled = 3;
@@ -4169,7 +4169,7 @@ message CHPCfgAveragingResponse {
 }
 
 message CHPCfgCarrierOffsetRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double carrier_frequency = 3;
 }
@@ -4179,7 +4179,7 @@ message CHPCfgCarrierOffsetResponse {
 }
 
 message CHPCfgFFTRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof fft_window_enum {
     ChpFftWindow fft_window = 3;
@@ -4193,7 +4193,7 @@ message CHPCfgFFTResponse {
 }
 
 message CHPCfgIntegrationBandwidthRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double integration_bandwidth = 3;
 }
@@ -4203,7 +4203,7 @@ message CHPCfgIntegrationBandwidthResponse {
 }
 
 message CHPCfgNumberOfCarriersRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_carriers = 3;
 }
@@ -4213,13 +4213,13 @@ message CHPCfgNumberOfCarriersResponse {
 }
 
 message CHPCfgRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rbw_auto_enum {
     ChpRbwAutoBandwidth rbw_auto = 3;
     int32 rbw_auto_raw = 4;
   }
-  double rb_w = 5;
+  double rbw = 5;
   oneof rbw_filter_type_enum {
     ChpRbwFilterType rbw_filter_type = 6;
     int32 rbw_filter_type_raw = 7;
@@ -4231,7 +4231,7 @@ message CHPCfgRBWFilterResponse {
 }
 
 message CHPCfgRRCFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rrc_filter_enabled_enum {
     ChpCarrierRrcFilterEnabled rrc_filter_enabled = 3;
@@ -4245,7 +4245,7 @@ message CHPCfgRRCFilterResponse {
 }
 
 message CHPCfgSpanRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double span = 3;
 }
@@ -4255,7 +4255,7 @@ message CHPCfgSpanResponse {
 }
 
 message CHPCfgSweepTimeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof sweep_time_auto_enum {
     ChpSweepTimeAuto sweep_time_auto = 3;
@@ -4269,7 +4269,7 @@ message CHPCfgSweepTimeResponse {
 }
 
 message CHPFetchCarrierMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4277,12 +4277,12 @@ message CHPFetchCarrierMeasurementRequest {
 message CHPFetchCarrierMeasurementResponse {
   int32 status = 1;
   double absolute_power = 2;
-  double ps_d = 3;
+  double psd = 3;
   double relative_power = 4;
 }
 
 message CHPFetchSpectrumRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4296,7 +4296,7 @@ message CHPFetchSpectrumResponse {
 }
 
 message CHPFetchTotalCarrierPowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4307,7 +4307,7 @@ message CHPFetchTotalCarrierPowerResponse {
 }
 
 message CHPReadRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4315,11 +4315,11 @@ message CHPReadRequest {
 message CHPReadResponse {
   int32 status = 1;
   double absolute_power = 2;
-  double ps_d = 3;
+  double psd = 3;
 }
 
 message CHPValidateNoiseCalibrationDataRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -4330,7 +4330,7 @@ message CHPValidateNoiseCalibrationDataResponse {
 }
 
 message CfgDigitalEdgeTriggerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof digital_edge_source_enum {
     DigitalEdgeTriggerSource digital_edge_source_mapped = 3;
@@ -4349,7 +4349,7 @@ message CfgDigitalEdgeTriggerResponse {
 }
 
 message CfgExternalAttenuationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double external_attenuation = 3;
 }
@@ -4359,7 +4359,7 @@ message CfgExternalAttenuationResponse {
 }
 
 message CfgFrequencyRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double center_frequency = 3;
 }
@@ -4369,7 +4369,7 @@ message CfgFrequencyResponse {
 }
 
 message CfgFrequencyReferenceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   oneof frequency_reference_source_enum {
     FrequencyReferenceSource frequency_reference_source_mapped = 3;
@@ -4383,7 +4383,7 @@ message CfgFrequencyReferenceResponse {
 }
 
 message CfgIQPowerEdgeTriggerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string iq_power_edge_source = 3;
   double iq_power_edge_level = 4;
@@ -4405,7 +4405,7 @@ message CfgIQPowerEdgeTriggerResponse {
 }
 
 message CfgMechanicalAttenuationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   oneof mechanical_attenuation_auto_enum {
     MechanicalAttenuationAuto mechanical_attenuation_auto = 3;
@@ -4419,7 +4419,7 @@ message CfgMechanicalAttenuationResponse {
 }
 
 message CfgRFRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double center_frequency = 3;
   double reference_level = 4;
@@ -4431,7 +4431,7 @@ message CfgRFResponse {
 }
 
 message CfgRFAttenuationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   oneof rf_attenuation_auto_enum {
     RFAttenuationAuto rf_attenuation_auto = 3;
@@ -4445,7 +4445,7 @@ message CfgRFAttenuationResponse {
 }
 
 message CfgReferenceLevelRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double reference_level = 3;
 }
@@ -4455,7 +4455,7 @@ message CfgReferenceLevelResponse {
 }
 
 message CfgSoftwareEdgeTriggerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double trigger_delay = 3;
   int32 enable_trigger = 4;
@@ -4466,7 +4466,7 @@ message CfgSoftwareEdgeTriggerResponse {
 }
 
 message CheckMeasurementStatusRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -4476,7 +4476,7 @@ message CheckMeasurementStatusResponse {
 }
 
 message ClearAllNamedResultsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -4485,7 +4485,7 @@ message ClearAllNamedResultsResponse {
 }
 
 message ClearNamedResultRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -4494,7 +4494,7 @@ message ClearNamedResultResponse {
 }
 
 message ClearNoiseCalibrationDatabaseRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -4503,7 +4503,7 @@ message ClearNoiseCalibrationDatabaseResponse {
 }
 
 message CloneSignalConfigurationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string old_signal_name = 2;
   string new_signal_name = 3;
 }
@@ -4513,7 +4513,7 @@ message CloneSignalConfigurationResponse {
 }
 
 message CloseRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   oneof force_destroy_enum {
     Boolean force_destroy = 2;
     int32 force_destroy_raw = 3;
@@ -4525,7 +4525,7 @@ message CloseResponse {
 }
 
 message CommitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -4534,7 +4534,7 @@ message CommitResponse {
 }
 
 message CreateListRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string list_name = 2;
 }
 
@@ -4543,7 +4543,7 @@ message CreateListResponse {
 }
 
 message CreateListStepRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -4553,7 +4553,7 @@ message CreateListStepResponse {
 }
 
 message CreateSignalConfigurationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string signal_name = 2;
 }
 
@@ -4562,7 +4562,7 @@ message CreateSignalConfigurationResponse {
 }
 
 message DPDApplyDigitalPredistortionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double x0_in = 3;
   double dx_in = 4;
@@ -4580,12 +4580,12 @@ message DPDApplyDigitalPredistortionResponse {
   double dx_out = 3;
   repeated nidevice_grpc.NIComplexNumberF32 waveform_out = 4;
   int32 actual_array_size = 5;
-  double pap_r = 6;
+  double papr = 6;
   double power_offset = 7;
 }
 
 message DPDApplyDigitalPredistortionSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double x0_in = 3;
   double dx_in = 4;
@@ -4606,12 +4606,12 @@ message DPDApplyDigitalPredistortionSplitResponse {
   double x0_out = 2;
   double dx_out = 3;
   int32 actual_array_size = 4;
-  double pap_r = 5;
+  double papr = 5;
   double power_offset = 6;
 }
 
 message DPDApplyPreDPDSignalConditioningRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double x0_in = 3;
   double dx_in = 4;
@@ -4628,11 +4628,11 @@ message DPDApplyPreDPDSignalConditioningResponse {
   double dx_out = 3;
   repeated nidevice_grpc.NIComplexNumberF32 waveform_out = 4;
   int32 actual_array_size = 5;
-  double pap_r = 6;
+  double papr = 6;
 }
 
 message DPDApplyPreDPDSignalConditioningSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double x0_in = 3;
   double dx_in = 4;
@@ -4652,11 +4652,11 @@ message DPDApplyPreDPDSignalConditioningSplitResponse {
   double x0_out = 2;
   double dx_out = 3;
   int32 actual_array_size = 4;
-  double pap_r = 5;
+  double papr = 5;
 }
 
 message DPDCfgApplyDPDConfigurationInputRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof configuration_input_enum {
     DpdApplyDpdConfigurationInput configuration_input = 3;
@@ -4669,7 +4669,7 @@ message DPDCfgApplyDPDConfigurationInputResponse {
 }
 
 message DPDCfgApplyDPDLookupTableCorrectionTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof lut_correction_type_enum {
     DpdApplyDpdLookupTableCorrectionType lut_correction_type = 3;
@@ -4682,7 +4682,7 @@ message DPDCfgApplyDPDLookupTableCorrectionTypeResponse {
 }
 
 message DPDCfgApplyDPDMemoryModelCorrectionTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof memory_model_correction_type_enum {
     DpdApplyDpdMemoryModelCorrectionType memory_model_correction_type = 3;
@@ -4695,7 +4695,7 @@ message DPDCfgApplyDPDMemoryModelCorrectionTypeResponse {
 }
 
 message DPDCfgApplyDPDUserDPDPolynomialRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated nidevice_grpc.NIComplexNumberF32 dpd_polynomial = 3;
 }
@@ -4705,7 +4705,7 @@ message DPDCfgApplyDPDUserDPDPolynomialResponse {
 }
 
 message DPDCfgApplyDPDUserDPDPolynomialSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated float i = 3;
   repeated float q = 4;
@@ -4716,7 +4716,7 @@ message DPDCfgApplyDPDUserDPDPolynomialSplitResponse {
 }
 
 message DPDCfgApplyDPDUserLookupTableRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated float lut_input_powers = 3;
   repeated nidevice_grpc.NIComplexNumberF32 lut_complex_gains = 4;
@@ -4727,7 +4727,7 @@ message DPDCfgApplyDPDUserLookupTableResponse {
 }
 
 message DPDCfgApplyDPDUserLookupTableSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated float lut_input_powers = 3;
   repeated float i = 4;
@@ -4739,7 +4739,7 @@ message DPDCfgApplyDPDUserLookupTableSplitResponse {
 }
 
 message DPDCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     DpdAveragingEnabled averaging_enabled = 3;
@@ -4753,7 +4753,7 @@ message DPDCfgAveragingResponse {
 }
 
 message DPDCfgDPDModelRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof dpd_model_enum {
     DpdModel dpd_model = 3;
@@ -4766,7 +4766,7 @@ message DPDCfgDPDModelResponse {
 }
 
 message DPDCfgDUTAverageInputPowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double dut_average_input_power = 3;
 }
@@ -4776,7 +4776,7 @@ message DPDCfgDUTAverageInputPowerResponse {
 }
 
 message DPDCfgGeneralizedMemoryPolynomialCrossTermsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 memory_polynomial_lead_order = 3;
   int32 memory_polynomial_lag_order = 4;
@@ -4791,7 +4791,7 @@ message DPDCfgGeneralizedMemoryPolynomialCrossTermsResponse {
 }
 
 message DPDCfgIterativeDPDEnabledRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof iterative_dpd_enabled_enum {
     DpdIterativeDpdEnabled iterative_dpd_enabled = 3;
@@ -4804,7 +4804,7 @@ message DPDCfgIterativeDPDEnabledResponse {
 }
 
 message DPDCfgLookupTableAMToAMCurveFitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 am_to_am_curve_fit_order = 3;
   oneof am_to_am_curve_fit_type_enum {
@@ -4818,7 +4818,7 @@ message DPDCfgLookupTableAMToAMCurveFitResponse {
 }
 
 message DPDCfgLookupTableAMToPMCurveFitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 am_to_pm_curve_fit_order = 3;
   oneof am_to_pm_curve_fit_type_enum {
@@ -4832,7 +4832,7 @@ message DPDCfgLookupTableAMToPMCurveFitResponse {
 }
 
 message DPDCfgLookupTableStepSizeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double step_size = 3;
 }
@@ -4842,7 +4842,7 @@ message DPDCfgLookupTableStepSizeResponse {
 }
 
 message DPDCfgLookupTableThresholdRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof threshold_enabled_enum {
     DpdLookupTableThresholdEnabled threshold_enabled = 3;
@@ -4860,7 +4860,7 @@ message DPDCfgLookupTableThresholdResponse {
 }
 
 message DPDCfgLookupTableTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof lookup_table_type_enum {
     DpdLookupTableType lookup_table_type = 3;
@@ -4873,7 +4873,7 @@ message DPDCfgLookupTableTypeResponse {
 }
 
 message DPDCfgMeasurementIntervalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurement_interval = 3;
 }
@@ -4883,7 +4883,7 @@ message DPDCfgMeasurementIntervalResponse {
 }
 
 message DPDCfgMeasurementSampleRateRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof sample_rate_mode_enum {
     DpdMeasurementSampleRateMode sample_rate_mode = 3;
@@ -4897,7 +4897,7 @@ message DPDCfgMeasurementSampleRateResponse {
 }
 
 message DPDCfgMemoryPolynomialRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 memory_polynomial_order = 3;
   int32 memory_polynomial_memory_depth = 4;
@@ -4908,7 +4908,7 @@ message DPDCfgMemoryPolynomialResponse {
 }
 
 message DPDCfgPreviousDPDPolynomialRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated nidevice_grpc.NIComplexNumberF32 previous_dpd_polynomial = 3;
 }
@@ -4918,7 +4918,7 @@ message DPDCfgPreviousDPDPolynomialResponse {
 }
 
 message DPDCfgPreviousDPDPolynomialSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated float i = 3;
   repeated float q = 4;
@@ -4929,7 +4929,7 @@ message DPDCfgPreviousDPDPolynomialSplitResponse {
 }
 
 message DPDCfgReferenceWaveformRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double x0 = 3;
   double dx = 4;
@@ -4949,7 +4949,7 @@ message DPDCfgReferenceWaveformResponse {
 }
 
 message DPDCfgReferenceWaveformSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double x0 = 3;
   double dx = 4;
@@ -4970,7 +4970,7 @@ message DPDCfgReferenceWaveformSplitResponse {
 }
 
 message DPDCfgSynchronizationMethodRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof synchronization_method_enum {
     DpdSynchronizationMethod synchronization_method = 3;
@@ -4983,7 +4983,7 @@ message DPDCfgSynchronizationMethodResponse {
 }
 
 message DPDFetchApplyDPDPreCFRPAPRRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -4994,7 +4994,7 @@ message DPDFetchApplyDPDPreCFRPAPRResponse {
 }
 
 message DPDFetchAverageGainRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5005,7 +5005,7 @@ message DPDFetchAverageGainResponse {
 }
 
 message DPDFetchDPDPolynomialRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5017,7 +5017,7 @@ message DPDFetchDPDPolynomialResponse {
 }
 
 message DPDFetchDPDPolynomialSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5030,7 +5030,7 @@ message DPDFetchDPDPolynomialSplitResponse {
 }
 
 message DPDFetchLookupTableRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5043,7 +5043,7 @@ message DPDFetchLookupTableResponse {
 }
 
 message DPDFetchLookupTableSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5057,18 +5057,18 @@ message DPDFetchLookupTableSplitResponse {
 }
 
 message DPDFetchNMSERequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
 
 message DPDFetchNMSEResponse {
   int32 status = 1;
-  double nms_e = 2;
+  double nmse = 2;
 }
 
 message DPDFetchProcessedMeanAcquiredWaveformRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5082,7 +5082,7 @@ message DPDFetchProcessedMeanAcquiredWaveformResponse {
 }
 
 message DPDFetchProcessedMeanAcquiredWaveformSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5097,7 +5097,7 @@ message DPDFetchProcessedMeanAcquiredWaveformSplitResponse {
 }
 
 message DPDFetchProcessedReferenceWaveformRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5111,7 +5111,7 @@ message DPDFetchProcessedReferenceWaveformResponse {
 }
 
 message DPDFetchProcessedReferenceWaveformSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5126,7 +5126,7 @@ message DPDFetchProcessedReferenceWaveformSplitResponse {
 }
 
 message DeleteListRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string list_name = 2;
 }
 
@@ -5135,7 +5135,7 @@ message DeleteListResponse {
 }
 
 message DeleteSignalConfigurationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string signal_name = 2;
 }
 
@@ -5144,7 +5144,7 @@ message DeleteSignalConfigurationResponse {
 }
 
 message DisableTriggerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -5153,7 +5153,7 @@ message DisableTriggerResponse {
 }
 
 message FCntCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     FcntAveragingEnabled averaging_enabled = 3;
@@ -5171,7 +5171,7 @@ message FCntCfgAveragingResponse {
 }
 
 message FCntCfgMeasurementIntervalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurement_interval = 3;
 }
@@ -5181,9 +5181,9 @@ message FCntCfgMeasurementIntervalResponse {
 }
 
 message FCntCfgRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  double rb_w = 3;
+  double rbw = 3;
   oneof rbw_filter_type_enum {
     FcntRbwFilterType rbw_filter_type = 4;
     int32 rbw_filter_type_raw = 5;
@@ -5196,7 +5196,7 @@ message FCntCfgRBWFilterResponse {
 }
 
 message FCntCfgThresholdRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof threshold_enabled_enum {
     FcntThresholdEnabled threshold_enabled = 3;
@@ -5214,7 +5214,7 @@ message FCntCfgThresholdResponse {
 }
 
 message FCntFetchAllanDeviationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5225,7 +5225,7 @@ message FCntFetchAllanDeviationResponse {
 }
 
 message FCntFetchFrequencyTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5239,7 +5239,7 @@ message FCntFetchFrequencyTraceResponse {
 }
 
 message FCntFetchMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5252,7 +5252,7 @@ message FCntFetchMeasurementResponse {
 }
 
 message FCntFetchPhaseTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5266,7 +5266,7 @@ message FCntFetchPhaseTraceResponse {
 }
 
 message FCntFetchPowerTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5280,7 +5280,7 @@ message FCntFetchPowerTraceResponse {
 }
 
 message FCntReadRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5293,7 +5293,7 @@ message FCntReadResponse {
 }
 
 message GetAllNamedResultNamesRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -5305,7 +5305,7 @@ message GetAllNamedResultNamesResponse {
 }
 
 message GetAttributeF32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5316,7 +5316,7 @@ message GetAttributeF32Response {
 }
 
 message GetAttributeF32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5328,7 +5328,7 @@ message GetAttributeF32ArrayResponse {
 }
 
 message GetAttributeF64Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5339,7 +5339,7 @@ message GetAttributeF64Response {
 }
 
 message GetAttributeF64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5351,7 +5351,7 @@ message GetAttributeF64ArrayResponse {
 }
 
 message GetAttributeI16Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5362,7 +5362,7 @@ message GetAttributeI16Response {
 }
 
 message GetAttributeI32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5374,7 +5374,7 @@ message GetAttributeI32Response {
 }
 
 message GetAttributeI32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5387,7 +5387,7 @@ message GetAttributeI32ArrayResponse {
 }
 
 message GetAttributeI64Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5398,7 +5398,7 @@ message GetAttributeI64Response {
 }
 
 message GetAttributeI64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5410,7 +5410,7 @@ message GetAttributeI64ArrayResponse {
 }
 
 message GetAttributeI8Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5421,7 +5421,7 @@ message GetAttributeI8Response {
 }
 
 message GetAttributeI8ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5433,7 +5433,7 @@ message GetAttributeI8ArrayResponse {
 }
 
 message GetAttributeNIComplexDoubleArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5445,7 +5445,7 @@ message GetAttributeNIComplexDoubleArrayResponse {
 }
 
 message GetAttributeNIComplexSingleArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5457,7 +5457,7 @@ message GetAttributeNIComplexSingleArrayResponse {
 }
 
 message GetAttributeStringRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5468,7 +5468,7 @@ message GetAttributeStringResponse {
 }
 
 message GetAttributeU16Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5479,7 +5479,7 @@ message GetAttributeU16Response {
 }
 
 message GetAttributeU32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5490,7 +5490,7 @@ message GetAttributeU32Response {
 }
 
 message GetAttributeU32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5502,7 +5502,7 @@ message GetAttributeU32ArrayResponse {
 }
 
 message GetAttributeU64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5514,7 +5514,7 @@ message GetAttributeU64ArrayResponse {
 }
 
 message GetAttributeU8Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5525,7 +5525,7 @@ message GetAttributeU8Response {
 }
 
 message GetAttributeU8ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -5537,7 +5537,7 @@ message GetAttributeU8ArrayResponse {
 }
 
 message GetErrorRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message GetErrorResponse {
@@ -5547,7 +5547,7 @@ message GetErrorResponse {
 }
 
 message GetErrorStringRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   int32 error_code = 2;
 }
 
@@ -5557,7 +5557,7 @@ message GetErrorStringResponse {
 }
 
 message HarmCfgAutoHarmonicsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof auto_harmonics_setup_enabled_enum {
     HarmAutoHarmonicsSetupEnabled auto_harmonics_setup_enabled = 3;
@@ -5570,7 +5570,7 @@ message HarmCfgAutoHarmonicsResponse {
 }
 
 message HarmCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     HarmAveragingEnabled averaging_enabled = 3;
@@ -5588,7 +5588,7 @@ message HarmCfgAveragingResponse {
 }
 
 message HarmCfgFundamentalMeasurementIntervalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurement_interval = 3;
 }
@@ -5598,9 +5598,9 @@ message HarmCfgFundamentalMeasurementIntervalResponse {
 }
 
 message HarmCfgFundamentalRBWRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  double rb_w = 3;
+  double rbw = 3;
   oneof rbw_filter_type_enum {
     HarmRbwFilterType rbw_filter_type = 4;
     int32 rbw_filter_type_raw = 5;
@@ -5613,7 +5613,7 @@ message HarmCfgFundamentalRBWResponse {
 }
 
 message HarmCfgHarmonicRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 harmonic_order = 3;
   double harmonic_bandwidth = 4;
@@ -5629,7 +5629,7 @@ message HarmCfgHarmonicResponse {
 }
 
 message HarmCfgHarmonicArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated int32 harmonic_order = 3;
   repeated double harmonic_bandwidth = 4;
@@ -5642,7 +5642,7 @@ message HarmCfgHarmonicArrayResponse {
 }
 
 message HarmCfgNumberOfHarmonicsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_harmonics = 3;
 }
@@ -5652,7 +5652,7 @@ message HarmCfgNumberOfHarmonicsResponse {
 }
 
 message HarmFetchHarmonicMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5661,12 +5661,12 @@ message HarmFetchHarmonicMeasurementResponse {
   int32 status = 1;
   double average_relative_power = 2;
   double average_absolute_power = 3;
-  double rb_w = 4;
+  double rbw = 4;
   double frequency = 5;
 }
 
 message HarmFetchHarmonicMeasurementArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5675,13 +5675,13 @@ message HarmFetchHarmonicMeasurementArrayResponse {
   int32 status = 1;
   repeated double average_relative_power = 2;
   repeated double average_absolute_power = 3;
-  repeated double rb_w = 4;
+  repeated double rbw = 4;
   repeated double frequency = 5;
   int32 actual_array_size = 6;
 }
 
 message HarmFetchHarmonicPowerTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5695,7 +5695,7 @@ message HarmFetchHarmonicPowerTraceResponse {
 }
 
 message HarmFetchTHDRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5708,7 +5708,7 @@ message HarmFetchTHDResponse {
 }
 
 message HarmReadRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5720,7 +5720,7 @@ message HarmReadResponse {
 }
 
 message IMCfgAutoIntermodsSetupRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof auto_intermods_setup_enabled_enum {
     IMAutoIntermodsSetupEnabled auto_intermods_setup_enabled = 3;
@@ -5734,7 +5734,7 @@ message IMCfgAutoIntermodsSetupResponse {
 }
 
 message IMCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     IMAveragingEnabled averaging_enabled = 3;
@@ -5752,7 +5752,7 @@ message IMCfgAveragingResponse {
 }
 
 message IMCfgFFTRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof fft_window_enum {
     IMFftWindow fft_window = 3;
@@ -5766,7 +5766,7 @@ message IMCfgFFTResponse {
 }
 
 message IMCfgFrequencyDefinitionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof frequency_definition_enum {
     IMFrequencyDefinition frequency_definition = 3;
@@ -5779,7 +5779,7 @@ message IMCfgFrequencyDefinitionResponse {
 }
 
 message IMCfgFundamentalTonesRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double lower_tone_frequency = 3;
   double upper_tone_frequency = 4;
@@ -5790,7 +5790,7 @@ message IMCfgFundamentalTonesResponse {
 }
 
 message IMCfgIntermodRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 intermod_order = 3;
   double lower_intermod_frequency = 4;
@@ -5810,7 +5810,7 @@ message IMCfgIntermodResponse {
 }
 
 message IMCfgIntermodArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated int32 intermod_order = 3;
   repeated double lower_intermod_frequency = 4;
@@ -5824,7 +5824,7 @@ message IMCfgIntermodArrayResponse {
 }
 
 message IMCfgMeasurementMethodRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof measurement_method_enum {
     IMMeasurementMethod measurement_method = 3;
@@ -5837,7 +5837,7 @@ message IMCfgMeasurementMethodResponse {
 }
 
 message IMCfgNumberOfIntermodsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_intermods = 3;
 }
@@ -5847,13 +5847,13 @@ message IMCfgNumberOfIntermodsResponse {
 }
 
 message IMCfgRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rbw_auto_enum {
     IMRbwFilterAutoBandwidth rbw_auto = 3;
     int32 rbw_auto_raw = 4;
   }
-  double rb_w = 5;
+  double rbw = 5;
   oneof rbw_filter_type_enum {
     IMRbwFilterType rbw_filter_type = 6;
     int32 rbw_filter_type_raw = 7;
@@ -5865,7 +5865,7 @@ message IMCfgRBWFilterResponse {
 }
 
 message IMCfgSweepTimeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof sweep_time_auto_enum {
     IMSweepTimeAuto sweep_time_auto = 3;
@@ -5879,7 +5879,7 @@ message IMCfgSweepTimeResponse {
 }
 
 message IMFetchFundamentalMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5891,7 +5891,7 @@ message IMFetchFundamentalMeasurementResponse {
 }
 
 message IMFetchInterceptPowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5905,7 +5905,7 @@ message IMFetchInterceptPowerResponse {
 }
 
 message IMFetchInterceptPowerArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5920,7 +5920,7 @@ message IMFetchInterceptPowerArrayResponse {
 }
 
 message IMFetchIntermodMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5933,7 +5933,7 @@ message IMFetchIntermodMeasurementResponse {
 }
 
 message IMFetchIntermodMeasurementArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -5947,7 +5947,7 @@ message IMFetchIntermodMeasurementArrayResponse {
 }
 
 message IMFetchSpectrumRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
   int32 spectrum_index = 4;
@@ -5962,7 +5962,7 @@ message IMFetchSpectrumResponse {
 }
 
 message IQCfgAcquisitionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double sample_rate = 3;
   int32 number_of_records = 4;
@@ -5975,7 +5975,7 @@ message IQCfgAcquisitionResponse {
 }
 
 message IQCfgBandwidthRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof bandwidth_auto_enum {
     IQBandwidthAuto bandwidth_auto = 3;
@@ -5989,7 +5989,7 @@ message IQCfgBandwidthResponse {
 }
 
 message IQFetchDataRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
   int32 record_to_fetch = 4;
@@ -6005,7 +6005,7 @@ message IQFetchDataResponse {
 }
 
 message IQFetchDataSplitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
   int32 record_to_fetch = 4;
@@ -6022,7 +6022,7 @@ message IQFetchDataSplitResponse {
 }
 
 message IQGetRecordsDoneRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -6039,7 +6039,7 @@ message InitializeRequest {
 
 message InitializeResponse {
   int32 status = 1;
-  nidevice_grpc.Session handle_out = 2;
+  nidevice_grpc.Session instrument = 2;
   int32 is_new_session = 3;
 }
 
@@ -6050,11 +6050,11 @@ message InitializeFromNIRFSASessionRequest {
 
 message InitializeFromNIRFSASessionResponse {
   int32 status = 1;
-  nidevice_grpc.Session handle_out = 2;
+  nidevice_grpc.Session instrument = 2;
 }
 
 message InitiateRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string result_name = 3;
 }
@@ -6064,7 +6064,7 @@ message InitiateResponse {
 }
 
 message MarkerCfgNumberOfMarkersRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_markers = 3;
 }
@@ -6074,7 +6074,7 @@ message MarkerCfgNumberOfMarkersResponse {
 }
 
 message MarkerCfgPeakExcursionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof peak_excursion_enabled_enum {
     MarkerPeakExcursionEnabled peak_excursion_enabled = 3;
@@ -6088,7 +6088,7 @@ message MarkerCfgPeakExcursionResponse {
 }
 
 message MarkerCfgReferenceMarkerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 reference_marker = 3;
 }
@@ -6098,7 +6098,7 @@ message MarkerCfgReferenceMarkerResponse {
 }
 
 message MarkerCfgThresholdRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof threshold_enabled_enum {
     MarkerThresholdEnabled threshold_enabled = 3;
@@ -6112,7 +6112,7 @@ message MarkerCfgThresholdResponse {
 }
 
 message MarkerCfgTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof trace_enum {
     MarkerTrace trace = 3;
@@ -6125,7 +6125,7 @@ message MarkerCfgTraceResponse {
 }
 
 message MarkerCfgTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof marker_type_enum {
     MarkerType marker_type = 3;
@@ -6138,7 +6138,7 @@ message MarkerCfgTypeResponse {
 }
 
 message MarkerCfgXLocationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double marker_x_location = 3;
 }
@@ -6148,7 +6148,7 @@ message MarkerCfgXLocationResponse {
 }
 
 message MarkerFetchXYRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -6159,7 +6159,7 @@ message MarkerFetchXYResponse {
 }
 
 message MarkerNextPeakRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof next_peak_enum {
     MarkerNextPeak next_peak = 3;
@@ -6173,7 +6173,7 @@ message MarkerNextPeakResponse {
 }
 
 message MarkerPeakSearchRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -6183,7 +6183,7 @@ message MarkerPeakSearchResponse {
 }
 
 message NFCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     NFAveragingEnabled averaging_enabled = 3;
@@ -6197,7 +6197,7 @@ message NFCfgAveragingResponse {
 }
 
 message NFCfgCalibrationLossRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof calibration_loss_compensation_enabled_enum {
     NFCalibrationLossCompensationEnabled calibration_loss_compensation_enabled = 3;
@@ -6213,13 +6213,13 @@ message NFCfgCalibrationLossResponse {
 }
 
 message NFCfgColdSourceDUTSParametersRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double duts_parameters_frequency = 3;
-  repeated double dut_s21 = 4;
-  repeated double dut_s12 = 5;
-  repeated double dut_s11 = 6;
-  repeated double dut_s22 = 7;
+  repeated double duts21 = 4;
+  repeated double duts12 = 5;
+  repeated double duts11 = 6;
+  repeated double duts22 = 7;
 }
 
 message NFCfgColdSourceDUTSParametersResponse {
@@ -6227,7 +6227,7 @@ message NFCfgColdSourceDUTSParametersResponse {
 }
 
 message NFCfgColdSourceInputTerminationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double termination_vswr = 3;
   repeated double termination_vswr_frequency = 4;
@@ -6239,7 +6239,7 @@ message NFCfgColdSourceInputTerminationResponse {
 }
 
 message NFCfgColdSourceModeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof cold_source_mode_enum {
     NFColdSourceMode cold_source_mode = 3;
@@ -6252,7 +6252,7 @@ message NFCfgColdSourceModeResponse {
 }
 
 message NFCfgDUTInputLossRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof dut_input_loss_compensation_enabled_enum {
     NFDutInputLossCompensationEnabled dut_input_loss_compensation_enabled = 3;
@@ -6268,7 +6268,7 @@ message NFCfgDUTInputLossResponse {
 }
 
 message NFCfgDUTOutputLossRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof dut_output_loss_compensation_enabled_enum {
     NFDutOutputLossCompensationEnabled dut_output_loss_compensation_enabled = 3;
@@ -6284,7 +6284,7 @@ message NFCfgDUTOutputLossResponse {
 }
 
 message NFCfgFrequencyListRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double frequency_list = 3;
 }
@@ -6294,7 +6294,7 @@ message NFCfgFrequencyListResponse {
 }
 
 message NFCfgFrequencyListStartStopPointsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double start_frequency = 3;
   double stop_frequency = 4;
@@ -6306,7 +6306,7 @@ message NFCfgFrequencyListStartStopPointsResponse {
 }
 
 message NFCfgFrequencyListStartStopStepRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double start_frequency = 3;
   double stop_frequency = 4;
@@ -6318,7 +6318,7 @@ message NFCfgFrequencyListStartStopStepResponse {
 }
 
 message NFCfgMeasurementBandwidthRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurement_bandwidth = 3;
 }
@@ -6328,7 +6328,7 @@ message NFCfgMeasurementBandwidthResponse {
 }
 
 message NFCfgMeasurementIntervalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurement_interval = 3;
 }
@@ -6338,7 +6338,7 @@ message NFCfgMeasurementIntervalResponse {
 }
 
 message NFCfgMeasurementMethodRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof measurement_method_enum {
     NFMeasurementMethod measurement_method = 3;
@@ -6351,7 +6351,7 @@ message NFCfgMeasurementMethodResponse {
 }
 
 message NFCfgYFactorModeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof y_factor_mode_enum {
     NFYFactorMode y_factor_mode = 3;
@@ -6364,10 +6364,10 @@ message NFCfgYFactorModeResponse {
 }
 
 message NFCfgYFactorNoiseSourceENRRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double enr_frequency = 3;
-  repeated double en_r = 4;
+  repeated double enr = 4;
   double cold_temperature = 5;
   double off_temperature = 6;
 }
@@ -6377,7 +6377,7 @@ message NFCfgYFactorNoiseSourceENRResponse {
 }
 
 message NFCfgYFactorNoiseSourceLossRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof noise_source_loss_compensation_enabled_enum {
     NFYFactorNoiseSourceLossCompensationEnabled noise_source_loss_compensation_enabled = 3;
@@ -6393,7 +6393,7 @@ message NFCfgYFactorNoiseSourceLossResponse {
 }
 
 message NFCfgYFactorNoiseSourceSettlingTimeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double settling_time = 3;
 }
@@ -6403,7 +6403,7 @@ message NFCfgYFactorNoiseSourceSettlingTimeResponse {
 }
 
 message NFClearCalibrationDatabaseRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string calibration_setup_id = 2;
 }
 
@@ -6412,7 +6412,7 @@ message NFClearCalibrationDatabaseResponse {
 }
 
 message NFFetchAnalyzerNoiseFigureRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6424,7 +6424,7 @@ message NFFetchAnalyzerNoiseFigureResponse {
 }
 
 message NFFetchColdSourcePowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6436,7 +6436,7 @@ message NFFetchColdSourcePowerResponse {
 }
 
 message NFFetchDUTNoiseFigureAndGainRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6450,7 +6450,7 @@ message NFFetchDUTNoiseFigureAndGainResponse {
 }
 
 message NFFetchYFactorPowersRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6463,7 +6463,7 @@ message NFFetchYFactorPowersResponse {
 }
 
 message NFFetchYFactorsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6476,7 +6476,7 @@ message NFFetchYFactorsResponse {
 }
 
 message NFGetCalibrationSetupIdRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -6486,7 +6486,7 @@ message NFGetCalibrationSetupIdResponse {
 }
 
 message NFRecommendReferenceLevelRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double dut_max_gain = 3;
   double dut_max_noise_figure = 4;
@@ -6498,7 +6498,7 @@ message NFRecommendReferenceLevelResponse {
 }
 
 message NFSetCalibrationSetupIdRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string attr_val = 3;
 }
@@ -6508,7 +6508,7 @@ message NFSetCalibrationSetupIdResponse {
 }
 
 message NFValidateCalibrationDataRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -6519,7 +6519,7 @@ message NFValidateCalibrationDataResponse {
 }
 
 message OBWCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     ObwAveragingEnabled averaging_enabled = 3;
@@ -6537,7 +6537,7 @@ message OBWCfgAveragingResponse {
 }
 
 message OBWCfgBandwidthPercentageRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double bandwidth_percentage = 3;
 }
@@ -6547,7 +6547,7 @@ message OBWCfgBandwidthPercentageResponse {
 }
 
 message OBWCfgFFTRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof fft_window_enum {
     ObwFftWindow fft_window = 3;
@@ -6561,7 +6561,7 @@ message OBWCfgFFTResponse {
 }
 
 message OBWCfgPowerUnitsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof power_units_enum {
     ObwPowerUnits power_units = 3;
@@ -6574,13 +6574,13 @@ message OBWCfgPowerUnitsResponse {
 }
 
 message OBWCfgRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rbw_auto_enum {
     ObwRbwAutoBandwidth rbw_auto = 3;
     int32 rbw_auto_raw = 4;
   }
-  double rb_w = 5;
+  double rbw = 5;
   oneof rbw_filter_type_enum {
     ObwRbwFilterType rbw_filter_type = 6;
     int32 rbw_filter_type_raw = 7;
@@ -6592,7 +6592,7 @@ message OBWCfgRBWFilterResponse {
 }
 
 message OBWCfgSpanRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double span = 3;
 }
@@ -6602,7 +6602,7 @@ message OBWCfgSpanResponse {
 }
 
 message OBWCfgSweepTimeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof sweep_time_auto_enum {
     ObwSweepTimeAuto sweep_time_auto = 3;
@@ -6616,7 +6616,7 @@ message OBWCfgSweepTimeResponse {
 }
 
 message OBWFetchMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6631,7 +6631,7 @@ message OBWFetchMeasurementResponse {
 }
 
 message OBWFetchSpectrumTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6645,7 +6645,7 @@ message OBWFetchSpectrumTraceResponse {
 }
 
 message OBWReadRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6660,7 +6660,7 @@ message OBWReadResponse {
 }
 
 message PAVTCfgMeasurementBandwidthRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurement_bandwidth = 3;
 }
@@ -6670,7 +6670,7 @@ message PAVTCfgMeasurementBandwidthResponse {
 }
 
 message PAVTCfgMeasurementIntervalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurerment_offset = 3;
   double measurerment_length = 4;
@@ -6681,7 +6681,7 @@ message PAVTCfgMeasurementIntervalResponse {
 }
 
 message PAVTCfgMeasurementIntervalModeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof measurement_interval_mode_enum {
     PavtMeasurementIntervalMode measurement_interval_mode = 3;
@@ -6694,7 +6694,7 @@ message PAVTCfgMeasurementIntervalModeResponse {
 }
 
 message PAVTCfgMeasurementLocationTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof measurement_location_type_enum {
     PavtMeasurementLocationType measurement_location_type = 3;
@@ -6707,7 +6707,7 @@ message PAVTCfgMeasurementLocationTypeResponse {
 }
 
 message PAVTCfgNumberOfSegmentsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_segments = 3;
 }
@@ -6717,7 +6717,7 @@ message PAVTCfgNumberOfSegmentsResponse {
 }
 
 message PAVTCfgSegmentMeasurementIntervalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double segment_measurement_offset = 3;
   double segment_measurement_length = 4;
@@ -6728,7 +6728,7 @@ message PAVTCfgSegmentMeasurementIntervalResponse {
 }
 
 message PAVTCfgSegmentMeasurementIntervalArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double segment_measurement_offset = 3;
   repeated double segment_measurement_length = 4;
@@ -6739,7 +6739,7 @@ message PAVTCfgSegmentMeasurementIntervalArrayResponse {
 }
 
 message PAVTCfgSegmentStartTimeListRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double segment_start_time = 3;
 }
@@ -6749,7 +6749,7 @@ message PAVTCfgSegmentStartTimeListResponse {
 }
 
 message PAVTCfgSegmentStartTimeStepRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_segments = 3;
   double segment0_start_time = 4;
@@ -6761,7 +6761,7 @@ message PAVTCfgSegmentStartTimeStepResponse {
 }
 
 message PAVTCfgSegmentTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof segment_type_enum {
     PavtSegmentType segment_type = 3;
@@ -6774,7 +6774,7 @@ message PAVTCfgSegmentTypeResponse {
 }
 
 message PAVTCfgSegmentTypeArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated PavtSegmentType segment_type = 3;
 }
@@ -6784,7 +6784,7 @@ message PAVTCfgSegmentTypeArrayResponse {
 }
 
 message PAVTFetchAmplitudeTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
   int32 trace_index = 4;
@@ -6799,7 +6799,7 @@ message PAVTFetchAmplitudeTraceResponse {
 }
 
 message PAVTFetchPhaseAndAmplitudeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6813,7 +6813,7 @@ message PAVTFetchPhaseAndAmplitudeResponse {
 }
 
 message PAVTFetchPhaseAndAmplitudeArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6828,7 +6828,7 @@ message PAVTFetchPhaseAndAmplitudeArrayResponse {
 }
 
 message PAVTFetchPhaseTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
   int32 trace_index = 4;
@@ -6843,7 +6843,7 @@ message PAVTFetchPhaseTraceResponse {
 }
 
 message PhaseNoiseCfgAutoRangeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double start_frequency = 3;
   double stop_frequency = 4;
@@ -6855,7 +6855,7 @@ message PhaseNoiseCfgAutoRangeResponse {
 }
 
 message PhaseNoiseCfgAveragingMultiplierRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 averaging_multiplier = 3;
 }
@@ -6865,7 +6865,7 @@ message PhaseNoiseCfgAveragingMultiplierResponse {
 }
 
 message PhaseNoiseCfgCancellationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof cancellation_enabled_enum {
     PhaseNoiseCancellationEnabled cancellation_enabled = 3;
@@ -6881,7 +6881,7 @@ message PhaseNoiseCfgCancellationResponse {
 }
 
 message PhaseNoiseCfgIntegratedNoiseRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof integrated_noise_range_definition_enum {
     PhaseNoiseIntegratedNoiseRangeDefinition integrated_noise_range_definition = 3;
@@ -6896,7 +6896,7 @@ message PhaseNoiseCfgIntegratedNoiseResponse {
 }
 
 message PhaseNoiseCfgNumberOfRangesRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_ranges = 3;
 }
@@ -6906,7 +6906,7 @@ message PhaseNoiseCfgNumberOfRangesResponse {
 }
 
 message PhaseNoiseCfgRangeArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double range_start_frequency = 3;
   repeated double range_stop_frequency = 4;
@@ -6919,7 +6919,7 @@ message PhaseNoiseCfgRangeArrayResponse {
 }
 
 message PhaseNoiseCfgRangeDefinitionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof range_definition_enum {
     PhaseNoiseRangeDefinition range_definition = 3;
@@ -6932,7 +6932,7 @@ message PhaseNoiseCfgRangeDefinitionResponse {
 }
 
 message PhaseNoiseCfgSmoothingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof smoothing_type_enum {
     PhaseNoiseSmoothingType smoothing_type = 3;
@@ -6946,7 +6946,7 @@ message PhaseNoiseCfgSmoothingResponse {
 }
 
 message PhaseNoiseCfgSpotNoiseFrequencyListRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double frequency_list = 3;
 }
@@ -6956,7 +6956,7 @@ message PhaseNoiseCfgSpotNoiseFrequencyListResponse {
 }
 
 message PhaseNoiseCfgSpurRemovalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof spur_removal_enabled_enum {
     PhaseNoiseSpurRemovalEnabled spur_removal_enabled = 3;
@@ -6970,7 +6970,7 @@ message PhaseNoiseCfgSpurRemovalResponse {
 }
 
 message PhaseNoiseFetchCarrierMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6982,7 +6982,7 @@ message PhaseNoiseFetchCarrierMeasurementResponse {
 }
 
 message PhaseNoiseFetchIntegratedNoiseRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -6998,7 +6998,7 @@ message PhaseNoiseFetchIntegratedNoiseResponse {
 }
 
 message PhaseNoiseFetchMeasuredLogPlotTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7011,7 +7011,7 @@ message PhaseNoiseFetchMeasuredLogPlotTraceResponse {
 }
 
 message PhaseNoiseFetchSmoothedLogPlotTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7024,7 +7024,7 @@ message PhaseNoiseFetchSmoothedLogPlotTraceResponse {
 }
 
 message PhaseNoiseFetchSpotNoiseRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7036,7 +7036,7 @@ message PhaseNoiseFetchSpotNoiseResponse {
 }
 
 message ResetAttributeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
 }
@@ -7046,7 +7046,7 @@ message ResetAttributeResponse {
 }
 
 message ResetToDefaultRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -7055,7 +7055,7 @@ message ResetToDefaultResponse {
 }
 
 message SEMCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     SemAveragingEnabled averaging_enabled = 3;
@@ -7073,7 +7073,7 @@ message SEMCfgAveragingResponse {
 }
 
 message SEMCfgCarrierChannelBandwidthRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double carrier_channel_bandwidth = 3;
 }
@@ -7083,7 +7083,7 @@ message SEMCfgCarrierChannelBandwidthResponse {
 }
 
 message SEMCfgCarrierEnabledRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof carrier_enabled_enum {
     SemCarrierEnabled carrier_enabled = 3;
@@ -7096,7 +7096,7 @@ message SEMCfgCarrierEnabledResponse {
 }
 
 message SEMCfgCarrierFrequencyRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double carrier_frequency = 3;
 }
@@ -7106,7 +7106,7 @@ message SEMCfgCarrierFrequencyResponse {
 }
 
 message SEMCfgCarrierIntegrationBandwidthRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double integration_bandwidth = 3;
 }
@@ -7116,13 +7116,13 @@ message SEMCfgCarrierIntegrationBandwidthResponse {
 }
 
 message SEMCfgCarrierRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rbw_auto_enum {
     SemCarrierRbwAutoBandwidth rbw_auto = 3;
     int32 rbw_auto_raw = 4;
   }
-  double rb_w = 5;
+  double rbw = 5;
   oneof rbw_filter_type_enum {
     SemCarrierRbwFilterType rbw_filter_type = 6;
     int32 rbw_filter_type_raw = 7;
@@ -7134,7 +7134,7 @@ message SEMCfgCarrierRBWFilterResponse {
 }
 
 message SEMCfgCarrierRRCFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rrc_filter_enabled_enum {
     SemCarrierRrcFilterEnabled rrc_filter_enabled = 3;
@@ -7148,7 +7148,7 @@ message SEMCfgCarrierRRCFilterResponse {
 }
 
 message SEMCfgFFTRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof fft_window_enum {
     SemFftWindow fft_window = 3;
@@ -7162,7 +7162,7 @@ message SEMCfgFFTResponse {
 }
 
 message SEMCfgNumberOfCarriersRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_carriers = 3;
 }
@@ -7172,7 +7172,7 @@ message SEMCfgNumberOfCarriersResponse {
 }
 
 message SEMCfgNumberOfOffsetsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_offsets = 3;
 }
@@ -7182,7 +7182,7 @@ message SEMCfgNumberOfOffsetsResponse {
 }
 
 message SEMCfgOffsetAbsoluteLimitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof absolute_limit_mode_enum {
     SemOffsetAbsoluteLimitMode absolute_limit_mode = 3;
@@ -7197,7 +7197,7 @@ message SEMCfgOffsetAbsoluteLimitResponse {
 }
 
 message SEMCfgOffsetAbsoluteLimitArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated SemOffsetAbsoluteLimitMode absolute_limit_mode = 3;
   repeated double absolute_limit_start = 4;
@@ -7209,7 +7209,7 @@ message SEMCfgOffsetAbsoluteLimitArrayResponse {
 }
 
 message SEMCfgOffsetBandwidthIntegralRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 bandwidth_integral = 3;
 }
@@ -7219,7 +7219,7 @@ message SEMCfgOffsetBandwidthIntegralResponse {
 }
 
 message SEMCfgOffsetFrequencyRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double offset_start_frequency = 3;
   double offset_stop_frequency = 4;
@@ -7238,7 +7238,7 @@ message SEMCfgOffsetFrequencyResponse {
 }
 
 message SEMCfgOffsetFrequencyArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double offset_start_frequency = 3;
   repeated double offset_stop_frequency = 4;
@@ -7251,7 +7251,7 @@ message SEMCfgOffsetFrequencyArrayResponse {
 }
 
 message SEMCfgOffsetFrequencyDefinitionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof offset_frequency_definition_enum {
     SemOffsetFrequencyDefinition offset_frequency_definition = 3;
@@ -7264,7 +7264,7 @@ message SEMCfgOffsetFrequencyDefinitionResponse {
 }
 
 message SEMCfgOffsetLimitFailMaskRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof limit_fail_mask_enum {
     SemOffsetLimitFailMask limit_fail_mask = 3;
@@ -7277,13 +7277,13 @@ message SEMCfgOffsetLimitFailMaskResponse {
 }
 
 message SEMCfgOffsetRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rbw_auto_enum {
     SemOffsetRbwAutoBandwidth rbw_auto = 3;
     int32 rbw_auto_raw = 4;
   }
-  double rb_w = 5;
+  double rbw = 5;
   oneof rbw_filter_type_enum {
     SemOffsetRbwFilterType rbw_filter_type = 6;
     int32 rbw_filter_type_raw = 7;
@@ -7295,10 +7295,10 @@ message SEMCfgOffsetRBWFilterResponse {
 }
 
 message SEMCfgOffsetRBWFilterArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated SemOffsetRbwAutoBandwidth rbw_auto = 3;
-  repeated double rb_w = 4;
+  repeated double rbw = 4;
   repeated SemOffsetRbwFilterType rbw_filter_type = 5;
 }
 
@@ -7307,7 +7307,7 @@ message SEMCfgOffsetRBWFilterArrayResponse {
 }
 
 message SEMCfgOffsetRelativeAttenuationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double relative_attenuation = 3;
 }
@@ -7317,7 +7317,7 @@ message SEMCfgOffsetRelativeAttenuationResponse {
 }
 
 message SEMCfgOffsetRelativeAttenuationArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double relative_attenuation = 3;
 }
@@ -7327,7 +7327,7 @@ message SEMCfgOffsetRelativeAttenuationArrayResponse {
 }
 
 message SEMCfgOffsetRelativeLimitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof relative_limit_mode_enum {
     SemOffsetRelativeLimitMode relative_limit_mode = 3;
@@ -7342,7 +7342,7 @@ message SEMCfgOffsetRelativeLimitResponse {
 }
 
 message SEMCfgOffsetRelativeLimitArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated SemOffsetRelativeLimitMode relative_limit_mode = 3;
   repeated double relative_limit_start = 4;
@@ -7354,7 +7354,7 @@ message SEMCfgOffsetRelativeLimitArrayResponse {
 }
 
 message SEMCfgPowerUnitsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof power_units_enum {
     SemPowerUnits power_units = 3;
@@ -7367,7 +7367,7 @@ message SEMCfgPowerUnitsResponse {
 }
 
 message SEMCfgReferenceTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof reference_type_enum {
     SemReferenceType reference_type = 3;
@@ -7380,7 +7380,7 @@ message SEMCfgReferenceTypeResponse {
 }
 
 message SEMCfgSweepTimeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof sweep_time_auto_enum {
     SemSweepTimeAuto sweep_time_auto = 3;
@@ -7394,7 +7394,7 @@ message SEMCfgSweepTimeResponse {
 }
 
 message SEMFetchAbsoluteMaskTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7408,7 +7408,7 @@ message SEMFetchAbsoluteMaskTraceResponse {
 }
 
 message SEMFetchCarrierMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7422,7 +7422,7 @@ message SEMFetchCarrierMeasurementResponse {
 }
 
 message SEMFetchCompositeMeasurementStatusRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7434,7 +7434,7 @@ message SEMFetchCompositeMeasurementStatusResponse {
 }
 
 message SEMFetchFrequencyResolutionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7445,7 +7445,7 @@ message SEMFetchFrequencyResolutionResponse {
 }
 
 message SEMFetchLowerOffsetMarginRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7461,7 +7461,7 @@ message SEMFetchLowerOffsetMarginResponse {
 }
 
 message SEMFetchLowerOffsetMarginArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7478,7 +7478,7 @@ message SEMFetchLowerOffsetMarginArrayResponse {
 }
 
 message SEMFetchLowerOffsetPowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7493,7 +7493,7 @@ message SEMFetchLowerOffsetPowerResponse {
 }
 
 message SEMFetchLowerOffsetPowerArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7509,7 +7509,7 @@ message SEMFetchLowerOffsetPowerArrayResponse {
 }
 
 message SEMFetchRelativeMaskTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7523,7 +7523,7 @@ message SEMFetchRelativeMaskTraceResponse {
 }
 
 message SEMFetchSpectrumRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7537,7 +7537,7 @@ message SEMFetchSpectrumResponse {
 }
 
 message SEMFetchTotalCarrierPowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7548,7 +7548,7 @@ message SEMFetchTotalCarrierPowerResponse {
 }
 
 message SEMFetchUpperOffsetMarginRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7564,7 +7564,7 @@ message SEMFetchUpperOffsetMarginResponse {
 }
 
 message SEMFetchUpperOffsetMarginArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7581,7 +7581,7 @@ message SEMFetchUpperOffsetMarginArrayResponse {
 }
 
 message SEMFetchUpperOffsetPowerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7596,7 +7596,7 @@ message SEMFetchUpperOffsetPowerResponse {
 }
 
 message SEMFetchUpperOffsetPowerArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -7612,7 +7612,7 @@ message SEMFetchUpperOffsetPowerArrayResponse {
 }
 
 message SelectMeasurementsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof measurements_enum {
     MeasurementTypes measurements = 3;
@@ -7626,7 +7626,7 @@ message SelectMeasurementsResponse {
 }
 
 message SendSoftwareEdgeTriggerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message SendSoftwareEdgeTriggerResponse {
@@ -7634,7 +7634,7 @@ message SendSoftwareEdgeTriggerResponse {
 }
 
 message SetAttributeF32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   float attr_val = 4;
@@ -7645,7 +7645,7 @@ message SetAttributeF32Response {
 }
 
 message SetAttributeF32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   repeated float attr_val = 4;
@@ -7656,7 +7656,7 @@ message SetAttributeF32ArrayResponse {
 }
 
 message SetAttributeF64Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   double attr_val = 4;
@@ -7667,7 +7667,7 @@ message SetAttributeF64Response {
 }
 
 message SetAttributeF64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   repeated double attr_val = 4;
@@ -7678,7 +7678,7 @@ message SetAttributeF64ArrayResponse {
 }
 
 message SetAttributeI16Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   int32 attr_val = 4;
@@ -7689,7 +7689,7 @@ message SetAttributeI16Response {
 }
 
 message SetAttributeI32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   oneof attr_val_enum {
@@ -7703,7 +7703,7 @@ message SetAttributeI32Response {
 }
 
 message SetAttributeI32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   repeated NiRFmxSpecAnInt32AttributeValues attr_val = 4;
@@ -7714,7 +7714,7 @@ message SetAttributeI32ArrayResponse {
 }
 
 message SetAttributeI64Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   int64 attr_val = 4;
@@ -7725,7 +7725,7 @@ message SetAttributeI64Response {
 }
 
 message SetAttributeI64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   repeated int64 attr_val = 4;
@@ -7736,7 +7736,7 @@ message SetAttributeI64ArrayResponse {
 }
 
 message SetAttributeI8Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   int32 attr_val = 4;
@@ -7747,7 +7747,7 @@ message SetAttributeI8Response {
 }
 
 message SetAttributeI8ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   repeated int32 attr_val = 4;
@@ -7758,7 +7758,7 @@ message SetAttributeI8ArrayResponse {
 }
 
 message SetAttributeNIComplexDoubleArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   repeated nidevice_grpc.NIComplexNumber attr_val = 4;
@@ -7769,7 +7769,7 @@ message SetAttributeNIComplexDoubleArrayResponse {
 }
 
 message SetAttributeNIComplexSingleArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   repeated nidevice_grpc.NIComplexNumberF32 attr_val = 4;
@@ -7780,7 +7780,7 @@ message SetAttributeNIComplexSingleArrayResponse {
 }
 
 message SetAttributeStringRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   oneof attr_val_enum {
@@ -7794,7 +7794,7 @@ message SetAttributeStringResponse {
 }
 
 message SetAttributeU16Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   uint32 attr_val = 4;
@@ -7805,7 +7805,7 @@ message SetAttributeU16Response {
 }
 
 message SetAttributeU32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   uint32 attr_val = 4;
@@ -7816,7 +7816,7 @@ message SetAttributeU32Response {
 }
 
 message SetAttributeU32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   repeated uint32 attr_val = 4;
@@ -7827,7 +7827,7 @@ message SetAttributeU32ArrayResponse {
 }
 
 message SetAttributeU64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   repeated uint64 attr_val = 4;
@@ -7838,7 +7838,7 @@ message SetAttributeU64ArrayResponse {
 }
 
 message SetAttributeU8Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   uint32 attr_val = 4;
@@ -7849,7 +7849,7 @@ message SetAttributeU8Response {
 }
 
 message SetAttributeU8ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxSpecAnAttribute attribute_id = 3;
   bytes attr_val = 4;
@@ -7860,7 +7860,7 @@ message SetAttributeU8ArrayResponse {
 }
 
 message SpectrumCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     SpectrumAveragingEnabled averaging_enabled = 3;
@@ -7878,7 +7878,7 @@ message SpectrumCfgAveragingResponse {
 }
 
 message SpectrumCfgDetectorRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof detector_type_enum {
     SpectrumDetectorType detector_type = 3;
@@ -7892,7 +7892,7 @@ message SpectrumCfgDetectorResponse {
 }
 
 message SpectrumCfgFFTRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof fft_window_enum {
     SpectrumFftWindow fft_window = 3;
@@ -7906,7 +7906,7 @@ message SpectrumCfgFFTResponse {
 }
 
 message SpectrumCfgFrequencyStartStopRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double start_frequency = 3;
   double stop_frequency = 4;
@@ -7917,7 +7917,7 @@ message SpectrumCfgFrequencyStartStopResponse {
 }
 
 message SpectrumCfgNoiseCompensationEnabledRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof noise_compensation_enabled_enum {
     SpectrumNoiseCompensationEnabled noise_compensation_enabled = 3;
@@ -7930,7 +7930,7 @@ message SpectrumCfgNoiseCompensationEnabledResponse {
 }
 
 message SpectrumCfgPowerUnitsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof spectrum_power_units_enum {
     SpectrumPowerUnits spectrum_power_units = 3;
@@ -7943,13 +7943,13 @@ message SpectrumCfgPowerUnitsResponse {
 }
 
 message SpectrumCfgRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rbw_auto_enum {
     SpectrumRbwAutoBandwidth rbw_auto = 3;
     int32 rbw_auto_raw = 4;
   }
-  double rb_w = 5;
+  double rbw = 5;
   oneof rbw_filter_type_enum {
     SpectrumRbwFilterType rbw_filter_type = 6;
     int32 rbw_filter_type_raw = 7;
@@ -7961,7 +7961,7 @@ message SpectrumCfgRBWFilterResponse {
 }
 
 message SpectrumCfgSpanRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double span = 3;
 }
@@ -7971,7 +7971,7 @@ message SpectrumCfgSpanResponse {
 }
 
 message SpectrumCfgSweepTimeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof sweep_time_auto_enum {
     SpectrumSweepTimeAuto sweep_time_auto = 3;
@@ -7985,13 +7985,13 @@ message SpectrumCfgSweepTimeResponse {
 }
 
 message SpectrumCfgVBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof vbw_auto_enum {
     SpectrumVbwFilterAutoBandwidth vbw_auto = 3;
     int32 vbw_auto_raw = 4;
   }
-  double vb_w = 5;
+  double vbw = 5;
   double vbw_to_rbw_ratio = 6;
 }
 
@@ -8000,7 +8000,7 @@ message SpectrumCfgVBWFilterResponse {
 }
 
 message SpectrumFetchMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8013,7 +8013,7 @@ message SpectrumFetchMeasurementResponse {
 }
 
 message SpectrumFetchPowerTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8027,7 +8027,7 @@ message SpectrumFetchPowerTraceResponse {
 }
 
 message SpectrumFetchSpectrumRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8041,7 +8041,7 @@ message SpectrumFetchSpectrumResponse {
 }
 
 message SpectrumReadRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8055,7 +8055,7 @@ message SpectrumReadResponse {
 }
 
 message SpectrumValidateNoiseCalibrationDataRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -8066,7 +8066,7 @@ message SpectrumValidateNoiseCalibrationDataResponse {
 }
 
 message SpurCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     SpurAveragingEnabled averaging_enabled = 3;
@@ -8084,7 +8084,7 @@ message SpurCfgAveragingResponse {
 }
 
 message SpurCfgFFTWindowTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof fft_window_enum {
     SpurFftWindow fft_window = 3;
@@ -8097,7 +8097,7 @@ message SpurCfgFFTWindowTypeResponse {
 }
 
 message SpurCfgNumberOfRangesRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_ranges = 3;
 }
@@ -8107,7 +8107,7 @@ message SpurCfgNumberOfRangesResponse {
 }
 
 message SpurCfgRangeAbsoluteLimitRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof absolute_limit_mode_enum {
     SpurAbsoluteLimitMode absolute_limit_mode = 3;
@@ -8122,7 +8122,7 @@ message SpurCfgRangeAbsoluteLimitResponse {
 }
 
 message SpurCfgRangeAbsoluteLimitArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated SpurAbsoluteLimitMode absolute_limit_mode = 3;
   repeated double absolute_limit_start = 4;
@@ -8134,7 +8134,7 @@ message SpurCfgRangeAbsoluteLimitArrayResponse {
 }
 
 message SpurCfgRangeDetectorRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof detector_type_enum {
     SpurRangeDetectorType detector_type = 3;
@@ -8148,7 +8148,7 @@ message SpurCfgRangeDetectorResponse {
 }
 
 message SpurCfgRangeDetectorArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated SpurRangeDetectorType detector_type = 3;
   repeated int32 detector_points = 4;
@@ -8159,7 +8159,7 @@ message SpurCfgRangeDetectorArrayResponse {
 }
 
 message SpurCfgRangeFrequencyRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double start_frequency = 3;
   double stop_frequency = 4;
@@ -8174,7 +8174,7 @@ message SpurCfgRangeFrequencyResponse {
 }
 
 message SpurCfgRangeFrequencyArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double start_frequency = 3;
   repeated double stop_frequency = 4;
@@ -8186,7 +8186,7 @@ message SpurCfgRangeFrequencyArrayResponse {
 }
 
 message SpurCfgRangeNumberOfSpursToReportRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 number_of_spurs_to_report = 3;
 }
@@ -8196,7 +8196,7 @@ message SpurCfgRangeNumberOfSpursToReportResponse {
 }
 
 message SpurCfgRangeNumberOfSpursToReportArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated int32 number_of_spurs_to_report = 3;
 }
@@ -8206,7 +8206,7 @@ message SpurCfgRangeNumberOfSpursToReportArrayResponse {
 }
 
 message SpurCfgRangePeakCriteriaRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double threshold = 3;
   double excursion = 4;
@@ -8217,7 +8217,7 @@ message SpurCfgRangePeakCriteriaResponse {
 }
 
 message SpurCfgRangePeakCriteriaArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double threshold = 3;
   repeated double excursion = 4;
@@ -8228,10 +8228,10 @@ message SpurCfgRangePeakCriteriaArrayResponse {
 }
 
 message SpurCfgRangeRBWArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated SpurRbwAutoBandwidth rbw_auto = 3;
-  repeated double rb_w = 4;
+  repeated double rbw = 4;
   repeated SpurRbwFilterType rbw_filter_type = 5;
 }
 
@@ -8240,13 +8240,13 @@ message SpurCfgRangeRBWArrayResponse {
 }
 
 message SpurCfgRangeRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof rbw_auto_enum {
     SpurRbwAutoBandwidth rbw_auto = 3;
     int32 rbw_auto_raw = 4;
   }
-  double rb_w = 5;
+  double rbw = 5;
   oneof rbw_filter_type_enum {
     SpurRbwFilterType rbw_filter_type = 6;
     int32 rbw_filter_type_raw = 7;
@@ -8258,7 +8258,7 @@ message SpurCfgRangeRBWFilterResponse {
 }
 
 message SpurCfgRangeRelativeAttenuationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double relative_attenuation = 3;
 }
@@ -8268,7 +8268,7 @@ message SpurCfgRangeRelativeAttenuationResponse {
 }
 
 message SpurCfgRangeRelativeAttenuationArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double relative_attenuation = 3;
 }
@@ -8278,7 +8278,7 @@ message SpurCfgRangeRelativeAttenuationArrayResponse {
 }
 
 message SpurCfgRangeSweepTimeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof sweep_time_auto_enum {
     SpurSweepTimeAuto sweep_time_auto = 3;
@@ -8292,7 +8292,7 @@ message SpurCfgRangeSweepTimeResponse {
 }
 
 message SpurCfgRangeSweepTimeArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated SpurSweepTimeAuto sweep_time_auto = 3;
   repeated double sweep_time_interval = 4;
@@ -8303,13 +8303,13 @@ message SpurCfgRangeSweepTimeArrayResponse {
 }
 
 message SpurCfgRangeVBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof vbw_auto_enum {
     SpurRangeVbwFilterAutoBandwidth vbw_auto = 3;
     int32 vbw_auto_raw = 4;
   }
-  double vb_w = 5;
+  double vbw = 5;
   double vbw_to_rbw_ratio = 6;
 }
 
@@ -8318,10 +8318,10 @@ message SpurCfgRangeVBWFilterResponse {
 }
 
 message SpurCfgRangeVBWFilterArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated SpurRangeVbwFilterAutoBandwidth vbw_auto = 3;
-  repeated double vb_w = 4;
+  repeated double vbw = 4;
   repeated double vbw_to_rbw_ratio = 5;
 }
 
@@ -8330,7 +8330,7 @@ message SpurCfgRangeVBWFilterArrayResponse {
 }
 
 message SpurCfgTraceRangeIndexRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 trace_range_index = 3;
 }
@@ -8340,7 +8340,7 @@ message SpurCfgTraceRangeIndexResponse {
 }
 
 message SpurFetchAllSpursRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8356,7 +8356,7 @@ message SpurFetchAllSpursResponse {
 }
 
 message SpurFetchMeasurementStatusRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8368,7 +8368,7 @@ message SpurFetchMeasurementStatusResponse {
 }
 
 message SpurFetchRangeAbsoluteLimitTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8382,7 +8382,7 @@ message SpurFetchRangeAbsoluteLimitTraceResponse {
 }
 
 message SpurFetchRangeSpectrumTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8396,7 +8396,7 @@ message SpurFetchRangeSpectrumTraceResponse {
 }
 
 message SpurFetchRangeStatusRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8409,7 +8409,7 @@ message SpurFetchRangeStatusResponse {
 }
 
 message SpurFetchRangeStatusArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8423,7 +8423,7 @@ message SpurFetchRangeStatusArrayResponse {
 }
 
 message SpurFetchSpurMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8437,7 +8437,7 @@ message SpurFetchSpurMeasurementResponse {
 }
 
 message SpurFetchSpurMeasurementArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8452,7 +8452,7 @@ message SpurFetchSpurMeasurementArrayResponse {
 }
 
 message TXPCfgAveragingRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof averaging_enabled_enum {
     TxpAveragingEnabled averaging_enabled = 3;
@@ -8470,7 +8470,7 @@ message TXPCfgAveragingResponse {
 }
 
 message TXPCfgMeasurementIntervalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double measurement_interval = 3;
 }
@@ -8480,9 +8480,9 @@ message TXPCfgMeasurementIntervalResponse {
 }
 
 message TXPCfgRBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  double rb_w = 3;
+  double rbw = 3;
   oneof rbw_filter_type_enum {
     TxpRbwFilterType rbw_filter_type = 4;
     int32 rbw_filter_type_raw = 5;
@@ -8495,7 +8495,7 @@ message TXPCfgRBWFilterResponse {
 }
 
 message TXPCfgThresholdRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof threshold_enabled_enum {
     TxpThresholdEnabled threshold_enabled = 3;
@@ -8513,13 +8513,13 @@ message TXPCfgThresholdResponse {
 }
 
 message TXPCfgVBWFilterRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   oneof vbw_auto_enum {
     TxpVbwFilterAutoBandwidth vbw_auto = 3;
     int32 vbw_auto_raw = 4;
   }
-  double vb_w = 5;
+  double vbw = 5;
   double vbw_to_rbw_ratio = 6;
 }
 
@@ -8528,7 +8528,7 @@ message TXPCfgVBWFilterResponse {
 }
 
 message TXPFetchMeasurementRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8542,7 +8542,7 @@ message TXPFetchMeasurementResponse {
 }
 
 message TXPFetchPowerTraceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8556,7 +8556,7 @@ message TXPFetchPowerTraceResponse {
 }
 
 message TXPReadRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }
@@ -8570,7 +8570,7 @@ message TXPReadResponse {
 }
 
 message WaitForAcquisitionCompleteRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   double timeout = 2;
 }
 
@@ -8579,7 +8579,7 @@ message WaitForAcquisitionCompleteResponse {
 }
 
 message WaitForMeasurementCompleteRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   double timeout = 3;
 }

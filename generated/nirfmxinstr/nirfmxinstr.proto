@@ -216,7 +216,7 @@ message BuildPortStringResponse {
 }
 
 message CfgExternalAttenuationInterpolationLinearRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
   int32 format = 4;
@@ -227,7 +227,7 @@ message CfgExternalAttenuationInterpolationLinearResponse {
 }
 
 message CfgExternalAttenuationInterpolationNearestRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
 }
@@ -237,7 +237,7 @@ message CfgExternalAttenuationInterpolationNearestResponse {
 }
 
 message CfgExternalAttenuationInterpolationSplineRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
 }
@@ -247,7 +247,7 @@ message CfgExternalAttenuationInterpolationSplineResponse {
 }
 
 message CfgExternalAttenuationTableRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
   repeated double frequency = 4;
@@ -259,7 +259,7 @@ message CfgExternalAttenuationTableResponse {
 }
 
 message CfgFrequencyReferenceRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   string frequency_reference_source = 3;
   double frequency_reference_frequency = 4;
@@ -270,7 +270,7 @@ message CfgFrequencyReferenceResponse {
 }
 
 message CfgMechanicalAttenuationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   int32 mechanical_attenuation_auto = 3;
   double mechanical_attenuation_value = 4;
@@ -281,7 +281,7 @@ message CfgMechanicalAttenuationResponse {
 }
 
 message CfgRFAttenuationRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   int32 rf_attenuation_auto = 3;
   double rf_attenuation_value = 4;
@@ -292,7 +292,7 @@ message CfgRFAttenuationResponse {
 }
 
 message CfgSParameterExternalAttenuationTableRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
   repeated double frequency = 4;
@@ -306,7 +306,7 @@ message CfgSParameterExternalAttenuationTableResponse {
 }
 
 message CfgSParameterExternalAttenuationTypeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 s_parameter_type = 3;
 }
@@ -316,7 +316,7 @@ message CfgSParameterExternalAttenuationTypeResponse {
 }
 
 message CheckAcquisitionStatusRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message CheckAcquisitionStatusResponse {
@@ -325,7 +325,7 @@ message CheckAcquisitionStatusResponse {
 }
 
 message CheckIfListExistsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string list_name = 2;
 }
 
@@ -336,7 +336,7 @@ message CheckIfListExistsResponse {
 }
 
 message CheckIfSignalConfigurationExistsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string signal_name = 2;
 }
 
@@ -347,7 +347,7 @@ message CheckIfSignalConfigurationExistsResponse {
 }
 
 message CloseRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   int32 force_destroy = 2;
 }
 
@@ -356,7 +356,7 @@ message CloseResponse {
 }
 
 message DeleteAllExternalAttenuationTablesRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -365,7 +365,7 @@ message DeleteAllExternalAttenuationTablesResponse {
 }
 
 message DeleteExternalAttenuationTableRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
 }
@@ -375,7 +375,7 @@ message DeleteExternalAttenuationTableResponse {
 }
 
 message DisableCalibrationPlaneRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -384,7 +384,7 @@ message DisableCalibrationPlaneResponse {
 }
 
 message EnableCalibrationPlaneRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -393,7 +393,7 @@ message EnableCalibrationPlaneResponse {
 }
 
 message ExportSignalRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   int32 export_signal_source = 2;
   string export_signal_output_terminal = 3;
 }
@@ -403,7 +403,7 @@ message ExportSignalResponse {
 }
 
 message GetAttributeF32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -414,7 +414,7 @@ message GetAttributeF32Response {
 }
 
 message GetAttributeF32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -426,7 +426,7 @@ message GetAttributeF32ArrayResponse {
 }
 
 message GetAttributeF64Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -437,7 +437,7 @@ message GetAttributeF64Response {
 }
 
 message GetAttributeF64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -449,7 +449,7 @@ message GetAttributeF64ArrayResponse {
 }
 
 message GetAttributeI16Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -460,7 +460,7 @@ message GetAttributeI16Response {
 }
 
 message GetAttributeI32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -472,7 +472,7 @@ message GetAttributeI32Response {
 }
 
 message GetAttributeI32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -485,7 +485,7 @@ message GetAttributeI32ArrayResponse {
 }
 
 message GetAttributeI64Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -496,7 +496,7 @@ message GetAttributeI64Response {
 }
 
 message GetAttributeI64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -508,7 +508,7 @@ message GetAttributeI64ArrayResponse {
 }
 
 message GetAttributeI8Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -519,7 +519,7 @@ message GetAttributeI8Response {
 }
 
 message GetAttributeI8ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -531,7 +531,7 @@ message GetAttributeI8ArrayResponse {
 }
 
 message GetAttributeNIComplexDoubleArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -543,7 +543,7 @@ message GetAttributeNIComplexDoubleArrayResponse {
 }
 
 message GetAttributeNIComplexSingleArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -555,7 +555,7 @@ message GetAttributeNIComplexSingleArrayResponse {
 }
 
 message GetAttributeStringRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -566,7 +566,7 @@ message GetAttributeStringResponse {
 }
 
 message GetAttributeU16Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -577,7 +577,7 @@ message GetAttributeU16Response {
 }
 
 message GetAttributeU32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -588,7 +588,7 @@ message GetAttributeU32Response {
 }
 
 message GetAttributeU32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -600,7 +600,7 @@ message GetAttributeU32ArrayResponse {
 }
 
 message GetAttributeU64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -612,7 +612,7 @@ message GetAttributeU64ArrayResponse {
 }
 
 message GetAttributeU8Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -623,7 +623,7 @@ message GetAttributeU8Response {
 }
 
 message GetAttributeU8ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -635,7 +635,7 @@ message GetAttributeU8ArrayResponse {
 }
 
 message GetAvailablePortsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -645,7 +645,7 @@ message GetAvailablePortsResponse {
 }
 
 message GetErrorRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message GetErrorResponse {
@@ -655,7 +655,7 @@ message GetErrorResponse {
 }
 
 message GetErrorStringRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   int32 error_code = 2;
 }
 
@@ -665,7 +665,7 @@ message GetErrorStringResponse {
 }
 
 message GetExternalAttenuationTableActualValueRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -675,7 +675,7 @@ message GetExternalAttenuationTableActualValueResponse {
 }
 
 message GetNIRFSASessionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message GetNIRFSASessionResponse {
@@ -684,7 +684,7 @@ message GetNIRFSASessionResponse {
 }
 
 message GetNIRFSASessionArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message GetNIRFSASessionArrayResponse {
@@ -694,7 +694,7 @@ message GetNIRFSASessionArrayResponse {
 }
 
 message GetSelfCalibrateLastDateAndTimeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int64 self_calibrate_step = 3;
 }
@@ -705,7 +705,7 @@ message GetSelfCalibrateLastDateAndTimeResponse {
 }
 
 message GetSelfCalibrateLastTemperatureRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int64 self_calibrate_step = 3;
 }
@@ -723,7 +723,7 @@ message InitializeRequest {
 
 message InitializeResponse {
   int32 status = 1;
-  nidevice_grpc.Session handle_out = 2;
+  nidevice_grpc.Session instrument = 2;
   int32 is_new_session = 3;
 }
 
@@ -734,7 +734,7 @@ message InitializeFromNIRFSASessionRequest {
 
 message InitializeFromNIRFSASessionResponse {
   int32 status = 1;
-  nidevice_grpc.Session handle_out = 2;
+  nidevice_grpc.Session instrument = 2;
 }
 
 message InitializeFromNIRFSASessionArrayRequest {
@@ -744,11 +744,11 @@ message InitializeFromNIRFSASessionArrayRequest {
 
 message InitializeFromNIRFSASessionArrayResponse {
   int32 status = 1;
-  nidevice_grpc.Session handle_out = 2;
+  nidevice_grpc.Session instrument = 2;
 }
 
 message IsSelfCalibrateValidRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
@@ -759,7 +759,7 @@ message IsSelfCalibrateValidResponse {
 }
 
 message LoadAllConfigurationsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string file_path = 2;
   int32 load_rf_instr_configuration = 3;
 }
@@ -769,7 +769,7 @@ message LoadAllConfigurationsResponse {
 }
 
 message LoadSParameterExternalAttenuationTableFromS2PFileRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
   string s2_p_file_path = 4;
@@ -781,7 +781,7 @@ message LoadSParameterExternalAttenuationTableFromS2PFileResponse {
 }
 
 message ResetAttributeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
 }
@@ -791,7 +791,7 @@ message ResetAttributeResponse {
 }
 
 message ResetDriverRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message ResetDriverResponse {
@@ -799,7 +799,7 @@ message ResetDriverResponse {
 }
 
 message ResetEntireSessionRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message ResetEntireSessionResponse {
@@ -807,7 +807,7 @@ message ResetEntireSessionResponse {
 }
 
 message ResetToDefaultRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message ResetToDefaultResponse {
@@ -815,7 +815,7 @@ message ResetToDefaultResponse {
 }
 
 message SaveAllConfigurationsRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string file_path = 2;
 }
 
@@ -824,7 +824,7 @@ message SaveAllConfigurationsResponse {
 }
 
 message SelectActiveExternalAttenuationTableRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
 }
@@ -834,7 +834,7 @@ message SelectActiveExternalAttenuationTableResponse {
 }
 
 message SelfCalibrateRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 steps_to_omit = 3;
 }
@@ -844,7 +844,7 @@ message SelfCalibrateResponse {
 }
 
 message SelfCalibrateRangeRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   int32 steps_to_omit = 3;
   double minimum_frequency = 4;
@@ -858,7 +858,7 @@ message SelfCalibrateRangeResponse {
 }
 
 message SendSoftwareEdgeAdvanceTriggerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message SendSoftwareEdgeAdvanceTriggerResponse {
@@ -866,7 +866,7 @@ message SendSoftwareEdgeAdvanceTriggerResponse {
 }
 
 message SendSoftwareEdgeStartTriggerRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
 }
 
 message SendSoftwareEdgeStartTriggerResponse {
@@ -874,7 +874,7 @@ message SendSoftwareEdgeStartTriggerResponse {
 }
 
 message SetAttributeF32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   float attr_val = 4;
@@ -885,7 +885,7 @@ message SetAttributeF32Response {
 }
 
 message SetAttributeF32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   repeated float attr_val = 4;
@@ -896,7 +896,7 @@ message SetAttributeF32ArrayResponse {
 }
 
 message SetAttributeF64Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   double attr_val = 4;
@@ -907,7 +907,7 @@ message SetAttributeF64Response {
 }
 
 message SetAttributeF64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   repeated double attr_val = 4;
@@ -918,7 +918,7 @@ message SetAttributeF64ArrayResponse {
 }
 
 message SetAttributeI16Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   int32 attr_val = 4;
@@ -929,7 +929,7 @@ message SetAttributeI16Response {
 }
 
 message SetAttributeI32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   oneof attr_val_enum {
@@ -943,7 +943,7 @@ message SetAttributeI32Response {
 }
 
 message SetAttributeI32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   repeated NiRFmxInstrInt32AttributeValues attr_val = 4;
@@ -954,7 +954,7 @@ message SetAttributeI32ArrayResponse {
 }
 
 message SetAttributeI64Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   int64 attr_val = 4;
@@ -965,7 +965,7 @@ message SetAttributeI64Response {
 }
 
 message SetAttributeI64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   repeated int64 attr_val = 4;
@@ -976,7 +976,7 @@ message SetAttributeI64ArrayResponse {
 }
 
 message SetAttributeI8Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   int32 attr_val = 4;
@@ -987,7 +987,7 @@ message SetAttributeI8Response {
 }
 
 message SetAttributeI8ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   repeated int32 attr_val = 4;
@@ -998,7 +998,7 @@ message SetAttributeI8ArrayResponse {
 }
 
 message SetAttributeNIComplexDoubleArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   repeated nidevice_grpc.NIComplexNumber attr_val = 4;
@@ -1009,7 +1009,7 @@ message SetAttributeNIComplexDoubleArrayResponse {
 }
 
 message SetAttributeNIComplexSingleArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   repeated nidevice_grpc.NIComplexNumberF32 attr_val = 4;
@@ -1020,7 +1020,7 @@ message SetAttributeNIComplexSingleArrayResponse {
 }
 
 message SetAttributeStringRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   string attr_val = 4;
@@ -1031,7 +1031,7 @@ message SetAttributeStringResponse {
 }
 
 message SetAttributeU16Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   uint32 attr_val = 4;
@@ -1042,7 +1042,7 @@ message SetAttributeU16Response {
 }
 
 message SetAttributeU32Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   uint32 attr_val = 4;
@@ -1053,7 +1053,7 @@ message SetAttributeU32Response {
 }
 
 message SetAttributeU32ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   repeated uint32 attr_val = 4;
@@ -1064,7 +1064,7 @@ message SetAttributeU32ArrayResponse {
 }
 
 message SetAttributeU64ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   repeated uint64 attr_val = 4;
@@ -1075,7 +1075,7 @@ message SetAttributeU64ArrayResponse {
 }
 
 message SetAttributeU8Request {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   uint32 attr_val = 4;
@@ -1086,7 +1086,7 @@ message SetAttributeU8Response {
 }
 
 message SetAttributeU8ArrayRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
   NiRFmxInstrAttribute attribute_id = 3;
   bytes attr_val = 4;
@@ -1117,7 +1117,7 @@ message ValuesFromTimestampResponse {
 }
 
 message WaitForAcquisitionCompleteRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   double timeout = 2;
 }
 

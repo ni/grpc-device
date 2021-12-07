@@ -154,7 +154,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -179,7 +179,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -199,7 +199,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -219,7 +219,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -262,7 +262,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -287,7 +287,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -312,7 +312,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -337,7 +337,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -395,7 +395,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -415,7 +415,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -430,7 +430,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -455,7 +455,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -480,7 +480,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -495,7 +495,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -510,7 +510,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -530,7 +530,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -545,7 +545,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -560,7 +560,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -580,7 +580,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -606,7 +606,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -647,7 +647,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -673,7 +673,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -714,7 +714,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -740,7 +740,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -766,7 +766,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -807,7 +807,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -833,7 +833,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -874,7 +874,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -901,7 +901,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -943,7 +943,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -984,7 +984,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1025,7 +1025,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1060,7 +1060,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1086,7 +1086,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1112,7 +1112,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1153,7 +1153,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1194,7 +1194,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1220,7 +1220,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1261,7 +1261,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1290,7 +1290,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1319,7 +1319,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1348,7 +1348,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1368,7 +1368,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1383,7 +1383,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1413,7 +1413,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1438,7 +1438,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1475,7 +1475,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'handleOut',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1497,7 +1497,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'handleOut',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1523,7 +1523,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'handleOut',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1533,7 +1533,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1558,7 +1558,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1578,7 +1578,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1608,7 +1608,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1629,7 +1629,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1639,7 +1639,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1649,7 +1649,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1659,7 +1659,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1674,7 +1674,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1694,7 +1694,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1714,7 +1714,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1754,7 +1754,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1764,7 +1764,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1774,7 +1774,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1800,7 +1800,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1835,7 +1835,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1861,7 +1861,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1896,7 +1896,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1922,7 +1922,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1948,7 +1948,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1983,7 +1983,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2009,7 +2009,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2044,7 +2044,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2071,7 +2071,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2107,7 +2107,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2142,7 +2142,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2177,7 +2177,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2203,7 +2203,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2229,7 +2229,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2255,7 +2255,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2290,7 +2290,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2325,7 +2325,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2351,7 +2351,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2426,7 +2426,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrumentHandle',
+                'name': 'instrument',
                 'type': 'niRFmxInstrHandle'
             },
             {

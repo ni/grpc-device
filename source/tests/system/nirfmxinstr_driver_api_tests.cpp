@@ -70,7 +70,7 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model)
 TEST_F(NiRFmxInstrDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
-  auto session = init_response.handle_out();
+  auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 
   auto close_response = client::close(stub(), session, 0);

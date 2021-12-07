@@ -184,987 +184,987 @@ int32 NiRFmxInstrLibrary::BuildPortString(char selectorString[], char portName[]
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CfgExternalAttenuationInterpolationLinear(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 format)
+int32 NiRFmxInstrLibrary::CfgExternalAttenuationInterpolationLinear(niRFmxInstrHandle instrument, char selectorString[], char tableName[], int32 format)
 {
   if (!function_pointers_.CfgExternalAttenuationInterpolationLinear) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgExternalAttenuationInterpolationLinear.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CfgExternalAttenuationInterpolationLinear(instrumentHandle, selectorString, tableName, format);
+  return RFmxInstr_CfgExternalAttenuationInterpolationLinear(instrument, selectorString, tableName, format);
 #else
-  return function_pointers_.CfgExternalAttenuationInterpolationLinear(instrumentHandle, selectorString, tableName, format);
+  return function_pointers_.CfgExternalAttenuationInterpolationLinear(instrument, selectorString, tableName, format);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CfgExternalAttenuationInterpolationNearest(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[])
+int32 NiRFmxInstrLibrary::CfgExternalAttenuationInterpolationNearest(niRFmxInstrHandle instrument, char selectorString[], char tableName[])
 {
   if (!function_pointers_.CfgExternalAttenuationInterpolationNearest) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgExternalAttenuationInterpolationNearest.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CfgExternalAttenuationInterpolationNearest(instrumentHandle, selectorString, tableName);
+  return RFmxInstr_CfgExternalAttenuationInterpolationNearest(instrument, selectorString, tableName);
 #else
-  return function_pointers_.CfgExternalAttenuationInterpolationNearest(instrumentHandle, selectorString, tableName);
+  return function_pointers_.CfgExternalAttenuationInterpolationNearest(instrument, selectorString, tableName);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CfgExternalAttenuationInterpolationSpline(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[])
+int32 NiRFmxInstrLibrary::CfgExternalAttenuationInterpolationSpline(niRFmxInstrHandle instrument, char selectorString[], char tableName[])
 {
   if (!function_pointers_.CfgExternalAttenuationInterpolationSpline) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgExternalAttenuationInterpolationSpline.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CfgExternalAttenuationInterpolationSpline(instrumentHandle, selectorString, tableName);
+  return RFmxInstr_CfgExternalAttenuationInterpolationSpline(instrument, selectorString, tableName);
 #else
-  return function_pointers_.CfgExternalAttenuationInterpolationSpline(instrumentHandle, selectorString, tableName);
+  return function_pointers_.CfgExternalAttenuationInterpolationSpline(instrument, selectorString, tableName);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CfgExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], float64 externalAttenuation[], int32 arraySize)
+int32 NiRFmxInstrLibrary::CfgExternalAttenuationTable(niRFmxInstrHandle instrument, char selectorString[], char tableName[], float64 frequency[], float64 externalAttenuation[], int32 arraySize)
 {
   if (!function_pointers_.CfgExternalAttenuationTable) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgExternalAttenuationTable.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CfgExternalAttenuationTable(instrumentHandle, selectorString, tableName, frequency, externalAttenuation, arraySize);
+  return RFmxInstr_CfgExternalAttenuationTable(instrument, selectorString, tableName, frequency, externalAttenuation, arraySize);
 #else
-  return function_pointers_.CfgExternalAttenuationTable(instrumentHandle, selectorString, tableName, frequency, externalAttenuation, arraySize);
+  return function_pointers_.CfgExternalAttenuationTable(instrument, selectorString, tableName, frequency, externalAttenuation, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
+int32 NiRFmxInstrLibrary::CfgFrequencyReference(niRFmxInstrHandle instrument, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
 {
   if (!function_pointers_.CfgFrequencyReference) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgFrequencyReference.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+  return RFmxInstr_CfgFrequencyReference(instrument, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
 #else
-  return function_pointers_.CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+  return function_pointers_.CfgFrequencyReference(instrument, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
+int32 NiRFmxInstrLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrument, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
 {
   if (!function_pointers_.CfgMechanicalAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgMechanicalAttenuation.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+  return RFmxInstr_CfgMechanicalAttenuation(instrument, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
 #else
-  return function_pointers_.CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+  return function_pointers_.CfgMechanicalAttenuation(instrument, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
+int32 NiRFmxInstrLibrary::CfgRFAttenuation(niRFmxInstrHandle instrument, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
 {
   if (!function_pointers_.CfgRFAttenuation) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgRFAttenuation.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+  return RFmxInstr_CfgRFAttenuation(instrument, channelName, rfAttenuationAuto, rfAttenuationValue);
 #else
-  return function_pointers_.CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+  return function_pointers_.CfgRFAttenuation(instrument, channelName, rfAttenuationAuto, rfAttenuationValue);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CfgSParameterExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 frequencyArraySize, NIComplexDouble sParameters[], int32 sParameterTableSize, int32 numberOfPorts, int32 sParameterOrientation)
+int32 NiRFmxInstrLibrary::CfgSParameterExternalAttenuationTable(niRFmxInstrHandle instrument, char selectorString[], char tableName[], float64 frequency[], int32 frequencyArraySize, NIComplexDouble sParameters[], int32 sParameterTableSize, int32 numberOfPorts, int32 sParameterOrientation)
 {
   if (!function_pointers_.CfgSParameterExternalAttenuationTable) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgSParameterExternalAttenuationTable.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CfgSParameterExternalAttenuationTable(instrumentHandle, selectorString, tableName, frequency, frequencyArraySize, sParameters, sParameterTableSize, numberOfPorts, sParameterOrientation);
+  return RFmxInstr_CfgSParameterExternalAttenuationTable(instrument, selectorString, tableName, frequency, frequencyArraySize, sParameters, sParameterTableSize, numberOfPorts, sParameterOrientation);
 #else
-  return function_pointers_.CfgSParameterExternalAttenuationTable(instrumentHandle, selectorString, tableName, frequency, frequencyArraySize, sParameters, sParameterTableSize, numberOfPorts, sParameterOrientation);
+  return function_pointers_.CfgSParameterExternalAttenuationTable(instrument, selectorString, tableName, frequency, frequencyArraySize, sParameters, sParameterTableSize, numberOfPorts, sParameterOrientation);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CfgSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterType)
+int32 NiRFmxInstrLibrary::CfgSParameterExternalAttenuationType(niRFmxInstrHandle instrument, char selectorString[], int32 sParameterType)
 {
   if (!function_pointers_.CfgSParameterExternalAttenuationType) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgSParameterExternalAttenuationType.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CfgSParameterExternalAttenuationType(instrumentHandle, selectorString, sParameterType);
+  return RFmxInstr_CfgSParameterExternalAttenuationType(instrument, selectorString, sParameterType);
 #else
-  return function_pointers_.CfgSParameterExternalAttenuationType(instrumentHandle, selectorString, sParameterType);
+  return function_pointers_.CfgSParameterExternalAttenuationType(instrument, selectorString, sParameterType);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CheckAcquisitionStatus(niRFmxInstrHandle instrumentHandle, int32* acquisitionDone)
+int32 NiRFmxInstrLibrary::CheckAcquisitionStatus(niRFmxInstrHandle instrument, int32* acquisitionDone)
 {
   if (!function_pointers_.CheckAcquisitionStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CheckAcquisitionStatus.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CheckAcquisitionStatus(instrumentHandle, acquisitionDone);
+  return RFmxInstr_CheckAcquisitionStatus(instrument, acquisitionDone);
 #else
-  return function_pointers_.CheckAcquisitionStatus(instrumentHandle, acquisitionDone);
+  return function_pointers_.CheckAcquisitionStatus(instrument, acquisitionDone);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CheckIfListExists(niRFmxInstrHandle instrumentHandle, char listName[], int32* listExists, int32* personality)
+int32 NiRFmxInstrLibrary::CheckIfListExists(niRFmxInstrHandle instrument, char listName[], int32* listExists, int32* personality)
 {
   if (!function_pointers_.CheckIfListExists) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CheckIfListExists.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CheckIfListExists(instrumentHandle, listName, listExists, personality);
+  return RFmxInstr_CheckIfListExists(instrument, listName, listExists, personality);
 #else
-  return function_pointers_.CheckIfListExists(instrumentHandle, listName, listExists, personality);
+  return function_pointers_.CheckIfListExists(instrument, listName, listExists, personality);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::CheckIfSignalConfigurationExists(niRFmxInstrHandle instrumentHandle, char signalName[], int32* signalConfigurationExists, int32* personality)
+int32 NiRFmxInstrLibrary::CheckIfSignalConfigurationExists(niRFmxInstrHandle instrument, char signalName[], int32* signalConfigurationExists, int32* personality)
 {
   if (!function_pointers_.CheckIfSignalConfigurationExists) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CheckIfSignalConfigurationExists.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_CheckIfSignalConfigurationExists(instrumentHandle, signalName, signalConfigurationExists, personality);
+  return RFmxInstr_CheckIfSignalConfigurationExists(instrument, signalName, signalConfigurationExists, personality);
 #else
-  return function_pointers_.CheckIfSignalConfigurationExists(instrumentHandle, signalName, signalConfigurationExists, personality);
+  return function_pointers_.CheckIfSignalConfigurationExists(instrument, signalName, signalConfigurationExists, personality);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
+int32 NiRFmxInstrLibrary::Close(niRFmxInstrHandle instrument, int32 forceDestroy)
 {
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_Close.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_Close(instrumentHandle, forceDestroy);
+  return RFmxInstr_Close(instrument, forceDestroy);
 #else
-  return function_pointers_.Close(instrumentHandle, forceDestroy);
+  return function_pointers_.Close(instrument, forceDestroy);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::DeleteAllExternalAttenuationTables(niRFmxInstrHandle instrumentHandle, char selectorString[])
+int32 NiRFmxInstrLibrary::DeleteAllExternalAttenuationTables(niRFmxInstrHandle instrument, char selectorString[])
 {
   if (!function_pointers_.DeleteAllExternalAttenuationTables) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_DeleteAllExternalAttenuationTables.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_DeleteAllExternalAttenuationTables(instrumentHandle, selectorString);
+  return RFmxInstr_DeleteAllExternalAttenuationTables(instrument, selectorString);
 #else
-  return function_pointers_.DeleteAllExternalAttenuationTables(instrumentHandle, selectorString);
+  return function_pointers_.DeleteAllExternalAttenuationTables(instrument, selectorString);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::DeleteExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[])
+int32 NiRFmxInstrLibrary::DeleteExternalAttenuationTable(niRFmxInstrHandle instrument, char selectorString[], char tableName[])
 {
   if (!function_pointers_.DeleteExternalAttenuationTable) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_DeleteExternalAttenuationTable.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_DeleteExternalAttenuationTable(instrumentHandle, selectorString, tableName);
+  return RFmxInstr_DeleteExternalAttenuationTable(instrument, selectorString, tableName);
 #else
-  return function_pointers_.DeleteExternalAttenuationTable(instrumentHandle, selectorString, tableName);
+  return function_pointers_.DeleteExternalAttenuationTable(instrument, selectorString, tableName);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::DisableCalibrationPlane(niRFmxInstrHandle instrumentHandle, char selectorString[])
+int32 NiRFmxInstrLibrary::DisableCalibrationPlane(niRFmxInstrHandle instrument, char selectorString[])
 {
   if (!function_pointers_.DisableCalibrationPlane) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_DisableCalibrationPlane.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_DisableCalibrationPlane(instrumentHandle, selectorString);
+  return RFmxInstr_DisableCalibrationPlane(instrument, selectorString);
 #else
-  return function_pointers_.DisableCalibrationPlane(instrumentHandle, selectorString);
+  return function_pointers_.DisableCalibrationPlane(instrument, selectorString);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::EnableCalibrationPlane(niRFmxInstrHandle instrumentHandle, char selectorString[])
+int32 NiRFmxInstrLibrary::EnableCalibrationPlane(niRFmxInstrHandle instrument, char selectorString[])
 {
   if (!function_pointers_.EnableCalibrationPlane) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_EnableCalibrationPlane.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_EnableCalibrationPlane(instrumentHandle, selectorString);
+  return RFmxInstr_EnableCalibrationPlane(instrument, selectorString);
 #else
-  return function_pointers_.EnableCalibrationPlane(instrumentHandle, selectorString);
+  return function_pointers_.EnableCalibrationPlane(instrument, selectorString);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::ExportSignal(niRFmxInstrHandle instrumentHandle, int32 exportSignalSource, char exportSignalOutputTerminal[])
+int32 NiRFmxInstrLibrary::ExportSignal(niRFmxInstrHandle instrument, int32 exportSignalSource, char exportSignalOutputTerminal[])
 {
   if (!function_pointers_.ExportSignal) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_ExportSignal.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_ExportSignal(instrumentHandle, exportSignalSource, exportSignalOutputTerminal);
+  return RFmxInstr_ExportSignal(instrument, exportSignalSource, exportSignalOutputTerminal);
 #else
-  return function_pointers_.ExportSignal(instrumentHandle, exportSignalSource, exportSignalOutputTerminal);
+  return function_pointers_.ExportSignal(instrument, exportSignalSource, exportSignalOutputTerminal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal)
+int32 NiRFmxInstrLibrary::GetAttributeF32(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, float32* attrVal)
 {
   if (!function_pointers_.GetAttributeF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeF32.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeF32(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_GetAttributeF32(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.GetAttributeF32(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.GetAttributeF32(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeF32Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeF32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeF32Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeF32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeF32Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeF32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeF32Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64* attrVal)
+int32 NiRFmxInstrLibrary::GetAttributeF64(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, float64* attrVal)
 {
   if (!function_pointers_.GetAttributeF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeF64.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeF64(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_GetAttributeF64(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.GetAttributeF64(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.GetAttributeF64(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeF64Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeF64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeF64Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeF64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeF64Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeF64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeF64Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int16* attrVal)
+int32 NiRFmxInstrLibrary::GetAttributeI16(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int16* attrVal)
 {
   if (!function_pointers_.GetAttributeI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeI16.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeI16(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_GetAttributeI16(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.GetAttributeI16(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.GetAttributeI16(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int32* attrVal)
+int32 NiRFmxInstrLibrary::GetAttributeI32(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int32* attrVal)
 {
   if (!function_pointers_.GetAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeI32.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeI32(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_GetAttributeI32(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.GetAttributeI32(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.GetAttributeI32(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeI32Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeI32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeI32Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeI32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeI32Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeI32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeI32Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int64* attrVal)
+int32 NiRFmxInstrLibrary::GetAttributeI64(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int64* attrVal)
 {
   if (!function_pointers_.GetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeI64.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeI64(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_GetAttributeI64(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.GetAttributeI64(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.GetAttributeI64(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeI64Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeI64Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeI64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeI64Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeI64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeI64Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int8* attrVal)
+int32 NiRFmxInstrLibrary::GetAttributeI8(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int8* attrVal)
 {
   if (!function_pointers_.GetAttributeI8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeI8.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeI8(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_GetAttributeI8(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.GetAttributeI8(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.GetAttributeI8(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeI8Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeI8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeI8Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeI8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeI8Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeI8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeI8Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeNIComplexDoubleArray.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeNIComplexDoubleArray(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeNIComplexDoubleArray(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeNIComplexDoubleArray(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeNIComplexSingleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeNIComplexSingleArray.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeNIComplexSingleArray(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeNIComplexSingleArray(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeNIComplexSingleArray(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeNIComplexSingleArray(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int32 arraySize, char attrVal[])
+int32 NiRFmxInstrLibrary::GetAttributeString(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int32 arraySize, char attrVal[])
 {
   if (!function_pointers_.GetAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeString.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeString(instrumentHandle, channelName, attributeID, arraySize, attrVal);
+  return RFmxInstr_GetAttributeString(instrument, channelName, attributeID, arraySize, attrVal);
 #else
-  return function_pointers_.GetAttributeString(instrumentHandle, channelName, attributeID, arraySize, attrVal);
+  return function_pointers_.GetAttributeString(instrument, channelName, attributeID, arraySize, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt16* attrVal)
+int32 NiRFmxInstrLibrary::GetAttributeU16(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt16* attrVal)
 {
   if (!function_pointers_.GetAttributeU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeU16.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeU16(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_GetAttributeU16(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.GetAttributeU16(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.GetAttributeU16(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt32* attrVal)
+int32 NiRFmxInstrLibrary::GetAttributeU32(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt32* attrVal)
 {
   if (!function_pointers_.GetAttributeU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeU32.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeU32(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_GetAttributeU32(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.GetAttributeU32(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.GetAttributeU32(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeU32Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeU32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeU32Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeU32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeU32Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeU32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeU32Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeU64Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeU64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeU64Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeU64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeU64Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeU64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeU64Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8* attrVal)
+int32 NiRFmxInstrLibrary::GetAttributeU8(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt8* attrVal)
 {
   if (!function_pointers_.GetAttributeU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeU8.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeU8(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_GetAttributeU8(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.GetAttributeU8(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.GetAttributeU8(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetAttributeU8Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetAttributeU8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAttributeU8Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAttributeU8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return RFmxInstr_GetAttributeU8Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetAttributeU8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize, actualArraySize);
+  return function_pointers_.GetAttributeU8Array(instrument, channelName, attributeID, attrVal, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetAvailablePorts(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char availablePorts[])
+int32 NiRFmxInstrLibrary::GetAvailablePorts(niRFmxInstrHandle instrument, char selectorString[], int32 arraySize, char availablePorts[])
 {
   if (!function_pointers_.GetAvailablePorts) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetAvailablePorts.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetAvailablePorts(instrumentHandle, selectorString, arraySize, availablePorts);
+  return RFmxInstr_GetAvailablePorts(instrument, selectorString, arraySize, availablePorts);
 #else
-  return function_pointers_.GetAvailablePorts(instrumentHandle, selectorString, arraySize, availablePorts);
+  return function_pointers_.GetAvailablePorts(instrument, selectorString, arraySize, availablePorts);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+int32 NiRFmxInstrLibrary::GetError(niRFmxInstrHandle instrument, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
 {
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetError.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+  return RFmxInstr_GetError(instrument, errorCode, errorDescriptionBufferSize, errorDescription);
 #else
-  return function_pointers_.GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+  return function_pointers_.GetError(instrument, errorCode, errorDescriptionBufferSize, errorDescription);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+int32 NiRFmxInstrLibrary::GetErrorString(niRFmxInstrHandle instrument, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
 {
   if (!function_pointers_.GetErrorString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetErrorString.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+  return RFmxInstr_GetErrorString(instrument, errorCode, errorDescriptionBufferSize, errorDescription);
 #else
-  return function_pointers_.GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+  return function_pointers_.GetErrorString(instrument, errorCode, errorDescriptionBufferSize, errorDescription);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetExternalAttenuationTableActualValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* externalAttenuation)
+int32 NiRFmxInstrLibrary::GetExternalAttenuationTableActualValue(niRFmxInstrHandle instrument, char selectorString[], float64* externalAttenuation)
 {
   if (!function_pointers_.GetExternalAttenuationTableActualValue) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetExternalAttenuationTableActualValue.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetExternalAttenuationTableActualValue(instrumentHandle, selectorString, externalAttenuation);
+  return RFmxInstr_GetExternalAttenuationTableActualValue(instrument, selectorString, externalAttenuation);
 #else
-  return function_pointers_.GetExternalAttenuationTableActualValue(instrumentHandle, selectorString, externalAttenuation);
+  return function_pointers_.GetExternalAttenuationTableActualValue(instrument, selectorString, externalAttenuation);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetNIRFSASession(niRFmxInstrHandle instrumentHandle, uInt32* niRfsaSession)
+int32 NiRFmxInstrLibrary::GetNIRFSASession(niRFmxInstrHandle instrument, uInt32* niRfsaSession)
 {
   if (!function_pointers_.GetNIRFSASession) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetNIRFSASession.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetNIRFSASession(instrumentHandle, niRfsaSession);
+  return RFmxInstr_GetNIRFSASession(instrument, niRfsaSession);
 #else
-  return function_pointers_.GetNIRFSASession(instrumentHandle, niRfsaSession);
+  return function_pointers_.GetNIRFSASession(instrument, niRfsaSession);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetNIRFSASessionArray(niRFmxInstrHandle instrumentHandle, uInt32 nirfsaSessions[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxInstrLibrary::GetNIRFSASessionArray(niRFmxInstrHandle instrument, uInt32 nirfsaSessions[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetNIRFSASessionArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetNIRFSASessionArray.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetNIRFSASessionArray(instrumentHandle, nirfsaSessions, arraySize, actualArraySize);
+  return RFmxInstr_GetNIRFSASessionArray(instrument, nirfsaSessions, arraySize, actualArraySize);
 #else
-  return function_pointers_.GetNIRFSASessionArray(instrumentHandle, nirfsaSessions, arraySize, actualArraySize);
+  return function_pointers_.GetNIRFSASessionArray(instrument, nirfsaSessions, arraySize, actualArraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetSelfCalibrateLastDateAndTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, CVIAbsoluteTime* timestamp)
+int32 NiRFmxInstrLibrary::GetSelfCalibrateLastDateAndTime(niRFmxInstrHandle instrument, char selectorString[], int64 selfCalibrateStep, CVIAbsoluteTime* timestamp)
 {
   if (!function_pointers_.GetSelfCalibrateLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSelfCalibrateLastDateAndTime.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetSelfCalibrateLastDateAndTime(instrumentHandle, selectorString, selfCalibrateStep, timestamp);
+  return RFmxInstr_GetSelfCalibrateLastDateAndTime(instrument, selectorString, selfCalibrateStep, timestamp);
 #else
-  return function_pointers_.GetSelfCalibrateLastDateAndTime(instrumentHandle, selectorString, selfCalibrateStep, timestamp);
+  return function_pointers_.GetSelfCalibrateLastDateAndTime(instrument, selectorString, selfCalibrateStep, timestamp);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::GetSelfCalibrateLastTemperature(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, float64* temperature)
+int32 NiRFmxInstrLibrary::GetSelfCalibrateLastTemperature(niRFmxInstrHandle instrument, char selectorString[], int64 selfCalibrateStep, float64* temperature)
 {
   if (!function_pointers_.GetSelfCalibrateLastTemperature) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSelfCalibrateLastTemperature.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_GetSelfCalibrateLastTemperature(instrumentHandle, selectorString, selfCalibrateStep, temperature);
+  return RFmxInstr_GetSelfCalibrateLastTemperature(instrument, selectorString, selfCalibrateStep, temperature);
 #else
-  return function_pointers_.GetSelfCalibrateLastTemperature(instrumentHandle, selectorString, selfCalibrateStep, temperature);
+  return function_pointers_.GetSelfCalibrateLastTemperature(instrument, selectorString, selfCalibrateStep, temperature);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession)
+int32 NiRFmxInstrLibrary::Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* instrument, int32* isNewSession)
 {
   if (!function_pointers_.Initialize) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_Initialize.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_Initialize(resourceName, optionString, handleOut, isNewSession);
+  return RFmxInstr_Initialize(resourceName, optionString, instrument, isNewSession);
 #else
-  return function_pointers_.Initialize(resourceName, optionString, handleOut, isNewSession);
+  return function_pointers_.Initialize(resourceName, optionString, instrument, isNewSession);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
+int32 NiRFmxInstrLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* instrument)
 {
   if (!function_pointers_.InitializeFromNIRFSASession) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_InitializeFromNIRFSASession.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_InitializeFromNIRFSASession(nirfsaSession, handleOut);
+  return RFmxInstr_InitializeFromNIRFSASession(nirfsaSession, instrument);
 #else
-  return function_pointers_.InitializeFromNIRFSASession(nirfsaSession, handleOut);
+  return function_pointers_.InitializeFromNIRFSASession(nirfsaSession, instrument);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::InitializeFromNIRFSASessionArray(uInt32 nirfsaSessions[], int32 numberOfNIRFSASessions, niRFmxInstrHandle* handleOut)
+int32 NiRFmxInstrLibrary::InitializeFromNIRFSASessionArray(uInt32 nirfsaSessions[], int32 numberOfNIRFSASessions, niRFmxInstrHandle* instrument)
 {
   if (!function_pointers_.InitializeFromNIRFSASessionArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_InitializeFromNIRFSASessionArray.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_InitializeFromNIRFSASessionArray(nirfsaSessions, numberOfNIRFSASessions, handleOut);
+  return RFmxInstr_InitializeFromNIRFSASessionArray(nirfsaSessions, numberOfNIRFSASessions, instrument);
 #else
-  return function_pointers_.InitializeFromNIRFSASessionArray(nirfsaSessions, numberOfNIRFSASessions, handleOut);
+  return function_pointers_.InitializeFromNIRFSASessionArray(nirfsaSessions, numberOfNIRFSASessions, instrument);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::IsSelfCalibrateValid(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* selfCalibrateValid, int32* validSteps)
+int32 NiRFmxInstrLibrary::IsSelfCalibrateValid(niRFmxInstrHandle instrument, char selectorString[], int32* selfCalibrateValid, int32* validSteps)
 {
   if (!function_pointers_.IsSelfCalibrateValid) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_IsSelfCalibrateValid.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_IsSelfCalibrateValid(instrumentHandle, selectorString, selfCalibrateValid, validSteps);
+  return RFmxInstr_IsSelfCalibrateValid(instrument, selectorString, selfCalibrateValid, validSteps);
 #else
-  return function_pointers_.IsSelfCalibrateValid(instrumentHandle, selectorString, selfCalibrateValid, validSteps);
+  return function_pointers_.IsSelfCalibrateValid(instrument, selectorString, selfCalibrateValid, validSteps);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::LoadAllConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[], int32 loadRFInstrConfiguration)
+int32 NiRFmxInstrLibrary::LoadAllConfigurations(niRFmxInstrHandle instrument, char filePath[], int32 loadRFInstrConfiguration)
 {
   if (!function_pointers_.LoadAllConfigurations) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_LoadAllConfigurations.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_LoadAllConfigurations(instrumentHandle, filePath, loadRFInstrConfiguration);
+  return RFmxInstr_LoadAllConfigurations(instrument, filePath, loadRFInstrConfiguration);
 #else
-  return function_pointers_.LoadAllConfigurations(instrumentHandle, filePath, loadRFInstrConfiguration);
+  return function_pointers_.LoadAllConfigurations(instrument, filePath, loadRFInstrConfiguration);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::LoadSParameterExternalAttenuationTableFromS2PFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], char s2PFilePath[], int32 sParameterOrientation)
+int32 NiRFmxInstrLibrary::LoadSParameterExternalAttenuationTableFromS2PFile(niRFmxInstrHandle instrument, char selectorString[], char tableName[], char s2PFilePath[], int32 sParameterOrientation)
 {
   if (!function_pointers_.LoadSParameterExternalAttenuationTableFromS2PFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile(instrumentHandle, selectorString, tableName, s2PFilePath, sParameterOrientation);
+  return RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile(instrument, selectorString, tableName, s2PFilePath, sParameterOrientation);
 #else
-  return function_pointers_.LoadSParameterExternalAttenuationTableFromS2PFile(instrumentHandle, selectorString, tableName, s2PFilePath, sParameterOrientation);
+  return function_pointers_.LoadSParameterExternalAttenuationTableFromS2PFile(instrument, selectorString, tableName, s2PFilePath, sParameterOrientation);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID)
+int32 NiRFmxInstrLibrary::ResetAttribute(niRFmxInstrHandle instrument, char channelName[], int32 attributeID)
 {
   if (!function_pointers_.ResetAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_ResetAttribute.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_ResetAttribute(instrumentHandle, channelName, attributeID);
+  return RFmxInstr_ResetAttribute(instrument, channelName, attributeID);
 #else
-  return function_pointers_.ResetAttribute(instrumentHandle, channelName, attributeID);
+  return function_pointers_.ResetAttribute(instrument, channelName, attributeID);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::ResetDriver(niRFmxInstrHandle instrumentHandle)
+int32 NiRFmxInstrLibrary::ResetDriver(niRFmxInstrHandle instrument)
 {
   if (!function_pointers_.ResetDriver) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_ResetDriver.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_ResetDriver(instrumentHandle);
+  return RFmxInstr_ResetDriver(instrument);
 #else
-  return function_pointers_.ResetDriver(instrumentHandle);
+  return function_pointers_.ResetDriver(instrument);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::ResetEntireSession(niRFmxInstrHandle instrumentHandle)
+int32 NiRFmxInstrLibrary::ResetEntireSession(niRFmxInstrHandle instrument)
 {
   if (!function_pointers_.ResetEntireSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_ResetEntireSession.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_ResetEntireSession(instrumentHandle);
+  return RFmxInstr_ResetEntireSession(instrument);
 #else
-  return function_pointers_.ResetEntireSession(instrumentHandle);
+  return function_pointers_.ResetEntireSession(instrument);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle)
+int32 NiRFmxInstrLibrary::ResetToDefault(niRFmxInstrHandle instrument)
 {
   if (!function_pointers_.ResetToDefault) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_ResetToDefault.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_ResetToDefault(instrumentHandle);
+  return RFmxInstr_ResetToDefault(instrument);
 #else
-  return function_pointers_.ResetToDefault(instrumentHandle);
+  return function_pointers_.ResetToDefault(instrument);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SaveAllConfigurations(niRFmxInstrHandle instrumentHandle, char filePath[])
+int32 NiRFmxInstrLibrary::SaveAllConfigurations(niRFmxInstrHandle instrument, char filePath[])
 {
   if (!function_pointers_.SaveAllConfigurations) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SaveAllConfigurations.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SaveAllConfigurations(instrumentHandle, filePath);
+  return RFmxInstr_SaveAllConfigurations(instrument, filePath);
 #else
-  return function_pointers_.SaveAllConfigurations(instrumentHandle, filePath);
+  return function_pointers_.SaveAllConfigurations(instrument, filePath);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SelectActiveExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[])
+int32 NiRFmxInstrLibrary::SelectActiveExternalAttenuationTable(niRFmxInstrHandle instrument, char selectorString[], char tableName[])
 {
   if (!function_pointers_.SelectActiveExternalAttenuationTable) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SelectActiveExternalAttenuationTable.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SelectActiveExternalAttenuationTable(instrumentHandle, selectorString, tableName);
+  return RFmxInstr_SelectActiveExternalAttenuationTable(instrument, selectorString, tableName);
 #else
-  return function_pointers_.SelectActiveExternalAttenuationTable(instrumentHandle, selectorString, tableName);
+  return function_pointers_.SelectActiveExternalAttenuationTable(instrument, selectorString, tableName);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SelfCalibrate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 stepsToOmit)
+int32 NiRFmxInstrLibrary::SelfCalibrate(niRFmxInstrHandle instrument, char selectorString[], int32 stepsToOmit)
 {
   if (!function_pointers_.SelfCalibrate) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SelfCalibrate.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SelfCalibrate(instrumentHandle, selectorString, stepsToOmit);
+  return RFmxInstr_SelfCalibrate(instrument, selectorString, stepsToOmit);
 #else
-  return function_pointers_.SelfCalibrate(instrumentHandle, selectorString, stepsToOmit);
+  return function_pointers_.SelfCalibrate(instrument, selectorString, stepsToOmit);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SelfCalibrateRange(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 stepsToOmit, float64 minimumFrequency, float64 maximumFrequency, float64 minimumReferenceLevel, float64 maximumReferenceLevel)
+int32 NiRFmxInstrLibrary::SelfCalibrateRange(niRFmxInstrHandle instrument, char selectorString[], int32 stepsToOmit, float64 minimumFrequency, float64 maximumFrequency, float64 minimumReferenceLevel, float64 maximumReferenceLevel)
 {
   if (!function_pointers_.SelfCalibrateRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SelfCalibrateRange.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SelfCalibrateRange(instrumentHandle, selectorString, stepsToOmit, minimumFrequency, maximumFrequency, minimumReferenceLevel, maximumReferenceLevel);
+  return RFmxInstr_SelfCalibrateRange(instrument, selectorString, stepsToOmit, minimumFrequency, maximumFrequency, minimumReferenceLevel, maximumReferenceLevel);
 #else
-  return function_pointers_.SelfCalibrateRange(instrumentHandle, selectorString, stepsToOmit, minimumFrequency, maximumFrequency, minimumReferenceLevel, maximumReferenceLevel);
+  return function_pointers_.SelfCalibrateRange(instrument, selectorString, stepsToOmit, minimumFrequency, maximumFrequency, minimumReferenceLevel, maximumReferenceLevel);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SendSoftwareEdgeAdvanceTrigger(niRFmxInstrHandle instrumentHandle)
+int32 NiRFmxInstrLibrary::SendSoftwareEdgeAdvanceTrigger(niRFmxInstrHandle instrument)
 {
   if (!function_pointers_.SendSoftwareEdgeAdvanceTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SendSoftwareEdgeAdvanceTrigger.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SendSoftwareEdgeAdvanceTrigger(instrumentHandle);
+  return RFmxInstr_SendSoftwareEdgeAdvanceTrigger(instrument);
 #else
-  return function_pointers_.SendSoftwareEdgeAdvanceTrigger(instrumentHandle);
+  return function_pointers_.SendSoftwareEdgeAdvanceTrigger(instrument);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SendSoftwareEdgeStartTrigger(niRFmxInstrHandle instrumentHandle)
+int32 NiRFmxInstrLibrary::SendSoftwareEdgeStartTrigger(niRFmxInstrHandle instrument)
 {
   if (!function_pointers_.SendSoftwareEdgeStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SendSoftwareEdgeStartTrigger.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SendSoftwareEdgeStartTrigger(instrumentHandle);
+  return RFmxInstr_SendSoftwareEdgeStartTrigger(instrument);
 #else
-  return function_pointers_.SendSoftwareEdgeStartTrigger(instrumentHandle);
+  return function_pointers_.SendSoftwareEdgeStartTrigger(instrument);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal)
+int32 NiRFmxInstrLibrary::SetAttributeF32(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, float32 attrVal)
 {
   if (!function_pointers_.SetAttributeF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeF32.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeF32(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeF32(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeF32(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeF32(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeF32Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeF32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeF32Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeF32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeF32Array(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeF32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeF32Array(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64 attrVal)
+int32 NiRFmxInstrLibrary::SetAttributeF64(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, float64 attrVal)
 {
   if (!function_pointers_.SetAttributeF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeF64.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeF64(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeF64(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeF64(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeF64(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64 attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeF64Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, float64 attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeF64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeF64Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeF64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeF64Array(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeF64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeF64Array(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int16 attrVal)
+int32 NiRFmxInstrLibrary::SetAttributeI16(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int16 attrVal)
 {
   if (!function_pointers_.SetAttributeI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeI16.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeI16(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeI16(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeI16(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeI16(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int32 attrVal)
+int32 NiRFmxInstrLibrary::SetAttributeI32(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int32 attrVal)
 {
   if (!function_pointers_.SetAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeI32.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeI32(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeI32(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeI32(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeI32(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int32 attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeI32Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int32 attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeI32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeI32Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeI32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeI32Array(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeI32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeI32Array(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int64 attrVal)
+int32 NiRFmxInstrLibrary::SetAttributeI64(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int64 attrVal)
 {
   if (!function_pointers_.SetAttributeI64) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeI64.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeI64(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeI64(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeI64(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeI64(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int64 attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeI64Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int64 attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeI64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeI64Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeI64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeI64Array(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeI64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeI64Array(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int8 attrVal)
+int32 NiRFmxInstrLibrary::SetAttributeI8(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int8 attrVal)
 {
   if (!function_pointers_.SetAttributeI8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeI8.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeI8(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeI8(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeI8(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeI8(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, int8 attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeI8Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, int8 attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeI8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeI8Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeI8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeI8Array(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeI8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeI8Array(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeNIComplexDoubleArray.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeNIComplexDoubleArray(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeNIComplexDoubleArray(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeNIComplexDoubleArray(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeNIComplexSingleArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeNIComplexSingleArray.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeNIComplexSingleArray(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeNIComplexSingleArray(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeNIComplexSingleArray(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeNIComplexSingleArray(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, char attrVal[])
+int32 NiRFmxInstrLibrary::SetAttributeString(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, char attrVal[])
 {
   if (!function_pointers_.SetAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeString.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeString(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeString(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeString(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeString(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt16 attrVal)
+int32 NiRFmxInstrLibrary::SetAttributeU16(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt16 attrVal)
 {
   if (!function_pointers_.SetAttributeU16) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeU16.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeU16(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeU16(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeU16(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeU16(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt32 attrVal)
+int32 NiRFmxInstrLibrary::SetAttributeU32(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt32 attrVal)
 {
   if (!function_pointers_.SetAttributeU32) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeU32.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeU32(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeU32(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeU32(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeU32(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeU32Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeU32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeU32Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeU32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeU32Array(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeU32Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeU32Array(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeU64Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeU64Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeU64Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeU64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeU64Array(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeU64Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeU64Array(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal)
+int32 NiRFmxInstrLibrary::SetAttributeU8(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt8 attrVal)
 {
   if (!function_pointers_.SetAttributeU8) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeU8.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeU8(instrumentHandle, channelName, attributeID, attrVal);
+  return RFmxInstr_SetAttributeU8(instrument, channelName, attributeID, attrVal);
 #else
-  return function_pointers_.SetAttributeU8(instrumentHandle, channelName, attributeID, attrVal);
+  return function_pointers_.SetAttributeU8(instrument, channelName, attributeID, attrVal);
 #endif
 }
 
-int32 NiRFmxInstrLibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
+int32 NiRFmxInstrLibrary::SetAttributeU8Array(niRFmxInstrHandle instrument, char channelName[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
 {
   if (!function_pointers_.SetAttributeU8Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetAttributeU8Array.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_SetAttributeU8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return RFmxInstr_SetAttributeU8Array(instrument, channelName, attributeID, attrVal, arraySize);
 #else
-  return function_pointers_.SetAttributeU8Array(instrumentHandle, channelName, attributeID, attrVal, arraySize);
+  return function_pointers_.SetAttributeU8Array(instrument, channelName, attributeID, attrVal, arraySize);
 #endif
 }
 
@@ -1192,15 +1192,15 @@ int32 NiRFmxInstrLibrary::ValuesFromTimestamp(CVIAbsoluteTime timestamp, int64* 
 #endif
 }
 
-int32 NiRFmxInstrLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
+int32 NiRFmxInstrLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrument, float64 timeout)
 {
   if (!function_pointers_.WaitForAcquisitionComplete) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_WaitForAcquisitionComplete.");
   }
 #if defined(_MSC_VER)
-  return RFmxInstr_WaitForAcquisitionComplete(instrumentHandle, timeout);
+  return RFmxInstr_WaitForAcquisitionComplete(instrument, timeout);
 #else
-  return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
+  return function_pointers_.WaitForAcquisitionComplete(instrument, timeout);
 #endif
 }
 
