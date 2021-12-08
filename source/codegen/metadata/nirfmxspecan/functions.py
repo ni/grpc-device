@@ -6049,6 +6049,7 @@ functions = {
                 'type': 'int32'
             },
             {
+                'coerced': True,
                 'direction': 'out',
                 'name': 'attrVal',
                 'type': 'int16'
@@ -6395,6 +6396,7 @@ functions = {
                 'type': 'int32'
             },
             {
+                'coerced': True,
                 'direction': 'out',
                 'name': 'attrVal',
                 'type': 'uInt16'
@@ -12273,6 +12275,7 @@ functions = {
                 'type': 'int32'
             },
             {
+                'coerced': True,
                 'direction': 'in',
                 'name': 'attrVal',
                 'type': 'int16'
@@ -12580,6 +12583,7 @@ functions = {
                 'type': 'int32'
             },
             {
+                'coerced': True,
                 'direction': 'in',
                 'name': 'attrVal',
                 'type': 'uInt16'
