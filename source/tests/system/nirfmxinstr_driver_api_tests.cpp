@@ -29,6 +29,7 @@ class NiRFmxInstrDriverApiTests : public Test {
       : device_server_(DeviceServerInterface::Singleton()),
         stub_(NiRFmxInstr::NewStub(device_server_->InProcessChannel()))
   {
+    device_server_->ResetServer();
   }
 
   virtual ~NiRFmxInstrDriverApiTests() {}
@@ -75,7 +76,8 @@ TEST_F(NiRFmxInstrDriverApiTests, Init_Close_Succeeds)
 
   auto close_response = client::close(stub(), session, 0);
 
-  EXPECT_SUCCESS(session, close_response);
+  // Don't check_error because this can report stale errors from previous tests.
+  ni::tests::system::EXPECT_SUCCESS(close_response);
 }
 }  // namespace
 }  // namespace system
