@@ -72,7 +72,7 @@ def create_standard_arg(parameter):
     elif not is_output and common_helpers.is_pointer_parameter(parameter) and 'hardcoded_value' not in parameter:
         return f'&{parameter_name}_copy, '
     else:
-        if is_array and common_helpers.is_struct(parameter):
+        if is_array and common_helpers.supports_standard_copy_conversion_routines(parameter):
             parameter_name = parameter_name + ".data()"
         elif not is_array and is_output:
             parameter_name = f'&{parameter_name}'

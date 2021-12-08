@@ -1402,6 +1402,24 @@ TEST_F(NiFakeNonIviServiceTests, InputStringValuedEnum_PassNonMappedValue_Correc
 
   EXPECT_EQ(kDriverSuccess, response.status());
 }
+
+TEST_F(NiFakeNonIviServiceTests, WriteBooleanArray_PassesBooleansAsInt32s)
+{
+  const auto BOOLS = std::vector<bool>{true, false, true, true, false, false, true, true, true, false, false, false};
+  const auto BOOLS_AS_INT32S = std::vector<int32>{1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0};
+  EXPECT_CALL(library_, WriteBooleanArray(_, _))
+      .With(Args<0, 1>(ElementsAreArray(BOOLS_AS_INT32S.data(), BOOLS_AS_INT32S.size())))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  WriteBooleanArrayRequest request;
+  request.mutable_bools()->CopyFrom({BOOLS.begin(), BOOLS.end()});
+  WriteBooleanArrayResponse response;
+
+  service_.WriteBooleanArray(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

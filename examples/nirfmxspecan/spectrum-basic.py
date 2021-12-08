@@ -111,7 +111,7 @@ try:
         client.SpectrumCfgRBWFilter(
             nirfmxspecan_types.SpectrumCfgRBWFilterRequest(
                 instrument=instr, selector_string="",
-                rbw_auto=nirfmxspecan_types.SPECTRUM_RBW_AUTO_BANDWIDTH_TRUE,
+                rbw_auto=True,
                 rbw=100e3,
                 rbw_filter_type=nirfmxspecan_types.SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN
             )
@@ -122,7 +122,7 @@ try:
         client.SpectrumCfgAveraging(
             nirfmxspecan_types.SpectrumCfgAveragingRequest(
                 instrument=instr, selector_string="",
-                averaging_enabled=nirfmxspecan_types.SPECTRUM_AVERAGING_ENABLED_FALSE,
+                averaging_enabled=False,
                 averaging_count=10,
                 averaging_type=nirfmxspecan_types.SPECTRUM_AVERAGING_TYPE_RMS
             )
@@ -148,4 +148,4 @@ try:
 finally:
     if instr:
         client.Close(nirfmxspecan_types.CloseRequest(
-            instrument=instr, force_destroy=nirfmxspecan_types.BOOLEAN_FALSE))
+            instrument=instr, force_destroy=False))

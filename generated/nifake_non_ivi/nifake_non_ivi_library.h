@@ -43,6 +43,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 GetStructsWithCoercion(int32 numberOfStructs, StructWithCoercion_struct structs[]);
   int32 SetStructsWithCoercion(StructWithCoercion_struct structs[3]);
   int32 InputStringValuedEnum(char aName[]);
+  int32 WriteBooleanArray(int32 bools[], int32 size);
 
  private:
   using ClosePtr = decltype(&niFakeNonIvi_Close);
@@ -70,6 +71,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using GetStructsWithCoercionPtr = decltype(&niFakeNonIvi_GetStructsWithCoercion);
   using SetStructsWithCoercionPtr = decltype(&niFakeNonIvi_SetStructsWithCoercion);
   using InputStringValuedEnumPtr = decltype(&niFakeNonIvi_InputStringValuedEnum);
+  using WriteBooleanArrayPtr = decltype(&niFakeNonIvi_WriteBooleanArray);
 
   typedef struct FunctionPointers {
     ClosePtr Close;
@@ -97,6 +99,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     GetStructsWithCoercionPtr GetStructsWithCoercion;
     SetStructsWithCoercionPtr SetStructsWithCoercion;
     InputStringValuedEnumPtr InputStringValuedEnum;
+    WriteBooleanArrayPtr WriteBooleanArray;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

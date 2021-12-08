@@ -900,6 +900,25 @@ namespace nifake_non_ivi_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::WriteBooleanArray(::grpc::ServerContext* context, const WriteBooleanArrayRequest* request, WriteBooleanArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto bools = convert_from_grpc<int32>(request->bools());
+      int32 size = static_cast<int32>(request->bools().size());
+      auto status = library_->WriteBooleanArray(bools.data(), size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
 
   NiFakeNonIviFeatureToggles::NiFakeNonIviFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

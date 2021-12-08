@@ -67,6 +67,7 @@ public:
   ::grpc::Status GetStructsWithCoercion(::grpc::ServerContext* context, const GetStructsWithCoercionRequest* request, GetStructsWithCoercionResponse* response) override;
   ::grpc::Status SetStructsWithCoercion(::grpc::ServerContext* context, const SetStructsWithCoercionRequest* request, SetStructsWithCoercionResponse* response) override;
   ::grpc::Status InputStringValuedEnum(::grpc::ServerContext* context, const InputStringValuedEnumRequest* request, InputStringValuedEnumResponse* response) override;
+  ::grpc::Status WriteBooleanArray(::grpc::ServerContext* context, const WriteBooleanArrayRequest* request, WriteBooleanArrayResponse* response) override;
 private:
   NiFakeNonIviLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;

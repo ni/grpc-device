@@ -51,6 +51,19 @@ inline std::vector<CType> convert_from_grpc(const google::protobuf::RepeatedPtrF
   return output;
 }
 
+template <typename CType, typename GrpcType>
+inline std::vector<CType> convert_from_grpc(const google::protobuf::RepeatedField<GrpcType>& input)
+{
+  auto output = std::vector<CType>();
+  output.reserve(input.size());
+  std::transform(
+      input.begin(),
+      input.end(),
+      std::back_inserter(output),
+      [&](GrpcType x) { return convert_from_grpc<CType>(x); });
+  return output;
+}
+
 template <typename GrpcType, typename CType>
 inline void convert_to_grpc(const std::vector<CType>& input, google::protobuf::RepeatedPtrField<GrpcType>* output)
 {

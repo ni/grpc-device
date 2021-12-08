@@ -543,5 +543,25 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'WriteBooleanArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated bool',
+                'name': 'bools',
+                'type': 'int32[]',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                }
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
     }
 }

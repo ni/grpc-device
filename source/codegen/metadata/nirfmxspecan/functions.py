@@ -13,7 +13,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcpAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -136,7 +136,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcpCarrierRrcFilterEnabled',
+                'grpc_type': 'bool',
                 'name': 'rrcFilterEnabled',
                 'type': 'int32'
             },
@@ -209,7 +209,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcpNoiseCompensationEnabled',
+                'grpc_type': 'bool',
                 'name': 'noiseCompensationEnabled',
                 'type': 'int32'
             }
@@ -281,7 +281,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcpOffsetEnabled',
+                'grpc_type': 'bool',
                 'name': 'offsetEnabled',
                 'type': 'int32'
             }
@@ -321,7 +321,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcpOffsetEnabled',
+                'grpc_type': 'repeated bool',
                 'name': 'offsetEnabled',
                 'size': {
                     'mechanism': 'len',
@@ -486,7 +486,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcpOffsetRrcFilterEnabled',
+                'grpc_type': 'bool',
                 'name': 'rrcFilterEnabled',
                 'type': 'int32'
             },
@@ -512,7 +512,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcpOffsetRrcFilterEnabled',
+                'grpc_type': 'repeated bool',
                 'name': 'rrcFilterEnabled',
                 'size': {
                     'mechanism': 'len',
@@ -621,7 +621,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcpRbwAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'rbwAuto',
                 'type': 'int32'
             },
@@ -653,7 +653,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AcpSweepTimeAuto',
+                'grpc_type': 'bool',
                 'name': 'sweepTimeAuto',
                 'type': 'int32'
             },
@@ -1084,7 +1084,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'AcpNoiseCalibrationDataValid',
+                'grpc_type': 'bool',
                 'name': 'noiseCalibrationDataValid',
                 'type': 'int32'
             }
@@ -1157,7 +1157,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AmpmAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -1183,7 +1183,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AmpmCompressionPointEnabled',
+                'grpc_type': 'bool',
                 'name': 'compressionPointEnabled',
                 'type': 'int32'
             },
@@ -1329,7 +1329,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AmpmReferenceWaveformIdleDurationPresent',
+                'grpc_type': 'bool',
                 'name': 'idleDurationPresent',
                 'type': 'int32'
             },
@@ -1389,7 +1389,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AmpmReferenceWaveformIdleDurationPresent',
+                'grpc_type': 'bool',
                 'name': 'idleDurationPresent',
                 'type': 'int32'
             },
@@ -1437,7 +1437,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'AmpmThresholdEnabled',
+                'grpc_type': 'bool',
                 'name': 'thresholdEnabled',
                 'type': 'int32'
             },
@@ -2760,7 +2760,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'CcdfThresholdEnabled',
+                'grpc_type': 'bool',
                 'name': 'thresholdEnabled',
                 'type': 'int32'
             },
@@ -3022,7 +3022,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ChpAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -3140,7 +3140,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ChpRbwAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'rbwAuto',
                 'type': 'int32'
             },
@@ -3172,7 +3172,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ChpCarrierRrcFilterEnabled',
+                'grpc_type': 'bool',
                 'name': 'rrcFilterEnabled',
                 'type': 'int32'
             },
@@ -3218,7 +3218,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ChpSweepTimeAuto',
+                'grpc_type': 'bool',
                 'name': 'sweepTimeAuto',
                 'type': 'int32'
             },
@@ -3384,7 +3384,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'ChpNoiseCalibrationDataValid',
+                'grpc_type': 'bool',
                 'name': 'noiseCalibrationDataValid',
                 'type': 'int32'
             }
@@ -3560,7 +3560,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'MechanicalAttenuationAuto',
+                'grpc_type': 'bool',
                 'name': 'mechanicalAttenuationAuto',
                 'type': 'int32'
             },
@@ -3616,7 +3616,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'RFAttenuationAuto',
+                'grpc_type': 'bool',
                 'name': 'rfAttenuationAuto',
                 'type': 'int32'
             },
@@ -3767,7 +3767,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Boolean',
+                'grpc_type': 'bool',
                 'name': 'forceDestroy',
                 'type': 'int32'
             }
@@ -3877,7 +3877,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DpdApplyDpdIdleDurationPresent',
+                'grpc_type': 'bool',
                 'name': 'idleDurationPresent',
                 'type': 'int32'
             },
@@ -3976,7 +3976,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DpdApplyDpdIdleDurationPresent',
+                'grpc_type': 'bool',
                 'name': 'idleDurationPresent',
                 'type': 'int32'
             },
@@ -4074,7 +4074,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DpdApplyDpdIdleDurationPresent',
+                'grpc_type': 'bool',
                 'name': 'idleDurationPresent',
                 'type': 'int32'
             },
@@ -4163,7 +4163,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DpdApplyDpdIdleDurationPresent',
+                'grpc_type': 'bool',
                 'name': 'idleDurationPresent',
                 'type': 'int32'
             },
@@ -4442,7 +4442,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DpdAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -4554,7 +4554,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DpdIterativeDpdEnabled',
+                'grpc_type': 'bool',
                 'name': 'iterativeDPDEnabled',
                 'type': 'int32'
             }
@@ -4647,7 +4647,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DpdLookupTableThresholdEnabled',
+                'grpc_type': 'bool',
                 'name': 'thresholdEnabled',
                 'type': 'int32'
             },
@@ -4862,7 +4862,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DpdReferenceWaveformIdleDurationPresent',
+                'grpc_type': 'bool',
                 'name': 'idleDurationPresent',
                 'type': 'int32'
             },
@@ -4922,7 +4922,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DpdReferenceWaveformIdleDurationPresent',
+                'grpc_type': 'bool',
                 'name': 'idleDurationPresent',
                 'type': 'int32'
             },
@@ -5510,7 +5510,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'FcntAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -5593,7 +5593,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'FcntThresholdEnabled',
+                'grpc_type': 'bool',
                 'name': 'thresholdEnabled',
                 'type': 'int32'
             },
@@ -6649,7 +6649,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'HarmAutoHarmonicsSetupEnabled',
+                'grpc_type': 'bool',
                 'name': 'autoHarmonicsSetupEnabled',
                 'type': 'int32'
             }
@@ -6670,7 +6670,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'HarmAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -6763,7 +6763,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'HarmHarmonicEnabled',
+                'grpc_type': 'bool',
                 'name': 'harmonicEnabled',
                 'type': 'int32'
             },
@@ -6807,7 +6807,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'HarmHarmonicEnabled',
+                'grpc_type': 'repeated bool',
                 'name': 'harmonicEnabled',
                 'size': {
                     'mechanism': 'len',
@@ -7091,7 +7091,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'IMAutoIntermodsSetupEnabled',
+                'grpc_type': 'bool',
                 'name': 'autoIntermodsSetupEnabled',
                 'type': 'int32'
             },
@@ -7117,7 +7117,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'IMAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -7242,7 +7242,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'IMIntermodEnabled',
+                'grpc_type': 'bool',
                 'name': 'intermodEnabled',
                 'type': 'int32'
             }
@@ -7300,7 +7300,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'IMIntermodEnabled',
+                'grpc_type': 'repeated bool',
                 'name': 'intermodEnabled',
                 'size': {
                     'mechanism': 'len',
@@ -7371,7 +7371,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'IMRbwFilterAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'rbwAuto',
                 'type': 'int32'
             },
@@ -7403,7 +7403,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'IMSweepTimeAuto',
+                'grpc_type': 'bool',
                 'name': 'sweepTimeAuto',
                 'type': 'int32'
             },
@@ -7754,7 +7754,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'IQBandwidthAuto',
+                'grpc_type': 'bool',
                 'name': 'bandwidthAuto',
                 'type': 'int32'
             },
@@ -8014,7 +8014,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'MarkerPeakExcursionEnabled',
+                'grpc_type': 'bool',
                 'name': 'peakExcursionEnabled',
                 'type': 'int32'
             },
@@ -8060,7 +8060,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'MarkerThresholdEnabled',
+                'grpc_type': 'bool',
                 'name': 'thresholdEnabled',
                 'type': 'int32'
             },
@@ -8219,7 +8219,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'NFAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -8245,7 +8245,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'NFCalibrationLossCompensationEnabled',
+                'grpc_type': 'bool',
                 'name': 'calibrationLossCompensationEnabled',
                 'type': 'int32'
             },
@@ -8423,7 +8423,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'NFDutInputLossCompensationEnabled',
+                'grpc_type': 'bool',
                 'name': 'dutInputLossCompensationEnabled',
                 'type': 'int32'
             },
@@ -8472,7 +8472,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'NFDutOutputLossCompensationEnabled',
+                'grpc_type': 'bool',
                 'name': 'dutOutputLossCompensationEnabled',
                 'type': 'int32'
             },
@@ -8742,7 +8742,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'NFYFactorNoiseSourceLossCompensationEnabled',
+                'grpc_type': 'bool',
                 'name': 'noiseSourceLossCompensationEnabled',
                 'type': 'int32'
             },
@@ -9145,7 +9145,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'NFCalibrationDataValid',
+                'grpc_type': 'bool',
                 'name': 'calibrationDataValid',
                 'type': 'int32'
             }
@@ -9166,7 +9166,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ObwAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -9265,7 +9265,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ObwRbwAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'rbwAuto',
                 'type': 'int32'
             },
@@ -9317,7 +9317,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ObwSweepTimeAuto',
+                'grpc_type': 'bool',
                 'name': 'sweepTimeAuto',
                 'type': 'int32'
             },
@@ -10033,7 +10033,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'PhaseNoiseCancellationEnabled',
+                'grpc_type': 'bool',
                 'name': 'cancellationEnabled',
                 'type': 'int32'
             },
@@ -10278,7 +10278,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'PhaseNoiseSpurRemovalEnabled',
+                'grpc_type': 'bool',
                 'name': 'spurRemovalEnabled',
                 'type': 'int32'
             },
@@ -10590,7 +10590,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SemAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -10642,7 +10642,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SemCarrierEnabled',
+                'grpc_type': 'bool',
                 'name': 'carrierEnabled',
                 'type': 'int32'
             }
@@ -10703,7 +10703,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SemCarrierRbwAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'rbwAuto',
                 'type': 'int32'
             },
@@ -10735,7 +10735,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SemCarrierRrcFilterEnabled',
+                'grpc_type': 'bool',
                 'name': 'rrcFilterEnabled',
                 'type': 'int32'
             },
@@ -10936,7 +10936,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SemOffsetEnabled',
+                'grpc_type': 'bool',
                 'name': 'offsetEnabled',
                 'type': 'int32'
             },
@@ -10981,7 +10981,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SemOffsetEnabled',
+                'grpc_type': 'repeated bool',
                 'name': 'offsetEnabled',
                 'size': {
                     'mechanism': 'len',
@@ -11063,7 +11063,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SemOffsetRbwAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'rbwAuto',
                 'type': 'int32'
             },
@@ -11095,7 +11095,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SemOffsetRbwAutoBandwidth',
+                'grpc_type': 'repeated bool',
                 'name': 'rbwAuto',
                 'size': {
                     'mechanism': 'len',
@@ -11314,7 +11314,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SemSweepTimeAuto',
+                'grpc_type': 'bool',
                 'name': 'sweepTimeAuto',
                 'type': 'int32'
             },
@@ -12758,7 +12758,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpectrumAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -12867,7 +12867,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpectrumNoiseCompensationEnabled',
+                'grpc_type': 'bool',
                 'name': 'noiseCompensationEnabled',
                 'type': 'int32'
             }
@@ -12909,7 +12909,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpectrumRbwAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'rbwAuto',
                 'type': 'int32'
             },
@@ -12961,7 +12961,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpectrumSweepTimeAuto',
+                'grpc_type': 'bool',
                 'name': 'sweepTimeAuto',
                 'type': 'int32'
             },
@@ -12987,7 +12987,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpectrumVbwFilterAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'vbwAuto',
                 'type': 'int32'
             },
@@ -13203,7 +13203,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'SpectrumNoiseCalibrationDataValid',
+                'grpc_type': 'bool',
                 'name': 'noiseCalibrationDataValid',
                 'type': 'int32'
             }
@@ -13224,7 +13224,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpurAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -13451,7 +13451,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpurRangeEnabled',
+                'grpc_type': 'bool',
                 'name': 'rangeEnabled',
                 'type': 'int32'
             }
@@ -13490,7 +13490,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpurRangeEnabled',
+                'grpc_type': 'repeated bool',
                 'name': 'rangeEnabled',
                 'size': {
                     'mechanism': 'len',
@@ -13632,7 +13632,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpurRbwAutoBandwidth',
+                'grpc_type': 'repeated bool',
                 'name': 'rbwAuto',
                 'size': {
                     'mechanism': 'len',
@@ -13681,7 +13681,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpurRbwAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'rbwAuto',
                 'type': 'int32'
             },
@@ -13762,7 +13762,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpurSweepTimeAuto',
+                'grpc_type': 'bool',
                 'name': 'sweepTimeAuto',
                 'type': 'int32'
             },
@@ -13788,7 +13788,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpurSweepTimeAuto',
+                'grpc_type': 'repeated bool',
                 'name': 'sweepTimeAuto',
                 'size': {
                     'mechanism': 'len',
@@ -13827,7 +13827,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpurRangeVbwFilterAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'vbwAuto',
                 'type': 'int32'
             },
@@ -13858,7 +13858,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SpurRangeVbwFilterAutoBandwidth',
+                'grpc_type': 'repeated bool',
                 'name': 'vbwAuto',
                 'size': {
                     'mechanism': 'len',
@@ -14324,7 +14324,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'TxpAveragingEnabled',
+                'grpc_type': 'bool',
                 'name': 'averagingEnabled',
                 'type': 'int32'
             },
@@ -14407,7 +14407,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'TxpThresholdEnabled',
+                'grpc_type': 'bool',
                 'name': 'thresholdEnabled',
                 'type': 'int32'
             },
@@ -14439,7 +14439,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'TxpVbwFilterAutoBandwidth',
+                'grpc_type': 'bool',
                 'name': 'vbwAuto',
                 'type': 'int32'
             },
