@@ -37,6 +37,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, GetAnIviDanceString, (ViSession vi, ViInt32 bufferSize, ViChar aString[]), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistArray, (ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistArrayOfCustomType, (ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize), (override));
+  MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistArrayWithInputArray, (ViInt32 dataIn[], ViInt32 arraySizeIn, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistByteArray, (ViInt32 bufferSize, ViInt8 arrayOut[], ViInt32* actualSize), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistString, (ViInt32 bufferSize, ViChar arrayOut[], ViInt32* actualSize), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistStringStrlenBug, (ViInt32 bufferSize, ViChar stringOut[], ViInt32* actualSize), (override));

@@ -94,7 +94,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 BuildRangeString(char selectorString[], int32 rangeNumber, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 BuildSegmentString(char selectorString[], int32 segmentNumber, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]);
-  int32 BuildSpurString2(char selectorString[], int32 spurNumber, int32 selectorStringOutLength, char selectorStringOut[]);
+  int32 BuildSpurString(char selectorString[], int32 spurNumber, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 CCDFCfgMeasurementInterval(niRFmxInstrHandle instrument, char selectorString[], float64 measurementInterval);
   int32 CCDFCfgNumberOfRecords(niRFmxInstrHandle instrument, char selectorString[], int32 numberOfRecords);
   int32 CCDFCfgRBWFilter(niRFmxInstrHandle instrument, char selectorString[], float64 rbw, int32 rbwFilterType, float64 rrcAlpha);
@@ -526,7 +526,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using BuildRangeStringPtr = decltype(&RFmxSpecAn_BuildRangeString2);
   using BuildSegmentStringPtr = decltype(&RFmxSpecAn_BuildSegmentString);
   using BuildSignalStringPtr = decltype(&RFmxSpecAn_BuildSignalString);
-  using BuildSpurString2Ptr = decltype(&RFmxSpecAn_BuildSpurString2);
+  using BuildSpurStringPtr = decltype(&RFmxSpecAn_BuildSpurString2);
   using CCDFCfgMeasurementIntervalPtr = decltype(&RFmxSpecAn_CCDFCfgMeasurementInterval);
   using CCDFCfgNumberOfRecordsPtr = decltype(&RFmxSpecAn_CCDFCfgNumberOfRecords);
   using CCDFCfgRBWFilterPtr = decltype(&RFmxSpecAn_CCDFCfgRBWFilter);
@@ -958,7 +958,7 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     BuildRangeStringPtr BuildRangeString;
     BuildSegmentStringPtr BuildSegmentString;
     BuildSignalStringPtr BuildSignalString;
-    BuildSpurString2Ptr BuildSpurString2;
+    BuildSpurStringPtr BuildSpurString;
     CCDFCfgMeasurementIntervalPtr CCDFCfgMeasurementInterval;
     CCDFCfgNumberOfRecordsPtr CCDFCfgNumberOfRecords;
     CCDFCfgRBWFilterPtr CCDFCfgRBWFilter;

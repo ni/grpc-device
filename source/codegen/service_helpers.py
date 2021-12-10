@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 import common_helpers
 
 
@@ -129,18 +129,30 @@ def create_args_for_ivi_dance(parameters):
     return result[:-2]
 
 
+def get_size_mechanism(param: dict) -> Optional[str]:
+    return param.get("size", {}).get("mechanism")
+
+
 def create_args_for_ivi_dance_with_a_twist(parameters):
     result = ''
+    ivi_twist_array_params = [
+        p 
+        for p in parameters 
+        if get_size_mechanism(p) == "ivi-dance-with-a-twist"
+    ]
+    arrays = { p["name"] for p in ivi_twist_array_params }
+    twists = { p["size"]["value_twist"] for p in ivi_twist_array_params }
+    sizes = { p["size"]["value"] for p in ivi_twist_array_params }
+
     for parameter in parameters:
-        name = common_helpers.camel_to_snake(parameter['cppName'])
-        is_array = common_helpers.is_array(parameter['type'])
-        if common_helpers.is_output_parameter(parameter):
-            if is_array:
-                result = f'{result}nullptr, '
-            else:
-                # Pass the twist output param by pointer.
-                result = result + f'&{name}' + ', '
-        elif parameter.get('is_size_param', False):
+        c_name = common_helpers.camel_to_snake(parameter['cppName'])
+        name = parameter["name"]
+        if name in arrays:
+            result = f'{result}nullptr, '
+        elif name in twists:
+            # Pass the twist output param by pointer.
+            result = result + f'&{c_name}' + ', '
+        elif name in sizes:
             result = f'{result}0, '
         else:
             result = result + create_standard_arg(parameter)

@@ -91,7 +91,7 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 BuildRangeString(char selectorString[], int32 rangeNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 BuildSegmentString(char selectorString[], int32 segmentNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]) = 0;
-  virtual int32 BuildSpurString2(char selectorString[], int32 spurNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
+  virtual int32 BuildSpurString(char selectorString[], int32 spurNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 CCDFCfgMeasurementInterval(niRFmxInstrHandle instrument, char selectorString[], float64 measurementInterval) = 0;
   virtual int32 CCDFCfgNumberOfRecords(niRFmxInstrHandle instrument, char selectorString[], int32 numberOfRecords) = 0;
   virtual int32 CCDFCfgRBWFilter(niRFmxInstrHandle instrument, char selectorString[], float64 rbw, int32 rbwFilterType, float64 rrcAlpha) = 0;

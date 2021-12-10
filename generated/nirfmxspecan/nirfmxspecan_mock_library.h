@@ -93,7 +93,7 @@ class NiRFmxSpecAnMockLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInt
   MOCK_METHOD(int32, BuildRangeString, (char selectorString[], int32 rangeNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildSegmentString, (char selectorString[], int32 segmentNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildSignalString, (char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]), (override));
-  MOCK_METHOD(int32, BuildSpurString2, (char selectorString[], int32 spurNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
+  MOCK_METHOD(int32, BuildSpurString, (char selectorString[], int32 spurNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, CCDFCfgMeasurementInterval, (niRFmxInstrHandle instrument, char selectorString[], float64 measurementInterval), (override));
   MOCK_METHOD(int32, CCDFCfgNumberOfRecords, (niRFmxInstrHandle instrument, char selectorString[], int32 numberOfRecords), (override));
   MOCK_METHOD(int32, CCDFCfgRBWFilter, (niRFmxInstrHandle instrument, char selectorString[], float64 rbw, int32 rbwFilterType, float64 rrcAlpha), (override));

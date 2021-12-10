@@ -466,7 +466,15 @@ target_link_libraries(SystemTestsRunner
     gtest
     gmock
     ${_GRPC_GRPCPP}
-    ${CMAKE_DL_LIBS})
+    ${CMAKE_DL_LIBS}
+    nlohmann_json::nlohmann_json
+)
+
+add_custom_command(
+  TARGET SystemTestsRunner POST_BUILD
+  COMMAND  ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_SOURCE_DIR}/source/tests/assets/data/
+            $<TARGET_FILE_DIR:SystemTestsRunner>/)
 
 if(WIN32)
     target_link_libraries(SystemTestsRunner Delayimp nidaqmx nidcpower niDigital nidmm niFgen niRFmxInstr niRFmxSpecAn niRFSA niRFSG niScope niswitch nisync niTClk)
