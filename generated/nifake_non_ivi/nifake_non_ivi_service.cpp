@@ -16,9 +16,12 @@
 #include <server/server_reactor.h>
 
 namespace nifake_non_ivi_grpc {
-
+  
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
+
 
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,

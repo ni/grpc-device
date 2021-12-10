@@ -14,9 +14,12 @@
 #include <server/converters.h>
 
 namespace nirfmxinstr_grpc {
-
+  
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
+
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -317,10 +320,18 @@ namespace nirfmxinstr_grpc {
       char* table_name = (char*)request->table_name().c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
       auto external_attenuation = const_cast<float64*>(request->external_attenuation().data());
-      if (request->frequency().size() != request->external_attenuation().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields frequency and external_attenuation do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->frequency_size(),
+        request->external_attenuation_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
       }
-      int32 array_size = static_cast<int32>(request->external_attenuation().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->CfgExternalAttenuationTable(instrument, selector_string, table_name, frequency, external_attenuation, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;

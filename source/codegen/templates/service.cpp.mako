@@ -48,8 +48,10 @@ any_ivi_dance_functions = any(
 
 namespace ${config["namespace_component"]}_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
 % if any_ivi_dance_functions:
   const auto kErrorReadBufferTooSmall = -200229;

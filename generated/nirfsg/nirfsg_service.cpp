@@ -14,9 +14,12 @@
 #include <server/converters.h>
 
 namespace nirfsg_grpc {
-
+  
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
+
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -3105,10 +3108,18 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
-      if (request->i_data().size() != request->q_data().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i_data and q_data do not match");
+      auto number_of_samples_determine_from_sizes = std::array<int, 2>
+      {
+        request->i_data_size(),
+        request->q_data_size()
+      };
+      const auto number_of_samples_size_calculation = calculate_linked_array_size(number_of_samples_determine_from_sizes, false);
+
+      if (number_of_samples_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
       }
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->q_data().size());
+      auto number_of_samples = number_of_samples_size_calculation.size;
+
       auto i_data = const_cast<ViReal64*>(request->i_data().data());
       auto q_data = const_cast<ViReal64*>(request->q_data().data());
       ViBoolean more_data_pending = request->more_data_pending();
@@ -3200,10 +3211,18 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
-      if (request->i_data().size() != request->q_data().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i_data and q_data do not match");
+      auto number_of_samples_determine_from_sizes = std::array<int, 2>
+      {
+        request->i_data_size(),
+        request->q_data_size()
+      };
+      const auto number_of_samples_size_calculation = calculate_linked_array_size(number_of_samples_determine_from_sizes, false);
+
+      if (number_of_samples_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
       }
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->q_data().size());
+      auto number_of_samples = number_of_samples_size_calculation.size;
+
       auto i_data = const_cast<ViReal32*>(request->i_data().data());
       auto q_data = const_cast<ViReal32*>(request->q_data().data());
       ViBoolean more_data_pending = request->more_data_pending();

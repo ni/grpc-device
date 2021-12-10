@@ -14,9 +14,12 @@
 #include <server/converters.h>
 
 namespace nidcpower_grpc {
-
+  
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
+
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -3423,10 +3426,18 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto values = const_cast<ViReal64*>(request->values().data());
       auto source_delays = const_cast<ViReal64*>(request->source_delays().data());
-      if (request->values().size() != request->source_delays().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values and source_delays do not match");
+      auto size_determine_from_sizes = std::array<int, 2>
+      {
+        request->values_size(),
+        request->source_delays_size()
+      };
+      const auto size_size_calculation = calculate_linked_array_size(size_determine_from_sizes, false);
+
+      if (size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
       }
-      ViUInt32 size = static_cast<ViUInt32>(request->source_delays().size());
+      auto size = size_size_calculation.size;
+
       auto status = library_->SetSequence(vi, channel_name, values, source_delays, size);
       response->set_status(status);
       return ::grpc::Status::OK;
