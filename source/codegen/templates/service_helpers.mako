@@ -411,12 +411,12 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   size_sources = parameter["determine_size_from"]
-  size_field_name = common_helpers.camel_to_snake(size_sources[-1])
+  size_field_name = common_helpers.get_grpc_field_name_from_str(size_sources[-1])
 %>\
 % if len(size_sources) > 1:
 % for size_source in size_sources[:-1]:
 <%
-  current_size_field_name = common_helpers.camel_to_snake(size_source)
+  current_size_field_name = common_helpers.get_grpc_field_name_from_str(size_source)
 %>\
       if (request->${current_size_field_name}().size() != request->${size_field_name}().size()) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields ${current_size_field_name} and ${size_field_name} do not match");

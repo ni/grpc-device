@@ -268,8 +268,12 @@ def is_actually_pascal(camel_or_pascal_string: str) -> bool:
     return 'A' <= camel_or_pascal_string[0] <= 'Z'
 
 
-def camel_to_snake(camel_string: str) -> str:
-    '''Returns a snake_string for a given camelString.'''
+def _camel_to_snake(camel_string: str) -> str:
+    '''
+    Returns a snake_string for a given camelString.
+
+    External callers should use/create a wrapper instead (i.e. get_grpc_field_name).
+    '''
     if is_actually_pascal(camel_string):
         camel_string = pascal_to_camel(camel_string)
 
@@ -334,7 +338,7 @@ def ensure_pascal_case(pascal_or_camel_string):
 def pascal_to_snake(pascal_string):
     '''Returns a snake_string for a given PascalString.'''
     camel_string = pascal_to_camel(pascal_string)
-    snake_string = camel_to_snake(camel_string)
+    snake_string = _camel_to_snake(camel_string)
     return ("".join(snake_string))
 
 
@@ -807,7 +811,7 @@ def get_grpc_field_name(param: dict) -> str:
     definition itself, as well as in C++ code that accesses the field
     from a Request/Response message.
     """
-    return param.get("grpc_name", camel_to_snake(param["name"]))
+    return param.get("grpc_name", _camel_to_snake(param["name"]))
 
 
 def get_grpc_field_name_from_str(field_name: str) -> str:
@@ -815,7 +819,7 @@ def get_grpc_field_name_from_str(field_name: str) -> str:
     NOTE: Does not account for "grpc_name" overrides, but can be used to
     get a proto name from a camelCase field name when no overrides are present.
     """
-    return camel_to_snake(field_name)
+    return _camel_to_snake(field_name)
 
 
 def get_cpp_local_name(param: dict) -> str:
@@ -829,4 +833,4 @@ def get_cpp_local_name(param: dict) -> str:
     If "grpc_name" is a reserved keyword, this may be an issue (but don't use 
     reserved grpc_name!).
     """
-    return param.get("grpc_name", camel_to_snake(param["cppName"]))
+    return param.get("grpc_name", _camel_to_snake(param["cppName"]))
