@@ -23,10 +23,6 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
 
 def mutate_metadata(metadata: dict):
     config = metadata["config"]
-    for custom_type in config.get("custom_types", []):
-        for field in custom_type["fields"]:
-            if "grpc_name" not in field:
-                field["grpc_name"] = common_helpers.camel_to_snake(field["name"])
 
     attribute_expander = metadata_mutation.AttributeAccessorExpander(metadata)
     for function_name in metadata["functions"]:

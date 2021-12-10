@@ -3197,8 +3197,8 @@ message AMPMFetchDUTCharacteristicsRequest {
 message AMPMFetchDUTCharacteristicsResponse {
   int32 status = 1;
   double mean_linear_gain = 2;
-  double oned_b_compression_point = 3;
-  double mean_rmsevm = 4;
+  double one_db_compression_point = 3;
+  double mean_rms_evm = 4;
 }
 
 message AMPMFetchErrorRequest {

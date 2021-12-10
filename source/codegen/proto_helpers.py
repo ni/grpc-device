@@ -60,7 +60,7 @@ def get_message_parameter_definitions(parameters):
   for parameter in parameters:
     is_array = common_helpers.is_array(
         parameter["type"]) and not parameter["grpc_type"] == "string"
-    parameter_name = common_helpers.camel_to_snake(parameter["name"])
+    parameter_name = common_helpers.get_grpc_field_name(parameter)
     parameter_type = get_parameter_type(parameter)
     if is_decomposable_enum(parameter):
       is_request_message = common_helpers.is_input_parameter(parameter)

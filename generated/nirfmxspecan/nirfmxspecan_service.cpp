@@ -1707,14 +1707,14 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 mean_linear_gain {};
-      float64 oned_b_compression_point {};
-      float64 mean_rmsevm {};
-      auto status = library_->AMPMFetchDUTCharacteristics(instrument, selector_string, timeout, &mean_linear_gain, &oned_b_compression_point, &mean_rmsevm);
+      float64 one_db_compression_point {};
+      float64 mean_rms_evm {};
+      auto status = library_->AMPMFetchDUTCharacteristics(instrument, selector_string, timeout, &mean_linear_gain, &one_db_compression_point, &mean_rms_evm);
       response->set_status(status);
       if (status == 0) {
         response->set_mean_linear_gain(mean_linear_gain);
-        response->set_oned_b_compression_point(oned_b_compression_point);
-        response->set_mean_rmsevm(mean_rmsevm);
+        response->set_one_db_compression_point(one_db_compression_point);
+        response->set_mean_rms_evm(mean_rms_evm);
       }
       return ::grpc::Status::OK;
     }

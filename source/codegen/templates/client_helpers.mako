@@ -9,7 +9,7 @@ from client_helpers import ParamMechanism
 <%def name="build_request(client_params)">\
 %   for param in client_params:
 <%
-  field_name = common_helpers.camel_to_snake(param.name)
+  field_name = common_helpers.get_grpc_field_name_from_str(param.name)
 %>\
 %     if param.mechanism == ParamMechanism.ARRAY:
   copy_array(${field_name}, request.mutable_${field_name}());

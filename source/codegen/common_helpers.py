@@ -428,11 +428,11 @@ def get_buffer_size_expression(parameter: dict) -> str:
     if size_mechanism == 'fixed':
         return parameter['size']['value']
     elif size_mechanism == 'ivi-dance-with-a-twist':
-        return camel_to_snake(parameter['size']['value_twist'])
+        return get_grpc_field_name_from_str(parameter['size']['value_twist'])
     elif size_mechanism == 'passed-in-by-ptr':
-        return camel_to_snake(parameter['size']['value']) + '_copy'
+        return get_grpc_field_name_from_str(parameter['size']['value']) + '_copy'
     else:
-        return camel_to_snake(parameter['size']['value'])
+        return get_grpc_field_name_from_str(parameter['size']['value'])
 
 
 def get_size_expression(parameter: dict) -> str:
@@ -446,10 +446,6 @@ def get_size_expression(parameter: dict) -> str:
             return f"{expression} /* Workaround: strlen-bug */"
         return f"{expression} - 1"
     return expression
-
-
-def get_param_cpp_name(parameter: dict) -> str:
-    return camel_to_snake(parameter["name"])
 
 
 def is_ivi_dance_array_param(parameter):
@@ -801,3 +797,36 @@ def get_enum_value_prefix(enum_name: str, enum: dict) -> str:
 
 def get_driver_readiness(config: dict) -> str:
     return config.get('code_readiness', 'Release')
+
+
+def get_grpc_field_name(param: dict) -> str:
+    """"
+    Returns the name of the protobuf field for the given param.
+
+    This will be a snake_case_string, that can be used in the proto
+    definition itself, as well as in C++ code that accesses the field
+    from a Request/Response message.
+    """
+    return param.get("grpc_name", camel_to_snake(param["name"]))
+
+
+def get_grpc_field_name_from_str(field_name: str) -> str:
+    """
+    NOTE: Does not account for "grpc_name" overrides, but can be used to
+    get a proto name from a camelCase field name when no overrides are present.
+    """
+    return camel_to_snake(field_name)
+
+
+def get_cpp_local_name(param: dict) -> str:
+    """"
+    Returns a similar to token get_grpc_field_name, but will ensure
+    that the name is valid as a C++ variable name.
+
+    NOTE: this is not used consistently to differentiate from get_grpc_field_name.
+    For that reason, the field respects the "grpc_name" override so that the two
+    will match in the vast majority of cases where "name" is not a reserved keyword.
+    If "grpc_name" is a reserved keyword, this may be an issue (but don't use 
+    reserved grpc_name!).
+    """
+    return param.get("grpc_name", camel_to_snake(param["cppName"]))
