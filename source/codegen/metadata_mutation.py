@@ -91,8 +91,10 @@ def populate_grpc_types(parameters, config):
         config)
 
 
-def get_short_enum_type_name(type):
-    stripped_name = common_helpers.strip_prefix(type, "Vi")
+def get_short_enum_type_name(typename: str) -> str:
+    if typename in ["char[]", "const char[]", "char"]:
+        return "String"
+    stripped_name = common_helpers.strip_prefix(typename, "Vi")
     return common_helpers.ensure_pascal_case(stripped_name,)
 
 

@@ -316,6 +316,26 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAndGetAttributeInt32_Succeeds)
   EXPECT_EQ(NiRFmxSpecAnInt32AttributeValues::NIRFMXSPECAN_INT32_NF_EXTERNAL_PREAMP_PRESENT_TRUE, get_response.attr_val());
 }
 
+TEST_F(NiRFmxSpecAnDriverApiTests, SetAndGetAttributeString_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5663);
+  EXPECT_SUCCESS(
+      session,
+      client::set_attribute_string(
+        stub(),
+        session,
+        "",
+        NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE,
+        NiRFmxSpecAnStringAttributeValuesMapped::NIRFMXSPECAN_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI0));
+  // This is one way to get the driver in a state where we can get attributes
+  EXPECT_SUCCESS(session, client::spectrum_read(stub(), session, "", 10.0));
+
+  auto get_response = client::get_attribute_string(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE);
+
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_EQ("PFI0", get_response.attr_val());
+}
+
 }  // namespace system
 }  // namespace tests
 }  // namespace ni

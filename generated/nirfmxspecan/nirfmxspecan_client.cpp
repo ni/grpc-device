@@ -7417,7 +7417,7 @@ set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 SetAttributeStringResponse
-set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxSpecAnAttribute& attribute_id, const simple_variant<NiRFmxSpecAnCharAttributeValuesMapped, std::string>& attr_val)
+set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxSpecAnAttribute& attribute_id, const simple_variant<NiRFmxSpecAnStringAttributeValuesMapped, std::string>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -7425,7 +7425,7 @@ set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_attribute_id(attribute_id);
-  const auto attr_val_ptr = attr_val.get_if<NiRFmxSpecAnCharAttributeValuesMapped>();
+  const auto attr_val_ptr = attr_val.get_if<NiRFmxSpecAnStringAttributeValuesMapped>();
   const auto attr_val_raw_ptr = attr_val.get_if<std::string>();
   if (attr_val_ptr) {
     request.set_attr_val_mapped(*attr_val_ptr);

@@ -11950,8 +11950,8 @@ namespace nirfmxspecan_grpc {
       char* attr_val;
       switch (request->attr_val_enum_case()) {
         case nirfmxspecan_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
-          auto attr_val_imap_it = nirfmxspecancharattributevaluesmapped_input_map_.find(request->attr_val_mapped());
-          if (attr_val_imap_it == nirfmxspecancharattributevaluesmapped_input_map_.end()) {
+          auto attr_val_imap_it = nirfmxspecanstringattributevaluesmapped_input_map_.find(request->attr_val_mapped());
+          if (attr_val_imap_it == nirfmxspecanstringattributevaluesmapped_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val_mapped was not specified or out of range.");
           }
           attr_val = const_cast<char*>((attr_val_imap_it->second).c_str());
