@@ -40,9 +40,7 @@ struct LinkedArraySize {
 template <size_t N>
 inline LinkedArraySize calculate_linked_array_size(std::array<int, N> sizes, bool allow_optional)
 {
-  auto result = LinkedArraySize{};
-
-  if (std::adjacent_find(sizes.begin() + 1, sizes.end(), std::not_equal_to<>()) == sizes.end()) {
+  if (std::adjacent_find(sizes.begin(), sizes.end(), std::not_equal_to<>()) == sizes.end()) {
     return LinkedArraySize{sizes[0], MatchState::MATCH};
   }
 
