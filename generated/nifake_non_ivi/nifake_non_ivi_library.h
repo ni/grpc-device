@@ -37,6 +37,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 InputVarArgs(const char inputName[], const char channelName[], int32 color, double powerUpState, const char channelName0[], int32 color0, double powerUpState0, const char channelName1[], int32 color1, double powerUpState1, const char channelName2[], int32 color2, double powerUpState2);
   int32 OutputVarArgs(const char inputName[], const char channelName[], int32* color, const char channelName0[], int32* color0, const char channelName1[], int32* color1, const char channelName2[], int32* color2);
   int32 ResetMarbleAttribute(FakeHandle handle, int32 attribute);
+  int32 ScalarsWithNarrowIntegerTypes(myUInt16 u16, myInt16 i16, myInt8 i8);
   int32 SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value);
   int32 SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value);
   int32 SetColors(int32 colors[3], int32 size);
@@ -65,6 +66,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using InputVarArgsPtr = decltype(&niFakeNonIvi_InputVarArgs);
   using OutputVarArgsPtr = decltype(&niFakeNonIvi_OutputVarArgs);
   using ResetMarbleAttributePtr = decltype(&niFakeNonIvi_ResetMarbleAttribute);
+  using ScalarsWithNarrowIntegerTypesPtr = decltype(&niFakeNonIvi_ScalarsWithNarrowIntegerTypes);
   using SetMarbleAttributeDoublePtr = decltype(&niFakeNonIvi_SetMarbleAttributeDouble);
   using SetMarbleAttributeInt32Ptr = decltype(&niFakeNonIvi_SetMarbleAttributeInt32);
   using SetColorsPtr = decltype(&niFakeNonIvi_SetColors);
@@ -93,6 +95,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     InputVarArgsPtr InputVarArgs;
     OutputVarArgsPtr OutputVarArgs;
     ResetMarbleAttributePtr ResetMarbleAttribute;
+    ScalarsWithNarrowIntegerTypesPtr ScalarsWithNarrowIntegerTypes;
     SetMarbleAttributeDoublePtr SetMarbleAttributeDouble;
     SetMarbleAttributeInt32Ptr SetMarbleAttributeInt32;
     SetColorsPtr SetColors;

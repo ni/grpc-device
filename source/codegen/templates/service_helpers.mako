@@ -491,6 +491,16 @@ ${initialize_standard_input_param(function_name, parameter)}
       auto ${parameter_name} = reinterpret_cast<${c_type_pointer}>(${request_snippet}.data());\
 %elif grpc_type == 'bytes':
       auto ${parameter_name} = reinterpret_cast<const unsigned char*>(${request_snippet}.data());\
+%elif service_helpers.is_scalar_input_that_needs_coercion(parameter):
+      auto ${parameter_name}_raw = ${request_snippet};
+      if (${parameter_name}_raw < std::numeric_limits<${c_type}>::min() || ${parameter_name}_raw > std::numeric_limits<${c_type}>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(${parameter_name}_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("${c_type}");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto ${parameter_name} = static_cast<${c_type}>(${parameter_name}_raw);
 %elif service_helpers.is_input_array_that_needs_coercion(parameter):
       auto ${parameter_name}_raw = ${request_snippet};
       auto ${parameter_name} = std::vector<${c_element_type_that_needs_coercion}>();
