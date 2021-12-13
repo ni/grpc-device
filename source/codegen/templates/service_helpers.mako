@@ -411,8 +411,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   size_sources = parameter["determine_size_from"]
-  all_optional = parameter["linked_params_are_optional"]
-  allow_optional_cpp_constant = "true" if all_optional else "false"
+  allow_optional = parameter["linked_params_are_optional"]
+  allow_optional_as_cpp_constant = "true" if allow_optional else "false"
 %>\
 % if len(size_sources) > 1:
       auto ${parameter_name}_determine_from_sizes = std::array<int, ${len(size_sources)}>
@@ -426,12 +426,12 @@ ${initialize_standard_input_param(function_name, parameter)}
 % endfor
 </%block>\
       };
-      const auto ${parameter_name}_size_calculation = calculate_linked_array_size(${parameter_name}_determine_from_sizes, ${allow_optional_cpp_constant});
+      const auto ${parameter_name}_size_calculation = calculate_linked_array_size(${parameter_name}_determine_from_sizes, ${allow_optional_as_cpp_constant});
 
       if (${parameter_name}_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [${str.join(', ', size_sources)}] do not match");
       }
-% if all_optional:
+% if allow_optional:
       // NULL out optional params with zero sizes.
       if (${parameter_name}_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
 % for size_source in size_sources:

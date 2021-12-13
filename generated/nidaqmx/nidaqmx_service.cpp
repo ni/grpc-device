@@ -285,7 +285,7 @@ namespace nidaqmx_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [triggerSlopeArray, triggerLevelArray] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -319,7 +319,7 @@ namespace nidaqmx_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [triggerSlopeArray, triggerLevelArray] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -1052,7 +1052,7 @@ namespace nidaqmx_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [expirStateArray, outputTypeArray] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -13980,7 +13980,7 @@ namespace nidaqmx_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [stateArray, channelTypeArray] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 

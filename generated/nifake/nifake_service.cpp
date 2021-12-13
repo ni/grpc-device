@@ -1298,7 +1298,7 @@ namespace nifake_grpc {
       const auto input_array_sizes_size_calculation = calculate_linked_array_size(input_array_sizes_determine_from_sizes, false);
 
       if (input_array_sizes_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [inputArrayOfFloats, inputArrayOfIntegers] do not match");
       }
       auto input_array_sizes = input_array_sizes_size_calculation.size;
 
@@ -1349,7 +1349,7 @@ namespace nifake_grpc {
       const auto size_size_calculation = calculate_linked_array_size(size_determine_from_sizes, false);
 
       if (size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [values1, values2, values3, values4] do not match");
       }
       auto size = size_size_calculation.size;
 
@@ -1386,7 +1386,7 @@ namespace nifake_grpc {
       const auto size_size_calculation = calculate_linked_array_size(size_determine_from_sizes, true);
 
       if (size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [values1, values2, values3, values4] do not match");
       }
       // NULL out optional params with zero sizes.
       if (size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {

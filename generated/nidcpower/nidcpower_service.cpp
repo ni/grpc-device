@@ -3433,7 +3433,7 @@ namespace nidcpower_grpc {
       const auto size_size_calculation = calculate_linked_array_size(size_determine_from_sizes, false);
 
       if (size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [values, sourceDelays] do not match");
       }
       auto size = size_size_calculation.size;
 
