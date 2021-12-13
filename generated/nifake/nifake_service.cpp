@@ -1364,6 +1364,50 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::MultipleArraysSameSizeWithOptional(::grpc::ServerContext* context, const MultipleArraysSameSizeWithOptionalRequest* request, MultipleArraysSameSizeWithOptionalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto values1 = const_cast<ViReal64*>(request->values1().data());
+      auto values2 = const_cast<ViReal64*>(request->values2().data());
+      auto values3 = const_cast<ViReal64*>(request->values3().data());
+      auto values4 = const_cast<ViReal64*>(request->values4().data());
+      auto size_determine_from_sizes = std::array<int, 4>
+      {
+        request->values1_size(),
+        request->values2_size(),
+        request->values3_size(),
+        request->values4_size()
+      };
+      const auto size_size_calculation = calculate_linked_array_size(size_determine_from_sizes, true);
+
+      if (size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields TODO do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        values1 = request->values1_size() ? values1 : nullptr;
+        values2 = request->values2_size() ? values2 : nullptr;
+        values3 = request->values3_size() ? values3 : nullptr;
+        values4 = request->values4_size() ? values4 : nullptr;
+      }
+      auto size = size_size_calculation.size;
+
+      auto status = library_->MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::OneInputFunction(::grpc::ServerContext* context, const OneInputFunctionRequest* request, OneInputFunctionResponse* response)
   {
     if (context->IsCancelled()) {

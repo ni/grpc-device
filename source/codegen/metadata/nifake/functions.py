@@ -1839,6 +1839,90 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'MultipleArraysSameSizeWithOptional': {
+        'documentation': {
+            'description': 'Function to test multiple arrays that use the same size'
+        },
+        'parameters': [
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Identifies a particular instrument session.'
+                },
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Array 1 of same size.'
+                },
+                'name': 'values1',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'size'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Array 2 of same size.'
+                },
+                'name': 'values2',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'size'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Array 3 of same size.'
+                },
+                'name': 'values3',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'size'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Array 4 of same size.'
+                },
+                'name': 'values4',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'size'
+                },
+                'type': 'ViReal64[]'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Size for all arrays'
+                },
+                'name': 'size',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'OneInputFunction': {
         'codegen_method': 'public',
         'documentation': {

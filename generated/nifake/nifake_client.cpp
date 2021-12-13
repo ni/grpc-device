@@ -796,6 +796,26 @@ multiple_arrays_same_size(const StubPtr& stub, const nidevice_grpc::Session& vi,
   return response;
 }
 
+MultipleArraysSameSizeWithOptionalResponse
+multiple_arrays_same_size_with_optional(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& values1, const std::vector<double>& values2, const std::vector<double>& values3, const std::vector<double>& values4)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MultipleArraysSameSizeWithOptionalRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  copy_array(values1, request.mutable_values1());
+  copy_array(values2, request.mutable_values2());
+  copy_array(values3, request.mutable_values3());
+  copy_array(values4, request.mutable_values4());
+
+  auto response = MultipleArraysSameSizeWithOptionalResponse{};
+
+  raise_if_error(
+      stub->MultipleArraysSameSizeWithOptional(&context, request, &response));
+
+  return response;
+}
+
 OneInputFunctionResponse
 one_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& a_number)
 {

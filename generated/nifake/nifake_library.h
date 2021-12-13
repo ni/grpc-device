@@ -66,6 +66,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2);
   ViStatus MultipleArrayTypes(ViSession vi, ViInt32 outputArraySize, ViReal64 outputArray[], ViReal64 outputArrayOfFixedLength[3], ViInt32 inputArraySizes, ViReal64 inputArrayOfFloats[], ViInt16 inputArrayOfIntegers[]);
   ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size);
+  ViStatus MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size);
   ViStatus OneInputFunction(ViSession vi, ViInt32 aNumber);
   ViStatus ParametersAreMultipleTypes(ViSession vi, ViBoolean aBoolean, ViInt32 anInt32, ViInt64 anInt64, ViInt16 anIntEnum, ViReal64 aFloat, ViReal64 aFloatEnum, ViInt32 stringSize, ViConstString aString);
   ViStatus PoorlyNamedSimpleFunction(ViSession vi);
@@ -144,6 +145,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using InitWithVarArgsPtr = decltype(&niFake_InitWithVarArgs);
   using MultipleArrayTypesPtr = decltype(&niFake_MultipleArrayTypes);
   using MultipleArraysSameSizePtr = decltype(&niFake_MultipleArraysSameSize);
+  using MultipleArraysSameSizeWithOptionalPtr = decltype(&niFake_MultipleArraysSameSizeWithOptional);
   using OneInputFunctionPtr = decltype(&niFake_OneInputFunction);
   using ParametersAreMultipleTypesPtr = decltype(&niFake_ParametersAreMultipleTypes);
   using PoorlyNamedSimpleFunctionPtr = decltype(&niFake_PoorlyNamedSimpleFunction);
@@ -222,6 +224,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     InitWithVarArgsPtr InitWithVarArgs;
     MultipleArrayTypesPtr MultipleArrayTypes;
     MultipleArraysSameSizePtr MultipleArraysSameSize;
+    MultipleArraysSameSizeWithOptionalPtr MultipleArraysSameSizeWithOptional;
     OneInputFunctionPtr OneInputFunction;
     ParametersAreMultipleTypesPtr ParametersAreMultipleTypes;
     PoorlyNamedSimpleFunctionPtr PoorlyNamedSimpleFunction;
