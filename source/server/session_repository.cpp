@@ -81,6 +81,19 @@ void SessionRepository::remove_session(uint32_t id)
   }
 }
 
+void SessionRepository::register_dependent_session(uint32_t id, uint32_t dependent_session_id, std::function<void()> cleanup)
+{
+  std::unique_lock<std::shared_mutex> lock(repository_lock_);
+  auto it = sessions_.find(id);
+  if (it != sessions_.end()) {
+    auto remove_action = std::make_unique<RemoveAction>([dependent_session_id, cleanup, this]() {
+      cleanup();
+      sessions_.erase(dependent_session_id);
+    });
+    it->second->dependent_sessions.emplace_back(std::move(remove_action));
+  }
+}
+
 // This method has three behaviors:
 // 1) If no ReservationInfo exists with the given reservation_id, it creates a new ReservationInfo,
 //    adds it to reservations_, and returns it.
@@ -218,10 +231,20 @@ bool SessionRepository::reset_server()
 bool SessionRepository::close_sessions()
 {
   named_sessions_.clear();
-  for (auto it = sessions_.begin(); it != sessions_.end();) {
-    cleanup_session(it->second);
-    it = sessions_.erase(it);
+  // Copy sessions for cleanup to avoid invalidating iterators when dependent sessions
+  // are removed.
+  auto sessions_cleanup = std::vector<std::shared_ptr<SessionInfo>>();
+  std::transform(
+      sessions_.cbegin(),
+      sessions_.cend(),
+      std::back_inserter(sessions_cleanup),
+      [](const SessionMap::value_type& entry) { return entry.second; });
+
+  sessions_.clear();
+  for (auto session_info : sessions_cleanup) {
+    cleanup_session(session_info);
   }
+  sessions_cleanup.clear();
   return named_sessions_.empty() && sessions_.empty();
 }
 

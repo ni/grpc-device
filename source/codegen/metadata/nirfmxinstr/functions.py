@@ -1365,6 +1365,7 @@ functions = {
         'returns': 'int32'
     },
     'GetNIRFSASession': {
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1372,7 +1373,9 @@ functions = {
                 'type': 'niRFmxInstrHandle'
             },
             {
+                'cross_driver_session': 'ViSession',
                 'direction': 'out',
+                'grpc_type': "nidevice_grpc.Session",
                 'name': 'niRfsaSession',
                 'type': 'uInt32'
             }
@@ -1491,7 +1494,9 @@ functions = {
         'init_method': True,
         'parameters': [
             {
+                'cross_driver_session': 'ViSession',
                 'direction': 'in',
+                'grpc_type': "nidevice_grpc.Session",
                 'name': 'nirfsaSession',
                 'type': 'uInt32'
             },

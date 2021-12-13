@@ -18,10 +18,12 @@ import "google/protobuf/timestamp.proto";
 
 service NiFakeNonIvi {
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc GetCrossDriverSession(GetCrossDriverSessionRequest) returns (GetCrossDriverSessionResponse);
   rpc GetMarbleAttributeDouble(GetMarbleAttributeDoubleRequest) returns (GetMarbleAttributeDoubleResponse);
   rpc GetMarbleAttributeInt32(GetMarbleAttributeInt32Request) returns (GetMarbleAttributeInt32Response);
   rpc GetMarbleAttributeInt32Array(GetMarbleAttributeInt32ArrayRequest) returns (GetMarbleAttributeInt32ArrayResponse);
   rpc Init(InitRequest) returns (InitResponse);
+  rpc InitFromCrossDriverSession(InitFromCrossDriverSessionRequest) returns (InitFromCrossDriverSessionResponse);
   rpc InitWithHandleNameAsSessionName(InitWithHandleNameAsSessionNameRequest) returns (InitWithHandleNameAsSessionNameResponse);
   rpc InputArraysWithNarrowIntegerTypes(InputArraysWithNarrowIntegerTypesRequest) returns (InputArraysWithNarrowIntegerTypesResponse);
   rpc IotaWithCustomSize(IotaWithCustomSizeRequest) returns (IotaWithCustomSizeResponse);
@@ -111,6 +113,16 @@ message CloseResponse {
   int32 status = 1;
 }
 
+message GetCrossDriverSessionRequest {
+  string session_name = 1;
+  nidevice_grpc.Session handle = 2;
+}
+
+message GetCrossDriverSessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session cross_driver_session = 2;
+}
+
 message GetMarbleAttributeDoubleRequest {
   nidevice_grpc.Session handle = 1;
   oneof attribute_enum {
@@ -157,6 +169,16 @@ message InitRequest {
 }
 
 message InitResponse {
+  int32 status = 1;
+  nidevice_grpc.Session handle = 2;
+}
+
+message InitFromCrossDriverSessionRequest {
+  string session_name = 1;
+  nidevice_grpc.Session cross_driver_session = 2;
+}
+
+message InitFromCrossDriverSessionResponse {
   int32 status = 1;
   nidevice_grpc.Session handle = 2;
 }

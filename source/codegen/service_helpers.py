@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import Dict, List, NamedTuple, Optional
 import common_helpers
 
 
@@ -389,7 +389,53 @@ def get_resource_handle_type(config: dict) -> str:
     return config.get("resource_handle_type", "ViSession")
 
 
-def get_shared_resource_repository_ptr_type(config: dict) -> str:
-    resource_handle_type = get_resource_handle_type(config)
+def get_shared_resource_repository_ptr_type(resource_handle_type: str) -> str:
     resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
-    return f"std::shared_ptr<{resource_repository_type}>"
+    return f"std::shared_ptr<{resource_repository_type}>" 
+
+
+def get_driver_shared_resource_repository_ptr_type(driver_config: dict) -> str:
+    return get_shared_resource_repository_ptr_type(
+        get_resource_handle_type(driver_config)
+    )
+
+class CrossDriverSessionDependency(NamedTuple):
+    resource_handle_type: str
+    resource_repository_alias: str
+    resource_repository_type: str
+    field_name: str
+    local_name: str
+
+
+def _create_cross_driver_session_dependency(resource_handle_type: str) -> CrossDriverSessionDependency:
+    return CrossDriverSessionDependency(
+        resource_handle_type,
+        f"{resource_handle_type}ResourceRepositorySharedPtr",
+        get_shared_resource_repository_ptr_type(resource_handle_type),
+        f"{common_helpers.pascal_to_snake(resource_handle_type)}_resource_repository_",
+        f"{common_helpers.pascal_to_snake(resource_handle_type)}_resource_repository",
+    )
+
+def get_cross_driver_session_type(parameter: dict) -> Optional[str]:
+    return parameter.get("cross_driver_session")
+
+
+def get_cross_driver_session_dependencies(functions: List[dict]) -> List[CrossDriverSessionDependency]:
+    return sorted(set([
+        _create_cross_driver_session_dependency(get_cross_driver_session_type(p))
+        for f in functions.values()
+        for p in f["parameters"]
+        if get_cross_driver_session_type(p)
+    ]))
+
+def get_cross_driver_session_dependency(parameter: dict) -> CrossDriverSessionDependency:
+    return _create_cross_driver_session_dependency(parameter["cross_driver_session"])
+
+
+def session_repository_field_name(param: dict) -> str:
+    cross_driver_session_type = get_cross_driver_session_type(param)
+
+    if cross_driver_session_type:
+        return get_cross_driver_session_dependency(param).field_name
+    else:
+        return "session_repository_"

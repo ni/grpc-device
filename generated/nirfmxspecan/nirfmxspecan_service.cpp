@@ -27,7 +27,9 @@ namespace nirfmxspecan_grpc {
       NiRFmxSpecAnLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiRFmxSpecAnFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 

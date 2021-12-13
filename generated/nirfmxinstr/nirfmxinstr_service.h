@@ -34,10 +34,12 @@ struct NiRFmxInstrFeatureToggles
 class NiRFmxInstrService final : public NiRFmxInstr::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
+  using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxInstrService(
     NiRFmxInstrLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
+    ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxInstrFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxInstrService();
   
@@ -134,6 +136,7 @@ public:
 private:
   NiRFmxInstrLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
 
   NiRFmxInstrFeatureToggles feature_toggles_;
 };

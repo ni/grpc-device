@@ -17,6 +17,7 @@ using namespace nifake_non_ivi_grpc;
 class NiFakeNonIviServiceTests_EndToEnd : public ::testing::Test {
  public:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
+  using FakeCrossDriverResourceRepository = nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>;
   nidevice_grpc::SessionRepository session_repository_;
   std::shared_ptr<FakeResourceRepository> resource_repository_;
   ni::tests::unit::NiFakeNonIviMockLibrary library_;
@@ -29,7 +30,7 @@ class NiFakeNonIviServiceTests_EndToEnd : public ::testing::Test {
       : session_repository_(),
         resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
         library_(),
-        service_(&library_, resource_repository_),
+        service_(&library_, resource_repository_, std::make_shared<FakeCrossDriverResourceRepository>(&session_repository_)),
         server_(start_server()),
         stub_(NiFakeNonIvi::NewStub(server_->InProcessChannel(::grpc::ChannelArguments())))
   {

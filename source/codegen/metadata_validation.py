@@ -86,6 +86,7 @@ PARAM_SCHEMA = Schema(
         Optional('callback_params'): [dict],
         Optional('callback_token'): bool,
         Optional('use_in_python_api'): bool,
+        Optional('cross_driver_session'): str,
     }
 )
 

@@ -72,6 +72,7 @@ std::shared_ptr<void> register_all_services(
     nirfmxinstr_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
+      vi_session_repository,
       feature_toggles));
   service_vector->push_back(
     nirfmxspecan_grpc::register_service(

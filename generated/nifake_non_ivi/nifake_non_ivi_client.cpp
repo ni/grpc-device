@@ -33,6 +33,22 @@ close(const StubPtr& stub, const nidevice_grpc::Session& handle)
   return response;
 }
 
+GetCrossDriverSessionResponse
+get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& handle)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetCrossDriverSessionRequest{};
+  request.mutable_handle()->CopyFrom(handle);
+
+  auto response = GetCrossDriverSessionResponse{};
+
+  raise_if_error(
+      stub->GetCrossDriverSession(&context, request, &response));
+
+  return response;
+}
+
 GetMarbleAttributeDoubleResponse
 get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute)
 {
@@ -117,6 +133,22 @@ init(const StubPtr& stub, const pb::string& session_name)
 
   raise_if_error(
       stub->Init(&context, request, &response));
+
+  return response;
+}
+
+InitFromCrossDriverSessionResponse
+init_from_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& cross_driver_session)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitFromCrossDriverSessionRequest{};
+  request.mutable_cross_driver_session()->CopyFrom(cross_driver_session);
+
+  auto response = InitFromCrossDriverSessionResponse{};
+
+  raise_if_error(
+      stub->InitFromCrossDriverSession(&context, request, &response));
 
   return response;
 }

@@ -542,6 +542,16 @@ def is_init_method(function_data):
     return function_data.get('init_method', False)
 
 
+def is_cross_driver_init_method(function_data: dict) -> bool:
+    return (
+        is_init_method(function_data) 
+        and any(
+            p 
+            for p in function_data["parameters"] 
+            if "cross_driver_session" in p and p["direction"] == "out"
+        )
+    )
+
 def has_streaming_response(function_data):
     return function_data.get('stream_response', False)
 

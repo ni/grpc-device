@@ -19,10 +19,12 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
 
   ::grpc::Status check_function_exists(std::string functionName);
   int32 Close(FakeHandle handle);
+  int32 GetCrossDriverSession(FakeHandle handle, int32* crossDriverSession);
   int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value);
   int32 GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value);
   int32 GetMarbleAttributeInt32Array(FakeHandle handle, int32 attribute, int32 value[]);
   int32 Init(const char sessionName[], FakeHandle* handle);
+  int32 InitFromCrossDriverSession(int32 crossDriverSession, FakeHandle* handle);
   int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle);
   int32 InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
   int32 IotaWithCustomSize(int32 sizeOne, int32 sizeTwo, int32 data[]);
@@ -48,10 +50,12 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
 
  private:
   using ClosePtr = decltype(&niFakeNonIvi_Close);
+  using GetCrossDriverSessionPtr = decltype(&niFakeNonIvi_GetCrossDriverSession);
   using GetMarbleAttributeDoublePtr = decltype(&niFakeNonIvi_GetMarbleAttributeDouble);
   using GetMarbleAttributeInt32Ptr = decltype(&niFakeNonIvi_GetMarbleAttributeInt32);
   using GetMarbleAttributeInt32ArrayPtr = decltype(&niFakeNonIvi_GetMarbleAttributeInt32Array);
   using InitPtr = decltype(&niFakeNonIvi_Init);
+  using InitFromCrossDriverSessionPtr = decltype(&niFakeNonIvi_InitFromCrossDriverSession);
   using InitWithHandleNameAsSessionNamePtr = decltype(&niFakeNonIvi_InitWithHandleNameAsSessionName);
   using InputArraysWithNarrowIntegerTypesPtr = decltype(&niFakeNonIvi_InputArraysWithNarrowIntegerTypes);
   using IotaWithCustomSizePtr = decltype(&niFakeNonIvi_IotaWithCustomSize);
@@ -77,10 +81,12 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
 
   typedef struct FunctionPointers {
     ClosePtr Close;
+    GetCrossDriverSessionPtr GetCrossDriverSession;
     GetMarbleAttributeDoublePtr GetMarbleAttributeDouble;
     GetMarbleAttributeInt32Ptr GetMarbleAttributeInt32;
     GetMarbleAttributeInt32ArrayPtr GetMarbleAttributeInt32Array;
     InitPtr Init;
+    InitFromCrossDriverSessionPtr InitFromCrossDriverSession;
     InitWithHandleNameAsSessionNamePtr InitWithHandleNameAsSessionName;
     InputArraysWithNarrowIntegerTypesPtr InputArraysWithNarrowIntegerTypes;
     IotaWithCustomSizePtr IotaWithCustomSize;

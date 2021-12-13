@@ -30,7 +30,7 @@ class SessionResourceRepository {
 
   TResourceHandle access_session(uint32_t session_id, const std::string& session_name) const;
   uint32_t resolve_session_id(TResourceHandle handle) const;
-
+  int SessionResourceRepository<TResourceHandle>::add_dependent_session(const std::string& session_name, InitFunc init_func, uint32_t initiating_session, uint32_t& session_id);
   void remove_session(TResourceHandle handle);
 
  private:
@@ -116,6 +116,26 @@ int SessionResourceRepository<TResourceHandle>::add_session(
 
   session_id = session_from_repository;
   return 0;
+}
+
+template <typename TResourceHandle>
+int SessionResourceRepository<TResourceHandle>::add_dependent_session(
+    const std::string& session_name,
+    InitFunc init_func,
+    uint32_t initiating_session,
+    uint32_t& session_id)
+{
+  // Register with no cleanup function.
+  // ASSUMPTION: dependent sessions are owned by the initiating driver session and appropriate
+  // cleanup code will be executed when the initiating session is closed.
+  // We're only responsible for cleaning up the map structures.
+  auto status = add_session(
+      session_name, init_func, [](uint32_t id) {}, session_id);
+  session_repository_->register_dependent_session(
+      initiating_session,
+      session_id,
+      [session_id, this]() { resource_map_.remove_session_id(session_id); });
+  return status;
 }
 
 template <typename TResourceHandle>

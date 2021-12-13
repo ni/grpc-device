@@ -27,7 +27,9 @@ namespace niscope_grpc {
       NiScopeLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiScopeFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 

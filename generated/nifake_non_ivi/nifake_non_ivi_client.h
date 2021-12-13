@@ -23,10 +23,12 @@ using namespace nidevice_grpc::experimental::client;
 
 
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& handle);
+GetCrossDriverSessionResponse get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& handle);
 GetMarbleAttributeDoubleResponse get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute);
 GetMarbleAttributeInt32Response get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attribute, pb::int32>& attribute);
 GetMarbleAttributeInt32ArrayResponse get_marble_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32ArrayAttribute, pb::int32>& attribute);
 InitResponse init(const StubPtr& stub, const pb::string& session_name);
+InitFromCrossDriverSessionResponse init_from_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& cross_driver_session);
 InitWithHandleNameAsSessionNameResponse init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& handle_name);
 InputArraysWithNarrowIntegerTypesResponse input_arrays_with_narrow_integer_types(const StubPtr& stub, const std::vector<pb::uint32>& u16_array, const std::vector<pb::int32>& i16_array, const std::vector<pb::int32>& i8_array);
 IotaWithCustomSizeResponse iota_with_custom_size(const StubPtr& stub, const pb::int32& size_one, const pb::int32& size_two);

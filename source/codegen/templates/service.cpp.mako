@@ -19,6 +19,8 @@ any_non_mockable_functions = any(not common_helpers.can_mock_function(functions[
 any_ivi_dance_functions = any(
   common_helpers.has_ivi_dance_with_a_twist_param(functions[name]['parameters']) or
   common_helpers.has_ivi_dance_param(functions[name]['parameters']) for name in function_names)
+
+cross_driver_session_deps = service_helpers.get_cross_driver_session_dependencies(functions)
 %>\
 <%namespace name="mako_helper" file="/service_helpers.mako"/>\
 
@@ -61,8 +63,16 @@ namespace ${config["namespace_component"]}_grpc {
   ${service_class_prefix}Service::${service_class_prefix}Service(
       ${service_class_prefix}LibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
+% for cross_driver_dep in cross_driver_session_deps:
+      ${cross_driver_dep.resource_repository_alias} ${cross_driver_dep.local_name},
+% endfor
       const ${service_class_prefix}FeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+% for cross_driver_dep in cross_driver_session_deps:
+      ${cross_driver_dep.field_name}(${cross_driver_dep.local_name}),
+% endfor
+      feature_toggles_(feature_toggles)
   {
   }
 
@@ -108,6 +118,8 @@ ${mako_helper.define_async_callback_method_body(function_name=function_name, fun
     try {
 %   if common_helpers.has_unsupported_parameter(function_data):
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");
+%   elif common_helpers.is_cross_driver_init_method(function_data):
+${mako_helper.define_cross_driver_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   elif common_helpers.is_init_method(function_data):
 ${mako_helper.define_init_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   elif common_helpers.has_ivi_dance_param(parameters):

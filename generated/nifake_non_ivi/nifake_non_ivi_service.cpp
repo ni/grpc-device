@@ -25,8 +25,12 @@ namespace nifake_non_ivi_grpc {
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
+      FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
       const NiFakeNonIviFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      fake_cross_driver_handle_resource_repository_(fake_cross_driver_handle_resource_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 
@@ -47,6 +51,37 @@ namespace nifake_non_ivi_grpc {
       session_repository_->remove_session(handle);
       auto status = library_->Close(handle);
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetCrossDriverSession(::grpc::ServerContext* context, const GetCrossDriverSessionRequest* request, GetCrossDriverSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+
+      auto initiating_session_id = session_repository_->resolve_session_id(handle);
+      auto init_lambda = [&] () {
+        FakeCrossDriverHandle cross_driver_session;
+        int status = library_->GetCrossDriverSession(handle, &cross_driver_session);
+        return std::make_tuple(status, cross_driver_session);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      int status = fake_cross_driver_handle_resource_repository_->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_cross_driver_session()->set_id(session_id);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -213,6 +248,37 @@ namespace nifake_non_ivi_grpc {
       auto init_lambda = [&] () {
         FakeHandle handle;
         int status = library_->Init(session_name, &handle);
+        return std::make_tuple(status, handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_handle()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitFromCrossDriverSession(::grpc::ServerContext* context, const InitFromCrossDriverSessionRequest* request, InitFromCrossDriverSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto cross_driver_session_grpc_session = request->cross_driver_session();
+      int32 cross_driver_session = fake_cross_driver_handle_resource_repository_->access_session(cross_driver_session_grpc_session.id(), cross_driver_session_grpc_session.name());
+
+      auto init_lambda = [&] () {
+        FakeHandle handle;
+        int status = library_->InitFromCrossDriverSession(cross_driver_session, &handle);
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;

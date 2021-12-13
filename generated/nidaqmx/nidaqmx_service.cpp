@@ -30,7 +30,9 @@ namespace nidaqmx_grpc {
       NiDAQmxLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiDAQmxFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 
