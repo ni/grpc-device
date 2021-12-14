@@ -129,16 +129,12 @@ def create_args_for_ivi_dance(parameters):
     return result[:-2]
 
 
-def get_size_mechanism(param: dict) -> Optional[str]:
-    return param.get("size", {}).get("mechanism")
-
-
 def create_args_for_ivi_dance_with_a_twist(parameters):
     result = ''
     ivi_twist_array_params = [
         p 
         for p in parameters 
-        if get_size_mechanism(p) == "ivi-dance-with-a-twist"
+        if common_helpers.get_size_mechanism(p) == "ivi-dance-with-a-twist"
     ]
     arrays = { p["name"] for p in ivi_twist_array_params }
     twists = { p["size"]["value_twist"] for p in ivi_twist_array_params }
