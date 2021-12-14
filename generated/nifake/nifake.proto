@@ -36,6 +36,7 @@ service NiFake {
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
   rpc GetAnIviDanceWithATwistArray(GetAnIviDanceWithATwistArrayRequest) returns (GetAnIviDanceWithATwistArrayResponse);
   rpc GetAnIviDanceWithATwistArrayOfCustomType(GetAnIviDanceWithATwistArrayOfCustomTypeRequest) returns (GetAnIviDanceWithATwistArrayOfCustomTypeResponse);
+  rpc GetAnIviDanceWithATwistArrayWithInputArray(GetAnIviDanceWithATwistArrayWithInputArrayRequest) returns (GetAnIviDanceWithATwistArrayWithInputArrayResponse);
   rpc GetAnIviDanceWithATwistByteArray(GetAnIviDanceWithATwistByteArrayRequest) returns (GetAnIviDanceWithATwistByteArrayResponse);
   rpc GetAnIviDanceWithATwistString(GetAnIviDanceWithATwistStringRequest) returns (GetAnIviDanceWithATwistStringResponse);
   rpc GetAnIviDanceWithATwistStringStrlenBug(GetAnIviDanceWithATwistStringStrlenBugRequest) returns (GetAnIviDanceWithATwistStringStrlenBugResponse);
@@ -354,6 +355,16 @@ message GetAnIviDanceWithATwistArrayOfCustomTypeRequest {
 message GetAnIviDanceWithATwistArrayOfCustomTypeResponse {
   int32 status = 1;
   repeated FakeCustomStruct array_out = 2;
+  sint32 actual_size = 3;
+}
+
+message GetAnIviDanceWithATwistArrayWithInputArrayRequest {
+  repeated sint32 data_in = 1;
+}
+
+message GetAnIviDanceWithATwistArrayWithInputArrayResponse {
+  int32 status = 1;
+  repeated sint32 array_out = 2;
   sint32 actual_size = 3;
 }
 

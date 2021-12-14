@@ -354,6 +354,22 @@ get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const ni
   return response;
 }
 
+GetAnIviDanceWithATwistArrayWithInputArrayResponse
+get_an_ivi_dance_with_a_twist_array_with_input_array(const StubPtr& stub, const std::vector<pb::int32>& data_in)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAnIviDanceWithATwistArrayWithInputArrayRequest{};
+  copy_array(data_in, request.mutable_data_in());
+
+  auto response = GetAnIviDanceWithATwistArrayWithInputArrayResponse{};
+
+  raise_if_error(
+      stub->GetAnIviDanceWithATwistArrayWithInputArray(&context, request, &response));
+
+  return response;
+}
+
 GetAnIviDanceWithATwistByteArrayResponse
 get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub)
 {

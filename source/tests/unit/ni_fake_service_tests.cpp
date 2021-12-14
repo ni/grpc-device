@@ -1721,6 +1721,41 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIv
   EXPECT_EQ(response.actual_size(), expected_size);
 }
 
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithInputArray_PassesArrayInputOnFirstPass_CallsGetAnIviDanceWithATwistArray)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const auto data_in = std::array<ViInt32, 4>{0, -1, 100, 5};
+  ViInt32 input_size = 2;
+  ViInt32 array_out[] = {1, 2, 3};
+  ViInt32 expected_size = 3;
+  // ivi-dance-with-a-twist call: ensure that data and size are passed in.
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayWithInputArray(_, _, 0, nullptr, _))
+      .With(Args<0, 1>(ElementsAreArray(data_in)))
+      .WillOnce(DoAll(
+          SetArgPointee<4>(expected_size),
+          Return(kDriverSuccess)));
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayWithInputArray(_, _, expected_size, _, _))
+      .With(Args<0, 1>(ElementsAreArray(data_in)))
+      .WillOnce(DoAll(
+          SetArrayArgument<3>(array_out, array_out + expected_size),
+          SetArgPointee<4>(expected_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAnIviDanceWithATwistArrayWithInputArrayRequest request;
+  request.mutable_data_in()->CopyFrom({data_in.begin(), data_in.end()});
+  nifake_grpc::GetAnIviDanceWithATwistArrayWithInputArrayResponse response;
+  ::grpc::Status status = service.GetAnIviDanceWithATwistArrayWithInputArray(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(array_out, expected_size));
+  EXPECT_EQ(response.actual_size(), expected_size);
+}
+
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithBiggerSizes_CallsGetAnIviDanceWithATwistArray)
 {
   nidevice_grpc::SessionRepository session_repository;
