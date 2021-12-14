@@ -15,8 +15,10 @@
 
 namespace nifake_extension_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   NiFakeExtensionService::NiFakeExtensionService(
       NiFakeExtensionLibraryInterface* library,

@@ -241,8 +241,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SpurBasicFromExample_ReturnsMeasurementStatus
   EXPECT_SUCCESS(session, client::spur_cfg_number_of_ranges(stub(), session, "", 1));
   EXPECT_SUCCESS(session, client::spur_cfg_range_frequency_array(stub(), session, "", {1e9}, {1.5e9}, {true}));
   EXPECT_SUCCESS(session, client::spur_cfg_range_rbw_array(stub(), session, "", {false}, {30e3}, {SpurRbwFilterType::SPUR_RBW_FILTER_TYPE_GAUSSIAN}));
-  // GH #452 Optional array parameters are not supported by grpc-device.
-  // EXPECT_SUCCESS(session, client::spur_cfg_range_absolute_limit_array(stub(), session, "", null, {-10.0}, null));
+  EXPECT_SUCCESS(session, client::spur_cfg_range_absolute_limit_array(stub(), session, "", {}, {-10.0}, {}));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   const auto fetch_response = client::spur_fetch_measurement_status(stub(), session, "", 10.0);

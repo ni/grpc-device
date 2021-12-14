@@ -15,8 +15,10 @@
 
 namespace nifgen_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -1082,10 +1084,18 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      if (request->waveform_handles_array().size() != request->loop_counts_array().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields waveform_handles_array and loop_counts_array do not match");
+      auto sequence_length_determine_from_sizes = std::array<int, 2>
+      {
+        request->waveform_handles_array_size(),
+        request->loop_counts_array_size()
+      };
+      const auto sequence_length_size_calculation = calculate_linked_array_size(sequence_length_determine_from_sizes, false);
+
+      if (sequence_length_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformHandlesArray, loopCountsArray] do not match");
       }
-      ViInt32 sequence_length = static_cast<ViInt32>(request->loop_counts_array().size());
+      auto sequence_length = sequence_length_size_calculation.size;
+
       auto waveform_handles_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->waveform_handles_array().data()));
       auto loop_counts_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->loop_counts_array().data()));
       ViInt32 sequence_handle {};
@@ -1127,10 +1137,18 @@ namespace nifgen_grpc {
         }
       }
 
-      if (request->frequency_array().size() != request->duration_array().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields frequency_array and duration_array do not match");
+      auto frequency_list_length_determine_from_sizes = std::array<int, 2>
+      {
+        request->frequency_array_size(),
+        request->duration_array_size()
+      };
+      const auto frequency_list_length_size_calculation = calculate_linked_array_size(frequency_list_length_determine_from_sizes, false);
+
+      if (frequency_list_length_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequencyArray, durationArray] do not match");
       }
-      ViInt32 frequency_list_length = static_cast<ViInt32>(request->duration_array().size());
+      auto frequency_list_length = frequency_list_length_size_calculation.size;
+
       auto frequency_array = const_cast<ViReal64*>(request->frequency_array().data());
       auto duration_array = const_cast<ViReal64*>(request->duration_array().data());
       ViInt32 frequency_list_handle {};

@@ -411,19 +411,41 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
   size_sources = parameter["determine_size_from"]
-  size_field_name = common_helpers.camel_to_snake(size_sources[-1])
+  allow_optional = parameter["linked_params_are_optional"]
+  allow_optional_as_cpp_constant = "true" if allow_optional else "false"
 %>\
 % if len(size_sources) > 1:
-% for size_source in size_sources[:-1]:
+      auto ${parameter_name}_determine_from_sizes = std::array<int, ${len(size_sources)}>
+      {
+<%block filter="common_helpers.trim_trailing_comma()">\
+% for size_source in size_sources:
 <%
-  current_size_field_name = common_helpers.camel_to_snake(size_source)
+      current_size_field_name = common_helpers.camel_to_snake(size_source)
 %>\
-      if (request->${current_size_field_name}().size() != request->${size_field_name}().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields ${current_size_field_name} and ${size_field_name} do not match");
-      }
+        request->${current_size_field_name}_size(),
 % endfor
+</%block>\
+      };
+      const auto ${parameter_name}_size_calculation = calculate_linked_array_size(${parameter_name}_determine_from_sizes, ${allow_optional_as_cpp_constant});
+
+      if (${parameter_name}_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [${str.join(', ', size_sources)}] do not match");
+      }
+% if allow_optional:
+      // NULL out optional params with zero sizes.
+      if (${parameter_name}_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+% for size_source in size_sources:
+        ${common_helpers.camel_to_snake(size_source)} = request->${common_helpers.camel_to_snake(size_source)}_size() ? ${common_helpers.camel_to_snake(size_source)} : nullptr;
+% endfor
+      }
 % endif
+      auto ${parameter_name} = ${parameter_name}_size_calculation.size;
+% else:
+<%
+  size_field_name = common_helpers.camel_to_snake(size_sources[-1])
+%>\
       ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
+% endif
 </%def>
 
 

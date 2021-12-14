@@ -18,8 +18,10 @@
 
 namespace nidaqmx_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -275,10 +277,18 @@ namespace nidaqmx_grpc {
       auto trigger_slope_array = reinterpret_cast<const int32*>(request->trigger_slope_array().data());
       auto trigger_level_array = const_cast<const float64*>(request->trigger_level_array().data());
       uInt32 pretrigger_samples = request->pretrigger_samples();
-      if (request->trigger_slope_array().size() != request->trigger_level_array().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields trigger_slope_array and trigger_level_array do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->trigger_slope_array_size(),
+        request->trigger_level_array_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [triggerSlopeArray, triggerLevelArray] do not match");
       }
-      uInt32 array_size = static_cast<uInt32>(request->trigger_level_array().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->CfgAnlgMultiEdgeRefTrig(task, trigger_sources, trigger_slope_array, trigger_level_array, pretrigger_samples, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -301,10 +311,18 @@ namespace nidaqmx_grpc {
       auto trigger_sources = request->trigger_sources().c_str();
       auto trigger_slope_array = reinterpret_cast<const int32*>(request->trigger_slope_array().data());
       auto trigger_level_array = const_cast<const float64*>(request->trigger_level_array().data());
-      if (request->trigger_slope_array().size() != request->trigger_level_array().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields trigger_slope_array and trigger_level_array do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->trigger_slope_array_size(),
+        request->trigger_level_array_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [triggerSlopeArray, triggerLevelArray] do not match");
       }
-      uInt32 array_size = static_cast<uInt32>(request->trigger_level_array().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->CfgAnlgMultiEdgeStartTrig(task, trigger_sources, trigger_slope_array, trigger_level_array, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1026,10 +1044,18 @@ namespace nidaqmx_grpc {
         [](auto x) { return x; });
       auto output_type_array = output_type_array_vector.data();
 
-      if (request->expir_state_array().size() != request->output_type_array().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields expir_state_array and output_type_array do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->expir_state_array_size(),
+        request->output_type_array_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [expirStateArray, outputTypeArray] do not match");
       }
-      uInt32 array_size = static_cast<uInt32>(request->output_type_array().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->CfgWatchdogAOExpirStates(task, channel_names, expir_state_array, output_type_array, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -13946,10 +13972,18 @@ namespace nidaqmx_grpc {
         [](auto x) { return x; });
       auto channel_type_array = channel_type_array_vector.data();
 
-      if (request->state_array().size() != request->channel_type_array().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields state_array and channel_type_array do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->state_array_size(),
+        request->channel_type_array_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [stateArray, channelTypeArray] do not match");
       }
-      uInt32 array_size = static_cast<uInt32>(request->channel_type_array().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->SetAnalogPowerUpStatesWithOutputType(channel_names, state_array, channel_type_array, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
