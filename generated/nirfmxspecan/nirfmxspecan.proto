@@ -93,7 +93,7 @@ service NiRFmxSpecAn {
   rpc BuildRangeString(BuildRangeStringRequest) returns (BuildRangeStringResponse);
   rpc BuildSegmentString(BuildSegmentStringRequest) returns (BuildSegmentStringResponse);
   rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
-  rpc BuildSpurString2(BuildSpurString2Request) returns (BuildSpurString2Response);
+  rpc BuildSpurString(BuildSpurStringRequest) returns (BuildSpurStringResponse);
   rpc CCDFCfgMeasurementInterval(CCDFCfgMeasurementIntervalRequest) returns (CCDFCfgMeasurementIntervalResponse);
   rpc CCDFCfgNumberOfRecords(CCDFCfgNumberOfRecordsRequest) returns (CCDFCfgNumberOfRecordsResponse);
   rpc CCDFCfgRBWFilter(CCDFCfgRBWFilterRequest) returns (CCDFCfgRBWFilterResponse);
@@ -3481,12 +3481,12 @@ message BuildSignalStringResponse {
   string selector_string = 2;
 }
 
-message BuildSpurString2Request {
+message BuildSpurStringRequest {
   string selector_string = 1;
   int32 spur_number = 2;
 }
 
-message BuildSpurString2Response {
+message BuildSpurStringResponse {
   int32 status = 1;
   string selector_string_out = 2;
 }
@@ -4031,18 +4031,17 @@ message DPDApplyDigitalPredistortionSplitRequest {
   repeated float waveform_in_q = 6;
   bool idle_duration_present = 7;
   double measurement_timeout = 8;
-  repeated float waveform_out_i = 9;
-  repeated float waveform_out_q = 10;
-  int32 array_size_out = 11;
 }
 
 message DPDApplyDigitalPredistortionSplitResponse {
   int32 status = 1;
   double x0_out = 2;
   double dx_out = 3;
-  int32 actual_array_size = 4;
-  double papr = 5;
-  double power_offset = 6;
+  repeated float waveform_out_i = 4;
+  repeated float waveform_out_q = 5;
+  int32 actual_array_size = 6;
+  double papr = 7;
+  double power_offset = 8;
 }
 
 message DPDApplyPreDPDSignalConditioningRequest {
@@ -4071,17 +4070,16 @@ message DPDApplyPreDPDSignalConditioningSplitRequest {
   repeated float waveform_in_i = 5;
   repeated float waveform_in_q = 6;
   bool idle_duration_present = 7;
-  repeated float waveform_out_i = 8;
-  repeated float waveform_out_q = 9;
-  int32 array_size_out = 10;
 }
 
 message DPDApplyPreDPDSignalConditioningSplitResponse {
   int32 status = 1;
   double x0_out = 2;
   double dx_out = 3;
-  int32 actual_array_size = 4;
-  double papr = 5;
+  repeated float waveform_out_i = 4;
+  repeated float waveform_out_q = 5;
+  int32 actual_array_size = 6;
+  double papr = 7;
 }
 
 message DPDCfgApplyDPDConfigurationInputRequest {
@@ -6941,7 +6939,7 @@ message SelectMeasurementsRequest {
     MeasurementTypes measurements = 3;
     uint32 measurements_raw = 4;
   }
-  int32 enable_all_traces = 5;
+  bool enable_all_traces = 5;
 }
 
 message SelectMeasurementsResponse {

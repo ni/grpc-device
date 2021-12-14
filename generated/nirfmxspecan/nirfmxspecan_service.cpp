@@ -15,8 +15,10 @@
 
 namespace nirfmxspecan_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -390,13 +392,19 @@ namespace nirfmxspecan_grpc {
       auto offset_sideband = offset_sideband_vector.data();
 
       auto offset_enabled = convert_from_grpc<int32>(request->offset_enabled());
-      if (request->offset_frequency().size() != request->offset_enabled().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields offset_frequency and offset_enabled do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->offset_frequency_size(),
+        request->offset_sideband_size(),
+        request->offset_enabled_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offsetFrequency, offsetSideband, offsetEnabled] do not match");
       }
-      if (request->offset_sideband().size() != request->offset_enabled().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields offset_sideband and offset_enabled do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->offset_enabled().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->ACPCfgOffsetArray(instrument, selector_string, offset_frequency, offset_sideband, offset_enabled.data(), number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -543,10 +551,18 @@ namespace nirfmxspecan_grpc {
       auto offset_power_reference_carrier = offset_power_reference_carrier_vector.data();
 
       auto offset_power_reference_specific = const_cast<int32*>(reinterpret_cast<const int32*>(request->offset_power_reference_specific().data()));
-      if (request->offset_power_reference_carrier().size() != request->offset_power_reference_specific().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields offset_power_reference_carrier and offset_power_reference_specific do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->offset_power_reference_carrier_size(),
+        request->offset_power_reference_specific_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offsetPowerReferenceCarrier, offsetPowerReferenceSpecific] do not match");
       }
-      int32 number_of_elements = static_cast<int32>(request->offset_power_reference_specific().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->ACPCfgOffsetPowerReferenceArray(instrument, selector_string, offset_power_reference_carrier, offset_power_reference_specific, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -591,10 +607,18 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto rrc_filter_enabled = convert_from_grpc<int32>(request->rrc_filter_enabled());
       auto rrc_alpha = const_cast<float64*>(request->rrc_alpha().data());
-      if (request->rrc_filter_enabled().size() != request->rrc_alpha().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rrc_filter_enabled and rrc_alpha do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->rrc_filter_enabled_size(),
+        request->rrc_alpha_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rrcFilterEnabled, rrcAlpha] do not match");
       }
-      int32 number_of_elements = static_cast<int32>(request->rrc_alpha().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->ACPCfgOffsetRRCFilterArray(instrument, selector_string, rrc_filter_enabled.data(), rrc_alpha, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1385,10 +1409,18 @@ namespace nirfmxspecan_grpc {
       float64 dx = request->dx();
       auto i = const_cast<float32*>(request->i().data());
       auto q = const_cast<float32*>(request->q().data());
-      if (request->i().size() != request->q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i and q do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->i_size(),
+        request->q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
       }
-      int32 array_size = static_cast<int32>(request->q().size());
+      auto array_size = array_size_size_calculation.size;
+
       int32 idle_duration_present = request->idle_duration_present();
       int32 signal_type;
       switch (request->signal_type_enum_case()) {
@@ -2097,10 +2129,18 @@ namespace nirfmxspecan_grpc {
       float64 dx = request->dx();
       auto i = const_cast<float32*>(request->i().data());
       auto q = const_cast<float32*>(request->q().data());
-      if (request->i().size() != request->q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i and q do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->i_size(),
+        request->q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
       }
-      int32 array_size = static_cast<int32>(request->q().size());
+      auto array_size = array_size_size_calculation.size;
+
       int32 reset = request->reset();
       int64 reserved = request->reserved();
       auto status = library_->AnalyzeIQ1WaveformSplit(instrument, selector_string, result_name, x0, dx, i, q, array_size, reset, reserved);
@@ -2601,7 +2641,7 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::BuildSpurString2(::grpc::ServerContext* context, const BuildSpurString2Request* request, BuildSpurString2Response* response)
+  ::grpc::Status NiRFmxSpecAnService::BuildSpurString(::grpc::ServerContext* context, const BuildSpurStringRequest* request, BuildSpurStringResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -2611,7 +2651,7 @@ namespace nirfmxspecan_grpc {
       int32 spur_number = request->spur_number();
 
       while (true) {
-        auto status = library_->BuildSpurString2(selector_string, spur_number, 0, nullptr);
+        auto status = library_->BuildSpurString(selector_string, spur_number, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -2622,7 +2662,7 @@ namespace nirfmxspecan_grpc {
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
         }
-        status = library_->BuildSpurString2(selector_string, spur_number, selector_string_out_length, (char*)selector_string_out.data());
+        status = library_->BuildSpurString(selector_string, spur_number, selector_string_out_length, (char*)selector_string_out.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
           // buffer is now too small, try again
           continue;
@@ -3874,7 +3914,7 @@ namespace nirfmxspecan_grpc {
       float64 papr {};
       float64 power_offset {};
       while (true) {
-        auto status = library_->DPDApplyDigitalPredistortion(instrument, selector_string, x0_in, dx_in, waveform_in.data(), 0, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr, &power_offset);
+        auto status = library_->DPDApplyDigitalPredistortion(instrument, selector_string, x0_in, dx_in, waveform_in.data(), array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr, &power_offset);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -3925,36 +3965,53 @@ namespace nirfmxspecan_grpc {
       float64 dx_in = request->dx_in();
       auto waveform_in_i = const_cast<float32*>(request->waveform_in_i().data());
       auto waveform_in_q = const_cast<float32*>(request->waveform_in_q().data());
-      if (request->waveform_in_i().size() != request->waveform_out_q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields waveform_in_i and waveform_out_q do not match");
+      auto array_size_in_determine_from_sizes = std::array<int, 2>
+      {
+        request->waveform_in_i_size(),
+        request->waveform_in_q_size()
+      };
+      const auto array_size_in_size_calculation = calculate_linked_array_size(array_size_in_determine_from_sizes, false);
+
+      if (array_size_in_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformInI, waveformInQ] do not match");
       }
-      if (request->waveform_in_q().size() != request->waveform_out_q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields waveform_in_q and waveform_out_q do not match");
-      }
-      if (request->waveform_out_i().size() != request->waveform_out_q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields waveform_out_i and waveform_out_q do not match");
-      }
-      int32 array_size_in = static_cast<int32>(request->waveform_out_q().size());
+      auto array_size_in = array_size_in_size_calculation.size;
+
       int32 idle_duration_present = request->idle_duration_present();
       float64 measurement_timeout = request->measurement_timeout();
-      auto waveform_out_i = const_cast<float32*>(request->waveform_out_i().data());
-      auto waveform_out_q = const_cast<float32*>(request->waveform_out_q().data());
-      int32 array_size_out = request->array_size_out();
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
       float64 papr {};
       float64 power_offset {};
-      auto status = library_->DPDApplyDigitalPredistortionSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr, &power_offset);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_x0_out(x0_out);
-        response->set_dx_out(dx_out);
-        response->set_actual_array_size(actual_array_size);
-        response->set_papr(papr);
-        response->set_power_offset(power_offset);
+      while (true) {
+        auto status = library_->DPDApplyDigitalPredistortionSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, nullptr, 0, &actual_array_size, &papr, &power_offset);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
+        float32* waveform_out_i = response->mutable_waveform_out_i()->mutable_data();
+        response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
+        float32* waveform_out_q = response->mutable_waveform_out_q()->mutable_data();
+        auto array_size_out = actual_array_size;
+        status = library_->DPDApplyDigitalPredistortionSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr, &power_offset);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_x0_out(x0_out);
+          response->set_dx_out(dx_out);
+          response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
+          response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+          response->set_papr(papr);
+          response->set_power_offset(power_offset);
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -3982,7 +4039,7 @@ namespace nirfmxspecan_grpc {
       int32 actual_array_size {};
       float64 papr {};
       while (true) {
-        auto status = library_->DPDApplyPreDPDSignalConditioning(instrument, selector_string, x0_in, dx_in, waveform_in.data(), 0, idle_duration_present, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr);
+        auto status = library_->DPDApplyPreDPDSignalConditioning(instrument, selector_string, x0_in, dx_in, waveform_in.data(), array_size_in, idle_duration_present, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -4032,33 +4089,50 @@ namespace nirfmxspecan_grpc {
       float64 dx_in = request->dx_in();
       auto waveform_in_i = const_cast<float32*>(request->waveform_in_i().data());
       auto waveform_in_q = const_cast<float32*>(request->waveform_in_q().data());
-      if (request->waveform_in_i().size() != request->waveform_out_q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields waveform_in_i and waveform_out_q do not match");
+      auto array_size_in_determine_from_sizes = std::array<int, 2>
+      {
+        request->waveform_in_i_size(),
+        request->waveform_in_q_size()
+      };
+      const auto array_size_in_size_calculation = calculate_linked_array_size(array_size_in_determine_from_sizes, false);
+
+      if (array_size_in_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformInI, waveformInQ] do not match");
       }
-      if (request->waveform_in_q().size() != request->waveform_out_q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields waveform_in_q and waveform_out_q do not match");
-      }
-      if (request->waveform_out_i().size() != request->waveform_out_q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields waveform_out_i and waveform_out_q do not match");
-      }
-      int32 array_size_in = static_cast<int32>(request->waveform_out_q().size());
+      auto array_size_in = array_size_in_size_calculation.size;
+
       int32 idle_duration_present = request->idle_duration_present();
-      auto waveform_out_i = const_cast<float32*>(request->waveform_out_i().data());
-      auto waveform_out_q = const_cast<float32*>(request->waveform_out_q().data());
-      int32 array_size_out = request->array_size_out();
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
       float64 papr {};
-      auto status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_x0_out(x0_out);
-        response->set_dx_out(dx_out);
-        response->set_actual_array_size(actual_array_size);
-        response->set_papr(papr);
+      while (true) {
+        auto status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, nullptr, nullptr, 0, &actual_array_size, &papr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
+        float32* waveform_out_i = response->mutable_waveform_out_i()->mutable_data();
+        response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
+        float32* waveform_out_q = response->mutable_waveform_out_q()->mutable_data();
+        auto array_size_out = actual_array_size;
+        status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_x0_out(x0_out);
+          response->set_dx_out(dx_out);
+          response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
+          response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+          response->set_papr(papr);
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -4208,10 +4282,18 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto i = const_cast<float32*>(request->i().data());
       auto q = const_cast<float32*>(request->q().data());
-      if (request->i().size() != request->q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i and q do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->i_size(),
+        request->q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
       }
-      int32 array_size = static_cast<int32>(request->q().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->DPDCfgApplyDPDUserDPDPolynomialSplit(instrument, selector_string, i, q, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4234,10 +4316,18 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto lut_input_powers = const_cast<float32*>(request->lut_input_powers().data());
       auto lut_complex_gains = convert_from_grpc<NIComplexSingle>(request->lut_complex_gains());
-      if (request->lut_input_powers().size() != request->lut_complex_gains().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields lut_input_powers and lut_complex_gains do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->lut_input_powers_size(),
+        request->lut_complex_gains_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [lutInputPowers, lutComplexGains] do not match");
       }
-      int32 array_size = static_cast<int32>(request->lut_complex_gains().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->DPDCfgApplyDPDUserLookupTable(instrument, selector_string, lut_input_powers, lut_complex_gains.data(), array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4261,13 +4351,19 @@ namespace nirfmxspecan_grpc {
       auto lut_input_powers = const_cast<float32*>(request->lut_input_powers().data());
       auto i = const_cast<float32*>(request->i().data());
       auto q = const_cast<float32*>(request->q().data());
-      if (request->lut_input_powers().size() != request->q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields lut_input_powers and q do not match");
+      auto array_size_determine_from_sizes = std::array<int, 3>
+      {
+        request->lut_input_powers_size(),
+        request->i_size(),
+        request->q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [lutInputPowers, i, q] do not match");
       }
-      if (request->i().size() != request->q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i and q do not match");
-      }
-      int32 array_size = static_cast<int32>(request->q().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->DPDCfgApplyDPDUserLookupTableSplit(instrument, selector_string, lut_input_powers, i, q, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4687,10 +4783,18 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto i = const_cast<float32*>(request->i().data());
       auto q = const_cast<float32*>(request->q().data());
-      if (request->i().size() != request->q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i and q do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->i_size(),
+        request->q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
       }
-      int32 array_size = static_cast<int32>(request->q().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->DPDCfgPreviousDPDPolynomialSplit(instrument, selector_string, i, q, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4756,10 +4860,18 @@ namespace nirfmxspecan_grpc {
       float64 dx = request->dx();
       auto i = const_cast<float32*>(request->i().data());
       auto q = const_cast<float32*>(request->q().data());
-      if (request->i().size() != request->q().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields i and q do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->i_size(),
+        request->q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
       }
-      int32 array_size = static_cast<int32>(request->q().size());
+      auto array_size = array_size_size_calculation.size;
+
       int32 idle_duration_present = request->idle_duration_present();
       int32 signal_type;
       switch (request->signal_type_enum_case()) {
@@ -6679,16 +6791,20 @@ namespace nirfmxspecan_grpc {
       auto harmonic_bandwidth = const_cast<float64*>(request->harmonic_bandwidth().data());
       auto harmonic_enabled = convert_from_grpc<int32>(request->harmonic_enabled());
       auto harmonic_measurement_interval = const_cast<float64*>(request->harmonic_measurement_interval().data());
-      if (request->harmonic_order().size() != request->harmonic_measurement_interval().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields harmonic_order and harmonic_measurement_interval do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 4>
+      {
+        request->harmonic_order_size(),
+        request->harmonic_bandwidth_size(),
+        request->harmonic_enabled_size(),
+        request->harmonic_measurement_interval_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [harmonicOrder, harmonicBandwidth, harmonicEnabled, harmonicMeasurementInterval] do not match");
       }
-      if (request->harmonic_bandwidth().size() != request->harmonic_measurement_interval().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields harmonic_bandwidth and harmonic_measurement_interval do not match");
-      }
-      if (request->harmonic_enabled().size() != request->harmonic_measurement_interval().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields harmonic_enabled and harmonic_measurement_interval do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->harmonic_measurement_interval().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->HarmCfgHarmonicArray(instrument, selector_string, harmonic_order, harmonic_bandwidth, harmonic_enabled.data(), harmonic_measurement_interval, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7118,19 +7234,21 @@ namespace nirfmxspecan_grpc {
       auto intermod_side = intermod_side_vector.data();
 
       auto intermod_enabled = convert_from_grpc<int32>(request->intermod_enabled());
-      if (request->intermod_order().size() != request->intermod_enabled().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields intermod_order and intermod_enabled do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 5>
+      {
+        request->intermod_order_size(),
+        request->lower_intermod_frequency_size(),
+        request->upper_intermod_frequency_size(),
+        request->intermod_side_size(),
+        request->intermod_enabled_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [intermodOrder, lowerIntermodFrequency, upperIntermodFrequency, intermodSide, intermodEnabled] do not match");
       }
-      if (request->lower_intermod_frequency().size() != request->intermod_enabled().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields lower_intermod_frequency and intermod_enabled do not match");
-      }
-      if (request->upper_intermod_frequency().size() != request->intermod_enabled().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields upper_intermod_frequency and intermod_enabled do not match");
-      }
-      if (request->intermod_side().size() != request->intermod_enabled().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields intermod_side and intermod_enabled do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->intermod_enabled().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->IMCfgIntermodArray(instrument, selector_string, intermod_order, lower_intermod_frequency, upper_intermod_frequency, intermod_side, intermod_enabled.data(), number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8044,10 +8162,18 @@ namespace nirfmxspecan_grpc {
       auto calibration_loss_frequency = const_cast<float64*>(request->calibration_loss_frequency().data());
       auto calibration_loss = const_cast<float64*>(request->calibration_loss().data());
       float64 calibration_loss_temperature = request->calibration_loss_temperature();
-      if (request->calibration_loss_frequency().size() != request->calibration_loss().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields calibration_loss_frequency and calibration_loss do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->calibration_loss_frequency_size(),
+        request->calibration_loss_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [calibrationLossFrequency, calibrationLoss] do not match");
       }
-      int32 array_size = static_cast<int32>(request->calibration_loss().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->NFCfgCalibrationLoss(instrument, selector_string, calibration_loss_compensation_enabled, calibration_loss_frequency, calibration_loss, calibration_loss_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8073,19 +8199,21 @@ namespace nirfmxspecan_grpc {
       auto duts12 = const_cast<float64*>(request->duts12().data());
       auto duts11 = const_cast<float64*>(request->duts11().data());
       auto duts22 = const_cast<float64*>(request->duts22().data());
-      if (request->duts_parameters_frequency().size() != request->duts22().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields duts_parameters_frequency and duts22 do not match");
+      auto array_size_determine_from_sizes = std::array<int, 5>
+      {
+        request->duts_parameters_frequency_size(),
+        request->duts21_size(),
+        request->duts12_size(),
+        request->duts11_size(),
+        request->duts22_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [dutsParametersFrequency, duts21, duts12, duts11, duts22] do not match");
       }
-      if (request->duts21().size() != request->duts22().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields duts21 and duts22 do not match");
-      }
-      if (request->duts12().size() != request->duts22().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields duts12 and duts22 do not match");
-      }
-      if (request->duts11().size() != request->duts22().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields duts11 and duts22 do not match");
-      }
-      int32 array_size = static_cast<int32>(request->duts22().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->NFCfgColdSourceDUTSParameters(instrument, selector_string, duts_parameters_frequency, duts21, duts12, duts11, duts22, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8109,10 +8237,18 @@ namespace nirfmxspecan_grpc {
       auto termination_vswr = const_cast<float64*>(request->termination_vswr().data());
       auto termination_vswr_frequency = const_cast<float64*>(request->termination_vswr_frequency().data());
       float64 termination_temperature = request->termination_temperature();
-      if (request->termination_vswr().size() != request->termination_vswr_frequency().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields termination_vswr and termination_vswr_frequency do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->termination_vswr_size(),
+        request->termination_vswr_frequency_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [terminationVSWR, terminationVSWRFrequency] do not match");
       }
-      int32 array_size = static_cast<int32>(request->termination_vswr_frequency().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->NFCfgColdSourceInputTermination(instrument, selector_string, termination_vswr, termination_vswr_frequency, termination_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8173,10 +8309,18 @@ namespace nirfmxspecan_grpc {
       auto dut_input_loss_frequency = const_cast<float64*>(request->dut_input_loss_frequency().data());
       auto dut_input_loss = const_cast<float64*>(request->dut_input_loss().data());
       float64 dut_input_loss_temperature = request->dut_input_loss_temperature();
-      if (request->dut_input_loss_frequency().size() != request->dut_input_loss().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields dut_input_loss_frequency and dut_input_loss do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->dut_input_loss_frequency_size(),
+        request->dut_input_loss_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [dutInputLossFrequency, dutInputLoss] do not match");
       }
-      int32 array_size = static_cast<int32>(request->dut_input_loss().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->NFCfgDUTInputLoss(instrument, selector_string, dut_input_loss_compensation_enabled, dut_input_loss_frequency, dut_input_loss, dut_input_loss_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8201,10 +8345,18 @@ namespace nirfmxspecan_grpc {
       auto dut_output_loss_frequency = const_cast<float64*>(request->dut_output_loss_frequency().data());
       auto dut_output_loss = const_cast<float64*>(request->dut_output_loss().data());
       float64 dut_output_loss_temperature = request->dut_output_loss_temperature();
-      if (request->dut_output_loss_frequency().size() != request->dut_output_loss().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields dut_output_loss_frequency and dut_output_loss do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->dut_output_loss_frequency_size(),
+        request->dut_output_loss_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [dutOutputLossFrequency, dutOutputLoss] do not match");
       }
-      int32 array_size = static_cast<int32>(request->dut_output_loss().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->NFCfgDUTOutputLoss(instrument, selector_string, dut_output_loss_compensation_enabled, dut_output_loss_frequency, dut_output_loss, dut_output_loss_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8411,10 +8563,18 @@ namespace nirfmxspecan_grpc {
       auto enr = const_cast<float64*>(request->enr().data());
       float64 cold_temperature = request->cold_temperature();
       float64 off_temperature = request->off_temperature();
-      if (request->enr_frequency().size() != request->enr().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields enr_frequency and enr do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->enr_frequency_size(),
+        request->enr_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [enrFrequency, enr] do not match");
       }
-      int32 array_size = static_cast<int32>(request->enr().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->NFCfgYFactorNoiseSourceENR(instrument, selector_string, enr_frequency, enr, cold_temperature, off_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8439,10 +8599,18 @@ namespace nirfmxspecan_grpc {
       auto noise_source_loss_frequency = const_cast<float64*>(request->noise_source_loss_frequency().data());
       auto noise_source_loss = const_cast<float64*>(request->noise_source_loss().data());
       float64 noise_source_loss_temperature = request->noise_source_loss_temperature();
-      if (request->noise_source_loss_frequency().size() != request->noise_source_loss().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields noise_source_loss_frequency and noise_source_loss do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->noise_source_loss_frequency_size(),
+        request->noise_source_loss_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [noiseSourceLossFrequency, noiseSourceLoss] do not match");
       }
-      int32 array_size = static_cast<int32>(request->noise_source_loss().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->NFCfgYFactorNoiseSourceLoss(instrument, selector_string, noise_source_loss_compensation_enabled, noise_source_loss_frequency, noise_source_loss, noise_source_loss_temperature, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -9312,10 +9480,18 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto segment_measurement_offset = const_cast<float64*>(request->segment_measurement_offset().data());
       auto segment_measurement_length = const_cast<float64*>(request->segment_measurement_length().data());
-      if (request->segment_measurement_offset().size() != request->segment_measurement_length().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields segment_measurement_offset and segment_measurement_length do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->segment_measurement_offset_size(),
+        request->segment_measurement_length_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [segmentMeasurementOffset, segmentMeasurementLength] do not match");
       }
-      int32 number_of_elements = static_cast<int32>(request->segment_measurement_length().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->PAVTCfgSegmentMeasurementIntervalArray(instrument, selector_string, segment_measurement_offset, segment_measurement_length, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -9665,10 +9841,18 @@ namespace nirfmxspecan_grpc {
       float64 cancellation_threshold = request->cancellation_threshold();
       auto frequency = const_cast<float32*>(request->frequency().data());
       auto reference_phase_noise = const_cast<float32*>(request->reference_phase_noise().data());
-      if (request->frequency().size() != request->reference_phase_noise().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields frequency and reference_phase_noise do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->frequency_size(),
+        request->reference_phase_noise_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, referencePhaseNoise] do not match");
       }
-      int32 array_size = static_cast<int32>(request->reference_phase_noise().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->PhaseNoiseCfgCancellation(instrument, selector_string, cancellation_enabled, cancellation_threshold, frequency, reference_phase_noise, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -9707,10 +9891,18 @@ namespace nirfmxspecan_grpc {
 
       auto integrated_noise_start_frequency = const_cast<float64*>(request->integrated_noise_start_frequency().data());
       auto integrated_noise_stop_frequency = const_cast<float64*>(request->integrated_noise_stop_frequency().data());
-      if (request->integrated_noise_start_frequency().size() != request->integrated_noise_stop_frequency().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields integrated_noise_start_frequency and integrated_noise_stop_frequency do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->integrated_noise_start_frequency_size(),
+        request->integrated_noise_stop_frequency_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [integratedNoiseStartFrequency, integratedNoiseStopFrequency] do not match");
       }
-      int32 array_size = static_cast<int32>(request->integrated_noise_stop_frequency().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->PhaseNoiseCfgIntegratedNoise(instrument, selector_string, integrated_noise_range_definition, integrated_noise_start_frequency, integrated_noise_stop_frequency, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -9756,16 +9948,20 @@ namespace nirfmxspecan_grpc {
       auto range_stop_frequency = const_cast<float64*>(request->range_stop_frequency().data());
       auto range_rbw_percentage = const_cast<float64*>(request->range_rbw_percentage().data());
       auto range_averaging_count = const_cast<int32*>(reinterpret_cast<const int32*>(request->range_averaging_count().data()));
-      if (request->range_start_frequency().size() != request->range_averaging_count().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields range_start_frequency and range_averaging_count do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 4>
+      {
+        request->range_start_frequency_size(),
+        request->range_stop_frequency_size(),
+        request->range_rbw_percentage_size(),
+        request->range_averaging_count_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rangeStartFrequency, rangeStopFrequency, rangeRBWPercentage, rangeAveragingCount] do not match");
       }
-      if (request->range_stop_frequency().size() != request->range_averaging_count().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields range_stop_frequency and range_averaging_count do not match");
-      }
-      if (request->range_rbw_percentage().size() != request->range_averaging_count().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields range_rbw_percentage and range_averaging_count do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->range_averaging_count().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->PhaseNoiseCfgRangeArray(instrument, selector_string, range_start_frequency, range_stop_frequency, range_rbw_percentage, range_averaging_count, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -10459,13 +10655,19 @@ namespace nirfmxspecan_grpc {
 
       auto absolute_limit_start = const_cast<float64*>(request->absolute_limit_start().data());
       auto absolute_limit_stop = const_cast<float64*>(request->absolute_limit_stop().data());
-      if (request->absolute_limit_mode().size() != request->absolute_limit_stop().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields absolute_limit_mode and absolute_limit_stop do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->absolute_limit_mode_size(),
+        request->absolute_limit_start_size(),
+        request->absolute_limit_stop_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [absoluteLimitMode, absoluteLimitStart, absoluteLimitStop] do not match");
       }
-      if (request->absolute_limit_start().size() != request->absolute_limit_stop().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields absolute_limit_start and absolute_limit_stop do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->absolute_limit_stop().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SEMCfgOffsetAbsoluteLimitArray(instrument, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -10558,16 +10760,20 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto offset_sideband = offset_sideband_vector.data();
 
-      if (request->offset_start_frequency().size() != request->offset_sideband().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields offset_start_frequency and offset_sideband do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 4>
+      {
+        request->offset_start_frequency_size(),
+        request->offset_stop_frequency_size(),
+        request->offset_enabled_size(),
+        request->offset_sideband_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offsetStartFrequency, offsetStopFrequency, offsetEnabled, offsetSideband] do not match");
       }
-      if (request->offset_stop_frequency().size() != request->offset_sideband().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields offset_stop_frequency and offset_sideband do not match");
-      }
-      if (request->offset_enabled().size() != request->offset_sideband().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields offset_enabled and offset_sideband do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->offset_sideband().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SEMCfgOffsetFrequencyArray(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_enabled.data(), offset_sideband, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -10709,13 +10915,19 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto rbw_filter_type = rbw_filter_type_vector.data();
 
-      if (request->rbw_auto().size() != request->rbw_filter_type().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rbw_auto and rbw_filter_type do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->rbw_auto_size(),
+        request->rbw_size(),
+        request->rbw_filter_type_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rbwAuto, rbw, rbwFilterType] do not match");
       }
-      if (request->rbw().size() != request->rbw_filter_type().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rbw and rbw_filter_type do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->rbw_filter_type().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SEMCfgOffsetRBWFilterArray(instrument, selector_string, rbw_auto.data(), rbw, rbw_filter_type, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -10828,13 +11040,19 @@ namespace nirfmxspecan_grpc {
 
       auto relative_limit_start = const_cast<float64*>(request->relative_limit_start().data());
       auto relative_limit_stop = const_cast<float64*>(request->relative_limit_stop().data());
-      if (request->relative_limit_mode().size() != request->relative_limit_stop().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields relative_limit_mode and relative_limit_stop do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->relative_limit_mode_size(),
+        request->relative_limit_start_size(),
+        request->relative_limit_stop_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [relativeLimitMode, relativeLimitStart, relativeLimitStop] do not match");
       }
-      if (request->relative_limit_start().size() != request->relative_limit_stop().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields relative_limit_start and relative_limit_stop do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->relative_limit_stop().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SEMCfgOffsetRelativeLimitArray(instrument, selector_string, relative_limit_mode, relative_limit_start, relative_limit_stop, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -11695,7 +11913,16 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      int16 attr_val = request->attr_val();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int16>::min() || attr_val_raw > std::numeric_limits<int16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int16>(attr_val_raw);
+
       auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -11833,7 +12060,16 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      int8 attr_val = request->attr_val();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int8>::min() || attr_val_raw > std::numeric_limits<int8>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int8");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int8>(attr_val_raw);
+
       auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -11988,7 +12224,16 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      uInt16 attr_val = request->attr_val();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<uInt16>::min() || attr_val_raw > std::numeric_limits<uInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<uInt16>(attr_val_raw);
+
       auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -12749,13 +12994,25 @@ namespace nirfmxspecan_grpc {
 
       auto absolute_limit_start = const_cast<float64*>(request->absolute_limit_start().data());
       auto absolute_limit_stop = const_cast<float64*>(request->absolute_limit_stop().data());
-      if (request->absolute_limit_mode().size() != request->absolute_limit_stop().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields absolute_limit_mode and absolute_limit_stop do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->absolute_limit_mode_size(),
+        request->absolute_limit_start_size(),
+        request->absolute_limit_stop_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, true);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [absoluteLimitMode, absoluteLimitStart, absoluteLimitStop] do not match");
       }
-      if (request->absolute_limit_start().size() != request->absolute_limit_stop().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields absolute_limit_start and absolute_limit_stop do not match");
+      // NULL out optional params with zero sizes.
+      if (number_of_elements_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        absolute_limit_mode = request->absolute_limit_mode_size() ? absolute_limit_mode : nullptr;
+        absolute_limit_start = request->absolute_limit_start_size() ? absolute_limit_start : nullptr;
+        absolute_limit_stop = request->absolute_limit_stop_size() ? absolute_limit_stop : nullptr;
       }
-      int32 number_of_elements = static_cast<int32>(request->absolute_limit_stop().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SpurCfgRangeAbsoluteLimitArray(instrument, selector_string, absolute_limit_mode, absolute_limit_start, absolute_limit_stop, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -12823,10 +13080,18 @@ namespace nirfmxspecan_grpc {
       auto detector_type = detector_type_vector.data();
 
       auto detector_points = const_cast<int32*>(reinterpret_cast<const int32*>(request->detector_points().data()));
-      if (request->detector_type().size() != request->detector_points().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields detector_type and detector_points do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->detector_type_size(),
+        request->detector_points_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [detectorType, detectorPoints] do not match");
       }
-      int32 number_of_elements = static_cast<int32>(request->detector_points().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SpurCfgRangeDetectorArray(instrument, selector_string, detector_type, detector_points, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -12873,13 +13138,19 @@ namespace nirfmxspecan_grpc {
       auto start_frequency = const_cast<float64*>(request->start_frequency().data());
       auto stop_frequency = const_cast<float64*>(request->stop_frequency().data());
       auto range_enabled = convert_from_grpc<int32>(request->range_enabled());
-      if (request->start_frequency().size() != request->range_enabled().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields start_frequency and range_enabled do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->start_frequency_size(),
+        request->stop_frequency_size(),
+        request->range_enabled_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [startFrequency, stopFrequency, rangeEnabled] do not match");
       }
-      if (request->stop_frequency().size() != request->range_enabled().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields stop_frequency and range_enabled do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->range_enabled().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SpurCfgRangeFrequencyArray(instrument, selector_string, start_frequency, stop_frequency, range_enabled.data(), number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -12967,10 +13238,18 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto threshold = const_cast<float64*>(request->threshold().data());
       auto excursion = const_cast<float64*>(request->excursion().data());
-      if (request->threshold().size() != request->excursion().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields threshold and excursion do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->threshold_size(),
+        request->excursion_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [threshold, excursion] do not match");
       }
-      int32 number_of_elements = static_cast<int32>(request->excursion().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SpurCfgRangePeakCriteriaArray(instrument, selector_string, threshold, excursion, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -13002,13 +13281,19 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto rbw_filter_type = rbw_filter_type_vector.data();
 
-      if (request->rbw_auto().size() != request->rbw_filter_type().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rbw_auto and rbw_filter_type do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->rbw_auto_size(),
+        request->rbw_size(),
+        request->rbw_filter_type_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rbwAuto, rbw, rbwFilterType] do not match");
       }
-      if (request->rbw().size() != request->rbw_filter_type().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields rbw and rbw_filter_type do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->rbw_filter_type().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SpurCfgRangeRBWArray(instrument, selector_string, rbw_auto.data(), rbw, rbw_filter_type, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -13134,10 +13419,18 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto sweep_time_auto = convert_from_grpc<int32>(request->sweep_time_auto());
       auto sweep_time_interval = const_cast<float64*>(request->sweep_time_interval().data());
-      if (request->sweep_time_auto().size() != request->sweep_time_interval().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields sweep_time_auto and sweep_time_interval do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->sweep_time_auto_size(),
+        request->sweep_time_interval_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [sweepTimeAuto, sweepTimeInterval] do not match");
       }
-      int32 number_of_elements = static_cast<int32>(request->sweep_time_interval().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SpurCfgRangeSweepTimeArray(instrument, selector_string, sweep_time_auto.data(), sweep_time_interval, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -13184,13 +13477,19 @@ namespace nirfmxspecan_grpc {
       auto vbw_auto = convert_from_grpc<int32>(request->vbw_auto());
       auto vbw = const_cast<float64*>(request->vbw().data());
       auto vbw_to_rbw_ratio = const_cast<float64*>(request->vbw_to_rbw_ratio().data());
-      if (request->vbw_auto().size() != request->vbw_to_rbw_ratio().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields vbw_auto and vbw_to_rbw_ratio do not match");
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->vbw_auto_size(),
+        request->vbw_size(),
+        request->vbw_to_rbw_ratio_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [vbwAuto, vbw, vbwToRBWRatio] do not match");
       }
-      if (request->vbw().size() != request->vbw_to_rbw_ratio().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields vbw and vbw_to_rbw_ratio do not match");
-      }
-      int32 number_of_elements = static_cast<int32>(request->vbw_to_rbw_ratio().size());
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
       auto status = library_->SpurCfgRangeVBWFilterArray(instrument, selector_string, vbw_auto.data(), vbw, vbw_to_rbw_ratio, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;

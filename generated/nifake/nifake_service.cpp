@@ -15,8 +15,10 @@
 
 namespace nifake_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -566,6 +568,44 @@ namespace nifake_grpc {
               response->mutable_array_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
+          response->set_actual_size(actual_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetAnIviDanceWithATwistArrayWithInputArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayWithInputArrayRequest* request, GetAnIviDanceWithATwistArrayWithInputArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto data_in = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->data_in().data()));
+      ViInt32 array_size_in = static_cast<ViInt32>(request->data_in().size());
+      ViInt32 actual_size {};
+      while (true) {
+        auto status = library_->GetAnIviDanceWithATwistArrayWithInputArray(data_in, array_size_in, 0, nullptr, &actual_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_array_out()->Resize(actual_size, 0);
+        ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
+        auto buffer_size = actual_size;
+        status = library_->GetAnIviDanceWithATwistArrayWithInputArray(data_in, array_size_in, buffer_size, array_out, &actual_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->mutable_array_out()->Resize(actual_size, 0);
           response->set_actual_size(actual_size);
         }
         return ::grpc::Status::OK;
@@ -1288,10 +1328,18 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 output_array_size = request->output_array_size();
-      if (request->input_array_of_floats().size() != request->input_array_of_integers().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields input_array_of_floats and input_array_of_integers do not match");
+      auto input_array_sizes_determine_from_sizes = std::array<int, 2>
+      {
+        request->input_array_of_floats_size(),
+        request->input_array_of_integers_size()
+      };
+      const auto input_array_sizes_size_calculation = calculate_linked_array_size(input_array_sizes_determine_from_sizes, false);
+
+      if (input_array_sizes_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [inputArrayOfFloats, inputArrayOfIntegers] do not match");
       }
-      ViInt32 input_array_sizes = static_cast<ViInt32>(request->input_array_of_integers().size());
+      auto input_array_sizes = input_array_sizes_size_calculation.size;
+
       auto input_array_of_floats = const_cast<ViReal64*>(request->input_array_of_floats().data());
       auto input_array_of_integers_request = request->input_array_of_integers();
       std::vector<ViInt16> input_array_of_integers;
@@ -1329,17 +1377,65 @@ namespace nifake_grpc {
       auto values2 = const_cast<ViReal64*>(request->values2().data());
       auto values3 = const_cast<ViReal64*>(request->values3().data());
       auto values4 = const_cast<ViReal64*>(request->values4().data());
-      if (request->values1().size() != request->values4().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values1 and values4 do not match");
+      auto size_determine_from_sizes = std::array<int, 4>
+      {
+        request->values1_size(),
+        request->values2_size(),
+        request->values3_size(),
+        request->values4_size()
+      };
+      const auto size_size_calculation = calculate_linked_array_size(size_determine_from_sizes, false);
+
+      if (size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [values1, values2, values3, values4] do not match");
       }
-      if (request->values2().size() != request->values4().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values2 and values4 do not match");
-      }
-      if (request->values3().size() != request->values4().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values3 and values4 do not match");
-      }
-      ViInt32 size = static_cast<ViInt32>(request->values4().size());
+      auto size = size_size_calculation.size;
+
       auto status = library_->MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::MultipleArraysSameSizeWithOptional(::grpc::ServerContext* context, const MultipleArraysSameSizeWithOptionalRequest* request, MultipleArraysSameSizeWithOptionalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto values1 = const_cast<ViReal64*>(request->values1().data());
+      auto values2 = const_cast<ViReal64*>(request->values2().data());
+      auto values3 = const_cast<ViReal64*>(request->values3().data());
+      auto values4 = const_cast<ViReal64*>(request->values4().data());
+      auto size_determine_from_sizes = std::array<int, 4>
+      {
+        request->values1_size(),
+        request->values2_size(),
+        request->values3_size(),
+        request->values4_size()
+      };
+      const auto size_size_calculation = calculate_linked_array_size(size_determine_from_sizes, true);
+
+      if (size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [values1, values2, values3, values4] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        values1 = request->values1_size() ? values1 : nullptr;
+        values2 = request->values2_size() ? values2 : nullptr;
+        values3 = request->values3_size() ? values3 : nullptr;
+        values4 = request->values4_size() ? values4 : nullptr;
+      }
+      auto size = size_size_calculation.size;
+
+      auto status = library_->MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

@@ -15,8 +15,10 @@
 
 namespace nirfmxinstr_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -317,10 +319,18 @@ namespace nirfmxinstr_grpc {
       char* table_name = (char*)request->table_name().c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
       auto external_attenuation = const_cast<float64*>(request->external_attenuation().data());
-      if (request->frequency().size() != request->external_attenuation().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields frequency and external_attenuation do not match");
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->frequency_size(),
+        request->external_attenuation_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, externalAttenuation] do not match");
       }
-      int32 array_size = static_cast<int32>(request->external_attenuation().size());
+      auto array_size = array_size_size_calculation.size;
+
       auto status = library_->CfgExternalAttenuationTable(instrument, selector_string, table_name, frequency, external_attenuation, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2215,7 +2225,16 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
-      int8 attr_val = request->attr_val();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int8>::min() || attr_val_raw > std::numeric_limits<int8>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int8");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int8>(attr_val_raw);
+
       auto status = library_->SetAttributeI8(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;

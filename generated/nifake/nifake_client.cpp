@@ -354,6 +354,22 @@ get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const ni
   return response;
 }
 
+GetAnIviDanceWithATwistArrayWithInputArrayResponse
+get_an_ivi_dance_with_a_twist_array_with_input_array(const StubPtr& stub, const std::vector<pb::int32>& data_in)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAnIviDanceWithATwistArrayWithInputArrayRequest{};
+  copy_array(data_in, request.mutable_data_in());
+
+  auto response = GetAnIviDanceWithATwistArrayWithInputArrayResponse{};
+
+  raise_if_error(
+      stub->GetAnIviDanceWithATwistArrayWithInputArray(&context, request, &response));
+
+  return response;
+}
+
 GetAnIviDanceWithATwistByteArrayResponse
 get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub)
 {
@@ -792,6 +808,26 @@ multiple_arrays_same_size(const StubPtr& stub, const nidevice_grpc::Session& vi,
 
   raise_if_error(
       stub->MultipleArraysSameSize(&context, request, &response));
+
+  return response;
+}
+
+MultipleArraysSameSizeWithOptionalResponse
+multiple_arrays_same_size_with_optional(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& values1, const std::vector<double>& values2, const std::vector<double>& values3, const std::vector<double>& values4)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MultipleArraysSameSizeWithOptionalRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  copy_array(values1, request.mutable_values1());
+  copy_array(values2, request.mutable_values2());
+  copy_array(values3, request.mutable_values3());
+  copy_array(values4, request.mutable_values4());
+
+  auto response = MultipleArraysSameSizeWithOptionalResponse{};
+
+  raise_if_error(
+      stub->MultipleArraysSameSizeWithOptional(&context, request, &response));
 
   return response;
 }

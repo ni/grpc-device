@@ -436,6 +436,29 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ScalarsWithNarrowIntegerTypes': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'u16',
+                'type': 'myUInt16',
+                'coerced': True
+            },
+            {
+                'direction': 'in',
+                'name': 'i16',
+                'type': 'myInt16',
+                'coerced': True
+            },
+            {
+                'direction': 'in',
+                'name': 'i8',
+                'type': 'myInt8',
+                'coerced': True
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetMarbleAttributeDouble': {
         'parameters': [
             {

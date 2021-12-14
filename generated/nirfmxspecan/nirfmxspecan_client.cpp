@@ -1548,19 +1548,19 @@ build_signal_string(const StubPtr& stub, const pb::string& signal_name, const pb
   return response;
 }
 
-BuildSpurString2Response
-build_spur_string2(const StubPtr& stub, const pb::string& selector_string, const pb::int32& spur_number)
+BuildSpurStringResponse
+build_spur_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& spur_number)
 {
   ::grpc::ClientContext context;
 
-  auto request = BuildSpurString2Request{};
+  auto request = BuildSpurStringRequest{};
   request.set_selector_string(selector_string);
   request.set_spur_number(spur_number);
 
-  auto response = BuildSpurString2Response{};
+  auto response = BuildSpurStringResponse{};
 
   raise_if_error(
-      stub->BuildSpurString2(&context, request, &response));
+      stub->BuildSpurString(&context, request, &response));
 
   return response;
 }
@@ -2448,7 +2448,7 @@ dpd_apply_digital_predistortion(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 DPDApplyDigitalPredistortionSplitResponse
-dpd_apply_digital_predistortion_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const bool& idle_duration_present, const double& measurement_timeout, const std::vector<float>& waveform_out_i, const std::vector<float>& waveform_out_q, const pb::int32& array_size_out)
+dpd_apply_digital_predistortion_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const bool& idle_duration_present, const double& measurement_timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2461,9 +2461,6 @@ dpd_apply_digital_predistortion_split(const StubPtr& stub, const nidevice_grpc::
   copy_array(waveform_in_q, request.mutable_waveform_in_q());
   request.set_idle_duration_present(idle_duration_present);
   request.set_measurement_timeout(measurement_timeout);
-  copy_array(waveform_out_i, request.mutable_waveform_out_i());
-  copy_array(waveform_out_q, request.mutable_waveform_out_q());
-  request.set_array_size_out(array_size_out);
 
   auto response = DPDApplyDigitalPredistortionSplitResponse{};
 
@@ -2495,7 +2492,7 @@ dpd_apply_pre_dpd_signal_conditioning(const StubPtr& stub, const nidevice_grpc::
 }
 
 DPDApplyPreDPDSignalConditioningSplitResponse
-dpd_apply_pre_dpd_signal_conditioning_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const bool& idle_duration_present, const std::vector<float>& waveform_out_i, const std::vector<float>& waveform_out_q, const pb::int32& array_size_out)
+dpd_apply_pre_dpd_signal_conditioning_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const bool& idle_duration_present)
 {
   ::grpc::ClientContext context;
 
@@ -2507,9 +2504,6 @@ dpd_apply_pre_dpd_signal_conditioning_split(const StubPtr& stub, const nidevice_
   copy_array(waveform_in_i, request.mutable_waveform_in_i());
   copy_array(waveform_in_q, request.mutable_waveform_in_q());
   request.set_idle_duration_present(idle_duration_present);
-  copy_array(waveform_out_i, request.mutable_waveform_out_i());
-  copy_array(waveform_out_q, request.mutable_waveform_out_q());
-  request.set_array_size_out(array_size_out);
 
   auto response = DPDApplyPreDPDSignalConditioningSplitResponse{};
 
@@ -7121,7 +7115,7 @@ sem_fetch_upper_offset_power_array(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 SelectMeasurementsResponse
-select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<MeasurementTypes, pb::uint32>& measurements, const pb::int32& enable_all_traces)
+select_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<MeasurementTypes, pb::uint32>& measurements, const bool& enable_all_traces)
 {
   ::grpc::ClientContext context;
 

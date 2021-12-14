@@ -41,6 +41,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAnIviDanceString = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceString"));
   function_pointers_.GetAnIviDanceWithATwistArray = reinterpret_cast<GetAnIviDanceWithATwistArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArray"));
   function_pointers_.GetAnIviDanceWithATwistArrayOfCustomType = reinterpret_cast<GetAnIviDanceWithATwistArrayOfCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArrayOfCustomType"));
+  function_pointers_.GetAnIviDanceWithATwistArrayWithInputArray = reinterpret_cast<GetAnIviDanceWithATwistArrayWithInputArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArrayWithInputArray"));
   function_pointers_.GetAnIviDanceWithATwistByteArray = reinterpret_cast<GetAnIviDanceWithATwistByteArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistByteArray"));
   function_pointers_.GetAnIviDanceWithATwistString = reinterpret_cast<GetAnIviDanceWithATwistStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistString"));
   function_pointers_.GetAnIviDanceWithATwistStringStrlenBug = reinterpret_cast<GetAnIviDanceWithATwistStringStrlenBugPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistStringStrlenBug"));
@@ -69,6 +70,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.InitWithVarArgs = reinterpret_cast<InitWithVarArgsPtr>(shared_library_.get_function_pointer("niFake_InitWithVarArgs"));
   function_pointers_.MultipleArrayTypes = reinterpret_cast<MultipleArrayTypesPtr>(shared_library_.get_function_pointer("niFake_MultipleArrayTypes"));
   function_pointers_.MultipleArraysSameSize = reinterpret_cast<MultipleArraysSameSizePtr>(shared_library_.get_function_pointer("niFake_MultipleArraysSameSize"));
+  function_pointers_.MultipleArraysSameSizeWithOptional = reinterpret_cast<MultipleArraysSameSizeWithOptionalPtr>(shared_library_.get_function_pointer("niFake_MultipleArraysSameSizeWithOptional"));
   function_pointers_.OneInputFunction = reinterpret_cast<OneInputFunctionPtr>(shared_library_.get_function_pointer("niFake_OneInputFunction"));
   function_pointers_.ParametersAreMultipleTypes = reinterpret_cast<ParametersAreMultipleTypesPtr>(shared_library_.get_function_pointer("niFake_ParametersAreMultipleTypes"));
   function_pointers_.PoorlyNamedSimpleFunction = reinterpret_cast<PoorlyNamedSimpleFunctionPtr>(shared_library_.get_function_pointer("niFake_PoorlyNamedSimpleFunction"));
@@ -347,6 +349,18 @@ ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, V
   return niFake_GetAnIviDanceWithATwistArrayOfCustomType(vi, bufferSize, arrayOut, actualSize);
 #else
   return function_pointers_.GetAnIviDanceWithATwistArrayOfCustomType(vi, bufferSize, arrayOut, actualSize);
+#endif
+}
+
+ViStatus NiFakeLibrary::GetAnIviDanceWithATwistArrayWithInputArray(ViInt32 dataIn[], ViInt32 arraySizeIn, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize)
+{
+  if (!function_pointers_.GetAnIviDanceWithATwistArrayWithInputArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_GetAnIviDanceWithATwistArrayWithInputArray.");
+  }
+#if defined(_MSC_VER)
+  return niFake_GetAnIviDanceWithATwistArrayWithInputArray(dataIn, arraySizeIn, bufferSize, arrayOut, actualSize);
+#else
+  return function_pointers_.GetAnIviDanceWithATwistArrayWithInputArray(dataIn, arraySizeIn, bufferSize, arrayOut, actualSize);
 #endif
 }
 
@@ -675,6 +689,18 @@ ViStatus NiFakeLibrary::MultipleArraysSameSize(ViSession vi, ViReal64 values1[],
   return niFake_MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
 #else
   return function_pointers_.MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
+#endif
+}
+
+ViStatus NiFakeLibrary::MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size)
+{
+  if (!function_pointers_.MultipleArraysSameSizeWithOptional) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_MultipleArraysSameSizeWithOptional.");
+  }
+#if defined(_MSC_VER)
+  return niFake_MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, size);
+#else
+  return function_pointers_.MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, size);
 #endif
 }
 

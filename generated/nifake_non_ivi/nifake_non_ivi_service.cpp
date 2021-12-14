@@ -17,8 +17,10 @@
 
 namespace nifake_non_ivi_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
@@ -697,6 +699,56 @@ namespace nifake_non_ivi_grpc {
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::ScalarsWithNarrowIntegerTypes(::grpc::ServerContext* context, const ScalarsWithNarrowIntegerTypesRequest* request, ScalarsWithNarrowIntegerTypesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto u16_raw = request->u16();
+      if (u16_raw < std::numeric_limits<myUInt16>::min() || u16_raw > std::numeric_limits<myUInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(u16_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("myUInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto u16 = static_cast<myUInt16>(u16_raw);
+
+      auto i16_raw = request->i16();
+      if (i16_raw < std::numeric_limits<myInt16>::min() || i16_raw > std::numeric_limits<myInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(i16_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("myInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto i16 = static_cast<myInt16>(i16_raw);
+
+      auto i8_raw = request->i8();
+      if (i8_raw < std::numeric_limits<myInt8>::min() || i8_raw > std::numeric_limits<myInt8>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(i8_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("myInt8");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto i8 = static_cast<myInt8>(i8_raw);
+
+      auto status = library_->ScalarsWithNarrowIntegerTypes(u16, i16, i8);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
     }
   }
 

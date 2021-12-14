@@ -2646,7 +2646,8 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'BuildSpurString2': {
+    'BuildSpurString': {
+        'cname': 'RFmxSpecAn_BuildSpurString2',
         'parameters': [
             {
                 'direction': 'in',
@@ -3996,20 +3997,22 @@ functions = {
                 'type': 'float64'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'waveformOutI',
                 'size': {
-                    'mechanism': 'len',
-                    'value': 'arraySizeIn'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'float32[]'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'waveformOutQ',
                 'size': {
-                    'mechanism': 'len',
-                    'value': 'arraySizeIn'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'float32[]'
             },
@@ -4178,20 +4181,22 @@ functions = {
                 'type': 'float64'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'waveformOutI',
                 'size': {
-                    'mechanism': 'len',
-                    'value': 'arraySizeIn'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'float32[]'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'waveformOutQ',
                 'size': {
-                    'mechanism': 'len',
-                    'value': 'arraySizeIn'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
                 },
                 'type': 'float32[]'
             },
@@ -12118,6 +12123,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'enableAllTraces',
                 'type': 'int32'
             }
@@ -13336,6 +13342,9 @@ functions = {
                 'name': 'absoluteLimitMode',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -13345,6 +13354,9 @@ functions = {
                 'name': 'absoluteLimitStart',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -13354,6 +13366,9 @@ functions = {
                 'name': 'absoluteLimitStop',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'

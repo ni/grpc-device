@@ -117,7 +117,7 @@ public:
   ::grpc::Status BuildRangeString(::grpc::ServerContext* context, const BuildRangeStringRequest* request, BuildRangeStringResponse* response) override;
   ::grpc::Status BuildSegmentString(::grpc::ServerContext* context, const BuildSegmentStringRequest* request, BuildSegmentStringResponse* response) override;
   ::grpc::Status BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response) override;
-  ::grpc::Status BuildSpurString2(::grpc::ServerContext* context, const BuildSpurString2Request* request, BuildSpurString2Response* response) override;
+  ::grpc::Status BuildSpurString(::grpc::ServerContext* context, const BuildSpurStringRequest* request, BuildSpurStringResponse* response) override;
   ::grpc::Status CCDFCfgMeasurementInterval(::grpc::ServerContext* context, const CCDFCfgMeasurementIntervalRequest* request, CCDFCfgMeasurementIntervalResponse* response) override;
   ::grpc::Status CCDFCfgNumberOfRecords(::grpc::ServerContext* context, const CCDFCfgNumberOfRecordsRequest* request, CCDFCfgNumberOfRecordsResponse* response) override;
   ::grpc::Status CCDFCfgRBWFilter(::grpc::ServerContext* context, const CCDFCfgRBWFilterRequest* request, CCDFCfgRBWFilterResponse* response) override;

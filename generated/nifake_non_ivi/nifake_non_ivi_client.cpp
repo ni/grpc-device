@@ -346,6 +346,24 @@ reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle
   return response;
 }
 
+ScalarsWithNarrowIntegerTypesResponse
+scalars_with_narrow_integer_types(const StubPtr& stub, const pb::uint32& u16, const pb::int32& i16, const pb::int32& i8)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ScalarsWithNarrowIntegerTypesRequest{};
+  request.set_u16(u16);
+  request.set_i16(i16);
+  request.set_i8(i8);
+
+  auto response = ScalarsWithNarrowIntegerTypesResponse{};
+
+  raise_if_error(
+      stub->ScalarsWithNarrowIntegerTypes(&context, request, &response));
+
+  return response;
+}
+
 SetMarbleAttributeDoubleResponse
 set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute, const double& value)
 {

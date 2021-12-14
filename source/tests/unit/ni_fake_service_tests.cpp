@@ -895,6 +895,23 @@ TEST(NiFakeServiceTests, NiFakeService_ImportAttributeConfigurationBuffer_CallsI
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+template <typename TRequest>
+TRequest create_linked_array_request(
+    int32_t session_id,
+    const std::vector<double>& values1,
+    const std::vector<double>& values2,
+    const std::vector<double>& values3,
+    const std::vector<double>& values4)
+{
+  auto request = TRequest{};
+  request.mutable_vi()->set_id(session_id);
+  request.mutable_values1()->CopyFrom({values1.begin(), values1.end()});
+  request.mutable_values2()->CopyFrom({values2.begin(), values2.end()});
+  request.mutable_values3()->CopyFrom({values3.begin(), values3.end()});
+  request.mutable_values4()->CopyFrom({values4.begin(), values4.end()});
+  return request;
+}
+
 TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArraysSameSize)
 {
   nidevice_grpc::SessionRepository session_repository;
@@ -902,25 +919,18 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_CallsMultipleArray
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  const double doubles[] = {0.2, -2.3, 4.5};
-  std::int32_t expected_size = 3;
+  const std::vector<double> doubles = {0.2, -2.3, 4.5};
+  const auto expected_size = static_cast<std::int32_t>(doubles.size());
   EXPECT_CALL(library, MultipleArraysSameSize(kTestViSession, _, _, _, _, expected_size))
       .With(AllOf(
-          Args<1, 5>(ElementsAreArray(doubles, expected_size)),
-          Args<2, 5>(ElementsAreArray(doubles, expected_size)),
-          Args<3, 5>(ElementsAreArray(doubles, expected_size)),
-          Args<4, 5>(ElementsAreArray(doubles, expected_size))))
+          Args<1, 5>(ElementsAreArray(doubles.data(), expected_size)),
+          Args<2, 5>(ElementsAreArray(doubles.data(), expected_size)),
+          Args<3, 5>(ElementsAreArray(doubles.data(), expected_size)),
+          Args<4, 5>(ElementsAreArray(doubles.data(), expected_size))))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
-  nifake_grpc::MultipleArraysSameSizeRequest request;
-  request.mutable_vi()->set_id(session_id);
-  for (double num : doubles) {
-    request.add_values1(num);
-    request.add_values2(num);
-    request.add_values3(num);
-    request.add_values4(num);
-  }
+  const auto request = create_linked_array_request<MultipleArraysSameSizeRequest>(session_id, doubles, doubles, doubles, doubles);
   nifake_grpc::MultipleArraysSameSizeResponse response;
   ::grpc::Status status = service.MultipleArraysSameSize(&context, &request, &response);
 
@@ -935,26 +945,130 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_OneArrayDifferentS
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
   auto session_id = create_session(library, service, kTestViSession);
-  const double doubles[] = {0.2, -2.3, 4.5};
-  std::int32_t expected_size = 3;
+  const std::vector<double> doubles = {0.2, -2.3, 4.5};
   EXPECT_CALL(library, MultipleArraysSameSize)
       .Times(0);
 
   ::grpc::ServerContext context;
-  nifake_grpc::MultipleArraysSameSizeRequest request;
-  request.mutable_vi()->set_id(session_id);
-  for (auto i = 0; i < sizeof(doubles) / sizeof(doubles[0]); ++i) {
-    request.add_values1(doubles[i]);
-    if (i != 0) {
-      request.add_values2(doubles[i]);
-    }
-    request.add_values3(doubles[i]);
-    request.add_values4(doubles[i]);
-  }
+  const auto request = create_linked_array_request<MultipleArraysSameSizeRequest>(session_id, doubles, {doubles.begin() + 1, doubles.end()}, doubles, doubles);
   nifake_grpc::MultipleArraysSameSizeResponse response;
   ::grpc::Status status = service.MultipleArraysSameSize(&context, &request, &response);
 
   EXPECT_EQ(::grpc::INVALID_ARGUMENT, status.error_code());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSize_OneArrayWithZeroSizeFails)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  auto session_id = create_session(library, service, kTestViSession);
+  const std::vector<double> doubles = {0.2, -2.3, 4.5};
+  EXPECT_CALL(library, MultipleArraysSameSize)
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  const auto request = create_linked_array_request<MultipleArraysSameSizeRequest>(session_id, {}, doubles, doubles, doubles);
+  nifake_grpc::MultipleArraysSameSizeResponse response;
+  ::grpc::Status status = service.MultipleArraysSameSize(&context, &request, &response);
+
+  EXPECT_EQ(::grpc::INVALID_ARGUMENT, status.error_code());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_OneArrayWithZeroSizePassesNull)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  auto session_id = create_session(library, service, kTestViSession);
+  const std::vector<double> doubles = {0.2, -2.3, 4.5};
+  const auto expected_size = static_cast<std::int32_t>(doubles.size());
+  EXPECT_CALL(library, MultipleArraysSameSizeWithOptional(kTestViSession, _, _, _, nullptr, expected_size))
+      .With(AllOf(
+          Args<1, 5>(ElementsAreArray(doubles.data(), expected_size)),
+          Args<2, 5>(ElementsAreArray(doubles.data(), expected_size)),
+          Args<3, 5>(ElementsAreArray(doubles.data(), expected_size))))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  const auto request = create_linked_array_request<MultipleArraysSameSizeWithOptionalRequest>(session_id, doubles, doubles, doubles, {});
+  nifake_grpc::MultipleArraysSameSizeWithOptionalResponse response;
+  ::grpc::Status status = service.MultipleArraysSameSizeWithOptional(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_TwoZeroSizeArraysPassesNull)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  auto session_id = create_session(library, service, kTestViSession);
+  const std::vector<double> doubles = {0.2, -2.3, 4.5};
+  const auto expected_size = static_cast<std::int32_t>(doubles.size());
+  EXPECT_CALL(library, MultipleArraysSameSizeWithOptional(kTestViSession, _, nullptr, nullptr, _, expected_size))
+      .With(AllOf(
+          Args<1, 5>(ElementsAreArray(doubles.data(), expected_size)),
+          Args<4, 5>(ElementsAreArray(doubles.data(), expected_size))))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  const auto request = create_linked_array_request<MultipleArraysSameSizeWithOptionalRequest>(session_id, doubles, {}, {}, doubles);
+  nifake_grpc::MultipleArraysSameSizeWithOptionalResponse response;
+  ::grpc::Status status = service.MultipleArraysSameSizeWithOptional(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_DifferentNonZeroSizesFails)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  auto session_id = create_session(library, service, kTestViSession);
+  const std::vector<double> doubles = {1.2, 2.3, 4.5, 6};
+  const auto expected_size = static_cast<std::int32_t>(doubles.size());
+  EXPECT_CALL(library, MultipleArraysSameSize)
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  const auto request = create_linked_array_request<MultipleArraysSameSizeWithOptionalRequest>(session_id, {}, doubles, {}, {doubles.begin() + 1, doubles.end()});
+  nifake_grpc::MultipleArraysSameSizeWithOptionalResponse response;
+  ::grpc::Status status = service.MultipleArraysSameSizeWithOptional(&context, &request, &response);
+
+  EXPECT_EQ(::grpc::INVALID_ARGUMENT, status.error_code());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_AllEmptyArraysPassesEmpty)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  auto session_id = create_session(library, service, kTestViSession);
+  const std::vector<double> empty_doubles = {};
+  const auto expected_size = static_cast<std::int32_t>(empty_doubles.size());
+  EXPECT_CALL(library, MultipleArraysSameSizeWithOptional(kTestViSession, _, _, _, _, expected_size))
+      .With(AllOf(
+          Args<1, 5>(ElementsAreArray(empty_doubles.data(), expected_size)),
+          Args<2, 5>(ElementsAreArray(empty_doubles.data(), expected_size)),
+          Args<3, 5>(ElementsAreArray(empty_doubles.data(), expected_size)),
+          Args<4, 5>(ElementsAreArray(empty_doubles.data(), expected_size))))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  const auto request = create_linked_array_request<MultipleArraysSameSizeWithOptionalRequest>(session_id, empty_doubles, empty_doubles, empty_doubles, empty_doubles);
+  nifake_grpc::MultipleArraysSameSizeWithOptionalResponse response;
+  ::grpc::Status status = service.MultipleArraysSameSizeWithOptional(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParametersAreMultipleTypes)
@@ -1714,6 +1828,41 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIv
   request.set_a_string(a_string);
   nifake_grpc::GetAnIviDanceWithATwistArrayResponse response;
   ::grpc::Status status = service.GetAnIviDanceWithATwistArray(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(array_out, expected_size));
+  EXPECT_EQ(response.actual_size(), expected_size);
+}
+
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithInputArray_PassesArrayInputOnFirstPass_CallsGetAnIviDanceWithATwistArray)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const auto data_in = std::array<ViInt32, 4>{0, -1, 100, 5};
+  ViInt32 input_size = 2;
+  ViInt32 array_out[] = {1, 2, 3};
+  ViInt32 expected_size = 3;
+  // ivi-dance-with-a-twist call: ensure that data and size are passed in.
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayWithInputArray(_, _, 0, nullptr, _))
+      .With(Args<0, 1>(ElementsAreArray(data_in)))
+      .WillOnce(DoAll(
+          SetArgPointee<4>(expected_size),
+          Return(kDriverSuccess)));
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArrayWithInputArray(_, _, expected_size, _, _))
+      .With(Args<0, 1>(ElementsAreArray(data_in)))
+      .WillOnce(DoAll(
+          SetArrayArgument<3>(array_out, array_out + expected_size),
+          SetArgPointee<4>(expected_size),
+          Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAnIviDanceWithATwistArrayWithInputArrayRequest request;
+  request.mutable_data_in()->CopyFrom({data_in.begin(), data_in.end()});
+  nifake_grpc::GetAnIviDanceWithATwistArrayWithInputArrayResponse response;
+  ::grpc::Status status = service.GetAnIviDanceWithATwistArrayWithInputArray(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
