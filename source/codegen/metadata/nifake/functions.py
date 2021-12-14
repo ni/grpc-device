@@ -655,6 +655,45 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetAnIviDanceWithATwistArrayWithInputArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'dataIn',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySizeIn'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeIn',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'bufferSize',
+                'direction': 'in',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'arrayOut',
+                'direction': 'out',
+                'type': 'ViInt32[]',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualSize'
+                }
+            },
+            {
+                'name': 'actualSize',
+                'direction': 'out',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAnIviDanceWithATwistByteArray': {
         'parameters': [
             {

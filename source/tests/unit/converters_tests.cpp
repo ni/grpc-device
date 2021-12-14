@@ -42,7 +42,7 @@ TEST(ConvertersTests, AllEqualSizesAllowOptional_Match)
   const auto calculation = calculate_linked_array_size(SIZES, true);
 
   EXPECT_EQ(3, calculation.size);
-  EXPECT_EQ(true, calculation.match_state);
+  EXPECT_EQ(MatchState::MATCH, calculation.match_state);
 }
 
 TEST(ConvertersTests, AllEqualSizesDisallowOptional_Match)

@@ -38,6 +38,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
   ViStatus GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
   ViStatus GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize);
+  ViStatus GetAnIviDanceWithATwistArrayWithInputArray(ViInt32 dataIn[], ViInt32 arraySizeIn, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
   ViStatus GetAnIviDanceWithATwistByteArray(ViInt32 bufferSize, ViInt8 arrayOut[], ViInt32* actualSize);
   ViStatus GetAnIviDanceWithATwistString(ViInt32 bufferSize, ViChar arrayOut[], ViInt32* actualSize);
   ViStatus GetAnIviDanceWithATwistStringStrlenBug(ViInt32 bufferSize, ViChar stringOut[], ViInt32* actualSize);
@@ -117,6 +118,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetAnIviDanceStringPtr = decltype(&niFake_GetAnIviDanceString);
   using GetAnIviDanceWithATwistArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistArray);
   using GetAnIviDanceWithATwistArrayOfCustomTypePtr = decltype(&niFake_GetAnIviDanceWithATwistArrayOfCustomType);
+  using GetAnIviDanceWithATwistArrayWithInputArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistArrayWithInputArray);
   using GetAnIviDanceWithATwistByteArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistByteArray);
   using GetAnIviDanceWithATwistStringPtr = decltype(&niFake_GetAnIviDanceWithATwistString);
   using GetAnIviDanceWithATwistStringStrlenBugPtr = decltype(&niFake_GetAnIviDanceWithATwistStringStrlenBug);
@@ -196,6 +198,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetAnIviDanceStringPtr GetAnIviDanceString;
     GetAnIviDanceWithATwistArrayPtr GetAnIviDanceWithATwistArray;
     GetAnIviDanceWithATwistArrayOfCustomTypePtr GetAnIviDanceWithATwistArrayOfCustomType;
+    GetAnIviDanceWithATwistArrayWithInputArrayPtr GetAnIviDanceWithATwistArrayWithInputArray;
     GetAnIviDanceWithATwistByteArrayPtr GetAnIviDanceWithATwistByteArray;
     GetAnIviDanceWithATwistStringPtr GetAnIviDanceWithATwistString;
     GetAnIviDanceWithATwistStringStrlenBugPtr GetAnIviDanceWithATwistStringStrlenBug;

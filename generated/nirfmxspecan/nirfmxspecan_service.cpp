@@ -2641,7 +2641,7 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::BuildSpurString2(::grpc::ServerContext* context, const BuildSpurString2Request* request, BuildSpurString2Response* response)
+  ::grpc::Status NiRFmxSpecAnService::BuildSpurString(::grpc::ServerContext* context, const BuildSpurStringRequest* request, BuildSpurStringResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -2651,7 +2651,7 @@ namespace nirfmxspecan_grpc {
       int32 spur_number = request->spur_number();
 
       while (true) {
-        auto status = library_->BuildSpurString2(selector_string, spur_number, 0, nullptr);
+        auto status = library_->BuildSpurString(selector_string, spur_number, 0, nullptr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -2662,7 +2662,7 @@ namespace nirfmxspecan_grpc {
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
         }
-        status = library_->BuildSpurString2(selector_string, spur_number, selector_string_out_length, (char*)selector_string_out.data());
+        status = library_->BuildSpurString(selector_string, spur_number, selector_string_out_length, (char*)selector_string_out.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
           // buffer is now too small, try again
           continue;
@@ -3914,7 +3914,7 @@ namespace nirfmxspecan_grpc {
       float64 papr {};
       float64 power_offset {};
       while (true) {
-        auto status = library_->DPDApplyDigitalPredistortion(instrument, selector_string, x0_in, dx_in, waveform_in.data(), 0, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr, &power_offset);
+        auto status = library_->DPDApplyDigitalPredistortion(instrument, selector_string, x0_in, dx_in, waveform_in.data(), array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr, &power_offset);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -3965,40 +3965,53 @@ namespace nirfmxspecan_grpc {
       float64 dx_in = request->dx_in();
       auto waveform_in_i = const_cast<float32*>(request->waveform_in_i().data());
       auto waveform_in_q = const_cast<float32*>(request->waveform_in_q().data());
-      auto array_size_in_determine_from_sizes = std::array<int, 4>
+      auto array_size_in_determine_from_sizes = std::array<int, 2>
       {
         request->waveform_in_i_size(),
-        request->waveform_in_q_size(),
-        request->waveform_out_i_size(),
-        request->waveform_out_q_size()
+        request->waveform_in_q_size()
       };
       const auto array_size_in_size_calculation = calculate_linked_array_size(array_size_in_determine_from_sizes, false);
 
       if (array_size_in_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformInI, waveformInQ, waveformOutI, waveformOutQ] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformInI, waveformInQ] do not match");
       }
       auto array_size_in = array_size_in_size_calculation.size;
 
       int32 idle_duration_present = request->idle_duration_present();
       float64 measurement_timeout = request->measurement_timeout();
-      auto waveform_out_i = const_cast<float32*>(request->waveform_out_i().data());
-      auto waveform_out_q = const_cast<float32*>(request->waveform_out_q().data());
-      int32 array_size_out = request->array_size_out();
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
       float64 papr {};
       float64 power_offset {};
-      auto status = library_->DPDApplyDigitalPredistortionSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr, &power_offset);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_x0_out(x0_out);
-        response->set_dx_out(dx_out);
-        response->set_actual_array_size(actual_array_size);
-        response->set_papr(papr);
-        response->set_power_offset(power_offset);
+      while (true) {
+        auto status = library_->DPDApplyDigitalPredistortionSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, nullptr, 0, &actual_array_size, &papr, &power_offset);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
+        float32* waveform_out_i = response->mutable_waveform_out_i()->mutable_data();
+        response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
+        float32* waveform_out_q = response->mutable_waveform_out_q()->mutable_data();
+        auto array_size_out = actual_array_size;
+        status = library_->DPDApplyDigitalPredistortionSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr, &power_offset);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_x0_out(x0_out);
+          response->set_dx_out(dx_out);
+          response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
+          response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+          response->set_papr(papr);
+          response->set_power_offset(power_offset);
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -4026,7 +4039,7 @@ namespace nirfmxspecan_grpc {
       int32 actual_array_size {};
       float64 papr {};
       while (true) {
-        auto status = library_->DPDApplyPreDPDSignalConditioning(instrument, selector_string, x0_in, dx_in, waveform_in.data(), 0, idle_duration_present, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr);
+        auto status = library_->DPDApplyPreDPDSignalConditioning(instrument, selector_string, x0_in, dx_in, waveform_in.data(), array_size_in, idle_duration_present, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -4076,37 +4089,50 @@ namespace nirfmxspecan_grpc {
       float64 dx_in = request->dx_in();
       auto waveform_in_i = const_cast<float32*>(request->waveform_in_i().data());
       auto waveform_in_q = const_cast<float32*>(request->waveform_in_q().data());
-      auto array_size_in_determine_from_sizes = std::array<int, 4>
+      auto array_size_in_determine_from_sizes = std::array<int, 2>
       {
         request->waveform_in_i_size(),
-        request->waveform_in_q_size(),
-        request->waveform_out_i_size(),
-        request->waveform_out_q_size()
+        request->waveform_in_q_size()
       };
       const auto array_size_in_size_calculation = calculate_linked_array_size(array_size_in_determine_from_sizes, false);
 
       if (array_size_in_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformInI, waveformInQ, waveformOutI, waveformOutQ] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformInI, waveformInQ] do not match");
       }
       auto array_size_in = array_size_in_size_calculation.size;
 
       int32 idle_duration_present = request->idle_duration_present();
-      auto waveform_out_i = const_cast<float32*>(request->waveform_out_i().data());
-      auto waveform_out_q = const_cast<float32*>(request->waveform_out_q().data());
-      int32 array_size_out = request->array_size_out();
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
       float64 papr {};
-      auto status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_x0_out(x0_out);
-        response->set_dx_out(dx_out);
-        response->set_actual_array_size(actual_array_size);
-        response->set_papr(papr);
+      while (true) {
+        auto status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, nullptr, nullptr, 0, &actual_array_size, &papr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
+        float32* waveform_out_i = response->mutable_waveform_out_i()->mutable_data();
+        response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
+        float32* waveform_out_q = response->mutable_waveform_out_q()->mutable_data();
+        auto array_size_out = actual_array_size;
+        status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status == 0) {
+          response->set_x0_out(x0_out);
+          response->set_dx_out(dx_out);
+          response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
+          response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+          response->set_papr(papr);
+        }
+        return ::grpc::Status::OK;
       }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

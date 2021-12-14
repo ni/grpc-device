@@ -61,6 +61,7 @@ public:
   ::grpc::Status GetAnIviDanceString(::grpc::ServerContext* context, const GetAnIviDanceStringRequest* request, GetAnIviDanceStringResponse* response) override;
   ::grpc::Status GetAnIviDanceWithATwistArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayRequest* request, GetAnIviDanceWithATwistArrayResponse* response) override;
   ::grpc::Status GetAnIviDanceWithATwistArrayOfCustomType(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayOfCustomTypeRequest* request, GetAnIviDanceWithATwistArrayOfCustomTypeResponse* response) override;
+  ::grpc::Status GetAnIviDanceWithATwistArrayWithInputArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistArrayWithInputArrayRequest* request, GetAnIviDanceWithATwistArrayWithInputArrayResponse* response) override;
   ::grpc::Status GetAnIviDanceWithATwistByteArray(::grpc::ServerContext* context, const GetAnIviDanceWithATwistByteArrayRequest* request, GetAnIviDanceWithATwistByteArrayResponse* response) override;
   ::grpc::Status GetAnIviDanceWithATwistString(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringRequest* request, GetAnIviDanceWithATwistStringResponse* response) override;
   ::grpc::Status GetAnIviDanceWithATwistStringStrlenBug(::grpc::ServerContext* context, const GetAnIviDanceWithATwistStringStrlenBugRequest* request, GetAnIviDanceWithATwistStringStrlenBugResponse* response) override;

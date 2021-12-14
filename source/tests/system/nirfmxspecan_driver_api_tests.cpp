@@ -1,7 +1,11 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <fstream>
+#include <iostream>
+#include <nlohmann/json.hpp>
 #include <thread>
+#include <tuple>
 
 #include "device_server.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
@@ -15,6 +19,7 @@ using namespace ::testing;
 namespace ni {
 namespace tests {
 namespace system {
+namespace {
 
 const auto PXI_5663 = "5663";
 
@@ -110,6 +115,21 @@ TComplex complex(TFloat real, TFloat imaginary)
   return c;
 }
 
+template <typename TComplex>
+struct TestWaveform {
+  double t0;
+  double dt;
+  std::vector<TComplex> data;
+};
+
+template <typename TFloat>
+struct TestIQData {
+  double t0;
+  double dt;
+  std::vector<TFloat> I;
+  std::vector<TFloat> Q;
+};
+
 template <typename TFloat, typename TComplex>
 std::vector<TComplex> complex_array(
     std::vector<TFloat> reals,
@@ -138,6 +158,25 @@ std::vector<nidevice_grpc::NIComplexNumber> complex_number_array(
     std::vector<double> imaginaries)
 {
   return complex_array<double, nidevice_grpc::NIComplexNumber>(reals, imaginaries);
+}
+
+template <typename TFloat>
+TestIQData<TFloat> load_test_iq_data(const std::string& file_name)
+{
+  std::ifstream input_stream(file_name);
+  auto json = nlohmann::json::parse(input_stream);
+  auto t0 = json.find("t0")->get<double>();
+  auto dt = json.find("dt")->get<double>();
+  auto reals = json.find("reals")->get<std::vector<TFloat>>();
+  auto imaginaries = json.find("imaginaries")->get<std::vector<TFloat>>();
+  return {t0, dt, reals, imaginaries};
+}
+
+template <typename TFloat, typename TComplex>
+TestWaveform<TComplex> load_test_waveform_data(const std::string& file_name)
+{
+  const auto iq_data = load_test_iq_data<TFloat>(file_name);
+  return {iq_data.t0, iq_data.dt, complex_array<TFloat, TComplex>(iq_data.I, iq_data.Q)};
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, SpectrumBasicFromExample_DataLooksReasonable)
@@ -192,6 +231,22 @@ TEST_F(NiRFmxSpecAnDriverApiTests, FcntBasicFromExample_DataLooksReasonable)
   EXPECT_GT(read_response.average_relative_frequency(), 0.0);
   EXPECT_GT(read_response.average_absolute_frequency(), read_response.average_relative_frequency());
   EXPECT_GT(read_response.mean_phase(), 0.0);
+}
+
+TEST_F(NiRFmxSpecAnDriverApiTests, SpurBasicFromExample_ReturnsMeasurementStatusFail)
+{
+  auto session = init_session(stub(), PXI_5663);
+  EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1e9, 0.0, 0.0));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_SPUR, true));
+  EXPECT_SUCCESS(session, client::spur_cfg_number_of_ranges(stub(), session, "", 1));
+  EXPECT_SUCCESS(session, client::spur_cfg_range_frequency_array(stub(), session, "", {1e9}, {1.5e9}, {true}));
+  EXPECT_SUCCESS(session, client::spur_cfg_range_rbw_array(stub(), session, "", {false}, {30e3}, {SpurRbwFilterType::SPUR_RBW_FILTER_TYPE_GAUSSIAN}));
+  EXPECT_SUCCESS(session, client::spur_cfg_range_absolute_limit_array(stub(), session, "", {}, {-10.0}, {}));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+
+  const auto fetch_response = client::spur_fetch_measurement_status(stub(), session, "", 10.0);
+  EXPECT_SUCCESS(session, fetch_response);
+  EXPECT_EQ(SpurMeasurementStatus::SPUR_MEASUREMENT_STATUS_FAIL, fetch_response.measurement_status());
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, HarmFromExample_NoError)
@@ -259,6 +314,31 @@ TEST_F(NiRFmxSpecAnDriverApiTests, AMPMFromExample_NoError)
   EXPECT_SUCCESS(session, am_to_am_response);
 }
 
+TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_SynchronizationNotFoundWarning)
+{
+  const auto session = init_session(stub(), PXI_5663);
+  EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DigitalEdgeTriggerSource::DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DigitalEdgeTriggerEdge::DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, true));
+  EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1e9, 0.0, 0.0));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_DPD, true));
+  auto waveform = load_test_waveform_data<float, nidevice_grpc::NIComplexNumberF32>("LTE20MHz Waveform (Two Subframes).json");
+  EXPECT_SUCCESS(session, client::dpd_cfg_reference_waveform(stub(), session, "", waveform.t0, waveform.dt, waveform.data, false, DpdSignalType::DPD_SIGNAL_TYPE_MODULATED));
+  EXPECT_SUCCESS(session, client::dpd_cfg_dut_average_input_power(stub(), session, "", 1e9));
+  EXPECT_SUCCESS(session, client::dpd_cfg_dpd_model(stub(), session, "", DpdModel::DPD_MODEL_LOOKUP_TABLE));
+  EXPECT_SUCCESS(session, client::dpd_cfg_lookup_table_threshold(stub(), session, "", true, -20.0, DpdLookupTableThresholdType::DPD_LOOKUP_TABLE_THRESHOLD_TYPE_RELATIVE));
+  EXPECT_SUCCESS(session, client::dpd_cfg_lookup_table_step_size(stub(), session, "", 0.1));
+  EXPECT_SUCCESS(session, client::dpd_cfg_measurement_interval(stub(), session, "", 100e-6));
+  EXPECT_SUCCESS(session, client::dpd_cfg_measurement_sample_rate(stub(), session, "", DpdMeasurementSampleRateMode::DPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM, 120e6));
+  EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, "", -14.00));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+  EXPECT_SUCCESS(session, client::dpd_cfg_apply_dpd_lookup_table_correction_type(stub(), session, "", DpdApplyDpdLookupTableCorrectionType::DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_AND_PHASE));
+
+  const auto iq_data = load_test_iq_data<float>("LTE20MHz Waveform (Two Subframes).json");
+  const auto apply_response = client::dpd_apply_digital_predistortion_split(stub(), session, "", iq_data.t0, iq_data.dt, iq_data.I, iq_data.Q, false, 10.0);
+  // GH #454 grpc-device does not fill in response fields when a warning is returned.
+  EXPECT_RFMX_ERROR(377652, "Synchronization not found", session, apply_response);
+}
+
 // Note: there aren't any complex attributes in attributes.py, but this at least exercises the code.
 TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeComplex_ExpectedError)
 {
@@ -316,6 +396,16 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAndGetAttributeInt32_Succeeds)
   EXPECT_EQ(NiRFmxSpecAnInt32AttributeValues::NIRFMXSPECAN_INT32_NF_EXTERNAL_PREAMP_PRESENT_TRUE, get_response.attr_val());
 }
 
+TEST_F(NiRFmxSpecAnDriverApiTests, BuildSpurString_ReturnsSpurString)
+{
+  auto session = init_session(stub(), PXI_5663);
+  const auto spur_string_response = client::build_spur_string(stub(), "", 0);
+  EXPECT_EQ(spur_string_response.selector_string_out(), "spur0");
+
+  EXPECT_SUCCESS(session, spur_string_response);
+}
+
+}  // namespace
 }  // namespace system
 }  // namespace tests
 }  // namespace ni

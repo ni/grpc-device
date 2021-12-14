@@ -97,7 +97,7 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
   function_pointers_.BuildRangeString = reinterpret_cast<BuildRangeStringPtr>(shared_library_.get_function_pointer("RFmxSpecAn_BuildRangeString2"));
   function_pointers_.BuildSegmentString = reinterpret_cast<BuildSegmentStringPtr>(shared_library_.get_function_pointer("RFmxSpecAn_BuildSegmentString"));
   function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_.get_function_pointer("RFmxSpecAn_BuildSignalString"));
-  function_pointers_.BuildSpurString2 = reinterpret_cast<BuildSpurString2Ptr>(shared_library_.get_function_pointer("RFmxSpecAn_BuildSpurString2"));
+  function_pointers_.BuildSpurString = reinterpret_cast<BuildSpurStringPtr>(shared_library_.get_function_pointer("RFmxSpecAn_BuildSpurString2"));
   function_pointers_.CCDFCfgMeasurementInterval = reinterpret_cast<CCDFCfgMeasurementIntervalPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CCDFCfgMeasurementInterval"));
   function_pointers_.CCDFCfgNumberOfRecords = reinterpret_cast<CCDFCfgNumberOfRecordsPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CCDFCfgNumberOfRecords"));
   function_pointers_.CCDFCfgRBWFilter = reinterpret_cast<CCDFCfgRBWFilterPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CCDFCfgRBWFilter"));
@@ -1376,15 +1376,15 @@ int32 NiRFmxSpecAnLibrary::BuildSignalString(char signalName[], char resultName[
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::BuildSpurString2(char selectorString[], int32 spurNumber, int32 selectorStringOutLength, char selectorStringOut[])
+int32 NiRFmxSpecAnLibrary::BuildSpurString(char selectorString[], int32 spurNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
-  if (!function_pointers_.BuildSpurString2) {
+  if (!function_pointers_.BuildSpurString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_BuildSpurString2.");
   }
 #if defined(_MSC_VER)
   return RFmxSpecAn_BuildSpurString2(selectorString, spurNumber, selectorStringOutLength, selectorStringOut);
 #else
-  return function_pointers_.BuildSpurString2(selectorString, spurNumber, selectorStringOutLength, selectorStringOut);
+  return function_pointers_.BuildSpurString(selectorString, spurNumber, selectorStringOutLength, selectorStringOut);
 #endif
 }
 

@@ -42,6 +42,7 @@ GetBitfieldAsEnumArrayResponse get_bitfield_as_enum_array(const StubPtr& stub);
 GetAnIviDanceStringResponse get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceWithATwistArrayResponse get_an_ivi_dance_with_a_twist_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& a_string);
 GetAnIviDanceWithATwistArrayOfCustomTypeResponse get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetAnIviDanceWithATwistArrayWithInputArrayResponse get_an_ivi_dance_with_a_twist_array_with_input_array(const StubPtr& stub, const std::vector<pb::int32>& data_in);
 GetAnIviDanceWithATwistByteArrayResponse get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub);
 GetAnIviDanceWithATwistStringResponse get_an_ivi_dance_with_a_twist_string(const StubPtr& stub);
 GetAnIviDanceWithATwistStringStrlenBugResponse get_an_ivi_dance_with_a_twist_string_strlen_bug(const StubPtr& stub);
