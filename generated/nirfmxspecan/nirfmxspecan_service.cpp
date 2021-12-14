@@ -11703,7 +11703,7 @@ namespace nirfmxspecan_grpc {
           message.append("int16");
           throw nidevice_grpc::ValueOutOfRangeException(message);
       }
-    auto attr_val = static_cast<int16>(attr_val_raw);
+      auto attr_val = static_cast<int16>(attr_val_raw);
 
       auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
@@ -11850,7 +11850,7 @@ namespace nirfmxspecan_grpc {
           message.append("int8");
           throw nidevice_grpc::ValueOutOfRangeException(message);
       }
-    auto attr_val = static_cast<int8>(attr_val_raw);
+      auto attr_val = static_cast<int8>(attr_val_raw);
 
       auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
@@ -12014,7 +12014,7 @@ namespace nirfmxspecan_grpc {
           message.append("uInt16");
           throw nidevice_grpc::ValueOutOfRangeException(message);
       }
-    auto attr_val = static_cast<uInt16>(attr_val_raw);
+      auto attr_val = static_cast<uInt16>(attr_val_raw);
 
       auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);

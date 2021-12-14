@@ -2223,7 +2223,7 @@ namespace nirfmxinstr_grpc {
           message.append("int8");
           throw nidevice_grpc::ValueOutOfRangeException(message);
       }
-    auto attr_val = static_cast<int8>(attr_val_raw);
+      auto attr_val = static_cast<int8>(attr_val_raw);
 
       auto status = library_->SetAttributeI8(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);

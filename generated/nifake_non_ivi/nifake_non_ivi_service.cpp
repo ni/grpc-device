@@ -716,7 +716,7 @@ namespace nifake_non_ivi_grpc {
           message.append("myUInt16");
           throw nidevice_grpc::ValueOutOfRangeException(message);
       }
-    auto u16 = static_cast<myUInt16>(u16_raw);
+      auto u16 = static_cast<myUInt16>(u16_raw);
 
       auto i16_raw = request->i16();
       if (i16_raw < std::numeric_limits<myInt16>::min() || i16_raw > std::numeric_limits<myInt16>::max()) {
@@ -726,7 +726,7 @@ namespace nifake_non_ivi_grpc {
           message.append("myInt16");
           throw nidevice_grpc::ValueOutOfRangeException(message);
       }
-    auto i16 = static_cast<myInt16>(i16_raw);
+      auto i16 = static_cast<myInt16>(i16_raw);
 
       auto i8_raw = request->i8();
       if (i8_raw < std::numeric_limits<myInt8>::min() || i8_raw > std::numeric_limits<myInt8>::max()) {
@@ -736,7 +736,7 @@ namespace nifake_non_ivi_grpc {
           message.append("myInt8");
           throw nidevice_grpc::ValueOutOfRangeException(message);
       }
-    auto i8 = static_cast<myInt8>(i8_raw);
+      auto i8 = static_cast<myInt8>(i8_raw);
 
       auto status = library_->ScalarsWithNarrowIntegerTypes(u16, i16, i8);
       response->set_status(status);
