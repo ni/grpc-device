@@ -30,7 +30,7 @@ class SessionResourceRepository {
 
   TResourceHandle access_session(uint32_t session_id, const std::string& session_name) const;
   uint32_t resolve_session_id(TResourceHandle handle) const;
-  int SessionResourceRepository<TResourceHandle>::add_dependent_session(const std::string& session_name, InitFunc init_func, uint32_t initiating_session, uint32_t& session_id);
+  int add_dependent_session(const std::string& session_name, InitFunc init_func, uint32_t initiating_session, uint32_t& session_id);
   void remove_session(TResourceHandle handle);
 
  private:
