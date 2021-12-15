@@ -35,6 +35,12 @@ namespace nirfsg_grpc {
   {
   }
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiRFSGService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
@@ -270,7 +276,7 @@ namespace nirfsg_grpc {
       ViBoolean is_done {};
       auto status = library_->CheckGenerationStatus(vi, &is_done);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_is_done(is_done);
       }
       return ::grpc::Status::OK;
@@ -294,7 +300,7 @@ namespace nirfsg_grpc {
       ViBoolean list_exists {};
       auto status = library_->CheckIfConfigurationListExists(vi, list_name, &list_exists);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_list_exists(list_exists);
       }
       return ::grpc::Status::OK;
@@ -318,7 +324,7 @@ namespace nirfsg_grpc {
       ViBoolean script_exists {};
       auto status = library_->CheckIfScriptExists(vi, script_name, &script_exists);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_script_exists(script_exists);
       }
       return ::grpc::Status::OK;
@@ -342,7 +348,7 @@ namespace nirfsg_grpc {
       ViBoolean waveform_exists {};
       auto status = library_->CheckIfWaveformExists(vi, waveform_name, &waveform_exists);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_waveform_exists(waveform_exists);
       }
       return ::grpc::Status::OK;
@@ -1470,7 +1476,7 @@ namespace nirfsg_grpc {
       std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
@@ -1495,7 +1501,7 @@ namespace nirfsg_grpc {
       std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_code(error_code);
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
@@ -1597,7 +1603,7 @@ namespace nirfsg_grpc {
       ViBoolean value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1622,7 +1628,7 @@ namespace nirfsg_grpc {
       ViInt32 value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1647,7 +1653,7 @@ namespace nirfsg_grpc {
       ViInt64 value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1672,7 +1678,7 @@ namespace nirfsg_grpc {
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1697,7 +1703,7 @@ namespace nirfsg_grpc {
       ViSession value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto session_id = session_repository_->resolve_session_id(value);
         response->mutable_value()->set_id(session_id);
       }
@@ -1739,7 +1745,7 @@ namespace nirfsg_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -1781,7 +1787,7 @@ namespace nirfsg_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_name(name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
@@ -1819,7 +1825,7 @@ namespace nirfsg_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           convert_to_grpc(sparameters, response->mutable_sparameters());
           {
             auto shrunk_size = number_of_sparameters;
@@ -1869,7 +1875,7 @@ namespace nirfsg_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_error_code(error_code);
           response->set_error_description(error_description);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
@@ -1900,7 +1906,7 @@ namespace nirfsg_grpc {
       ViInt32 second {};
       auto status = library_->GetExternalCalibrationLastDateAndTime(vi, &year, &month, &day, &hour, &minute, &second);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -1949,7 +1955,7 @@ namespace nirfsg_grpc {
       ViInt32 second {};
       auto status = library_->GetSelfCalibrationDateAndTime(vi, module, &year, &month, &day, &hour, &minute, &second);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -1993,7 +1999,7 @@ namespace nirfsg_grpc {
       ViReal64 temperature {};
       auto status = library_->GetSelfCalibrationTemperature(vi, module, &temperature);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temperature(temperature);
       }
       return ::grpc::Status::OK;
@@ -2068,7 +2074,7 @@ namespace nirfsg_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_terminal_name(terminal_name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_terminal_name()));
         }
@@ -2106,7 +2112,7 @@ namespace nirfsg_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_data(data);
           response->mutable_data()->resize(actual_data_size);
           response->set_actual_data_size(actual_data_size);
@@ -2146,7 +2152,7 @@ namespace nirfsg_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_locations()->Resize(required_size, 0);
           response->set_required_size(required_size);
         }
@@ -2185,7 +2191,7 @@ namespace nirfsg_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_locations()->Resize(required_size, 0);
           response->set_required_size(required_size);
         }
@@ -2224,7 +2230,7 @@ namespace nirfsg_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_locations()->Resize(required_size, 0);
           response->set_required_size(required_size);
         }
@@ -2258,7 +2264,7 @@ namespace nirfsg_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_new_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2291,7 +2297,7 @@ namespace nirfsg_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2414,7 +2420,7 @@ namespace nirfsg_grpc {
       ViInt32 max_waveform_size {};
       auto status = library_->QueryArbWaveformCapabilities(vi, &max_number_waveforms, &waveform_quantum, &min_waveform_size, &max_waveform_size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_max_number_waveforms(max_number_waveforms);
         response->set_waveform_quantum(waveform_quantum);
         response->set_min_waveform_size(min_waveform_size);
@@ -2576,7 +2582,7 @@ namespace nirfsg_grpc {
       std::string firmware_revision(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_instrument_driver_revision(instrument_driver_revision);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
         response->set_firmware_revision(firmware_revision);
@@ -2702,7 +2708,7 @@ namespace nirfsg_grpc {
       std::string self_test_message(2048 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));

@@ -35,6 +35,12 @@ namespace niswitch_grpc {
   {
   }
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiSwitchService::AbortScan(::grpc::ServerContext* context, const AbortScanRequest* request, AbortScanResponse* response)
@@ -69,7 +75,7 @@ namespace niswitch_grpc {
       ViInt32 path_capability {};
       auto status = library_->CanConnect(vi, channel1, channel2, &path_capability);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_path_capability(static_cast<niswitch_grpc::PathCapability>(path_capability));
         response->set_path_capability_raw(path_capability);
       }
@@ -505,7 +511,7 @@ namespace niswitch_grpc {
       std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
@@ -530,7 +536,7 @@ namespace niswitch_grpc {
       std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_code(error_code);
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
@@ -557,7 +563,7 @@ namespace niswitch_grpc {
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -582,7 +588,7 @@ namespace niswitch_grpc {
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -607,7 +613,7 @@ namespace niswitch_grpc {
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -648,7 +654,7 @@ namespace niswitch_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_attribute_value(attribute_value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         }
@@ -675,7 +681,7 @@ namespace niswitch_grpc {
       ViSession attribute_value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto session_id = session_repository_->resolve_session_id(attribute_value);
         response->mutable_attribute_value()->set_id(session_id);
       }
@@ -716,7 +722,7 @@ namespace niswitch_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_channel_name_buffer(channel_name_buffer);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name_buffer()));
         }
@@ -758,7 +764,7 @@ namespace niswitch_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_code(code);
           response->set_description(description);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
@@ -800,7 +806,7 @@ namespace niswitch_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_coercion_record(coercion_record);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
         }
@@ -841,7 +847,7 @@ namespace niswitch_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_interchange_warning(interchange_warning);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
         }
@@ -884,7 +890,7 @@ namespace niswitch_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_path(path);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_path()));
         }
@@ -910,7 +916,7 @@ namespace niswitch_grpc {
       ViInt32 relay_count {};
       auto status = library_->GetRelayCount(vi, relay_name, &relay_count);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_relay_count(relay_count);
       }
       return ::grpc::Status::OK;
@@ -950,7 +956,7 @@ namespace niswitch_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_relay_name_buffer(relay_name_buffer);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_relay_name_buffer()));
         }
@@ -976,7 +982,7 @@ namespace niswitch_grpc {
       ViInt32 relay_position {};
       auto status = library_->GetRelayPosition(vi, relay_name, &relay_position);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_relay_position(static_cast<niswitch_grpc::RelayPosition>(relay_position));
         response->set_relay_position_raw(relay_position);
       }
@@ -1009,7 +1015,7 @@ namespace niswitch_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -1042,7 +1048,7 @@ namespace niswitch_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -1075,7 +1081,7 @@ namespace niswitch_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -1136,7 +1142,7 @@ namespace niswitch_grpc {
       ViBoolean is_debounced {};
       auto status = library_->IsDebounced(vi, &is_debounced);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_is_debounced(is_debounced);
       }
       return ::grpc::Status::OK;
@@ -1159,7 +1165,7 @@ namespace niswitch_grpc {
       ViBoolean is_scanning {};
       auto status = library_->IsScanning(vi, &is_scanning);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_is_scanning(is_scanning);
       }
       return ::grpc::Status::OK;
@@ -1276,7 +1282,7 @@ namespace niswitch_grpc {
       std::string firmware_revision(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_instrument_driver_revision(instrument_driver_revision);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
         response->set_firmware_revision(firmware_revision);
@@ -1443,7 +1449,7 @@ namespace niswitch_grpc {
       std::string self_test_message(256 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));

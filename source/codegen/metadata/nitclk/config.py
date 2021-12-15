@@ -13,6 +13,7 @@ config = {
     ],
     'driver_name': 'NI-TClk',
     'extra_errors_used': [],
+    'status_ok': 'status >= 0',
     'library_info': {
         'Linux': {
             '64bit': {

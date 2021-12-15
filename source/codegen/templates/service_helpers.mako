@@ -33,7 +33,7 @@ ${initialize_output_params(output_parameters_to_initialize)}\
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_${session_output_var_name}()->set_id(session_id);
       }
       return ::grpc::Status::OK;\
@@ -67,7 +67,7 @@ ${initialize_output_params(output_parameters)}\
         }
         response->set_status(status);
 % if output_parameters:
-        if (status == 0) {
+        if (status_ok(status)) {
 <%block filter="common_helpers.indent(1)">\
 ${set_response_values(output_parameters)}\
 </%block>\
@@ -109,7 +109,7 @@ ${initialize_output_params(array_output_parameters)}\
         }
         response->set_status(status);
 % if output_parameters:
-        if (status == 0) {
+        if (status_ok(status)) {
 <%block filter="common_helpers.indent(1)">\
 ${set_response_values(output_parameters)}\
 </%block>\
@@ -198,7 +198,7 @@ ${set_output_vararg_parameter_sizes(parameters)}\
 % endif
       response->set_status(status);
 % if output_parameters:
-      if (status == 0) {
+      if (status_ok(status)) {
 ${set_response_values(output_parameters=output_parameters)}\
       }
 % endif
@@ -219,7 +219,7 @@ ${initialize_output_params(output_parameters)}\
       auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
       response->set_status(status);
 % if output_parameters:
-      if (status == 0) {
+      if (status_ok(status)) {
 ${set_response_values(output_parameters=output_parameters)}\
       }
 % endif
