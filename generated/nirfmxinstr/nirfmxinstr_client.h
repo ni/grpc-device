@@ -74,7 +74,7 @@ GetNIRFSASessionArrayResponse get_nirfsa_session_array(const StubPtr& stub, cons
 GetSelfCalibrateLastDateAndTimeResponse get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int64& self_calibrate_step);
 GetSelfCalibrateLastTemperatureResponse get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int64& self_calibrate_step);
 InitializeResponse initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string);
-InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr& stub, const pb::uint32& nirfsa_session);
+InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session);
 InitializeFromNIRFSASessionArrayResponse initialize_from_nirfsa_session_array(const StubPtr& stub, const std::vector<pb::uint32>& nirfsa_sessions);
 IsSelfCalibrateValidResponse is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 LoadAllConfigurationsResponse load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path, const pb::int32& load_rf_instr_configuration);

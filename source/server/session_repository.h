@@ -5,6 +5,7 @@
 #include <functional>
 #include <map>
 #include <shared_mutex>
+#include <vector>
 
 #include "semaphore.h"
 
@@ -26,6 +27,8 @@ class SessionRepository {
   uint32_t access_session(uint32_t session_id, const std::string& session_name);
   void remove_session(uint32_t id);
 
+  void register_dependent_session(uint32_t id, uint32_t dependent_session_id, std::function<void()> cleanup);
+
   bool reserve(
       const ::grpc::ServerContext* context,
       const std::string& reservation_id,
@@ -44,11 +47,27 @@ class SessionRepository {
     int client_count;
   };
 
+  // Action that is executed on remove from the map.
+  // Unlike cleanup_action this is called for both explicit cleanup (close) and
+  // implicit cleanup (reset_server).
+  class RemoveAction {
+   public:
+    RemoveAction(std::function<void()> on_remove) : on_remove_(on_remove) {}
+    ~RemoveAction()
+    {
+      on_remove_();
+    }
+
+   private:
+    std::function<void()> on_remove_;
+  };
+
   struct SessionInfo {
     uint32_t id;
     std::string name;
     std::chrono::steady_clock::time_point last_access_time;
     SessionRepository::CleanupSessionFunc cleanup_func;
+    std::vector<std::unique_ptr<RemoveAction> > dependent_sessions;
   };
 
   using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;

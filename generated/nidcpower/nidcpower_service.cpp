@@ -27,7 +27,9 @@ namespace nidcpower_grpc {
       NiDCPowerLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiDCPowerFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 

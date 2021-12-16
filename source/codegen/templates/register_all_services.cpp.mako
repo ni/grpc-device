@@ -3,6 +3,7 @@ import common_helpers
 import service_helpers
 
 driver_configs = [data["config"] for data in drivers]
+driver_cross_driver_session_deps = [service_helpers.get_cross_driver_session_dependencies(data["functions"]) for data in drivers]
 module_names = [config["module_name"] for config in driver_configs]
 handle_types = [service_helpers.get_resource_handle_type(config) for config in driver_configs]
 repository_type_to_local_name = {
@@ -45,7 +46,7 @@ std::shared_ptr<void> register_all_services(
   auto ${local_name} = std::make_shared<nidevice_grpc::SessionResourceRepository<${type_name}>>(session_repository.get());
 % endfor
 
-% for config in driver_configs:
+% for config, cross_driver_session_deps in zip(driver_configs, driver_cross_driver_session_deps):
 <%
   namespace = f"{config['namespace_component']}_grpc"
   resource_handle_type = service_helpers.get_resource_handle_type(config)
@@ -55,6 +56,9 @@ std::shared_ptr<void> register_all_services(
     ${namespace}::register_service(
       server_builder, 
       ${resource_repository_local_name},
+% for cross_driver_dep in cross_driver_session_deps:
+      ${repository_type_to_local_name[cross_driver_dep.resource_handle_type]},
+% endfor
       feature_toggles));
 % endfor
 

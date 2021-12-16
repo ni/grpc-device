@@ -542,6 +542,16 @@ def is_init_method(function_data):
     return function_data.get('init_method', False)
 
 
+def is_cross_driver_init_method(function_data: dict) -> bool:
+    return (
+        is_init_method(function_data) 
+        and any(
+            p 
+            for p in function_data["parameters"] 
+            if "cross_driver_session" in p and p["direction"] == "out"
+        )
+    )
+
 def has_streaming_response(function_data):
     return function_data.get('stream_response', False)
 
@@ -828,7 +838,7 @@ def get_grpc_field_name_from_str(field_name: str) -> str:
 
 def get_cpp_local_name(param: dict) -> str:
     """"
-    Returns a similar to token get_grpc_field_name, but will ensure
+    Returns a similar token to get_grpc_field_name, but will ensure
     that the name is valid as a C++ variable name.
 
     NOTE: this is not used consistently to differentiate from get_grpc_field_name.

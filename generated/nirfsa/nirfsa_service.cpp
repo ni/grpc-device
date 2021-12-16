@@ -28,7 +28,9 @@ namespace nirfsa_grpc {
       NiRFSALibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiRFSAFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 

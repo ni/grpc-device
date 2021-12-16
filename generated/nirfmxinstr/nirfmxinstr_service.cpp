@@ -26,8 +26,12 @@ namespace nirfmxinstr_grpc {
   NiRFmxInstrService::NiRFmxInstrService(
       NiRFmxInstrLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
+      ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxInstrFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      vi_session_resource_repository_(vi_session_resource_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 
@@ -1527,11 +1531,19 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      uInt32 ni_rfsa_session {};
-      auto status = library_->GetNIRFSASession(instrument, &ni_rfsa_session);
+
+      auto initiating_session_id = session_repository_->resolve_session_id(instrument);
+      auto init_lambda = [&] () {
+        ViSession ni_rfsa_session;
+        int status = library_->GetNIRFSASession(instrument, &ni_rfsa_session);
+        return std::make_tuple(status, ni_rfsa_session);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      int status = vi_session_resource_repository_->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
       response->set_status(status);
-      if (status_ok(status)) {
-        response->set_ni_rfsa_session(ni_rfsa_session);
+      if (status == 0) {
+        response->mutable_ni_rfsa_session()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -1668,7 +1680,8 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      uInt32 nirfsa_session = request->nirfsa_session();
+      auto nirfsa_session_grpc_session = request->nirfsa_session();
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.id(), nirfsa_session_grpc_session.name());
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;

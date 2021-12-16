@@ -27,7 +27,9 @@ namespace niswitch_grpc {
       NiSwitchLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiSwitchFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 

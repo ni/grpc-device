@@ -27,7 +27,9 @@ namespace nifgen_grpc {
       NiFgenLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiFgenFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 

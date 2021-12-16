@@ -27,7 +27,9 @@ namespace nirfsg_grpc {
       NiRFSGLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiRFSGFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 

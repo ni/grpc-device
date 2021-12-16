@@ -27,7 +27,9 @@ namespace nifake_grpc {
       NiFakeLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiFakeFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 

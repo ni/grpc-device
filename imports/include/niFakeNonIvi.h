@@ -7,6 +7,7 @@
 const int32 kDriverSuccess = 0;
 const int32 kDriverFailure = 1;
 
+using FakeCrossDriverHandle = int32;
 using FakeHandle = uint64_t;
 using myInt16 = int16_t;
 using myUInt16 = uint16_t;

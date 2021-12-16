@@ -27,7 +27,9 @@ namespace nidmm_grpc {
       NiDmmLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiDmmFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 

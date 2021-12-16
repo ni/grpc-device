@@ -10,6 +10,24 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetCrossDriverSession': {
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            },
+            {
+                'cross_driver_session': 'FakeCrossDriverHandle',
+                'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'crossDriverSession',
+                'type': 'int32'
+            },
+        ],
+        'returns': 'int32'
+    },
     'GetMarbleAttributeDouble': {
         'parameters': [
             {
@@ -85,6 +103,24 @@ functions = {
                 'name': 'sessionName',
                 'type': 'const char[]',
                 'is_session_name': True
+            },
+            {
+                'direction': 'out',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'InitFromCrossDriverSession': {
+        'init_method': True,
+        'parameters': [
+            {
+                'cross_driver_session': 'FakeCrossDriverHandle',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'crossDriverSession',
+                'type': 'int32'
             },
             {
                 'direction': 'out',

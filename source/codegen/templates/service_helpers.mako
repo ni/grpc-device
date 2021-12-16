@@ -39,6 +39,34 @@ ${initialize_output_params(output_parameters_to_initialize)}\
       return ::grpc::Status::OK;\
 </%def>
 
+<%def name="define_cross_driver_init_method_body(function_name, function_data, parameters)">\
+<%
+  initiating_driver_input_param = next(p for p in parameters if common_helpers.is_input_parameter(p) and p['grpc_type'] == 'nidevice_grpc.Session')
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+  session_output_param = next(p for p in output_parameters if p['grpc_type'] == 'nidevice_grpc.Session')
+  output_parameters_to_initialize = [p for p in output_parameters if p['grpc_type'] != 'nidevice_grpc.Session']
+  cross_driver_dep = service_helpers.get_cross_driver_session_dependency(session_output_param)
+  session_output_var_name = common_helpers.get_cpp_local_name(session_output_param)
+  initiating_driver_input_var_name = common_helpers.get_cpp_local_name(initiating_driver_input_param)
+%>\
+${initialize_input_params(function_name, parameters)}
+${initialize_output_params(output_parameters_to_initialize)}\
+      auto initiating_session_id = session_repository_->resolve_session_id(${initiating_driver_input_var_name});
+      auto init_lambda = [&] () {
+        ${cross_driver_dep.resource_handle_type} ${session_output_var_name};
+        int status = library_->${function_name}(${service_helpers.create_args(parameters)});
+        return std::make_tuple(status, ${session_output_var_name});
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      int status = ${cross_driver_dep.field_name}->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_${session_output_var_name}()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;\
+</%def>
+
 ## Generate the core method body for an ivi-dance method. This should be what gets included within the try block in the service method.
 <%def name="define_ivi_dance_method_body(function_name, function_data, parameters)">\
 <%
@@ -487,7 +515,7 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.begin(),
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); \
+        [&](auto session) { return ${service_helpers.session_repository_field_name(parameter)}->access_session(session.id(), session.name()); }); \
 % elif c_type == 'ViBoolean[]':
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
@@ -510,7 +538,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
 % elif grpc_type == 'nidevice_grpc.Session':
       auto ${parameter_name}_grpc_session = ${request_snippet};
-      ${c_type} ${parameter_name} = session_repository_->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
+      ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter)}->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
 % elif c_type in ['ViAddr[]', 'ViInt32[]', 'ViUInt32[]', 'int32[]', 'uInt32[]', "ViAttr[]", "uInt64[]", "int64[]"]:
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 %elif c_type in ['const int32[]', 'const uInt32[]']:

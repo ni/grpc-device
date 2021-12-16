@@ -27,7 +27,9 @@ namespace nisync_grpc {
       NiSyncLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
       const NiSyncFeatureToggles& feature_toggles)
-      : library_(library), session_repository_(session_repository), feature_toggles_(feature_toggles)
+      : library_(library),
+      session_repository_(session_repository),
+      feature_toggles_(feature_toggles)
   {
   }
 
