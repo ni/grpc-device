@@ -37,6 +37,12 @@ namespace nifake_grpc {
   {
   }
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
+  }
+
   template <typename TEnum>
   void NiFakeService::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
   {
@@ -146,7 +152,7 @@ namespace nifake_grpc {
       std::vector<ViBoolean> an_array(number_of_elements, ViBoolean());
       auto status = library_->BoolArrayOutputFunction(vi, number_of_elements, an_array.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(an_array, response->mutable_an_array());
       }
       return ::grpc::Status::OK;
@@ -320,7 +326,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_configuration(configuration);
         }
         return ::grpc::Status::OK;
@@ -347,7 +353,7 @@ namespace nifake_grpc {
       ViInt32 actual_number_of_samples {};
       auto status = library_->FetchWaveform(vi, number_of_samples, waveform_data, &actual_number_of_samples);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_actual_number_of_samples(actual_number_of_samples);
       }
       return ::grpc::Status::OK;
@@ -370,7 +376,7 @@ namespace nifake_grpc {
       ViBoolean a_boolean {};
       auto status = library_->GetABoolean(vi, &a_boolean);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_a_boolean(a_boolean);
       }
       return ::grpc::Status::OK;
@@ -393,7 +399,7 @@ namespace nifake_grpc {
       ViInt16 a_number {};
       auto status = library_->GetANumber(vi, &a_number);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_a_number(a_number);
       }
       return ::grpc::Status::OK;
@@ -416,7 +422,7 @@ namespace nifake_grpc {
       std::string a_string(256 - 1, '\0');
       auto status = library_->GetAStringOfFixedMaximumSize(vi, (ViChar*)a_string.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_a_string(a_string);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
       }
@@ -438,7 +444,7 @@ namespace nifake_grpc {
       ViInt64 flags {};
       auto status = library_->GetBitfieldAsEnumArray(&flags);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         if (flags & 0x1)
           response->add_flags_array(Bitfield::BITFIELD_FLAG_A);
         if (flags & 0x2)
@@ -485,7 +491,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_a_string(a_string);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
         }
@@ -524,7 +530,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_array_out()->Resize(actual_size, 0);
           response->set_actual_size(actual_size);
         }
@@ -561,7 +567,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           convert_to_grpc(array_out, response->mutable_array_out());
           {
             auto shrunk_size = actual_size;
@@ -606,7 +612,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_array_out()->Resize(actual_size, 0);
           response->set_actual_size(actual_size);
         }
@@ -641,7 +647,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_array_out(array_out);
           response->mutable_array_out()->resize(actual_size);
           response->set_actual_size(actual_size);
@@ -680,7 +686,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_array_out(array_out);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_array_out()));
           response->set_actual_size(actual_size);
@@ -719,7 +725,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_string_out(string_out);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
           response->set_actual_size(actual_size);
@@ -745,7 +751,7 @@ namespace nifake_grpc {
       ViInt32 size_out {};
       auto status = library_->GetArraySizeForCustomCode(vi, &size_out);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_size_out(size_out);
       }
       return ::grpc::Status::OK;
@@ -782,7 +788,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
         }
         return ::grpc::Status::OK;
       }
@@ -806,7 +812,7 @@ namespace nifake_grpc {
       std::string u_int8_enum_array(array_len, '\0');
       auto status = library_->GetArrayViUInt8WithEnum(vi, array_len, (ViUInt8*)u_int8_enum_array.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         CopyBytesToEnums(u_int8_enum_array, response->mutable_u_int8_enum_array());
         response->set_u_int8_enum_array_raw(u_int8_enum_array);
       }
@@ -832,7 +838,7 @@ namespace nifake_grpc {
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -857,7 +863,7 @@ namespace nifake_grpc {
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -882,7 +888,7 @@ namespace nifake_grpc {
       ViInt64 attribute_value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -907,7 +913,7 @@ namespace nifake_grpc {
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -931,7 +937,7 @@ namespace nifake_grpc {
       ViSession session_out {};
       auto status = library_->GetAttributeViSession(vi, attribute_id, &session_out);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto session_id = session_repository_->resolve_session_id(session_out);
         response->mutable_session_out()->set_id(session_id);
       }
@@ -973,7 +979,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_attribute_value(attribute_value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         }
@@ -1003,7 +1009,7 @@ namespace nifake_grpc {
       ViInt32 minute {};
       auto status = library_->GetCalDateAndTime(vi, cal_type, &month, &day, &year, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_month(month);
         response->set_day(day);
         response->set_year(year);
@@ -1030,7 +1036,7 @@ namespace nifake_grpc {
       ViInt32 months {};
       auto status = library_->GetCalInterval(vi, &months);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_months(months);
       }
       return ::grpc::Status::OK;
@@ -1053,7 +1059,7 @@ namespace nifake_grpc {
       CustomStruct cs {};
       auto status = library_->GetCustomType(vi, &cs);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(cs, response->mutable_cs());
       }
       return ::grpc::Status::OK;
@@ -1077,7 +1083,7 @@ namespace nifake_grpc {
       std::vector<CustomStruct> cs(number_of_elements, CustomStruct());
       auto status = library_->GetCustomTypeArray(vi, number_of_elements, cs.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(cs, response->mutable_cs());
       }
       return ::grpc::Status::OK;
@@ -1101,7 +1107,7 @@ namespace nifake_grpc {
       ViInt16 a_turtle {};
       auto status = library_->GetEnumValue(vi, &a_quantity, &a_turtle);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_a_quantity(a_quantity);
         response->set_a_turtle(static_cast<nifake_grpc::Turtle>(a_turtle));
         response->set_a_turtle_raw(a_turtle);
@@ -1126,7 +1132,7 @@ namespace nifake_grpc {
       ViUInt8 a_uint8_number {};
       auto status = library_->GetViUInt8(vi, &a_uint8_number);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_a_uint8_number(a_uint8_number);
       }
       return ::grpc::Status::OK;
@@ -1151,7 +1157,7 @@ namespace nifake_grpc {
       ViInt32* int32_array = reinterpret_cast<ViInt32*>(response->mutable_int32_array()->mutable_data());
       auto status = library_->GetViInt32Array(vi, array_len, int32_array);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
       }
       return ::grpc::Status::OK;
     }
@@ -1175,7 +1181,7 @@ namespace nifake_grpc {
       ViUInt32* u_int32_array = reinterpret_cast<ViUInt32*>(response->mutable_u_int32_array()->mutable_data());
       auto status = library_->GetViUInt32Array(vi, array_len, u_int32_array);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
       }
       return ::grpc::Status::OK;
     }
@@ -1228,7 +1234,7 @@ namespace nifake_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -1259,7 +1265,7 @@ namespace nifake_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->CloseExtCal(id, 0); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -1309,7 +1315,7 @@ namespace nifake_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -1356,7 +1362,7 @@ namespace nifake_grpc {
       ViReal64* output_array_of_fixed_length = response->mutable_output_array_of_fixed_length()->mutable_data();
       auto status = library_->MultipleArrayTypes(vi, output_array_size, output_array, output_array_of_fixed_length, input_array_sizes, input_array_of_floats, input_array_of_integers.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
       }
       return ::grpc::Status::OK;
     }
@@ -1560,7 +1566,7 @@ namespace nifake_grpc {
       ViReal64 reading {};
       auto status = library_->Read(vi, maximum_time, &reading);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_reading(reading);
       }
       return ::grpc::Status::OK;
@@ -1593,7 +1599,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_data()->Resize(buffer_size, 0);
           response->set_buffer_size(buffer_size);
         }
@@ -1620,7 +1626,7 @@ namespace nifake_grpc {
       ViReal64 reading {};
       auto status = library_->ReadFromChannel(vi, channel_name, maximum_time, &reading);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_reading(reading);
       }
       return ::grpc::Status::OK;
@@ -1644,7 +1650,7 @@ namespace nifake_grpc {
       std::string a_string(256 - 1, '\0');
       auto status = library_->ReturnANumberAndAString(vi, &a_number, (ViChar*)a_string.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_a_number(a_number);
         response->set_a_string(a_string);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
@@ -1669,7 +1675,7 @@ namespace nifake_grpc {
       ViReal64 timedelta {};
       auto status = library_->ReturnDurationInSeconds(vi, &timedelta);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_timedelta(timedelta);
       }
       return ::grpc::Status::OK;
@@ -1694,7 +1700,7 @@ namespace nifake_grpc {
       ViReal64* timedeltas = response->mutable_timedeltas()->mutable_data();
       auto status = library_->ReturnListOfDurationsInSeconds(vi, number_of_elements, timedeltas);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
       }
       return ::grpc::Status::OK;
     }
@@ -1741,7 +1747,7 @@ namespace nifake_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_a_boolean(a_boolean);
           response->set_an_int32(an_int32);
           response->set_an_int64(an_int64);
@@ -1879,7 +1885,7 @@ namespace nifake_grpc {
       ViInt64 output {};
       auto status = library_->Use64BitNumber(vi, input, &output);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_output(output);
       }
       return ::grpc::Status::OK;
@@ -1986,7 +1992,7 @@ namespace nifake_grpc {
       std::string an_array(number_of_elements, '\0');
       auto status = library_->ViUInt8ArrayOutputFunction(vi, number_of_elements, (ViUInt8*)an_array.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_an_array(an_array);
       }
       return ::grpc::Status::OK;

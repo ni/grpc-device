@@ -87,6 +87,7 @@ PARAM_SCHEMA = Schema(
         Optional('callback_token'): bool,
         Optional('use_in_python_api'): bool,
         Optional('cross_driver_session'): str,
+        Optional('grpc_name'): str,
     }
 )
 

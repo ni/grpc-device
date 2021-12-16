@@ -40,6 +40,12 @@ namespace nidaqmx_grpc {
   {
   }
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::AddCDAQSyncConnection(::grpc::ServerContext* context, const AddCDAQSyncConnectionRequest* request, AddCDAQSyncConnectionResponse* response)
@@ -109,7 +115,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_device_name_out(device_name_out);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_device_name_out()));
         }
@@ -134,7 +140,7 @@ namespace nidaqmx_grpc {
       bool32 disconnected_ports_exist {};
       auto status = library_->AreConfiguredCDAQSyncPortsDisconnected(chassis_devices_ports, timeout, &disconnected_ports_exist);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_disconnected_ports_exist(disconnected_ports_exist);
       }
       return ::grpc::Status::OK;
@@ -181,7 +187,7 @@ namespace nidaqmx_grpc {
       float64* reverse_coeffs = response->mutable_reverse_coeffs()->mutable_data();
       auto status = library_->CalculateReversePolyCoeff(forward_coeffs, num_forward_coeffs_in, min_val_x, max_val_x, num_points_to_compute, reverse_poly_order, reverse_coeffs);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
       }
       return ::grpc::Status::OK;
     }
@@ -6694,7 +6700,7 @@ namespace nidaqmx_grpc {
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_task()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -6746,7 +6752,7 @@ namespace nidaqmx_grpc {
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_task()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -6778,7 +6784,7 @@ namespace nidaqmx_grpc {
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_task()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -6872,7 +6878,7 @@ namespace nidaqmx_grpc {
       bool32 cal_supported {};
       auto status = library_->DeviceSupportsCal(device_name, &cal_supported);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_cal_supported(cal_supported);
       }
       return ::grpc::Status::OK;
@@ -6993,7 +6999,7 @@ namespace nidaqmx_grpc {
       uInt32 minute {};
       auto status = library_->GetAIChanCalCalDate(task, channel_name, &year, &month, &day, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -7025,7 +7031,7 @@ namespace nidaqmx_grpc {
       uInt32 minute {};
       auto status = library_->GetAIChanCalExpDate(task, channel_name, &year, &month, &day, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -7078,7 +7084,7 @@ namespace nidaqmx_grpc {
       stateVector.resize(channels.size());
       auto status = ((NiDAQmxLibrary*)library_)->GetAnalogPowerUpStates(device_name, get_channelName_if(channels, 0), get_state_if(stateVector, 0), get_channelType_if(channels, 0), get_channelName_if(channels, 1), get_state_if(stateVector, 1), get_channelType_if(channels, 1), get_channelName_if(channels, 2), get_state_if(stateVector, 2), get_channelType_if(channels, 2), get_channelName_if(channels, 3), get_state_if(stateVector, 3), get_channelType_if(channels, 3), get_channelName_if(channels, 4), get_state_if(stateVector, 4), get_channelType_if(channels, 4), get_channelName_if(channels, 5), get_state_if(stateVector, 5), get_channelType_if(channels, 5), get_channelName_if(channels, 6), get_state_if(stateVector, 6), get_channelType_if(channels, 6), get_channelName_if(channels, 7), get_state_if(stateVector, 7), get_channelType_if(channels, 7), get_channelName_if(channels, 8), get_state_if(stateVector, 8), get_channelType_if(channels, 8), get_channelName_if(channels, 9), get_state_if(stateVector, 9), get_channelType_if(channels, 9), get_channelName_if(channels, 10), get_state_if(stateVector, 10), get_channelType_if(channels, 10), get_channelName_if(channels, 11), get_state_if(stateVector, 11), get_channelType_if(channels, 11), get_channelName_if(channels, 12), get_state_if(stateVector, 12), get_channelType_if(channels, 12), get_channelName_if(channels, 13), get_state_if(stateVector, 13), get_channelType_if(channels, 13), get_channelName_if(channels, 14), get_state_if(stateVector, 14), get_channelType_if(channels, 14), get_channelName_if(channels, 15), get_state_if(stateVector, 15), get_channelType_if(channels, 15), get_channelName_if(channels, 16), get_state_if(stateVector, 16), get_channelType_if(channels, 16), get_channelName_if(channels, 17), get_state_if(stateVector, 17), get_channelType_if(channels, 17), get_channelName_if(channels, 18), get_state_if(stateVector, 18), get_channelType_if(channels, 18), get_channelName_if(channels, 19), get_state_if(stateVector, 19), get_channelType_if(channels, 19), get_channelName_if(channels, 20), get_state_if(stateVector, 20), get_channelType_if(channels, 20), get_channelName_if(channels, 21), get_state_if(stateVector, 21), get_channelType_if(channels, 21), get_channelName_if(channels, 22), get_state_if(stateVector, 22), get_channelType_if(channels, 22), get_channelName_if(channels, 23), get_state_if(stateVector, 23), get_channelType_if(channels, 23), get_channelName_if(channels, 24), get_state_if(stateVector, 24), get_channelType_if(channels, 24), get_channelName_if(channels, 25), get_state_if(stateVector, 25), get_channelType_if(channels, 25), get_channelName_if(channels, 26), get_state_if(stateVector, 26), get_channelType_if(channels, 26), get_channelName_if(channels, 27), get_state_if(stateVector, 27), get_channelType_if(channels, 27), get_channelName_if(channels, 28), get_state_if(stateVector, 28), get_channelType_if(channels, 28), get_channelName_if(channels, 29), get_state_if(stateVector, 29), get_channelType_if(channels, 29), get_channelName_if(channels, 30), get_state_if(stateVector, 30), get_channelType_if(channels, 30), get_channelName_if(channels, 31), get_state_if(stateVector, 31), get_channelType_if(channels, 31), get_channelName_if(channels, 32), get_state_if(stateVector, 32), get_channelType_if(channels, 32), get_channelName_if(channels, 33), get_state_if(stateVector, 33), get_channelType_if(channels, 33), get_channelName_if(channels, 34), get_state_if(stateVector, 34), get_channelType_if(channels, 34), get_channelName_if(channels, 35), get_state_if(stateVector, 35), get_channelType_if(channels, 35), get_channelName_if(channels, 36), get_state_if(stateVector, 36), get_channelType_if(channels, 36), get_channelName_if(channels, 37), get_state_if(stateVector, 37), get_channelType_if(channels, 37), get_channelName_if(channels, 38), get_state_if(stateVector, 38), get_channelType_if(channels, 38), get_channelName_if(channels, 39), get_state_if(stateVector, 39), get_channelType_if(channels, 39), get_channelName_if(channels, 40), get_state_if(stateVector, 40), get_channelType_if(channels, 40), get_channelName_if(channels, 41), get_state_if(stateVector, 41), get_channelType_if(channels, 41), get_channelName_if(channels, 42), get_state_if(stateVector, 42), get_channelType_if(channels, 42), get_channelName_if(channels, 43), get_state_if(stateVector, 43), get_channelType_if(channels, 43), get_channelName_if(channels, 44), get_state_if(stateVector, 44), get_channelType_if(channels, 44), get_channelName_if(channels, 45), get_state_if(stateVector, 45), get_channelType_if(channels, 45), get_channelName_if(channels, 46), get_state_if(stateVector, 46), get_channelType_if(channels, 46), get_channelName_if(channels, 47), get_state_if(stateVector, 47), get_channelType_if(channels, 47), get_channelName_if(channels, 48), get_state_if(stateVector, 48), get_channelType_if(channels, 48), get_channelName_if(channels, 49), get_state_if(stateVector, 49), get_channelType_if(channels, 49), get_channelName_if(channels, 50), get_state_if(stateVector, 50), get_channelType_if(channels, 50), get_channelName_if(channels, 51), get_state_if(stateVector, 51), get_channelType_if(channels, 51), get_channelName_if(channels, 52), get_state_if(stateVector, 52), get_channelType_if(channels, 52), get_channelName_if(channels, 53), get_state_if(stateVector, 53), get_channelType_if(channels, 53), get_channelName_if(channels, 54), get_state_if(stateVector, 54), get_channelType_if(channels, 54), get_channelName_if(channels, 55), get_state_if(stateVector, 55), get_channelType_if(channels, 55), get_channelName_if(channels, 56), get_state_if(stateVector, 56), get_channelType_if(channels, 56), get_channelName_if(channels, 57), get_state_if(stateVector, 57), get_channelType_if(channels, 57), get_channelName_if(channels, 58), get_state_if(stateVector, 58), get_channelType_if(channels, 58), get_channelName_if(channels, 59), get_state_if(stateVector, 59), get_channelType_if(channels, 59), get_channelName_if(channels, 60), get_state_if(stateVector, 60), get_channelType_if(channels, 60), get_channelName_if(channels, 61), get_state_if(stateVector, 61), get_channelType_if(channels, 61), get_channelName_if(channels, 62), get_state_if(stateVector, 62), get_channelType_if(channels, 62), get_channelName_if(channels, 63), get_state_if(stateVector, 63), get_channelType_if(channels, 63), get_channelName_if(channels, 64), get_state_if(stateVector, 64), get_channelType_if(channels, 64), get_channelName_if(channels, 65), get_state_if(stateVector, 65), get_channelType_if(channels, 65), get_channelName_if(channels, 66), get_state_if(stateVector, 66), get_channelType_if(channels, 66), get_channelName_if(channels, 67), get_state_if(stateVector, 67), get_channelType_if(channels, 67), get_channelName_if(channels, 68), get_state_if(stateVector, 68), get_channelType_if(channels, 68), get_channelName_if(channels, 69), get_state_if(stateVector, 69), get_channelType_if(channels, 69), get_channelName_if(channels, 70), get_state_if(stateVector, 70), get_channelType_if(channels, 70), get_channelName_if(channels, 71), get_state_if(stateVector, 71), get_channelType_if(channels, 71), get_channelName_if(channels, 72), get_state_if(stateVector, 72), get_channelType_if(channels, 72), get_channelName_if(channels, 73), get_state_if(stateVector, 73), get_channelType_if(channels, 73), get_channelName_if(channels, 74), get_state_if(stateVector, 74), get_channelType_if(channels, 74), get_channelName_if(channels, 75), get_state_if(stateVector, 75), get_channelType_if(channels, 75), get_channelName_if(channels, 76), get_state_if(stateVector, 76), get_channelType_if(channels, 76), get_channelName_if(channels, 77), get_state_if(stateVector, 77), get_channelType_if(channels, 77), get_channelName_if(channels, 78), get_state_if(stateVector, 78), get_channelType_if(channels, 78), get_channelName_if(channels, 79), get_state_if(stateVector, 79), get_channelType_if(channels, 79), get_channelName_if(channels, 80), get_state_if(stateVector, 80), get_channelType_if(channels, 80), get_channelName_if(channels, 81), get_state_if(stateVector, 81), get_channelType_if(channels, 81), get_channelName_if(channels, 82), get_state_if(stateVector, 82), get_channelType_if(channels, 82), get_channelName_if(channels, 83), get_state_if(stateVector, 83), get_channelType_if(channels, 83), get_channelName_if(channels, 84), get_state_if(stateVector, 84), get_channelType_if(channels, 84), get_channelName_if(channels, 85), get_state_if(stateVector, 85), get_channelType_if(channels, 85), get_channelName_if(channels, 86), get_state_if(stateVector, 86), get_channelType_if(channels, 86), get_channelName_if(channels, 87), get_state_if(stateVector, 87), get_channelType_if(channels, 87), get_channelName_if(channels, 88), get_state_if(stateVector, 88), get_channelType_if(channels, 88), get_channelName_if(channels, 89), get_state_if(stateVector, 89), get_channelType_if(channels, 89), get_channelName_if(channels, 90), get_state_if(stateVector, 90), get_channelType_if(channels, 90), get_channelName_if(channels, 91), get_state_if(stateVector, 91), get_channelType_if(channels, 91), get_channelName_if(channels, 92), get_state_if(stateVector, 92), get_channelType_if(channels, 92), get_channelName_if(channels, 93), get_state_if(stateVector, 93), get_channelType_if(channels, 93), get_channelName_if(channels, 94), get_state_if(stateVector, 94), get_channelType_if(channels, 94), get_channelName_if(channels, 95), get_state_if(stateVector, 95), get_channelType_if(channels, 95), get_channelName_if(channels, 96), get_state_if(stateVector, 96), get_channelType_if(channels, 96));
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         for (int i = 0; i < stateVector.size(); ++i) {
           response->add_power_up_states(stateVector[i]);
         }
@@ -7106,7 +7112,7 @@ namespace nidaqmx_grpc {
       int32* channel_type_array = reinterpret_cast<int32*>(response->mutable_channel_type_array_raw()->mutable_data());
       auto status = library_->GetAnalogPowerUpStatesWithOutputType(channel_names, state_array, channel_type_array, &array_size_copy);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_state_array()->Resize(array_size_copy, 0);
         response->mutable_channel_type_array()->Clear();
         response->mutable_channel_type_array()->Reserve(array_size_copy);
@@ -7138,7 +7144,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetArmStartTrigTimestampVal(task, &data);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
@@ -7161,7 +7167,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetArmStartTrigTrigWhen(task, &data);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
@@ -7198,7 +7204,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_port_list(port_list);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_port_list()));
         }
@@ -7242,7 +7248,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetBufferAttributeUInt32(task, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -7284,7 +7290,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetCalInfoAttributeBool(device_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -7326,7 +7332,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetCalInfoAttributeDouble(device_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -7383,7 +7389,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -7427,7 +7433,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetCalInfoAttributeUInt32(device_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -7471,7 +7477,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetChanAttributeBool(task, channel, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -7515,7 +7521,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetChanAttributeDouble(task, channel, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -7572,7 +7578,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
         }
         return ::grpc::Status::OK;
       }
@@ -7616,7 +7622,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetChanAttributeInt32(task, channel, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::ChannelInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -7681,7 +7687,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -7727,7 +7733,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetChanAttributeUInt32(task, channel, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -7769,7 +7775,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetDeviceAttributeBool(device_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -7811,7 +7817,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetDeviceAttributeDouble(device_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -7866,7 +7872,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
         }
         return ::grpc::Status::OK;
       }
@@ -7908,7 +7914,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetDeviceAttributeInt32(device_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::DeviceInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -7969,7 +7975,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           auto checked_convert_value = [](auto raw_value) {
             bool raw_value_is_valid = nidaqmx_grpc::DeviceInt32AttributeValues_IsValid(raw_value);
             auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -8040,7 +8046,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -8084,7 +8090,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetDeviceAttributeUInt32(device_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -8139,7 +8145,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
         }
         return ::grpc::Status::OK;
       }
@@ -8161,7 +8167,7 @@ namespace nidaqmx_grpc {
       int32 logic_family {};
       auto status = library_->GetDigitalLogicFamilyPowerUpState(device_name, &logic_family);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_logic_family(logic_family);
       }
       return ::grpc::Status::OK;
@@ -8204,7 +8210,7 @@ namespace nidaqmx_grpc {
       stateVector.resize(channel_name.size());
       auto status = ((NiDAQmxLibrary*)library_)->GetDigitalPowerUpStates(device_name, get_channelName_if(channel_name, 0), get_state_if(stateVector, 0), get_channelName_if(channel_name, 1), get_state_if(stateVector, 1), get_channelName_if(channel_name, 2), get_state_if(stateVector, 2), get_channelName_if(channel_name, 3), get_state_if(stateVector, 3), get_channelName_if(channel_name, 4), get_state_if(stateVector, 4), get_channelName_if(channel_name, 5), get_state_if(stateVector, 5), get_channelName_if(channel_name, 6), get_state_if(stateVector, 6), get_channelName_if(channel_name, 7), get_state_if(stateVector, 7), get_channelName_if(channel_name, 8), get_state_if(stateVector, 8), get_channelName_if(channel_name, 9), get_state_if(stateVector, 9), get_channelName_if(channel_name, 10), get_state_if(stateVector, 10), get_channelName_if(channel_name, 11), get_state_if(stateVector, 11), get_channelName_if(channel_name, 12), get_state_if(stateVector, 12), get_channelName_if(channel_name, 13), get_state_if(stateVector, 13), get_channelName_if(channel_name, 14), get_state_if(stateVector, 14), get_channelName_if(channel_name, 15), get_state_if(stateVector, 15), get_channelName_if(channel_name, 16), get_state_if(stateVector, 16), get_channelName_if(channel_name, 17), get_state_if(stateVector, 17), get_channelName_if(channel_name, 18), get_state_if(stateVector, 18), get_channelName_if(channel_name, 19), get_state_if(stateVector, 19), get_channelName_if(channel_name, 20), get_state_if(stateVector, 20), get_channelName_if(channel_name, 21), get_state_if(stateVector, 21), get_channelName_if(channel_name, 22), get_state_if(stateVector, 22), get_channelName_if(channel_name, 23), get_state_if(stateVector, 23), get_channelName_if(channel_name, 24), get_state_if(stateVector, 24), get_channelName_if(channel_name, 25), get_state_if(stateVector, 25), get_channelName_if(channel_name, 26), get_state_if(stateVector, 26), get_channelName_if(channel_name, 27), get_state_if(stateVector, 27), get_channelName_if(channel_name, 28), get_state_if(stateVector, 28), get_channelName_if(channel_name, 29), get_state_if(stateVector, 29), get_channelName_if(channel_name, 30), get_state_if(stateVector, 30), get_channelName_if(channel_name, 31), get_state_if(stateVector, 31), get_channelName_if(channel_name, 32), get_state_if(stateVector, 32), get_channelName_if(channel_name, 33), get_state_if(stateVector, 33), get_channelName_if(channel_name, 34), get_state_if(stateVector, 34), get_channelName_if(channel_name, 35), get_state_if(stateVector, 35), get_channelName_if(channel_name, 36), get_state_if(stateVector, 36), get_channelName_if(channel_name, 37), get_state_if(stateVector, 37), get_channelName_if(channel_name, 38), get_state_if(stateVector, 38), get_channelName_if(channel_name, 39), get_state_if(stateVector, 39), get_channelName_if(channel_name, 40), get_state_if(stateVector, 40), get_channelName_if(channel_name, 41), get_state_if(stateVector, 41), get_channelName_if(channel_name, 42), get_state_if(stateVector, 42), get_channelName_if(channel_name, 43), get_state_if(stateVector, 43), get_channelName_if(channel_name, 44), get_state_if(stateVector, 44), get_channelName_if(channel_name, 45), get_state_if(stateVector, 45), get_channelName_if(channel_name, 46), get_state_if(stateVector, 46), get_channelName_if(channel_name, 47), get_state_if(stateVector, 47), get_channelName_if(channel_name, 48), get_state_if(stateVector, 48), get_channelName_if(channel_name, 49), get_state_if(stateVector, 49), get_channelName_if(channel_name, 50), get_state_if(stateVector, 50), get_channelName_if(channel_name, 51), get_state_if(stateVector, 51), get_channelName_if(channel_name, 52), get_state_if(stateVector, 52), get_channelName_if(channel_name, 53), get_state_if(stateVector, 53), get_channelName_if(channel_name, 54), get_state_if(stateVector, 54), get_channelName_if(channel_name, 55), get_state_if(stateVector, 55), get_channelName_if(channel_name, 56), get_state_if(stateVector, 56), get_channelName_if(channel_name, 57), get_state_if(stateVector, 57), get_channelName_if(channel_name, 58), get_state_if(stateVector, 58), get_channelName_if(channel_name, 59), get_state_if(stateVector, 59), get_channelName_if(channel_name, 60), get_state_if(stateVector, 60), get_channelName_if(channel_name, 61), get_state_if(stateVector, 61), get_channelName_if(channel_name, 62), get_state_if(stateVector, 62), get_channelName_if(channel_name, 63), get_state_if(stateVector, 63), get_channelName_if(channel_name, 64), get_state_if(stateVector, 64), get_channelName_if(channel_name, 65), get_state_if(stateVector, 65), get_channelName_if(channel_name, 66), get_state_if(stateVector, 66), get_channelName_if(channel_name, 67), get_state_if(stateVector, 67), get_channelName_if(channel_name, 68), get_state_if(stateVector, 68), get_channelName_if(channel_name, 69), get_state_if(stateVector, 69), get_channelName_if(channel_name, 70), get_state_if(stateVector, 70), get_channelName_if(channel_name, 71), get_state_if(stateVector, 71), get_channelName_if(channel_name, 72), get_state_if(stateVector, 72), get_channelName_if(channel_name, 73), get_state_if(stateVector, 73), get_channelName_if(channel_name, 74), get_state_if(stateVector, 74), get_channelName_if(channel_name, 75), get_state_if(stateVector, 75), get_channelName_if(channel_name, 76), get_state_if(stateVector, 76), get_channelName_if(channel_name, 77), get_state_if(stateVector, 77), get_channelName_if(channel_name, 78), get_state_if(stateVector, 78), get_channelName_if(channel_name, 79), get_state_if(stateVector, 79), get_channelName_if(channel_name, 80), get_state_if(stateVector, 80), get_channelName_if(channel_name, 81), get_state_if(stateVector, 81), get_channelName_if(channel_name, 82), get_state_if(stateVector, 82), get_channelName_if(channel_name, 83), get_state_if(stateVector, 83), get_channelName_if(channel_name, 84), get_state_if(stateVector, 84), get_channelName_if(channel_name, 85), get_state_if(stateVector, 85), get_channelName_if(channel_name, 86), get_state_if(stateVector, 86), get_channelName_if(channel_name, 87), get_state_if(stateVector, 87), get_channelName_if(channel_name, 88), get_state_if(stateVector, 88), get_channelName_if(channel_name, 89), get_state_if(stateVector, 89), get_channelName_if(channel_name, 90), get_state_if(stateVector, 90), get_channelName_if(channel_name, 91), get_state_if(stateVector, 91), get_channelName_if(channel_name, 92), get_state_if(stateVector, 92), get_channelName_if(channel_name, 93), get_state_if(stateVector, 93), get_channelName_if(channel_name, 94), get_state_if(stateVector, 94), get_channelName_if(channel_name, 95), get_state_if(stateVector, 95), get_channelName_if(channel_name, 96), get_state_if(stateVector, 96));
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         for (int i = 0; i < stateVector.size(); ++i) {
           response->add_power_up_states(static_cast<PowerUpStates>(stateVector[i]));
         }
@@ -8249,7 +8255,7 @@ namespace nidaqmx_grpc {
       stateVector.resize(channel_name.size());
       auto status = ((NiDAQmxLibrary*)library_)->GetDigitalPullUpPullDownStates(device_name, get_channelName_if(channel_name, 0), get_state_if(stateVector, 0), get_channelName_if(channel_name, 1), get_state_if(stateVector, 1), get_channelName_if(channel_name, 2), get_state_if(stateVector, 2), get_channelName_if(channel_name, 3), get_state_if(stateVector, 3), get_channelName_if(channel_name, 4), get_state_if(stateVector, 4), get_channelName_if(channel_name, 5), get_state_if(stateVector, 5), get_channelName_if(channel_name, 6), get_state_if(stateVector, 6), get_channelName_if(channel_name, 7), get_state_if(stateVector, 7), get_channelName_if(channel_name, 8), get_state_if(stateVector, 8), get_channelName_if(channel_name, 9), get_state_if(stateVector, 9), get_channelName_if(channel_name, 10), get_state_if(stateVector, 10), get_channelName_if(channel_name, 11), get_state_if(stateVector, 11), get_channelName_if(channel_name, 12), get_state_if(stateVector, 12), get_channelName_if(channel_name, 13), get_state_if(stateVector, 13), get_channelName_if(channel_name, 14), get_state_if(stateVector, 14), get_channelName_if(channel_name, 15), get_state_if(stateVector, 15), get_channelName_if(channel_name, 16), get_state_if(stateVector, 16), get_channelName_if(channel_name, 17), get_state_if(stateVector, 17), get_channelName_if(channel_name, 18), get_state_if(stateVector, 18), get_channelName_if(channel_name, 19), get_state_if(stateVector, 19), get_channelName_if(channel_name, 20), get_state_if(stateVector, 20), get_channelName_if(channel_name, 21), get_state_if(stateVector, 21), get_channelName_if(channel_name, 22), get_state_if(stateVector, 22), get_channelName_if(channel_name, 23), get_state_if(stateVector, 23), get_channelName_if(channel_name, 24), get_state_if(stateVector, 24), get_channelName_if(channel_name, 25), get_state_if(stateVector, 25), get_channelName_if(channel_name, 26), get_state_if(stateVector, 26), get_channelName_if(channel_name, 27), get_state_if(stateVector, 27), get_channelName_if(channel_name, 28), get_state_if(stateVector, 28), get_channelName_if(channel_name, 29), get_state_if(stateVector, 29), get_channelName_if(channel_name, 30), get_state_if(stateVector, 30), get_channelName_if(channel_name, 31), get_state_if(stateVector, 31), get_channelName_if(channel_name, 32), get_state_if(stateVector, 32), get_channelName_if(channel_name, 33), get_state_if(stateVector, 33), get_channelName_if(channel_name, 34), get_state_if(stateVector, 34), get_channelName_if(channel_name, 35), get_state_if(stateVector, 35), get_channelName_if(channel_name, 36), get_state_if(stateVector, 36), get_channelName_if(channel_name, 37), get_state_if(stateVector, 37), get_channelName_if(channel_name, 38), get_state_if(stateVector, 38), get_channelName_if(channel_name, 39), get_state_if(stateVector, 39), get_channelName_if(channel_name, 40), get_state_if(stateVector, 40), get_channelName_if(channel_name, 41), get_state_if(stateVector, 41), get_channelName_if(channel_name, 42), get_state_if(stateVector, 42), get_channelName_if(channel_name, 43), get_state_if(stateVector, 43), get_channelName_if(channel_name, 44), get_state_if(stateVector, 44), get_channelName_if(channel_name, 45), get_state_if(stateVector, 45), get_channelName_if(channel_name, 46), get_state_if(stateVector, 46), get_channelName_if(channel_name, 47), get_state_if(stateVector, 47), get_channelName_if(channel_name, 48), get_state_if(stateVector, 48), get_channelName_if(channel_name, 49), get_state_if(stateVector, 49), get_channelName_if(channel_name, 50), get_state_if(stateVector, 50), get_channelName_if(channel_name, 51), get_state_if(stateVector, 51), get_channelName_if(channel_name, 52), get_state_if(stateVector, 52), get_channelName_if(channel_name, 53), get_state_if(stateVector, 53), get_channelName_if(channel_name, 54), get_state_if(stateVector, 54), get_channelName_if(channel_name, 55), get_state_if(stateVector, 55), get_channelName_if(channel_name, 56), get_state_if(stateVector, 56), get_channelName_if(channel_name, 57), get_state_if(stateVector, 57), get_channelName_if(channel_name, 58), get_state_if(stateVector, 58), get_channelName_if(channel_name, 59), get_state_if(stateVector, 59), get_channelName_if(channel_name, 60), get_state_if(stateVector, 60), get_channelName_if(channel_name, 61), get_state_if(stateVector, 61), get_channelName_if(channel_name, 62), get_state_if(stateVector, 62), get_channelName_if(channel_name, 63), get_state_if(stateVector, 63), get_channelName_if(channel_name, 64), get_state_if(stateVector, 64), get_channelName_if(channel_name, 65), get_state_if(stateVector, 65), get_channelName_if(channel_name, 66), get_state_if(stateVector, 66), get_channelName_if(channel_name, 67), get_state_if(stateVector, 67), get_channelName_if(channel_name, 68), get_state_if(stateVector, 68), get_channelName_if(channel_name, 69), get_state_if(stateVector, 69), get_channelName_if(channel_name, 70), get_state_if(stateVector, 70), get_channelName_if(channel_name, 71), get_state_if(stateVector, 71), get_channelName_if(channel_name, 72), get_state_if(stateVector, 72), get_channelName_if(channel_name, 73), get_state_if(stateVector, 73), get_channelName_if(channel_name, 74), get_state_if(stateVector, 74), get_channelName_if(channel_name, 75), get_state_if(stateVector, 75), get_channelName_if(channel_name, 76), get_state_if(stateVector, 76), get_channelName_if(channel_name, 77), get_state_if(stateVector, 77), get_channelName_if(channel_name, 78), get_state_if(stateVector, 78), get_channelName_if(channel_name, 79), get_state_if(stateVector, 79), get_channelName_if(channel_name, 80), get_state_if(stateVector, 80), get_channelName_if(channel_name, 81), get_state_if(stateVector, 81), get_channelName_if(channel_name, 82), get_state_if(stateVector, 82), get_channelName_if(channel_name, 83), get_state_if(stateVector, 83), get_channelName_if(channel_name, 84), get_state_if(stateVector, 84), get_channelName_if(channel_name, 85), get_state_if(stateVector, 85), get_channelName_if(channel_name, 86), get_state_if(stateVector, 86), get_channelName_if(channel_name, 87), get_state_if(stateVector, 87), get_channelName_if(channel_name, 88), get_state_if(stateVector, 88), get_channelName_if(channel_name, 89), get_state_if(stateVector, 89), get_channelName_if(channel_name, 90), get_state_if(stateVector, 90), get_channelName_if(channel_name, 91), get_state_if(stateVector, 91), get_channelName_if(channel_name, 92), get_state_if(stateVector, 92), get_channelName_if(channel_name, 93), get_state_if(stateVector, 93), get_channelName_if(channel_name, 94), get_state_if(stateVector, 94), get_channelName_if(channel_name, 95), get_state_if(stateVector, 95), get_channelName_if(channel_name, 96), get_state_if(stateVector, 96));
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         for (int i = 0; i < stateVector.size(); ++i) {
           response->add_pull_up_pull_down_states(static_cast<ResistorState>(stateVector[i]));
         }
@@ -8288,7 +8294,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_port_list(port_list);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_port_list()));
         }
@@ -8328,7 +8334,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_error_string(error_string);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         }
@@ -8373,7 +8379,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetExportedSignalAttributeBool(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -8416,7 +8422,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetExportedSignalAttributeDouble(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -8459,7 +8465,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetExportedSignalAttributeInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::ExportSignalInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -8523,7 +8529,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -8568,7 +8574,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetExportedSignalAttributeUInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -8605,7 +8611,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_error_string(error_string);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         }
@@ -8630,7 +8636,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetFirstSampClkWhen(task, &data);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
@@ -8653,7 +8659,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetFirstSampTimestampVal(task, &data);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
@@ -8693,7 +8699,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_buffer(buffer);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
         }
@@ -8735,7 +8741,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_buffer(buffer);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
         }
@@ -8777,7 +8783,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_buffer(buffer);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
         }
@@ -8821,7 +8827,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetPersistedChanAttributeBool(channel, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -8878,7 +8884,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -8922,7 +8928,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetPersistedScaleAttributeBool(scale_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -8979,7 +8985,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -9023,7 +9029,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetPersistedTaskAttributeBool(task_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9080,7 +9086,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -9124,7 +9130,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetPhysicalChanAttributeBool(physical_channel, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9178,7 +9184,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
         }
         return ::grpc::Status::OK;
@@ -9221,7 +9227,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetPhysicalChanAttributeDouble(physical_channel, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9276,7 +9282,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
         }
         return ::grpc::Status::OK;
       }
@@ -9318,7 +9324,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetPhysicalChanAttributeInt32(physical_channel, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -9379,7 +9385,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           auto checked_convert_value = [](auto raw_value) {
             bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
             auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -9450,7 +9456,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -9494,7 +9500,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetPhysicalChanAttributeUInt32(physical_channel, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9549,7 +9555,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
         }
         return ::grpc::Status::OK;
       }
@@ -9592,7 +9598,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetReadAttributeBool(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9635,7 +9641,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetReadAttributeDouble(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9678,7 +9684,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetReadAttributeInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::ReadInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -9742,7 +9748,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -9787,7 +9793,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetReadAttributeUInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9830,7 +9836,7 @@ namespace nidaqmx_grpc {
       uInt64 value {};
       auto status = library_->GetReadAttributeUInt64(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9873,7 +9879,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetRealTimeAttributeBool(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9916,7 +9922,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetRealTimeAttributeInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::RealTimeInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -9965,7 +9971,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetRealTimeAttributeUInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -9988,7 +9994,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetRefTrigTimestampVal(task, &data);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
@@ -10030,7 +10036,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetScaleAttributeDouble(scale_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10085,7 +10091,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
         }
         return ::grpc::Status::OK;
       }
@@ -10127,7 +10133,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetScaleAttributeInt32(scale_name, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::ScaleInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -10190,7 +10196,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -10218,7 +10224,7 @@ namespace nidaqmx_grpc {
       uInt32 minute {};
       auto status = library_->GetSelfCalLastDateAndTime(device_name, &year, &month, &day, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -10245,7 +10251,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetStartTrigTimestampVal(task, &data);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
@@ -10268,7 +10274,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetStartTrigTrigWhen(task, &data);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
@@ -10291,7 +10297,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetSyncPulseTimeWhen(task, &data);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
       }
       return ::grpc::Status::OK;
@@ -10347,7 +10353,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -10390,7 +10396,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetSystemInfoAttributeUInt32(attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10433,7 +10439,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetTaskAttributeBool(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10491,7 +10497,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -10536,7 +10542,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetTaskAttributeUInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10579,7 +10585,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetTimingAttributeBool(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10622,7 +10628,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetTimingAttributeDouble(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10666,7 +10672,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetTimingAttributeExBool(task, device_names, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10710,7 +10716,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetTimingAttributeExDouble(task, device_names, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10754,7 +10760,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetTimingAttributeExInt32(task, device_names, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::TimingInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -10819,7 +10825,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -10865,7 +10871,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime value {};
       auto status = library_->GetTimingAttributeExTimestamp(task, device_names, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(value, response->mutable_value());
       }
       return ::grpc::Status::OK;
@@ -10909,7 +10915,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetTimingAttributeExUInt32(task, device_names, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10953,7 +10959,7 @@ namespace nidaqmx_grpc {
       uInt64 value {};
       auto status = library_->GetTimingAttributeExUInt64(task, device_names, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -10996,7 +11002,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetTimingAttributeInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::TimingInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -11060,7 +11066,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -11105,7 +11111,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime value {};
       auto status = library_->GetTimingAttributeTimestamp(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(value, response->mutable_value());
       }
       return ::grpc::Status::OK;
@@ -11148,7 +11154,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetTimingAttributeUInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -11191,7 +11197,7 @@ namespace nidaqmx_grpc {
       uInt64 value {};
       auto status = library_->GetTimingAttributeUInt64(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -11234,7 +11240,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetTrigAttributeBool(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -11277,7 +11283,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetTrigAttributeDouble(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -11333,7 +11339,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
         }
         return ::grpc::Status::OK;
       }
@@ -11376,7 +11382,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetTrigAttributeInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::TriggerInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -11438,7 +11444,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           auto checked_convert_value = [](auto raw_value) {
             bool raw_value_is_valid = nidaqmx_grpc::TriggerInt32AttributeValues_IsValid(raw_value);
             auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -11510,7 +11516,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -11555,7 +11561,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime value {};
       auto status = library_->GetTrigAttributeTimestamp(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(value, response->mutable_value());
       }
       return ::grpc::Status::OK;
@@ -11598,7 +11604,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetTrigAttributeUInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -11642,7 +11648,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetWatchdogAttributeBool(task, lines, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -11686,7 +11692,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetWatchdogAttributeDouble(task, lines, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -11730,7 +11736,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetWatchdogAttributeInt32(task, lines, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::WatchdogInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -11795,7 +11801,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -11840,7 +11846,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetWriteAttributeBool(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -11883,7 +11889,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetWriteAttributeDouble(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -11926,7 +11932,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetWriteAttributeInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nidaqmx_grpc::WriteInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -11990,7 +11996,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -12035,7 +12041,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetWriteAttributeUInt32(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -12078,7 +12084,7 @@ namespace nidaqmx_grpc {
       uInt64 value {};
       auto status = library_->GetWriteAttributeUInt64(task, attribute, &value, size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -12101,7 +12107,7 @@ namespace nidaqmx_grpc {
       bool32 is_task_done {};
       auto status = library_->IsTaskDone(task, &is_task_done);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_is_task_done(is_task_done);
       }
       return ::grpc::Status::OK;
@@ -12131,7 +12137,7 @@ namespace nidaqmx_grpc {
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_task()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -12176,7 +12182,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12201,7 +12207,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->ReadAnalogScalarF64(task, timeout, &value, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -12245,7 +12251,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryI16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_read_array()->Clear();
         response->mutable_read_array()->Reserve(array_size_in_samps);
         std::transform(
@@ -12299,7 +12305,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryI32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12343,7 +12349,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_read_array()->Clear();
         response->mutable_read_array()->Reserve(array_size_in_samps);
         std::transform(
@@ -12397,7 +12403,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12426,7 +12432,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterF64(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12471,7 +12477,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterF64Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12496,7 +12502,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->ReadCounterScalarF64(task, timeout, &value, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -12521,7 +12527,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->ReadCounterScalarU32(task, timeout, &value, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -12550,7 +12556,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterU32(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12595,7 +12601,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterU32Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12642,7 +12648,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCtrFreq(task, num_samps_per_chan, timeout, interleaved, read_array_frequency, read_array_duty_cycle, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12668,7 +12674,7 @@ namespace nidaqmx_grpc {
       float64 duty_cycle {};
       auto status = library_->ReadCtrFreqScalar(task, timeout, &frequency, &duty_cycle, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_frequency(frequency);
         response->set_duty_cycle(duty_cycle);
       }
@@ -12716,7 +12722,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCtrTicks(task, num_samps_per_chan, timeout, interleaved, read_array_high_ticks, read_array_low_ticks, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12742,7 +12748,7 @@ namespace nidaqmx_grpc {
       uInt32 low_ticks {};
       auto status = library_->ReadCtrTicksScalar(task, timeout, &high_ticks, &low_ticks, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_high_ticks(high_ticks);
         response->set_low_ticks(low_ticks);
       }
@@ -12790,7 +12796,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCtrTime(task, num_samps_per_chan, timeout, interleaved, read_array_high_time, read_array_low_time, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -12816,7 +12822,7 @@ namespace nidaqmx_grpc {
       float64 low_time {};
       auto status = library_->ReadCtrTimeScalar(task, timeout, &high_time, &low_time, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_high_time(high_time);
         response->set_low_time(low_time);
       }
@@ -12862,7 +12868,7 @@ namespace nidaqmx_grpc {
       int32 num_bytes_per_samp {};
       auto status = library_->ReadDigitalLines(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_bytes, &samps_per_chan_read, &num_bytes_per_samp, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_read_array(read_array);
         response->set_samps_per_chan_read(samps_per_chan_read);
         response->set_num_bytes_per_samp(num_bytes_per_samp);
@@ -12889,7 +12895,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->ReadDigitalScalarU32(task, timeout, &value, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -12933,7 +12939,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_read_array()->Clear();
         response->mutable_read_array()->Reserve(array_size_in_samps);
         std::transform(
@@ -12987,7 +12993,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadDigitalU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
       return ::grpc::Status::OK;
@@ -13031,7 +13037,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadDigitalU8(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_read_array(read_array);
         response->set_samps_per_chan_read(samps_per_chan_read);
       }
@@ -13061,7 +13067,7 @@ namespace nidaqmx_grpc {
       int32 num_bytes_per_samp {};
       auto status = library_->ReadRaw(task, num_samps_per_chan, timeout, (uInt8*)read_array.data(), array_size_in_bytes, &samps_read, &num_bytes_per_samp, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_read_array(read_array);
         response->set_samps_read(samps_read);
         response->set_num_bytes_per_samp(num_bytes_per_samp);
@@ -16926,7 +16932,7 @@ namespace nidaqmx_grpc {
       bool32 is_late {};
       auto status = library_->WaitForNextSampleClock(task, timeout, &is_late);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_is_late(is_late);
       }
       return ::grpc::Status::OK;
@@ -16966,7 +16972,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime timestamp {};
       auto status = library_->WaitForValidTimestamp(task, timestamp_event, timeout, &timestamp);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(timestamp, response->mutable_timestamp());
       }
       return ::grpc::Status::OK;
@@ -17030,7 +17036,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17114,7 +17120,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17161,7 +17167,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17222,7 +17228,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17269,7 +17275,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17314,7 +17320,7 @@ namespace nidaqmx_grpc {
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrFreq(task, num_samps_per_chan, auto_start, timeout, data_layout, frequency, duty_cycle, &num_samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_num_samps_per_chan_written(num_samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17383,7 +17389,7 @@ namespace nidaqmx_grpc {
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrTicks(task, num_samps_per_chan, auto_start, timeout, data_layout, high_ticks, low_ticks, &num_samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_num_samps_per_chan_written(num_samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17452,7 +17458,7 @@ namespace nidaqmx_grpc {
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrTime(task, num_samps_per_chan, auto_start, timeout, data_layout, high_time, low_time, &num_samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_num_samps_per_chan_written(num_samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17520,7 +17526,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalLines(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17604,7 +17610,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17651,7 +17657,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17695,7 +17701,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU8(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;
@@ -17723,7 +17729,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteRaw(task, num_samps, auto_start, timeout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
       }
       return ::grpc::Status::OK;

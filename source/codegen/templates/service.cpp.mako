@@ -80,6 +80,12 @@ namespace ${config["namespace_component"]}_grpc {
   {
   }
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return ${config['status_ok']};
+  }
+
 % if common_helpers.has_enum_array_string_out_param(functions):
   template <typename TEnum>
   void ${service_class_prefix}Service::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
@@ -171,7 +177,7 @@ template <>
 void convert_to_grpc(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
 {
 %       for field in common_helpers.filter_parameters_for_grpc_fields(custom_type["fields"]):
-  output->set_${field["grpc_name"]}(input.${field["name"]});
+  output->set_${common_helpers.get_grpc_field_name(field)}(input.${field["name"]});
 %       endfor
 }
 
@@ -183,7 +189,7 @@ ${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type[
   auto output = ${custom_type["name"]}();  
 %       for field in common_helpers.filter_parameters_for_grpc_fields(custom_type["fields"]):
 <%
-            input_field_name = field["grpc_name"]
+            input_field_name = common_helpers.get_grpc_field_name(field)
             output_field_name = field["name"]
 %>\
 %           if field.get("coerced", False):

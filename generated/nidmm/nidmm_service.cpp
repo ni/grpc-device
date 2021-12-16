@@ -37,6 +37,12 @@ namespace nidmm_grpc {
   {
   }
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiDmmService::Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response)
@@ -1184,7 +1190,7 @@ namespace nidmm_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_configuration(configuration);
         }
         return ::grpc::Status::OK;
@@ -1244,7 +1250,7 @@ namespace nidmm_grpc {
       ViReal64 reading {};
       auto status = library_->Fetch(vi, maximum_time, &reading);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_reading(reading);
       }
       return ::grpc::Status::OK;
@@ -1286,7 +1292,7 @@ namespace nidmm_grpc {
       ViInt32 actual_number_of_points {};
       auto status = library_->FetchMultiPoint(vi, maximum_time, array_size, reading_array, &actual_number_of_points);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_actual_number_of_points(actual_number_of_points);
       }
       return ::grpc::Status::OK;
@@ -1328,7 +1334,7 @@ namespace nidmm_grpc {
       ViInt32 actual_number_of_points {};
       auto status = library_->FetchWaveform(vi, maximum_time, array_size, waveform_array, &actual_number_of_points);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_actual_number_of_points(actual_number_of_points);
       }
       return ::grpc::Status::OK;
@@ -1352,7 +1358,7 @@ namespace nidmm_grpc {
       ViInt32 aperture_time_units {};
       auto status = library_->GetApertureTimeInfo(vi, &aperture_time, &aperture_time_units);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         if(aperture_time == (int)aperture_time) {
           response->set_aperture_time(static_cast<nidmm_grpc::ApertureTime>(static_cast<int>(aperture_time)));
         }
@@ -1382,7 +1388,7 @@ namespace nidmm_grpc {
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -1407,7 +1413,7 @@ namespace nidmm_grpc {
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -1432,7 +1438,7 @@ namespace nidmm_grpc {
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -1457,7 +1463,7 @@ namespace nidmm_grpc {
       ViSession attribute_value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto session_id = session_repository_->resolve_session_id(attribute_value);
         response->mutable_attribute_value()->set_id(session_id);
       }
@@ -1499,7 +1505,7 @@ namespace nidmm_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_attribute_value(attribute_value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         }
@@ -1524,7 +1530,7 @@ namespace nidmm_grpc {
       ViReal64 actual_range {};
       auto status = library_->GetAutoRangeValue(vi, &actual_range);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_actual_range(actual_range);
       }
       return ::grpc::Status::OK;
@@ -1567,7 +1573,7 @@ namespace nidmm_grpc {
       ViInt32 minute {};
       auto status = library_->GetCalDateAndTime(vi, cal_type, &month, &day, &year, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_month(month);
         response->set_day(day);
         response->set_year(year);
@@ -1611,7 +1617,7 @@ namespace nidmm_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_channel_string(channel_string);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_string()));
         }
@@ -1637,7 +1643,7 @@ namespace nidmm_grpc {
       ViReal64 temperature {};
       auto status = library_->GetDevTemp(vi, options, &temperature);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temperature(temperature);
       }
       return ::grpc::Status::OK;
@@ -1677,7 +1683,7 @@ namespace nidmm_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_error_code(error_code);
           response->set_description(description);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
@@ -1720,7 +1726,7 @@ namespace nidmm_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_error_message(error_message);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
         }
@@ -1745,7 +1751,7 @@ namespace nidmm_grpc {
       ViInt32 months {};
       auto status = library_->GetExtCalRecommendedInterval(vi, &months);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_months(months);
       }
       return ::grpc::Status::OK;
@@ -1784,7 +1790,7 @@ namespace nidmm_grpc {
       ViReal64 temperature {};
       auto status = library_->GetLastCalTemp(vi, cal_type, &temperature);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temperature(temperature);
       }
       return ::grpc::Status::OK;
@@ -1807,7 +1813,7 @@ namespace nidmm_grpc {
       ViReal64 period {};
       auto status = library_->GetMeasurementPeriod(vi, &period);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_period(period);
       }
       return ::grpc::Status::OK;
@@ -1846,7 +1852,7 @@ namespace nidmm_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_coercion_record(coercion_record);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
         }
@@ -1887,7 +1893,7 @@ namespace nidmm_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_interchange_warning(interchange_warning);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
         }
@@ -1912,7 +1918,7 @@ namespace nidmm_grpc {
       ViBoolean self_cal_supported {};
       auto status = library_->GetSelfCalSupported(vi, &self_cal_supported);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_self_cal_supported(self_cal_supported);
       }
       return ::grpc::Status::OK;
@@ -1985,7 +1991,7 @@ namespace nidmm_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2018,7 +2024,7 @@ namespace nidmm_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2080,7 +2086,7 @@ namespace nidmm_grpc {
       ViBoolean is_over_range {};
       auto status = library_->IsOverRange(vi, measurement_value, &is_over_range);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_is_over_range(is_over_range);
       }
       return ::grpc::Status::OK;
@@ -2104,7 +2110,7 @@ namespace nidmm_grpc {
       ViBoolean is_under_range {};
       auto status = library_->IsUnderRange(vi, measurement_value, &is_under_range);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_is_under_range(is_under_range);
       }
       return ::grpc::Status::OK;
@@ -2128,7 +2134,7 @@ namespace nidmm_grpc {
       ViReal64 susceptance {};
       auto status = library_->PerformOpenCableComp(vi, &conductance, &susceptance);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_conductance(conductance);
         response->set_susceptance(susceptance);
       }
@@ -2153,7 +2159,7 @@ namespace nidmm_grpc {
       ViReal64 reactance {};
       auto status = library_->PerformShortCableComp(vi, &resistance, &reactance);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_resistance(resistance);
         response->set_reactance(reactance);
       }
@@ -2193,7 +2199,7 @@ namespace nidmm_grpc {
       ViReal64 reading {};
       auto status = library_->Read(vi, maximum_time, &reading);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_reading(reading);
       }
       return ::grpc::Status::OK;
@@ -2235,7 +2241,7 @@ namespace nidmm_grpc {
       ViInt32 actual_number_of_points {};
       auto status = library_->ReadMultiPoint(vi, maximum_time, array_size, reading_array, &actual_number_of_points);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_actual_number_of_points(actual_number_of_points);
       }
       return ::grpc::Status::OK;
@@ -2259,7 +2265,7 @@ namespace nidmm_grpc {
       ViInt16 acquisition_status {};
       auto status = library_->ReadStatus(vi, &acquisition_backlog, &acquisition_status);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_acquisition_backlog(acquisition_backlog);
         response->set_acquisition_status(static_cast<nidmm_grpc::AcquisitionStatus>(acquisition_status));
         response->set_acquisition_status_raw(acquisition_status);
@@ -2303,7 +2309,7 @@ namespace nidmm_grpc {
       ViInt32 actual_number_of_points {};
       auto status = library_->ReadWaveform(vi, maximum_time, array_size, waveform_array, &actual_number_of_points);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_actual_number_of_points(actual_number_of_points);
       }
       return ::grpc::Status::OK;
@@ -2384,7 +2390,7 @@ namespace nidmm_grpc {
       std::string firmware_revision(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_instrument_driver_revision(instrument_driver_revision);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
         response->set_firmware_revision(firmware_revision);
@@ -2430,7 +2436,7 @@ namespace nidmm_grpc {
       std::string self_test_message(256 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));

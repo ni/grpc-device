@@ -57,13 +57,13 @@ def is_output_array_that_needs_coercion(parameter):
 
 def create_args_for_callback(parameters):
     return ", ".join([
-        f'{p["type"]} {common_helpers.camel_to_snake(p["name"])}'
+        f'{p["type"]} {common_helpers.get_grpc_field_name(p)}'
         for p in parameters
     ])
 
 
 def create_standard_arg(parameter):
-    parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+    parameter_name = common_helpers.get_cpp_local_name(parameter)
     is_array = common_helpers.is_array(parameter['type'])
     is_output = common_helpers.is_output_parameter(parameter)
     if is_output and common_helpers.is_string_arg(parameter):
@@ -90,18 +90,11 @@ def create_standard_arg(parameter):
 
 def create_args(parameters):
     result = ''
-    is_twist_mechanism = common_helpers.has_ivi_dance_with_a_twist_param(
-        parameters)
-    if is_twist_mechanism:
-        twist_value = common_helpers.get_twist_value(parameters)
-        twist_value_name = common_helpers.camel_to_snake(twist_value)
     have_expanded_varargs = False
     for parameter in parameters:
         if parameter.get('repeating_argument', False):
             continue
-        parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-        is_array = common_helpers.is_array(parameter['type'])
-        is_output = common_helpers.is_output_parameter(parameter)
+        parameter_name = common_helpers.get_cpp_local_name(parameter)
         if common_helpers.is_repeated_varargs_parameter(parameter):
             # Some methods have both input and output repeated varargs parameters,
             # so only expand them once.
@@ -148,7 +141,7 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
     sizes = { p["size"]["value"] for p in ivi_twist_array_params }
 
     for parameter in parameters:
-        c_name = common_helpers.camel_to_snake(parameter['cppName'])
+        c_name = common_helpers.get_cpp_local_name(parameter)
         name = parameter["name"]
         if name in arrays:
             result = f'{result}nullptr, '

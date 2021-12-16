@@ -11,6 +11,7 @@ config = {
     'close_function': 'Close',
     'driver_name': 'NI-FAKE-NON-IVI',
     'resource_handle_type': 'FakeHandle',
+    'status_ok': 'status >= 0',
     'custom_types': [
         {
             'name': 'StringAndEnum',

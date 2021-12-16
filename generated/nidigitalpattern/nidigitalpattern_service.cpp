@@ -37,6 +37,12 @@ namespace nidigitalpattern_grpc {
   {
   }
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
+  }
+
   template <typename TEnum>
   void NiDigitalService::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
   {
@@ -1320,7 +1326,7 @@ namespace nidigitalpattern_grpc {
       std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
@@ -1399,7 +1405,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_data()->Resize(actual_num_waveforms, 0);
           response->set_actual_num_waveforms(actual_num_waveforms);
           response->set_actual_samples_per_waveform(actual_samples_per_waveform);
@@ -1431,7 +1437,7 @@ namespace nidigitalpattern_grpc {
       ViInt32 num_dut_cycles {};
       auto status = library_->FetchHistoryRAMCycleInformation(vi, site, sample_index, &pattern_index, &time_set_index, &vector_number, &cycle_number, &num_dut_cycles);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_pattern_index(pattern_index);
         response->set_time_set_index(time_set_index);
         response->set_vector_number(vector_number);
@@ -1476,7 +1482,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           CopyBytesToEnums(expected_pin_states, response->mutable_expected_pin_states());
           response->set_expected_pin_states_raw(expected_pin_states);
           response->mutable_expected_pin_states()->Resize(actual_num_pin_data, 0);
@@ -1510,7 +1516,7 @@ namespace nidigitalpattern_grpc {
       ViInt64 scan_cycle_number {};
       auto status = library_->FetchHistoryRAMScanCycleNumber(vi, site, sample_index, &scan_cycle_number);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_scan_cycle_number(scan_cycle_number);
       }
       return ::grpc::Status::OK;
@@ -1603,7 +1609,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
           response->set_actual_num_frequencies(actual_num_frequencies);
         }
@@ -1630,7 +1636,7 @@ namespace nidigitalpattern_grpc {
       ViBoolean value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1655,7 +1661,7 @@ namespace nidigitalpattern_grpc {
       ViInt32 value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1680,7 +1686,7 @@ namespace nidigitalpattern_grpc {
       ViInt64 value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1705,7 +1711,7 @@ namespace nidigitalpattern_grpc {
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1730,7 +1736,7 @@ namespace nidigitalpattern_grpc {
       ViSession value {};
       auto status = library_->GetAttributeViSession(vi, channel_list, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto session_id = session_repository_->resolve_session_id(value);
         response->mutable_value()->set_id(session_id);
       }
@@ -1772,7 +1778,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -1814,7 +1820,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_name(name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
@@ -1856,7 +1862,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_names(names);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_names()));
         }
@@ -1898,7 +1904,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_error_code(error_code);
           response->set_error_description(error_description);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
@@ -1938,7 +1944,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_failure_count()->Resize(actual_num_read, 0);
           response->set_actual_num_read(actual_num_read);
         }
@@ -1964,7 +1970,7 @@ namespace nidigitalpattern_grpc {
       ViInt64 sample_count {};
       auto status = library_->GetHistoryRAMSampleCount(vi, site, &sample_count);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_sample_count(sample_count);
       }
       return ::grpc::Status::OK;
@@ -2001,7 +2007,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
           response->set_actual_num_pins(actual_num_pins);
         }
@@ -2043,7 +2049,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_name(name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
@@ -2085,7 +2091,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_pin_list(pin_list);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_pin_list()));
         }
@@ -2127,7 +2133,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_name(name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
@@ -2170,7 +2176,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_pin_indexes()->Resize(actual_num_values, 0);
           response->mutable_site_numbers()->Resize(actual_num_values, 0);
           response->mutable_channel_indexes()->Resize(actual_num_values, 0);
@@ -2210,7 +2216,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           convert_to_grpc(pass_fail, response->mutable_pass_fail());
           response->mutable_pass_fail()->Resize(actual_num_sites, 0);
           response->set_actual_num_sites(actual_num_sites);
@@ -2266,7 +2272,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
           response->set_actual_num_site_numbers(actual_num_site_numbers);
         }
@@ -2293,7 +2299,7 @@ namespace nidigitalpattern_grpc {
       ViInt32 format {};
       auto status = library_->GetTimeSetDriveFormat(vi, pin, time_set_name, &format);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_format(static_cast<nidigitalpattern_grpc::DriveFormat>(format));
         response->set_format_raw(format);
       }
@@ -2335,7 +2341,7 @@ namespace nidigitalpattern_grpc {
       ViReal64 time {};
       auto status = library_->GetTimeSetEdge(vi, pin, time_set_name, edge, &time);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_time(time);
       }
       return ::grpc::Status::OK;
@@ -2360,7 +2366,7 @@ namespace nidigitalpattern_grpc {
       ViInt32 edge_multiplier {};
       auto status = library_->GetTimeSetEdgeMultiplier(vi, pin, time_set_name, &edge_multiplier);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_edge_multiplier(edge_multiplier);
       }
       return ::grpc::Status::OK;
@@ -2400,7 +2406,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_name(name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         }
@@ -2426,7 +2432,7 @@ namespace nidigitalpattern_grpc {
       ViReal64 period {};
       auto status = library_->GetTimeSetPeriod(vi, time_set_name, &period);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_period(period);
       }
       return ::grpc::Status::OK;
@@ -2458,7 +2464,7 @@ namespace nidigitalpattern_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2491,7 +2497,7 @@ namespace nidigitalpattern_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2533,7 +2539,7 @@ namespace nidigitalpattern_grpc {
       ViBoolean done {};
       auto status = library_->IsDone(vi, &done);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_done(done);
       }
       return ::grpc::Status::OK;
@@ -2557,7 +2563,7 @@ namespace nidigitalpattern_grpc {
       ViBoolean enable {};
       auto status = library_->IsSiteEnabled(vi, site, &enable);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_enable(enable);
       }
       return ::grpc::Status::OK;
@@ -2948,7 +2954,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_measurements()->Resize(actual_num_read, 0);
           response->set_actual_num_read(actual_num_read);
         }
@@ -2994,7 +3000,7 @@ namespace nidigitalpattern_grpc {
       ViBoolean value {};
       auto status = library_->ReadSequencerFlag(vi, flag, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -3018,7 +3024,7 @@ namespace nidigitalpattern_grpc {
       ViInt32 value {};
       auto status = library_->ReadSequencerRegister(vi, reg, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -3054,7 +3060,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           CopyBytesToEnums(data, response->mutable_data());
           response->set_data_raw(data);
           response->mutable_data()->Resize(actual_num_read, 0);
@@ -3196,7 +3202,7 @@ namespace nidigitalpattern_grpc {
       std::string test_message(2048 - 1, '\0');
       auto status = library_->SelfTest(vi, &test_result, (ViChar*)test_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_test_result(test_result);
         response->set_test_message(test_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_test_message()));
@@ -3420,7 +3426,7 @@ namespace nidigitalpattern_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_offsets()->Resize(actual_num_offsets, 0);
           response->set_actual_num_offsets(actual_num_offsets);
         }
