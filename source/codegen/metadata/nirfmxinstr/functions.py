@@ -154,7 +154,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -179,7 +180,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -199,7 +201,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -219,7 +222,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -262,7 +266,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -287,7 +292,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -312,7 +318,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -337,7 +344,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -395,7 +403,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -415,7 +424,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -430,7 +440,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -455,7 +466,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -480,7 +492,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -495,7 +508,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -510,7 +524,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -530,7 +545,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -545,7 +561,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -560,7 +577,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -580,7 +598,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -606,7 +625,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -647,7 +667,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -673,7 +694,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -714,7 +736,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -740,7 +763,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -766,7 +790,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -807,7 +832,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -833,7 +859,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -874,7 +901,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -901,7 +929,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -943,7 +972,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -984,7 +1014,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1025,7 +1056,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1060,7 +1092,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1086,7 +1119,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1112,7 +1146,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1153,7 +1188,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1194,7 +1230,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1220,7 +1257,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1261,7 +1299,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1290,7 +1329,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1319,7 +1359,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1348,7 +1389,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1368,7 +1410,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1383,7 +1426,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1413,7 +1457,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1438,7 +1483,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1475,7 +1521,8 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'handleOut',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1497,7 +1544,8 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'handleOut',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1523,7 +1571,8 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'handleOut',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1533,7 +1582,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1558,7 +1608,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1578,7 +1629,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1608,7 +1660,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1629,7 +1682,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1639,7 +1693,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1649,7 +1704,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1659,7 +1715,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1674,7 +1731,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1694,7 +1752,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1714,7 +1773,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1754,7 +1814,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1764,7 +1825,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             }
         ],
@@ -1774,7 +1836,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1800,7 +1863,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1835,7 +1899,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1861,7 +1926,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1896,7 +1962,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1922,7 +1989,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1948,7 +2016,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -1983,7 +2052,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2009,7 +2079,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2044,7 +2115,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2071,7 +2143,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2107,7 +2180,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2142,7 +2216,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2177,7 +2252,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2203,7 +2279,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2229,7 +2306,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2255,7 +2333,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2290,7 +2369,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2325,7 +2405,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2351,7 +2432,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {
@@ -2426,7 +2508,8 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'instrument',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
                 'type': 'niRFmxInstrHandle'
             },
             {

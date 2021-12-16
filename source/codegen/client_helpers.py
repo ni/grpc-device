@@ -132,7 +132,7 @@ def get_param_mechanism(param: dict) -> ParamMechanism:
 
 
 def create_client_param(param: dict, enums: dict) -> ClientParam:
-  name = common_helpers.camel_to_snake(param["name"])
+  name = common_helpers.get_grpc_field_name(param)
   param_type = get_cpp_client_param_type(param, enums)
   param_type = const_ref_t(param_type)
   param_mechanism = get_param_mechanism(param)

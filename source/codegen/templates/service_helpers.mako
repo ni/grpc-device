@@ -11,10 +11,10 @@
   session_output_param = next((parameter for parameter in output_parameters if parameter['grpc_type'] == 'nidevice_grpc.Session'), None)
   output_parameters_to_initialize = [p for p in output_parameters if p['grpc_type'] != 'nidevice_grpc.Session']
   resource_handle_type = session_output_param['type']
-  session_output_var_name = common_helpers.camel_to_snake(session_output_param['cppName'])
+  session_output_var_name = common_helpers.get_cpp_local_name(session_output_param)
   close_function_call = function_data['custom_close'] if 'custom_close' in function_data else f"{config['close_function']}(id)"
 
-  explicit_session_params = (common_helpers.camel_to_snake(param['cppName']) for param in parameters if param.get('is_session_name', False))
+  explicit_session_params = (common_helpers.get_cpp_local_name(param) for param in parameters if param.get('is_session_name', False))
   session_field_name = next(explicit_session_params, 'session_name')
 %>\
 ${initialize_input_params(function_name, parameters)}
@@ -53,15 +53,15 @@ ${initialize_input_params(function_name, non_ivi_params)}\
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        ${size_param['type']} ${common_helpers.camel_to_snake(size_param['cppName'])} = status;
+        ${size_param['type']} ${common_helpers.get_cpp_local_name(size_param)} = status;
       
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(output_parameters)}\
 </%block>\
         status = library_->${function_name}(${service_helpers.create_args(parameters)});
-        ## We cast status into ${common_helpers.camel_to_snake(size_param['cppName'])} above, so it's safe to cast
+        ## We cast status into ${common_helpers.get_cpp_local_name(size_param)} above, so it's safe to cast
         ## back to status's type here. (we do this to avoid a compiler warning)
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(${common_helpers.camel_to_snake(size_param['cppName'])})) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(${common_helpers.get_cpp_local_name(size_param)})) {
           // buffer is now too small, try again
           continue;
         }
@@ -84,8 +84,8 @@ ${set_response_values(output_parameters)}\
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   array_output_parameters = [p for p in output_parameters if common_helpers.is_array(p['type'])]
   scalar_output_parameters = [p for p in output_parameters if p not in array_output_parameters]
-  size_param_name = common_helpers.get_param_cpp_name(size_param)
-  twist_param_name = common_helpers.get_param_cpp_name(twist_param)
+  size_param_name = common_helpers.get_cpp_local_name(size_param)
+  twist_param_name = common_helpers.get_cpp_local_name(twist_param)
   is_in_out_twist = size_param_name == twist_param_name
 %>\
 ${initialize_input_params(function_name, non_ivi_params)}\
@@ -267,7 +267,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       stripped_grpc_type = 'std::string'
   parameter_c_type = parameter['type']
   parameter_c_type_pointer = parameter_c_type.replace('[]','*')
-  parameter_name = common_helpers.camel_to_snake(parameter['name'])
+  parameter_name = common_helpers.get_grpc_field_name(parameter)
 %>\
       auto get_${parameter['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, int n) -> ${parameter_c_type_pointer} {
             if (vector.size() > n) {
@@ -293,8 +293,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%def name="initialize_repeated_varargs_param(parameter)">\
 <%
   config = data['config']
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  field_name = common_helpers.camel_to_snake(parameter["name"])
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
+  field_name = common_helpers.get_grpc_field_name(parameter)
   stripped_grpc_type = common_helpers.strip_repeated_from_grpc_type(parameter['grpc_type'])
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
@@ -316,8 +316,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## (i.e. mapped enums, _raw fields, etc.)
 <%def name="initialize_enum_array_input_param(function_name, parameter)">\
 <%
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  field_name = common_helpers.camel_to_snake(parameter["name"])
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
+  field_name = common_helpers.get_grpc_field_name(parameter)
   element_type = service_helpers.get_c_element_type(parameter)
 %>\
       auto ${parameter_name}_vector = std::vector<${element_type}>();
@@ -336,9 +336,9 @@ ${initialize_standard_input_param(function_name, parameter)}
   config = data['config']
   enums = data['enums']
   namespace_prefix = config["namespace_component"] + "_grpc::"
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
   parameter_type_pointer = parameter['type'].replace('[]','*')
-  field_name = common_helpers.camel_to_snake(parameter["name"])
+  field_name = common_helpers.get_grpc_field_name(parameter)
   pascal_field_name = common_helpers.snake_to_pascal(field_name)
   one_of_case_prefix = f'{namespace_prefix}{function_name}Request::{pascal_field_name}EnumCase'
   has_mapped_enum = 'mapped-enum' in parameter
@@ -409,8 +409,9 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Initialize an input parameter that is determined by the 'len' size mechanism.
 <%def name="initialize_len_input_param(parameter)">\
 <%
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
   size_sources = parameter["determine_size_from"]
+  size_field_name = common_helpers.get_grpc_field_name_from_str(size_sources[-1])
   allow_optional = parameter["linked_params_are_optional"]
   allow_optional_as_cpp_constant = "true" if allow_optional else "false"
 %>\
@@ -420,7 +421,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%block filter="common_helpers.trim_trailing_comma()">\
 % for size_source in size_sources:
 <%
-      current_size_field_name = common_helpers.camel_to_snake(size_source)
+  current_size_field_name = common_helpers.get_grpc_field_name_from_str(size_source)
 %>\
         request->${current_size_field_name}_size(),
 % endfor
@@ -435,14 +436,17 @@ ${initialize_standard_input_param(function_name, parameter)}
       // NULL out optional params with zero sizes.
       if (${parameter_name}_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
 % for size_source in size_sources:
-        ${common_helpers.camel_to_snake(size_source)} = request->${common_helpers.camel_to_snake(size_source)}_size() ? ${common_helpers.camel_to_snake(size_source)} : nullptr;
+<%
+  current_size_field_name = common_helpers.get_grpc_field_name_from_str(size_source)
+%>\
+        ${current_size_field_name} = request->${current_size_field_name}_size() ? ${current_size_field_name} : nullptr;
 % endfor
       }
 % endif
       auto ${parameter_name} = ${parameter_name}_size_calculation.size;
 % else:
 <%
-  size_field_name = common_helpers.camel_to_snake(size_sources[-1])
+  size_field_name = common_helpers.get_grpc_field_name_from_str(size_sources[-1])
 %>\
       ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
 % endif
@@ -451,20 +455,20 @@ ${initialize_standard_input_param(function_name, parameter)}
 
 ## Initialize a 'hardcoded' param.
 <%def name="initialize_hardcoded_parameter(parameter)">\
-      auto ${common_helpers.camel_to_snake(parameter['cppName'])} = ${parameter['hardcoded_value']};\
+      auto ${common_helpers.get_cpp_local_name(parameter)} = ${parameter['hardcoded_value']};\
 </%def>
 
 ## Initialize an input parameter that's passed by pointer.
 <%def name="initialize_pointer_input_parameter(parameter)">\
-      ${parameter['type']} ${common_helpers.camel_to_snake(parameter['cppName'])}_copy = request->${common_helpers.camel_to_snake(parameter['cppName'])}();\
+      ${parameter['type']} ${common_helpers.get_cpp_local_name(parameter)}_copy = request->${common_helpers.get_cpp_local_name(parameter)}();\
 </%def>
 
 
 ## Initialize an input parameter for an API call.
 <%def name="initialize_standard_input_param(function_name, parameter)">\
 <%
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
-  field_name = common_helpers.camel_to_snake(parameter["name"])
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
+  field_name = common_helpers.get_grpc_field_name(parameter)
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
   grpc_type = parameter.get('grpc_type', None)
@@ -551,12 +555,12 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%def name="set_output_vararg_parameter_sizes(parameters)">\
 <%
   input_vararg_parameter = [p for p in parameters if common_helpers.is_repeated_varargs_parameter(p) and common_helpers.is_input_parameter(p)][0]
-  input_parameter_name = common_helpers.camel_to_snake(input_vararg_parameter['cppName'])
+  input_parameter_name = common_helpers.get_cpp_local_name(input_vararg_parameter)
   output_vararg_parameters = [p for p in parameters if common_helpers.is_repeating_parameter(p) and not common_helpers.is_input_parameter(p)]
 %>\
 % for parameter in output_vararg_parameters:
 <%
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
 %>\
       ${parameter_name}Vector.resize(${input_parameter_name}.size());
 % endfor
@@ -566,7 +570,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%def name="initialize_output_params(output_parameters)">\
 % for parameter in output_parameters:
 <%
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
   underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
 %>\
 %   if common_helpers.is_repeating_parameter(parameter):
@@ -627,12 +631,12 @@ ${initialize_standard_input_param(function_name, parameter)}
 %>\
 % for parameter in output_parameters:
 <%
-  parameter_name = common_helpers.camel_to_snake(parameter['cppName'])
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
 %>\
 %   if common_helpers.is_repeating_parameter(parameter):
 <%
     varargs_parameter = [p for p in output_parameters if common_helpers.is_repeated_varargs_parameter(p)][0]
-    varargs_parameter_name = common_helpers.camel_to_snake(varargs_parameter['cppName'])
+    varargs_parameter_name = common_helpers.get_cpp_local_name(varargs_parameter)
 %>\
 ## Note that this currently only supports one repeated output parameter.
         for (int i = 0; i < ${parameter_name}Vector.size(); ++i) {

@@ -113,7 +113,7 @@ message ${custom_type["grpc_name"]} {
 % for field in common_helpers.filter_parameters_for_grpc_fields(custom_type["fields"]):
 <%
   field_type = field.get("enum", None) or common_helpers.get_grpc_type(field["type"], config)
-  field_name = field["grpc_name"]
+  field_name = common_helpers.get_grpc_field_name(field)
   field_number = proto_helpers.generate_parameter_field_number(field, used_indexes)
 %>\
   ${field_type} ${field_name} = ${field_number};
