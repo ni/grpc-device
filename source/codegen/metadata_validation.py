@@ -212,6 +212,17 @@ def validate_function(function_name: str, metadata: dict):
                     if parameter.get('include_in_proto', True):
                         raise Exception(
                             f"parameter {parameter['name']} has hardcoded_value but is include_in_proto!")
+                if 'cross_driver_session' in parameter:
+                    # Assumption: there's no code that automatically sets the grpc_type for cross_driver_sessions and nidevice_grpc.Session
+                    # is the only type that works.
+                    if parameter.get('grpc_type', None) != 'nidevice_grpc.Session':
+                        raise  Exception(
+                           f"parameter {parameter['name']} is a cross_driver_session but does not have a grpc_type of nidevice_grpc.Session!")
+                    # Assumption: a method that creates a session (via accessing a cross-driver session) must be an init_method to ensure
+                    # that the session is tracked in the session repository.
+                    if parameter['direction'] == 'out' and not function.get('init_method'):
+                        raise  Exception(
+                           f"parameter {parameter['name']} is a cross_driver_session output but {function_name} is not an init_method!")
                 if parameter.get('size', {}).get('mechanism', None) == 'ivi-dance-with-a-twist':
                     size = parameter['size']
                     ivi_dance_with_a_twist_params.append(parameter['name'])
