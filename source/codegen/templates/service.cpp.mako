@@ -70,6 +70,12 @@ namespace ${config["namespace_component"]}_grpc {
   {
   }
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return ${config['status_ok']};
+  }
+
 % if common_helpers.has_enum_array_string_out_param(functions):
   template <typename TEnum>
   void ${service_class_prefix}Service::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)

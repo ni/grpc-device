@@ -314,7 +314,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, AMPMFromExample_NoError)
   EXPECT_SUCCESS(session, am_to_am_response);
 }
 
-TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_SynchronizationNotFoundWarning)
+TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_ReturnsSynchronizationNotFoundWarningWithData)
 {
   const auto session = init_session(stub(), PXI_5663);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
@@ -335,8 +335,9 @@ TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_SynchronizationNotFoundWarn
 
   const auto iq_data = load_test_iq_data<float>("LTE20MHz Waveform (Two Subframes).json");
   const auto apply_response = client::dpd_apply_digital_predistortion_split(stub(), session, "", iq_data.t0, iq_data.dt, iq_data.I, iq_data.Q, false, 10.0);
-  // GH #454 grpc-device does not fill in response fields when a warning is returned.
   EXPECT_RFMX_ERROR(377652, "Synchronization not found", session, apply_response);
+  EXPECT_THAT(apply_response.waveform_out_i(), Not(IsEmpty()));
+  EXPECT_THAT(apply_response.waveform_out_q(), Not(IsEmpty()));
 }
 
 // Note: there aren't any complex attributes in attributes.py, but this at least exercises the code.

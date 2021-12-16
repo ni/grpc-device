@@ -21,6 +21,7 @@ config = {
         'SelfTestError'
     ],
     'init_function': 'InitializeWithChannels',
+    'status_ok': 'status >= 0',
     'library_info': {
         'Linux': {
             '64bit': {

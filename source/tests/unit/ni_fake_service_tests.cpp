@@ -55,7 +55,8 @@ using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<ViSessio
 
 const std::uint32_t kTestViSession = 12345678;
 const std::uint32_t kDriverSuccess = 0;
-const std::uint32_t kDriverFailure = 1;
+const std::uint32_t kDriverFailure = -1;
+const std::uint32_t kDriverWarning = 123456;
 const char* kTestChannelName = "channel";
 
 std::int32_t create_session(
@@ -417,6 +418,28 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseValuesNotSet)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverFailure, response.status());
   EXPECT_NE(a_boolean, response.a_boolean());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_FunctionCallReturnsWarning_ResponseValueSet)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  auto session_id = create_session(library, service, kTestViSession);
+  bool a_boolean = true;
+  EXPECT_CALL(library, GetABoolean(kTestViSession, _))
+      .WillOnce(DoAll(SetArgPointee<1>(a_boolean), Return(kDriverWarning)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetABooleanRequest request;
+  request.mutable_vi()->set_id(session_id);
+  nifake_grpc::GetABooleanResponse response;
+  ::grpc::Status status = service.GetABoolean(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverWarning, response.status());
+  EXPECT_EQ(a_boolean, response.a_boolean());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_GetABoolean_CallsGetABoolean)
@@ -1835,6 +1858,44 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIv
   EXPECT_EQ(response.actual_size(), expected_size);
 }
 
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithWarning_CallsGetAnIviDanceWithATwistArray)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
+  const char* a_string = "abc";
+  const auto data_in = std::array<ViInt32, 4>{0, -1, 100, 5};
+  ViInt32 input_size = 2;
+  ViInt32 array_out[] = {1, 2, 3};
+  ViInt32 expected_size = 3;
+
+  // ivi-dance-with-a-twist call
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArray(kTestViSession, Pointee(*a_string), 0, nullptr, _))
+      .WillOnce(DoAll(
+          SetArgPointee<4>(expected_size),
+          Return(kDriverSuccess)));
+  // follow up call with size returned from ivi-dance-with-a-twist setup.
+  EXPECT_CALL(library, GetAnIviDanceWithATwistArray(kTestViSession, Pointee(*a_string), expected_size, _, _))
+      .WillOnce(DoAll(
+          SetArrayArgument<3>(array_out, array_out + expected_size),
+          SetArgPointee<4>(expected_size),
+          Return(kDriverWarning)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::GetAnIviDanceWithATwistArrayRequest request;
+  request.mutable_vi()->set_id(session_id);
+  request.set_a_string(a_string);
+  nifake_grpc::GetAnIviDanceWithATwistArrayResponse response;
+  ::grpc::Status status = service.GetAnIviDanceWithATwistArray(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverWarning, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(array_out, expected_size));
+  EXPECT_EQ(response.actual_size(), expected_size);
+}
+
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithInputArray_PassesArrayInputOnFirstPass_CallsGetAnIviDanceWithATwistArray)
 {
   nidevice_grpc::SessionRepository session_repository;
@@ -2464,6 +2525,23 @@ TEST(NiFakeServiceTests, FakeService_GetCustomStruct_ReturnsCustomStruct)
   service_holder.service.GetCustomType(&service_holder.context, &request, &response);
 
   EXPECT_EQ(0, response.status());
+  EXPECT_EQ(response.cs(), EXPECTED);
+}
+
+TEST(NiFakeServiceTests, FakeService_GetCustomStructWithWarning_ReturnsCustomStruct)
+{
+  auto EXPECTED = CustomStruct{};
+  EXPECTED.structDouble = 1.234;
+  EXPECTED.structInt = 9999;
+  FakeServiceHolder service_holder;
+  EXPECT_CALL(service_holder.library, GetCustomType(_, _))
+      .WillOnce(DoAll(SetArgPointee<1>(EXPECTED), Return(kDriverWarning)));
+
+  auto request = GetCustomTypeRequest{};
+  auto response = GetCustomTypeResponse{};
+  service_holder.service.GetCustomType(&service_holder.context, &request, &response);
+
+  EXPECT_EQ(kDriverWarning, response.status());
   EXPECT_EQ(response.cs(), EXPECTED);
 }
 

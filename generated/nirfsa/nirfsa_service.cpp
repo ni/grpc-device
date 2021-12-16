@@ -36,6 +36,12 @@ namespace nirfsa_grpc {
   {
   }
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
+  }
+
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiRFSAService::Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response)
@@ -68,7 +74,7 @@ namespace nirfsa_grpc {
       ViBoolean is_done {};
       auto status = library_->CheckAcquisitionStatus(vi, &is_done);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_is_done(is_done);
       }
       return ::grpc::Status::OK;
@@ -1075,7 +1081,7 @@ namespace nirfsa_grpc {
       std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorMessage(vi, status_code, (ViChar*)error_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
@@ -1100,7 +1106,7 @@ namespace nirfsa_grpc {
       std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_code(error_code);
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
@@ -1187,7 +1193,7 @@ namespace nirfsa_grpc {
       std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
       auto status = library_->FetchIQMultiRecordComplexF32(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
         convert_to_grpc(wfm_info, response->mutable_wfm_info());
       }
@@ -1217,7 +1223,7 @@ namespace nirfsa_grpc {
       std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
       auto status = library_->FetchIQMultiRecordComplexF64(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
         convert_to_grpc(wfm_info, response->mutable_wfm_info());
       }
@@ -1247,7 +1253,7 @@ namespace nirfsa_grpc {
       std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
       auto status = library_->FetchIQMultiRecordComplexI16(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
         convert_to_grpc(wfm_info, response->mutable_wfm_info());
       }
@@ -1276,7 +1282,7 @@ namespace nirfsa_grpc {
       niRFSA_wfmInfo_struct wfm_info {};
       auto status = library_->FetchIQSingleRecordComplexF32(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
         convert_to_grpc(wfm_info, response->mutable_wfm_info());
       }
@@ -1305,7 +1311,7 @@ namespace nirfsa_grpc {
       niRFSA_wfmInfo_struct wfm_info {};
       auto status = library_->FetchIQSingleRecordComplexF64(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
         convert_to_grpc(wfm_info, response->mutable_wfm_info());
       }
@@ -1334,7 +1340,7 @@ namespace nirfsa_grpc {
       niRFSA_wfmInfo_struct wfm_info {};
       auto status = library_->FetchIQSingleRecordComplexI16(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
         convert_to_grpc(wfm_info, response->mutable_wfm_info());
       }
@@ -1360,7 +1366,7 @@ namespace nirfsa_grpc {
       ViBoolean value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1385,7 +1391,7 @@ namespace nirfsa_grpc {
       ViInt32 value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1410,7 +1416,7 @@ namespace nirfsa_grpc {
       ViInt64 value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1435,7 +1441,7 @@ namespace nirfsa_grpc {
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1460,7 +1466,7 @@ namespace nirfsa_grpc {
       ViSession value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto session_id = session_repository_->resolve_session_id(value);
         response->mutable_value()->set_id(session_id);
       }
@@ -1502,7 +1508,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -1527,7 +1533,7 @@ namespace nirfsa_grpc {
       std::string info(2048 - 1, '\0');
       auto status = library_->GetCalUserDefinedInfo(vi, (ViChar*)info.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_info(info);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_info()));
       }
@@ -1551,7 +1557,7 @@ namespace nirfsa_grpc {
       ViInt32 info_size {};
       auto status = library_->GetCalUserDefinedInfoMaxSize(vi, &info_size);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_info_size(info_size);
       }
       return ::grpc::Status::OK;
@@ -1587,7 +1593,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           convert_to_grpc(sparameters, response->mutable_sparameters());
           {
             auto shrunk_size = number_of_sparameters;
@@ -1654,7 +1660,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_frequencies()->Resize(number_of_frequencies, 0);
           response->mutable_magnitude_response()->Resize(number_of_frequencies, 0);
           response->mutable_phase_response()->Resize(number_of_frequencies, 0);
@@ -1698,7 +1704,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_error_code(error_code);
           response->set_error_description(error_description);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
@@ -1728,7 +1734,7 @@ namespace nirfsa_grpc {
       ViInt32 minute {};
       auto status = library_->GetExtCalLastDateAndTime(vi, &year, &month, &day, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -1755,7 +1761,7 @@ namespace nirfsa_grpc {
       ViReal64 temperature {};
       auto status = library_->GetExtCalLastTemp(vi, &temperature);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temperature(temperature);
       }
       return ::grpc::Status::OK;
@@ -1778,7 +1784,7 @@ namespace nirfsa_grpc {
       ViInt32 months {};
       auto status = library_->GetExtCalRecommendedInterval(vi, &months);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_months(months);
       }
       return ::grpc::Status::OK;
@@ -1803,7 +1809,7 @@ namespace nirfsa_grpc {
       ViInt64 backlog {};
       auto status = library_->GetFetchBacklog(vi, channel_list, record_number, &backlog);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_backlog(backlog);
       }
       return ::grpc::Status::OK;
@@ -1844,7 +1850,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_frequencies()->Resize(number_of_frequencies, 0);
           response->mutable_magnitude_response()->Resize(number_of_frequencies, 0);
           response->mutable_phase_response()->Resize(number_of_frequencies, 0);
@@ -1884,7 +1890,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
           {
             auto shrunk_size = number_of_coefficient_sets;
@@ -1917,7 +1923,7 @@ namespace nirfsa_grpc {
       ViInt32 number_of_spectral_lines {};
       auto status = library_->GetNumberOfSpectralLines(vi, channel_list, &number_of_spectral_lines);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_number_of_spectral_lines(number_of_spectral_lines);
       }
       return ::grpc::Status::OK;
@@ -1956,7 +1962,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_name(name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
           response->set_buffer_size(buffer_size);
@@ -1995,7 +2001,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->mutable_operations_count()->Resize(buffer_size, 0);
           response->set_buffer_size(buffer_size);
         }
@@ -2033,7 +2039,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
           {
             auto shrunk_size = number_of_coefficient_sets;
@@ -2070,7 +2076,7 @@ namespace nirfsa_grpc {
       ViInt32 minute {};
       auto status = library_->GetSelfCalLastDateAndTime(vi, self_calibration_step, &year, &month, &day, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -2098,7 +2104,7 @@ namespace nirfsa_grpc {
       ViReal64 temp {};
       auto status = library_->GetSelfCalLastTemp(vi, self_calibration_step, &temp);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temp(temp);
       }
       return ::grpc::Status::OK;
@@ -2121,7 +2127,7 @@ namespace nirfsa_grpc {
       SmtSpectrumInfo_struct spectrum_info {};
       auto status = library_->GetSpectralInfoForSMT(vi, &spectrum_info);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
       }
       return ::grpc::Status::OK;
@@ -2145,7 +2151,7 @@ namespace nirfsa_grpc {
       ViUInt32 writer_handle {};
       auto status = library_->GetStreamEndpointHandle(vi, stream_endpoint, &writer_handle);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_writer_handle(writer_handle);
       }
       return ::grpc::Status::OK;
@@ -2189,7 +2195,7 @@ namespace nirfsa_grpc {
       }
       auto status = library_->GetTerminalName(vi, signal, signal_identifier, buffer_size, (ViChar*)terminal_name.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_terminal_name(terminal_name);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_terminal_name()));
       }
@@ -2226,7 +2232,7 @@ namespace nirfsa_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_data(data);
           response->mutable_data()->resize(actual_data_size);
           response->set_actual_data_size(actual_data_size);
@@ -2261,7 +2267,7 @@ namespace nirfsa_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2294,7 +2300,7 @@ namespace nirfsa_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2356,7 +2362,7 @@ namespace nirfsa_grpc {
       ViInt64 valid_steps {};
       auto status = library_->IsSelfCalValid(vi, &self_cal_valid, &valid_steps);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_self_cal_valid(self_cal_valid);
         if (valid_steps & 0x1)
           response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_ALIGNMENT);
@@ -2423,7 +2429,7 @@ namespace nirfsa_grpc {
       niRFSA_wfmInfo_struct wfm_info {};
       auto status = library_->ReadIQSingleRecordComplexF64(vi, channel_list, timeout, data.data(), data_array_size, &wfm_info);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(data, response->mutable_data());
         convert_to_grpc(wfm_info, response->mutable_wfm_info());
       }
@@ -2452,7 +2458,7 @@ namespace nirfsa_grpc {
       niRFSA_spectrumInfo_struct spectrum_info {};
       auto status = library_->ReadPowerSpectrumF32(vi, channel_list, timeout, power_spectrum_data, data_array_size, &spectrum_info);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
       }
       return ::grpc::Status::OK;
@@ -2480,7 +2486,7 @@ namespace nirfsa_grpc {
       niRFSA_spectrumInfo_struct spectrum_info {};
       auto status = library_->ReadPowerSpectrumF64(vi, channel_list, timeout, power_spectrum_data, data_array_size, &spectrum_info);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
       }
       return ::grpc::Status::OK;
@@ -2617,7 +2623,7 @@ namespace nirfsa_grpc {
       std::string instr_rev(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)driver_rev.data(), (ViChar*)instr_rev.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_driver_rev(driver_rev);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_rev()));
         response->set_instr_rev(instr_rev);
@@ -2737,7 +2743,7 @@ namespace nirfsa_grpc {
       std::string test_message(2048 - 1, '\0');
       auto status = library_->SelfTest(vi, &test_result, (ViChar*)test_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_test_result(test_result);
         response->set_test_message(test_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_test_message()));
@@ -2987,7 +2993,7 @@ namespace nirfsa_grpc {
       std::string data(buffer_size, '\0');
       auto status = library_->SetUserData(vi, identifier, buffer_size, (ViInt8*)data.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_data(data);
       }
       return ::grpc::Status::OK;
