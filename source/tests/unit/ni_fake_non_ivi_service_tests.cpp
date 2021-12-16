@@ -1492,7 +1492,7 @@ TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSession)
   uint32_t cross_driver_session_id;
   cross_driver_resource_repository_->add_session(
       CROSS_DRIVER_SESSION_NAME,
-      [CROSS_DRIVER_HANDLE]() { return std::tuple(0, CROSS_DRIVER_HANDLE); },
+      [CROSS_DRIVER_HANDLE]() { return std::make_tuple(0, CROSS_DRIVER_HANDLE); },
       [](FakeCrossDriverHandle handle) {},
       cross_driver_session_id);
   EXPECT_CALL(library_, InitFromCrossDriverSession(CROSS_DRIVER_HANDLE, _))

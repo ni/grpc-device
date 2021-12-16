@@ -5,6 +5,7 @@
 #include <functional>
 #include <map>
 #include <shared_mutex>
+#include <vector>
 
 #include "semaphore.h"
 
@@ -66,7 +67,7 @@ class SessionRepository {
     std::string name;
     std::chrono::steady_clock::time_point last_access_time;
     SessionRepository::CleanupSessionFunc cleanup_func;
-    std::vector<std::unique_ptr<RemoveAction>> dependent_sessions;
+    std::vector<std::unique_ptr<RemoveAction> > dependent_sessions;
   };
 
   using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
