@@ -241,8 +241,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SpurBasicFromExample_ReturnsMeasurementStatus
   EXPECT_SUCCESS(session, client::spur_cfg_number_of_ranges(stub(), session, "", 1));
   EXPECT_SUCCESS(session, client::spur_cfg_range_frequency_array(stub(), session, "", {1e9}, {1.5e9}, {true}));
   EXPECT_SUCCESS(session, client::spur_cfg_range_rbw_array(stub(), session, "", {false}, {30e3}, {SpurRbwFilterType::SPUR_RBW_FILTER_TYPE_GAUSSIAN}));
-  // GH #452 Optional array parameters are not supported by grpc-device.
-  // EXPECT_SUCCESS(session, client::spur_cfg_range_absolute_limit_array(stub(), session, "", null, {-10.0}, null));
+  EXPECT_SUCCESS(session, client::spur_cfg_range_absolute_limit_array(stub(), session, "", {}, {-10.0}, {}));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   const auto fetch_response = client::spur_fetch_measurement_status(stub(), session, "", 10.0);
@@ -315,7 +314,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, AMPMFromExample_NoError)
   EXPECT_SUCCESS(session, am_to_am_response);
 }
 
-TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_SynchronizationNotFoundWarning)
+TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_ReturnsSynchronizationNotFoundWarningWithData)
 {
   const auto session = init_session(stub(), PXI_5663);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
@@ -336,8 +335,9 @@ TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_SynchronizationNotFoundWarn
 
   const auto iq_data = load_test_iq_data<float>("LTE20MHz Waveform (Two Subframes).json");
   const auto apply_response = client::dpd_apply_digital_predistortion_split(stub(), session, "", iq_data.t0, iq_data.dt, iq_data.I, iq_data.Q, false, 10.0);
-  // GH #454 grpc-device does not fill in response fields when a warning is returned.
   EXPECT_RFMX_ERROR(377652, "Synchronization not found", session, apply_response);
+  EXPECT_THAT(apply_response.waveform_out_i(), Not(IsEmpty()));
+  EXPECT_THAT(apply_response.waveform_out_q(), Not(IsEmpty()));
 }
 
 // Note: there aren't any complex attributes in attributes.py, but this at least exercises the code.
@@ -395,6 +395,26 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 
   EXPECT_SUCCESS(session, get_response);
   EXPECT_EQ(NiRFmxSpecAnInt32AttributeValues::NIRFMXSPECAN_INT32_NF_EXTERNAL_PREAMP_PRESENT_TRUE, get_response.attr_val());
+}
+
+TEST_F(NiRFmxSpecAnDriverApiTests, SetAndGetAttributeString_Succeeds)
+{
+  auto session = init_session(stub(), PXI_5663);
+  EXPECT_SUCCESS(
+      session,
+      client::set_attribute_string(
+          stub(),
+          session,
+          "",
+          NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE,
+          NiRFmxSpecAnStringAttributeValuesMapped::NIRFMXSPECAN_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI0));
+  // This is one way to get the driver in a state where we can get attributes
+  EXPECT_SUCCESS(session, client::spectrum_read(stub(), session, "", 10.0));
+
+  auto get_response = client::get_attribute_string(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE);
+
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_EQ("PFI0", get_response.attr_val());
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, BuildSpurString_ReturnsSpurString)

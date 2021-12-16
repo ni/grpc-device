@@ -65,6 +65,10 @@ def mark_non_proto_params(parameters):
                 if 'determine_size_from' not in size_param:
                     size_param['determine_size_from'] = []
                 size_param['determine_size_from'].append(param['name'])
+                is_optional = common_helpers.is_optional(param)
+                if is_optional != size_param.get('linked_params_are_optional', is_optional):
+                    raise Exception("Code generator does not support linked params that are a mix of optional and required", size_param)
+                size_param['linked_params_are_optional'] = is_optional
 
 def get_size_param(param, parameters):
     named_params = { p['name'] : p for p in parameters }
@@ -91,8 +95,10 @@ def populate_grpc_types(parameters, config):
         config)
 
 
-def get_short_enum_type_name(type):
-    stripped_name = common_helpers.strip_prefix(type, "Vi")
+def get_short_enum_type_name(typename: str) -> str:
+    if typename in ["char[]", "const char[]", "char"]:
+        return "String"
+    stripped_name = common_helpers.strip_prefix(typename, "Vi")
     return common_helpers.ensure_pascal_case(stripped_name,)
 
 

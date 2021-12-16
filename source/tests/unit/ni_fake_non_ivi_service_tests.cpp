@@ -396,6 +396,66 @@ TEST_F(NiFakeNonIviServiceTests, InputArraysWithNarrowIntegerTypes_I8DataOutOfRa
   EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
 }
 
+TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_I8DataOutOfRangeTooLow_ReturnsError)
+{
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .Times(0);
+  ::grpc::ServerContext context;
+  ScalarsWithNarrowIntegerTypesRequest request;
+  request.set_i8(INT8_MIN - 1);
+  ScalarsWithNarrowIntegerTypesResponse response;
+  auto status = service_.ScalarsWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT8_MIN - 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_I16DataOutOfRangeTooHigh_ReturnsError)
+{
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .Times(0);
+  ::grpc::ServerContext context;
+  ScalarsWithNarrowIntegerTypesRequest request;
+  request.set_i16(INT16_MAX + 1);
+  ScalarsWithNarrowIntegerTypesResponse response;
+  auto status = service_.ScalarsWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(INT16_MAX + 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_U16DataOutOfRangeTooHigh_ReturnsError)
+{
+  EXPECT_CALL(library_, InputArraysWithNarrowIntegerTypes(_, _, _))
+      .Times(0);
+  ::grpc::ServerContext context;
+  ScalarsWithNarrowIntegerTypesRequest request;
+  request.set_u16(UINT16_MAX + 1);
+  ScalarsWithNarrowIntegerTypesResponse response;
+  auto status = service_.ScalarsWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(grpc::StatusCode::OUT_OF_RANGE, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr(std::to_string(UINT16_MAX + 1)));
+}
+
+TEST_F(NiFakeNonIviServiceTests, ScalarsWithNarrowIntegerTypes_AllFieldsInRange_PassesThroughData)
+{
+  constexpr myUInt16 u16_val = UINT16_MAX;
+  constexpr myInt16 i16_val = INT16_MAX;
+  constexpr myInt8 i8_val = INT8_MAX;
+  EXPECT_CALL(library_, ScalarsWithNarrowIntegerTypes(u16_val, i16_val, i8_val))
+      .WillOnce(Return(kDriverSuccess));
+  ::grpc::ServerContext context;
+  ScalarsWithNarrowIntegerTypesRequest request;
+  request.set_u16(u16_val);
+  request.set_i16(i16_val);
+  request.set_i8(i8_val);
+  ScalarsWithNarrowIntegerTypesResponse response;
+  auto status = service_.ScalarsWithNarrowIntegerTypes(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
 TEST_F(NiFakeNonIviServiceTests, OutputArraysWithNarrowIntegerTypes_U16)
 {
   ::grpc::ServerContext context;

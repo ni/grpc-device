@@ -420,6 +420,10 @@ def has_strlen_bug(parameter: dict) -> bool:
     return has_size_mechanism_tag(parameter, "strlen-bug")
 
 
+def is_optional(parameter: dict) -> bool:
+    return has_size_mechanism_tag(parameter, "optional")
+
+
 def get_buffer_size_expression(parameter: dict) -> str:
     """Returns the C++ size expression for the size of the underlying
     C API bugger for a string/array parameter.

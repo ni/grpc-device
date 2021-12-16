@@ -15,8 +15,10 @@
 
 namespace nitclk_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -31,6 +33,12 @@ namespace nitclk_grpc {
 
   NiTClkService::~NiTClkService()
   {
+  }
+
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
   }
 
   //---------------------------------------------------------------------
@@ -99,7 +107,7 @@ namespace nitclk_grpc {
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(session, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -124,7 +132,7 @@ namespace nitclk_grpc {
       ViSession value {};
       auto status = library_->GetAttributeViSession(session, channel_name, attribute_id, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto session_id = session_repository_->resolve_session_id(value);
         response->mutable_value()->set_id(session_id);
       }
@@ -162,7 +170,7 @@ namespace nitclk_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_error_string(error_string);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         }
@@ -218,7 +226,7 @@ namespace nitclk_grpc {
       ViBoolean done {};
       auto status = library_->IsDone(session_count, sessions.data(), &done);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_done(done);
       }
       return ::grpc::Status::OK;

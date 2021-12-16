@@ -15,8 +15,10 @@
 
 namespace nifake_extension_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   NiFakeExtensionService::NiFakeExtensionService(
       NiFakeExtensionLibraryInterface* library,
@@ -28,6 +30,12 @@ namespace nifake_extension_grpc {
 
   NiFakeExtensionService::~NiFakeExtensionService()
   {
+  }
+
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
   }
 
   //---------------------------------------------------------------------

@@ -23,6 +23,13 @@ def get_c_element_type(parameter):
     return stripped_type
 
 
+def is_scalar_input_that_needs_coercion(parameter: dict) -> bool:
+    return (
+        common_helpers.is_input_parameter(parameter) 
+        and parameter.get('coerced', False)
+        and not common_helpers.is_array(parameter['type'])
+    )
+
 def is_input_array_that_needs_coercion(parameter):
     return common_helpers.is_input_parameter(parameter) and get_c_element_type_for_array_that_needs_coercion(parameter) is not None
 

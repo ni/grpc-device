@@ -41,6 +41,7 @@ OutputTimestampResponse output_timestamp(const StubPtr& stub);
 InputVarArgsResponse input_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<StringAndEnum>& string_and_enums);
 OutputVarArgsResponse output_var_args(const StubPtr& stub, const pb::string& input_name, const std::vector<pb::string>& channel_names);
 ResetMarbleAttributeResponse reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleResetAttribute, pb::int32>& attribute);
+ScalarsWithNarrowIntegerTypesResponse scalars_with_narrow_integer_types(const StubPtr& stub, const pb::uint32& u16, const pb::int32& i16, const pb::int32& i8);
 SetMarbleAttributeDoubleResponse set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute, const double& value);
 SetMarbleAttributeInt32Response set_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attribute, pb::int32>& attribute, const simple_variant<MarbleInt32AttributeValues, pb::int32>& value);
 SetColorsResponse set_colors(const StubPtr& stub, const std::vector<pb::int32>& colors, const pb::int32& size);

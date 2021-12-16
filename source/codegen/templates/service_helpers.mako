@@ -33,7 +33,7 @@ ${initialize_output_params(output_parameters_to_initialize)}\
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_${session_output_var_name}()->set_id(session_id);
       }
       return ::grpc::Status::OK;\
@@ -67,7 +67,7 @@ ${initialize_output_params(output_parameters)}\
         }
         response->set_status(status);
 % if output_parameters:
-        if (status == 0) {
+        if (status_ok(status)) {
 <%block filter="common_helpers.indent(1)">\
 ${set_response_values(output_parameters)}\
 </%block>\
@@ -109,7 +109,7 @@ ${initialize_output_params(array_output_parameters)}\
         }
         response->set_status(status);
 % if output_parameters:
-        if (status == 0) {
+        if (status_ok(status)) {
 <%block filter="common_helpers.indent(1)">\
 ${set_response_values(output_parameters)}\
 </%block>\
@@ -198,7 +198,7 @@ ${set_output_vararg_parameter_sizes(parameters)}\
 % endif
       response->set_status(status);
 % if output_parameters:
-      if (status == 0) {
+      if (status_ok(status)) {
 ${set_response_values(output_parameters=output_parameters)}\
       }
 % endif
@@ -219,7 +219,7 @@ ${initialize_output_params(output_parameters)}\
       auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
       response->set_status(status);
 % if output_parameters:
-      if (status == 0) {
+      if (status_ok(status)) {
 ${set_response_values(output_parameters=output_parameters)}\
       }
 % endif
@@ -412,18 +412,44 @@ ${initialize_standard_input_param(function_name, parameter)}
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   size_sources = parameter["determine_size_from"]
   size_field_name = common_helpers.get_grpc_field_name_from_str(size_sources[-1])
+  allow_optional = parameter["linked_params_are_optional"]
+  allow_optional_as_cpp_constant = "true" if allow_optional else "false"
 %>\
 % if len(size_sources) > 1:
-% for size_source in size_sources[:-1]:
+      auto ${parameter_name}_determine_from_sizes = std::array<int, ${len(size_sources)}>
+      {
+<%block filter="common_helpers.trim_trailing_comma()">\
+% for size_source in size_sources:
 <%
   current_size_field_name = common_helpers.get_grpc_field_name_from_str(size_source)
 %>\
-      if (request->${current_size_field_name}().size() != request->${size_field_name}().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields ${current_size_field_name} and ${size_field_name} do not match");
-      }
+        request->${current_size_field_name}_size(),
 % endfor
+</%block>\
+      };
+      const auto ${parameter_name}_size_calculation = calculate_linked_array_size(${parameter_name}_determine_from_sizes, ${allow_optional_as_cpp_constant});
+
+      if (${parameter_name}_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [${str.join(', ', size_sources)}] do not match");
+      }
+% if allow_optional:
+      // NULL out optional params with zero sizes.
+      if (${parameter_name}_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+% for size_source in size_sources:
+<%
+  current_size_field_name = common_helpers.get_grpc_field_name_from_str(size_source)
+%>\
+        ${current_size_field_name} = request->${current_size_field_name}_size() ? ${current_size_field_name} : nullptr;
+% endfor
+      }
 % endif
+      auto ${parameter_name} = ${parameter_name}_size_calculation.size;
+% else:
+<%
+  size_field_name = common_helpers.get_grpc_field_name_from_str(size_sources[-1])
+%>\
       ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
+% endif
 </%def>
 
 
@@ -491,6 +517,16 @@ ${initialize_standard_input_param(function_name, parameter)}
       auto ${parameter_name} = reinterpret_cast<${c_type_pointer}>(${request_snippet}.data());\
 %elif grpc_type == 'bytes':
       auto ${parameter_name} = reinterpret_cast<const unsigned char*>(${request_snippet}.data());\
+%elif service_helpers.is_scalar_input_that_needs_coercion(parameter):
+      auto ${parameter_name}_raw = ${request_snippet};
+      if (${parameter_name}_raw < std::numeric_limits<${c_type}>::min() || ${parameter_name}_raw > std::numeric_limits<${c_type}>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(${parameter_name}_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("${c_type}");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto ${parameter_name} = static_cast<${c_type}>(${parameter_name}_raw);
 %elif service_helpers.is_input_array_that_needs_coercion(parameter):
       auto ${parameter_name}_raw = ${request_snippet};
       auto ${parameter_name} = std::vector<${c_element_type_that_needs_coercion}>();

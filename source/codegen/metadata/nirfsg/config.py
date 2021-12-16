@@ -19,6 +19,7 @@ config = {
     'extra_errors_used': [
     ],
     'init_function': 'InitWithOptions',
+    'status_ok': 'status >= 0',
     'library_info': {
         'Linux': {
             '64bit': {

@@ -48,8 +48,10 @@ any_ivi_dance_functions = any(
 
 namespace ${config["namespace_component"]}_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
 % if any_ivi_dance_functions:
   const auto kErrorReadBufferTooSmall = -200229;
@@ -66,6 +68,12 @@ namespace ${config["namespace_component"]}_grpc {
 
   ${service_class_prefix}Service::~${service_class_prefix}Service()
   {
+  }
+
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return ${config['status_ok']};
   }
 
 % if common_helpers.has_enum_array_string_out_param(functions):

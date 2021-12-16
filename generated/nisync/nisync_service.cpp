@@ -15,8 +15,10 @@
 
 namespace nisync_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -31,6 +33,12 @@ namespace nisync_grpc {
 
   NiSyncService::~NiSyncService()
   {
+  }
+
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
   }
 
   //---------------------------------------------------------------------
@@ -55,7 +63,7 @@ namespace nisync_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -99,7 +107,7 @@ namespace nisync_grpc {
       std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
@@ -162,7 +170,7 @@ namespace nisync_grpc {
       std::string self_test_message(256 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
@@ -188,7 +196,7 @@ namespace nisync_grpc {
       std::string firmware_revision(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)driver_revision.data(), (ViChar*)firmware_revision.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_driver_revision(driver_revision);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_revision()));
         response->set_firmware_revision(firmware_revision);
@@ -371,7 +379,7 @@ namespace nisync_grpc {
       ViReal64 error {};
       auto status = library_->MeasureFrequency(vi, src_terminal, duration, &actual_duration, &frequency, &error);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_actual_duration(actual_duration);
         response->set_frequency(frequency);
         response->set_error(error);
@@ -401,7 +409,7 @@ namespace nisync_grpc {
       ViReal64 frequency_error {};
       auto status = library_->MeasureFrequencyEx(vi, src_terminal, duration, decimation_count, &actual_duration, &frequency, &frequency_error);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_actual_duration(actual_duration);
         response->set_frequency(frequency);
         response->set_frequency_error(frequency_error);
@@ -527,7 +535,7 @@ namespace nisync_grpc {
       ViUInt16 time_fractional_nanoseconds {};
       auto status = library_->GetTime(vi, &time_seconds, &time_nanoseconds, &time_fractional_nanoseconds);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_time_seconds(time_seconds);
         response->set_time_nanoseconds(time_nanoseconds);
         response->set_time_fractional_nanoseconds(time_fractional_nanoseconds);
@@ -663,7 +671,7 @@ namespace nisync_grpc {
       ViInt32 detected_edge {};
       auto status = library_->ReadTriggerTimeStamp(vi, terminal, timeout, &time_seconds, &time_nanoseconds, &time_fractional_nanoseconds, &detected_edge);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_time_seconds(time_seconds);
         response->set_time_nanoseconds(time_nanoseconds);
         response->set_time_fractional_nanoseconds(time_fractional_nanoseconds);
@@ -923,7 +931,7 @@ namespace nisync_grpc {
       ViUInt16 gps_fractional_nanoseconds {};
       auto status = library_->ReadLastGPSTimestamp(vi, &timestamp_seconds, &timestamp_nanoseconds, &timestamp_fractional_nanoseconds, &gps_seconds, &gps_nanoseconds, &gps_fractional_nanoseconds);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_timestamp_seconds(timestamp_seconds);
         response->set_timestamp_nanoseconds(timestamp_nanoseconds);
         response->set_timestamp_fractional_nanoseconds(timestamp_fractional_nanoseconds);
@@ -957,7 +965,7 @@ namespace nisync_grpc {
       ViUInt16 irigb_fractional_nanoseconds {};
       auto status = library_->ReadLastIRIGTimestamp(vi, terminal, &timestamp_seconds, &timestamp_nanoseconds, &timestamp_fractional_nanoseconds, &irigb_seconds, &irigb_nanoseconds, &irigb_fractional_nanoseconds);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_timestamp_seconds(timestamp_seconds);
         response->set_timestamp_nanoseconds(timestamp_nanoseconds);
         response->set_timestamp_fractional_nanoseconds(timestamp_fractional_nanoseconds);
@@ -1026,7 +1034,7 @@ namespace nisync_grpc {
       ViReal64 up_velocity {};
       auto status = library_->GetVelocity(vi, &east_velocity, &north_velocity, &up_velocity);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_east_velocity(east_velocity);
         response->set_north_velocity(north_velocity);
         response->set_up_velocity(up_velocity);
@@ -1053,7 +1061,7 @@ namespace nisync_grpc {
       ViReal64 altitude {};
       auto status = library_->GetLocation(vi, &latitude, &longitude, &altitude);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_latitude(latitude);
         response->set_longitude(longitude);
         response->set_altitude(altitude);
@@ -1094,7 +1102,7 @@ namespace nisync_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_time_reference_names(time_reference_names);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_time_reference_names()));
         }
@@ -1121,7 +1129,7 @@ namespace nisync_grpc {
       ViInt32 value {};
       auto status = library_->GetAttributeViInt32(vi, active_item, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1146,7 +1154,7 @@ namespace nisync_grpc {
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(vi, active_item, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1171,7 +1179,7 @@ namespace nisync_grpc {
       ViBoolean value {};
       auto status = library_->GetAttributeViBoolean(vi, active_item, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -1212,7 +1220,7 @@ namespace nisync_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         }
@@ -1329,7 +1337,7 @@ namespace nisync_grpc {
       ViInt32 minute {};
       auto status = library_->GetExtCalLastDateAndTime(vi, &year, &month, &day, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -1356,7 +1364,7 @@ namespace nisync_grpc {
       ViReal64 temp {};
       auto status = library_->GetExtCalLastTemp(vi, &temp);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temp(temp);
       }
       return ::grpc::Status::OK;
@@ -1379,7 +1387,7 @@ namespace nisync_grpc {
       ViInt32 months {};
       auto status = library_->GetExtCalRecommendedInterval(vi, &months);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_months(months);
       }
       return ::grpc::Status::OK;
@@ -1423,7 +1431,7 @@ namespace nisync_grpc {
       ViReal64 temperature {};
       auto status = library_->ReadCurrentTemperature(vi, &temperature);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temperature(temperature);
       }
       return ::grpc::Status::OK;
@@ -1446,7 +1454,7 @@ namespace nisync_grpc {
       ViReal64 voltage {};
       auto status = library_->CalGetOscillatorVoltage(vi, &voltage);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_voltage(voltage);
       }
       return ::grpc::Status::OK;
@@ -1469,7 +1477,7 @@ namespace nisync_grpc {
       ViReal64 voltage {};
       auto status = library_->CalGetClk10PhaseVoltage(vi, &voltage);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_voltage(voltage);
       }
       return ::grpc::Status::OK;
@@ -1492,7 +1500,7 @@ namespace nisync_grpc {
       ViReal64 voltage {};
       auto status = library_->CalGetDDSStartPulsePhaseVoltage(vi, &voltage);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_voltage(voltage);
       }
       return ::grpc::Status::OK;
@@ -1515,7 +1523,7 @@ namespace nisync_grpc {
       ViReal64 phase {};
       auto status = library_->CalGetDDSInitialPhase(vi, &phase);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_phase(phase);
       }
       return ::grpc::Status::OK;
@@ -1546,7 +1554,7 @@ namespace nisync_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -1590,7 +1598,7 @@ namespace nisync_grpc {
       ViReal64 old_voltage {};
       auto status = library_->CalAdjustOscillatorVoltage(vi, measured_voltage, &old_voltage);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_old_voltage(old_voltage);
       }
       return ::grpc::Status::OK;
@@ -1614,7 +1622,7 @@ namespace nisync_grpc {
       ViReal64 old_voltage {};
       auto status = library_->CalAdjustClk10PhaseVoltage(vi, measured_voltage, &old_voltage);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_old_voltage(old_voltage);
       }
       return ::grpc::Status::OK;
@@ -1638,7 +1646,7 @@ namespace nisync_grpc {
       ViReal64 old_voltage {};
       auto status = library_->CalAdjustDDSStartPulsePhaseVoltage(vi, measured_voltage, &old_voltage);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_old_voltage(old_voltage);
       }
       return ::grpc::Status::OK;
@@ -1662,7 +1670,7 @@ namespace nisync_grpc {
       ViReal64 old_phase {};
       auto status = library_->CalAdjustDDSInitialPhase(vi, measured_phase, &old_phase);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_old_phase(old_phase);
       }
       return ::grpc::Status::OK;

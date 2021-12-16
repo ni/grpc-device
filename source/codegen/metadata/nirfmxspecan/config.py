@@ -34,6 +34,7 @@ config = {
     ],
     'init_function': 'Initialize',
     'resource_handle_type': 'niRFmxInstrHandle',
+    'status_ok': 'status >= 0',
     'library_info': {
         'Linux': {
             '64bit': {

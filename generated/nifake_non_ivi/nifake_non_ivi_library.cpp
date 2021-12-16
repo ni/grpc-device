@@ -40,6 +40,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.InputVarArgs = reinterpret_cast<InputVarArgsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputVarArgs"));
   function_pointers_.OutputVarArgs = reinterpret_cast<OutputVarArgsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_OutputVarArgs"));
   function_pointers_.ResetMarbleAttribute = reinterpret_cast<ResetMarbleAttributePtr>(shared_library_.get_function_pointer("niFakeNonIvi_ResetMarbleAttribute"));
+  function_pointers_.ScalarsWithNarrowIntegerTypes = reinterpret_cast<ScalarsWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_ScalarsWithNarrowIntegerTypes"));
   function_pointers_.SetMarbleAttributeDouble = reinterpret_cast<SetMarbleAttributeDoublePtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeDouble"));
   function_pointers_.SetMarbleAttributeInt32 = reinterpret_cast<SetMarbleAttributeInt32Ptr>(shared_library_.get_function_pointer("niFakeNonIvi_SetMarbleAttributeInt32"));
   function_pointers_.SetColors = reinterpret_cast<SetColorsPtr>(shared_library_.get_function_pointer("niFakeNonIvi_SetColors"));
@@ -285,6 +286,18 @@ int32 NiFakeNonIviLibrary::ResetMarbleAttribute(FakeHandle handle, int32 attribu
   return niFakeNonIvi_ResetMarbleAttribute(handle, attribute);
 #else
   return function_pointers_.ResetMarbleAttribute(handle, attribute);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::ScalarsWithNarrowIntegerTypes(myUInt16 u16, myInt16 i16, myInt8 i8)
+{
+  if (!function_pointers_.ScalarsWithNarrowIntegerTypes) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_ScalarsWithNarrowIntegerTypes.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_ScalarsWithNarrowIntegerTypes(u16, i16, i8);
+#else
+  return function_pointers_.ScalarsWithNarrowIntegerTypes(u16, i16, i8);
 #endif
 }
 

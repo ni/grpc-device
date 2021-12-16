@@ -132,6 +132,7 @@ config = {
     ],
     'init_function': 'CreateTask',
     'resource_handle_type': 'TaskHandle',
+    'status_ok': 'status >= 0',
     'library_info': {
         'Linux': {
             '64bit': {

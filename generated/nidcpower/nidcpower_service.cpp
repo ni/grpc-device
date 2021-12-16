@@ -15,8 +15,10 @@
 
 namespace nidcpower_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   const auto kErrorReadBufferTooSmall = -200229;
   const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -31,6 +33,12 @@ namespace nidcpower_grpc {
 
   NiDCPowerService::~NiDCPowerService()
   {
+  }
+
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
   }
 
   //---------------------------------------------------------------------
@@ -697,7 +705,7 @@ namespace nidcpower_grpc {
       ViInt32 error_code {};
       auto status = library_->ErrorQuery(vi, &error_code, error_message);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_code(error_code);
       }
       return ::grpc::Status::OK;
@@ -767,7 +775,7 @@ namespace nidcpower_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2142,7 +2150,7 @@ namespace nidcpower_grpc {
       std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       }
@@ -2180,7 +2188,7 @@ namespace nidcpower_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
         }
         return ::grpc::Status::OK;
       }
@@ -2268,7 +2276,7 @@ namespace nidcpower_grpc {
       ViInt32 actual_count {};
       auto status = library_->FetchMultiple(vi, channel_name, timeout, count, voltage_measurements, current_measurements, in_compliance.data(), &actual_count);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(in_compliance, response->mutable_in_compliance());
         response->set_actual_count(actual_count);
       }
@@ -2294,7 +2302,7 @@ namespace nidcpower_grpc {
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -2319,7 +2327,7 @@ namespace nidcpower_grpc {
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -2344,7 +2352,7 @@ namespace nidcpower_grpc {
       ViInt64 attribute_value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -2369,7 +2377,7 @@ namespace nidcpower_grpc {
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_attribute_value(attribute_value);
       }
       return ::grpc::Status::OK;
@@ -2394,7 +2402,7 @@ namespace nidcpower_grpc {
       ViSession attribute_value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto session_id = session_repository_->resolve_session_id(attribute_value);
         response->mutable_attribute_value()->set_id(session_id);
       }
@@ -2436,7 +2444,7 @@ namespace nidcpower_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_attribute_value(attribute_value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         }
@@ -2478,7 +2486,7 @@ namespace nidcpower_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_channel_name(channel_name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name()));
         }
@@ -2520,7 +2528,7 @@ namespace nidcpower_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_channel_name(channel_name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name()));
         }
@@ -2562,7 +2570,7 @@ namespace nidcpower_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_code(code);
           response->set_description(description);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
@@ -2592,7 +2600,7 @@ namespace nidcpower_grpc {
       ViInt32 minute {};
       auto status = library_->GetExtCalLastDateAndTime(vi, &year, &month, &day, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -2619,7 +2627,7 @@ namespace nidcpower_grpc {
       ViReal64 temperature {};
       auto status = library_->GetExtCalLastTemp(vi, &temperature);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temperature(temperature);
       }
       return ::grpc::Status::OK;
@@ -2642,7 +2650,7 @@ namespace nidcpower_grpc {
       ViInt32 months {};
       auto status = library_->GetExtCalRecommendedInterval(vi, &months);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_months(months);
       }
       return ::grpc::Status::OK;
@@ -2681,7 +2689,7 @@ namespace nidcpower_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_coercion_record(coercion_record);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
         }
@@ -2722,7 +2730,7 @@ namespace nidcpower_grpc {
           continue;
         }
         response->set_status(status);
-        if (status == 0) {
+        if (status_ok(status)) {
           response->set_interchange_warning(interchange_warning);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
         }
@@ -2751,7 +2759,7 @@ namespace nidcpower_grpc {
       ViInt32 minute {};
       auto status = library_->GetSelfCalLastDateAndTime(vi, &year, &month, &day, &hour, &minute);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
@@ -2778,7 +2786,7 @@ namespace nidcpower_grpc {
       ViReal64 temperature {};
       auto status = library_->GetSelfCalLastTemp(vi, &temperature);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temperature(temperature);
       }
       return ::grpc::Status::OK;
@@ -2852,7 +2860,7 @@ namespace nidcpower_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -2911,7 +2919,7 @@ namespace nidcpower_grpc {
       ViReal64 measurement {};
       auto status = library_->Measure(vi, channel_name, measurement_type, &measurement);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_measurement(measurement);
       }
       return ::grpc::Status::OK;
@@ -2935,7 +2943,7 @@ namespace nidcpower_grpc {
       ViBoolean in_compliance {};
       auto status = library_->QueryInCompliance(vi, channel_name, &in_compliance);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_in_compliance(in_compliance);
       }
       return ::grpc::Status::OK;
@@ -2960,7 +2968,7 @@ namespace nidcpower_grpc {
       ViReal64 max_current_limit {};
       auto status = library_->QueryMaxCurrentLimit(vi, channel_name, voltage_level, &max_current_limit);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_max_current_limit(max_current_limit);
       }
       return ::grpc::Status::OK;
@@ -2985,7 +2993,7 @@ namespace nidcpower_grpc {
       ViReal64 max_voltage_level {};
       auto status = library_->QueryMaxVoltageLevel(vi, channel_name, current_limit, &max_voltage_level);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_max_voltage_level(max_voltage_level);
       }
       return ::grpc::Status::OK;
@@ -3010,7 +3018,7 @@ namespace nidcpower_grpc {
       ViReal64 min_current_limit {};
       auto status = library_->QueryMinCurrentLimit(vi, channel_name, voltage_level, &min_current_limit);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_min_current_limit(min_current_limit);
       }
       return ::grpc::Status::OK;
@@ -3050,7 +3058,7 @@ namespace nidcpower_grpc {
       ViBoolean in_state {};
       auto status = library_->QueryOutputState(vi, channel_name, output_state, &in_state);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_in_state(in_state);
       }
       return ::grpc::Status::OK;
@@ -3073,7 +3081,7 @@ namespace nidcpower_grpc {
       ViReal64 temperature {};
       auto status = library_->ReadCurrentTemperature(vi, &temperature);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_temperature(temperature);
       }
       return ::grpc::Status::OK;
@@ -3173,7 +3181,7 @@ namespace nidcpower_grpc {
       std::string firmware_revision(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_instrument_driver_revision(instrument_driver_revision);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
         response->set_firmware_revision(firmware_revision);
@@ -3200,7 +3208,7 @@ namespace nidcpower_grpc {
       std::string self_test_message(256 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
@@ -3423,10 +3431,18 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto values = const_cast<ViReal64*>(request->values().data());
       auto source_delays = const_cast<ViReal64*>(request->source_delays().data());
-      if (request->values().size() != request->source_delays().size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of repeated fields values and source_delays do not match");
+      auto size_determine_from_sizes = std::array<int, 2>
+      {
+        request->values_size(),
+        request->source_delays_size()
+      };
+      const auto size_size_calculation = calculate_linked_array_size(size_determine_from_sizes, false);
+
+      if (size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [values, sourceDelays] do not match");
       }
-      ViUInt32 size = static_cast<ViUInt32>(request->source_delays().size());
+      auto size = size_size_calculation.size;
+
       auto status = library_->SetSequence(vi, channel_name, values, source_delays, size);
       response->set_status(status);
       return ::grpc::Status::OK;

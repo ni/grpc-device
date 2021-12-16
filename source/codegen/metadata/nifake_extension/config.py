@@ -11,6 +11,7 @@ config = {
     'close_function': None,
     'driver_name': 'NI-FAKE-EXTENSION',
     'custom_types': [],
+    'status_ok': 'status >= 0',
     'library_info': {
         'Linux': {
             '64bit': {

@@ -17,8 +17,10 @@
 
 namespace nifake_non_ivi_grpc {
 
+  using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
@@ -30,6 +32,12 @@ namespace nifake_non_ivi_grpc {
 
   NiFakeNonIviService::~NiFakeNonIviService()
   {
+  }
+
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
   }
 
   //---------------------------------------------------------------------
@@ -84,7 +92,7 @@ namespace nifake_non_ivi_grpc {
       double value {};
       auto status = library_->GetMarbleAttributeDouble(handle, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_value(value);
       }
       return ::grpc::Status::OK;
@@ -126,7 +134,7 @@ namespace nifake_non_ivi_grpc {
       int32 value {};
       auto status = library_->GetMarbleAttributeInt32(handle, attribute, &value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -175,7 +183,7 @@ namespace nifake_non_ivi_grpc {
       int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
       auto status = library_->GetMarbleAttributeInt32Array(handle, attribute, value);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         auto checked_convert_value = [](auto raw_value) {
           bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -218,7 +226,7 @@ namespace nifake_non_ivi_grpc {
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_handle()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -248,7 +256,7 @@ namespace nifake_non_ivi_grpc {
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_handle()->set_id(session_id);
       }
       return ::grpc::Status::OK;
@@ -346,7 +354,7 @@ namespace nifake_non_ivi_grpc {
       int32* data = reinterpret_cast<int32*>(response->mutable_data()->mutable_data());
       auto status = library_->IotaWithCustomSize(size_one, size_two, data);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
       }
       return ::grpc::Status::OK;
     }
@@ -371,7 +379,7 @@ namespace nifake_non_ivi_grpc {
       std::vector<myInt8> i8_data(number_of_i8_samples);
       auto status = library_->OutputArraysWithNarrowIntegerTypes(number_of_u16_samples, u16_data.data(), number_of_i16_samples, i16_data.data(), number_of_i8_samples, i8_data.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_u16_data()->Clear();
         response->mutable_u16_data()->Reserve(number_of_u16_samples);
         std::transform(
@@ -437,7 +445,7 @@ namespace nifake_non_ivi_grpc {
       std::string u8_data(number_of_u8_samples, '\0');
       auto status = library_->OutputArrayOfBytes(number_of_u8_samples, (myUInt8*)u8_data.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->set_u8_data(u8_data);
       }
       return ::grpc::Status::OK;
@@ -461,7 +469,7 @@ namespace nifake_non_ivi_grpc {
       std::vector<myUInt16> u16_data(array_size_copy);
       auto status = library_->OutputArraysWithPassedInByPtrMechanism(i32_data, u16_data.data(), &array_size_copy);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         response->mutable_i32_data()->Resize(array_size_copy, 0);
         response->mutable_u16_data()->Clear();
         response->mutable_u16_data()->Reserve(array_size_copy);
@@ -563,7 +571,7 @@ namespace nifake_non_ivi_grpc {
       CVIAbsoluteTime when {};
       auto status = library_->OutputTimestamp(&when);
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(when, response->mutable_when());
       }
       return ::grpc::Status::OK;
@@ -650,7 +658,7 @@ namespace nifake_non_ivi_grpc {
       colorVector.resize(channel_names.size());
       auto status = library_->OutputVarArgs(input_name, get_channelName_if(channel_names, 0), get_color_if(colorVector, 0), get_channelName_if(channel_names, 1), get_color_if(colorVector, 1), get_channelName_if(channel_names, 2), get_color_if(colorVector, 2), get_channelName_if(channel_names, 3), get_color_if(colorVector, 3));
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         for (int i = 0; i < colorVector.size(); ++i) {
           response->add_colors(static_cast<BeautifulColor>(colorVector[i]));
         }
@@ -697,6 +705,56 @@ namespace nifake_non_ivi_grpc {
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::ScalarsWithNarrowIntegerTypes(::grpc::ServerContext* context, const ScalarsWithNarrowIntegerTypesRequest* request, ScalarsWithNarrowIntegerTypesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto u16_raw = request->u16();
+      if (u16_raw < std::numeric_limits<myUInt16>::min() || u16_raw > std::numeric_limits<myUInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(u16_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("myUInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto u16 = static_cast<myUInt16>(u16_raw);
+
+      auto i16_raw = request->i16();
+      if (i16_raw < std::numeric_limits<myInt16>::min() || i16_raw > std::numeric_limits<myInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(i16_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("myInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto i16 = static_cast<myInt16>(i16_raw);
+
+      auto i8_raw = request->i8();
+      if (i8_raw < std::numeric_limits<myInt8>::min() || i8_raw > std::numeric_limits<myInt8>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(i8_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("myInt8");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto i8 = static_cast<myInt8>(i8_raw);
+
+      auto status = library_->ScalarsWithNarrowIntegerTypes(u16, i16, i8);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
     }
   }
 
@@ -832,7 +890,7 @@ namespace nifake_non_ivi_grpc {
       std::vector<StructWithCoercion_struct> structs(number_of_structs, StructWithCoercion_struct());
       auto status = library_->GetStructsWithCoercion(number_of_structs, structs.data());
       response->set_status(status);
-      if (status == 0) {
+      if (status_ok(status)) {
         convert_to_grpc(structs, response->mutable_structs());
       }
       return ::grpc::Status::OK;
