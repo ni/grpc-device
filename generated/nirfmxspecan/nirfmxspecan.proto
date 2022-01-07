@@ -1107,6 +1107,13 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_PHASENOISE_CANCELLATION_REFERENCE_PHASE_NOISE = 1245218;
 }
 
+enum AcpAveragingEnabled {
+  option allow_alias = true;
+  ACP_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  ACP_AVERAGING_ENABLED_FALSE = 0;
+  ACP_AVERAGING_ENABLED_TRUE = 1;
+}
+
 enum AcpAveragingType {
   option allow_alias = true;
   ACP_AVERAGING_TYPE_UNSPECIFIED = 0;
@@ -1122,6 +1129,13 @@ enum AcpCarrierMode {
   ACP_CARRIER_MODE_UNSPECIFIED = 0;
   ACP_CARRIER_MODE_PASSIVE = 0;
   ACP_CARRIER_MODE_ACTIVE = 1;
+}
+
+enum AcpCarrierRrcFilterEnabled {
+  option allow_alias = true;
+  ACP_CARRIER_RRC_FILTER_ENABLED_UNSPECIFIED = 0;
+  ACP_CARRIER_RRC_FILTER_ENABLED_FALSE = 0;
+  ACP_CARRIER_RRC_FILTER_ENABLED_TRUE = 1;
 }
 
 enum AcpFftWindow {
@@ -1145,6 +1159,27 @@ enum AcpMeasurementMethod {
   ACP_MEASUREMENT_METHOD_SEQUENTIAL_FFT = 2;
 }
 
+enum AcpNoiseCalibrationDataValid {
+  option allow_alias = true;
+  ACP_NOISE_CALIBRATION_DATA_VALID_UNSPECIFIED = 0;
+  ACP_NOISE_CALIBRATION_DATA_VALID_FALSE = 0;
+  ACP_NOISE_CALIBRATION_DATA_VALID_TRUE = 1;
+}
+
+enum AcpNoiseCompensationEnabled {
+  option allow_alias = true;
+  ACP_NOISE_COMPENSATION_ENABLED_UNSPECIFIED = 0;
+  ACP_NOISE_COMPENSATION_ENABLED_FALSE = 0;
+  ACP_NOISE_COMPENSATION_ENABLED_TRUE = 1;
+}
+
+enum AcpOffsetEnabled {
+  option allow_alias = true;
+  ACP_OFFSET_ENABLED_UNSPECIFIED = 0;
+  ACP_OFFSET_ENABLED_FALSE = 0;
+  ACP_OFFSET_ENABLED_TRUE = 1;
+}
+
 enum AcpOffsetFrequencyDefinition {
   option allow_alias = true;
   ACP_OFFSET_FREQUENCY_DEFINITION_UNSPECIFIED = 0;
@@ -1159,6 +1194,13 @@ enum AcpOffsetPowerReferenceCarrier {
   ACP_OFFSET_POWER_REFERENCE_CARRIER_HIGHEST = 1;
   ACP_OFFSET_POWER_REFERENCE_CARRIER_COMPOSITE = 2;
   ACP_OFFSET_POWER_REFERENCE_CARRIER_SPECIFIC = 3;
+}
+
+enum AcpOffsetRrcFilterEnabled {
+  option allow_alias = true;
+  ACP_OFFSET_RRC_FILTER_ENABLED_UNSPECIFIED = 0;
+  ACP_OFFSET_RRC_FILTER_ENABLED_FALSE = 0;
+  ACP_OFFSET_RRC_FILTER_ENABLED_TRUE = 1;
 }
 
 enum AcpOffsetSideband {
@@ -1176,12 +1218,26 @@ enum AcpPowerUnits {
   ACP_POWER_UNITS_DBM_PER_HZ = 1;
 }
 
+enum AcpRbwAutoBandwidth {
+  option allow_alias = true;
+  ACP_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  ACP_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  ACP_RBW_AUTO_BANDWIDTH_TRUE = 1;
+}
+
 enum AcpRbwFilterType {
   option allow_alias = true;
   ACP_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   ACP_RBW_FILTER_TYPE_FFT_BASED = 0;
   ACP_RBW_FILTER_TYPE_GAUSSIAN = 1;
   ACP_RBW_FILTER_TYPE_FLAT = 2;
+}
+
+enum AcpSweepTimeAuto {
+  option allow_alias = true;
+  ACP_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
+  ACP_SWEEP_TIME_AUTO_FALSE = 0;
+  ACP_SWEEP_TIME_AUTO_TRUE = 1;
 }
 
 enum AmpmAMToAMCurveFitType {
@@ -1200,6 +1256,20 @@ enum AmpmAMToPMCurveFitType {
   AMPM_AM_TO_PM_CURVE_FIT_TYPE_BISQUARE = 2;
 }
 
+enum AmpmAveragingEnabled {
+  option allow_alias = true;
+  AMPM_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  AMPM_AVERAGING_ENABLED_FALSE = 0;
+  AMPM_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum AmpmCompressionPointEnabled {
+  option allow_alias = true;
+  AMPM_COMPRESSION_POINT_ENABLED_UNSPECIFIED = 0;
+  AMPM_COMPRESSION_POINT_ENABLED_FALSE = 0;
+  AMPM_COMPRESSION_POINT_ENABLED_TRUE = 1;
+}
+
 enum AmpmMeasurementSampleRateMode {
   option allow_alias = true;
   AMPM_MEASUREMENT_SAMPLE_RATE_MODE_UNSPECIFIED = 0;
@@ -1212,6 +1282,13 @@ enum AmpmReferencePowerType {
   AMPM_REFERENCE_POWER_TYPE_UNSPECIFIED = 0;
   AMPM_REFERENCE_POWER_TYPE_INPUT = 0;
   AMPM_REFERENCE_POWER_TYPE_OUTPUT = 1;
+}
+
+enum AmpmReferenceWaveformIdleDurationPresent {
+  option allow_alias = true;
+  AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_UNSPECIFIED = 0;
+  AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE = 0;
+  AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE = 1;
 }
 
 enum AmpmSignalType {
@@ -1227,11 +1304,25 @@ enum AmpmSynchronizationMethod {
   AMPM_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED = 2;
 }
 
+enum AmpmThresholdEnabled {
+  option allow_alias = true;
+  AMPM_THRESHOLD_ENABLED_UNSPECIFIED = 0;
+  AMPM_THRESHOLD_ENABLED_FALSE = 0;
+  AMPM_THRESHOLD_ENABLED_TRUE = 1;
+}
+
 enum AmpmThresholdType {
   option allow_alias = true;
   AMPM_THRESHOLD_TYPE_UNSPECIFIED = 0;
   AMPM_THRESHOLD_TYPE_RELATIVE = 0;
   AMPM_THRESHOLD_TYPE_ABSOLUTE = 1;
+}
+
+enum Boolean {
+  option allow_alias = true;
+  BOOLEAN_UNSPECIFIED = 0;
+  BOOLEAN_FALSE = 0;
+  BOOLEAN_TRUE = 1;
 }
 
 enum CcdfRbwFilterType {
@@ -1242,11 +1333,25 @@ enum CcdfRbwFilterType {
   CCDF_RBW_FILTER_TYPE_RRC = 6;
 }
 
+enum CcdfThresholdEnabled {
+  option allow_alias = true;
+  CCDF_THRESHOLD_ENABLED_UNSPECIFIED = 0;
+  CCDF_THRESHOLD_ENABLED_FALSE = 0;
+  CCDF_THRESHOLD_ENABLED_TRUE = 1;
+}
+
 enum CcdfThresholdType {
   option allow_alias = true;
   CCDF_THRESHOLD_TYPE_UNSPECIFIED = 0;
   CCDF_THRESHOLD_TYPE_RELATIVE = 0;
   CCDF_THRESHOLD_TYPE_ABSOLUTE = 1;
+}
+
+enum ChpAveragingEnabled {
+  option allow_alias = true;
+  CHP_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  CHP_AVERAGING_ENABLED_FALSE = 0;
+  CHP_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum ChpAveragingType {
@@ -1257,6 +1362,13 @@ enum ChpAveragingType {
   CHP_AVERAGING_TYPE_SCALAR = 2;
   CHP_AVERAGING_TYPE_MAXIMUM = 3;
   CHP_AVERAGING_TYPE_MINIMUM = 4;
+}
+
+enum ChpCarrierRrcFilterEnabled {
+  option allow_alias = true;
+  CHP_CARRIER_RRC_FILTER_ENABLED_UNSPECIFIED = 0;
+  CHP_CARRIER_RRC_FILTER_ENABLED_FALSE = 0;
+  CHP_CARRIER_RRC_FILTER_ENABLED_TRUE = 1;
 }
 
 enum ChpFftWindow {
@@ -1272,12 +1384,33 @@ enum ChpFftWindow {
   CHP_FFT_WINDOW_KAISER_BESSEL = 7;
 }
 
+enum ChpNoiseCalibrationDataValid {
+  option allow_alias = true;
+  CHP_NOISE_CALIBRATION_DATA_VALID_UNSPECIFIED = 0;
+  CHP_NOISE_CALIBRATION_DATA_VALID_FALSE = 0;
+  CHP_NOISE_CALIBRATION_DATA_VALID_TRUE = 1;
+}
+
+enum ChpRbwAutoBandwidth {
+  option allow_alias = true;
+  CHP_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  CHP_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  CHP_RBW_AUTO_BANDWIDTH_TRUE = 1;
+}
+
 enum ChpRbwFilterType {
   option allow_alias = true;
   CHP_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   CHP_RBW_FILTER_TYPE_FFT_BASED = 0;
   CHP_RBW_FILTER_TYPE_GAUSSIAN = 1;
   CHP_RBW_FILTER_TYPE_FLAT = 2;
+}
+
+enum ChpSweepTimeAuto {
+  option allow_alias = true;
+  CHP_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
+  CHP_SWEEP_TIME_AUTO_FALSE = 0;
+  CHP_SWEEP_TIME_AUTO_TRUE = 1;
 }
 
 enum DigitalEdgeTriggerEdge {
@@ -1311,6 +1444,13 @@ enum DpdApplyDpdConfigurationInput {
   DPD_APPLY_DPD_CONFIGURATION_INPUT_USER = 1;
 }
 
+enum DpdApplyDpdIdleDurationPresent {
+  option allow_alias = true;
+  DPD_APPLY_DPD_IDLE_DURATION_PRESENT_UNSPECIFIED = 0;
+  DPD_APPLY_DPD_IDLE_DURATION_PRESENT_FALSE = 0;
+  DPD_APPLY_DPD_IDLE_DURATION_PRESENT_TRUE = 1;
+}
+
 enum DpdApplyDpdLookupTableCorrectionType {
   option allow_alias = true;
   DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_UNSPECIFIED = 0;
@@ -1327,6 +1467,20 @@ enum DpdApplyDpdMemoryModelCorrectionType {
   DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_PHASE_ONLY = 2;
 }
 
+enum DpdAveragingEnabled {
+  option allow_alias = true;
+  DPD_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  DPD_AVERAGING_ENABLED_FALSE = 0;
+  DPD_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum DpdIterativeDpdEnabled {
+  option allow_alias = true;
+  DPD_ITERATIVE_DPD_ENABLED_UNSPECIFIED = 0;
+  DPD_ITERATIVE_DPD_ENABLED_FALSE = 0;
+  DPD_ITERATIVE_DPD_ENABLED_TRUE = 1;
+}
+
 enum DpdLookupTableAMToAMCurveFitType {
   option allow_alias = true;
   DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE_UNSPECIFIED = 0;
@@ -1341,6 +1495,13 @@ enum DpdLookupTableAMToPMCurveFitType {
   DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE_LEAST_SQUARE = 0;
   DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE_LEAST_ABSOLUTE_RESIDUAL = 1;
   DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE_BISQUARE = 2;
+}
+
+enum DpdLookupTableThresholdEnabled {
+  option allow_alias = true;
+  DPD_LOOKUP_TABLE_THRESHOLD_ENABLED_UNSPECIFIED = 0;
+  DPD_LOOKUP_TABLE_THRESHOLD_ENABLED_FALSE = 0;
+  DPD_LOOKUP_TABLE_THRESHOLD_ENABLED_TRUE = 1;
 }
 
 enum DpdLookupTableThresholdType {
@@ -1372,6 +1533,13 @@ enum DpdModel {
   DPD_MODEL_GENERALIZED_MEMORY_POLYNOMIAL = 2;
 }
 
+enum DpdReferenceWaveformIdleDurationPresent {
+  option allow_alias = true;
+  DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_UNSPECIFIED = 0;
+  DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE = 0;
+  DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE = 1;
+}
+
 enum DpdSignalType {
   option allow_alias = true;
   DPD_SIGNAL_TYPE_UNSPECIFIED = 0;
@@ -1383,6 +1551,13 @@ enum DpdSynchronizationMethod {
   DPD_SYNCHRONIZATION_METHOD_UNSPECIFIED = 0;
   DPD_SYNCHRONIZATION_METHOD_DIRECT = 1;
   DPD_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED = 2;
+}
+
+enum FcntAveragingEnabled {
+  option allow_alias = true;
+  FCNT_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  FCNT_AVERAGING_ENABLED_FALSE = 0;
+  FCNT_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum FcntAveragingType {
@@ -1401,6 +1576,13 @@ enum FcntRbwFilterType {
   FCNT_RBW_FILTER_TYPE_RRC = 6;
 }
 
+enum FcntThresholdEnabled {
+  option allow_alias = true;
+  FCNT_THRESHOLD_ENABLED_UNSPECIFIED = 0;
+  FCNT_THRESHOLD_ENABLED_FALSE = 0;
+  FCNT_THRESHOLD_ENABLED_TRUE = 1;
+}
+
 enum FcntThresholdType {
   option allow_alias = true;
   FCNT_THRESHOLD_TYPE_UNSPECIFIED = 0;
@@ -1416,6 +1598,20 @@ enum FrequencyReferenceSource {
   FREQUENCY_REFERENCE_SOURCE_CLK_IN = 4;
 }
 
+enum HarmAutoHarmonicsSetupEnabled {
+  option allow_alias = true;
+  HARM_AUTO_HARMONICS_SETUP_ENABLED_UNSPECIFIED = 0;
+  HARM_AUTO_HARMONICS_SETUP_ENABLED_FALSE = 0;
+  HARM_AUTO_HARMONICS_SETUP_ENABLED_TRUE = 1;
+}
+
+enum HarmAveragingEnabled {
+  option allow_alias = true;
+  HARM_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  HARM_AVERAGING_ENABLED_FALSE = 0;
+  HARM_AVERAGING_ENABLED_TRUE = 1;
+}
+
 enum HarmAveragingType {
   option allow_alias = true;
   HARM_AVERAGING_TYPE_UNSPECIFIED = 0;
@@ -1426,12 +1622,33 @@ enum HarmAveragingType {
   HARM_AVERAGING_TYPE_MINIMUM = 4;
 }
 
+enum HarmHarmonicEnabled {
+  option allow_alias = true;
+  HARM_HARMONIC_ENABLED_UNSPECIFIED = 0;
+  HARM_HARMONIC_ENABLED_FALSE = 0;
+  HARM_HARMONIC_ENABLED_TRUE = 1;
+}
+
 enum HarmRbwFilterType {
   HARM_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   HARM_RBW_FILTER_TYPE_GAUSSIAN = 1;
   HARM_RBW_FILTER_TYPE_FLAT = 2;
   HARM_RBW_FILTER_TYPE_NONE = 5;
   HARM_RBW_FILTER_TYPE_RRC = 6;
+}
+
+enum IMAutoIntermodsSetupEnabled {
+  option allow_alias = true;
+  IM_AUTO_INTERMODS_SETUP_ENABLED_UNSPECIFIED = 0;
+  IM_AUTO_INTERMODS_SETUP_ENABLED_FALSE = 0;
+  IM_AUTO_INTERMODS_SETUP_ENABLED_TRUE = 1;
+}
+
+enum IMAveragingEnabled {
+  option allow_alias = true;
+  IM_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  IM_AVERAGING_ENABLED_FALSE = 0;
+  IM_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum IMAveragingType {
@@ -1464,6 +1681,13 @@ enum IMFrequencyDefinition {
   IM_FREQUENCY_DEFINITION_ABSOLUTE = 1;
 }
 
+enum IMIntermodEnabled {
+  option allow_alias = true;
+  IM_INTERMOD_ENABLED_UNSPECIFIED = 0;
+  IM_INTERMOD_ENABLED_FALSE = 0;
+  IM_INTERMOD_ENABLED_TRUE = 1;
+}
+
 enum IMIntermodSide {
   option allow_alias = true;
   IM_INTERMOD_SIDE_UNSPECIFIED = 0;
@@ -1480,12 +1704,33 @@ enum IMMeasurementMethod {
   IM_MEASUREMENT_METHOD_SEGMENTED = 2;
 }
 
+enum IMRbwFilterAutoBandwidth {
+  option allow_alias = true;
+  IM_RBW_FILTER_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  IM_RBW_FILTER_AUTO_BANDWIDTH_FALSE = 0;
+  IM_RBW_FILTER_AUTO_BANDWIDTH_TRUE = 1;
+}
+
 enum IMRbwFilterType {
   option allow_alias = true;
   IM_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   IM_RBW_FILTER_TYPE_FFT_BASED = 0;
   IM_RBW_FILTER_TYPE_GAUSSIAN = 1;
   IM_RBW_FILTER_TYPE_FLAT = 2;
+}
+
+enum IMSweepTimeAuto {
+  option allow_alias = true;
+  IM_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
+  IM_SWEEP_TIME_AUTO_FALSE = 0;
+  IM_SWEEP_TIME_AUTO_TRUE = 1;
+}
+
+enum IQBandwidthAuto {
+  option allow_alias = true;
+  IQ_BANDWIDTH_AUTO_UNSPECIFIED = 0;
+  IQ_BANDWIDTH_AUTO_FALSE = 0;
+  IQ_BANDWIDTH_AUTO_TRUE = 1;
 }
 
 enum IQPowerEdgeTriggerSlope {
@@ -1501,6 +1746,20 @@ enum MarkerNextPeak {
   MARKER_NEXT_PEAK_NEXT_HIGHEST = 0;
   MARKER_NEXT_PEAK_NEXT_LEFT = 1;
   MARKER_NEXT_PEAK_NEXT_RIGHT = 2;
+}
+
+enum MarkerPeakExcursionEnabled {
+  option allow_alias = true;
+  MARKER_PEAK_EXCURSION_ENABLED_UNSPECIFIED = 0;
+  MARKER_PEAK_EXCURSION_ENABLED_FALSE = 0;
+  MARKER_PEAK_EXCURSION_ENABLED_TRUE = 1;
+}
+
+enum MarkerThresholdEnabled {
+  option allow_alias = true;
+  MARKER_THRESHOLD_ENABLED_UNSPECIFIED = 0;
+  MARKER_THRESHOLD_ENABLED_FALSE = 0;
+  MARKER_THRESHOLD_ENABLED_TRUE = 1;
 }
 
 enum MarkerTrace {
@@ -1546,11 +1805,53 @@ enum MeasurementTypes {
   MEASUREMENT_TYPES_PAVT = 65536;
 }
 
+enum MechanicalAttenuationAuto {
+  option allow_alias = true;
+  MECHANICAL_ATTENUATION_AUTO_UNSPECIFIED = 0;
+  MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
+  MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum NFAveragingEnabled {
+  option allow_alias = true;
+  NF_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  NF_AVERAGING_ENABLED_FALSE = 0;
+  NF_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum NFCalibrationDataValid {
+  option allow_alias = true;
+  NF_CALIBRATION_DATA_VALID_UNSPECIFIED = 0;
+  NF_CALIBRATION_DATA_VALID_FALSE = 0;
+  NF_CALIBRATION_DATA_VALID_TRUE = 1;
+}
+
+enum NFCalibrationLossCompensationEnabled {
+  option allow_alias = true;
+  NF_CALIBRATION_LOSS_COMPENSATION_ENABLED_UNSPECIFIED = 0;
+  NF_CALIBRATION_LOSS_COMPENSATION_ENABLED_FALSE = 0;
+  NF_CALIBRATION_LOSS_COMPENSATION_ENABLED_TRUE = 1;
+}
+
 enum NFColdSourceMode {
   option allow_alias = true;
   NF_COLD_SOURCE_MODE_UNSPECIFIED = 0;
   NF_COLD_SOURCE_MODE_MEASURE = 0;
   NF_COLD_SOURCE_MODE_CALIBRATE = 1;
+}
+
+enum NFDutInputLossCompensationEnabled {
+  option allow_alias = true;
+  NF_DUT_INPUT_LOSS_COMPENSATION_ENABLED_UNSPECIFIED = 0;
+  NF_DUT_INPUT_LOSS_COMPENSATION_ENABLED_FALSE = 0;
+  NF_DUT_INPUT_LOSS_COMPENSATION_ENABLED_TRUE = 1;
+}
+
+enum NFDutOutputLossCompensationEnabled {
+  option allow_alias = true;
+  NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_UNSPECIFIED = 0;
+  NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_FALSE = 0;
+  NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_TRUE = 1;
 }
 
 enum NFMeasurementMethod {
@@ -1565,6 +1866,20 @@ enum NFYFactorMode {
   NFY_FACTOR_MODE_UNSPECIFIED = 0;
   NFY_FACTOR_MODE_MEASURE = 0;
   NFY_FACTOR_MODE_CALIBRATE = 1;
+}
+
+enum NFYFactorNoiseSourceLossCompensationEnabled {
+  option allow_alias = true;
+  NFY_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_UNSPECIFIED = 0;
+  NFY_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_FALSE = 0;
+  NFY_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_TRUE = 1;
+}
+
+enum ObwAveragingEnabled {
+  option allow_alias = true;
+  OBW_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  OBW_AVERAGING_ENABLED_FALSE = 0;
+  OBW_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum ObwAveragingType {
@@ -1597,12 +1912,26 @@ enum ObwPowerUnits {
   OBW_POWER_UNITS_DBM_PER_HZ = 1;
 }
 
+enum ObwRbwAutoBandwidth {
+  option allow_alias = true;
+  OBW_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  OBW_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  OBW_RBW_AUTO_BANDWIDTH_TRUE = 1;
+}
+
 enum ObwRbwFilterType {
   option allow_alias = true;
   OBW_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   OBW_RBW_FILTER_TYPE_FFT_BASED = 0;
   OBW_RBW_FILTER_TYPE_GAUSSIAN = 1;
   OBW_RBW_FILTER_TYPE_FLAT = 2;
+}
+
+enum ObwSweepTimeAuto {
+  option allow_alias = true;
+  OBW_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
+  OBW_SWEEP_TIME_AUTO_FALSE = 0;
+  OBW_SWEEP_TIME_AUTO_TRUE = 1;
 }
 
 enum PavtMeasurementIntervalMode {
@@ -1625,6 +1954,13 @@ enum PavtSegmentType {
   PAVT_SEGMENT_TYPE_PHASE_AND_AMPLITUDE = 0;
   PAVT_SEGMENT_TYPE_AMPLITUDE = 1;
   PAVT_SEGMENT_TYPE_FREQUENCY_ERROR_MEASUREMENT = 2;
+}
+
+enum PhaseNoiseCancellationEnabled {
+  option allow_alias = true;
+  PHASE_NOISE_CANCELLATION_ENABLED_UNSPECIFIED = 0;
+  PHASE_NOISE_CANCELLATION_ENABLED_FALSE = 0;
+  PHASE_NOISE_CANCELLATION_ENABLED_TRUE = 1;
 }
 
 enum PhaseNoiseIntegratedNoiseRangeDefinition {
@@ -1651,6 +1987,27 @@ enum PhaseNoiseSmoothingType {
   PHASE_NOISE_SMOOTHING_TYPE_MEDIAN = 3;
 }
 
+enum PhaseNoiseSpurRemovalEnabled {
+  option allow_alias = true;
+  PHASE_NOISE_SPUR_REMOVAL_ENABLED_UNSPECIFIED = 0;
+  PHASE_NOISE_SPUR_REMOVAL_ENABLED_FALSE = 0;
+  PHASE_NOISE_SPUR_REMOVAL_ENABLED_TRUE = 1;
+}
+
+enum RFAttenuationAuto {
+  option allow_alias = true;
+  RF_ATTENUATION_AUTO_UNSPECIFIED = 0;
+  RF_ATTENUATION_AUTO_FALSE = 0;
+  RF_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum SemAveragingEnabled {
+  option allow_alias = true;
+  SEM_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  SEM_AVERAGING_ENABLED_FALSE = 0;
+  SEM_AVERAGING_ENABLED_TRUE = 1;
+}
+
 enum SemAveragingType {
   option allow_alias = true;
   SEM_AVERAGING_TYPE_UNSPECIFIED = 0;
@@ -1661,12 +2018,33 @@ enum SemAveragingType {
   SEM_AVERAGING_TYPE_MINIMUM = 4;
 }
 
+enum SemCarrierEnabled {
+  option allow_alias = true;
+  SEM_CARRIER_ENABLED_UNSPECIFIED = 0;
+  SEM_CARRIER_ENABLED_FALSE = 0;
+  SEM_CARRIER_ENABLED_TRUE = 1;
+}
+
+enum SemCarrierRbwAutoBandwidth {
+  option allow_alias = true;
+  SEM_CARRIER_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  SEM_CARRIER_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  SEM_CARRIER_RBW_AUTO_BANDWIDTH_TRUE = 1;
+}
+
 enum SemCarrierRbwFilterType {
   option allow_alias = true;
   SEM_CARRIER_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   SEM_CARRIER_RBW_FILTER_TYPE_FFT_BASED = 0;
   SEM_CARRIER_RBW_FILTER_TYPE_GAUSSIAN = 1;
   SEM_CARRIER_RBW_FILTER_TYPE_FLAT = 2;
+}
+
+enum SemCarrierRrcFilterEnabled {
+  option allow_alias = true;
+  SEM_CARRIER_RRC_FILTER_ENABLED_UNSPECIFIED = 0;
+  SEM_CARRIER_RRC_FILTER_ENABLED_FALSE = 0;
+  SEM_CARRIER_RRC_FILTER_ENABLED_TRUE = 1;
 }
 
 enum SemCompositeMeasurementStatus {
@@ -1703,6 +2081,13 @@ enum SemOffsetAbsoluteLimitMode {
   SEM_OFFSET_ABSOLUTE_LIMIT_MODE_COUPLE = 1;
 }
 
+enum SemOffsetEnabled {
+  option allow_alias = true;
+  SEM_OFFSET_ENABLED_UNSPECIFIED = 0;
+  SEM_OFFSET_ENABLED_FALSE = 0;
+  SEM_OFFSET_ENABLED_TRUE = 1;
+}
+
 enum SemOffsetFrequencyDefinition {
   option allow_alias = true;
   SEM_OFFSET_FREQUENCY_DEFINITION_UNSPECIFIED = 0;
@@ -1719,6 +2104,13 @@ enum SemOffsetLimitFailMask {
   SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE_OR_RELATIVE = 1;
   SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE = 2;
   SEM_OFFSET_LIMIT_FAIL_MASK_RELATIVE = 3;
+}
+
+enum SemOffsetRbwAutoBandwidth {
+  option allow_alias = true;
+  SEM_OFFSET_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  SEM_OFFSET_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  SEM_OFFSET_RBW_AUTO_BANDWIDTH_TRUE = 1;
 }
 
 enum SemOffsetRbwFilterType {
@@ -1758,11 +2150,25 @@ enum SemReferenceType {
   SEM_REFERENCE_TYPE_PEAK = 1;
 }
 
+enum SemSweepTimeAuto {
+  option allow_alias = true;
+  SEM_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
+  SEM_SWEEP_TIME_AUTO_FALSE = 0;
+  SEM_SWEEP_TIME_AUTO_TRUE = 1;
+}
+
 enum SemUpperOffsetMeasurementStatus {
   option allow_alias = true;
   SEM_UPPER_OFFSET_MEASUREMENT_STATUS_UNSPECIFIED = 0;
   SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
   SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
+}
+
+enum SpectrumAveragingEnabled {
+  option allow_alias = true;
+  SPECTRUM_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  SPECTRUM_AVERAGING_ENABLED_FALSE = 0;
+  SPECTRUM_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum SpectrumAveragingType {
@@ -1801,6 +2207,20 @@ enum SpectrumFftWindow {
   SPECTRUM_FFT_WINDOW_KAISER_BESSEL = 7;
 }
 
+enum SpectrumNoiseCalibrationDataValid {
+  option allow_alias = true;
+  SPECTRUM_NOISE_CALIBRATION_DATA_VALID_UNSPECIFIED = 0;
+  SPECTRUM_NOISE_CALIBRATION_DATA_VALID_FALSE = 0;
+  SPECTRUM_NOISE_CALIBRATION_DATA_VALID_TRUE = 1;
+}
+
+enum SpectrumNoiseCompensationEnabled {
+  option allow_alias = true;
+  SPECTRUM_NOISE_COMPENSATION_ENABLED_UNSPECIFIED = 0;
+  SPECTRUM_NOISE_COMPENSATION_ENABLED_FALSE = 0;
+  SPECTRUM_NOISE_COMPENSATION_ENABLED_TRUE = 1;
+}
+
 enum SpectrumPowerUnits {
   option allow_alias = true;
   SPECTRUM_POWER_UNITS_UNSPECIFIED = 0;
@@ -1815,6 +2235,13 @@ enum SpectrumPowerUnits {
   SPECTRUM_POWER_UNITS_VOLTS_SQUARED = 8;
 }
 
+enum SpectrumRbwAutoBandwidth {
+  option allow_alias = true;
+  SPECTRUM_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  SPECTRUM_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  SPECTRUM_RBW_AUTO_BANDWIDTH_TRUE = 1;
+}
+
 enum SpectrumRbwFilterType {
   option allow_alias = true;
   SPECTRUM_RBW_FILTER_TYPE_UNSPECIFIED = 0;
@@ -1823,11 +2250,32 @@ enum SpectrumRbwFilterType {
   SPECTRUM_RBW_FILTER_TYPE_FLAT = 2;
 }
 
+enum SpectrumSweepTimeAuto {
+  option allow_alias = true;
+  SPECTRUM_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
+  SPECTRUM_SWEEP_TIME_AUTO_FALSE = 0;
+  SPECTRUM_SWEEP_TIME_AUTO_TRUE = 1;
+}
+
+enum SpectrumVbwFilterAutoBandwidth {
+  option allow_alias = true;
+  SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_FALSE = 0;
+  SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_TRUE = 1;
+}
+
 enum SpurAbsoluteLimitMode {
   option allow_alias = true;
   SPUR_ABSOLUTE_LIMIT_MODE_UNSPECIFIED = 0;
   SPUR_ABSOLUTE_LIMIT_MODE_MANUAL = 0;
   SPUR_ABSOLUTE_LIMIT_MODE_COUPLE = 1;
+}
+
+enum SpurAveragingEnabled {
+  option allow_alias = true;
+  SPUR_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  SPUR_AVERAGING_ENABLED_FALSE = 0;
+  SPUR_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum SpurAveragingType {
@@ -1873,11 +2321,32 @@ enum SpurRangeDetectorType {
   SPUR_RANGE_DETECTOR_TYPE_AVERAGE_LOG = 7;
 }
 
+enum SpurRangeEnabled {
+  option allow_alias = true;
+  SPUR_RANGE_ENABLED_UNSPECIFIED = 0;
+  SPUR_RANGE_ENABLED_FALSE = 0;
+  SPUR_RANGE_ENABLED_TRUE = 1;
+}
+
 enum SpurRangeStatus {
   option allow_alias = true;
   SPUR_RANGE_STATUS_UNSPECIFIED = 0;
   SPUR_RANGE_STATUS_FAIL = 0;
   SPUR_RANGE_STATUS_PASS = 1;
+}
+
+enum SpurRangeVbwFilterAutoBandwidth {
+  option allow_alias = true;
+  SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_FALSE = 0;
+  SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_TRUE = 1;
+}
+
+enum SpurRbwAutoBandwidth {
+  option allow_alias = true;
+  SPUR_RBW_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  SPUR_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  SPUR_RBW_AUTO_BANDWIDTH_TRUE = 1;
 }
 
 enum SpurRbwFilterType {
@@ -1888,11 +2357,25 @@ enum SpurRbwFilterType {
   SPUR_RBW_FILTER_TYPE_FLAT = 2;
 }
 
+enum SpurSweepTimeAuto {
+  option allow_alias = true;
+  SPUR_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
+  SPUR_SWEEP_TIME_AUTO_FALSE = 0;
+  SPUR_SWEEP_TIME_AUTO_TRUE = 1;
+}
+
 enum TriggerMinimumQuietTimeMode {
   option allow_alias = true;
   TRIGGER_MINIMUM_QUIET_TIME_MODE_UNSPECIFIED = 0;
   TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
   TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+}
+
+enum TxpAveragingEnabled {
+  option allow_alias = true;
+  TXP_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  TXP_AVERAGING_ENABLED_FALSE = 0;
+  TXP_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum TxpAveragingType {
@@ -1913,11 +2396,25 @@ enum TxpRbwFilterType {
   TXP_RBW_FILTER_TYPE_RRC = 6;
 }
 
+enum TxpThresholdEnabled {
+  option allow_alias = true;
+  TXP_THRESHOLD_ENABLED_UNSPECIFIED = 0;
+  TXP_THRESHOLD_ENABLED_FALSE = 0;
+  TXP_THRESHOLD_ENABLED_TRUE = 1;
+}
+
 enum TxpThresholdType {
   option allow_alias = true;
   TXP_THRESHOLD_TYPE_UNSPECIFIED = 0;
   TXP_THRESHOLD_TYPE_RELATIVE = 0;
   TXP_THRESHOLD_TYPE_ABSOLUTE = 1;
+}
+
+enum TxpVbwFilterAutoBandwidth {
+  option allow_alias = true;
+  TXP_VBW_FILTER_AUTO_BANDWIDTH_UNSPECIFIED = 0;
+  TXP_VBW_FILTER_AUTO_BANDWIDTH_FALSE = 0;
+  TXP_VBW_FILTER_AUTO_BANDWIDTH_TRUE = 1;
 }
 
 enum NiRFmxSpecAnInt32AttributeValues {
@@ -2537,11 +3034,14 @@ enum NiRFmxSpecAnStringAttributeValuesMapped {
 message ACPCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    AcpAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    AcpAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    AcpAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -2597,8 +3097,11 @@ message ACPCfgCarrierModeResponse {
 message ACPCfgCarrierRRCFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rrc_filter_enabled = 3;
-  double rrc_alpha = 4;
+  oneof rrc_filter_enabled_enum {
+    AcpCarrierRrcFilterEnabled rrc_filter_enabled = 3;
+    int32 rrc_filter_enabled_raw = 4;
+  }
+  double rrc_alpha = 5;
 }
 
 message ACPCfgCarrierRRCFilterResponse {
@@ -2635,7 +3138,10 @@ message ACPCfgMeasurementMethodResponse {
 message ACPCfgNoiseCompensationEnabledRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool noise_compensation_enabled = 3;
+  oneof noise_compensation_enabled_enum {
+    AcpNoiseCompensationEnabled noise_compensation_enabled = 3;
+    int32 noise_compensation_enabled_raw = 4;
+  }
 }
 
 message ACPCfgNoiseCompensationEnabledResponse {
@@ -2670,7 +3176,10 @@ message ACPCfgOffsetRequest {
     AcpOffsetSideband offset_sideband = 4;
     int32 offset_sideband_raw = 5;
   }
-  bool offset_enabled = 6;
+  oneof offset_enabled_enum {
+    AcpOffsetEnabled offset_enabled = 6;
+    int32 offset_enabled_raw = 7;
+  }
 }
 
 message ACPCfgOffsetResponse {
@@ -2682,7 +3191,7 @@ message ACPCfgOffsetArrayRequest {
   string selector_string = 2;
   repeated double offset_frequency = 3;
   repeated AcpOffsetSideband offset_sideband = 4;
-  repeated bool offset_enabled = 5;
+  repeated AcpOffsetEnabled offset_enabled = 5;
 }
 
 message ACPCfgOffsetArrayResponse {
@@ -2750,8 +3259,11 @@ message ACPCfgOffsetPowerReferenceArrayResponse {
 message ACPCfgOffsetRRCFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rrc_filter_enabled = 3;
-  double rrc_alpha = 4;
+  oneof rrc_filter_enabled_enum {
+    AcpOffsetRrcFilterEnabled rrc_filter_enabled = 3;
+    int32 rrc_filter_enabled_raw = 4;
+  }
+  double rrc_alpha = 5;
 }
 
 message ACPCfgOffsetRRCFilterResponse {
@@ -2761,7 +3273,7 @@ message ACPCfgOffsetRRCFilterResponse {
 message ACPCfgOffsetRRCFilterArrayRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  repeated bool rrc_filter_enabled = 3;
+  repeated AcpOffsetRrcFilterEnabled rrc_filter_enabled = 3;
   repeated double rrc_alpha = 4;
 }
 
@@ -2805,11 +3317,14 @@ message ACPCfgPowerUnitsResponse {
 message ACPCfgRBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rbw_auto = 3;
-  double rbw = 4;
+  oneof rbw_auto_enum {
+    AcpRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
   oneof rbw_filter_type_enum {
-    AcpRbwFilterType rbw_filter_type = 5;
-    int32 rbw_filter_type_raw = 6;
+    AcpRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
   }
 }
 
@@ -2820,8 +3335,11 @@ message ACPCfgRBWFilterResponse {
 message ACPCfgSweepTimeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool sweep_time_auto = 3;
-  double sweep_time_interval = 4;
+  oneof sweep_time_auto_enum {
+    AcpSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
 }
 
 message ACPCfgSweepTimeResponse {
@@ -2959,7 +3477,8 @@ message ACPValidateNoiseCalibrationDataRequest {
 
 message ACPValidateNoiseCalibrationDataResponse {
   int32 status = 1;
-  bool noise_calibration_data_valid = 2;
+  AcpNoiseCalibrationDataValid noise_calibration_data_valid = 2;
+  int32 noise_calibration_data_valid_raw = 3;
 }
 
 message AMPMCfgAMToAMCurveFitRequest {
@@ -2993,8 +3512,11 @@ message AMPMCfgAMToPMCurveFitResponse {
 message AMPMCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    AmpmAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
 }
 
 message AMPMCfgAveragingResponse {
@@ -3004,8 +3526,11 @@ message AMPMCfgAveragingResponse {
 message AMPMCfgCompressionPointsRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool compression_point_enabled = 3;
-  repeated double compression_level = 4;
+  oneof compression_point_enabled_enum {
+    AmpmCompressionPointEnabled compression_point_enabled = 3;
+    int32 compression_point_enabled_raw = 4;
+  }
+  repeated double compression_level = 5;
 }
 
 message AMPMCfgCompressionPointsResponse {
@@ -3065,10 +3590,13 @@ message AMPMCfgReferenceWaveformRequest {
   double x0 = 3;
   double dx = 4;
   repeated nidevice_grpc.NIComplexNumberF32 reference_waveform = 5;
-  bool idle_duration_present = 6;
+  oneof idle_duration_present_enum {
+    AmpmReferenceWaveformIdleDurationPresent idle_duration_present = 6;
+    int32 idle_duration_present_raw = 7;
+  }
   oneof signal_type_enum {
-    AmpmSignalType signal_type = 7;
-    int32 signal_type_raw = 8;
+    AmpmSignalType signal_type = 8;
+    int32 signal_type_raw = 9;
   }
 }
 
@@ -3083,10 +3611,13 @@ message AMPMCfgReferenceWaveformSplitRequest {
   double dx = 4;
   repeated float i = 5;
   repeated float q = 6;
-  bool idle_duration_present = 7;
+  oneof idle_duration_present_enum {
+    AmpmReferenceWaveformIdleDurationPresent idle_duration_present = 7;
+    int32 idle_duration_present_raw = 8;
+  }
   oneof signal_type_enum {
-    AmpmSignalType signal_type = 8;
-    int32 signal_type_raw = 9;
+    AmpmSignalType signal_type = 9;
+    int32 signal_type_raw = 10;
   }
 }
 
@@ -3110,11 +3641,14 @@ message AMPMCfgSynchronizationMethodResponse {
 message AMPMCfgThresholdRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool threshold_enabled = 3;
-  double threshold_level = 4;
+  oneof threshold_enabled_enum {
+    AmpmThresholdEnabled threshold_enabled = 3;
+    int32 threshold_enabled_raw = 4;
+  }
+  double threshold_level = 5;
   oneof threshold_type_enum {
-    AmpmThresholdType threshold_type = 5;
-    int32 threshold_type_raw = 6;
+    AmpmThresholdType threshold_type = 6;
+    int32 threshold_type_raw = 7;
   }
 }
 
@@ -3529,11 +4063,14 @@ message CCDFCfgRBWFilterResponse {
 message CCDFCfgThresholdRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool threshold_enabled = 3;
-  double threshold_level = 4;
+  oneof threshold_enabled_enum {
+    CcdfThresholdEnabled threshold_enabled = 3;
+    int32 threshold_enabled_raw = 4;
+  }
+  double threshold_level = 5;
   oneof threshold_type_enum {
-    CcdfThresholdType threshold_type = 5;
-    int32 threshold_type_raw = 6;
+    CcdfThresholdType threshold_type = 6;
+    int32 threshold_type_raw = 7;
   }
 }
 
@@ -3616,11 +4153,14 @@ message CCDFReadResponse {
 message CHPCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    ChpAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    ChpAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    ChpAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -3675,11 +4215,14 @@ message CHPCfgNumberOfCarriersResponse {
 message CHPCfgRBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rbw_auto = 3;
-  double rbw = 4;
+  oneof rbw_auto_enum {
+    ChpRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
   oneof rbw_filter_type_enum {
-    ChpRbwFilterType rbw_filter_type = 5;
-    int32 rbw_filter_type_raw = 6;
+    ChpRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
   }
 }
 
@@ -3690,8 +4233,11 @@ message CHPCfgRBWFilterResponse {
 message CHPCfgRRCFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rrc_filter_enabled = 3;
-  double rrc_alpha = 4;
+  oneof rrc_filter_enabled_enum {
+    ChpCarrierRrcFilterEnabled rrc_filter_enabled = 3;
+    int32 rrc_filter_enabled_raw = 4;
+  }
+  double rrc_alpha = 5;
 }
 
 message CHPCfgRRCFilterResponse {
@@ -3711,8 +4257,11 @@ message CHPCfgSpanResponse {
 message CHPCfgSweepTimeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool sweep_time_auto = 3;
-  double sweep_time_interval = 4;
+  oneof sweep_time_auto_enum {
+    ChpSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
 }
 
 message CHPCfgSweepTimeResponse {
@@ -3776,7 +4325,8 @@ message CHPValidateNoiseCalibrationDataRequest {
 
 message CHPValidateNoiseCalibrationDataResponse {
   int32 status = 1;
-  bool noise_calibration_data_valid = 2;
+  ChpNoiseCalibrationDataValid noise_calibration_data_valid = 2;
+  int32 noise_calibration_data_valid_raw = 3;
 }
 
 message CfgDigitalEdgeTriggerRequest {
@@ -3857,8 +4407,11 @@ message CfgIQPowerEdgeTriggerResponse {
 message CfgMechanicalAttenuationRequest {
   nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
-  bool mechanical_attenuation_auto = 3;
-  double mechanical_attenuation_value = 4;
+  oneof mechanical_attenuation_auto_enum {
+    MechanicalAttenuationAuto mechanical_attenuation_auto = 3;
+    int32 mechanical_attenuation_auto_raw = 4;
+  }
+  double mechanical_attenuation_value = 5;
 }
 
 message CfgMechanicalAttenuationResponse {
@@ -3880,8 +4433,11 @@ message CfgRFResponse {
 message CfgRFAttenuationRequest {
   nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
-  bool rf_attenuation_auto = 3;
-  double rf_attenuation_value = 4;
+  oneof rf_attenuation_auto_enum {
+    RFAttenuationAuto rf_attenuation_auto = 3;
+    int32 rf_attenuation_auto_raw = 4;
+  }
+  double rf_attenuation_value = 5;
 }
 
 message CfgRFAttenuationResponse {
@@ -3958,7 +4514,10 @@ message CloneSignalConfigurationResponse {
 
 message CloseRequest {
   nidevice_grpc.Session instrument = 1;
-  bool force_destroy = 2;
+  oneof force_destroy_enum {
+    Boolean force_destroy = 2;
+    int32 force_destroy_raw = 3;
+  }
 }
 
 message CloseResponse {
@@ -4008,8 +4567,11 @@ message DPDApplyDigitalPredistortionRequest {
   double x0_in = 3;
   double dx_in = 4;
   repeated nidevice_grpc.NIComplexNumberF32 waveform_in = 5;
-  bool idle_duration_present = 6;
-  double measurement_timeout = 7;
+  oneof idle_duration_present_enum {
+    DpdApplyDpdIdleDurationPresent idle_duration_present = 6;
+    int32 idle_duration_present_raw = 7;
+  }
+  double measurement_timeout = 8;
 }
 
 message DPDApplyDigitalPredistortionResponse {
@@ -4029,8 +4591,11 @@ message DPDApplyDigitalPredistortionSplitRequest {
   double dx_in = 4;
   repeated float waveform_in_i = 5;
   repeated float waveform_in_q = 6;
-  bool idle_duration_present = 7;
-  double measurement_timeout = 8;
+  oneof idle_duration_present_enum {
+    DpdApplyDpdIdleDurationPresent idle_duration_present = 7;
+    int32 idle_duration_present_raw = 8;
+  }
+  double measurement_timeout = 9;
 }
 
 message DPDApplyDigitalPredistortionSplitResponse {
@@ -4050,7 +4615,10 @@ message DPDApplyPreDPDSignalConditioningRequest {
   double x0_in = 3;
   double dx_in = 4;
   repeated nidevice_grpc.NIComplexNumberF32 waveform_in = 5;
-  bool idle_duration_present = 6;
+  oneof idle_duration_present_enum {
+    DpdApplyDpdIdleDurationPresent idle_duration_present = 6;
+    int32 idle_duration_present_raw = 7;
+  }
 }
 
 message DPDApplyPreDPDSignalConditioningResponse {
@@ -4069,7 +4637,10 @@ message DPDApplyPreDPDSignalConditioningSplitRequest {
   double dx_in = 4;
   repeated float waveform_in_i = 5;
   repeated float waveform_in_q = 6;
-  bool idle_duration_present = 7;
+  oneof idle_duration_present_enum {
+    DpdApplyDpdIdleDurationPresent idle_duration_present = 7;
+    int32 idle_duration_present_raw = 8;
+  }
 }
 
 message DPDApplyPreDPDSignalConditioningSplitResponse {
@@ -4168,8 +4739,11 @@ message DPDCfgApplyDPDUserLookupTableSplitResponse {
 message DPDCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    DpdAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
 }
 
 message DPDCfgAveragingResponse {
@@ -4217,7 +4791,10 @@ message DPDCfgGeneralizedMemoryPolynomialCrossTermsResponse {
 message DPDCfgIterativeDPDEnabledRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool iterative_dpd_enabled = 3;
+  oneof iterative_dpd_enabled_enum {
+    DpdIterativeDpdEnabled iterative_dpd_enabled = 3;
+    int32 iterative_dpd_enabled_raw = 4;
+  }
 }
 
 message DPDCfgIterativeDPDEnabledResponse {
@@ -4265,11 +4842,14 @@ message DPDCfgLookupTableStepSizeResponse {
 message DPDCfgLookupTableThresholdRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool threshold_enabled = 3;
-  double threshold_level = 4;
+  oneof threshold_enabled_enum {
+    DpdLookupTableThresholdEnabled threshold_enabled = 3;
+    int32 threshold_enabled_raw = 4;
+  }
+  double threshold_level = 5;
   oneof threshold_type_enum {
-    DpdLookupTableThresholdType threshold_type = 5;
-    int32 threshold_type_raw = 6;
+    DpdLookupTableThresholdType threshold_type = 6;
+    int32 threshold_type_raw = 7;
   }
 }
 
@@ -4352,10 +4932,13 @@ message DPDCfgReferenceWaveformRequest {
   double x0 = 3;
   double dx = 4;
   repeated nidevice_grpc.NIComplexNumberF32 reference_waveform = 5;
-  bool idle_duration_present = 6;
+  oneof idle_duration_present_enum {
+    DpdReferenceWaveformIdleDurationPresent idle_duration_present = 6;
+    int32 idle_duration_present_raw = 7;
+  }
   oneof signal_type_enum {
-    DpdSignalType signal_type = 7;
-    int32 signal_type_raw = 8;
+    DpdSignalType signal_type = 8;
+    int32 signal_type_raw = 9;
   }
 }
 
@@ -4370,10 +4953,13 @@ message DPDCfgReferenceWaveformSplitRequest {
   double dx = 4;
   repeated float i = 5;
   repeated float q = 6;
-  bool idle_duration_present = 7;
+  oneof idle_duration_present_enum {
+    DpdReferenceWaveformIdleDurationPresent idle_duration_present = 7;
+    int32 idle_duration_present_raw = 8;
+  }
   oneof signal_type_enum {
-    DpdSignalType signal_type = 8;
-    int32 signal_type_raw = 9;
+    DpdSignalType signal_type = 9;
+    int32 signal_type_raw = 10;
   }
 }
 
@@ -4567,11 +5153,14 @@ message DisableTriggerResponse {
 message FCntCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    FcntAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    FcntAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    FcntAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -4607,11 +5196,14 @@ message FCntCfgRBWFilterResponse {
 message FCntCfgThresholdRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool threshold_enabled = 3;
-  double threshold_level = 4;
+  oneof threshold_enabled_enum {
+    FcntThresholdEnabled threshold_enabled = 3;
+    int32 threshold_enabled_raw = 4;
+  }
+  double threshold_level = 5;
   oneof threshold_type_enum {
-    FcntThresholdType threshold_type = 5;
-    int32 threshold_type_raw = 6;
+    FcntThresholdType threshold_type = 6;
+    int32 threshold_type_raw = 7;
   }
 }
 
@@ -4965,7 +5557,10 @@ message GetErrorStringResponse {
 message HarmCfgAutoHarmonicsRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool auto_harmonics_setup_enabled = 3;
+  oneof auto_harmonics_setup_enabled_enum {
+    HarmAutoHarmonicsSetupEnabled auto_harmonics_setup_enabled = 3;
+    int32 auto_harmonics_setup_enabled_raw = 4;
+  }
 }
 
 message HarmCfgAutoHarmonicsResponse {
@@ -4975,11 +5570,14 @@ message HarmCfgAutoHarmonicsResponse {
 message HarmCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    HarmAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    HarmAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    HarmAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -5017,8 +5615,11 @@ message HarmCfgHarmonicRequest {
   string selector_string = 2;
   int32 harmonic_order = 3;
   double harmonic_bandwidth = 4;
-  bool harmonic_enabled = 5;
-  double harmonic_measurement_interval = 6;
+  oneof harmonic_enabled_enum {
+    HarmHarmonicEnabled harmonic_enabled = 5;
+    int32 harmonic_enabled_raw = 6;
+  }
+  double harmonic_measurement_interval = 7;
 }
 
 message HarmCfgHarmonicResponse {
@@ -5030,7 +5631,7 @@ message HarmCfgHarmonicArrayRequest {
   string selector_string = 2;
   repeated int32 harmonic_order = 3;
   repeated double harmonic_bandwidth = 4;
-  repeated bool harmonic_enabled = 5;
+  repeated HarmHarmonicEnabled harmonic_enabled = 5;
   repeated double harmonic_measurement_interval = 6;
 }
 
@@ -5119,8 +5720,11 @@ message HarmReadResponse {
 message IMCfgAutoIntermodsSetupRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool auto_intermods_setup_enabled = 3;
-  int32 maximum_intermod_order = 4;
+  oneof auto_intermods_setup_enabled_enum {
+    IMAutoIntermodsSetupEnabled auto_intermods_setup_enabled = 3;
+    int32 auto_intermods_setup_enabled_raw = 4;
+  }
+  int32 maximum_intermod_order = 5;
 }
 
 message IMCfgAutoIntermodsSetupResponse {
@@ -5130,11 +5734,14 @@ message IMCfgAutoIntermodsSetupResponse {
 message IMCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    IMAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    IMAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    IMAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -5190,7 +5797,10 @@ message IMCfgIntermodRequest {
     IMIntermodSide intermod_side = 6;
     int32 intermod_side_raw = 7;
   }
-  bool intermod_enabled = 8;
+  oneof intermod_enabled_enum {
+    IMIntermodEnabled intermod_enabled = 8;
+    int32 intermod_enabled_raw = 9;
+  }
 }
 
 message IMCfgIntermodResponse {
@@ -5204,7 +5814,7 @@ message IMCfgIntermodArrayRequest {
   repeated double lower_intermod_frequency = 4;
   repeated double upper_intermod_frequency = 5;
   repeated IMIntermodSide intermod_side = 6;
-  repeated bool intermod_enabled = 7;
+  repeated IMIntermodEnabled intermod_enabled = 7;
 }
 
 message IMCfgIntermodArrayResponse {
@@ -5237,11 +5847,14 @@ message IMCfgNumberOfIntermodsResponse {
 message IMCfgRBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rbw_auto = 3;
-  double rbw = 4;
+  oneof rbw_auto_enum {
+    IMRbwFilterAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
   oneof rbw_filter_type_enum {
-    IMRbwFilterType rbw_filter_type = 5;
-    int32 rbw_filter_type_raw = 6;
+    IMRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
   }
 }
 
@@ -5252,8 +5865,11 @@ message IMCfgRBWFilterResponse {
 message IMCfgSweepTimeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool sweep_time_auto = 3;
-  double sweep_time_interval = 4;
+  oneof sweep_time_auto_enum {
+    IMSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
 }
 
 message IMCfgSweepTimeResponse {
@@ -5359,8 +5975,11 @@ message IQCfgAcquisitionResponse {
 message IQCfgBandwidthRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool bandwidth_auto = 3;
-  double bandwidth = 4;
+  oneof bandwidth_auto_enum {
+    IQBandwidthAuto bandwidth_auto = 3;
+    int32 bandwidth_auto_raw = 4;
+  }
+  double bandwidth = 5;
 }
 
 message IQCfgBandwidthResponse {
@@ -5455,8 +6074,11 @@ message MarkerCfgNumberOfMarkersResponse {
 message MarkerCfgPeakExcursionRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool peak_excursion_enabled = 3;
-  double peak_excursion = 4;
+  oneof peak_excursion_enabled_enum {
+    MarkerPeakExcursionEnabled peak_excursion_enabled = 3;
+    int32 peak_excursion_enabled_raw = 4;
+  }
+  double peak_excursion = 5;
 }
 
 message MarkerCfgPeakExcursionResponse {
@@ -5476,8 +6098,11 @@ message MarkerCfgReferenceMarkerResponse {
 message MarkerCfgThresholdRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool threshold_enabled = 3;
-  double threshold = 4;
+  oneof threshold_enabled_enum {
+    MarkerThresholdEnabled threshold_enabled = 3;
+    int32 threshold_enabled_raw = 4;
+  }
+  double threshold = 5;
 }
 
 message MarkerCfgThresholdResponse {
@@ -5558,8 +6183,11 @@ message MarkerPeakSearchResponse {
 message NFCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    NFAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
 }
 
 message NFCfgAveragingResponse {
@@ -5569,10 +6197,13 @@ message NFCfgAveragingResponse {
 message NFCfgCalibrationLossRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool calibration_loss_compensation_enabled = 3;
-  repeated double calibration_loss_frequency = 4;
-  repeated double calibration_loss = 5;
-  double calibration_loss_temperature = 6;
+  oneof calibration_loss_compensation_enabled_enum {
+    NFCalibrationLossCompensationEnabled calibration_loss_compensation_enabled = 3;
+    int32 calibration_loss_compensation_enabled_raw = 4;
+  }
+  repeated double calibration_loss_frequency = 5;
+  repeated double calibration_loss = 6;
+  double calibration_loss_temperature = 7;
 }
 
 message NFCfgCalibrationLossResponse {
@@ -5621,10 +6252,13 @@ message NFCfgColdSourceModeResponse {
 message NFCfgDUTInputLossRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool dut_input_loss_compensation_enabled = 3;
-  repeated double dut_input_loss_frequency = 4;
-  repeated double dut_input_loss = 5;
-  double dut_input_loss_temperature = 6;
+  oneof dut_input_loss_compensation_enabled_enum {
+    NFDutInputLossCompensationEnabled dut_input_loss_compensation_enabled = 3;
+    int32 dut_input_loss_compensation_enabled_raw = 4;
+  }
+  repeated double dut_input_loss_frequency = 5;
+  repeated double dut_input_loss = 6;
+  double dut_input_loss_temperature = 7;
 }
 
 message NFCfgDUTInputLossResponse {
@@ -5634,10 +6268,13 @@ message NFCfgDUTInputLossResponse {
 message NFCfgDUTOutputLossRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool dut_output_loss_compensation_enabled = 3;
-  repeated double dut_output_loss_frequency = 4;
-  repeated double dut_output_loss = 5;
-  double dut_output_loss_temperature = 6;
+  oneof dut_output_loss_compensation_enabled_enum {
+    NFDutOutputLossCompensationEnabled dut_output_loss_compensation_enabled = 3;
+    int32 dut_output_loss_compensation_enabled_raw = 4;
+  }
+  repeated double dut_output_loss_frequency = 5;
+  repeated double dut_output_loss = 6;
+  double dut_output_loss_temperature = 7;
 }
 
 message NFCfgDUTOutputLossResponse {
@@ -5740,10 +6377,13 @@ message NFCfgYFactorNoiseSourceENRResponse {
 message NFCfgYFactorNoiseSourceLossRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool noise_source_loss_compensation_enabled = 3;
-  repeated double noise_source_loss_frequency = 4;
-  repeated double noise_source_loss = 5;
-  double noise_source_loss_temperature = 6;
+  oneof noise_source_loss_compensation_enabled_enum {
+    NFYFactorNoiseSourceLossCompensationEnabled noise_source_loss_compensation_enabled = 3;
+    int32 noise_source_loss_compensation_enabled_raw = 4;
+  }
+  repeated double noise_source_loss_frequency = 5;
+  repeated double noise_source_loss = 6;
+  double noise_source_loss_temperature = 7;
 }
 
 message NFCfgYFactorNoiseSourceLossResponse {
@@ -5872,17 +6512,21 @@ message NFValidateCalibrationDataRequest {
 
 message NFValidateCalibrationDataResponse {
   int32 status = 1;
-  bool calibration_data_valid = 2;
+  NFCalibrationDataValid calibration_data_valid = 2;
+  int32 calibration_data_valid_raw = 3;
 }
 
 message OBWCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    ObwAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    ObwAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    ObwAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -5930,11 +6574,14 @@ message OBWCfgPowerUnitsResponse {
 message OBWCfgRBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rbw_auto = 3;
-  double rbw = 4;
+  oneof rbw_auto_enum {
+    ObwRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
   oneof rbw_filter_type_enum {
-    ObwRbwFilterType rbw_filter_type = 5;
-    int32 rbw_filter_type_raw = 6;
+    ObwRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
   }
 }
 
@@ -5955,8 +6602,11 @@ message OBWCfgSpanResponse {
 message OBWCfgSweepTimeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool sweep_time_auto = 3;
-  double sweep_time_interval = 4;
+  oneof sweep_time_auto_enum {
+    ObwSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
 }
 
 message OBWCfgSweepTimeResponse {
@@ -6215,10 +6865,13 @@ message PhaseNoiseCfgAveragingMultiplierResponse {
 message PhaseNoiseCfgCancellationRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool cancellation_enabled = 3;
-  double cancellation_threshold = 4;
-  repeated float frequency = 5;
-  repeated float reference_phase_noise = 6;
+  oneof cancellation_enabled_enum {
+    PhaseNoiseCancellationEnabled cancellation_enabled = 3;
+    int32 cancellation_enabled_raw = 4;
+  }
+  double cancellation_threshold = 5;
+  repeated float frequency = 6;
+  repeated float reference_phase_noise = 7;
 }
 
 message PhaseNoiseCfgCancellationResponse {
@@ -6303,8 +6956,11 @@ message PhaseNoiseCfgSpotNoiseFrequencyListResponse {
 message PhaseNoiseCfgSpurRemovalRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool spur_removal_enabled = 3;
-  double peak_excursion = 4;
+  oneof spur_removal_enabled_enum {
+    PhaseNoiseSpurRemovalEnabled spur_removal_enabled = 3;
+    int32 spur_removal_enabled_raw = 4;
+  }
+  double peak_excursion = 5;
 }
 
 message PhaseNoiseCfgSpurRemovalResponse {
@@ -6399,11 +7055,14 @@ message ResetToDefaultResponse {
 message SEMCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    SemAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    SemAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    SemAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -6424,7 +7083,10 @@ message SEMCfgCarrierChannelBandwidthResponse {
 message SEMCfgCarrierEnabledRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool carrier_enabled = 3;
+  oneof carrier_enabled_enum {
+    SemCarrierEnabled carrier_enabled = 3;
+    int32 carrier_enabled_raw = 4;
+  }
 }
 
 message SEMCfgCarrierEnabledResponse {
@@ -6454,11 +7116,14 @@ message SEMCfgCarrierIntegrationBandwidthResponse {
 message SEMCfgCarrierRBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rbw_auto = 3;
-  double rbw = 4;
+  oneof rbw_auto_enum {
+    SemCarrierRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
   oneof rbw_filter_type_enum {
-    SemCarrierRbwFilterType rbw_filter_type = 5;
-    int32 rbw_filter_type_raw = 6;
+    SemCarrierRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
   }
 }
 
@@ -6469,8 +7134,11 @@ message SEMCfgCarrierRBWFilterResponse {
 message SEMCfgCarrierRRCFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rrc_filter_enabled = 3;
-  double rrc_alpha = 4;
+  oneof rrc_filter_enabled_enum {
+    SemCarrierRrcFilterEnabled rrc_filter_enabled = 3;
+    int32 rrc_filter_enabled_raw = 4;
+  }
+  double rrc_alpha = 5;
 }
 
 message SEMCfgCarrierRRCFilterResponse {
@@ -6553,10 +7221,13 @@ message SEMCfgOffsetFrequencyRequest {
   string selector_string = 2;
   double offset_start_frequency = 3;
   double offset_stop_frequency = 4;
-  bool offset_enabled = 5;
+  oneof offset_enabled_enum {
+    SemOffsetEnabled offset_enabled = 5;
+    int32 offset_enabled_raw = 6;
+  }
   oneof offset_sideband_enum {
-    SemOffsetSideband offset_sideband = 6;
-    int32 offset_sideband_raw = 7;
+    SemOffsetSideband offset_sideband = 7;
+    int32 offset_sideband_raw = 8;
   }
 }
 
@@ -6569,7 +7240,7 @@ message SEMCfgOffsetFrequencyArrayRequest {
   string selector_string = 2;
   repeated double offset_start_frequency = 3;
   repeated double offset_stop_frequency = 4;
-  repeated bool offset_enabled = 5;
+  repeated SemOffsetEnabled offset_enabled = 5;
   repeated SemOffsetSideband offset_sideband = 6;
 }
 
@@ -6606,11 +7277,14 @@ message SEMCfgOffsetLimitFailMaskResponse {
 message SEMCfgOffsetRBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rbw_auto = 3;
-  double rbw = 4;
+  oneof rbw_auto_enum {
+    SemOffsetRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
   oneof rbw_filter_type_enum {
-    SemOffsetRbwFilterType rbw_filter_type = 5;
-    int32 rbw_filter_type_raw = 6;
+    SemOffsetRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
   }
 }
 
@@ -6621,7 +7295,7 @@ message SEMCfgOffsetRBWFilterResponse {
 message SEMCfgOffsetRBWFilterArrayRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  repeated bool rbw_auto = 3;
+  repeated SemOffsetRbwAutoBandwidth rbw_auto = 3;
   repeated double rbw = 4;
   repeated SemOffsetRbwFilterType rbw_filter_type = 5;
 }
@@ -6706,8 +7380,11 @@ message SEMCfgReferenceTypeResponse {
 message SEMCfgSweepTimeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool sweep_time_auto = 3;
-  double sweep_time_interval = 4;
+  oneof sweep_time_auto_enum {
+    SemSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
 }
 
 message SEMCfgSweepTimeResponse {
@@ -7183,11 +7860,14 @@ message SetAttributeU8ArrayResponse {
 message SpectrumCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    SpectrumAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    SpectrumAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    SpectrumAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -7237,7 +7917,10 @@ message SpectrumCfgFrequencyStartStopResponse {
 message SpectrumCfgNoiseCompensationEnabledRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool noise_compensation_enabled = 3;
+  oneof noise_compensation_enabled_enum {
+    SpectrumNoiseCompensationEnabled noise_compensation_enabled = 3;
+    int32 noise_compensation_enabled_raw = 4;
+  }
 }
 
 message SpectrumCfgNoiseCompensationEnabledResponse {
@@ -7260,11 +7943,14 @@ message SpectrumCfgPowerUnitsResponse {
 message SpectrumCfgRBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rbw_auto = 3;
-  double rbw = 4;
+  oneof rbw_auto_enum {
+    SpectrumRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
   oneof rbw_filter_type_enum {
-    SpectrumRbwFilterType rbw_filter_type = 5;
-    int32 rbw_filter_type_raw = 6;
+    SpectrumRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
   }
 }
 
@@ -7285,8 +7971,11 @@ message SpectrumCfgSpanResponse {
 message SpectrumCfgSweepTimeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool sweep_time_auto = 3;
-  double sweep_time_interval = 4;
+  oneof sweep_time_auto_enum {
+    SpectrumSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
 }
 
 message SpectrumCfgSweepTimeResponse {
@@ -7296,9 +7985,12 @@ message SpectrumCfgSweepTimeResponse {
 message SpectrumCfgVBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool vbw_auto = 3;
-  double vbw = 4;
-  double vbw_to_rbw_ratio = 5;
+  oneof vbw_auto_enum {
+    SpectrumVbwFilterAutoBandwidth vbw_auto = 3;
+    int32 vbw_auto_raw = 4;
+  }
+  double vbw = 5;
+  double vbw_to_rbw_ratio = 6;
 }
 
 message SpectrumCfgVBWFilterResponse {
@@ -7367,17 +8059,21 @@ message SpectrumValidateNoiseCalibrationDataRequest {
 
 message SpectrumValidateNoiseCalibrationDataResponse {
   int32 status = 1;
-  bool noise_calibration_data_valid = 2;
+  SpectrumNoiseCalibrationDataValid noise_calibration_data_valid = 2;
+  int32 noise_calibration_data_valid_raw = 3;
 }
 
 message SpurCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    SpurAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    SpurAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    SpurAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -7465,7 +8161,10 @@ message SpurCfgRangeFrequencyRequest {
   string selector_string = 2;
   double start_frequency = 3;
   double stop_frequency = 4;
-  bool range_enabled = 5;
+  oneof range_enabled_enum {
+    SpurRangeEnabled range_enabled = 5;
+    int32 range_enabled_raw = 6;
+  }
 }
 
 message SpurCfgRangeFrequencyResponse {
@@ -7477,7 +8176,7 @@ message SpurCfgRangeFrequencyArrayRequest {
   string selector_string = 2;
   repeated double start_frequency = 3;
   repeated double stop_frequency = 4;
-  repeated bool range_enabled = 5;
+  repeated SpurRangeEnabled range_enabled = 5;
 }
 
 message SpurCfgRangeFrequencyArrayResponse {
@@ -7529,7 +8228,7 @@ message SpurCfgRangePeakCriteriaArrayResponse {
 message SpurCfgRangeRBWArrayRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  repeated bool rbw_auto = 3;
+  repeated SpurRbwAutoBandwidth rbw_auto = 3;
   repeated double rbw = 4;
   repeated SpurRbwFilterType rbw_filter_type = 5;
 }
@@ -7541,11 +8240,14 @@ message SpurCfgRangeRBWArrayResponse {
 message SpurCfgRangeRBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool rbw_auto = 3;
-  double rbw = 4;
+  oneof rbw_auto_enum {
+    SpurRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
   oneof rbw_filter_type_enum {
-    SpurRbwFilterType rbw_filter_type = 5;
-    int32 rbw_filter_type_raw = 6;
+    SpurRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
   }
 }
 
@@ -7576,8 +8278,11 @@ message SpurCfgRangeRelativeAttenuationArrayResponse {
 message SpurCfgRangeSweepTimeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool sweep_time_auto = 3;
-  double sweep_time_interval = 4;
+  oneof sweep_time_auto_enum {
+    SpurSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
 }
 
 message SpurCfgRangeSweepTimeResponse {
@@ -7587,7 +8292,7 @@ message SpurCfgRangeSweepTimeResponse {
 message SpurCfgRangeSweepTimeArrayRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  repeated bool sweep_time_auto = 3;
+  repeated SpurSweepTimeAuto sweep_time_auto = 3;
   repeated double sweep_time_interval = 4;
 }
 
@@ -7598,9 +8303,12 @@ message SpurCfgRangeSweepTimeArrayResponse {
 message SpurCfgRangeVBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool vbw_auto = 3;
-  double vbw = 4;
-  double vbw_to_rbw_ratio = 5;
+  oneof vbw_auto_enum {
+    SpurRangeVbwFilterAutoBandwidth vbw_auto = 3;
+    int32 vbw_auto_raw = 4;
+  }
+  double vbw = 5;
+  double vbw_to_rbw_ratio = 6;
 }
 
 message SpurCfgRangeVBWFilterResponse {
@@ -7610,7 +8318,7 @@ message SpurCfgRangeVBWFilterResponse {
 message SpurCfgRangeVBWFilterArrayRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  repeated bool vbw_auto = 3;
+  repeated SpurRangeVbwFilterAutoBandwidth vbw_auto = 3;
   repeated double vbw = 4;
   repeated double vbw_to_rbw_ratio = 5;
 }
@@ -7744,11 +8452,14 @@ message SpurFetchSpurMeasurementArrayResponse {
 message TXPCfgAveragingRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool averaging_enabled = 3;
-  int32 averaging_count = 4;
+  oneof averaging_enabled_enum {
+    TxpAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
   oneof averaging_type_enum {
-    TxpAveragingType averaging_type = 5;
-    int32 averaging_type_raw = 6;
+    TxpAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
   }
 }
 
@@ -7784,11 +8495,14 @@ message TXPCfgRBWFilterResponse {
 message TXPCfgThresholdRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool threshold_enabled = 3;
-  double threshold_level = 4;
+  oneof threshold_enabled_enum {
+    TxpThresholdEnabled threshold_enabled = 3;
+    int32 threshold_enabled_raw = 4;
+  }
+  double threshold_level = 5;
   oneof threshold_type_enum {
-    TxpThresholdType threshold_type = 5;
-    int32 threshold_type_raw = 6;
+    TxpThresholdType threshold_type = 6;
+    int32 threshold_type_raw = 7;
   }
 }
 
@@ -7799,9 +8513,12 @@ message TXPCfgThresholdResponse {
 message TXPCfgVBWFilterRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  bool vbw_auto = 3;
-  double vbw = 4;
-  double vbw_to_rbw_ratio = 5;
+  oneof vbw_auto_enum {
+    TxpVbwFilterAutoBandwidth vbw_auto = 3;
+    int32 vbw_auto_raw = 4;
+  }
+  double vbw = 5;
+  double vbw_to_rbw_ratio = 6;
 }
 
 message TXPCfgVBWFilterResponse {

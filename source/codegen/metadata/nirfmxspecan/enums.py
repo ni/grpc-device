@@ -268,6 +268,18 @@ enums = {
             }
         ]
     },
+    'AcpNoiseCalibrationDataValid': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'AcpNoiseCalibrationMode': {
         'values': [
             {
@@ -754,6 +766,18 @@ enums = {
             }
         ]
     },
+    'AmpmReferenceWaveformIdleDurationPresent': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'AmpmSignalType': {
         'values': [
             {
@@ -822,6 +846,18 @@ enums = {
                     'description': ' The threshold is the absolute power, in dBm.'
                 },
                 'name': 'ABSOLUTE',
+                'value': 1
+            }
+        ]
+    },
+    'Boolean': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -1078,6 +1114,18 @@ enums = {
                 'documentation': {
                     'description': ' RFmx uses a noise calibration averaging count of 32.'
                 },
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'ChpNoiseCalibrationDataValid': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
                 'name': 'TRUE',
                 'value': 1
             }
@@ -1452,6 +1500,18 @@ enums = {
                     'description': ' Applies DPD by using a computed DPD polynomial or lookup table on an input waveform. You must set the configuration parameters for applying DPD such as the  RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_DUT_AVERAGE_INPUT_POWER, RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_DPD_MODEL, RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_MEASUREMENT_SAMPLE_RATE, DPD polynomial, and lookup table.  '
                 },
                 'name': 'USER',
+                'value': 1
+            }
+        ]
+    },
+    'DpdApplyDpdIdleDurationPresent': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -1891,6 +1951,18 @@ enums = {
                 },
                 'name': 'KAISER_BESSEL',
                 'value': 7
+            }
+        ]
+    },
+    'DpdReferenceWaveformIdleDurationPresent': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
             }
         ]
     },
@@ -2563,6 +2635,30 @@ enums = {
             }
         ]
     },
+    'MarkerPeakExcursionEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'MarkerThresholdEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'MarkerTrace': {
         'values': [
             {
@@ -2691,7 +2787,31 @@ enums = {
             }
         ]
     },
+    'MechanicalAttenuationAuto': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'NFAveragingEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'NFCalibrationDataValid': {
         'values': [
             {
                 'name': 'FALSE',
@@ -3277,6 +3397,18 @@ enums = {
         ]
     },
     'PhaseNoiseSpurRemovalEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'RFAttenuationAuto': {
         'values': [
             {
                 'name': 'FALSE',
@@ -4053,6 +4185,18 @@ enums = {
                 'documentation': {
                     'description': ' RFmx uses a noise calibration averaging count of 32.'
                 },
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'SpectrumNoiseCalibrationDataValid': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
                 'name': 'TRUE',
                 'value': 1
             }

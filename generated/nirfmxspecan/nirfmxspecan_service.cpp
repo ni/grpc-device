@@ -54,7 +54,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::ACPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -193,7 +208,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rrc_filter_enabled = request->rrc_filter_enabled();
+      int32 rrc_filter_enabled;
+      switch (request->rrc_filter_enabled_enum_case()) {
+        case nirfmxspecan_grpc::ACPCfgCarrierRRCFilterRequest::RrcFilterEnabledEnumCase::kRrcFilterEnabled: {
+          rrc_filter_enabled = static_cast<int32>(request->rrc_filter_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgCarrierRRCFilterRequest::RrcFilterEnabledEnumCase::kRrcFilterEnabledRaw: {
+          rrc_filter_enabled = static_cast<int32>(request->rrc_filter_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgCarrierRRCFilterRequest::RrcFilterEnabledEnumCase::RRC_FILTER_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rrc_filter_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rrc_alpha = request->rrc_alpha();
       auto status = library_->ACPCfgCarrierRRCFilter(instrument, selector_string, rrc_filter_enabled, rrc_alpha);
       response->set_status(status);
@@ -288,7 +318,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 noise_compensation_enabled = request->noise_compensation_enabled();
+      int32 noise_compensation_enabled;
+      switch (request->noise_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::ACPCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabled: {
+          noise_compensation_enabled = static_cast<int32>(request->noise_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabledRaw: {
+          noise_compensation_enabled = static_cast<int32>(request->noise_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::NOISE_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for noise_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ACPCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -368,7 +413,22 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      int32 offset_enabled = request->offset_enabled();
+      int32 offset_enabled;
+      switch (request->offset_enabled_enum_case()) {
+        case nirfmxspecan_grpc::ACPCfgOffsetRequest::OffsetEnabledEnumCase::kOffsetEnabled: {
+          offset_enabled = static_cast<int32>(request->offset_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgOffsetRequest::OffsetEnabledEnumCase::kOffsetEnabledRaw: {
+          offset_enabled = static_cast<int32>(request->offset_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgOffsetRequest::OffsetEnabledEnumCase::OFFSET_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for offset_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ACPCfgOffset(instrument, selector_string, offset_frequency, offset_sideband, offset_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -399,7 +459,15 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto offset_sideband = offset_sideband_vector.data();
 
-      auto offset_enabled = convert_from_grpc<int32>(request->offset_enabled());
+      auto offset_enabled_vector = std::vector<int32>();
+      offset_enabled_vector.reserve(request->offset_enabled().size());
+      std::transform(
+        request->offset_enabled().begin(),
+        request->offset_enabled().end(),
+        std::back_inserter(offset_enabled_vector),
+        [](auto x) { return x; });
+      auto offset_enabled = offset_enabled_vector.data();
+
       auto number_of_elements_determine_from_sizes = std::array<int, 3>
       {
         request->offset_frequency_size(),
@@ -413,7 +481,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->ACPCfgOffsetArray(instrument, selector_string, offset_frequency, offset_sideband, offset_enabled.data(), number_of_elements);
+      auto status = library_->ACPCfgOffsetArray(instrument, selector_string, offset_frequency, offset_sideband, offset_enabled, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -591,7 +659,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rrc_filter_enabled = request->rrc_filter_enabled();
+      int32 rrc_filter_enabled;
+      switch (request->rrc_filter_enabled_enum_case()) {
+        case nirfmxspecan_grpc::ACPCfgOffsetRRCFilterRequest::RrcFilterEnabledEnumCase::kRrcFilterEnabled: {
+          rrc_filter_enabled = static_cast<int32>(request->rrc_filter_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgOffsetRRCFilterRequest::RrcFilterEnabledEnumCase::kRrcFilterEnabledRaw: {
+          rrc_filter_enabled = static_cast<int32>(request->rrc_filter_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgOffsetRRCFilterRequest::RrcFilterEnabledEnumCase::RRC_FILTER_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rrc_filter_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rrc_alpha = request->rrc_alpha();
       auto status = library_->ACPCfgOffsetRRCFilter(instrument, selector_string, rrc_filter_enabled, rrc_alpha);
       response->set_status(status);
@@ -613,7 +696,15 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto rrc_filter_enabled = convert_from_grpc<int32>(request->rrc_filter_enabled());
+      auto rrc_filter_enabled_vector = std::vector<int32>();
+      rrc_filter_enabled_vector.reserve(request->rrc_filter_enabled().size());
+      std::transform(
+        request->rrc_filter_enabled().begin(),
+        request->rrc_filter_enabled().end(),
+        std::back_inserter(rrc_filter_enabled_vector),
+        [](auto x) { return x; });
+      auto rrc_filter_enabled = rrc_filter_enabled_vector.data();
+
       auto rrc_alpha = const_cast<float64*>(request->rrc_alpha().data());
       auto number_of_elements_determine_from_sizes = std::array<int, 2>
       {
@@ -627,7 +718,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->ACPCfgOffsetRRCFilterArray(instrument, selector_string, rrc_filter_enabled.data(), rrc_alpha, number_of_elements);
+      auto status = library_->ACPCfgOffsetRRCFilterArray(instrument, selector_string, rrc_filter_enabled, rrc_alpha, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -726,7 +817,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rbw_auto = request->rbw_auto();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::ACPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
@@ -764,7 +870,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 sweep_time_auto = request->sweep_time_auto();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxspecan_grpc::ACPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::ACPCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->ACPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
@@ -1118,7 +1239,8 @@ namespace nirfmxspecan_grpc {
       auto status = library_->ACPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_noise_calibration_data_valid(noise_calibration_data_valid);
+        response->set_noise_calibration_data_valid(static_cast<nirfmxspecan_grpc::AcpNoiseCalibrationDataValid>(noise_calibration_data_valid));
+        response->set_noise_calibration_data_valid_raw(noise_calibration_data_valid);
       }
       return ::grpc::Status::OK;
     }
@@ -1212,7 +1334,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::AMPMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       auto status = library_->AMPMCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       response->set_status(status);
@@ -1234,7 +1371,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 compression_point_enabled = request->compression_point_enabled();
+      int32 compression_point_enabled;
+      switch (request->compression_point_enabled_enum_case()) {
+        case nirfmxspecan_grpc::AMPMCfgCompressionPointsRequest::CompressionPointEnabledEnumCase::kCompressionPointEnabled: {
+          compression_point_enabled = static_cast<int32>(request->compression_point_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgCompressionPointsRequest::CompressionPointEnabledEnumCase::kCompressionPointEnabledRaw: {
+          compression_point_enabled = static_cast<int32>(request->compression_point_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgCompressionPointsRequest::CompressionPointEnabledEnumCase::COMPRESSION_POINT_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for compression_point_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto compression_level = const_cast<float64*>(request->compression_level().data());
       int32 array_size = static_cast<int32>(request->compression_level().size());
       auto status = library_->AMPMCfgCompressionPoints(instrument, selector_string, compression_point_enabled, compression_level, array_size);
@@ -1376,7 +1528,22 @@ namespace nirfmxspecan_grpc {
       float64 dx = request->dx();
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
       int32 array_size = static_cast<int32>(request->reference_waveform().size());
-      int32 idle_duration_present = request->idle_duration_present();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
       int32 signal_type;
       switch (request->signal_type_enum_case()) {
         case nirfmxspecan_grpc::AMPMCfgReferenceWaveformRequest::SignalTypeEnumCase::kSignalType: {
@@ -1429,7 +1596,22 @@ namespace nirfmxspecan_grpc {
       }
       auto array_size = array_size_size_calculation.size;
 
-      int32 idle_duration_present = request->idle_duration_present();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
       int32 signal_type;
       switch (request->signal_type_enum_case()) {
         case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::SignalTypeEnumCase::kSignalType: {
@@ -1502,7 +1684,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 threshold_enabled = request->threshold_enabled();
+      int32 threshold_enabled;
+      switch (request->threshold_enabled_enum_case()) {
+        case nirfmxspecan_grpc::AMPMCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabled: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabledRaw: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgThresholdRequest::ThresholdEnabledEnumCase::THRESHOLD_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for threshold_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 threshold_level = request->threshold_level();
       int32 threshold_type;
       switch (request->threshold_type_enum_case()) {
@@ -2779,7 +2976,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 threshold_enabled = request->threshold_enabled();
+      int32 threshold_enabled;
+      switch (request->threshold_enabled_enum_case()) {
+        case nirfmxspecan_grpc::CCDFCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabled: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::CCDFCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabledRaw: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CCDFCfgThresholdRequest::ThresholdEnabledEnumCase::THRESHOLD_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for threshold_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 threshold_level = request->threshold_level();
       int32 threshold_type;
       switch (request->threshold_type_enum_case()) {
@@ -3002,7 +3214,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::CHPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -3140,7 +3367,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rbw_auto = request->rbw_auto();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::CHPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
@@ -3178,7 +3420,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rrc_filter_enabled = request->rrc_filter_enabled();
+      int32 rrc_filter_enabled;
+      switch (request->rrc_filter_enabled_enum_case()) {
+        case nirfmxspecan_grpc::CHPCfgRRCFilterRequest::RrcFilterEnabledEnumCase::kRrcFilterEnabled: {
+          rrc_filter_enabled = static_cast<int32>(request->rrc_filter_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgRRCFilterRequest::RrcFilterEnabledEnumCase::kRrcFilterEnabledRaw: {
+          rrc_filter_enabled = static_cast<int32>(request->rrc_filter_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgRRCFilterRequest::RrcFilterEnabledEnumCase::RRC_FILTER_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rrc_filter_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rrc_alpha = request->rrc_alpha();
       auto status = library_->CHPCfgRRCFilter(instrument, selector_string, rrc_filter_enabled, rrc_alpha);
       response->set_status(status);
@@ -3221,7 +3478,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 sweep_time_auto = request->sweep_time_auto();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxspecan_grpc::CHPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CHPCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->CHPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
@@ -3372,7 +3644,8 @@ namespace nirfmxspecan_grpc {
       auto status = library_->CHPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_noise_calibration_data_valid(noise_calibration_data_valid);
+        response->set_noise_calibration_data_valid(static_cast<nirfmxspecan_grpc::ChpNoiseCalibrationDataValid>(noise_calibration_data_valid));
+        response->set_noise_calibration_data_valid_raw(noise_calibration_data_valid);
       }
       return ::grpc::Status::OK;
     }
@@ -3590,7 +3863,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
-      int32 mechanical_attenuation_auto = request->mechanical_attenuation_auto();
+      int32 mechanical_attenuation_auto;
+      switch (request->mechanical_attenuation_auto_enum_case()) {
+        case nirfmxspecan_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAuto: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAutoRaw: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::MECHANICAL_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mechanical_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
       auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
       response->set_status(status);
@@ -3635,7 +3923,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
-      int32 rf_attenuation_auto = request->rf_attenuation_auto();
+      int32 rf_attenuation_auto;
+      switch (request->rf_attenuation_auto_enum_case()) {
+        case nirfmxspecan_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAuto: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAutoRaw: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::RF_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rf_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rf_attenuation_value = request->rf_attenuation_value();
       auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
       response->set_status(status);
@@ -3804,7 +4107,22 @@ namespace nirfmxspecan_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      int32 force_destroy = request->force_destroy();
+      int32 force_destroy;
+      switch (request->force_destroy_enum_case()) {
+        case nirfmxspecan_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroy: {
+          force_destroy = static_cast<int32>(request->force_destroy());
+          break;
+        }
+        case nirfmxspecan_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroyRaw: {
+          force_destroy = static_cast<int32>(request->force_destroy_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::CloseRequest::ForceDestroyEnumCase::FORCE_DESTROY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for force_destroy was not specified or out of range");
+          break;
+        }
+      }
+
       session_repository_->remove_session(instrument);
       auto status = library_->Close(instrument, force_destroy);
       response->set_status(status);
@@ -3914,7 +4232,22 @@ namespace nirfmxspecan_grpc {
       float64 dx_in = request->dx_in();
       auto waveform_in = convert_from_grpc<NIComplexSingle>(request->waveform_in());
       int32 array_size_in = static_cast<int32>(request->waveform_in().size());
-      int32 idle_duration_present = request->idle_duration_present();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
       float64 measurement_timeout = request->measurement_timeout();
       float64 x0_out {};
       float64 dx_out {};
@@ -3985,7 +4318,22 @@ namespace nirfmxspecan_grpc {
       }
       auto array_size_in = array_size_in_size_calculation.size;
 
-      int32 idle_duration_present = request->idle_duration_present();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionSplitRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
       float64 measurement_timeout = request->measurement_timeout();
       float64 x0_out {};
       float64 dx_out {};
@@ -4041,7 +4389,22 @@ namespace nirfmxspecan_grpc {
       float64 dx_in = request->dx_in();
       auto waveform_in = convert_from_grpc<NIComplexSingle>(request->waveform_in());
       int32 array_size_in = static_cast<int32>(request->waveform_in().size());
-      int32 idle_duration_present = request->idle_duration_present();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
@@ -4109,7 +4472,22 @@ namespace nirfmxspecan_grpc {
       }
       auto array_size_in = array_size_in_size_calculation.size;
 
-      int32 idle_duration_present = request->idle_duration_present();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningSplitRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
       float64 x0_out {};
       float64 dx_out {};
       int32 actual_array_size {};
@@ -4392,7 +4770,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::DPDCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       auto status = library_->DPDCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       response->set_status(status);
@@ -4497,7 +4890,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 iterative_dpd_enabled = request->iterative_dpd_enabled();
+      int32 iterative_dpd_enabled;
+      switch (request->iterative_dpd_enabled_enum_case()) {
+        case nirfmxspecan_grpc::DPDCfgIterativeDPDEnabledRequest::IterativeDpdEnabledEnumCase::kIterativeDpdEnabled: {
+          iterative_dpd_enabled = static_cast<int32>(request->iterative_dpd_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgIterativeDPDEnabledRequest::IterativeDpdEnabledEnumCase::kIterativeDpdEnabledRaw: {
+          iterative_dpd_enabled = static_cast<int32>(request->iterative_dpd_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgIterativeDPDEnabledRequest::IterativeDpdEnabledEnumCase::ITERATIVE_DPD_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for iterative_dpd_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->DPDCfgIterativeDPDEnabled(instrument, selector_string, iterative_dpd_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4613,7 +5021,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 threshold_enabled = request->threshold_enabled();
+      int32 threshold_enabled;
+      switch (request->threshold_enabled_enum_case()) {
+        case nirfmxspecan_grpc::DPDCfgLookupTableThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabled: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgLookupTableThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabledRaw: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgLookupTableThresholdRequest::ThresholdEnabledEnumCase::THRESHOLD_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for threshold_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 threshold_level = request->threshold_level();
       int32 threshold_type;
       switch (request->threshold_type_enum_case()) {
@@ -4827,7 +5250,22 @@ namespace nirfmxspecan_grpc {
       float64 dx = request->dx();
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
       int32 array_size = static_cast<int32>(request->reference_waveform().size());
-      int32 idle_duration_present = request->idle_duration_present();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
       int32 signal_type;
       switch (request->signal_type_enum_case()) {
         case nirfmxspecan_grpc::DPDCfgReferenceWaveformRequest::SignalTypeEnumCase::kSignalType: {
@@ -4880,7 +5318,22 @@ namespace nirfmxspecan_grpc {
       }
       auto array_size = array_size_size_calculation.size;
 
-      int32 idle_duration_present = request->idle_duration_present();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
       int32 signal_type;
       switch (request->signal_type_enum_case()) {
         case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::SignalTypeEnumCase::kSignalType: {
@@ -5466,7 +5919,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::FCntCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::FCntCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::FCntCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -5563,7 +6031,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 threshold_enabled = request->threshold_enabled();
+      int32 threshold_enabled;
+      switch (request->threshold_enabled_enum_case()) {
+        case nirfmxspecan_grpc::FCntCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabled: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::FCntCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabledRaw: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::FCntCfgThresholdRequest::ThresholdEnabledEnumCase::THRESHOLD_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for threshold_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 threshold_level = request->threshold_level();
       int32 threshold_type;
       switch (request->threshold_type_enum_case()) {
@@ -6653,7 +7136,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 auto_harmonics_setup_enabled = request->auto_harmonics_setup_enabled();
+      int32 auto_harmonics_setup_enabled;
+      switch (request->auto_harmonics_setup_enabled_enum_case()) {
+        case nirfmxspecan_grpc::HarmCfgAutoHarmonicsRequest::AutoHarmonicsSetupEnabledEnumCase::kAutoHarmonicsSetupEnabled: {
+          auto_harmonics_setup_enabled = static_cast<int32>(request->auto_harmonics_setup_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::HarmCfgAutoHarmonicsRequest::AutoHarmonicsSetupEnabledEnumCase::kAutoHarmonicsSetupEnabledRaw: {
+          auto_harmonics_setup_enabled = static_cast<int32>(request->auto_harmonics_setup_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::HarmCfgAutoHarmonicsRequest::AutoHarmonicsSetupEnabledEnumCase::AUTO_HARMONICS_SETUP_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_harmonics_setup_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->HarmCfgAutoHarmonics(instrument, selector_string, auto_harmonics_setup_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6674,7 +7172,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::HarmCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::HarmCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::HarmCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -6773,7 +7286,22 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 harmonic_order = request->harmonic_order();
       float64 harmonic_bandwidth = request->harmonic_bandwidth();
-      int32 harmonic_enabled = request->harmonic_enabled();
+      int32 harmonic_enabled;
+      switch (request->harmonic_enabled_enum_case()) {
+        case nirfmxspecan_grpc::HarmCfgHarmonicRequest::HarmonicEnabledEnumCase::kHarmonicEnabled: {
+          harmonic_enabled = static_cast<int32>(request->harmonic_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::HarmCfgHarmonicRequest::HarmonicEnabledEnumCase::kHarmonicEnabledRaw: {
+          harmonic_enabled = static_cast<int32>(request->harmonic_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::HarmCfgHarmonicRequest::HarmonicEnabledEnumCase::HARMONIC_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for harmonic_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 harmonic_measurement_interval = request->harmonic_measurement_interval();
       auto status = library_->HarmCfgHarmonic(instrument, selector_string, harmonic_order, harmonic_bandwidth, harmonic_enabled, harmonic_measurement_interval);
       response->set_status(status);
@@ -6797,7 +7325,15 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto harmonic_order = const_cast<int32*>(reinterpret_cast<const int32*>(request->harmonic_order().data()));
       auto harmonic_bandwidth = const_cast<float64*>(request->harmonic_bandwidth().data());
-      auto harmonic_enabled = convert_from_grpc<int32>(request->harmonic_enabled());
+      auto harmonic_enabled_vector = std::vector<int32>();
+      harmonic_enabled_vector.reserve(request->harmonic_enabled().size());
+      std::transform(
+        request->harmonic_enabled().begin(),
+        request->harmonic_enabled().end(),
+        std::back_inserter(harmonic_enabled_vector),
+        [](auto x) { return x; });
+      auto harmonic_enabled = harmonic_enabled_vector.data();
+
       auto harmonic_measurement_interval = const_cast<float64*>(request->harmonic_measurement_interval().data());
       auto number_of_elements_determine_from_sizes = std::array<int, 4>
       {
@@ -6813,7 +7349,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->HarmCfgHarmonicArray(instrument, selector_string, harmonic_order, harmonic_bandwidth, harmonic_enabled.data(), harmonic_measurement_interval, number_of_elements);
+      auto status = library_->HarmCfgHarmonicArray(instrument, selector_string, harmonic_order, harmonic_bandwidth, harmonic_enabled, harmonic_measurement_interval, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7034,7 +7570,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 auto_intermods_setup_enabled = request->auto_intermods_setup_enabled();
+      int32 auto_intermods_setup_enabled;
+      switch (request->auto_intermods_setup_enabled_enum_case()) {
+        case nirfmxspecan_grpc::IMCfgAutoIntermodsSetupRequest::AutoIntermodsSetupEnabledEnumCase::kAutoIntermodsSetupEnabled: {
+          auto_intermods_setup_enabled = static_cast<int32>(request->auto_intermods_setup_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgAutoIntermodsSetupRequest::AutoIntermodsSetupEnabledEnumCase::kAutoIntermodsSetupEnabledRaw: {
+          auto_intermods_setup_enabled = static_cast<int32>(request->auto_intermods_setup_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgAutoIntermodsSetupRequest::AutoIntermodsSetupEnabledEnumCase::AUTO_INTERMODS_SETUP_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_intermods_setup_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 maximum_intermod_order = request->maximum_intermod_order();
       auto status = library_->IMCfgAutoIntermodsSetup(instrument, selector_string, auto_intermods_setup_enabled, maximum_intermod_order);
       response->set_status(status);
@@ -7056,7 +7607,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::IMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -7208,7 +7774,22 @@ namespace nirfmxspecan_grpc {
         }
       }
 
-      int32 intermod_enabled = request->intermod_enabled();
+      int32 intermod_enabled;
+      switch (request->intermod_enabled_enum_case()) {
+        case nirfmxspecan_grpc::IMCfgIntermodRequest::IntermodEnabledEnumCase::kIntermodEnabled: {
+          intermod_enabled = static_cast<int32>(request->intermod_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgIntermodRequest::IntermodEnabledEnumCase::kIntermodEnabledRaw: {
+          intermod_enabled = static_cast<int32>(request->intermod_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgIntermodRequest::IntermodEnabledEnumCase::INTERMOD_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for intermod_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->IMCfgIntermod(instrument, selector_string, intermod_order, lower_intermod_frequency, upper_intermod_frequency, intermod_side, intermod_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7241,7 +7822,15 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto intermod_side = intermod_side_vector.data();
 
-      auto intermod_enabled = convert_from_grpc<int32>(request->intermod_enabled());
+      auto intermod_enabled_vector = std::vector<int32>();
+      intermod_enabled_vector.reserve(request->intermod_enabled().size());
+      std::transform(
+        request->intermod_enabled().begin(),
+        request->intermod_enabled().end(),
+        std::back_inserter(intermod_enabled_vector),
+        [](auto x) { return x; });
+      auto intermod_enabled = intermod_enabled_vector.data();
+
       auto number_of_elements_determine_from_sizes = std::array<int, 5>
       {
         request->intermod_order_size(),
@@ -7257,7 +7846,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->IMCfgIntermodArray(instrument, selector_string, intermod_order, lower_intermod_frequency, upper_intermod_frequency, intermod_side, intermod_enabled.data(), number_of_elements);
+      auto status = library_->IMCfgIntermodArray(instrument, selector_string, intermod_order, lower_intermod_frequency, upper_intermod_frequency, intermod_side, intermod_enabled, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7334,7 +7923,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rbw_auto = request->rbw_auto();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::IMCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
@@ -7372,7 +7976,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 sweep_time_auto = request->sweep_time_auto();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxspecan_grpc::IMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IMCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->IMCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
@@ -7645,7 +8264,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 bandwidth_auto = request->bandwidth_auto();
+      int32 bandwidth_auto;
+      switch (request->bandwidth_auto_enum_case()) {
+        case nirfmxspecan_grpc::IQCfgBandwidthRequest::BandwidthAutoEnumCase::kBandwidthAuto: {
+          bandwidth_auto = static_cast<int32>(request->bandwidth_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::IQCfgBandwidthRequest::BandwidthAutoEnumCase::kBandwidthAutoRaw: {
+          bandwidth_auto = static_cast<int32>(request->bandwidth_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IQCfgBandwidthRequest::BandwidthAutoEnumCase::BANDWIDTH_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for bandwidth_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 bandwidth = request->bandwidth();
       auto status = library_->IQCfgBandwidth(instrument, selector_string, bandwidth_auto, bandwidth);
       response->set_status(status);
@@ -7896,7 +8530,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 peak_excursion_enabled = request->peak_excursion_enabled();
+      int32 peak_excursion_enabled;
+      switch (request->peak_excursion_enabled_enum_case()) {
+        case nirfmxspecan_grpc::MarkerCfgPeakExcursionRequest::PeakExcursionEnabledEnumCase::kPeakExcursionEnabled: {
+          peak_excursion_enabled = static_cast<int32>(request->peak_excursion_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::MarkerCfgPeakExcursionRequest::PeakExcursionEnabledEnumCase::kPeakExcursionEnabledRaw: {
+          peak_excursion_enabled = static_cast<int32>(request->peak_excursion_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::MarkerCfgPeakExcursionRequest::PeakExcursionEnabledEnumCase::PEAK_EXCURSION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for peak_excursion_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 peak_excursion = request->peak_excursion();
       auto status = library_->MarkerCfgPeakExcursion(instrument, selector_string, peak_excursion_enabled, peak_excursion);
       response->set_status(status);
@@ -7939,7 +8588,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 threshold_enabled = request->threshold_enabled();
+      int32 threshold_enabled;
+      switch (request->threshold_enabled_enum_case()) {
+        case nirfmxspecan_grpc::MarkerCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabled: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::MarkerCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabledRaw: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::MarkerCfgThresholdRequest::ThresholdEnabledEnumCase::THRESHOLD_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for threshold_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 threshold = request->threshold();
       auto status = library_->MarkerCfgThreshold(instrument, selector_string, threshold_enabled, threshold);
       response->set_status(status);
@@ -8144,7 +8808,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::NFCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       auto status = library_->NFCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       response->set_status(status);
@@ -8166,7 +8845,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 calibration_loss_compensation_enabled = request->calibration_loss_compensation_enabled();
+      int32 calibration_loss_compensation_enabled;
+      switch (request->calibration_loss_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::NFCfgCalibrationLossRequest::CalibrationLossCompensationEnabledEnumCase::kCalibrationLossCompensationEnabled: {
+          calibration_loss_compensation_enabled = static_cast<int32>(request->calibration_loss_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgCalibrationLossRequest::CalibrationLossCompensationEnabledEnumCase::kCalibrationLossCompensationEnabledRaw: {
+          calibration_loss_compensation_enabled = static_cast<int32>(request->calibration_loss_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgCalibrationLossRequest::CalibrationLossCompensationEnabledEnumCase::CALIBRATION_LOSS_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for calibration_loss_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto calibration_loss_frequency = const_cast<float64*>(request->calibration_loss_frequency().data());
       auto calibration_loss = const_cast<float64*>(request->calibration_loss().data());
       float64 calibration_loss_temperature = request->calibration_loss_temperature();
@@ -8313,7 +9007,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 dut_input_loss_compensation_enabled = request->dut_input_loss_compensation_enabled();
+      int32 dut_input_loss_compensation_enabled;
+      switch (request->dut_input_loss_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::NFCfgDUTInputLossRequest::DutInputLossCompensationEnabledEnumCase::kDutInputLossCompensationEnabled: {
+          dut_input_loss_compensation_enabled = static_cast<int32>(request->dut_input_loss_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgDUTInputLossRequest::DutInputLossCompensationEnabledEnumCase::kDutInputLossCompensationEnabledRaw: {
+          dut_input_loss_compensation_enabled = static_cast<int32>(request->dut_input_loss_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgDUTInputLossRequest::DutInputLossCompensationEnabledEnumCase::DUT_INPUT_LOSS_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for dut_input_loss_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto dut_input_loss_frequency = const_cast<float64*>(request->dut_input_loss_frequency().data());
       auto dut_input_loss = const_cast<float64*>(request->dut_input_loss().data());
       float64 dut_input_loss_temperature = request->dut_input_loss_temperature();
@@ -8349,7 +9058,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 dut_output_loss_compensation_enabled = request->dut_output_loss_compensation_enabled();
+      int32 dut_output_loss_compensation_enabled;
+      switch (request->dut_output_loss_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::NFCfgDUTOutputLossRequest::DutOutputLossCompensationEnabledEnumCase::kDutOutputLossCompensationEnabled: {
+          dut_output_loss_compensation_enabled = static_cast<int32>(request->dut_output_loss_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgDUTOutputLossRequest::DutOutputLossCompensationEnabledEnumCase::kDutOutputLossCompensationEnabledRaw: {
+          dut_output_loss_compensation_enabled = static_cast<int32>(request->dut_output_loss_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgDUTOutputLossRequest::DutOutputLossCompensationEnabledEnumCase::DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for dut_output_loss_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto dut_output_loss_frequency = const_cast<float64*>(request->dut_output_loss_frequency().data());
       auto dut_output_loss = const_cast<float64*>(request->dut_output_loss().data());
       float64 dut_output_loss_temperature = request->dut_output_loss_temperature();
@@ -8603,7 +9327,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 noise_source_loss_compensation_enabled = request->noise_source_loss_compensation_enabled();
+      int32 noise_source_loss_compensation_enabled;
+      switch (request->noise_source_loss_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::NFCfgYFactorNoiseSourceLossRequest::NoiseSourceLossCompensationEnabledEnumCase::kNoiseSourceLossCompensationEnabled: {
+          noise_source_loss_compensation_enabled = static_cast<int32>(request->noise_source_loss_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgYFactorNoiseSourceLossRequest::NoiseSourceLossCompensationEnabledEnumCase::kNoiseSourceLossCompensationEnabledRaw: {
+          noise_source_loss_compensation_enabled = static_cast<int32>(request->noise_source_loss_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFCfgYFactorNoiseSourceLossRequest::NoiseSourceLossCompensationEnabledEnumCase::NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for noise_source_loss_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto noise_source_loss_frequency = const_cast<float64*>(request->noise_source_loss_frequency().data());
       auto noise_source_loss = const_cast<float64*>(request->noise_source_loss().data());
       float64 noise_source_loss_temperature = request->noise_source_loss_temperature();
@@ -8985,7 +9724,8 @@ namespace nirfmxspecan_grpc {
       auto status = library_->NFValidateCalibrationData(instrument, selector_string, &calibration_data_valid);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_calibration_data_valid(calibration_data_valid);
+        response->set_calibration_data_valid(static_cast<nirfmxspecan_grpc::NFCalibrationDataValid>(calibration_data_valid));
+        response->set_calibration_data_valid_raw(calibration_data_valid);
       }
       return ::grpc::Status::OK;
     }
@@ -9005,7 +9745,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::OBWCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::OBWCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::OBWCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -9137,7 +9892,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rbw_auto = request->rbw_auto();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::OBWCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::OBWCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::OBWCfgRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
@@ -9196,7 +9966,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 sweep_time_auto = request->sweep_time_auto();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxspecan_grpc::OBWCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::OBWCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::OBWCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->OBWCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
@@ -9845,7 +10630,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 cancellation_enabled = request->cancellation_enabled();
+      int32 cancellation_enabled;
+      switch (request->cancellation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::PhaseNoiseCfgCancellationRequest::CancellationEnabledEnumCase::kCancellationEnabled: {
+          cancellation_enabled = static_cast<int32>(request->cancellation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::PhaseNoiseCfgCancellationRequest::CancellationEnabledEnumCase::kCancellationEnabledRaw: {
+          cancellation_enabled = static_cast<int32>(request->cancellation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::PhaseNoiseCfgCancellationRequest::CancellationEnabledEnumCase::CANCELLATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for cancellation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 cancellation_threshold = request->cancellation_threshold();
       auto frequency = const_cast<float32*>(request->frequency().data());
       auto reference_phase_noise = const_cast<float32*>(request->reference_phase_noise().data());
@@ -10085,7 +10885,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 spur_removal_enabled = request->spur_removal_enabled();
+      int32 spur_removal_enabled;
+      switch (request->spur_removal_enabled_enum_case()) {
+        case nirfmxspecan_grpc::PhaseNoiseCfgSpurRemovalRequest::SpurRemovalEnabledEnumCase::kSpurRemovalEnabled: {
+          spur_removal_enabled = static_cast<int32>(request->spur_removal_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::PhaseNoiseCfgSpurRemovalRequest::SpurRemovalEnabledEnumCase::kSpurRemovalEnabledRaw: {
+          spur_removal_enabled = static_cast<int32>(request->spur_removal_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::PhaseNoiseCfgSpurRemovalRequest::SpurRemovalEnabledEnumCase::SPUR_REMOVAL_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for spur_removal_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 peak_excursion = request->peak_excursion();
       auto status = library_->PhaseNoiseCfgSpurRemoval(instrument, selector_string, spur_removal_enabled, peak_excursion);
       response->set_status(status);
@@ -10353,7 +11168,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -10412,7 +11242,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 carrier_enabled = request->carrier_enabled();
+      int32 carrier_enabled;
+      switch (request->carrier_enabled_enum_case()) {
+        case nirfmxspecan_grpc::SEMCfgCarrierEnabledRequest::CarrierEnabledEnumCase::kCarrierEnabled: {
+          carrier_enabled = static_cast<int32>(request->carrier_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgCarrierEnabledRequest::CarrierEnabledEnumCase::kCarrierEnabledRaw: {
+          carrier_enabled = static_cast<int32>(request->carrier_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgCarrierEnabledRequest::CarrierEnabledEnumCase::CARRIER_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for carrier_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SEMCfgCarrierEnabled(instrument, selector_string, carrier_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -10475,7 +11320,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rbw_auto = request->rbw_auto();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::SEMCfgCarrierRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgCarrierRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgCarrierRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
@@ -10513,7 +11373,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rrc_filter_enabled = request->rrc_filter_enabled();
+      int32 rrc_filter_enabled;
+      switch (request->rrc_filter_enabled_enum_case()) {
+        case nirfmxspecan_grpc::SEMCfgCarrierRRCFilterRequest::RrcFilterEnabledEnumCase::kRrcFilterEnabled: {
+          rrc_filter_enabled = static_cast<int32>(request->rrc_filter_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgCarrierRRCFilterRequest::RrcFilterEnabledEnumCase::kRrcFilterEnabledRaw: {
+          rrc_filter_enabled = static_cast<int32>(request->rrc_filter_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgCarrierRRCFilterRequest::RrcFilterEnabledEnumCase::RRC_FILTER_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rrc_filter_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rrc_alpha = request->rrc_alpha();
       auto status = library_->SEMCfgCarrierRRCFilter(instrument, selector_string, rrc_filter_enabled, rrc_alpha);
       response->set_status(status);
@@ -10719,7 +11594,22 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 offset_start_frequency = request->offset_start_frequency();
       float64 offset_stop_frequency = request->offset_stop_frequency();
-      int32 offset_enabled = request->offset_enabled();
+      int32 offset_enabled;
+      switch (request->offset_enabled_enum_case()) {
+        case nirfmxspecan_grpc::SEMCfgOffsetFrequencyRequest::OffsetEnabledEnumCase::kOffsetEnabled: {
+          offset_enabled = static_cast<int32>(request->offset_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgOffsetFrequencyRequest::OffsetEnabledEnumCase::kOffsetEnabledRaw: {
+          offset_enabled = static_cast<int32>(request->offset_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgOffsetFrequencyRequest::OffsetEnabledEnumCase::OFFSET_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for offset_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 offset_sideband;
       switch (request->offset_sideband_enum_case()) {
         case nirfmxspecan_grpc::SEMCfgOffsetFrequencyRequest::OffsetSidebandEnumCase::kOffsetSideband: {
@@ -10758,7 +11648,15 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto offset_start_frequency = const_cast<float64*>(request->offset_start_frequency().data());
       auto offset_stop_frequency = const_cast<float64*>(request->offset_stop_frequency().data());
-      auto offset_enabled = convert_from_grpc<int32>(request->offset_enabled());
+      auto offset_enabled_vector = std::vector<int32>();
+      offset_enabled_vector.reserve(request->offset_enabled().size());
+      std::transform(
+        request->offset_enabled().begin(),
+        request->offset_enabled().end(),
+        std::back_inserter(offset_enabled_vector),
+        [](auto x) { return x; });
+      auto offset_enabled = offset_enabled_vector.data();
+
       auto offset_sideband_vector = std::vector<int32>();
       offset_sideband_vector.reserve(request->offset_sideband().size());
       std::transform(
@@ -10782,7 +11680,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->SEMCfgOffsetFrequencyArray(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_enabled.data(), offset_sideband, number_of_elements);
+      auto status = library_->SEMCfgOffsetFrequencyArray(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_enabled, offset_sideband, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10874,7 +11772,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rbw_auto = request->rbw_auto();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::SEMCfgOffsetRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgOffsetRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgOffsetRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
@@ -10912,7 +11825,15 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto rbw_auto = convert_from_grpc<int32>(request->rbw_auto());
+      auto rbw_auto_vector = std::vector<int32>();
+      rbw_auto_vector.reserve(request->rbw_auto().size());
+      std::transform(
+        request->rbw_auto().begin(),
+        request->rbw_auto().end(),
+        std::back_inserter(rbw_auto_vector),
+        [](auto x) { return x; });
+      auto rbw_auto = rbw_auto_vector.data();
+
       auto rbw = const_cast<float64*>(request->rbw().data());
       auto rbw_filter_type_vector = std::vector<int32>();
       rbw_filter_type_vector.reserve(request->rbw_filter_type().size());
@@ -10936,7 +11857,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->SEMCfgOffsetRBWFilterArray(instrument, selector_string, rbw_auto.data(), rbw, rbw_filter_type, number_of_elements);
+      auto status = library_->SEMCfgOffsetRBWFilterArray(instrument, selector_string, rbw_auto, rbw, rbw_filter_type, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -11153,7 +12074,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 sweep_time_auto = request->sweep_time_auto();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxspecan_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->SEMCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
@@ -12378,7 +13314,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::SpectrumCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -12512,7 +13463,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 noise_compensation_enabled = request->noise_compensation_enabled();
+      int32 noise_compensation_enabled;
+      switch (request->noise_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::SpectrumCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabled: {
+          noise_compensation_enabled = static_cast<int32>(request->noise_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabledRaw: {
+          noise_compensation_enabled = static_cast<int32>(request->noise_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::NOISE_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for noise_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SpectrumCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -12569,7 +13535,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rbw_auto = request->rbw_auto();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::SpectrumCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
@@ -12628,7 +13609,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 sweep_time_auto = request->sweep_time_auto();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxspecan_grpc::SpectrumCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->SpectrumCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
@@ -12650,7 +13646,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 vbw_auto = request->vbw_auto();
+      int32 vbw_auto;
+      switch (request->vbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::SpectrumCfgVBWFilterRequest::VbwAutoEnumCase::kVbwAuto: {
+          vbw_auto = static_cast<int32>(request->vbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgVBWFilterRequest::VbwAutoEnumCase::kVbwAutoRaw: {
+          vbw_auto = static_cast<int32>(request->vbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpectrumCfgVBWFilterRequest::VbwAutoEnumCase::VBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for vbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 vbw = request->vbw();
       float64 vbw_to_rbw_ratio = request->vbw_to_rbw_ratio();
       auto status = library_->SpectrumCfgVBWFilter(instrument, selector_string, vbw_auto, vbw, vbw_to_rbw_ratio);
@@ -12838,7 +13849,8 @@ namespace nirfmxspecan_grpc {
       auto status = library_->SpectrumValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_noise_calibration_data_valid(noise_calibration_data_valid);
+        response->set_noise_calibration_data_valid(static_cast<nirfmxspecan_grpc::SpectrumNoiseCalibrationDataValid>(noise_calibration_data_valid));
+        response->set_noise_calibration_data_valid_raw(noise_calibration_data_valid);
       }
       return ::grpc::Status::OK;
     }
@@ -12858,7 +13870,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::SpurCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -13122,7 +14149,22 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
-      int32 range_enabled = request->range_enabled();
+      int32 range_enabled;
+      switch (request->range_enabled_enum_case()) {
+        case nirfmxspecan_grpc::SpurCfgRangeFrequencyRequest::RangeEnabledEnumCase::kRangeEnabled: {
+          range_enabled = static_cast<int32>(request->range_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgRangeFrequencyRequest::RangeEnabledEnumCase::kRangeEnabledRaw: {
+          range_enabled = static_cast<int32>(request->range_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgRangeFrequencyRequest::RangeEnabledEnumCase::RANGE_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for range_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SpurCfgRangeFrequency(instrument, selector_string, start_frequency, stop_frequency, range_enabled);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -13145,7 +14187,15 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto start_frequency = const_cast<float64*>(request->start_frequency().data());
       auto stop_frequency = const_cast<float64*>(request->stop_frequency().data());
-      auto range_enabled = convert_from_grpc<int32>(request->range_enabled());
+      auto range_enabled_vector = std::vector<int32>();
+      range_enabled_vector.reserve(request->range_enabled().size());
+      std::transform(
+        request->range_enabled().begin(),
+        request->range_enabled().end(),
+        std::back_inserter(range_enabled_vector),
+        [](auto x) { return x; });
+      auto range_enabled = range_enabled_vector.data();
+
       auto number_of_elements_determine_from_sizes = std::array<int, 3>
       {
         request->start_frequency_size(),
@@ -13159,7 +14209,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->SpurCfgRangeFrequencyArray(instrument, selector_string, start_frequency, stop_frequency, range_enabled.data(), number_of_elements);
+      auto status = library_->SpurCfgRangeFrequencyArray(instrument, selector_string, start_frequency, stop_frequency, range_enabled, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13278,7 +14328,15 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto rbw_auto = convert_from_grpc<int32>(request->rbw_auto());
+      auto rbw_auto_vector = std::vector<int32>();
+      rbw_auto_vector.reserve(request->rbw_auto().size());
+      std::transform(
+        request->rbw_auto().begin(),
+        request->rbw_auto().end(),
+        std::back_inserter(rbw_auto_vector),
+        [](auto x) { return x; });
+      auto rbw_auto = rbw_auto_vector.data();
+
       auto rbw = const_cast<float64*>(request->rbw().data());
       auto rbw_filter_type_vector = std::vector<int32>();
       rbw_filter_type_vector.reserve(request->rbw_filter_type().size());
@@ -13302,7 +14360,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->SpurCfgRangeRBWArray(instrument, selector_string, rbw_auto.data(), rbw, rbw_filter_type, number_of_elements);
+      auto status = library_->SpurCfgRangeRBWArray(instrument, selector_string, rbw_auto, rbw, rbw_filter_type, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13322,7 +14380,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 rbw_auto = request->rbw_auto();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::SpurCfgRangeRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgRangeRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgRangeRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
       switch (request->rbw_filter_type_enum_case()) {
@@ -13403,7 +14476,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 sweep_time_auto = request->sweep_time_auto();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxspecan_grpc::SpurCfgRangeSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgRangeSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgRangeSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->SpurCfgRangeSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       response->set_status(status);
@@ -13425,7 +14513,15 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto sweep_time_auto = convert_from_grpc<int32>(request->sweep_time_auto());
+      auto sweep_time_auto_vector = std::vector<int32>();
+      sweep_time_auto_vector.reserve(request->sweep_time_auto().size());
+      std::transform(
+        request->sweep_time_auto().begin(),
+        request->sweep_time_auto().end(),
+        std::back_inserter(sweep_time_auto_vector),
+        [](auto x) { return x; });
+      auto sweep_time_auto = sweep_time_auto_vector.data();
+
       auto sweep_time_interval = const_cast<float64*>(request->sweep_time_interval().data());
       auto number_of_elements_determine_from_sizes = std::array<int, 2>
       {
@@ -13439,7 +14535,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->SpurCfgRangeSweepTimeArray(instrument, selector_string, sweep_time_auto.data(), sweep_time_interval, number_of_elements);
+      auto status = library_->SpurCfgRangeSweepTimeArray(instrument, selector_string, sweep_time_auto, sweep_time_interval, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13459,7 +14555,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 vbw_auto = request->vbw_auto();
+      int32 vbw_auto;
+      switch (request->vbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::SpurCfgRangeVBWFilterRequest::VbwAutoEnumCase::kVbwAuto: {
+          vbw_auto = static_cast<int32>(request->vbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgRangeVBWFilterRequest::VbwAutoEnumCase::kVbwAutoRaw: {
+          vbw_auto = static_cast<int32>(request->vbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::SpurCfgRangeVBWFilterRequest::VbwAutoEnumCase::VBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for vbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 vbw = request->vbw();
       float64 vbw_to_rbw_ratio = request->vbw_to_rbw_ratio();
       auto status = library_->SpurCfgRangeVBWFilter(instrument, selector_string, vbw_auto, vbw, vbw_to_rbw_ratio);
@@ -13482,7 +14593,15 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto vbw_auto = convert_from_grpc<int32>(request->vbw_auto());
+      auto vbw_auto_vector = std::vector<int32>();
+      vbw_auto_vector.reserve(request->vbw_auto().size());
+      std::transform(
+        request->vbw_auto().begin(),
+        request->vbw_auto().end(),
+        std::back_inserter(vbw_auto_vector),
+        [](auto x) { return x; });
+      auto vbw_auto = vbw_auto_vector.data();
+
       auto vbw = const_cast<float64*>(request->vbw().data());
       auto vbw_to_rbw_ratio = const_cast<float64*>(request->vbw_to_rbw_ratio().data());
       auto number_of_elements_determine_from_sizes = std::array<int, 3>
@@ -13498,7 +14617,7 @@ namespace nirfmxspecan_grpc {
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
-      auto status = library_->SpurCfgRangeVBWFilterArray(instrument, selector_string, vbw_auto.data(), vbw, vbw_to_rbw_ratio, number_of_elements);
+      auto status = library_->SpurCfgRangeVBWFilterArray(instrument, selector_string, vbw_auto, vbw, vbw_to_rbw_ratio, number_of_elements);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -13865,7 +14984,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 averaging_enabled = request->averaging_enabled();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxspecan_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       int32 averaging_count = request->averaging_count();
       int32 averaging_type;
       switch (request->averaging_type_enum_case()) {
@@ -13962,7 +15096,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 threshold_enabled = request->threshold_enabled();
+      int32 threshold_enabled;
+      switch (request->threshold_enabled_enum_case()) {
+        case nirfmxspecan_grpc::TXPCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabled: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::TXPCfgThresholdRequest::ThresholdEnabledEnumCase::kThresholdEnabledRaw: {
+          threshold_enabled = static_cast<int32>(request->threshold_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::TXPCfgThresholdRequest::ThresholdEnabledEnumCase::THRESHOLD_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for threshold_enabled was not specified or out of range");
+          break;
+        }
+      }
+
       float64 threshold_level = request->threshold_level();
       int32 threshold_type;
       switch (request->threshold_type_enum_case()) {
@@ -14000,7 +15149,22 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 vbw_auto = request->vbw_auto();
+      int32 vbw_auto;
+      switch (request->vbw_auto_enum_case()) {
+        case nirfmxspecan_grpc::TXPCfgVBWFilterRequest::VbwAutoEnumCase::kVbwAuto: {
+          vbw_auto = static_cast<int32>(request->vbw_auto());
+          break;
+        }
+        case nirfmxspecan_grpc::TXPCfgVBWFilterRequest::VbwAutoEnumCase::kVbwAutoRaw: {
+          vbw_auto = static_cast<int32>(request->vbw_auto_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::TXPCfgVBWFilterRequest::VbwAutoEnumCase::VBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for vbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 vbw = request->vbw();
       float64 vbw_to_rbw_ratio = request->vbw_to_rbw_ratio();
       auto status = library_->TXPCfgVBWFilter(instrument, selector_string, vbw_auto, vbw, vbw_to_rbw_ratio);

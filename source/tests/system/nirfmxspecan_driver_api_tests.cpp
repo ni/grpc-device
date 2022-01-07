@@ -333,11 +333,9 @@ TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_ReturnsSynchronizationNotFo
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
   EXPECT_SUCCESS(session, client::dpd_cfg_apply_dpd_lookup_table_correction_type(stub(), session, "", DpdApplyDpdLookupTableCorrectionType::DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_AND_PHASE));
 
-  const auto iq_data = load_test_iq_data<float>("LTE20MHz Waveform (Two Subframes).json");
-  const auto apply_response = client::dpd_apply_digital_predistortion_split(stub(), session, "", iq_data.t0, iq_data.dt, iq_data.I, iq_data.Q, false, 10.0);
+  const auto apply_response = client::dpd_apply_digital_predistortion(stub(), session, "", waveform.t0, waveform.dt, waveform.data, false, 10.0);
   EXPECT_RFMX_ERROR(377652, "Synchronization not found", session, apply_response);
-  EXPECT_THAT(apply_response.waveform_out_i(), Not(IsEmpty()));
-  EXPECT_THAT(apply_response.waveform_out_q(), Not(IsEmpty()));
+  EXPECT_THAT(apply_response.waveform_out(), Not(IsEmpty()));
 }
 
 // Note: there aren't any complex attributes in attributes.py, but this at least exercises the code.
