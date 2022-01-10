@@ -18,14 +18,21 @@
 namespace nirfmxspecan_grpc::experimental::client {
 
 ACPCfgAveragingResponse
-acp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<AcpAveragingType, pb::int32>& averaging_type)
+acp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<AcpAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = ACPCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<AcpAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<AcpAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -126,14 +133,21 @@ acp_cfg_carrier_mode(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 ACPCfgCarrierRRCFilterResponse
-acp_cfg_carrier_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rrc_filter_enabled, const double& rrc_alpha)
+acp_cfg_carrier_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpCarrierRrcFilterEnabled, pb::int32>& rrc_filter_enabled, const double& rrc_alpha)
 {
   ::grpc::ClientContext context;
 
   auto request = ACPCfgCarrierRRCFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rrc_filter_enabled(rrc_filter_enabled);
+  const auto rrc_filter_enabled_ptr = rrc_filter_enabled.get_if<AcpCarrierRrcFilterEnabled>();
+  const auto rrc_filter_enabled_raw_ptr = rrc_filter_enabled.get_if<pb::int32>();
+  if (rrc_filter_enabled_ptr) {
+    request.set_rrc_filter_enabled(*rrc_filter_enabled_ptr);
+  }
+  else if (rrc_filter_enabled_raw_ptr) {
+    request.set_rrc_filter_enabled_raw(*rrc_filter_enabled_raw_ptr);
+  }
   request.set_rrc_alpha(rrc_alpha);
 
   auto response = ACPCfgCarrierRRCFilterResponse{};
@@ -196,14 +210,21 @@ acp_cfg_measurement_method(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 ACPCfgNoiseCompensationEnabledResponse
-acp_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& noise_compensation_enabled)
+acp_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpNoiseCompensationEnabled, pb::int32>& noise_compensation_enabled)
 {
   ::grpc::ClientContext context;
 
   auto request = ACPCfgNoiseCompensationEnabledRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_noise_compensation_enabled(noise_compensation_enabled);
+  const auto noise_compensation_enabled_ptr = noise_compensation_enabled.get_if<AcpNoiseCompensationEnabled>();
+  const auto noise_compensation_enabled_raw_ptr = noise_compensation_enabled.get_if<pb::int32>();
+  if (noise_compensation_enabled_ptr) {
+    request.set_noise_compensation_enabled(*noise_compensation_enabled_ptr);
+  }
+  else if (noise_compensation_enabled_raw_ptr) {
+    request.set_noise_compensation_enabled_raw(*noise_compensation_enabled_raw_ptr);
+  }
 
   auto response = ACPCfgNoiseCompensationEnabledResponse{};
 
@@ -250,7 +271,7 @@ acp_cfg_number_of_offsets(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 ACPCfgOffsetResponse
-acp_cfg_offset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& offset_frequency, const simple_variant<AcpOffsetSideband, pb::int32>& offset_sideband, const bool& offset_enabled)
+acp_cfg_offset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& offset_frequency, const simple_variant<AcpOffsetSideband, pb::int32>& offset_sideband, const simple_variant<AcpOffsetEnabled, pb::int32>& offset_enabled)
 {
   ::grpc::ClientContext context;
 
@@ -266,7 +287,14 @@ acp_cfg_offset(const StubPtr& stub, const nidevice_grpc::Session& instrument, co
   else if (offset_sideband_raw_ptr) {
     request.set_offset_sideband_raw(*offset_sideband_raw_ptr);
   }
-  request.set_offset_enabled(offset_enabled);
+  const auto offset_enabled_ptr = offset_enabled.get_if<AcpOffsetEnabled>();
+  const auto offset_enabled_raw_ptr = offset_enabled.get_if<pb::int32>();
+  if (offset_enabled_ptr) {
+    request.set_offset_enabled(*offset_enabled_ptr);
+  }
+  else if (offset_enabled_raw_ptr) {
+    request.set_offset_enabled_raw(*offset_enabled_raw_ptr);
+  }
 
   auto response = ACPCfgOffsetResponse{};
 
@@ -277,7 +305,7 @@ acp_cfg_offset(const StubPtr& stub, const nidevice_grpc::Session& instrument, co
 }
 
 ACPCfgOffsetArrayResponse
-acp_cfg_offset_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& offset_frequency, const std::vector<pb::int32>& offset_sideband, const std::vector<bool>& offset_enabled)
+acp_cfg_offset_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& offset_frequency, const std::vector<pb::int32>& offset_sideband, const std::vector<pb::int32>& offset_enabled)
 {
   ::grpc::ClientContext context;
 
@@ -403,14 +431,21 @@ acp_cfg_offset_power_reference_array(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ACPCfgOffsetRRCFilterResponse
-acp_cfg_offset_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rrc_filter_enabled, const double& rrc_alpha)
+acp_cfg_offset_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpOffsetRrcFilterEnabled, pb::int32>& rrc_filter_enabled, const double& rrc_alpha)
 {
   ::grpc::ClientContext context;
 
   auto request = ACPCfgOffsetRRCFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rrc_filter_enabled(rrc_filter_enabled);
+  const auto rrc_filter_enabled_ptr = rrc_filter_enabled.get_if<AcpOffsetRrcFilterEnabled>();
+  const auto rrc_filter_enabled_raw_ptr = rrc_filter_enabled.get_if<pb::int32>();
+  if (rrc_filter_enabled_ptr) {
+    request.set_rrc_filter_enabled(*rrc_filter_enabled_ptr);
+  }
+  else if (rrc_filter_enabled_raw_ptr) {
+    request.set_rrc_filter_enabled_raw(*rrc_filter_enabled_raw_ptr);
+  }
   request.set_rrc_alpha(rrc_alpha);
 
   auto response = ACPCfgOffsetRRCFilterResponse{};
@@ -422,7 +457,7 @@ acp_cfg_offset_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 ACPCfgOffsetRRCFilterArrayResponse
-acp_cfg_offset_rrc_filter_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<bool>& rrc_filter_enabled, const std::vector<double>& rrc_alpha)
+acp_cfg_offset_rrc_filter_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& rrc_filter_enabled, const std::vector<double>& rrc_alpha)
 {
   ::grpc::ClientContext context;
 
@@ -502,14 +537,21 @@ acp_cfg_power_units(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 }
 
 ACPCfgRBWFilterResponse
-acp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rbw_auto, const double& rbw, const simple_variant<AcpRbwFilterType, pb::int32>& rbw_filter_type)
+acp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<AcpRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = ACPCfgRBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rbw_auto(rbw_auto);
+  const auto rbw_auto_ptr = rbw_auto.get_if<AcpRbwAutoBandwidth>();
+  const auto rbw_auto_raw_ptr = rbw_auto.get_if<pb::int32>();
+  if (rbw_auto_ptr) {
+    request.set_rbw_auto(*rbw_auto_ptr);
+  }
+  else if (rbw_auto_raw_ptr) {
+    request.set_rbw_auto_raw(*rbw_auto_raw_ptr);
+  }
   request.set_rbw(rbw);
   const auto rbw_filter_type_ptr = rbw_filter_type.get_if<AcpRbwFilterType>();
   const auto rbw_filter_type_raw_ptr = rbw_filter_type.get_if<pb::int32>();
@@ -529,14 +571,21 @@ acp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 ACPCfgSweepTimeResponse
-acp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& sweep_time_auto, const double& sweep_time_interval)
+acp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AcpSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
   auto request = ACPCfgSweepTimeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_sweep_time_auto(sweep_time_auto);
+  const auto sweep_time_auto_ptr = sweep_time_auto.get_if<AcpSweepTimeAuto>();
+  const auto sweep_time_auto_raw_ptr = sweep_time_auto.get_if<pb::int32>();
+  if (sweep_time_auto_ptr) {
+    request.set_sweep_time_auto(*sweep_time_auto_ptr);
+  }
+  else if (sweep_time_auto_raw_ptr) {
+    request.set_sweep_time_auto_raw(*sweep_time_auto_raw_ptr);
+  }
   request.set_sweep_time_interval(sweep_time_interval);
 
   auto response = ACPCfgSweepTimeResponse{};
@@ -781,14 +830,21 @@ ampm_cfg_am_to_pm_curve_fit(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 AMPMCfgAveragingResponse
-ampm_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count)
+ampm_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AmpmAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count)
 {
   ::grpc::ClientContext context;
 
   auto request = AMPMCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<AmpmAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
 
   auto response = AMPMCfgAveragingResponse{};
@@ -800,14 +856,21 @@ ampm_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 AMPMCfgCompressionPointsResponse
-ampm_cfg_compression_points(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& compression_point_enabled, const std::vector<double>& compression_level)
+ampm_cfg_compression_points(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AmpmCompressionPointEnabled, pb::int32>& compression_point_enabled, const std::vector<double>& compression_level)
 {
   ::grpc::ClientContext context;
 
   auto request = AMPMCfgCompressionPointsRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_compression_point_enabled(compression_point_enabled);
+  const auto compression_point_enabled_ptr = compression_point_enabled.get_if<AmpmCompressionPointEnabled>();
+  const auto compression_point_enabled_raw_ptr = compression_point_enabled.get_if<pb::int32>();
+  if (compression_point_enabled_ptr) {
+    request.set_compression_point_enabled(*compression_point_enabled_ptr);
+  }
+  else if (compression_point_enabled_raw_ptr) {
+    request.set_compression_point_enabled_raw(*compression_point_enabled_raw_ptr);
+  }
   copy_array(compression_level, request.mutable_compression_level());
 
   auto response = AMPMCfgCompressionPointsResponse{};
@@ -906,7 +969,7 @@ ampm_cfg_reference_power_type(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 AMPMCfgReferenceWaveformResponse
-ampm_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform, const bool& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type)
+ampm_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type)
 {
   ::grpc::ClientContext context;
 
@@ -916,7 +979,14 @@ ampm_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& i
   request.set_x0(x0);
   request.set_dx(dx);
   copy_array(reference_waveform, request.mutable_reference_waveform());
-  request.set_idle_duration_present(idle_duration_present);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<AmpmReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
   const auto signal_type_ptr = signal_type.get_if<AmpmSignalType>();
   const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
   if (signal_type_ptr) {
@@ -935,7 +1005,7 @@ ampm_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 AMPMCfgReferenceWaveformSplitResponse
-ampm_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0, const double& dx, const std::vector<float>& i, const std::vector<float>& q, const bool& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type)
+ampm_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0, const double& dx, const std::vector<float>& i, const std::vector<float>& q, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type)
 {
   ::grpc::ClientContext context;
 
@@ -946,7 +1016,14 @@ ampm_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Sess
   request.set_dx(dx);
   copy_array(i, request.mutable_i());
   copy_array(q, request.mutable_q());
-  request.set_idle_duration_present(idle_duration_present);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<AmpmReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
   const auto signal_type_ptr = signal_type.get_if<AmpmSignalType>();
   const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
   if (signal_type_ptr) {
@@ -990,14 +1067,21 @@ ampm_cfg_synchronization_method(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 AMPMCfgThresholdResponse
-ampm_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& threshold_enabled, const double& threshold_level, const simple_variant<AmpmThresholdType, pb::int32>& threshold_type)
+ampm_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<AmpmThresholdEnabled, pb::int32>& threshold_enabled, const double& threshold_level, const simple_variant<AmpmThresholdType, pb::int32>& threshold_type)
 {
   ::grpc::ClientContext context;
 
   auto request = AMPMCfgThresholdRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_threshold_enabled(threshold_enabled);
+  const auto threshold_enabled_ptr = threshold_enabled.get_if<AmpmThresholdEnabled>();
+  const auto threshold_enabled_raw_ptr = threshold_enabled.get_if<pb::int32>();
+  if (threshold_enabled_ptr) {
+    request.set_threshold_enabled(*threshold_enabled_ptr);
+  }
+  else if (threshold_enabled_raw_ptr) {
+    request.set_threshold_enabled_raw(*threshold_enabled_raw_ptr);
+  }
   request.set_threshold_level(threshold_level);
   const auto threshold_type_ptr = threshold_type.get_if<AmpmThresholdType>();
   const auto threshold_type_raw_ptr = threshold_type.get_if<pb::int32>();
@@ -1629,14 +1713,21 @@ ccdf_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 }
 
 CCDFCfgThresholdResponse
-ccdf_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& threshold_enabled, const double& threshold_level, const simple_variant<CcdfThresholdType, pb::int32>& threshold_type)
+ccdf_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<CcdfThresholdEnabled, pb::int32>& threshold_enabled, const double& threshold_level, const simple_variant<CcdfThresholdType, pb::int32>& threshold_type)
 {
   ::grpc::ClientContext context;
 
   auto request = CCDFCfgThresholdRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_threshold_enabled(threshold_enabled);
+  const auto threshold_enabled_ptr = threshold_enabled.get_if<CcdfThresholdEnabled>();
+  const auto threshold_enabled_raw_ptr = threshold_enabled.get_if<pb::int32>();
+  if (threshold_enabled_ptr) {
+    request.set_threshold_enabled(*threshold_enabled_ptr);
+  }
+  else if (threshold_enabled_raw_ptr) {
+    request.set_threshold_enabled_raw(*threshold_enabled_raw_ptr);
+  }
   request.set_threshold_level(threshold_level);
   const auto threshold_type_ptr = threshold_type.get_if<CcdfThresholdType>();
   const auto threshold_type_raw_ptr = threshold_type.get_if<pb::int32>();
@@ -1746,14 +1837,21 @@ ccdf_read(const StubPtr& stub, const nidevice_grpc::Session& instrument, const p
 }
 
 CHPCfgAveragingResponse
-chp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ChpAveragingType, pb::int32>& averaging_type)
+chp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ChpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ChpAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = CHPCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<ChpAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<ChpAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -1853,14 +1951,21 @@ chp_cfg_number_of_carriers(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 CHPCfgRBWFilterResponse
-chp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rbw_auto, const double& rbw, const simple_variant<ChpRbwFilterType, pb::int32>& rbw_filter_type)
+chp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ChpRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<ChpRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = CHPCfgRBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rbw_auto(rbw_auto);
+  const auto rbw_auto_ptr = rbw_auto.get_if<ChpRbwAutoBandwidth>();
+  const auto rbw_auto_raw_ptr = rbw_auto.get_if<pb::int32>();
+  if (rbw_auto_ptr) {
+    request.set_rbw_auto(*rbw_auto_ptr);
+  }
+  else if (rbw_auto_raw_ptr) {
+    request.set_rbw_auto_raw(*rbw_auto_raw_ptr);
+  }
   request.set_rbw(rbw);
   const auto rbw_filter_type_ptr = rbw_filter_type.get_if<ChpRbwFilterType>();
   const auto rbw_filter_type_raw_ptr = rbw_filter_type.get_if<pb::int32>();
@@ -1880,14 +1985,21 @@ chp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 CHPCfgRRCFilterResponse
-chp_cfg_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rrc_filter_enabled, const double& rrc_alpha)
+chp_cfg_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ChpCarrierRrcFilterEnabled, pb::int32>& rrc_filter_enabled, const double& rrc_alpha)
 {
   ::grpc::ClientContext context;
 
   auto request = CHPCfgRRCFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rrc_filter_enabled(rrc_filter_enabled);
+  const auto rrc_filter_enabled_ptr = rrc_filter_enabled.get_if<ChpCarrierRrcFilterEnabled>();
+  const auto rrc_filter_enabled_raw_ptr = rrc_filter_enabled.get_if<pb::int32>();
+  if (rrc_filter_enabled_ptr) {
+    request.set_rrc_filter_enabled(*rrc_filter_enabled_ptr);
+  }
+  else if (rrc_filter_enabled_raw_ptr) {
+    request.set_rrc_filter_enabled_raw(*rrc_filter_enabled_raw_ptr);
+  }
   request.set_rrc_alpha(rrc_alpha);
 
   auto response = CHPCfgRRCFilterResponse{};
@@ -1917,14 +2029,21 @@ chp_cfg_span(const StubPtr& stub, const nidevice_grpc::Session& instrument, cons
 }
 
 CHPCfgSweepTimeResponse
-chp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& sweep_time_auto, const double& sweep_time_interval)
+chp_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ChpSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
   auto request = CHPCfgSweepTimeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_sweep_time_auto(sweep_time_auto);
+  const auto sweep_time_auto_ptr = sweep_time_auto.get_if<ChpSweepTimeAuto>();
+  const auto sweep_time_auto_raw_ptr = sweep_time_auto.get_if<pb::int32>();
+  if (sweep_time_auto_ptr) {
+    request.set_sweep_time_auto(*sweep_time_auto_ptr);
+  }
+  else if (sweep_time_auto_raw_ptr) {
+    request.set_sweep_time_auto_raw(*sweep_time_auto_raw_ptr);
+  }
   request.set_sweep_time_interval(sweep_time_interval);
 
   auto response = CHPCfgSweepTimeResponse{};
@@ -2160,14 +2279,21 @@ cfg_iq_power_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 CfgMechanicalAttenuationResponse
-cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const bool& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
+cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<MechanicalAttenuationAuto, pb::int32>& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgMechanicalAttenuationRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
-  request.set_mechanical_attenuation_auto(mechanical_attenuation_auto);
+  const auto mechanical_attenuation_auto_ptr = mechanical_attenuation_auto.get_if<MechanicalAttenuationAuto>();
+  const auto mechanical_attenuation_auto_raw_ptr = mechanical_attenuation_auto.get_if<pb::int32>();
+  if (mechanical_attenuation_auto_ptr) {
+    request.set_mechanical_attenuation_auto(*mechanical_attenuation_auto_ptr);
+  }
+  else if (mechanical_attenuation_auto_raw_ptr) {
+    request.set_mechanical_attenuation_auto_raw(*mechanical_attenuation_auto_raw_ptr);
+  }
   request.set_mechanical_attenuation_value(mechanical_attenuation_value);
 
   auto response = CfgMechanicalAttenuationResponse{};
@@ -2199,14 +2325,21 @@ cfg_rf(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::
 }
 
 CfgRFAttenuationResponse
-cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const bool& rf_attenuation_auto, const double& rf_attenuation_value)
+cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<RFAttenuationAuto, pb::int32>& rf_attenuation_auto, const double& rf_attenuation_value)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgRFAttenuationRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
-  request.set_rf_attenuation_auto(rf_attenuation_auto);
+  const auto rf_attenuation_auto_ptr = rf_attenuation_auto.get_if<RFAttenuationAuto>();
+  const auto rf_attenuation_auto_raw_ptr = rf_attenuation_auto.get_if<pb::int32>();
+  if (rf_attenuation_auto_ptr) {
+    request.set_rf_attenuation_auto(*rf_attenuation_auto_ptr);
+  }
+  else if (rf_attenuation_auto_raw_ptr) {
+    request.set_rf_attenuation_auto_raw(*rf_attenuation_auto_raw_ptr);
+  }
   request.set_rf_attenuation_value(rf_attenuation_value);
 
   auto response = CfgRFAttenuationResponse{};
@@ -2341,13 +2474,20 @@ clone_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool& force_destroy)
+close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<Boolean, pb::int32>& force_destroy)
 {
   ::grpc::ClientContext context;
 
   auto request = CloseRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
-  request.set_force_destroy(force_destroy);
+  const auto force_destroy_ptr = force_destroy.get_if<Boolean>();
+  const auto force_destroy_raw_ptr = force_destroy.get_if<pb::int32>();
+  if (force_destroy_ptr) {
+    request.set_force_destroy(*force_destroy_ptr);
+  }
+  else if (force_destroy_raw_ptr) {
+    request.set_force_destroy_raw(*force_destroy_raw_ptr);
+  }
 
   auto response = CloseResponse{};
 
@@ -2426,7 +2566,7 @@ create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 DPDApplyDigitalPredistortionResponse
-dpd_apply_digital_predistortion(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<nidevice_grpc::NIComplexNumberF32>& waveform_in, const bool& idle_duration_present, const double& measurement_timeout)
+dpd_apply_digital_predistortion(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<nidevice_grpc::NIComplexNumberF32>& waveform_in, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present, const double& measurement_timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2436,7 +2576,14 @@ dpd_apply_digital_predistortion(const StubPtr& stub, const nidevice_grpc::Sessio
   request.set_x0_in(x0_in);
   request.set_dx_in(dx_in);
   copy_array(waveform_in, request.mutable_waveform_in());
-  request.set_idle_duration_present(idle_duration_present);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdApplyDpdIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
   request.set_measurement_timeout(measurement_timeout);
 
   auto response = DPDApplyDigitalPredistortionResponse{};
@@ -2448,7 +2595,7 @@ dpd_apply_digital_predistortion(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 DPDApplyDigitalPredistortionSplitResponse
-dpd_apply_digital_predistortion_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const bool& idle_duration_present, const double& measurement_timeout)
+dpd_apply_digital_predistortion_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present, const double& measurement_timeout)
 {
   ::grpc::ClientContext context;
 
@@ -2459,7 +2606,14 @@ dpd_apply_digital_predistortion_split(const StubPtr& stub, const nidevice_grpc::
   request.set_dx_in(dx_in);
   copy_array(waveform_in_i, request.mutable_waveform_in_i());
   copy_array(waveform_in_q, request.mutable_waveform_in_q());
-  request.set_idle_duration_present(idle_duration_present);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdApplyDpdIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
   request.set_measurement_timeout(measurement_timeout);
 
   auto response = DPDApplyDigitalPredistortionSplitResponse{};
@@ -2471,7 +2625,7 @@ dpd_apply_digital_predistortion_split(const StubPtr& stub, const nidevice_grpc::
 }
 
 DPDApplyPreDPDSignalConditioningResponse
-dpd_apply_pre_dpd_signal_conditioning(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<nidevice_grpc::NIComplexNumberF32>& waveform_in, const bool& idle_duration_present)
+dpd_apply_pre_dpd_signal_conditioning(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<nidevice_grpc::NIComplexNumberF32>& waveform_in, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present)
 {
   ::grpc::ClientContext context;
 
@@ -2481,7 +2635,14 @@ dpd_apply_pre_dpd_signal_conditioning(const StubPtr& stub, const nidevice_grpc::
   request.set_x0_in(x0_in);
   request.set_dx_in(dx_in);
   copy_array(waveform_in, request.mutable_waveform_in());
-  request.set_idle_duration_present(idle_duration_present);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdApplyDpdIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
 
   auto response = DPDApplyPreDPDSignalConditioningResponse{};
 
@@ -2492,7 +2653,7 @@ dpd_apply_pre_dpd_signal_conditioning(const StubPtr& stub, const nidevice_grpc::
 }
 
 DPDApplyPreDPDSignalConditioningSplitResponse
-dpd_apply_pre_dpd_signal_conditioning_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const bool& idle_duration_present)
+dpd_apply_pre_dpd_signal_conditioning_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present)
 {
   ::grpc::ClientContext context;
 
@@ -2503,7 +2664,14 @@ dpd_apply_pre_dpd_signal_conditioning_split(const StubPtr& stub, const nidevice_
   request.set_dx_in(dx_in);
   copy_array(waveform_in_i, request.mutable_waveform_in_i());
   copy_array(waveform_in_q, request.mutable_waveform_in_q());
-  request.set_idle_duration_present(idle_duration_present);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdApplyDpdIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
 
   auto response = DPDApplyPreDPDSignalConditioningSplitResponse{};
 
@@ -2665,14 +2833,21 @@ dpd_cfg_apply_dpd_user_lookup_table_split(const StubPtr& stub, const nidevice_gr
 }
 
 DPDCfgAveragingResponse
-dpd_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count)
+dpd_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<DpdAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count)
 {
   ::grpc::ClientContext context;
 
   auto request = DPDCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<DpdAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
 
   auto response = DPDCfgAveragingResponse{};
@@ -2750,14 +2925,21 @@ dpd_cfg_generalized_memory_polynomial_cross_terms(const StubPtr& stub, const nid
 }
 
 DPDCfgIterativeDPDEnabledResponse
-dpd_cfg_iterative_dpd_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& iterative_dpd_enabled)
+dpd_cfg_iterative_dpd_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<DpdIterativeDpdEnabled, pb::int32>& iterative_dpd_enabled)
 {
   ::grpc::ClientContext context;
 
   auto request = DPDCfgIterativeDPDEnabledRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_iterative_dpd_enabled(iterative_dpd_enabled);
+  const auto iterative_dpd_enabled_ptr = iterative_dpd_enabled.get_if<DpdIterativeDpdEnabled>();
+  const auto iterative_dpd_enabled_raw_ptr = iterative_dpd_enabled.get_if<pb::int32>();
+  if (iterative_dpd_enabled_ptr) {
+    request.set_iterative_dpd_enabled(*iterative_dpd_enabled_ptr);
+  }
+  else if (iterative_dpd_enabled_raw_ptr) {
+    request.set_iterative_dpd_enabled_raw(*iterative_dpd_enabled_raw_ptr);
+  }
 
   auto response = DPDCfgIterativeDPDEnabledResponse{};
 
@@ -2838,14 +3020,21 @@ dpd_cfg_lookup_table_step_size(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 DPDCfgLookupTableThresholdResponse
-dpd_cfg_lookup_table_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& threshold_enabled, const double& threshold_level, const simple_variant<DpdLookupTableThresholdType, pb::int32>& threshold_type)
+dpd_cfg_lookup_table_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<DpdLookupTableThresholdEnabled, pb::int32>& threshold_enabled, const double& threshold_level, const simple_variant<DpdLookupTableThresholdType, pb::int32>& threshold_type)
 {
   ::grpc::ClientContext context;
 
   auto request = DPDCfgLookupTableThresholdRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_threshold_enabled(threshold_enabled);
+  const auto threshold_enabled_ptr = threshold_enabled.get_if<DpdLookupTableThresholdEnabled>();
+  const auto threshold_enabled_raw_ptr = threshold_enabled.get_if<pb::int32>();
+  if (threshold_enabled_ptr) {
+    request.set_threshold_enabled(*threshold_enabled_ptr);
+  }
+  else if (threshold_enabled_raw_ptr) {
+    request.set_threshold_enabled_raw(*threshold_enabled_raw_ptr);
+  }
   request.set_threshold_level(threshold_level);
   const auto threshold_type_ptr = threshold_type.get_if<DpdLookupTableThresholdType>();
   const auto threshold_type_raw_ptr = threshold_type.get_if<pb::int32>();
@@ -2990,7 +3179,7 @@ dpd_cfg_previous_dpd_polynomial_split(const StubPtr& stub, const nidevice_grpc::
 }
 
 DPDCfgReferenceWaveformResponse
-dpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform, const bool& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type)
+dpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type)
 {
   ::grpc::ClientContext context;
 
@@ -3000,7 +3189,14 @@ dpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& in
   request.set_x0(x0);
   request.set_dx(dx);
   copy_array(reference_waveform, request.mutable_reference_waveform());
-  request.set_idle_duration_present(idle_duration_present);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
   const auto signal_type_ptr = signal_type.get_if<DpdSignalType>();
   const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
   if (signal_type_ptr) {
@@ -3019,7 +3215,7 @@ dpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 DPDCfgReferenceWaveformSplitResponse
-dpd_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0, const double& dx, const std::vector<float>& i, const std::vector<float>& q, const bool& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type)
+dpd_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& x0, const double& dx, const std::vector<float>& i, const std::vector<float>& q, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type)
 {
   ::grpc::ClientContext context;
 
@@ -3030,7 +3226,14 @@ dpd_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Sessi
   request.set_dx(dx);
   copy_array(i, request.mutable_i());
   copy_array(q, request.mutable_q());
-  request.set_idle_duration_present(idle_duration_present);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
   const auto signal_type_ptr = signal_type.get_if<DpdSignalType>();
   const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
   if (signal_type_ptr) {
@@ -3323,14 +3526,21 @@ disable_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, c
 }
 
 FCntCfgAveragingResponse
-f_cnt_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<FcntAveragingType, pb::int32>& averaging_type)
+f_cnt_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<FcntAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<FcntAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = FCntCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<FcntAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<FcntAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -3395,14 +3605,21 @@ f_cnt_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 FCntCfgThresholdResponse
-f_cnt_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& threshold_enabled, const double& threshold_level, const simple_variant<FcntThresholdType, pb::int32>& threshold_type)
+f_cnt_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<FcntThresholdEnabled, pb::int32>& threshold_enabled, const double& threshold_level, const simple_variant<FcntThresholdType, pb::int32>& threshold_type)
 {
   ::grpc::ClientContext context;
 
   auto request = FCntCfgThresholdRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_threshold_enabled(threshold_enabled);
+  const auto threshold_enabled_ptr = threshold_enabled.get_if<FcntThresholdEnabled>();
+  const auto threshold_enabled_raw_ptr = threshold_enabled.get_if<pb::int32>();
+  if (threshold_enabled_ptr) {
+    request.set_threshold_enabled(*threshold_enabled_ptr);
+  }
+  else if (threshold_enabled_raw_ptr) {
+    request.set_threshold_enabled_raw(*threshold_enabled_raw_ptr);
+  }
   request.set_threshold_level(threshold_level);
   const auto threshold_type_ptr = threshold_type.get_if<FcntThresholdType>();
   const auto threshold_type_raw_ptr = threshold_type.get_if<pb::int32>();
@@ -3940,14 +4157,21 @@ get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 HarmCfgAutoHarmonicsResponse
-harm_cfg_auto_harmonics(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& auto_harmonics_setup_enabled)
+harm_cfg_auto_harmonics(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<HarmAutoHarmonicsSetupEnabled, pb::int32>& auto_harmonics_setup_enabled)
 {
   ::grpc::ClientContext context;
 
   auto request = HarmCfgAutoHarmonicsRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_auto_harmonics_setup_enabled(auto_harmonics_setup_enabled);
+  const auto auto_harmonics_setup_enabled_ptr = auto_harmonics_setup_enabled.get_if<HarmAutoHarmonicsSetupEnabled>();
+  const auto auto_harmonics_setup_enabled_raw_ptr = auto_harmonics_setup_enabled.get_if<pb::int32>();
+  if (auto_harmonics_setup_enabled_ptr) {
+    request.set_auto_harmonics_setup_enabled(*auto_harmonics_setup_enabled_ptr);
+  }
+  else if (auto_harmonics_setup_enabled_raw_ptr) {
+    request.set_auto_harmonics_setup_enabled_raw(*auto_harmonics_setup_enabled_raw_ptr);
+  }
 
   auto response = HarmCfgAutoHarmonicsResponse{};
 
@@ -3958,14 +4182,21 @@ harm_cfg_auto_harmonics(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 HarmCfgAveragingResponse
-harm_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<HarmAveragingType, pb::int32>& averaging_type)
+harm_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<HarmAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<HarmAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = HarmCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<HarmAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<HarmAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -4030,7 +4261,7 @@ harm_cfg_fundamental_rbw(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 HarmCfgHarmonicResponse
-harm_cfg_harmonic(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& harmonic_order, const double& harmonic_bandwidth, const bool& harmonic_enabled, const double& harmonic_measurement_interval)
+harm_cfg_harmonic(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& harmonic_order, const double& harmonic_bandwidth, const simple_variant<HarmHarmonicEnabled, pb::int32>& harmonic_enabled, const double& harmonic_measurement_interval)
 {
   ::grpc::ClientContext context;
 
@@ -4039,7 +4270,14 @@ harm_cfg_harmonic(const StubPtr& stub, const nidevice_grpc::Session& instrument,
   request.set_selector_string(selector_string);
   request.set_harmonic_order(harmonic_order);
   request.set_harmonic_bandwidth(harmonic_bandwidth);
-  request.set_harmonic_enabled(harmonic_enabled);
+  const auto harmonic_enabled_ptr = harmonic_enabled.get_if<HarmHarmonicEnabled>();
+  const auto harmonic_enabled_raw_ptr = harmonic_enabled.get_if<pb::int32>();
+  if (harmonic_enabled_ptr) {
+    request.set_harmonic_enabled(*harmonic_enabled_ptr);
+  }
+  else if (harmonic_enabled_raw_ptr) {
+    request.set_harmonic_enabled_raw(*harmonic_enabled_raw_ptr);
+  }
   request.set_harmonic_measurement_interval(harmonic_measurement_interval);
 
   auto response = HarmCfgHarmonicResponse{};
@@ -4051,7 +4289,7 @@ harm_cfg_harmonic(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 HarmCfgHarmonicArrayResponse
-harm_cfg_harmonic_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& harmonic_order, const std::vector<double>& harmonic_bandwidth, const std::vector<bool>& harmonic_enabled, const std::vector<double>& harmonic_measurement_interval)
+harm_cfg_harmonic_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& harmonic_order, const std::vector<double>& harmonic_bandwidth, const std::vector<pb::int32>& harmonic_enabled, const std::vector<double>& harmonic_measurement_interval)
 {
   ::grpc::ClientContext context;
 
@@ -4180,14 +4418,21 @@ harm_read(const StubPtr& stub, const nidevice_grpc::Session& instrument, const p
 }
 
 IMCfgAutoIntermodsSetupResponse
-im_cfg_auto_intermods_setup(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& auto_intermods_setup_enabled, const pb::int32& maximum_intermod_order)
+im_cfg_auto_intermods_setup(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<IMAutoIntermodsSetupEnabled, pb::int32>& auto_intermods_setup_enabled, const pb::int32& maximum_intermod_order)
 {
   ::grpc::ClientContext context;
 
   auto request = IMCfgAutoIntermodsSetupRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_auto_intermods_setup_enabled(auto_intermods_setup_enabled);
+  const auto auto_intermods_setup_enabled_ptr = auto_intermods_setup_enabled.get_if<IMAutoIntermodsSetupEnabled>();
+  const auto auto_intermods_setup_enabled_raw_ptr = auto_intermods_setup_enabled.get_if<pb::int32>();
+  if (auto_intermods_setup_enabled_ptr) {
+    request.set_auto_intermods_setup_enabled(*auto_intermods_setup_enabled_ptr);
+  }
+  else if (auto_intermods_setup_enabled_raw_ptr) {
+    request.set_auto_intermods_setup_enabled_raw(*auto_intermods_setup_enabled_raw_ptr);
+  }
   request.set_maximum_intermod_order(maximum_intermod_order);
 
   auto response = IMCfgAutoIntermodsSetupResponse{};
@@ -4199,14 +4444,21 @@ im_cfg_auto_intermods_setup(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 IMCfgAveragingResponse
-im_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<IMAveragingType, pb::int32>& averaging_type)
+im_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<IMAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<IMAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = IMCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<IMAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<IMAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -4296,7 +4548,7 @@ im_cfg_fundamental_tones(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 IMCfgIntermodResponse
-im_cfg_intermod(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& intermod_order, const double& lower_intermod_frequency, const double& upper_intermod_frequency, const simple_variant<IMIntermodSide, pb::int32>& intermod_side, const bool& intermod_enabled)
+im_cfg_intermod(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& intermod_order, const double& lower_intermod_frequency, const double& upper_intermod_frequency, const simple_variant<IMIntermodSide, pb::int32>& intermod_side, const simple_variant<IMIntermodEnabled, pb::int32>& intermod_enabled)
 {
   ::grpc::ClientContext context;
 
@@ -4314,7 +4566,14 @@ im_cfg_intermod(const StubPtr& stub, const nidevice_grpc::Session& instrument, c
   else if (intermod_side_raw_ptr) {
     request.set_intermod_side_raw(*intermod_side_raw_ptr);
   }
-  request.set_intermod_enabled(intermod_enabled);
+  const auto intermod_enabled_ptr = intermod_enabled.get_if<IMIntermodEnabled>();
+  const auto intermod_enabled_raw_ptr = intermod_enabled.get_if<pb::int32>();
+  if (intermod_enabled_ptr) {
+    request.set_intermod_enabled(*intermod_enabled_ptr);
+  }
+  else if (intermod_enabled_raw_ptr) {
+    request.set_intermod_enabled_raw(*intermod_enabled_raw_ptr);
+  }
 
   auto response = IMCfgIntermodResponse{};
 
@@ -4325,7 +4584,7 @@ im_cfg_intermod(const StubPtr& stub, const nidevice_grpc::Session& instrument, c
 }
 
 IMCfgIntermodArrayResponse
-im_cfg_intermod_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& intermod_order, const std::vector<double>& lower_intermod_frequency, const std::vector<double>& upper_intermod_frequency, const std::vector<pb::int32>& intermod_side, const std::vector<bool>& intermod_enabled)
+im_cfg_intermod_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& intermod_order, const std::vector<double>& lower_intermod_frequency, const std::vector<double>& upper_intermod_frequency, const std::vector<pb::int32>& intermod_side, const std::vector<pb::int32>& intermod_enabled)
 {
   ::grpc::ClientContext context;
 
@@ -4390,14 +4649,21 @@ im_cfg_number_of_intermods(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 IMCfgRBWFilterResponse
-im_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rbw_auto, const double& rbw, const simple_variant<IMRbwFilterType, pb::int32>& rbw_filter_type)
+im_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<IMRbwFilterAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<IMRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = IMCfgRBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rbw_auto(rbw_auto);
+  const auto rbw_auto_ptr = rbw_auto.get_if<IMRbwFilterAutoBandwidth>();
+  const auto rbw_auto_raw_ptr = rbw_auto.get_if<pb::int32>();
+  if (rbw_auto_ptr) {
+    request.set_rbw_auto(*rbw_auto_ptr);
+  }
+  else if (rbw_auto_raw_ptr) {
+    request.set_rbw_auto_raw(*rbw_auto_raw_ptr);
+  }
   request.set_rbw(rbw);
   const auto rbw_filter_type_ptr = rbw_filter_type.get_if<IMRbwFilterType>();
   const auto rbw_filter_type_raw_ptr = rbw_filter_type.get_if<pb::int32>();
@@ -4417,14 +4683,21 @@ im_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 IMCfgSweepTimeResponse
-im_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& sweep_time_auto, const double& sweep_time_interval)
+im_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<IMSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
   auto request = IMCfgSweepTimeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_sweep_time_auto(sweep_time_auto);
+  const auto sweep_time_auto_ptr = sweep_time_auto.get_if<IMSweepTimeAuto>();
+  const auto sweep_time_auto_raw_ptr = sweep_time_auto.get_if<pb::int32>();
+  if (sweep_time_auto_ptr) {
+    request.set_sweep_time_auto(*sweep_time_auto_ptr);
+  }
+  else if (sweep_time_auto_raw_ptr) {
+    request.set_sweep_time_auto_raw(*sweep_time_auto_raw_ptr);
+  }
   request.set_sweep_time_interval(sweep_time_interval);
 
   auto response = IMCfgSweepTimeResponse{};
@@ -4566,14 +4839,21 @@ iq_cfg_acquisition(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 IQCfgBandwidthResponse
-iq_cfg_bandwidth(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& bandwidth_auto, const double& bandwidth)
+iq_cfg_bandwidth(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<IQBandwidthAuto, pb::int32>& bandwidth_auto, const double& bandwidth)
 {
   ::grpc::ClientContext context;
 
   auto request = IQCfgBandwidthRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_bandwidth_auto(bandwidth_auto);
+  const auto bandwidth_auto_ptr = bandwidth_auto.get_if<IQBandwidthAuto>();
+  const auto bandwidth_auto_raw_ptr = bandwidth_auto.get_if<pb::int32>();
+  if (bandwidth_auto_ptr) {
+    request.set_bandwidth_auto(*bandwidth_auto_ptr);
+  }
+  else if (bandwidth_auto_raw_ptr) {
+    request.set_bandwidth_auto_raw(*bandwidth_auto_raw_ptr);
+  }
   request.set_bandwidth(bandwidth);
 
   auto response = IQCfgBandwidthResponse{};
@@ -4711,14 +4991,21 @@ marker_cfg_number_of_markers(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 MarkerCfgPeakExcursionResponse
-marker_cfg_peak_excursion(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& peak_excursion_enabled, const double& peak_excursion)
+marker_cfg_peak_excursion(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<MarkerPeakExcursionEnabled, pb::int32>& peak_excursion_enabled, const double& peak_excursion)
 {
   ::grpc::ClientContext context;
 
   auto request = MarkerCfgPeakExcursionRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_peak_excursion_enabled(peak_excursion_enabled);
+  const auto peak_excursion_enabled_ptr = peak_excursion_enabled.get_if<MarkerPeakExcursionEnabled>();
+  const auto peak_excursion_enabled_raw_ptr = peak_excursion_enabled.get_if<pb::int32>();
+  if (peak_excursion_enabled_ptr) {
+    request.set_peak_excursion_enabled(*peak_excursion_enabled_ptr);
+  }
+  else if (peak_excursion_enabled_raw_ptr) {
+    request.set_peak_excursion_enabled_raw(*peak_excursion_enabled_raw_ptr);
+  }
   request.set_peak_excursion(peak_excursion);
 
   auto response = MarkerCfgPeakExcursionResponse{};
@@ -4748,14 +5035,21 @@ marker_cfg_reference_marker(const StubPtr& stub, const nidevice_grpc::Session& i
 }
 
 MarkerCfgThresholdResponse
-marker_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& threshold_enabled, const double& threshold)
+marker_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<MarkerThresholdEnabled, pb::int32>& threshold_enabled, const double& threshold)
 {
   ::grpc::ClientContext context;
 
   auto request = MarkerCfgThresholdRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_threshold_enabled(threshold_enabled);
+  const auto threshold_enabled_ptr = threshold_enabled.get_if<MarkerThresholdEnabled>();
+  const auto threshold_enabled_raw_ptr = threshold_enabled.get_if<pb::int32>();
+  if (threshold_enabled_ptr) {
+    request.set_threshold_enabled(*threshold_enabled_ptr);
+  }
+  else if (threshold_enabled_raw_ptr) {
+    request.set_threshold_enabled_raw(*threshold_enabled_raw_ptr);
+  }
   request.set_threshold(threshold);
 
   auto response = MarkerCfgThresholdResponse{};
@@ -4894,14 +5188,21 @@ marker_peak_search(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 NFCfgAveragingResponse
-nf_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count)
+nf_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<NFAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count)
 {
   ::grpc::ClientContext context;
 
   auto request = NFCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<NFAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
 
   auto response = NFCfgAveragingResponse{};
@@ -4913,14 +5214,21 @@ nf_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 NFCfgCalibrationLossResponse
-nf_cfg_calibration_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& calibration_loss_compensation_enabled, const std::vector<double>& calibration_loss_frequency, const std::vector<double>& calibration_loss, const double& calibration_loss_temperature)
+nf_cfg_calibration_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<NFCalibrationLossCompensationEnabled, pb::int32>& calibration_loss_compensation_enabled, const std::vector<double>& calibration_loss_frequency, const std::vector<double>& calibration_loss, const double& calibration_loss_temperature)
 {
   ::grpc::ClientContext context;
 
   auto request = NFCfgCalibrationLossRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_calibration_loss_compensation_enabled(calibration_loss_compensation_enabled);
+  const auto calibration_loss_compensation_enabled_ptr = calibration_loss_compensation_enabled.get_if<NFCalibrationLossCompensationEnabled>();
+  const auto calibration_loss_compensation_enabled_raw_ptr = calibration_loss_compensation_enabled.get_if<pb::int32>();
+  if (calibration_loss_compensation_enabled_ptr) {
+    request.set_calibration_loss_compensation_enabled(*calibration_loss_compensation_enabled_ptr);
+  }
+  else if (calibration_loss_compensation_enabled_raw_ptr) {
+    request.set_calibration_loss_compensation_enabled_raw(*calibration_loss_compensation_enabled_raw_ptr);
+  }
   copy_array(calibration_loss_frequency, request.mutable_calibration_loss_frequency());
   copy_array(calibration_loss, request.mutable_calibration_loss());
   request.set_calibration_loss_temperature(calibration_loss_temperature);
@@ -5001,14 +5309,21 @@ nf_cfg_cold_source_mode(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 NFCfgDUTInputLossResponse
-nf_cfg_dut_input_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& dut_input_loss_compensation_enabled, const std::vector<double>& dut_input_loss_frequency, const std::vector<double>& dut_input_loss, const double& dut_input_loss_temperature)
+nf_cfg_dut_input_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<NFDutInputLossCompensationEnabled, pb::int32>& dut_input_loss_compensation_enabled, const std::vector<double>& dut_input_loss_frequency, const std::vector<double>& dut_input_loss, const double& dut_input_loss_temperature)
 {
   ::grpc::ClientContext context;
 
   auto request = NFCfgDUTInputLossRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_dut_input_loss_compensation_enabled(dut_input_loss_compensation_enabled);
+  const auto dut_input_loss_compensation_enabled_ptr = dut_input_loss_compensation_enabled.get_if<NFDutInputLossCompensationEnabled>();
+  const auto dut_input_loss_compensation_enabled_raw_ptr = dut_input_loss_compensation_enabled.get_if<pb::int32>();
+  if (dut_input_loss_compensation_enabled_ptr) {
+    request.set_dut_input_loss_compensation_enabled(*dut_input_loss_compensation_enabled_ptr);
+  }
+  else if (dut_input_loss_compensation_enabled_raw_ptr) {
+    request.set_dut_input_loss_compensation_enabled_raw(*dut_input_loss_compensation_enabled_raw_ptr);
+  }
   copy_array(dut_input_loss_frequency, request.mutable_dut_input_loss_frequency());
   copy_array(dut_input_loss, request.mutable_dut_input_loss());
   request.set_dut_input_loss_temperature(dut_input_loss_temperature);
@@ -5022,14 +5337,21 @@ nf_cfg_dut_input_loss(const StubPtr& stub, const nidevice_grpc::Session& instrum
 }
 
 NFCfgDUTOutputLossResponse
-nf_cfg_dut_output_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& dut_output_loss_compensation_enabled, const std::vector<double>& dut_output_loss_frequency, const std::vector<double>& dut_output_loss, const double& dut_output_loss_temperature)
+nf_cfg_dut_output_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<NFDutOutputLossCompensationEnabled, pb::int32>& dut_output_loss_compensation_enabled, const std::vector<double>& dut_output_loss_frequency, const std::vector<double>& dut_output_loss, const double& dut_output_loss_temperature)
 {
   ::grpc::ClientContext context;
 
   auto request = NFCfgDUTOutputLossRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_dut_output_loss_compensation_enabled(dut_output_loss_compensation_enabled);
+  const auto dut_output_loss_compensation_enabled_ptr = dut_output_loss_compensation_enabled.get_if<NFDutOutputLossCompensationEnabled>();
+  const auto dut_output_loss_compensation_enabled_raw_ptr = dut_output_loss_compensation_enabled.get_if<pb::int32>();
+  if (dut_output_loss_compensation_enabled_ptr) {
+    request.set_dut_output_loss_compensation_enabled(*dut_output_loss_compensation_enabled_ptr);
+  }
+  else if (dut_output_loss_compensation_enabled_raw_ptr) {
+    request.set_dut_output_loss_compensation_enabled_raw(*dut_output_loss_compensation_enabled_raw_ptr);
+  }
   copy_array(dut_output_loss_frequency, request.mutable_dut_output_loss_frequency());
   copy_array(dut_output_loss, request.mutable_dut_output_loss());
   request.set_dut_output_loss_temperature(dut_output_loss_temperature);
@@ -5208,14 +5530,21 @@ nf_cfg_y_factor_noise_source_enr(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 NFCfgYFactorNoiseSourceLossResponse
-nf_cfg_y_factor_noise_source_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& noise_source_loss_compensation_enabled, const std::vector<double>& noise_source_loss_frequency, const std::vector<double>& noise_source_loss, const double& noise_source_loss_temperature)
+nf_cfg_y_factor_noise_source_loss(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<NFYFactorNoiseSourceLossCompensationEnabled, pb::int32>& noise_source_loss_compensation_enabled, const std::vector<double>& noise_source_loss_frequency, const std::vector<double>& noise_source_loss, const double& noise_source_loss_temperature)
 {
   ::grpc::ClientContext context;
 
   auto request = NFCfgYFactorNoiseSourceLossRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_noise_source_loss_compensation_enabled(noise_source_loss_compensation_enabled);
+  const auto noise_source_loss_compensation_enabled_ptr = noise_source_loss_compensation_enabled.get_if<NFYFactorNoiseSourceLossCompensationEnabled>();
+  const auto noise_source_loss_compensation_enabled_raw_ptr = noise_source_loss_compensation_enabled.get_if<pb::int32>();
+  if (noise_source_loss_compensation_enabled_ptr) {
+    request.set_noise_source_loss_compensation_enabled(*noise_source_loss_compensation_enabled_ptr);
+  }
+  else if (noise_source_loss_compensation_enabled_raw_ptr) {
+    request.set_noise_source_loss_compensation_enabled_raw(*noise_source_loss_compensation_enabled_raw_ptr);
+  }
   copy_array(noise_source_loss_frequency, request.mutable_noise_source_loss_frequency());
   copy_array(noise_source_loss, request.mutable_noise_source_loss());
   request.set_noise_source_loss_temperature(noise_source_loss_temperature);
@@ -5425,14 +5754,21 @@ nf_validate_calibration_data(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 OBWCfgAveragingResponse
-obw_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ObwAveragingType, pb::int32>& averaging_type)
+obw_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ObwAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<ObwAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = OBWCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<ObwAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<ObwAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -5521,14 +5857,21 @@ obw_cfg_power_units(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 }
 
 OBWCfgRBWFilterResponse
-obw_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rbw_auto, const double& rbw, const simple_variant<ObwRbwFilterType, pb::int32>& rbw_filter_type)
+obw_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ObwRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<ObwRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = OBWCfgRBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rbw_auto(rbw_auto);
+  const auto rbw_auto_ptr = rbw_auto.get_if<ObwRbwAutoBandwidth>();
+  const auto rbw_auto_raw_ptr = rbw_auto.get_if<pb::int32>();
+  if (rbw_auto_ptr) {
+    request.set_rbw_auto(*rbw_auto_ptr);
+  }
+  else if (rbw_auto_raw_ptr) {
+    request.set_rbw_auto_raw(*rbw_auto_raw_ptr);
+  }
   request.set_rbw(rbw);
   const auto rbw_filter_type_ptr = rbw_filter_type.get_if<ObwRbwFilterType>();
   const auto rbw_filter_type_raw_ptr = rbw_filter_type.get_if<pb::int32>();
@@ -5566,14 +5909,21 @@ obw_cfg_span(const StubPtr& stub, const nidevice_grpc::Session& instrument, cons
 }
 
 OBWCfgSweepTimeResponse
-obw_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& sweep_time_auto, const double& sweep_time_interval)
+obw_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ObwSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
   auto request = OBWCfgSweepTimeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_sweep_time_auto(sweep_time_auto);
+  const auto sweep_time_auto_ptr = sweep_time_auto.get_if<ObwSweepTimeAuto>();
+  const auto sweep_time_auto_raw_ptr = sweep_time_auto.get_if<pb::int32>();
+  if (sweep_time_auto_ptr) {
+    request.set_sweep_time_auto(*sweep_time_auto_ptr);
+  }
+  else if (sweep_time_auto_raw_ptr) {
+    request.set_sweep_time_auto_raw(*sweep_time_auto_raw_ptr);
+  }
   request.set_sweep_time_interval(sweep_time_interval);
 
   auto response = OBWCfgSweepTimeResponse{};
@@ -5975,14 +6325,21 @@ phase_noise_cfg_averaging_multiplier(const StubPtr& stub, const nidevice_grpc::S
 }
 
 PhaseNoiseCfgCancellationResponse
-phase_noise_cfg_cancellation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& cancellation_enabled, const double& cancellation_threshold, const std::vector<float>& frequency, const std::vector<float>& reference_phase_noise)
+phase_noise_cfg_cancellation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<PhaseNoiseCancellationEnabled, pb::int32>& cancellation_enabled, const double& cancellation_threshold, const std::vector<float>& frequency, const std::vector<float>& reference_phase_noise)
 {
   ::grpc::ClientContext context;
 
   auto request = PhaseNoiseCfgCancellationRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_cancellation_enabled(cancellation_enabled);
+  const auto cancellation_enabled_ptr = cancellation_enabled.get_if<PhaseNoiseCancellationEnabled>();
+  const auto cancellation_enabled_raw_ptr = cancellation_enabled.get_if<pb::int32>();
+  if (cancellation_enabled_ptr) {
+    request.set_cancellation_enabled(*cancellation_enabled_ptr);
+  }
+  else if (cancellation_enabled_raw_ptr) {
+    request.set_cancellation_enabled_raw(*cancellation_enabled_raw_ptr);
+  }
   request.set_cancellation_threshold(cancellation_threshold);
   copy_array(frequency, request.mutable_frequency());
   copy_array(reference_phase_noise, request.mutable_reference_phase_noise());
@@ -6131,14 +6488,21 @@ phase_noise_cfg_spot_noise_frequency_list(const StubPtr& stub, const nidevice_gr
 }
 
 PhaseNoiseCfgSpurRemovalResponse
-phase_noise_cfg_spur_removal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& spur_removal_enabled, const double& peak_excursion)
+phase_noise_cfg_spur_removal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<PhaseNoiseSpurRemovalEnabled, pb::int32>& spur_removal_enabled, const double& peak_excursion)
 {
   ::grpc::ClientContext context;
 
   auto request = PhaseNoiseCfgSpurRemovalRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_spur_removal_enabled(spur_removal_enabled);
+  const auto spur_removal_enabled_ptr = spur_removal_enabled.get_if<PhaseNoiseSpurRemovalEnabled>();
+  const auto spur_removal_enabled_raw_ptr = spur_removal_enabled.get_if<pb::int32>();
+  if (spur_removal_enabled_ptr) {
+    request.set_spur_removal_enabled(*spur_removal_enabled_ptr);
+  }
+  else if (spur_removal_enabled_raw_ptr) {
+    request.set_spur_removal_enabled_raw(*spur_removal_enabled_raw_ptr);
+  }
   request.set_peak_excursion(peak_excursion);
 
   auto response = PhaseNoiseCfgSpurRemovalResponse{};
@@ -6275,14 +6639,21 @@ reset_to_default(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
 }
 
 SEMCfgAveragingResponse
-sem_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<SemAveragingType, pb::int32>& averaging_type)
+sem_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<SemAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = SEMCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<SemAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<SemAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -6320,14 +6691,21 @@ sem_cfg_carrier_channel_bandwidth(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 SEMCfgCarrierEnabledResponse
-sem_cfg_carrier_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& carrier_enabled)
+sem_cfg_carrier_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemCarrierEnabled, pb::int32>& carrier_enabled)
 {
   ::grpc::ClientContext context;
 
   auto request = SEMCfgCarrierEnabledRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_carrier_enabled(carrier_enabled);
+  const auto carrier_enabled_ptr = carrier_enabled.get_if<SemCarrierEnabled>();
+  const auto carrier_enabled_raw_ptr = carrier_enabled.get_if<pb::int32>();
+  if (carrier_enabled_ptr) {
+    request.set_carrier_enabled(*carrier_enabled_ptr);
+  }
+  else if (carrier_enabled_raw_ptr) {
+    request.set_carrier_enabled_raw(*carrier_enabled_raw_ptr);
+  }
 
   auto response = SEMCfgCarrierEnabledResponse{};
 
@@ -6374,14 +6752,21 @@ sem_cfg_carrier_integration_bandwidth(const StubPtr& stub, const nidevice_grpc::
 }
 
 SEMCfgCarrierRBWFilterResponse
-sem_cfg_carrier_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rbw_auto, const double& rbw, const simple_variant<SemCarrierRbwFilterType, pb::int32>& rbw_filter_type)
+sem_cfg_carrier_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemCarrierRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<SemCarrierRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = SEMCfgCarrierRBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rbw_auto(rbw_auto);
+  const auto rbw_auto_ptr = rbw_auto.get_if<SemCarrierRbwAutoBandwidth>();
+  const auto rbw_auto_raw_ptr = rbw_auto.get_if<pb::int32>();
+  if (rbw_auto_ptr) {
+    request.set_rbw_auto(*rbw_auto_ptr);
+  }
+  else if (rbw_auto_raw_ptr) {
+    request.set_rbw_auto_raw(*rbw_auto_raw_ptr);
+  }
   request.set_rbw(rbw);
   const auto rbw_filter_type_ptr = rbw_filter_type.get_if<SemCarrierRbwFilterType>();
   const auto rbw_filter_type_raw_ptr = rbw_filter_type.get_if<pb::int32>();
@@ -6401,14 +6786,21 @@ sem_cfg_carrier_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 SEMCfgCarrierRRCFilterResponse
-sem_cfg_carrier_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rrc_filter_enabled, const double& rrc_alpha)
+sem_cfg_carrier_rrc_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemCarrierRrcFilterEnabled, pb::int32>& rrc_filter_enabled, const double& rrc_alpha)
 {
   ::grpc::ClientContext context;
 
   auto request = SEMCfgCarrierRRCFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rrc_filter_enabled(rrc_filter_enabled);
+  const auto rrc_filter_enabled_ptr = rrc_filter_enabled.get_if<SemCarrierRrcFilterEnabled>();
+  const auto rrc_filter_enabled_raw_ptr = rrc_filter_enabled.get_if<pb::int32>();
+  if (rrc_filter_enabled_ptr) {
+    request.set_rrc_filter_enabled(*rrc_filter_enabled_ptr);
+  }
+  else if (rrc_filter_enabled_raw_ptr) {
+    request.set_rrc_filter_enabled_raw(*rrc_filter_enabled_raw_ptr);
+  }
   request.set_rrc_alpha(rrc_alpha);
 
   auto response = SEMCfgCarrierRRCFilterResponse{};
@@ -6547,7 +6939,7 @@ sem_cfg_offset_bandwidth_integral(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 SEMCfgOffsetFrequencyResponse
-sem_cfg_offset_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& offset_start_frequency, const double& offset_stop_frequency, const bool& offset_enabled, const simple_variant<SemOffsetSideband, pb::int32>& offset_sideband)
+sem_cfg_offset_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& offset_start_frequency, const double& offset_stop_frequency, const simple_variant<SemOffsetEnabled, pb::int32>& offset_enabled, const simple_variant<SemOffsetSideband, pb::int32>& offset_sideband)
 {
   ::grpc::ClientContext context;
 
@@ -6556,7 +6948,14 @@ sem_cfg_offset_frequency(const StubPtr& stub, const nidevice_grpc::Session& inst
   request.set_selector_string(selector_string);
   request.set_offset_start_frequency(offset_start_frequency);
   request.set_offset_stop_frequency(offset_stop_frequency);
-  request.set_offset_enabled(offset_enabled);
+  const auto offset_enabled_ptr = offset_enabled.get_if<SemOffsetEnabled>();
+  const auto offset_enabled_raw_ptr = offset_enabled.get_if<pb::int32>();
+  if (offset_enabled_ptr) {
+    request.set_offset_enabled(*offset_enabled_ptr);
+  }
+  else if (offset_enabled_raw_ptr) {
+    request.set_offset_enabled_raw(*offset_enabled_raw_ptr);
+  }
   const auto offset_sideband_ptr = offset_sideband.get_if<SemOffsetSideband>();
   const auto offset_sideband_raw_ptr = offset_sideband.get_if<pb::int32>();
   if (offset_sideband_ptr) {
@@ -6575,7 +6974,7 @@ sem_cfg_offset_frequency(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SEMCfgOffsetFrequencyArrayResponse
-sem_cfg_offset_frequency_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& offset_start_frequency, const std::vector<double>& offset_stop_frequency, const std::vector<bool>& offset_enabled, const std::vector<pb::int32>& offset_sideband)
+sem_cfg_offset_frequency_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& offset_start_frequency, const std::vector<double>& offset_stop_frequency, const std::vector<pb::int32>& offset_enabled, const std::vector<pb::int32>& offset_sideband)
 {
   ::grpc::ClientContext context;
 
@@ -6646,14 +7045,21 @@ sem_cfg_offset_limit_fail_mask(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 SEMCfgOffsetRBWFilterResponse
-sem_cfg_offset_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rbw_auto, const double& rbw, const simple_variant<SemOffsetRbwFilterType, pb::int32>& rbw_filter_type)
+sem_cfg_offset_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemOffsetRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<SemOffsetRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = SEMCfgOffsetRBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rbw_auto(rbw_auto);
+  const auto rbw_auto_ptr = rbw_auto.get_if<SemOffsetRbwAutoBandwidth>();
+  const auto rbw_auto_raw_ptr = rbw_auto.get_if<pb::int32>();
+  if (rbw_auto_ptr) {
+    request.set_rbw_auto(*rbw_auto_ptr);
+  }
+  else if (rbw_auto_raw_ptr) {
+    request.set_rbw_auto_raw(*rbw_auto_raw_ptr);
+  }
   request.set_rbw(rbw);
   const auto rbw_filter_type_ptr = rbw_filter_type.get_if<SemOffsetRbwFilterType>();
   const auto rbw_filter_type_raw_ptr = rbw_filter_type.get_if<pb::int32>();
@@ -6673,7 +7079,7 @@ sem_cfg_offset_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 SEMCfgOffsetRBWFilterArrayResponse
-sem_cfg_offset_rbw_filter_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<bool>& rbw_auto, const std::vector<double>& rbw, const std::vector<pb::int32>& rbw_filter_type)
+sem_cfg_offset_rbw_filter_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& rbw_auto, const std::vector<double>& rbw, const std::vector<pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
@@ -6826,14 +7232,21 @@ sem_cfg_reference_type(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 SEMCfgSweepTimeResponse
-sem_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& sweep_time_auto, const double& sweep_time_interval)
+sem_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SemSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
   auto request = SEMCfgSweepTimeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_sweep_time_auto(sweep_time_auto);
+  const auto sweep_time_auto_ptr = sweep_time_auto.get_if<SemSweepTimeAuto>();
+  const auto sweep_time_auto_raw_ptr = sweep_time_auto.get_if<pb::int32>();
+  if (sweep_time_auto_ptr) {
+    request.set_sweep_time_auto(*sweep_time_auto_ptr);
+  }
+  else if (sweep_time_auto_raw_ptr) {
+    request.set_sweep_time_auto_raw(*sweep_time_auto_raw_ptr);
+  }
   request.set_sweep_time_interval(sweep_time_interval);
 
   auto response = SEMCfgSweepTimeResponse{};
@@ -7551,14 +7964,21 @@ set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 SpectrumCfgAveragingResponse
-spectrum_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<SpectrumAveragingType, pb::int32>& averaging_type)
+spectrum_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SpectrumAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<SpectrumAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = SpectrumCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<SpectrumAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<SpectrumAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -7649,14 +8069,21 @@ spectrum_cfg_frequency_start_stop(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 SpectrumCfgNoiseCompensationEnabledResponse
-spectrum_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& noise_compensation_enabled)
+spectrum_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SpectrumNoiseCompensationEnabled, pb::int32>& noise_compensation_enabled)
 {
   ::grpc::ClientContext context;
 
   auto request = SpectrumCfgNoiseCompensationEnabledRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_noise_compensation_enabled(noise_compensation_enabled);
+  const auto noise_compensation_enabled_ptr = noise_compensation_enabled.get_if<SpectrumNoiseCompensationEnabled>();
+  const auto noise_compensation_enabled_raw_ptr = noise_compensation_enabled.get_if<pb::int32>();
+  if (noise_compensation_enabled_ptr) {
+    request.set_noise_compensation_enabled(*noise_compensation_enabled_ptr);
+  }
+  else if (noise_compensation_enabled_raw_ptr) {
+    request.set_noise_compensation_enabled_raw(*noise_compensation_enabled_raw_ptr);
+  }
 
   auto response = SpectrumCfgNoiseCompensationEnabledResponse{};
 
@@ -7692,14 +8119,21 @@ spectrum_cfg_power_units(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SpectrumCfgRBWFilterResponse
-spectrum_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rbw_auto, const double& rbw, const simple_variant<SpectrumRbwFilterType, pb::int32>& rbw_filter_type)
+spectrum_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SpectrumRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<SpectrumRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = SpectrumCfgRBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rbw_auto(rbw_auto);
+  const auto rbw_auto_ptr = rbw_auto.get_if<SpectrumRbwAutoBandwidth>();
+  const auto rbw_auto_raw_ptr = rbw_auto.get_if<pb::int32>();
+  if (rbw_auto_ptr) {
+    request.set_rbw_auto(*rbw_auto_ptr);
+  }
+  else if (rbw_auto_raw_ptr) {
+    request.set_rbw_auto_raw(*rbw_auto_raw_ptr);
+  }
   request.set_rbw(rbw);
   const auto rbw_filter_type_ptr = rbw_filter_type.get_if<SpectrumRbwFilterType>();
   const auto rbw_filter_type_raw_ptr = rbw_filter_type.get_if<pb::int32>();
@@ -7737,14 +8171,21 @@ spectrum_cfg_span(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 SpectrumCfgSweepTimeResponse
-spectrum_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& sweep_time_auto, const double& sweep_time_interval)
+spectrum_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SpectrumSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
   auto request = SpectrumCfgSweepTimeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_sweep_time_auto(sweep_time_auto);
+  const auto sweep_time_auto_ptr = sweep_time_auto.get_if<SpectrumSweepTimeAuto>();
+  const auto sweep_time_auto_raw_ptr = sweep_time_auto.get_if<pb::int32>();
+  if (sweep_time_auto_ptr) {
+    request.set_sweep_time_auto(*sweep_time_auto_ptr);
+  }
+  else if (sweep_time_auto_raw_ptr) {
+    request.set_sweep_time_auto_raw(*sweep_time_auto_raw_ptr);
+  }
   request.set_sweep_time_interval(sweep_time_interval);
 
   auto response = SpectrumCfgSweepTimeResponse{};
@@ -7756,14 +8197,21 @@ spectrum_cfg_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 SpectrumCfgVBWFilterResponse
-spectrum_cfg_vbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& vbw_auto, const double& vbw, const double& vbw_to_rbw_ratio)
+spectrum_cfg_vbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SpectrumVbwFilterAutoBandwidth, pb::int32>& vbw_auto, const double& vbw, const double& vbw_to_rbw_ratio)
 {
   ::grpc::ClientContext context;
 
   auto request = SpectrumCfgVBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_vbw_auto(vbw_auto);
+  const auto vbw_auto_ptr = vbw_auto.get_if<SpectrumVbwFilterAutoBandwidth>();
+  const auto vbw_auto_raw_ptr = vbw_auto.get_if<pb::int32>();
+  if (vbw_auto_ptr) {
+    request.set_vbw_auto(*vbw_auto_ptr);
+  }
+  else if (vbw_auto_raw_ptr) {
+    request.set_vbw_auto_raw(*vbw_auto_raw_ptr);
+  }
   request.set_vbw(vbw);
   request.set_vbw_to_rbw_ratio(vbw_to_rbw_ratio);
 
@@ -7865,14 +8313,21 @@ spectrum_validate_noise_calibration_data(const StubPtr& stub, const nidevice_grp
 }
 
 SpurCfgAveragingResponse
-spur_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<SpurAveragingType, pb::int32>& averaging_type)
+spur_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SpurAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<SpurAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = SpurCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<SpurAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<SpurAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -8027,7 +8482,7 @@ spur_cfg_range_detector_array(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 SpurCfgRangeFrequencyResponse
-spur_cfg_range_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& start_frequency, const double& stop_frequency, const bool& range_enabled)
+spur_cfg_range_frequency(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& start_frequency, const double& stop_frequency, const simple_variant<SpurRangeEnabled, pb::int32>& range_enabled)
 {
   ::grpc::ClientContext context;
 
@@ -8036,7 +8491,14 @@ spur_cfg_range_frequency(const StubPtr& stub, const nidevice_grpc::Session& inst
   request.set_selector_string(selector_string);
   request.set_start_frequency(start_frequency);
   request.set_stop_frequency(stop_frequency);
-  request.set_range_enabled(range_enabled);
+  const auto range_enabled_ptr = range_enabled.get_if<SpurRangeEnabled>();
+  const auto range_enabled_raw_ptr = range_enabled.get_if<pb::int32>();
+  if (range_enabled_ptr) {
+    request.set_range_enabled(*range_enabled_ptr);
+  }
+  else if (range_enabled_raw_ptr) {
+    request.set_range_enabled_raw(*range_enabled_raw_ptr);
+  }
 
   auto response = SpurCfgRangeFrequencyResponse{};
 
@@ -8047,7 +8509,7 @@ spur_cfg_range_frequency(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SpurCfgRangeFrequencyArrayResponse
-spur_cfg_range_frequency_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& start_frequency, const std::vector<double>& stop_frequency, const std::vector<bool>& range_enabled)
+spur_cfg_range_frequency_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& start_frequency, const std::vector<double>& stop_frequency, const std::vector<pb::int32>& range_enabled)
 {
   ::grpc::ClientContext context;
 
@@ -8141,7 +8603,7 @@ spur_cfg_range_peak_criteria_array(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 SpurCfgRangeRBWArrayResponse
-spur_cfg_range_rbw_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<bool>& rbw_auto, const std::vector<double>& rbw, const std::vector<pb::int32>& rbw_filter_type)
+spur_cfg_range_rbw_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& rbw_auto, const std::vector<double>& rbw, const std::vector<pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
@@ -8161,14 +8623,21 @@ spur_cfg_range_rbw_array(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SpurCfgRangeRBWFilterResponse
-spur_cfg_range_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& rbw_auto, const double& rbw, const simple_variant<SpurRbwFilterType, pb::int32>& rbw_filter_type)
+spur_cfg_range_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SpurRbwAutoBandwidth, pb::int32>& rbw_auto, const double& rbw, const simple_variant<SpurRbwFilterType, pb::int32>& rbw_filter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = SpurCfgRangeRBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_rbw_auto(rbw_auto);
+  const auto rbw_auto_ptr = rbw_auto.get_if<SpurRbwAutoBandwidth>();
+  const auto rbw_auto_raw_ptr = rbw_auto.get_if<pb::int32>();
+  if (rbw_auto_ptr) {
+    request.set_rbw_auto(*rbw_auto_ptr);
+  }
+  else if (rbw_auto_raw_ptr) {
+    request.set_rbw_auto_raw(*rbw_auto_raw_ptr);
+  }
   request.set_rbw(rbw);
   const auto rbw_filter_type_ptr = rbw_filter_type.get_if<SpurRbwFilterType>();
   const auto rbw_filter_type_raw_ptr = rbw_filter_type.get_if<pb::int32>();
@@ -8224,14 +8693,21 @@ spur_cfg_range_relative_attenuation_array(const StubPtr& stub, const nidevice_gr
 }
 
 SpurCfgRangeSweepTimeResponse
-spur_cfg_range_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& sweep_time_auto, const double& sweep_time_interval)
+spur_cfg_range_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SpurSweepTimeAuto, pb::int32>& sweep_time_auto, const double& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
   auto request = SpurCfgRangeSweepTimeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_sweep_time_auto(sweep_time_auto);
+  const auto sweep_time_auto_ptr = sweep_time_auto.get_if<SpurSweepTimeAuto>();
+  const auto sweep_time_auto_raw_ptr = sweep_time_auto.get_if<pb::int32>();
+  if (sweep_time_auto_ptr) {
+    request.set_sweep_time_auto(*sweep_time_auto_ptr);
+  }
+  else if (sweep_time_auto_raw_ptr) {
+    request.set_sweep_time_auto_raw(*sweep_time_auto_raw_ptr);
+  }
   request.set_sweep_time_interval(sweep_time_interval);
 
   auto response = SpurCfgRangeSweepTimeResponse{};
@@ -8243,7 +8719,7 @@ spur_cfg_range_sweep_time(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 SpurCfgRangeSweepTimeArrayResponse
-spur_cfg_range_sweep_time_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<bool>& sweep_time_auto, const std::vector<double>& sweep_time_interval)
+spur_cfg_range_sweep_time_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& sweep_time_auto, const std::vector<double>& sweep_time_interval)
 {
   ::grpc::ClientContext context;
 
@@ -8262,14 +8738,21 @@ spur_cfg_range_sweep_time_array(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 SpurCfgRangeVBWFilterResponse
-spur_cfg_range_vbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& vbw_auto, const double& vbw, const double& vbw_to_rbw_ratio)
+spur_cfg_range_vbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SpurRangeVbwFilterAutoBandwidth, pb::int32>& vbw_auto, const double& vbw, const double& vbw_to_rbw_ratio)
 {
   ::grpc::ClientContext context;
 
   auto request = SpurCfgRangeVBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_vbw_auto(vbw_auto);
+  const auto vbw_auto_ptr = vbw_auto.get_if<SpurRangeVbwFilterAutoBandwidth>();
+  const auto vbw_auto_raw_ptr = vbw_auto.get_if<pb::int32>();
+  if (vbw_auto_ptr) {
+    request.set_vbw_auto(*vbw_auto_ptr);
+  }
+  else if (vbw_auto_raw_ptr) {
+    request.set_vbw_auto_raw(*vbw_auto_raw_ptr);
+  }
   request.set_vbw(vbw);
   request.set_vbw_to_rbw_ratio(vbw_to_rbw_ratio);
 
@@ -8282,7 +8765,7 @@ spur_cfg_range_vbw_filter(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 SpurCfgRangeVBWFilterArrayResponse
-spur_cfg_range_vbw_filter_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<bool>& vbw_auto, const std::vector<double>& vbw, const std::vector<double>& vbw_to_rbw_ratio)
+spur_cfg_range_vbw_filter_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<pb::int32>& vbw_auto, const std::vector<double>& vbw, const std::vector<double>& vbw_to_rbw_ratio)
 {
   ::grpc::ClientContext context;
 
@@ -8464,14 +8947,21 @@ spur_fetch_spur_measurement_array(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 TXPCfgAveragingResponse
-txp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& averaging_enabled, const pb::int32& averaging_count, const simple_variant<TxpAveragingType, pb::int32>& averaging_type)
+txp_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<TxpAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<TxpAveragingType, pb::int32>& averaging_type)
 {
   ::grpc::ClientContext context;
 
   auto request = TXPCfgAveragingRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_averaging_enabled(averaging_enabled);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<TxpAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
   request.set_averaging_count(averaging_count);
   const auto averaging_type_ptr = averaging_type.get_if<TxpAveragingType>();
   const auto averaging_type_raw_ptr = averaging_type.get_if<pb::int32>();
@@ -8536,14 +9026,21 @@ txp_cfg_rbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 TXPCfgThresholdResponse
-txp_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& threshold_enabled, const double& threshold_level, const simple_variant<TxpThresholdType, pb::int32>& threshold_type)
+txp_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<TxpThresholdEnabled, pb::int32>& threshold_enabled, const double& threshold_level, const simple_variant<TxpThresholdType, pb::int32>& threshold_type)
 {
   ::grpc::ClientContext context;
 
   auto request = TXPCfgThresholdRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_threshold_enabled(threshold_enabled);
+  const auto threshold_enabled_ptr = threshold_enabled.get_if<TxpThresholdEnabled>();
+  const auto threshold_enabled_raw_ptr = threshold_enabled.get_if<pb::int32>();
+  if (threshold_enabled_ptr) {
+    request.set_threshold_enabled(*threshold_enabled_ptr);
+  }
+  else if (threshold_enabled_raw_ptr) {
+    request.set_threshold_enabled_raw(*threshold_enabled_raw_ptr);
+  }
   request.set_threshold_level(threshold_level);
   const auto threshold_type_ptr = threshold_type.get_if<TxpThresholdType>();
   const auto threshold_type_raw_ptr = threshold_type.get_if<pb::int32>();
@@ -8563,14 +9060,21 @@ txp_cfg_threshold(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 }
 
 TXPCfgVBWFilterResponse
-txp_cfg_vbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const bool& vbw_auto, const double& vbw, const double& vbw_to_rbw_ratio)
+txp_cfg_vbw_filter(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<TxpVbwFilterAutoBandwidth, pb::int32>& vbw_auto, const double& vbw, const double& vbw_to_rbw_ratio)
 {
   ::grpc::ClientContext context;
 
   auto request = TXPCfgVBWFilterRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_vbw_auto(vbw_auto);
+  const auto vbw_auto_ptr = vbw_auto.get_if<TxpVbwFilterAutoBandwidth>();
+  const auto vbw_auto_raw_ptr = vbw_auto.get_if<pb::int32>();
+  if (vbw_auto_ptr) {
+    request.set_vbw_auto(*vbw_auto_ptr);
+  }
+  else if (vbw_auto_raw_ptr) {
+    request.set_vbw_auto_raw(*vbw_auto_raw_ptr);
+  }
   request.set_vbw(vbw);
   request.set_vbw_to_rbw_ratio(vbw_to_rbw_ratio);
 
