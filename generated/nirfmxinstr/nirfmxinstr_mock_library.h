@@ -21,6 +21,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, BuildInstrumentString, (char selectorString[], int32 instrumentNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildLOString, (char selectorString[], int32 loIndex, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildModuleString, (char selectorString[], char moduleName[], int32 selectorStringOutLength, char selectorStringOut[]), (override));
+  MOCK_METHOD(int32, GetListNames, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char listNames[], int32 listNamesSize, int32* actualListNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize), (override));
   MOCK_METHOD(int32, BuildPortString, (char selectorString[], char portName[], char deviceName[], int32 channelNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, CfgExternalAttenuationInterpolationLinear, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 format), (override));
   MOCK_METHOD(int32, CfgExternalAttenuationInterpolationNearest, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[]), (override));

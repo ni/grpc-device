@@ -47,6 +47,7 @@ public:
   ::grpc::Status BuildInstrumentString(::grpc::ServerContext* context, const BuildInstrumentStringRequest* request, BuildInstrumentStringResponse* response) override;
   ::grpc::Status BuildLOString(::grpc::ServerContext* context, const BuildLOStringRequest* request, BuildLOStringResponse* response) override;
   ::grpc::Status BuildModuleString(::grpc::ServerContext* context, const BuildModuleStringRequest* request, BuildModuleStringResponse* response) override;
+  ::grpc::Status GetListNames(::grpc::ServerContext* context, const GetListNamesRequest* request, GetListNamesResponse* response) override;
   ::grpc::Status BuildPortString(::grpc::ServerContext* context, const BuildPortStringRequest* request, BuildPortStringResponse* response) override;
   ::grpc::Status CfgExternalAttenuationInterpolationLinear(::grpc::ServerContext* context, const CfgExternalAttenuationInterpolationLinearRequest* request, CfgExternalAttenuationInterpolationLinearResponse* response) override;
   ::grpc::Status CfgExternalAttenuationInterpolationNearest(::grpc::ServerContext* context, const CfgExternalAttenuationInterpolationNearestRequest* request, CfgExternalAttenuationInterpolationNearestResponse* response) override;

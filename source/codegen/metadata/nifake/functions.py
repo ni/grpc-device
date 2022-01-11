@@ -2165,6 +2165,51 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ReadDataWithMultpleIviTwistParamSets': {
+        'parameters': [
+            {
+                'name': 'bufferSize',
+                'direction': 'in',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'arrayOut',
+                'direction': 'out',
+                'type': 'ViInt32[]',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualSize'
+                }
+            },
+            {
+                'name': 'actualSize',
+                'direction': 'out',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'otherBufferSize',
+                'direction': 'in',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'otherArrayOut',
+                'direction': 'out',
+                'type': 'ViInt32[]',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'otherBufferSize',
+                    'value_twist': 'otherActualSize'
+                }
+            },
+            {
+                'name': 'otherActualSize',
+                'direction': 'out',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ReadFromChannel': {
         'codegen_method': 'public',
         'documentation': {

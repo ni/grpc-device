@@ -22,6 +22,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 BuildInstrumentString(char selectorString[], int32 instrumentNumber, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 BuildLOString(char selectorString[], int32 loIndex, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 BuildModuleString(char selectorString[], char moduleName[], int32 selectorStringOutLength, char selectorStringOut[]);
+  int32 GetListNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char listNames[], int32 listNamesSize, int32* actualListNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize);
   int32 BuildPortString(char selectorString[], char portName[], char deviceName[], int32 channelNumber, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 CfgExternalAttenuationInterpolationLinear(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 format);
   int32 CfgExternalAttenuationInterpolationNearest(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[]);
@@ -114,6 +115,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using BuildInstrumentStringPtr = decltype(&RFmxInstr_BuildInstrumentString);
   using BuildLOStringPtr = decltype(&RFmxInstr_BuildLOString);
   using BuildModuleStringPtr = decltype(&RFmxInstr_BuildModuleString);
+  using GetListNamesPtr = decltype(&RFmxInstr_GetListNames);
   using BuildPortStringPtr = decltype(&RFmxInstr_BuildPortString2);
   using CfgExternalAttenuationInterpolationLinearPtr = decltype(&RFmxInstr_CfgExternalAttenuationInterpolationLinear);
   using CfgExternalAttenuationInterpolationNearestPtr = decltype(&RFmxInstr_CfgExternalAttenuationInterpolationNearest);
@@ -206,6 +208,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     BuildInstrumentStringPtr BuildInstrumentString;
     BuildLOStringPtr BuildLOString;
     BuildModuleStringPtr BuildModuleString;
+    GetListNamesPtr GetListNames;
     BuildPortStringPtr BuildPortString;
     CfgExternalAttenuationInterpolationLinearPtr CfgExternalAttenuationInterpolationLinear;
     CfgExternalAttenuationInterpolationNearestPtr CfgExternalAttenuationInterpolationNearest;

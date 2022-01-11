@@ -26,6 +26,7 @@ BuildCalibrationPlaneStringResponse build_calibration_plane_string(const StubPtr
 BuildInstrumentStringResponse build_instrument_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& instrument_number);
 BuildLOStringResponse build_lo_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& lo_index);
 BuildModuleStringResponse build_module_string(const StubPtr& stub, const pb::string& selector_string, const pb::string& module_name);
+GetListNamesResponse get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& personality_filter);
 BuildPortStringResponse build_port_string(const StubPtr& stub, const pb::string& selector_string, const pb::string& port_name, const pb::string& device_name, const pb::int32& channel_number);
 CfgExternalAttenuationInterpolationLinearResponse cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::int32& format);
 CfgExternalAttenuationInterpolationNearestResponse cfg_external_attenuation_interpolation_nearest(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name);

@@ -108,13 +108,11 @@ ${set_response_values(output_parameters)}\
 ## Generate the core method body for an ivi-dance-with_a_twist method. This should be what gets included within the try block in the service method.
 <%def name="define_ivi_dance_with_a_twist_method_body(function_name, function_data, parameters)">\
 <%
-  (size_param, twist_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_with_a_twist_params(parameters)
+  ivi_param_sets = common_helpers.get_ivi_dance_with_a_twist_params(parameters)
+  non_ivi_params = common_helpers.get_params_not_in_ivi_twist(parameters, ivi_param_sets)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   array_output_parameters = [p for p in output_parameters if common_helpers.is_array(p['type'])]
   scalar_output_parameters = [p for p in output_parameters if p not in array_output_parameters]
-  size_param_name = common_helpers.get_cpp_local_name(size_param)
-  twist_param_name = common_helpers.get_cpp_local_name(twist_param)
-  is_in_out_twist = size_param_name == twist_param_name
 %>\
 ${initialize_input_params(function_name, non_ivi_params)}\
 ${initialize_output_params(scalar_output_parameters)}\
@@ -127,9 +125,11 @@ ${initialize_output_params(scalar_output_parameters)}\
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(array_output_parameters)}\
 </%block>\
-% if not is_in_out_twist:
-        auto ${size_param_name} = ${twist_param_name};
-% endif
+% for ivi_param_set in ivi_param_sets:
+%   if not ivi_param_set.is_in_out_twist:
+        auto ${ivi_param_set.size_param_name} = ${ivi_param_set.twist_param_name};
+%   endif
+% endfor
         status = library_->${function_name}(${service_helpers.create_args(parameters)});
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again

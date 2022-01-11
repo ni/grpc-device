@@ -25,6 +25,7 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary() : shared_library_(kLibraryName)
   function_pointers_.BuildInstrumentString = reinterpret_cast<BuildInstrumentStringPtr>(shared_library_.get_function_pointer("RFmxInstr_BuildInstrumentString"));
   function_pointers_.BuildLOString = reinterpret_cast<BuildLOStringPtr>(shared_library_.get_function_pointer("RFmxInstr_BuildLOString"));
   function_pointers_.BuildModuleString = reinterpret_cast<BuildModuleStringPtr>(shared_library_.get_function_pointer("RFmxInstr_BuildModuleString"));
+  function_pointers_.GetListNames = reinterpret_cast<GetListNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetListNames"));
   function_pointers_.BuildPortString = reinterpret_cast<BuildPortStringPtr>(shared_library_.get_function_pointer("RFmxInstr_BuildPortString2"));
   function_pointers_.CfgExternalAttenuationInterpolationLinear = reinterpret_cast<CfgExternalAttenuationInterpolationLinearPtr>(shared_library_.get_function_pointer("RFmxInstr_CfgExternalAttenuationInterpolationLinear"));
   function_pointers_.CfgExternalAttenuationInterpolationNearest = reinterpret_cast<CfgExternalAttenuationInterpolationNearestPtr>(shared_library_.get_function_pointer("RFmxInstr_CfgExternalAttenuationInterpolationNearest"));
@@ -169,6 +170,18 @@ int32 NiRFmxInstrLibrary::BuildModuleString(char selectorString[], char moduleNa
   return RFmxInstr_BuildModuleString(selectorString, moduleName, selectorStringOutLength, selectorStringOut);
 #else
   return function_pointers_.BuildModuleString(selectorString, moduleName, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxInstrLibrary::GetListNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char listNames[], int32 listNamesSize, int32* actualListNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize)
+{
+  if (!function_pointers_.GetListNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetListNames.");
+  }
+#if defined(_MSC_VER)
+  return RFmxInstr_GetListNames(instrumentHandle, selectorString, personalityFilter, listNames, listNamesSize, actualListNamesSize, personality, personalityArraySize, actualPersonalityArraySize);
+#else
+  return function_pointers_.GetListNames(instrumentHandle, selectorString, personalityFilter, listNames, listNamesSize, actualListNamesSize, personality, personalityArraySize, actualPersonalityArraySize);
 #endif
 }
 

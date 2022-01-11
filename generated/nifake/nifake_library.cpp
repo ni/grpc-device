@@ -76,6 +76,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.PoorlyNamedSimpleFunction = reinterpret_cast<PoorlyNamedSimpleFunctionPtr>(shared_library_.get_function_pointer("niFake_PoorlyNamedSimpleFunction"));
   function_pointers_.Read = reinterpret_cast<ReadPtr>(shared_library_.get_function_pointer("niFake_Read"));
   function_pointers_.ReadDataWithInOutIviTwist = reinterpret_cast<ReadDataWithInOutIviTwistPtr>(shared_library_.get_function_pointer("niFake_ReadDataWithInOutIviTwist"));
+  function_pointers_.ReadDataWithMultpleIviTwistParamSets = reinterpret_cast<ReadDataWithMultpleIviTwistParamSetsPtr>(shared_library_.get_function_pointer("niFake_ReadDataWithMultpleIviTwistParamSets"));
   function_pointers_.ReadFromChannel = reinterpret_cast<ReadFromChannelPtr>(shared_library_.get_function_pointer("niFake_ReadFromChannel"));
   function_pointers_.ReturnANumberAndAString = reinterpret_cast<ReturnANumberAndAStringPtr>(shared_library_.get_function_pointer("niFake_ReturnANumberAndAString"));
   function_pointers_.ReturnDurationInSeconds = reinterpret_cast<ReturnDurationInSecondsPtr>(shared_library_.get_function_pointer("niFake_ReturnDurationInSeconds"));
@@ -761,6 +762,18 @@ ViStatus NiFakeLibrary::ReadDataWithInOutIviTwist(ViInt32 data[], ViInt32* buffe
   return niFake_ReadDataWithInOutIviTwist(data, bufferSize);
 #else
   return function_pointers_.ReadDataWithInOutIviTwist(data, bufferSize);
+#endif
+}
+
+ViStatus NiFakeLibrary::ReadDataWithMultpleIviTwistParamSets(ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize, ViInt32 otherBufferSize, ViInt32 otherArrayOut[], ViInt32* otherActualSize)
+{
+  if (!function_pointers_.ReadDataWithMultpleIviTwistParamSets) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_ReadDataWithMultpleIviTwistParamSets.");
+  }
+#if defined(_MSC_VER)
+  return niFake_ReadDataWithMultpleIviTwistParamSets(bufferSize, arrayOut, actualSize, otherBufferSize, otherArrayOut, otherActualSize);
+#else
+  return function_pointers_.ReadDataWithMultpleIviTwistParamSets(bufferSize, arrayOut, actualSize, otherBufferSize, otherArrayOut, otherActualSize);
 #endif
 }
 

@@ -228,10 +228,6 @@ def validate_function(function_name: str, metadata: dict):
                     ivi_dance_with_a_twist_params.append(parameter['name'])
                     ivi_dance_with_a_twist_sizes.add(size['value'])
                     ivi_dance_with_a_twist_twists.add(size['value_twist'])
-            if len(ivi_dance_with_a_twist_sizes) > 1 or len(ivi_dance_with_a_twist_twists) > 1:
-                raise Exception(
-                    f"Multiple ivi-dance-with-a-twist parameters with different sizes or twists are not currently supported! Parameter names: {ivi_dance_with_a_twist_params}"
-                )
 
     except Exception as e:
         raise Exception(f"Failed to validate function {function_name}") from e

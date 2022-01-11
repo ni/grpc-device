@@ -110,6 +110,67 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetListNames': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'personalityFilter',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'listNames',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'listNamesSize',
+                    'value_twist': 'actualListNamesSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'listNamesSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualListNamesSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'personality',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'personalityArraySize',
+                    'value_twist': 'actualPersonalityArraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'personalityArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualPersonalityArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'BuildPortString': {
         'cname': 'RFmxInstr_BuildPortString2',
         'parameters': [

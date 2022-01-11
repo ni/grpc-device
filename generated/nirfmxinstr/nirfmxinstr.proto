@@ -22,6 +22,7 @@ service NiRFmxInstr {
   rpc BuildInstrumentString(BuildInstrumentStringRequest) returns (BuildInstrumentStringResponse);
   rpc BuildLOString(BuildLOStringRequest) returns (BuildLOStringResponse);
   rpc BuildModuleString(BuildModuleStringRequest) returns (BuildModuleStringResponse);
+  rpc GetListNames(GetListNamesRequest) returns (GetListNamesResponse);
   rpc BuildPortString(BuildPortStringRequest) returns (BuildPortStringResponse);
   rpc CfgExternalAttenuationInterpolationLinear(CfgExternalAttenuationInterpolationLinearRequest) returns (CfgExternalAttenuationInterpolationLinearResponse);
   rpc CfgExternalAttenuationInterpolationNearest(CfgExternalAttenuationInterpolationNearestRequest) returns (CfgExternalAttenuationInterpolationNearestResponse);
@@ -201,6 +202,20 @@ message BuildModuleStringRequest {
 message BuildModuleStringResponse {
   int32 status = 1;
   string selector_string_out = 2;
+}
+
+message GetListNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 personality_filter = 3;
+}
+
+message GetListNamesResponse {
+  int32 status = 1;
+  string list_names = 2;
+  int32 actual_list_names_size = 3;
+  repeated int32 personality = 4;
+  int32 actual_personality_array_size = 5;
 }
 
 message BuildPortStringRequest {
