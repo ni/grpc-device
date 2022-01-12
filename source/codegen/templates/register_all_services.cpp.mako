@@ -52,7 +52,16 @@ std::shared_ptr<void> register_all_services(
     {session_repository, core_service});
 
 % for type_name, local_name in repository_type_to_local_name.items():
+<%
+  windows_only = type_name == "niRFmxInstrHandle"
+%>\
+% if windows_only:
+#if defined(_MSC_VER)
+% endif
   auto ${local_name} = std::make_shared<nidevice_grpc::SessionResourceRepository<${type_name}>>(session_repository.get());
+% if windows_only:
+#endif // defined(_MSC_VER)
+% endif
 % endfor
 
 % for config, cross_driver_session_deps in zip(driver_configs, driver_cross_driver_session_deps):
