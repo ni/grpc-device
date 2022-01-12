@@ -430,47 +430,58 @@ add_custom_command(
            ${CMAKE_SOURCE_DIR}/source/tests/assets/
            $<TARGET_FILE_DIR:UnitTestsRunner>/)
 
-add_executable(SystemTestsRunner
-    "source/tests/utilities/run_all_tests.cpp"
-    "source/server/core_service_registrar.cpp"
-    "source/tests/system/device_server.cpp"
-    "source/tests/system/enumerate_devices.cpp"
-    "source/tests/system/session_utilities_service_tests.cpp"
-    "source/tests/system/nidaqmx_driver_api_tests.cpp"
-    "source/tests/system/nidaqmx_session_tests.cpp"
-    "source/tests/system/nidcpower_driver_api_tests.cpp"
-    "source/tests/system/nidcpower_session_tests.cpp"
-    "source/tests/system/nidigital_driver_api_tests.cpp"
-    "source/tests/system/nidigital_session_tests.cpp"
-    "source/tests/system/nidmm_driver_api_tests.cpp"
-    "source/tests/system/nidmm_session_tests.cpp"
-    "source/tests/system/nifgen_driver_api_tests.cpp"
-    "source/tests/system/nifgen_session_tests.cpp"
-    "source/tests/system/nirfmxinstr_driver_api_tests.cpp"
-    "source/tests/system/nirfmxspecan_driver_api_tests.cpp"
-    "source/tests/system/nirfmxspecan_session_tests.cpp"
-    "source/tests/system/nirfsa_driver_api_tests.cpp"
-    "source/tests/system/nirfsg_driver_api_tests.cpp"
-    "source/tests/system/nirfsg_session_tests.cpp"
-    "source/tests/system/niscope_driver_api_tests.cpp"
-    "source/tests/system/niscope_session_tests.cpp"
-    "source/tests/system/niswitch_driver_api_tests.cpp"
-    "source/tests/system/niswitch_session_tests.cpp"
-    "source/tests/system/nisync_driver_api_tests.cpp"
-    "source/tests/system/nisync_session_tests.cpp"
-    "source/tests/system/nitclk_driver_api_tests.cpp"
-    "source/server/device_enumerator.cpp"
-    "source/server/feature_toggles.cpp"
-    "source/server/session_repository.cpp"
-    "source/server/semaphore.cpp"
-    "source/server/session_utilities_service.cpp"
-    "source/server/shared_library.cpp"
-    "source/server/syscfg_library.cpp"
-    ${nidevice_proto_srcs}
-    ${session_proto_srcs}
-    ${session_grpc_srcs}
-    ${nidriver_service_srcs}
-    ${nidriver_client_srcs})
+
+set(system_test_runner_sources
+  "source/tests/utilities/run_all_tests.cpp"
+  "source/server/core_service_registrar.cpp"
+  "source/tests/system/device_server.cpp"
+  "source/tests/system/enumerate_devices.cpp"
+  "source/tests/system/session_utilities_service_tests.cpp"
+  "source/tests/system/nidaqmx_driver_api_tests.cpp"
+  "source/tests/system/nidaqmx_session_tests.cpp"
+  "source/tests/system/nidcpower_driver_api_tests.cpp"
+  "source/tests/system/nidcpower_session_tests.cpp"
+  "source/tests/system/nidigital_driver_api_tests.cpp"
+  "source/tests/system/nidigital_session_tests.cpp"
+  "source/tests/system/nidmm_driver_api_tests.cpp"
+  "source/tests/system/nidmm_session_tests.cpp"
+  "source/tests/system/nifgen_driver_api_tests.cpp"
+  "source/tests/system/nifgen_session_tests.cpp"
+  "source/tests/system/nirfsa_driver_api_tests.cpp"
+  "source/tests/system/nirfsg_driver_api_tests.cpp"
+  "source/tests/system/nirfsg_session_tests.cpp"
+  "source/tests/system/niscope_driver_api_tests.cpp"
+  "source/tests/system/niscope_session_tests.cpp"
+  "source/tests/system/niswitch_driver_api_tests.cpp"
+  "source/tests/system/niswitch_session_tests.cpp"
+  "source/tests/system/nisync_driver_api_tests.cpp"
+  "source/tests/system/nisync_session_tests.cpp"
+  "source/tests/system/nitclk_driver_api_tests.cpp"
+  "source/server/device_enumerator.cpp"
+  "source/server/feature_toggles.cpp"
+  "source/server/session_repository.cpp"
+  "source/server/semaphore.cpp"
+  "source/server/session_utilities_service.cpp"
+  "source/server/shared_library.cpp"
+  "source/server/syscfg_library.cpp"
+  ${nidevice_proto_srcs}
+  ${session_proto_srcs}
+  ${session_grpc_srcs}
+  ${nidriver_service_srcs}
+  ${nidriver_client_srcs}
+)
+
+if(WIN32)
+  list(
+    APPEND 
+      system_test_runner_sources
+        "source/tests/system/nirfmxinstr_driver_api_tests.cpp"
+        "source/tests/system/nirfmxspecan_driver_api_tests.cpp"
+        "source/tests/system/nirfmxspecan_session_tests.cpp"
+  )
+endif()
+
+add_executable(SystemTestsRunner ${system_test_runner_sources})
 
 target_link_libraries(SystemTestsRunner
     gtest
