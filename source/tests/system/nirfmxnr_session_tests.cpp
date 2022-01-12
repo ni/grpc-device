@@ -1,0 +1,117 @@
+#include <gtest/gtest.h>
+
+#include "device_server.h"
+#include "nirfmxnr/nirfmxnr_service.h"
+
+namespace ni {
+namespace tests {
+namespace system {
+
+namespace rfmxnr = nirfmxnr_grpc;
+
+const int kInvalidRsrc = -200220;
+const int kInvalidRFmxNRSession = -380598;
+const char* kRFmxNRTestRsrc = "FakeDevice";
+const char* kRFmxNROptionsString = "Simulate=1, DriverSetup=Model:5663E";
+const char* kRFmxNRTestSession = "SessionName";
+const char* kRFmxNRTestInvalidRsrc = "";
+
+class NiRFmxNRSessionTest : public ::testing::Test {
+ protected:
+  NiRFmxNRSessionTest()
+      : device_server_(DeviceServerInterface::Singleton()),
+        nirfmxnr_stub_(rfmxnr::NiRFmxNR::NewStub(device_server_->InProcessChannel()))
+  {
+    device_server_->ResetServer();
+  }
+
+  virtual ~NiRFmxNRSessionTest() {}
+
+  std::unique_ptr<rfmxnr::NiRFmxNR::Stub>& GetStub()
+  {
+    return nirfmxnr_stub_;
+  }
+
+  ::grpc::Status call_initialize(const char* resource_name, const char* option_string, const char* session_name, rfmxnr::InitializeResponse* response)
+  {
+    ::grpc::ClientContext context;
+    rfmxnr::InitializeRequest request;
+    request.set_resource_name(resource_name);
+    request.set_option_string(option_string);
+    request.set_session_name(session_name);
+
+    ::grpc::Status status = GetStub()->Initialize(&context, request, response);
+    return status;
+  }
+
+ private:
+  DeviceServerInterface* device_server_;
+  std::unique_ptr<rfmxnr::NiRFmxNR::Stub> nirfmxnr_stub_;
+};
+
+TEST_F(NiRFmxNRSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
+{
+  rfmxnr::InitializeResponse response;
+  ::grpc::Status status = call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSession, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(0, response.status());
+  EXPECT_NE(0, response.handle_out().id());
+}
+
+TEST_F(NiRFmxNRSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
+{
+  rfmxnr::InitializeResponse response;
+  ::grpc::Status status = call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, "", &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(0, response.status());
+  EXPECT_NE(0, response.handle_out().id());
+}
+
+TEST_F(NiRFmxNRSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
+{
+  rfmxnr::InitializeResponse response;
+  ::grpc::Status status = call_initialize(kRFmxNRTestInvalidRsrc, "", "", &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kInvalidRsrc, response.status());
+  EXPECT_EQ(0, response.handle_out().id());
+}
+
+TEST_F(NiRFmxNRSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
+{
+  rfmxnr::InitializeResponse init_response;
+  call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSession, &init_response);
+
+  nidevice_grpc::Session session = init_response.handle_out();
+  ::grpc::ClientContext context;
+  rfmxnr::CloseRequest close_request;
+  close_request.mutable_instrument_handle()->set_id(session.id());
+  close_request.set_force_destroy(nirfmxnr_grpc::Boolean::BOOLEAN_FALSE);
+  rfmxnr::CloseResponse close_response;
+  ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(0, close_response.status());
+}
+
+TEST_F(NiRFmxNRSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
+{
+  nidevice_grpc::Session session;
+  session.set_id(0UL);
+
+  ::grpc::ClientContext context;
+  rfmxnr::CloseRequest request;
+  request.mutable_instrument_handle()->set_id(session.id());
+  request.set_force_destroy(nirfmxnr_grpc::Boolean::BOOLEAN_FALSE);
+  rfmxnr::CloseResponse response;
+  ::grpc::Status status = GetStub()->Close(&context, request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kInvalidRFmxNRSession, response.status());
+}
+
+}  // namespace system
+}  // namespace tests
+}  // namespace ni
