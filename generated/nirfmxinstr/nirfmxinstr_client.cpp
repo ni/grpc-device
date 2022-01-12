@@ -84,24 +84,6 @@ build_module_string(const StubPtr& stub, const pb::string& selector_string, cons
   return response;
 }
 
-GetListNamesResponse
-get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& personality_filter)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetListNamesRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-  request.set_personality_filter(personality_filter);
-
-  auto response = GetListNamesResponse{};
-
-  raise_if_error(
-      stub->GetListNames(&context, request, &response));
-
-  return response;
-}
-
 BuildPortStringResponse
 build_port_string(const StubPtr& stub, const pb::string& selector_string, const pb::string& port_name, const pb::string& device_name, const pb::int32& channel_number)
 {
@@ -874,6 +856,24 @@ get_external_attenuation_table_actual_value(const StubPtr& stub, const nidevice_
   return response;
 }
 
+GetListNamesResponse
+get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& personality_filter)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetListNamesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_personality_filter(personality_filter);
+
+  auto response = GetListNamesResponse{};
+
+  raise_if_error(
+      stub->GetListNames(&context, request, &response));
+
+  return response;
+}
+
 GetNIRFSASessionResponse
 get_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& instrument)
 {
@@ -938,6 +938,24 @@ get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Se
 
   raise_if_error(
       stub->GetSelfCalibrateLastTemperature(&context, request, &response));
+
+  return response;
+}
+
+GetSignalConfigurationNamesResponse
+get_signal_configuration_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& personality_filter)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSignalConfigurationNamesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_personality_filter(personality_filter);
+
+  auto response = GetSignalConfigurationNamesResponse{};
+
+  raise_if_error(
+      stub->GetSignalConfigurationNames(&context, request, &response));
 
   return response;
 }

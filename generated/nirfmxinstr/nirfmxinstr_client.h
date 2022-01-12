@@ -26,7 +26,6 @@ BuildCalibrationPlaneStringResponse build_calibration_plane_string(const StubPtr
 BuildInstrumentStringResponse build_instrument_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& instrument_number);
 BuildLOStringResponse build_lo_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& lo_index);
 BuildModuleStringResponse build_module_string(const StubPtr& stub, const pb::string& selector_string, const pb::string& module_name);
-GetListNamesResponse get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& personality_filter);
 BuildPortStringResponse build_port_string(const StubPtr& stub, const pb::string& selector_string, const pb::string& port_name, const pb::string& device_name, const pb::int32& channel_number);
 CfgExternalAttenuationInterpolationLinearResponse cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::int32& format);
 CfgExternalAttenuationInterpolationNearestResponse cfg_external_attenuation_interpolation_nearest(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name);
@@ -70,10 +69,12 @@ GetAvailablePortsResponse get_available_ports(const StubPtr& stub, const nidevic
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 GetErrorStringResponse get_error_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& error_code);
 GetExternalAttenuationTableActualValueResponse get_external_attenuation_table_actual_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
+GetListNamesResponse get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& personality_filter);
 GetNIRFSASessionResponse get_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 GetNIRFSASessionArrayResponse get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 GetSelfCalibrateLastDateAndTimeResponse get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int64& self_calibrate_step);
 GetSelfCalibrateLastTemperatureResponse get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int64& self_calibrate_step);
+GetSignalConfigurationNamesResponse get_signal_configuration_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& personality_filter);
 InitializeResponse initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string);
 InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session);
 InitializeFromNIRFSASessionArrayResponse initialize_from_nirfsa_session_array(const StubPtr& stub, const std::vector<pb::uint32>& nirfsa_sessions);

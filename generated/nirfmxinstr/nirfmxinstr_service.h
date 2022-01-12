@@ -47,7 +47,6 @@ public:
   ::grpc::Status BuildInstrumentString(::grpc::ServerContext* context, const BuildInstrumentStringRequest* request, BuildInstrumentStringResponse* response) override;
   ::grpc::Status BuildLOString(::grpc::ServerContext* context, const BuildLOStringRequest* request, BuildLOStringResponse* response) override;
   ::grpc::Status BuildModuleString(::grpc::ServerContext* context, const BuildModuleStringRequest* request, BuildModuleStringResponse* response) override;
-  ::grpc::Status GetListNames(::grpc::ServerContext* context, const GetListNamesRequest* request, GetListNamesResponse* response) override;
   ::grpc::Status BuildPortString(::grpc::ServerContext* context, const BuildPortStringRequest* request, BuildPortStringResponse* response) override;
   ::grpc::Status CfgExternalAttenuationInterpolationLinear(::grpc::ServerContext* context, const CfgExternalAttenuationInterpolationLinearRequest* request, CfgExternalAttenuationInterpolationLinearResponse* response) override;
   ::grpc::Status CfgExternalAttenuationInterpolationNearest(::grpc::ServerContext* context, const CfgExternalAttenuationInterpolationNearestRequest* request, CfgExternalAttenuationInterpolationNearestResponse* response) override;
@@ -91,10 +90,12 @@ public:
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
   ::grpc::Status GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response) override;
   ::grpc::Status GetExternalAttenuationTableActualValue(::grpc::ServerContext* context, const GetExternalAttenuationTableActualValueRequest* request, GetExternalAttenuationTableActualValueResponse* response) override;
+  ::grpc::Status GetListNames(::grpc::ServerContext* context, const GetListNamesRequest* request, GetListNamesResponse* response) override;
   ::grpc::Status GetNIRFSASession(::grpc::ServerContext* context, const GetNIRFSASessionRequest* request, GetNIRFSASessionResponse* response) override;
   ::grpc::Status GetNIRFSASessionArray(::grpc::ServerContext* context, const GetNIRFSASessionArrayRequest* request, GetNIRFSASessionArrayResponse* response) override;
   ::grpc::Status GetSelfCalibrateLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalibrateLastDateAndTimeRequest* request, GetSelfCalibrateLastDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalibrateLastTemperature(::grpc::ServerContext* context, const GetSelfCalibrateLastTemperatureRequest* request, GetSelfCalibrateLastTemperatureResponse* response) override;
+  ::grpc::Status GetSignalConfigurationNames(::grpc::ServerContext* context, const GetSignalConfigurationNamesRequest* request, GetSignalConfigurationNamesResponse* response) override;
   ::grpc::Status Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response) override;
   ::grpc::Status InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response) override;
   ::grpc::Status InitializeFromNIRFSASessionArray(::grpc::ServerContext* context, const InitializeFromNIRFSASessionArrayRequest* request, InitializeFromNIRFSASessionArrayResponse* response) override;

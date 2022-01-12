@@ -210,55 +210,6 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxInstrService::GetListNames(::grpc::ServerContext* context, const GetListNamesRequest* request, GetListNamesResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      int32 personality_filter = request->personality_filter();
-      int32 actual_list_names_size {};
-      int32 actual_personality_array_size {};
-      while (true) {
-        auto status = library_->GetListNames(instrument, selector_string, personality_filter, nullptr, 0, &actual_list_names_size, nullptr, 0, &actual_personality_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        std::string list_names;
-        if (actual_list_names_size > 0) {
-            list_names.resize(actual_list_names_size - 1);
-        }
-        response->mutable_personality()->Resize(actual_personality_array_size, 0);
-        int32* personality = reinterpret_cast<int32*>(response->mutable_personality()->mutable_data());
-        auto list_names_size = actual_list_names_size;
-        auto personality_array_size = actual_personality_array_size;
-        status = library_->GetListNames(instrument, selector_string, personality_filter, (char*)list_names.data(), list_names_size, &actual_list_names_size, personality, personality_array_size, &actual_personality_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_list_names(list_names);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_list_names()));
-          response->set_actual_list_names_size(actual_list_names_size);
-          response->mutable_personality()->Resize(actual_personality_array_size, 0);
-          response->set_actual_personality_array_size(actual_personality_array_size);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::BuildPortString(::grpc::ServerContext* context, const BuildPortStringRequest* request, BuildPortStringResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1572,6 +1523,55 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::GetListNames(::grpc::ServerContext* context, const GetListNamesRequest* request, GetListNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 personality_filter = request->personality_filter();
+      int32 actual_list_names_size {};
+      int32 actual_personality_array_size {};
+      while (true) {
+        auto status = library_->GetListNames(instrument, selector_string, personality_filter, nullptr, 0, &actual_list_names_size, nullptr, 0, &actual_personality_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string list_names;
+        if (actual_list_names_size > 0) {
+            list_names.resize(actual_list_names_size - 1);
+        }
+        response->mutable_personality()->Resize(actual_personality_array_size, 0);
+        int32* personality = reinterpret_cast<int32*>(response->mutable_personality()->mutable_data());
+        auto list_names_size = actual_list_names_size;
+        auto personality_array_size = actual_personality_array_size;
+        status = library_->GetListNames(instrument, selector_string, personality_filter, (char*)list_names.data(), list_names_size, &actual_list_names_size, personality, personality_array_size, &actual_personality_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_list_names(list_names);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_list_names()));
+          response->set_actual_list_names_size(actual_list_names_size);
+          response->mutable_personality()->Resize(actual_personality_array_size, 0);
+          response->set_actual_personality_array_size(actual_personality_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::GetNIRFSASession(::grpc::ServerContext* context, const GetNIRFSASessionRequest* request, GetNIRFSASessionResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1683,6 +1683,55 @@ namespace nirfmxinstr_grpc {
         response->set_temperature(temperature);
       }
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::GetSignalConfigurationNames(::grpc::ServerContext* context, const GetSignalConfigurationNamesRequest* request, GetSignalConfigurationNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 personality_filter = request->personality_filter();
+      int32 actual_signal_names_size {};
+      int32 actual_personality_array_size {};
+      while (true) {
+        auto status = library_->GetSignalConfigurationNames(instrument, selector_string, personality_filter, nullptr, 0, &actual_signal_names_size, nullptr, 0, &actual_personality_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string signal_names;
+        if (actual_signal_names_size > 0) {
+            signal_names.resize(actual_signal_names_size - 1);
+        }
+        response->mutable_personality()->Resize(actual_personality_array_size, 0);
+        int32* personality = reinterpret_cast<int32*>(response->mutable_personality()->mutable_data());
+        auto personality_array_size = actual_personality_array_size;
+        auto signal_names_size = actual_signal_names_size;
+        status = library_->GetSignalConfigurationNames(instrument, selector_string, personality_filter, (char*)signal_names.data(), signal_names_size, &actual_signal_names_size, personality, personality_array_size, &actual_personality_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_signal_names(signal_names);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_names()));
+          response->set_actual_signal_names_size(actual_signal_names_size);
+          response->mutable_personality()->Resize(actual_personality_array_size, 0);
+          response->set_actual_personality_array_size(actual_personality_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

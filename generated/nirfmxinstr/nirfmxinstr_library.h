@@ -22,7 +22,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 BuildInstrumentString(char selectorString[], int32 instrumentNumber, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 BuildLOString(char selectorString[], int32 loIndex, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 BuildModuleString(char selectorString[], char moduleName[], int32 selectorStringOutLength, char selectorStringOut[]);
-  int32 GetListNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char listNames[], int32 listNamesSize, int32* actualListNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize);
   int32 BuildPortString(char selectorString[], char portName[], char deviceName[], int32 channelNumber, int32 selectorStringOutLength, char selectorStringOut[]);
   int32 CfgExternalAttenuationInterpolationLinear(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], int32 format);
   int32 CfgExternalAttenuationInterpolationNearest(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[]);
@@ -66,10 +65,12 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
   int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
   int32 GetExternalAttenuationTableActualValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* externalAttenuation);
+  int32 GetListNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char listNames[], int32 listNamesSize, int32* actualListNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize);
   int32 GetNIRFSASession(niRFmxInstrHandle instrumentHandle, uInt32* niRfsaSession);
   int32 GetNIRFSASessionArray(niRFmxInstrHandle instrumentHandle, uInt32 nirfsaSessions[], int32 arraySize, int32* actualArraySize);
   int32 GetSelfCalibrateLastDateAndTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, CVIAbsoluteTime* timestamp);
   int32 GetSelfCalibrateLastTemperature(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, float64* temperature);
+  int32 GetSignalConfigurationNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char signalNames[], int32 signalNamesSize, int32* actualSignalNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize);
   int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession);
   int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut);
   int32 InitializeFromNIRFSASessionArray(uInt32 nirfsaSessions[], int32 numberOfNIRFSASessions, niRFmxInstrHandle* handleOut);
@@ -115,7 +116,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using BuildInstrumentStringPtr = decltype(&RFmxInstr_BuildInstrumentString);
   using BuildLOStringPtr = decltype(&RFmxInstr_BuildLOString);
   using BuildModuleStringPtr = decltype(&RFmxInstr_BuildModuleString);
-  using GetListNamesPtr = decltype(&RFmxInstr_GetListNames);
   using BuildPortStringPtr = decltype(&RFmxInstr_BuildPortString2);
   using CfgExternalAttenuationInterpolationLinearPtr = decltype(&RFmxInstr_CfgExternalAttenuationInterpolationLinear);
   using CfgExternalAttenuationInterpolationNearestPtr = decltype(&RFmxInstr_CfgExternalAttenuationInterpolationNearest);
@@ -159,10 +159,12 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using GetErrorPtr = decltype(&RFmxInstr_GetError);
   using GetErrorStringPtr = decltype(&RFmxInstr_GetErrorString);
   using GetExternalAttenuationTableActualValuePtr = decltype(&RFmxInstr_GetExternalAttenuationTableActualValue);
+  using GetListNamesPtr = decltype(&RFmxInstr_GetListNames);
   using GetNIRFSASessionPtr = decltype(&RFmxInstr_GetNIRFSASession);
   using GetNIRFSASessionArrayPtr = decltype(&RFmxInstr_GetNIRFSASessionArray);
   using GetSelfCalibrateLastDateAndTimePtr = decltype(&RFmxInstr_GetSelfCalibrateLastDateAndTime);
   using GetSelfCalibrateLastTemperaturePtr = decltype(&RFmxInstr_GetSelfCalibrateLastTemperature);
+  using GetSignalConfigurationNamesPtr = decltype(&RFmxInstr_GetSignalConfigurationNames);
   using InitializePtr = decltype(&RFmxInstr_Initialize);
   using InitializeFromNIRFSASessionPtr = decltype(&RFmxInstr_InitializeFromNIRFSASession);
   using InitializeFromNIRFSASessionArrayPtr = decltype(&RFmxInstr_InitializeFromNIRFSASessionArray);
@@ -208,7 +210,6 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     BuildInstrumentStringPtr BuildInstrumentString;
     BuildLOStringPtr BuildLOString;
     BuildModuleStringPtr BuildModuleString;
-    GetListNamesPtr GetListNames;
     BuildPortStringPtr BuildPortString;
     CfgExternalAttenuationInterpolationLinearPtr CfgExternalAttenuationInterpolationLinear;
     CfgExternalAttenuationInterpolationNearestPtr CfgExternalAttenuationInterpolationNearest;
@@ -252,10 +253,12 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     GetErrorPtr GetError;
     GetErrorStringPtr GetErrorString;
     GetExternalAttenuationTableActualValuePtr GetExternalAttenuationTableActualValue;
+    GetListNamesPtr GetListNames;
     GetNIRFSASessionPtr GetNIRFSASession;
     GetNIRFSASessionArrayPtr GetNIRFSASessionArray;
     GetSelfCalibrateLastDateAndTimePtr GetSelfCalibrateLastDateAndTime;
     GetSelfCalibrateLastTemperaturePtr GetSelfCalibrateLastTemperature;
+    GetSignalConfigurationNamesPtr GetSignalConfigurationNames;
     InitializePtr Initialize;
     InitializeFromNIRFSASessionPtr InitializeFromNIRFSASession;
     InitializeFromNIRFSASessionArrayPtr InitializeFromNIRFSASessionArray;

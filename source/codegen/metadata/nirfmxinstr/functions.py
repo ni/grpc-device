@@ -110,67 +110,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'GetListNames': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'personalityFilter',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'listNames',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'listNamesSize',
-                    'value_twist': 'actualListNamesSize'
-                },
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'listNamesSize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'actualListNamesSize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'personality',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'personalityArraySize',
-                    'value_twist': 'actualPersonalityArraySize'
-                },
-                'type': 'int32[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'personalityArraySize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'actualPersonalityArraySize',
-                'type': 'int32'
-            }
-        ],
-        'returns': 'int32'
-    },
     'BuildPortString': {
         'cname': 'RFmxInstr_BuildPortString2',
         'parameters': [
@@ -1467,6 +1406,67 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetListNames': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'personalityFilter',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'listNames',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'listNamesSize',
+                    'value_twist': 'actualListNamesSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'listNamesSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualListNamesSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'personality',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'personalityArraySize',
+                    'value_twist': 'actualPersonalityArraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'personalityArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualPersonalityArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetNIRFSASession': {
         'init_method': True,
         'parameters': [
@@ -1565,6 +1565,67 @@ functions = {
                 'direction': 'out',
                 'name': 'temperature',
                 'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSignalConfigurationNames': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'personalityFilter',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'signalNames',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'signalNamesSize',
+                    'value_twist': 'actualSignalNamesSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'signalNamesSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualSignalNamesSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'personality',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'personalityArraySize',
+                    'value_twist': 'actualPersonalityArraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'personalityArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualPersonalityArraySize',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'
