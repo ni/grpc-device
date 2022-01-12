@@ -232,6 +232,16 @@ GenerateGrpcSources(
     "${nidevice_proto_hdrs}"
 )
 
+# We'll codegen all drivers, but some are not included in the server build.
+set(nidrivers_to_build nidrivers)
+# Fake drivers are not in the server and are added manually to the UnitTestRunner build.
+list(FILTER nidrivers_to_build EXCLUDE REGEX "^nifake.*")
+if (NOT WIN32)
+  # None of the RFmx drivers support Linux and building against the headers fails.
+  # Exclude them on Linux.
+  list(FILTER nidrivers_to_build EXCLUDE REGEX "^nirfmx.*")
+endif()
+
 foreach(api ${nidrivers})
   GenerateGrpcSources(
     PROTO
@@ -242,7 +252,7 @@ foreach(api ${nidrivers})
       "${proto_srcs_dir}/${api}.grpc.pb.cc"
       "${proto_srcs_dir}/${api}.grpc.pb.h"
   )
-  if(NOT api MATCHES "^nifake.*")
+  if(api IN_LIST ${nidrivers_to_build})
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${proto_srcs_dir}/${api}.pb.cc"
