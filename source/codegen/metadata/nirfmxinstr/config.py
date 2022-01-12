@@ -57,6 +57,5 @@ config = {
     },
     'metadata_version': '0.1',
     'module_name': 'nirfmxinstr',
-    'session_class_description': 'An NI-RFmxInstr instrument handle',
-    'session_handle_parameter_name': 'instrumentHandle'
+    'session_class_description': 'An NI-RFmxInstr instrument handle'
 }
