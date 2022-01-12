@@ -25,7 +25,16 @@ repository_type_to_local_name = {
 #include <server/session_repository.h>
 
 % for module_name in module_names:
+<%
+  windows_only = module_name.startswith("nirfmx")
+%>\
+% if windows_only:
+#if defined(_MSC_VER)
+% endif
 #include "${module_name}/${module_name}_service_registrar.h"
+% if windows_only:
+#endif // defined(_MSC_VER)
+% endif
 % endfor
 
 namespace nidevice_grpc {
@@ -51,7 +60,11 @@ std::shared_ptr<void> register_all_services(
   namespace = f"{config['namespace_component']}_grpc"
   resource_handle_type = service_helpers.get_resource_handle_type(config)
   resource_repository_local_name = repository_type_to_local_name[resource_handle_type]
+  windows_only = namespace.startswith("nirfmx")
 %>\
+% if windows_only:
+#if defined(_MSC_VER)
+% endif
   service_vector->push_back(
     ${namespace}::register_service(
       server_builder, 
@@ -60,6 +73,9 @@ std::shared_ptr<void> register_all_services(
       ${repository_type_to_local_name[cross_driver_dep.resource_handle_type]},
 % endfor
       feature_toggles));
+% if windows_only:
+#endif // defined(_MSC_VER)
+% endif
 % endfor
 
   return service_vector;

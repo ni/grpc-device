@@ -16,8 +16,12 @@
 #include "nidigitalpattern/nidigitalpattern_service_registrar.h"
 #include "nidmm/nidmm_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
+#if defined(_MSC_VER)
 #include "nirfmxinstr/nirfmxinstr_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
 #include "nirfmxspecan/nirfmxspecan_service_registrar.h"
+#endif // defined(_MSC_VER)
 #include "nirfsa/nirfsa_service_registrar.h"
 #include "nirfsg/nirfsg_service_registrar.h"
 #include "niscope/niscope_service_registrar.h"
@@ -68,17 +72,21 @@ std::shared_ptr<void> register_all_services(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxinstr_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
       vi_session_repository,
       feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxspecan_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
       feature_toggles));
+#endif // defined(_MSC_VER)
   service_vector->push_back(
     nirfsa_grpc::register_service(
       server_builder, 
