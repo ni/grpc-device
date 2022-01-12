@@ -11,6 +11,7 @@ namespace client = nirfmxnr_grpc::experimental::client;
 namespace ni {
 namespace tests {
 namespace system {
+namespace {
 
 const auto PXI_5663E = "5663E";
 
@@ -75,6 +76,7 @@ TEST_F(NiRFmxNRDriverApiTests, Init_Close_Succeeds)
   ni::tests::system::EXPECT_SUCCESS(close_response);
 }
 
+}  // namespace
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
