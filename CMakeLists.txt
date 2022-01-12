@@ -113,6 +113,22 @@ set(codegen_scripts
 set(nidriver_service_srcs "")
 set(nidriver_client_srcs "")
 
+# We'll codegen all drivers, but some are not included in the server build.
+set(nidrivers_to_build ${nidrivers})
+message(${nidrivers_to_build})
+# Fake drivers are not in the server and are added manually to the UnitTestRunner build.
+list(FILTER nidrivers_to_build EXCLUDE REGEX "^nifake.*")
+message(${nidrivers_to_build})
+message(nidrivers_to_build)
+if (NOT WIN32)
+  # None of the RFmx drivers support Linux and building against the headers fails.
+  # Exclude them on Linux.
+  list(FILTER nidrivers_to_build EXCLUDE REGEX "^nirfmx.*")
+endif()
+message(${nidrivers_to_build})
+message(nidrivers_to_build)
+
+
 foreach(api ${nidrivers})
   set(codegen_dependencies
     "${metadata_dir}/${api}/attributes.py"
@@ -138,7 +154,7 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}_service_registrar.h
   )
   set(gen_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
-  if (NOT api MATCHES "^nifake.*")
+  if (api IN_LIST nidrivers_to_build)
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${service_output_dir}/${api}/${api}_service.cpp"
@@ -232,16 +248,6 @@ GenerateGrpcSources(
     "${nidevice_proto_hdrs}"
 )
 
-# We'll codegen all drivers, but some are not included in the server build.
-set(nidrivers_to_build nidrivers)
-# Fake drivers are not in the server and are added manually to the UnitTestRunner build.
-list(FILTER nidrivers_to_build EXCLUDE REGEX "^nifake.*")
-if (NOT WIN32)
-  # None of the RFmx drivers support Linux and building against the headers fails.
-  # Exclude them on Linux.
-  list(FILTER nidrivers_to_build EXCLUDE REGEX "^nirfmx.*")
-endif()
-
 foreach(api ${nidrivers})
   GenerateGrpcSources(
     PROTO
@@ -252,7 +258,7 @@ foreach(api ${nidrivers})
       "${proto_srcs_dir}/${api}.grpc.pb.cc"
       "${proto_srcs_dir}/${api}.grpc.pb.h"
   )
-  if(api IN_LIST ${nidrivers_to_build})
+  if(api IN_LIST nidrivers_to_build)
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${proto_srcs_dir}/${api}.pb.cc"
