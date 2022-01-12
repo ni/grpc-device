@@ -14,7 +14,8 @@ const int kInvalidRsrc = -200220;
 const int kInvalidRFmxNRSession = -380598;
 const char* kRFmxNRTestRsrc = "FakeDevice";
 const char* kRFmxNROptionsString = "Simulate=1, DriverSetup=Model:5663E";
-const char* kRFmxNRTestSession = "SessionName";
+const char* kRFmxNRTestSessionOne = "SessionOne";
+const char* kRFmxNRTestSessionTwo = "SessionTwo";
 const char* kRFmxNRTestInvalidRsrc = "";
 
 class NiRFmxNRSessionTest : public ::testing::Test {
@@ -45,6 +46,17 @@ class NiRFmxNRSessionTest : public ::testing::Test {
     return status;
   }
 
+  ::grpc::Status call_close(nidevice_grpc::Session session, nirfmxnr_grpc::Boolean force_destroy, rfmxnr::CloseResponse* response)
+  {
+    ::grpc::ClientContext context;
+    rfmxnr::CloseRequest request;
+    request.mutable_instrument_handle()->set_id(session.id());
+    request.set_force_destroy(force_destroy);
+
+    ::grpc::Status status = GetStub()->Close(&context, request, response);
+    return status;
+  }
+
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<rfmxnr::NiRFmxNR::Stub> nirfmxnr_stub_;
@@ -53,7 +65,7 @@ class NiRFmxNRSessionTest : public ::testing::Test {
 TEST_F(NiRFmxNRSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
 {
   rfmxnr::InitializeResponse response;
-  ::grpc::Status status = call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSession, &response);
+  ::grpc::Status status = call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSessionOne, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
@@ -83,7 +95,7 @@ TEST_F(NiRFmxNRSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 TEST_F(NiRFmxNRSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   rfmxnr::InitializeResponse init_response;
-  call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSession, &init_response);
+  call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSessionOne, &init_response);
 
   nidevice_grpc::Session session = init_response.handle_out();
   ::grpc::ClientContext context;
@@ -95,6 +107,29 @@ TEST_F(NiRFmxNRSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, close_response.status());
+}
+
+TEST_F(NiRFmxNRSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_ClosesDriverSessions)
+{
+  GTEST_SKIP() << "Initializing two sessions on same device is currently broken. Planning to fix with AB#1792683";
+  rfmxnr::InitializeResponse init_response_one, init_response_two;
+  ::grpc::Status status_one = call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSessionOne, &init_response_one);
+  ::grpc::Status status_two = call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSessionTwo, &init_response_two);
+  EXPECT_TRUE(status_one.ok());
+  EXPECT_EQ(0, init_response_one.status());
+  EXPECT_TRUE(status_two.ok());
+  EXPECT_EQ(0, init_response_two.status());
+
+  nidevice_grpc::Session session_one = init_response_one.handle_out();
+  nidevice_grpc::Session session_two = init_response_two.handle_out();
+  rfmxnr::CloseResponse close_response_one, close_response_two;
+  status_one = call_close(session_one, nirfmxnr_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
+  status_two = call_close(session_two, nirfmxnr_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
+
+  EXPECT_TRUE(status_one.ok());
+  EXPECT_EQ(0, close_response_one.status());
+  EXPECT_TRUE(status_two.ok());
+  EXPECT_EQ(0, close_response_two.status());
 }
 
 TEST_F(NiRFmxNRSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
