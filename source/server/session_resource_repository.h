@@ -65,9 +65,11 @@ class SessionResourceRepository {
 
    private:
     using SessionToResourceMap = std::map<uint32_t, TResourceHandle>;
+    using ResourceToSessionMap = std::map<TResourceHandle, uint32_t>;
     using MapLock = std::lock_guard<std::recursive_mutex>;
 
     SessionToResourceMap map_;
+    ResourceToSessionMap reverse_map_;
     mutable std::recursive_mutex map_mutex_;
   };
 
@@ -185,6 +187,7 @@ void SessionResourceRepository<TResourceHandle>::ResourceMap::add(uint32_t sessi
 {
   MapLock lock(map_mutex_);
   map_[session_id] = handle;
+  reverse_map_[handle] = session_id;
 }
 
 template <typename TResourceHandle>
@@ -212,10 +215,9 @@ template <typename TResourceHandle>
 uint32_t SessionResourceRepository<TResourceHandle>::ResourceMap::get_session_id(TResourceHandle handle) const
 {
   MapLock lock(map_mutex_);
-  for (auto const& x : map_) {
-    if (x.second == handle) {
-      return x.first;
-    }
+  auto session_it = reverse_map_.find(handle);
+  if (session_it != reverse_map_.end()) {
+    return session_it->second;
   }
   // Note: failed resolve will ultimately be reported as a bad resource by the driver
   // on use.
@@ -229,6 +231,7 @@ TResourceHandle SessionResourceRepository<TResourceHandle>::ResourceMap::remove_
   auto handle = get_handle(session_id);
   if (handle != TResourceHandle()) {
     map_.erase(session_id);
+    reverse_map_.erase(handle);
   }
   return handle;
 }
