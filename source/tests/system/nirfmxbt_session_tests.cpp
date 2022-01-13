@@ -6,6 +6,7 @@
 namespace ni {
 namespace tests {
 namespace system {
+namespace {
 
 namespace rfmxbt = nirfmxbt_grpc;
 
@@ -112,6 +113,7 @@ TEST_F(NiRFmxBTSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionErr
   EXPECT_EQ(kInvalidRFmxBTSession, response.status());
 }
 
+}  // namespace
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
