@@ -111,7 +111,6 @@ TEST_F(NiRFmxNRSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
 TEST_F(NiRFmxNRSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_ClosesDriverSessions)
 {
-  GTEST_SKIP() << "Initializing two sessions on same device is currently broken. Planning to fix with AB#1792683";
   rfmxnr::InitializeResponse init_response_one, init_response_two;
   ::grpc::Status status_one = call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSessionOne, &init_response_one);
   ::grpc::Status status_two = call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSessionTwo, &init_response_two);
