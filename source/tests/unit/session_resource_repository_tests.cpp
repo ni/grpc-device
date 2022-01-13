@@ -86,7 +86,7 @@ TEST(SessionResourceRepositoryTests, SessionResource_RemoveFromResourceRepositor
 
   // Remove from the SessionResourceRepository and ensure that it removes from the
   // SessionRepository and SessionResourceRepository.
-  resource_repository.remove_session(kResourceHandle);
+  resource_repository.remove_session(session_id, "");
 
   EXPECT_EQ(
       kNoSession,

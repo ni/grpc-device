@@ -54,7 +54,7 @@ namespace nifake_non_ivi_grpc {
     try {
       auto handle_grpc_session = request->handle();
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-      session_repository_->remove_session(handle);
+      session_repository_->remove_session(handle_grpc_session.id(), handle_grpc_session.name());
       auto status = library_->Close(handle);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -75,7 +75,7 @@ namespace nifake_non_ivi_grpc {
       auto handle_grpc_session = request->handle();
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
 
-      auto initiating_session_id = session_repository_->resolve_session_id(handle);
+      auto initiating_session_id = session_repository_->access_session_id(handle_grpc_session.id(), handle_grpc_session.name());
       auto init_lambda = [&] () {
         FakeCrossDriverHandle cross_driver_session;
         int status = library_->GetCrossDriverSession(handle, &cross_driver_session);

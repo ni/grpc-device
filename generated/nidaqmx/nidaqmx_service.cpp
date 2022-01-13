@@ -1161,7 +1161,7 @@ namespace nidaqmx_grpc {
     try {
       auto task_grpc_session = request->task();
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      session_repository_->remove_session(task);
+      session_repository_->remove_session(task_grpc_session.id(), task_grpc_session.name());
       auto status = library_->ClearTask(task);
       response->set_status(status);
       return ::grpc::Status::OK;
