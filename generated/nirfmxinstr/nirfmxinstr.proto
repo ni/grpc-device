@@ -65,10 +65,12 @@ service NiRFmxInstr {
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc GetExternalAttenuationTableActualValue(GetExternalAttenuationTableActualValueRequest) returns (GetExternalAttenuationTableActualValueResponse);
+  rpc GetListNames(GetListNamesRequest) returns (GetListNamesResponse);
   rpc GetNIRFSASession(GetNIRFSASessionRequest) returns (GetNIRFSASessionResponse);
   rpc GetNIRFSASessionArray(GetNIRFSASessionArrayRequest) returns (GetNIRFSASessionArrayResponse);
   rpc GetSelfCalibrateLastDateAndTime(GetSelfCalibrateLastDateAndTimeRequest) returns (GetSelfCalibrateLastDateAndTimeResponse);
   rpc GetSelfCalibrateLastTemperature(GetSelfCalibrateLastTemperatureRequest) returns (GetSelfCalibrateLastTemperatureResponse);
+  rpc GetSignalConfigurationNames(GetSignalConfigurationNamesRequest) returns (GetSignalConfigurationNamesResponse);
   rpc Initialize(InitializeRequest) returns (InitializeResponse);
   rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
   rpc InitializeFromNIRFSASessionArray(InitializeFromNIRFSASessionArrayRequest) returns (InitializeFromNIRFSASessionArrayResponse);
@@ -674,6 +676,20 @@ message GetExternalAttenuationTableActualValueResponse {
   double external_attenuation = 2;
 }
 
+message GetListNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 personality_filter = 3;
+}
+
+message GetListNamesResponse {
+  int32 status = 1;
+  string list_names = 2;
+  int32 actual_list_names_size = 3;
+  repeated int32 personality = 4;
+  int32 actual_personality_array_size = 5;
+}
+
 message GetNIRFSASessionRequest {
   string session_name = 1;
   nidevice_grpc.Session instrument = 2;
@@ -714,6 +730,20 @@ message GetSelfCalibrateLastTemperatureRequest {
 message GetSelfCalibrateLastTemperatureResponse {
   int32 status = 1;
   double temperature = 2;
+}
+
+message GetSignalConfigurationNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 personality_filter = 3;
+}
+
+message GetSignalConfigurationNamesResponse {
+  int32 status = 1;
+  string signal_names = 2;
+  int32 actual_signal_names_size = 3;
+  repeated int32 personality = 4;
+  int32 actual_personality_array_size = 5;
 }
 
 message InitializeRequest {

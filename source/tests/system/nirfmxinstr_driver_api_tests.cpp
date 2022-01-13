@@ -76,6 +76,14 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model)
   return client::initialize(stub, "FakeDevice", options);
 }
 
+nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model)
+{
+  auto response = init(stub, model);
+  auto session = response.instrument();
+  EXPECT_SUCCESS(response);
+  return session;
+}
+
 TEST_F(NiRFmxInstrDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
@@ -111,6 +119,17 @@ TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSA_SelfCalibrate_Succeeds)
   EXPECT_SUCCESS(session, init_response);
 
   client::self_calibrate(stub(), session, "", 0);
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, NoActiveList_GetListNames_ReturnsEmptyLists)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+
+  const auto response = client::get_list_names(stub(), session, "", 0);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_THAT(response.list_names(), IsEmpty());
+  EXPECT_THAT(response.personality(), IsEmpty());
 }
 
 }  // namespace

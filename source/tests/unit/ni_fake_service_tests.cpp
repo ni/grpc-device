@@ -2495,6 +2495,35 @@ TEST(NiFakeServiceTests, FakeService_ReadDataWithInOutIviTwist_DoesTwistAndRetur
   EXPECT_THAT(response.data(), ElementsAreArray(DATA, BUFFER_SIZE));
 }
 
+TEST(NiFakeServiceTests, FakeService_ReadDataWithMultpleIviTwistParamSets_DoesTwistAndReturnsCorrectData)
+{
+  const auto DATA = std::vector<::google::protobuf::int32>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  const auto OTHER_DATA = std::vector<::google::protobuf::int32>{100, 200, 300, 400};
+  FakeServiceHolder service_holder;
+  // First call expects pointer-to-zero and sets the size.
+  EXPECT_CALL(service_holder.library, ReadDataWithMultpleIviTwistParamSets(0, nullptr, _, 0, nullptr, _))
+      .WillOnce(
+          DoAll(
+              SetArgPointee<2>(DATA.size()),
+              SetArgPointee<5>(OTHER_DATA.size()),
+              Return(kDriverSuccess)));
+  // Second call expects pointer-to-size and sets the output data.
+  EXPECT_CALL(service_holder.library, ReadDataWithMultpleIviTwistParamSets(static_cast<ViInt32>(DATA.size()), _, _, static_cast<ViInt32>(OTHER_DATA.size()), _, _))
+      .WillOnce(
+          DoAll(
+              SetArrayArgument<1>(DATA.cbegin(), DATA.cend()),
+              SetArrayArgument<4>(OTHER_DATA.cbegin(), OTHER_DATA.cend()),
+              Return(kDriverSuccess)));
+
+  auto request = ReadDataWithMultpleIviTwistParamSetsRequest{};
+  auto response = ReadDataWithMultpleIviTwistParamSetsResponse{};
+  service_holder.service.ReadDataWithMultpleIviTwistParamSets(&service_holder.context, &request, &response);
+
+  EXPECT_EQ(0, response.status());
+  EXPECT_THAT(response.array_out(), ElementsAreArray(DATA.data(), DATA.size()));
+  EXPECT_THAT(response.other_array_out(), ElementsAreArray(OTHER_DATA.data(), OTHER_DATA.size()));
+}
+
 TEST(NiFakeServiceTests, FakeService_CreateConfigurationList_PassesAttributeArray)
 {
   const auto ATTRIBUTES = std::vector<NiFakeAttribute>{NiFakeAttribute::NIFAKE_ATTRIBUTE_READ_WRITE_BOOL, NiFakeAttribute::NIFAKE_ATTRIBUTE_READ_WRITE_COLOR};

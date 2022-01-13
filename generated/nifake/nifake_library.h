@@ -73,6 +73,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus PoorlyNamedSimpleFunction(ViSession vi);
   ViStatus Read(ViSession vi, ViReal64 maximumTime, ViReal64* reading);
   ViStatus ReadDataWithInOutIviTwist(ViInt32 data[], ViInt32* bufferSize);
+  ViStatus ReadDataWithMultpleIviTwistParamSets(ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize, ViInt32 otherBufferSize, ViInt32 otherArrayOut[], ViInt32* otherActualSize);
   ViStatus ReadFromChannel(ViSession vi, ViConstString channelName, ViInt32 maximumTime, ViReal64* reading);
   ViStatus ReturnANumberAndAString(ViSession vi, ViInt16* aNumber, ViChar aString[256]);
   ViStatus ReturnDurationInSeconds(ViSession vi, ViReal64* timedelta);
@@ -153,6 +154,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using PoorlyNamedSimpleFunctionPtr = decltype(&niFake_PoorlyNamedSimpleFunction);
   using ReadPtr = decltype(&niFake_Read);
   using ReadDataWithInOutIviTwistPtr = decltype(&niFake_ReadDataWithInOutIviTwist);
+  using ReadDataWithMultpleIviTwistParamSetsPtr = decltype(&niFake_ReadDataWithMultpleIviTwistParamSets);
   using ReadFromChannelPtr = decltype(&niFake_ReadFromChannel);
   using ReturnANumberAndAStringPtr = decltype(&niFake_ReturnANumberAndAString);
   using ReturnDurationInSecondsPtr = decltype(&niFake_ReturnDurationInSeconds);
@@ -233,6 +235,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     PoorlyNamedSimpleFunctionPtr PoorlyNamedSimpleFunction;
     ReadPtr Read;
     ReadDataWithInOutIviTwistPtr ReadDataWithInOutIviTwist;
+    ReadDataWithMultpleIviTwistParamSetsPtr ReadDataWithMultpleIviTwistParamSets;
     ReadFromChannelPtr ReadFromChannel;
     ReturnANumberAndAStringPtr ReturnANumberAndAString;
     ReturnDurationInSecondsPtr ReturnDurationInSeconds;
