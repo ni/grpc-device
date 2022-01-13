@@ -4,7 +4,6 @@ import service_helpers
 
 driver_configs = [data["config"] for data in drivers]
 driver_cross_driver_session_deps = [service_helpers.get_cross_driver_session_dependencies(data["functions"]) for data in drivers]
-module_names = [config["module_name"] for config in driver_configs]
 repository_type_to_config = service_helpers.list_session_repository_handle_types(driver_configs)
 %>\
 //---------------------------------------------------------------------

@@ -433,17 +433,20 @@ def session_repository_field_name(param: dict) -> str:
     else:
         return "session_repository_"
 
-def list_session_repository_handle_types(driver_configs: List[dict]) -> Dict[str, Dict[str, Any]]:
-    session_repository_info = {}
+SessionRepositoryHandleTypeMap = Dict[str, Dict[str, Any]]
+
+
+def list_session_repository_handle_types(driver_configs: List[dict]) -> SessionRepositoryHandleTypeMap:
+    session_repository_handle_type_map = {}
     for config in driver_configs:
         handle_type = get_resource_handle_type(config)
-        if handle_type in session_repository_info:
-            old_windows_only = session_repository_info[handle_type]["windows_only"]
+        if handle_type in session_repository_handle_type_map:
+            old_windows_only = session_repository_handle_type_map[handle_type]["windows_only"]
             new_windows_only = config.get("windows_only", False) and old_windows_only
-            session_repository_info[handle_type]["windows_only"] = new_windows_only
+            session_repository_handle_type_map[handle_type]["windows_only"] = new_windows_only
         else:
-            session_repository_info[handle_type] = {
+            session_repository_handle_type_map[handle_type] = {
                 "local_name": f"{common_helpers.pascal_to_snake(handle_type)}_repository",
                 "windows_only": config.get("windows_only", False)
             }
-    return session_repository_info
+    return session_repository_handle_type_map
