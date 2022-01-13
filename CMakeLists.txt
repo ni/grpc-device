@@ -115,18 +115,13 @@ set(nidriver_client_srcs "")
 
 # We'll codegen all drivers, but some are not included in the server build.
 set(nidrivers_to_build ${nidrivers})
-message(${nidrivers_to_build})
 # Fake drivers are not in the server and are added manually to the UnitTestRunner build.
 list(FILTER nidrivers_to_build EXCLUDE REGEX "^nifake.*")
-message(${nidrivers_to_build})
-message(nidrivers_to_build)
 if (NOT WIN32)
   # None of the RFmx drivers support Linux and building against the headers fails.
   # Exclude them on Linux.
   list(FILTER nidrivers_to_build EXCLUDE REGEX "^nirfmx.*")
 endif()
-message(${nidrivers_to_build})
-message(nidrivers_to_build)
 
 
 foreach(api ${nidrivers})
