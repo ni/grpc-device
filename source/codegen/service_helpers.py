@@ -1,4 +1,4 @@
-from typing import Dict, List, NamedTuple, Optional
+from typing import Any, Dict, List, NamedTuple, Optional
 import common_helpers
 
 
@@ -432,3 +432,18 @@ def session_repository_field_name(param: dict) -> str:
         return get_cross_driver_session_dependency(param).field_name
     else:
         return "session_repository_"
+
+def list_session_repository_handle_types(driver_configs: List[dict]) -> Dict[str, Dict[str, Any]]:
+    session_repository_info = {}
+    for config in driver_configs:
+        handle_type = get_resource_handle_type(config)
+        if handle_type in session_repository_info:
+            old_windows_only = session_repository_info[handle_type]["windows_only"]
+            new_windows_only = config.get("windows_only", False) and old_windows_only
+            session_repository_info[handle_type]["windows_only"] = new_windows_only
+        else:
+            session_repository_info[handle_type] = {
+                "local_name": f"{common_helpers.pascal_to_snake(handle_type)}_repository",
+                "windows_only": config.get("windows_only", False)
+            }
+    return session_repository_info

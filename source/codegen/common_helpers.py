@@ -593,6 +593,19 @@ def trim_trailing_comma():
     return lambda text: trim_trailing_comma_impl(text)
 
 
+def os_conditional_compile_block(config):
+    windows_only = config.get("windows_only", False)
+    """For use as a mako filter.
+        That wraps a block of text in #if blocks based on the config's OS support."""
+    def windows_only_block_impl(text):
+        return f"""#if defined(_MSC_VER)
+{text}#endif // defined(_MSC_VER)
+"""
+    if windows_only:
+        return lambda text : windows_only_block_impl(text)
+    
+    return lambda text: text
+
 def filter_parameters_for_grpc_fields(parameters_or_fields: List[dict]):
     """Filter out the parameters that shouldn't be represented by a field on a grpc message.
         For example, get rid of any parameters whose values should be determined from another parameter."""
