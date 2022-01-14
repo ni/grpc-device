@@ -58,6 +58,32 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_ResourceIsAdded)
       repository.access_session(session_id, ""));
 }
 
+TEST(SessionResourceRepositoryTests, AddTwoSessionsWithSameResourceHandle_RemoveOneSession_ResourceStillAccessible)
+{
+  SessionRepository repository;
+  SessionResourceRepository<uint64_t> resource_repository(
+      &repository);
+  const uint64_t kResourceHandle = 0x1234;
+  auto session_id_one = add_session_resource(resource_repository, kResourceHandle);
+  auto session_id_two = add_session_resource(resource_repository, kResourceHandle);
+  EXPECT_NE(session_id_one, session_id_two);
+  EXPECT_EQ(
+      kResourceHandle,
+      resource_repository.access_session(session_id_one, ""));
+  EXPECT_EQ(
+      kResourceHandle,
+      resource_repository.access_session(session_id_two, ""));
+
+  resource_repository.remove_session(session_id_one, "");
+  
+  EXPECT_EQ(
+      kNoSession,
+      resource_repository.access_session(session_id_one, ""));
+  EXPECT_EQ(
+      kResourceHandle,
+      resource_repository.access_session(session_id_two, ""));
+}
+
 TEST(SessionResourceRepositoryTests, SessionResource_RemoveSession_ResourceIsRemoved)
 {
   SessionRepository repository;
