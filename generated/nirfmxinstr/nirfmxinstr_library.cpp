@@ -68,10 +68,12 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxInstr_GetError"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxInstr_GetErrorString"));
   function_pointers_.GetExternalAttenuationTableActualValue = reinterpret_cast<GetExternalAttenuationTableActualValuePtr>(shared_library_.get_function_pointer("RFmxInstr_GetExternalAttenuationTableActualValue"));
+  function_pointers_.GetListNames = reinterpret_cast<GetListNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetListNames"));
   function_pointers_.GetNIRFSASession = reinterpret_cast<GetNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxInstr_GetNIRFSASession"));
   function_pointers_.GetNIRFSASessionArray = reinterpret_cast<GetNIRFSASessionArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetNIRFSASessionArray"));
   function_pointers_.GetSelfCalibrateLastDateAndTime = reinterpret_cast<GetSelfCalibrateLastDateAndTimePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSelfCalibrateLastDateAndTime"));
   function_pointers_.GetSelfCalibrateLastTemperature = reinterpret_cast<GetSelfCalibrateLastTemperaturePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSelfCalibrateLastTemperature"));
+  function_pointers_.GetSignalConfigurationNames = reinterpret_cast<GetSignalConfigurationNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSignalConfigurationNames"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxInstr_Initialize"));
   function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxInstr_InitializeFromNIRFSASession"));
   function_pointers_.InitializeFromNIRFSASessionArray = reinterpret_cast<InitializeFromNIRFSASessionArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_InitializeFromNIRFSASessionArray"));
@@ -688,6 +690,18 @@ int32 NiRFmxInstrLibrary::GetExternalAttenuationTableActualValue(niRFmxInstrHand
 #endif
 }
 
+int32 NiRFmxInstrLibrary::GetListNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char listNames[], int32 listNamesSize, int32* actualListNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize)
+{
+  if (!function_pointers_.GetListNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetListNames.");
+  }
+#if defined(_MSC_VER)
+  return RFmxInstr_GetListNames(instrumentHandle, selectorString, personalityFilter, listNames, listNamesSize, actualListNamesSize, personality, personalityArraySize, actualPersonalityArraySize);
+#else
+  return function_pointers_.GetListNames(instrumentHandle, selectorString, personalityFilter, listNames, listNamesSize, actualListNamesSize, personality, personalityArraySize, actualPersonalityArraySize);
+#endif
+}
+
 int32 NiRFmxInstrLibrary::GetNIRFSASession(niRFmxInstrHandle instrumentHandle, uInt32* niRfsaSession)
 {
   if (!function_pointers_.GetNIRFSASession) {
@@ -733,6 +747,18 @@ int32 NiRFmxInstrLibrary::GetSelfCalibrateLastTemperature(niRFmxInstrHandle inst
   return RFmxInstr_GetSelfCalibrateLastTemperature(instrumentHandle, selectorString, selfCalibrateStep, temperature);
 #else
   return function_pointers_.GetSelfCalibrateLastTemperature(instrumentHandle, selectorString, selfCalibrateStep, temperature);
+#endif
+}
+
+int32 NiRFmxInstrLibrary::GetSignalConfigurationNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char signalNames[], int32 signalNamesSize, int32* actualSignalNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize)
+{
+  if (!function_pointers_.GetSignalConfigurationNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSignalConfigurationNames.");
+  }
+#if defined(_MSC_VER)
+  return RFmxInstr_GetSignalConfigurationNames(instrumentHandle, selectorString, personalityFilter, signalNames, signalNamesSize, actualSignalNamesSize, personality, personalityArraySize, actualPersonalityArraySize);
+#else
+  return function_pointers_.GetSignalConfigurationNames(instrumentHandle, selectorString, personalityFilter, signalNames, signalNamesSize, actualSignalNamesSize, personality, personalityArraySize, actualPersonalityArraySize);
 #endif
 }
 

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 config = {
     'api_version': '21.0.0',
-    'c_header': 'niRFmxSpecAn.h',
-    'c_function_prefix': 'RFmxSpecAn_',
-    'service_class_prefix': 'NiRFmxSpecAn',
-    'java_package': 'com.ni.grpc.nirfmxspecan',
-    'csharp_namespace': 'NationalInstruments.Grpc.NiRFmxSpecAn',
-    'namespace_component': 'nirfmxspecan',
+    'c_header': 'niRFmxNR.h',
+    'c_function_prefix': 'RFmxNR_',
+    'service_class_prefix': 'NiRFmxNR',
+    'java_package': 'com.ni.grpc.nirfmxnr',
+    'csharp_namespace': 'NationalInstruments.Grpc.NiRFmxNR',
+    'namespace_component': 'nirfmxnr',
     'close_function': 'Close',
     'custom_types': [],
     'additional_headers': {},
@@ -29,7 +29,7 @@ config = {
     },
     'code_readiness': 'NextRelease',
     'feature_toggles': {},
-    'driver_name': 'NI-RFMXSPECAN',
+    'driver_name': 'NI-RFMXNR',
     'extra_errors_used': [
     ],
     'init_function': 'Initialize',
@@ -39,23 +39,23 @@ config = {
     'library_info': {
         'Linux': {
             '64bit': {
-                'name': 'nirfmxspecan',
+                'name': 'nirfmxnr',
                 'type': 'cdll',
                 'abi_version': '1'
             }
         },
         'Windows': {
             '32bit': {
-                'name': 'niRFmxSpecAn.dll',
+                'name': 'niRFmxNR.dll',
                 'type': 'windll'
             },
             '64bit': {
-                'name': 'niRFmxSpecAn.dll',
+                'name': 'niRFmxNR.dll',
                 'type': 'cdll'
             }
         }
     },
     'metadata_version': '0.1',
-    'module_name': 'nirfmxspecan',
-    'session_class_description': 'An NI-RFmxSpecAn instrument handle',
+    'module_name': 'nirfmxnr',
+    'session_class_description': 'An NI-RFmxNR instrument handle'
 }
