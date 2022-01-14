@@ -19,7 +19,9 @@
 #if defined(_MSC_VER)
 #include "nirfmxinstr/nirfmxinstr_service_registrar.h"
 #endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
 #include "nirfmxnr/nirfmxnr_service_registrar.h"
+#endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
 #include "nirfmxspecan/nirfmxspecan_service_registrar.h"
 #endif // defined(_MSC_VER)
@@ -46,7 +48,9 @@ std::shared_ptr<void> register_all_services(
 
   auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository.get());
   auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository.get());
+#if defined(_MSC_VER)
   auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository.get());
+#endif // defined(_MSC_VER)
 
   service_vector->push_back(
     nidaqmx_grpc::register_service(
@@ -81,11 +85,13 @@ std::shared_ptr<void> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxnr_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
       feature_toggles));
+#endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxspecan_grpc::register_service(
