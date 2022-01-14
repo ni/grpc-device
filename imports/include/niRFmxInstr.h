@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
  *          National Instruments RFmx Instr
  *-----------------------------------------------------------------------------
  *   Copyright (c) National Instruments 2014-2016.  All Rights Reserved.
@@ -15,13 +15,6 @@
 #ifndef __NI_RFMX_INSTR_H__
 #define __NI_RFMX_INSTR_H__
 
-// Added 2021-11-16 by greg.stoll to make this compile on Linux
-// for grpc-device (even though RFmx doesn't currently support Linux)
-#if defined(__WIN32__) || defined(__NT__) || defined(_WIN32) || defined(WIN32)
-#define NIRFMXINSTR_STDCALL __stdcall
-#else
-#define NIRFMXINSTR_STDCALL
-#endif
 
 #ifndef _NI_int8_DEFINED_
 #define _NI_int8_DEFINED_
@@ -118,10 +111,7 @@ typedef struct NIComplexSingle_struct {
 // Please visit ni.com/info and enter the Info Code NI_BTF for more information
 #ifndef CVITime_DECLARED
 #define CVITime_DECLARED
-typedef struct CVITime {
-  uInt64 lsb;
-  uInt64 msb;
-} CVITime;
+typedef struct CVITime { unsigned __int64 lsb; __int64 msb; } CVITime;
 #endif
 #ifndef CVIAbsoluteTime_DECLARED
 #define CVIAbsoluteTime_DECLARED
@@ -478,60 +468,60 @@ extern "C"
     *****************************************************************************/
 
    // Initializiation methods
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_Initialize(
+   int32 __stdcall RFmxInstr_Initialize(
       char resourceName[],
       char optionString[],
       niRFmxInstrHandle *handleOut,
       int32 *isNewSession);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_InitializeFromNIRFSASession(
+   int32 __stdcall RFmxInstr_InitializeFromNIRFSASession(
       uInt32 NIRFSASession,
       niRFmxInstrHandle *handleOut);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_InitializeFromNIRFSASessionArray(
+   int32 __stdcall RFmxInstr_InitializeFromNIRFSASessionArray(
        uInt32 NIRFSASessions[],
        int32 numberOfNIRFSASessions,
        niRFmxInstrHandle* handleOut
        );
 
    // Close method
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_Close(
+   int32 __stdcall RFmxInstr_Close(
       niRFmxInstrHandle instrumentHandle,
       int32 forceDestroy);
 
    // Error methods
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetError(
+   int32 __stdcall RFmxInstr_GetError(
       niRFmxInstrHandle instrumentHandle,
       int32* errorCode,
       int32 errorDescriptionBufferSize,
       char errorDescription[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetErrorString(
+   int32 __stdcall RFmxInstr_GetErrorString(
       niRFmxInstrHandle instrumentHandle,
       int32 errorCode,
       int32 errorDescriptionBufferSize,
       char errorDescription[]);
 
    // Configuation methods
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgFrequencyReference(
+   int32 __stdcall RFmxInstr_CfgFrequencyReference(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       char frequencyReferenceSource[],
       float64 frequencyReferenceFrequency);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgMechanicalAttenuation(
+   int32 __stdcall RFmxInstr_CfgMechanicalAttenuation(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 mechanicalAttenuationAuto,
       float64 mechanicalAttenuationValue);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgRFAttenuation(
+   int32 __stdcall RFmxInstr_CfgRFAttenuation(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 RFAttenuationAuto,
       float64 RFAttenuationValue);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgExternalAttenuationTable(
+   int32 __stdcall RFmxInstr_CfgExternalAttenuationTable(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char tableName[],
@@ -540,13 +530,13 @@ extern "C"
       int32 arraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgSParameterExternalAttenuationType(
+   int32 __stdcall RFmxInstr_CfgSParameterExternalAttenuationType(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 sParameterType
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgSParameterExternalAttenuationTable(
+   int32 __stdcall RFmxInstr_CfgSParameterExternalAttenuationTable(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char tableName[],
@@ -558,14 +548,14 @@ extern "C"
       int32 sParameterOrientation
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgExternalAttenuationInterpolationNearest
+   int32 __stdcall RFmxInstr_CfgExternalAttenuationInterpolationNearest
    (
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char tableName[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgExternalAttenuationInterpolationLinear
+   int32 __stdcall RFmxInstr_CfgExternalAttenuationInterpolationLinear
    (
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
@@ -573,93 +563,93 @@ extern "C"
       int32 format
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgExternalAttenuationInterpolationSpline
+   int32 __stdcall RFmxInstr_CfgExternalAttenuationInterpolationSpline
    (
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char tableName[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_DeleteExternalAttenuationTable(
+   int32 __stdcall RFmxInstr_DeleteExternalAttenuationTable(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char tableName[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_DeleteAllExternalAttenuationTables(
+   int32 __stdcall RFmxInstr_DeleteAllExternalAttenuationTables(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_EnableCalibrationPlane(
+   int32 __stdcall RFmxInstr_EnableCalibrationPlane(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_DisableCalibrationPlane(
+   int32 __stdcall RFmxInstr_DisableCalibrationPlane(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[]
    );
 
    // Utility methods
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_WaitForAcquisitionComplete(
+   int32 __stdcall RFmxInstr_WaitForAcquisitionComplete(
       niRFmxInstrHandle instrumentHandle,
       float64 timeout);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CheckAcquisitionStatus(
+   int32 __stdcall RFmxInstr_CheckAcquisitionStatus(
       niRFmxInstrHandle instrumentHandle,
       int32* acquisitionDone
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_ResetToDefault(
+   int32 __stdcall RFmxInstr_ResetToDefault(
       niRFmxInstrHandle instrumentHandle);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_ResetDriver(
+   int32 __stdcall RFmxInstr_ResetDriver(
       niRFmxInstrHandle instrumentHandle);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetNIRFSASession(
+   int32 __stdcall RFmxInstr_GetNIRFSASession(
       niRFmxInstrHandle instrumentHandle,
       uInt32 *niRfsaSession);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetNIRFSASessionArray(
+   int32 __stdcall RFmxInstr_GetNIRFSASessionArray(
        niRFmxInstrHandle instrumentHandle,
        uInt32 NIRFSASessions[],
        int32 arraySize,
        int32* actualArraySize
        );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CheckIfSignalConfigurationExists(
+   int32 __stdcall RFmxInstr_CheckIfSignalConfigurationExists(
       niRFmxInstrHandle instrumentHandle,
       char signalName[],
       int32* signalConfigurationExists,
       int32* personality
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CheckIfListExists(
+   int32 __stdcall RFmxInstr_CheckIfListExists(
       niRFmxInstrHandle instrumentHandle,
       char listName[],
       int32* listExists,
       int32* personality
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SaveAllConfigurations(
+   int32 __stdcall RFmxInstr_SaveAllConfigurations(
       niRFmxInstrHandle instrumentHandle,
       char filePath[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_LoadAllConfigurations(
+   int32 __stdcall RFmxInstr_LoadAllConfigurations(
       niRFmxInstrHandle instrumentHandle,
       char filePath[],
       int32 loadRFInstrConfiguration);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_ResetEntireSession(
+   int32 __stdcall RFmxInstr_ResetEntireSession(
       niRFmxInstrHandle instrumentHandle);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_ResetAttribute(
+   int32 __stdcall RFmxInstr_ResetAttribute(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSignalConfigurationNames(
+   int32 __stdcall RFmxInstr_GetSignalConfigurationNames(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 personalityFilter,
@@ -671,7 +661,7 @@ extern "C"
       int32* actualPersonalityArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetListNames(
+   int32 __stdcall RFmxInstr_GetListNames(
        niRFmxInstrHandle instrumentHandle,
        char selectorString[],
        int32 personalityFilter,
@@ -684,19 +674,19 @@ extern "C"
    );
 
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAvailablePorts(
+   int32 __stdcall RFmxInstr_GetAvailablePorts(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char availablePorts[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_ExportSignal(
+   int32 __stdcall RFmxInstr_ExportSignal(
       niRFmxInstrHandle instrumentHandle,
       int32 exportSignalSource,
       char exportSignalOutputTerminal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile(
+   int32 __stdcall RFmxInstr_LoadSParameterExternalAttenuationTableFromS2PFile(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char tableName[],
@@ -704,25 +694,25 @@ extern "C"
       int32 sParameterOrientation
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SelectActiveExternalAttenuationTable(
+   int32 __stdcall RFmxInstr_SelectActiveExternalAttenuationTable(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char tableName[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetExternalAttenuationTableActualValue(
+   int32 __stdcall RFmxInstr_GetExternalAttenuationTableActualValue(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64* externalAttenuation
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SelfCalibrate(
+   int32 __stdcall RFmxInstr_SelfCalibrate(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 stepsToOmit
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SelfCalibrateRange(
+   int32 __stdcall RFmxInstr_SelfCalibrateRange(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 stepsToOmit,
@@ -732,56 +722,56 @@ extern "C"
       float64 maximumReferenceLevel
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_IsSelfCalibrateValid(
+   int32 __stdcall RFmxInstr_IsSelfCalibrateValid(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32* selfCalibrateValid,
       int32* validSteps
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSelfCalibrateLastDateAndTime(
+   int32 __stdcall RFmxInstr_GetSelfCalibrateLastDateAndTime(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int64 selfCalibrateStep,
       CVIAbsoluteTime* timestamp
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSelfCalibrateLastTemperature(
+   int32 __stdcall RFmxInstr_GetSelfCalibrateLastTemperature(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int64 selfCalibrateStep,
       float64* temperature
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_ValuesFromTimestamp(
+   int32 __stdcall RFmxInstr_ValuesFromTimestamp(
       CVIAbsoluteTime timestamp,
       int64* secondsSince1970,
       float64* fractionalSeconds);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_TimestampFromValues(
+   int32 __stdcall RFmxInstr_TimestampFromValues(
       int64 secondsSince1970,
       float64 fractionalSeconds,
       CVIAbsoluteTime* timestamp);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SendSoftwareEdgeStartTrigger(
+   int32 __stdcall RFmxInstr_SendSoftwareEdgeStartTrigger(
       niRFmxInstrHandle instrumentHandle
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SendSoftwareEdgeAdvanceTrigger(
+   int32 __stdcall RFmxInstr_SendSoftwareEdgeAdvanceTrigger(
       niRFmxInstrHandle instrumentHandle
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_RegisterExternalRFSubsystemCallbacks(
+   int32 __stdcall RFmxInstr_RegisterExternalRFSubsystemCallbacks(
       niRFmxInstrHandle instrumentHandle,
       void *externalRFSubsystemContext,
       void *callbacks[],
       int32 arraySize,
       int32 callbackVersion);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_UnregisterExternalRFSubsystemCallbacks(niRFmxInstrHandle instrumentHandle);
+   int32 __stdcall RFmxInstr_UnregisterExternalRFSubsystemCallbacks(niRFmxInstrHandle instrumentHandle);
 
    // Build string methods
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_BuildPortString2(
+   int32 __stdcall RFmxInstr_BuildPortString2(
       char selectorString[],
       char portName[],
       char deviceName[],
@@ -790,27 +780,27 @@ extern "C"
       char selectorStringOut[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_BuildCalibrationPlaneString(
+   int32 __stdcall RFmxInstr_BuildCalibrationPlaneString(
       char calibrationPlaneName[],
       int32 selectorStringLength,
       char selectorString[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_BuildLOString(
+   int32 __stdcall RFmxInstr_BuildLOString(
       char selectorString[],
       int32 LOIndex,
       int32 selectorStringOutLength,
       char selectorStringOut[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_BuildModuleString(
+   int32 __stdcall RFmxInstr_BuildModuleString(
       char selectorString[],
       char moduleName[],
       int32 selectorStringOutLength,
       char selectorStringOut[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_BuildInstrumentString(
+   int32 __stdcall RFmxInstr_BuildInstrumentString(
       char selectorString[],
       int32 instrumentNumber,
       int32 selectorStringOutLength,
@@ -818,13 +808,13 @@ extern "C"
    );
 
    // Generic Get/Set Methods
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeString(
+   int32 __stdcall RFmxInstr_SetAttributeString(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       char attrVal[]
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeString(
+   int32 __stdcall RFmxInstr_GetAttributeString(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -832,131 +822,131 @@ extern "C"
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeI8(
+   int32 __stdcall RFmxInstr_SetAttributeI8(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int8 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeI8(
+   int32 __stdcall RFmxInstr_GetAttributeI8(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int8 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeU8(
+   int32 __stdcall RFmxInstr_SetAttributeU8(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       uInt8 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeU8(
+   int32 __stdcall RFmxInstr_GetAttributeU8(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       uInt8 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeI16(
+   int32 __stdcall RFmxInstr_SetAttributeI16(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int16 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeI16(
+   int32 __stdcall RFmxInstr_GetAttributeI16(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int16 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeU16(
+   int32 __stdcall RFmxInstr_SetAttributeU16(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       uInt16 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeU16(
+   int32 __stdcall RFmxInstr_GetAttributeU16(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       uInt16 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeI32(
+   int32 __stdcall RFmxInstr_SetAttributeI32(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int32 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeI32(
+   int32 __stdcall RFmxInstr_GetAttributeI32(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeU32(
+   int32 __stdcall RFmxInstr_SetAttributeU32(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       uInt32 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeU32(
+   int32 __stdcall RFmxInstr_GetAttributeU32(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       uInt32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeI64(
+   int32 __stdcall RFmxInstr_SetAttributeI64(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int64 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeI64(
+   int32 __stdcall RFmxInstr_GetAttributeI64(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeF64(
+   int32 __stdcall RFmxInstr_SetAttributeF64(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       float64 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeF64(
+   int32 __stdcall RFmxInstr_GetAttributeF64(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeF32(
+   int32 __stdcall RFmxInstr_SetAttributeF32(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       float32 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeF32(
+   int32 __stdcall RFmxInstr_GetAttributeF32(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       float32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeI8Array(
+   int32 __stdcall RFmxInstr_SetAttributeI8Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int8 attrVal[],
       int32 arraySize
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeI8Array(
+   int32 __stdcall RFmxInstr_GetAttributeI8Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -965,14 +955,14 @@ extern "C"
       int32 *actualArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeI32Array(
+   int32 __stdcall RFmxInstr_SetAttributeI32Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int32 attrVal[],
       int32 arraySize
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeI32Array(
+   int32 __stdcall RFmxInstr_GetAttributeI32Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -981,14 +971,14 @@ extern "C"
       int32 *actualArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeI64Array(
+   int32 __stdcall RFmxInstr_SetAttributeI64Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       int64 attrVal[],
       int32 arraySize
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeI64Array(
+   int32 __stdcall RFmxInstr_GetAttributeI64Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -997,14 +987,14 @@ extern "C"
       int32 *actualArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeU64Array(
+   int32 __stdcall RFmxInstr_SetAttributeU64Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       uInt64 attrVal[],
       int32 arraySize
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeU64Array(
+   int32 __stdcall RFmxInstr_GetAttributeU64Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -1013,14 +1003,14 @@ extern "C"
       int32 *actualArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeU8Array(
+   int32 __stdcall RFmxInstr_SetAttributeU8Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       uInt8 attrVal[],
       int32 arraySize
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeU8Array(
+   int32 __stdcall RFmxInstr_GetAttributeU8Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -1029,14 +1019,14 @@ extern "C"
       int32 *actualArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeU32Array(
+   int32 __stdcall RFmxInstr_SetAttributeU32Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       uInt32 attrVal[],
       int32 arraySize
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeU32Array(
+   int32 __stdcall RFmxInstr_GetAttributeU32Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -1045,14 +1035,14 @@ extern "C"
       int32 *actualArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeF32Array(
+   int32 __stdcall RFmxInstr_SetAttributeF32Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       float32 attrVal[],
       int32 arraySize
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeF32Array(
+   int32 __stdcall RFmxInstr_GetAttributeF32Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -1061,14 +1051,14 @@ extern "C"
       int32 *actualArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeF64Array(
+   int32 __stdcall RFmxInstr_SetAttributeF64Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       float64 attrVal[],
       int32 arraySize
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeF64Array(
+   int32 __stdcall RFmxInstr_GetAttributeF64Array(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -1077,14 +1067,14 @@ extern "C"
       int32 *actualArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeNIComplexSingleArray(
+   int32 __stdcall RFmxInstr_SetAttributeNIComplexSingleArray(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
       NIComplexSingle attrVal[],
       int32 arraySize
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeNIComplexSingleArray(
+   int32 __stdcall RFmxInstr_GetAttributeNIComplexSingleArray(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -1093,7 +1083,7 @@ extern "C"
       int32 *actualArraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAttributeNIComplexDoubleArray(
+   int32 __stdcall RFmxInstr_SetAttributeNIComplexDoubleArray(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -1101,7 +1091,7 @@ extern "C"
       int32 arraySize
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAttributeNIComplexDoubleArray(
+   int32 __stdcall RFmxInstr_GetAttributeNIComplexDoubleArray(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attributeID,
@@ -1111,892 +1101,892 @@ extern "C"
    );
 
    // Get/Set attribute methods
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetFrequencyReferenceSource(
+   int32 __stdcall RFmxInstr_SetFrequencyReferenceSource(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetFrequencyReferenceSource(
+   int32 __stdcall RFmxInstr_GetFrequencyReferenceSource(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetFrequencyReferenceFrequency(
+   int32 __stdcall RFmxInstr_SetFrequencyReferenceFrequency(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetFrequencyReferenceFrequency(
+   int32 __stdcall RFmxInstr_GetFrequencyReferenceFrequency(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetRFAttenuationAuto(
+   int32 __stdcall RFmxInstr_SetRFAttenuationAuto(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRFAttenuationAuto(
+   int32 __stdcall RFmxInstr_GetRFAttenuationAuto(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetRFAttenuationValue(
+   int32 __stdcall RFmxInstr_SetRFAttenuationValue(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRFAttenuationValue(
+   int32 __stdcall RFmxInstr_GetRFAttenuationValue(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetMechanicalAttenuationAuto(
+   int32 __stdcall RFmxInstr_SetMechanicalAttenuationAuto(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetMechanicalAttenuationAuto(
+   int32 __stdcall RFmxInstr_GetMechanicalAttenuationAuto(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetMechanicalAttenuationValue(
+   int32 __stdcall RFmxInstr_SetMechanicalAttenuationValue(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetMechanicalAttenuationValue(
+   int32 __stdcall RFmxInstr_GetMechanicalAttenuationValue(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetTuningSpeed(
+   int32 __stdcall RFmxInstr_SetTuningSpeed(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetTuningSpeed(
+   int32 __stdcall RFmxInstr_GetTuningSpeed(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetFrequencySettlingUnits(
+   int32 __stdcall RFmxInstr_SetFrequencySettlingUnits(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetFrequencySettlingUnits(
+   int32 __stdcall RFmxInstr_GetFrequencySettlingUnits(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetFrequencySettling(
+   int32 __stdcall RFmxInstr_SetFrequencySettling(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetFrequencySettling(
+   int32 __stdcall RFmxInstr_GetFrequencySettling(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetChannelCoupling(
+   int32 __stdcall RFmxInstr_SetChannelCoupling(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetChannelCoupling(
+   int32 __stdcall RFmxInstr_GetChannelCoupling(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetDownconverterPreselectorEnabled(
+   int32 __stdcall RFmxInstr_SetDownconverterPreselectorEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetDownconverterPreselectorEnabled(
+   int32 __stdcall RFmxInstr_GetDownconverterPreselectorEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetDownconverterCenterFrequency(
+   int32 __stdcall RFmxInstr_SetDownconverterCenterFrequency(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetDownconverterCenterFrequency(
+   int32 __stdcall RFmxInstr_GetDownconverterCenterFrequency(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOSource(
+   int32 __stdcall RFmxInstr_SetLOSource(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOSource(
+   int32 __stdcall RFmxInstr_GetLOSource(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOFrequency(
+   int32 __stdcall RFmxInstr_SetLOFrequency(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOFrequency(
+   int32 __stdcall RFmxInstr_GetLOFrequency(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetPreampEnabled(
+   int32 __stdcall RFmxInstr_SetPreampEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetPreampEnabled(
+   int32 __stdcall RFmxInstr_GetPreampEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetMixerLevelOffset(
+   int32 __stdcall RFmxInstr_SetMixerLevelOffset(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetMixerLevelOffset(
+   int32 __stdcall RFmxInstr_GetMixerLevelOffset(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetMixerLevel(
+   int32 __stdcall RFmxInstr_SetMixerLevel(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetMixerLevel(
+   int32 __stdcall RFmxInstr_GetMixerLevel(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetIFOutputPowerLevelOffset(
+   int32 __stdcall RFmxInstr_SetIFOutputPowerLevelOffset(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetIFOutputPowerLevelOffset(
+   int32 __stdcall RFmxInstr_GetIFOutputPowerLevelOffset(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOInjectionSide(
+   int32 __stdcall RFmxInstr_SetLOInjectionSide(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOInjectionSide(
+   int32 __stdcall RFmxInstr_GetLOInjectionSide(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetPhaseOffset(
+   int32 __stdcall RFmxInstr_SetPhaseOffset(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetPhaseOffset(
+   int32 __stdcall RFmxInstr_GetPhaseOffset(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetDigitizerDitherEnabled(
+   int32 __stdcall RFmxInstr_SetDigitizerDitherEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetDigitizerDitherEnabled(
+   int32 __stdcall RFmxInstr_GetDigitizerDitherEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetFFTWidth(
+   int32 __stdcall RFmxInstr_SetFFTWidth(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetFFTWidth(
+   int32 __stdcall RFmxInstr_GetFFTWidth(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetOSPDelayEnabled(
+   int32 __stdcall RFmxInstr_SetOSPDelayEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetOSPDelayEnabled(
+   int32 __stdcall RFmxInstr_GetOSPDelayEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetDeviceTemperature(
+   int32 __stdcall RFmxInstr_GetDeviceTemperature(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetDigitizerTemperature(
+   int32 __stdcall RFmxInstr_GetDigitizerTemperature(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOTemperature(
+   int32 __stdcall RFmxInstr_GetLOTemperature(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetInstrumentFirmwareRevision(
+   int32 __stdcall RFmxInstr_GetInstrumentFirmwareRevision(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetInstrumentModel(
+   int32 __stdcall RFmxInstr_GetInstrumentModel(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetModuleRevision(
+   int32 __stdcall RFmxInstr_GetModuleRevision(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSerialNumber(
+   int32 __stdcall RFmxInstr_GetSerialNumber(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetPreselectorPresent(
+   int32 __stdcall RFmxInstr_GetPreselectorPresent(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRFPreampPresent(
+   int32 __stdcall RFmxInstr_GetRFPreampPresent(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOExportEnabled(
+   int32 __stdcall RFmxInstr_SetLOExportEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOExportEnabled(
+   int32 __stdcall RFmxInstr_GetLOExportEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLO2ExportEnabled(
+   int32 __stdcall RFmxInstr_SetLO2ExportEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLO2ExportEnabled(
+   int32 __stdcall RFmxInstr_GetLO2ExportEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetFrequencyReferenceExportedTerminal(
+   int32 __stdcall RFmxInstr_SetFrequencyReferenceExportedTerminal(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetFrequencyReferenceExportedTerminal(
-      niRFmxInstrHandle instrumentHandle,
-      char channelName[],
-      int32 arraySize,
-      char attrVal[]);
-
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetTriggerExportOutputTerminal(
-      niRFmxInstrHandle instrumentHandle,
-      char channelName[],
-      char attrVal[]);
-
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetTriggerExportOutputTerminal(
+   int32 __stdcall RFmxInstr_GetFrequencyReferenceExportedTerminal(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetTriggerTerminalName(
+   int32 __stdcall RFmxInstr_SetTriggerExportOutputTerminal(
+      niRFmxInstrHandle instrumentHandle,
+      char channelName[],
+      char attrVal[]);
+
+   int32 __stdcall RFmxInstr_GetTriggerExportOutputTerminal(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetCleanerSpectrum(
+   int32 __stdcall RFmxInstr_GetTriggerTerminalName(
+      niRFmxInstrHandle instrumentHandle,
+      char channelName[],
+      int32 arraySize,
+      char attrVal[]);
+
+   int32 __stdcall RFmxInstr_SetCleanerSpectrum(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetCleanerSpectrum(
+   int32 __stdcall RFmxInstr_GetCleanerSpectrum(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedAcquisitionType(
+   int32 __stdcall RFmxInstr_GetRecommendedAcquisitionType(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedNumberOfRecords(
+   int32 __stdcall RFmxInstr_GetRecommendedNumberOfRecords(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedTriggerMinimumQuietTime(
+   int32 __stdcall RFmxInstr_GetRecommendedTriggerMinimumQuietTime(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedIQAcquisitionTime(
+   int32 __stdcall RFmxInstr_GetRecommendedIQAcquisitionTime(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedIQMinimumSampleRate(
+   int32 __stdcall RFmxInstr_GetRecommendedIQMinimumSampleRate(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedIQPreTriggerTime(
+   int32 __stdcall RFmxInstr_GetRecommendedIQPreTriggerTime(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedSpectralAcquisitionSpan(
+   int32 __stdcall RFmxInstr_GetRecommendedSpectralAcquisitionSpan(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedSpectralFFTWindow(
+   int32 __stdcall RFmxInstr_GetRecommendedSpectralFFTWindow(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedSpectralResolutionBandwidth(
+   int32 __stdcall RFmxInstr_GetRecommendedSpectralResolutionBandwidth(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedCenterFrequency(
+   int32 __stdcall RFmxInstr_GetRecommendedCenterFrequency(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetIFFilterBandwidth(
+   int32 __stdcall RFmxInstr_SetIFFilterBandwidth(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetIFFilterBandwidth(
+   int32 __stdcall RFmxInstr_GetIFFilterBandwidth(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetSubSpanOverlap(
+   int32 __stdcall RFmxInstr_SetSubSpanOverlap(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSubSpanOverlap(
+   int32 __stdcall RFmxInstr_GetSubSpanOverlap(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetDownconverterGain(
+   int32 __stdcall RFmxInstr_GetDownconverterGain(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetDownconverterFrequencyOffset(
+   int32 __stdcall RFmxInstr_SetDownconverterFrequencyOffset(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetDownconverterFrequencyOffset(
+   int32 __stdcall RFmxInstr_GetDownconverterFrequencyOffset(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetRFAttenuationStepSize(
+   int32 __stdcall RFmxInstr_SetRFAttenuationStepSize(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRFAttenuationStepSize(
+   int32 __stdcall RFmxInstr_GetRFAttenuationStepSize(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAmplitudeSettling(
+   int32 __stdcall RFmxInstr_SetAmplitudeSettling(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAmplitudeSettling(
+   int32 __stdcall RFmxInstr_GetAmplitudeSettling(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOLeakageAvoidanceEnabled(
+   int32 __stdcall RFmxInstr_SetLOLeakageAvoidanceEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOLeakageAvoidanceEnabled(
+   int32 __stdcall RFmxInstr_GetLOLeakageAvoidanceEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetCommonModeLevel(
+   int32 __stdcall RFmxInstr_SetCommonModeLevel(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetCommonModeLevel(
+   int32 __stdcall RFmxInstr_GetCommonModeLevel(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetSMUResourceName(
+   int32 __stdcall RFmxInstr_SetSMUResourceName(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSMUResourceName(
+   int32 __stdcall RFmxInstr_GetSMUResourceName(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetSMUChannel(
+   int32 __stdcall RFmxInstr_SetSMUChannel(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSMUChannel(
+   int32 __stdcall RFmxInstr_GetSMUChannel(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSelfCalibrationValidityCheck(
+   int32 __stdcall RFmxInstr_GetSelfCalibrationValidityCheck(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetSelfCalibrationValidityCheck(
+   int32 __stdcall RFmxInstr_SetSelfCalibrationValidityCheck(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSelfCalibrationValidityCheckTimeInterval(
+   int32 __stdcall RFmxInstr_GetSelfCalibrationValidityCheckTimeInterval(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetSelfCalibrationValidityCheckTimeInterval(
+   int32 __stdcall RFmxInstr_SetSelfCalibrationValidityCheckTimeInterval(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetOverflowErrorReporting(
+   int32 __stdcall RFmxInstr_SetOverflowErrorReporting(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetOverflowErrorReporting(
+   int32 __stdcall RFmxInstr_GetOverflowErrorReporting(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOInPower(
+   int32 __stdcall RFmxInstr_SetLOInPower(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOInPower(
+   int32 __stdcall RFmxInstr_GetLOInPower(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOOutPower(
+   int32 __stdcall RFmxInstr_SetLOOutPower(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOOutPower(
+   int32 __stdcall RFmxInstr_GetLOOutPower(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOPLLFractionalMode(
+   int32 __stdcall RFmxInstr_SetLOPLLFractionalMode(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOPLLFractionalMode(
+   int32 __stdcall RFmxInstr_GetLOPLLFractionalMode(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetOptimizePathForSignalBandwidth(
+   int32 __stdcall RFmxInstr_SetOptimizePathForSignalBandwidth(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetOptimizePathForSignalBandwidth(
+   int32 __stdcall RFmxInstr_GetOptimizePathForSignalBandwidth(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetInputIsolationEnabled(
+   int32 __stdcall RFmxInstr_SetInputIsolationEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetInputIsolationEnabled(
+   int32 __stdcall RFmxInstr_GetInputIsolationEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       int32 *attrVal);
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOVCOFrequencyStepSize(
+   int32 __stdcall RFmxInstr_GetLOVCOFrequencyStepSize(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOVCOFrequencyStepSize(
+   int32 __stdcall RFmxInstr_SetLOVCOFrequencyStepSize(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetThermalCorrectionHeadroomRange(
+   int32 __stdcall RFmxInstr_GetThermalCorrectionHeadroomRange(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetThermalCorrectionHeadroomRange(
+   int32 __stdcall RFmxInstr_SetThermalCorrectionHeadroomRange(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOFrequencyStepSize(
+   int32 __stdcall RFmxInstr_GetLOFrequencyStepSize(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOFrequencyStepSize(
+   int32 __stdcall RFmxInstr_SetLOFrequencyStepSize(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 attrVal
    );
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRFHighpassFilterFrequency(
+   int32 __stdcall RFmxInstr_GetRFHighpassFilterFrequency(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetRFHighpassFilterFrequency(
+   int32 __stdcall RFmxInstr_SetRFHighpassFilterFrequency(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetStartTriggerType(
+   int32 __stdcall RFmxInstr_GetStartTriggerType(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetStartTriggerType(
+   int32 __stdcall RFmxInstr_SetStartTriggerType(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetStartTriggerDigitalEdgeSource(
+   int32 __stdcall RFmxInstr_GetStartTriggerDigitalEdgeSource(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetStartTriggerDigitalEdgeSource(
+   int32 __stdcall RFmxInstr_SetStartTriggerDigitalEdgeSource(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetStartTriggerDigitalEdge(
+   int32 __stdcall RFmxInstr_GetStartTriggerDigitalEdge(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetStartTriggerDigitalEdge(
+   int32 __stdcall RFmxInstr_SetStartTriggerDigitalEdge(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetStartTriggerExportOutputTerminal(
+   int32 __stdcall RFmxInstr_GetStartTriggerExportOutputTerminal(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetStartTriggerExportOutputTerminal(
+   int32 __stdcall RFmxInstr_SetStartTriggerExportOutputTerminal(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetStartTriggerTerminalName(
+   int32 __stdcall RFmxInstr_GetStartTriggerTerminalName(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAdvanceTriggerType(
+   int32 __stdcall RFmxInstr_GetAdvanceTriggerType(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAdvanceTriggerType(
+   int32 __stdcall RFmxInstr_SetAdvanceTriggerType(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAdvanceTriggerDigitalEdgeSource(
+   int32 __stdcall RFmxInstr_GetAdvanceTriggerDigitalEdgeSource(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAdvanceTriggerDigitalEdgeSource(
+   int32 __stdcall RFmxInstr_SetAdvanceTriggerDigitalEdgeSource(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAdvanceTriggerExportOutputTerminal(
-      niRFmxInstrHandle instrumentHandle,
-      char selectorString[],
-      int32 arraySize,
-      char attrVal[]
-   );
-
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAdvanceTriggerExportOutputTerminal(
-      niRFmxInstrHandle instrumentHandle,
-      char selectorString[],
-      char attrVal[]
-   );
-
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAdvanceTriggerTerminalName(
+   int32 __stdcall RFmxInstr_GetAdvanceTriggerExportOutputTerminal(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetReadyForStartEventOutputTerminal(
+   int32 __stdcall RFmxInstr_SetAdvanceTriggerExportOutputTerminal(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char attrVal[]
+   );
+
+   int32 __stdcall RFmxInstr_GetAdvanceTriggerTerminalName(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetReadyForStartEventOutputTerminal(
-      niRFmxInstrHandle instrumentHandle,
-      char selectorString[],
-      char attrVal[]
-   );
-
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetReadyForStartEventTerminalName(
+   int32 __stdcall RFmxInstr_GetReadyForStartEventOutputTerminal(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetReadyForAdvanceEventOutputTerminal(
+   int32 __stdcall RFmxInstr_SetReadyForStartEventOutputTerminal(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char attrVal[]
+   );
+
+   int32 __stdcall RFmxInstr_GetReadyForStartEventTerminalName(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetReadyForAdvanceEventOutputTerminal(
-      niRFmxInstrHandle instrumentHandle,
-      char selectorString[],
-      char attrVal[]
-   );
-
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetReadyForAdvanceEventTerminalName(
+   int32 __stdcall RFmxInstr_GetReadyForAdvanceEventOutputTerminal(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetReadyForReferenceEventOutputTerminal(
+   int32 __stdcall RFmxInstr_SetReadyForAdvanceEventOutputTerminal(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char attrVal[]
+   );
+
+   int32 __stdcall RFmxInstr_GetReadyForAdvanceEventTerminalName(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetReadyForReferenceEventOutputTerminal(
-      niRFmxInstrHandle instrumentHandle,
-      char selectorString[],
-      char attrVal[]
-   );
-
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetReadyForReferenceEventTerminalName(
+   int32 __stdcall RFmxInstr_GetReadyForReferenceEventOutputTerminal(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetEndOfRecordEventOutputTerminal(
+   int32 __stdcall RFmxInstr_SetReadyForReferenceEventOutputTerminal(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char attrVal[]
+   );
+
+   int32 __stdcall RFmxInstr_GetReadyForReferenceEventTerminalName(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetEndOfRecordEventOutputTerminal(
-      niRFmxInstrHandle instrumentHandle,
-      char selectorString[],
-      char attrVal[]
-   );
-
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetEndOfRecordEventTerminalName(
+   int32 __stdcall RFmxInstr_GetEndOfRecordEventOutputTerminal(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetDoneEventOutputTerminal(
+   int32 __stdcall RFmxInstr_SetEndOfRecordEventOutputTerminal(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char attrVal[]
+   );
+
+   int32 __stdcall RFmxInstr_GetEndOfRecordEventTerminalName(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetDoneEventOutputTerminal(
-      niRFmxInstrHandle instrumentHandle,
-      char selectorString[],
-      char attrVal[]
-   );
-
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetDoneEventTerminalName(
+   int32 __stdcall RFmxInstr_GetDoneEventOutputTerminal(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 arraySize,
       char attrVal[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetTemperatureReadInterval(
+   int32 __stdcall RFmxInstr_SetDoneEventOutputTerminal(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char attrVal[]
+   );
+
+   int32 __stdcall RFmxInstr_GetDoneEventTerminalName(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      int32 arraySize,
+      char attrVal[]
+   );
+
+   int32 __stdcall RFmxInstr_GetTemperatureReadInterval(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetTemperatureReadInterval(
+   int32 __stdcall RFmxInstr_SetTemperatureReadInterval(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetThermalCorrectionTemperatureResolution(
+   int32 __stdcall RFmxInstr_GetThermalCorrectionTemperatureResolution(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetThermalCorrectionTemperatureResolution(
+   int32 __stdcall RFmxInstr_SetThermalCorrectionTemperatureResolution(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       float64 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetSParameterExternalAttenuationType(
+   int32 __stdcall RFmxInstr_GetSParameterExternalAttenuationType(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32* sParameterType
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetLOSharingMode(
+   int32 __stdcall RFmxInstr_GetLOSharingMode(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetLOSharingMode(
+   int32 __stdcall RFmxInstr_SetLOSharingMode(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetNumberOfLOSharingGroups(
+   int32 __stdcall RFmxInstr_GetNumberOfLOSharingGroups(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetNumberOfLOSharingGroups(
+   int32 __stdcall RFmxInstr_SetNumberOfLOSharingGroups(
       niRFmxInstrHandle instrumentHandle,
       char selectorString[],
       int32 attrVal
@@ -2021,32 +2011,32 @@ extern "C"
 {
 #endif
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetRecommendedIQMeasurementBandwidth(
+   int32 __stdcall RFmxInstr_GetRecommendedIQMeasurementBandwidth(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
       float64 *attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_BuildPortString(
+   int32 __stdcall RFmxInstr_BuildPortString(
       char selectorString[],
       char portName[],
       int32 selectorStringOutLength,
       char selectorStringOut[]
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_CfgAutomaticSGSASharedLO(
+   int32 __stdcall RFmxInstr_CfgAutomaticSGSASharedLO(
        niRFmxInstrHandle instrumentHandle,
        char selectorString[],
        int32 automaticSGSASharedLO
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_GetAutomaticSGSASharedLO(
+   int32 __stdcall RFmxInstr_GetAutomaticSGSASharedLO(
        niRFmxInstrHandle instrumentHandle,
        char channelName[],
        int32* attrVal
    );
 
-   int32 NIRFMXINSTR_STDCALL RFmxInstr_SetAutomaticSGSASharedLO(
+   int32 __stdcall RFmxInstr_SetAutomaticSGSASharedLO(
        niRFmxInstrHandle instrumentHandle,
        char channelName[],
        int32 attrVal

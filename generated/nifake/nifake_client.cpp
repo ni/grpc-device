@@ -934,6 +934,21 @@ read_data_with_in_out_ivi_twist(const StubPtr& stub)
   return response;
 }
 
+ReadDataWithMultpleIviTwistParamSetsResponse
+read_data_with_multple_ivi_twist_param_sets(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadDataWithMultpleIviTwistParamSetsRequest{};
+
+  auto response = ReadDataWithMultpleIviTwistParamSetsResponse{};
+
+  raise_if_error(
+      stub->ReadDataWithMultpleIviTwistParamSets(&context, request, &response));
+
+  return response;
+}
+
 ReadFromChannelResponse
 read_from_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& maximum_time)
 {

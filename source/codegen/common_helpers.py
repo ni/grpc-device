@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict, namedtuple
-from typing import List, Optional
+from typing import List, NamedTuple, Optional
 
 
 def is_output_parameter(parameter):
@@ -402,6 +402,10 @@ def get_size_mechanism(parameter: dict) -> Optional[str]:
     return size.get('mechanism', None)
 
 
+def _get_ivi_dance_twist_param_name(parameter: dict) -> Optional[str]:
+    return parameter.get('size', {}).get('value_twist')
+
+
 def has_size_mechanism_tag(parameter: dict, tag: str) -> bool:
     size_request = parameter.get('size', {})
     tags = size_request.get('tags', {})
@@ -522,20 +526,75 @@ def get_param_with_name(parameters: List[dict], name: str) -> dict:
     return next(matched_params)
 
 
+class IviDanceWithATwistParamSet(NamedTuple):
+    array_params: List[dict]
+    size_param: dict
+    twist_param: dict
+
+    @property
+    def all_params(self):
+        return self.array_params + [self.size_param, self.twist_param]
+
+    @property
+    def size_param_name(self) -> str:
+        return get_cpp_local_name(self.size_param)
+
+    @property
+    def twist_param_name(self) -> str: 
+        return get_cpp_local_name(self.twist_param)
+
+    @property
+    def is_in_out_twist(self) -> bool:
+        """
+        An "in-out" twist is a rare variant of ivi-dance-with-a-twist where the size and the
+        twist are the same param used as an in-out param, rather than separate input and output
+        params.
+        """
+        return self.size_param_name == self.twist_param_name
+
+
+def _make_ivi_twist_param_set(twist_param_name: str, parameters: List[dict]) -> IviDanceWithATwistParamSet:
+    matched_array_params = [
+        p 
+        for p in parameters 
+        if _get_ivi_dance_twist_param_name(p) == twist_param_name
+    ]
+    return IviDanceWithATwistParamSet(
+        matched_array_params,
+        get_param_with_name(parameters, matched_array_params[0]['size']['value']),
+        get_param_with_name(parameters, twist_param_name)
+    )
+
+
+def _unique_twist_params(parameters) -> List[str]:
+    unique_set = {_get_ivi_dance_twist_param_name(p) for p in parameters}
+
+    # Sort and remove None
+    return sorted((p for p in unique_set if p))
+
+
 def get_ivi_dance_with_a_twist_params(parameters):
-    array_param = next(
-        (p for p in parameters if is_ivi_dance_array_with_a_twist_param(p)))
+    return [
+        _make_ivi_twist_param_set(twist_name, parameters)
+        for twist_name in _unique_twist_params(parameters) 
+    ]
 
-    size_param = get_param_with_name(parameters, array_param['size']['value'])
-    twist_param = get_param_with_name(
-        parameters, array_param['size']['value_twist'])
 
-    other_params = (
+def get_params_not_in_ivi_twist(
+    parameters: List[dict], ivi_param_sets: List[IviDanceWithATwistParamSet]
+) -> List[dict]:
+    
+    all_params_in_ivi_set = {
+        p['name']
+        for ivi_set in ivi_param_sets
+        for p in ivi_set.all_params
+    }
+
+    return (
         p
         for p in parameters
-        if p not in [array_param, size_param, twist_param]
+        if p['name'] not in all_params_in_ivi_set
     )
-    return (size_param, twist_param, array_param, other_params)
 
 
 def is_init_method(function_data):
@@ -592,6 +651,19 @@ def trim_trailing_comma():
 
     return lambda text: trim_trailing_comma_impl(text)
 
+
+def os_conditional_compile_block(config):
+    windows_only = config.get("windows_only", False)
+    """For use as a mako filter.
+        That wraps a block of text in #if blocks based on the config's OS support."""
+    def windows_only_block_impl(text):
+        return f"""#if defined(_MSC_VER)
+{text}#endif // defined(_MSC_VER)
+"""
+    if windows_only:
+        return lambda text : windows_only_block_impl(text)
+    
+    return lambda text: text
 
 def filter_parameters_for_grpc_fields(parameters_or_fields: List[dict]):
     """Filter out the parameters that shouldn't be represented by a field on a grpc message.

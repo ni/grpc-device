@@ -1613,6 +1613,48 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::ReadDataWithMultpleIviTwistParamSets(::grpc::ServerContext* context, const ReadDataWithMultpleIviTwistParamSetsRequest* request, ReadDataWithMultpleIviTwistParamSetsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViInt32 actual_size {};
+      ViInt32 other_actual_size {};
+      while (true) {
+        auto status = library_->ReadDataWithMultpleIviTwistParamSets(0, nullptr, &actual_size, 0, nullptr, &other_actual_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_array_out()->Resize(actual_size, 0);
+        ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
+        response->mutable_other_array_out()->Resize(other_actual_size, 0);
+        ViInt32* other_array_out = reinterpret_cast<ViInt32*>(response->mutable_other_array_out()->mutable_data());
+        auto buffer_size = actual_size;
+        auto other_buffer_size = other_actual_size;
+        status = library_->ReadDataWithMultpleIviTwistParamSets(buffer_size, array_out, &actual_size, other_buffer_size, other_array_out, &other_actual_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_array_out()->Resize(actual_size, 0);
+          response->set_actual_size(actual_size);
+          response->mutable_other_array_out()->Resize(other_actual_size, 0);
+          response->set_other_actual_size(other_actual_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::ReadFromChannel(::grpc::ServerContext* context, const ReadFromChannelRequest* request, ReadFromChannelResponse* response)
   {
     if (context->IsCancelled()) {

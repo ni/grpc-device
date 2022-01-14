@@ -36,6 +36,7 @@ config = {
     'init_function': 'Initialize',
     'resource_handle_type': 'niRFmxInstrHandle',
     'status_ok': 'status >= 0',
+    'windows_only': True,
     'library_info': {
         'Linux': {
             '64bit': {
@@ -57,6 +58,5 @@ config = {
     },
     'metadata_version': '0.1',
     'module_name': 'nirfmxinstr',
-    'session_class_description': 'An NI-RFmxInstr instrument handle',
-    'session_handle_parameter_name': 'instrumentHandle'
+    'session_class_description': 'An NI-RFmxInstr instrument handle'
 }
