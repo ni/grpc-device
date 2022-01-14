@@ -1,6 +1,7 @@
 from typing import Any, Dict, Iterable, List, Set
 from schema import Schema, And, Optional, Or, Use
 import common_helpers
+import service_helpers
 
 
 # Rules that can be suppressed
@@ -176,6 +177,8 @@ def validate_function(function_name: str, metadata: dict):
             FUNCTION_SCHEMA.validate(function)
             if 'documentation' in function:
                 DOCUMENTATION_SCHEMA.validate(function['documentation'])
+            disallow_session_reverse_lookup = metadata['config'].get('disallow_session_reverse_lookup', False)
+            is_init_method = function.get('init_method', False)
             for parameter in function['parameters']:
                 validate_parameter_size(parameter, function_name, metadata)
                 if 'type' not in parameter:
@@ -228,7 +231,11 @@ def validate_function(function_name: str, metadata: dict):
                     ivi_dance_with_a_twist_params.append(parameter['name'])
                     ivi_dance_with_a_twist_sizes.add(size['value'])
                     ivi_dance_with_a_twist_twists.add(size['value_twist'])
-
+                if disallow_session_reverse_lookup:
+                    if not is_init_method:
+                        if parameter['direction'] == 'out' and parameter['type'] == service_helpers.get_resource_handle_type(metadata['config']):
+                            raise  Exception(
+                               f"Since reverse session lookup is disallowed for this driver, {function_name} is not valid since it's not marked as an init_method but has a session output!")
     except Exception as e:
         raise Exception(f"Failed to validate function {function_name}") from e
 
