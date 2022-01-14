@@ -1816,85 +1816,85 @@ extern "C"
 #endif
 
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ResetAttribute(
+int32 __stdcall RFmxSpecAn_ResetAttribute(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_Initialize(
+int32 __stdcall RFmxSpecAn_Initialize(
    char resourceName[],
    char optionString[],
    niRFmxInstrHandle *handleOut,
    int32 *isNewSession
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_InitializeFromNIRFSASession(
+int32 __stdcall RFmxSpecAn_InitializeFromNIRFSASession(
    uInt32 NIRFSASession,
    niRFmxInstrHandle *handleOut
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_Close(
+int32 __stdcall RFmxSpecAn_Close(
    niRFmxInstrHandle instrumentHandle,
    int32 forceDestroy
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetErrorString(
+int32 __stdcall RFmxSpecAn_GetErrorString(
    niRFmxInstrHandle instrumentHandle,
    int32 errorCode,
    int32 errorDescriptionBufferSize,
    char errorDescription[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetError(
+int32 __stdcall RFmxSpecAn_GetError(
    niRFmxInstrHandle instrumentHandle,
    int32* errorCode,
    int32 errorDescriptionBufferSize,
    char errorDescription[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgFrequencyReference(
+int32 __stdcall RFmxSpecAn_CfgFrequencyReference(
    niRFmxInstrHandle instrumentHandle,
    char channelName[],
    char frequencyReferenceSource[],
    float64 frequencyReferenceFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgMechanicalAttenuation(
+int32 __stdcall RFmxSpecAn_CfgMechanicalAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char channelName[],
    int32 mechanicalAttenuationAuto,
    float64 mechanicalAttenuationValue
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgRFAttenuation(
+int32 __stdcall RFmxSpecAn_CfgRFAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char channelName[],
    int32 RFAttenuationAuto,
    float64 RFAttenuationValue
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_WaitForAcquisitionComplete(
+int32 __stdcall RFmxSpecAn_WaitForAcquisitionComplete(
    niRFmxInstrHandle instrumentHandle,
    float64 timeout
 );
 
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildSignalString(
+int32 __stdcall RFmxSpecAn_BuildSignalString(
    char signalName[],
    char resultName[],
    int32 selectorStringLength,
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildListString(
+int32 __stdcall RFmxSpecAn_BuildListString(
    char listName[],
    char resultName[],
    int32 selectorStringLength,
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildListStepString(
+int32 __stdcall RFmxSpecAn_BuildListStepString(
    char listName[],
    char resultName[],
    int32 stepNumber,
@@ -1902,63 +1902,63 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildListStepString(
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildCarrierString2(
+int32 __stdcall RFmxSpecAn_BuildCarrierString2(
    char selectorString[],
    int32 carrierNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildOffsetString2(
+int32 __stdcall RFmxSpecAn_BuildOffsetString2(
    char selectorString[],
    int32 offsetNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildRangeString2(
+int32 __stdcall RFmxSpecAn_BuildRangeString2(
    char selectorString[],
    int32 rangeNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildMarkerString2(
+int32 __stdcall RFmxSpecAn_BuildMarkerString2(
    char selectorString[],
    int32 markerNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildHarmonicString2(
+int32 __stdcall RFmxSpecAn_BuildHarmonicString2(
    char selectorString[],
    int32 harmonicNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildIntermodString(
+int32 __stdcall RFmxSpecAn_BuildIntermodString(
    char selectorString[],
    int32 intermodNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildSpurString2(
+int32 __stdcall RFmxSpecAn_BuildSpurString2(
    char selectorString[],
    int32 spurNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildSegmentString(
+int32 __stdcall RFmxSpecAn_BuildSegmentString(
    char selectorString[],
    int32 segmentNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildCarrierString(
+int32 __stdcall RFmxSpecAn_BuildCarrierString(
    char signalName[],
    char resultName[],
    int32 carrierNumber,
@@ -1966,7 +1966,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildCarrierString(
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildOffsetString(
+int32 __stdcall RFmxSpecAn_BuildOffsetString(
    char signalName[],
    char resultName[],
    int32 offsetNumber,
@@ -1974,7 +1974,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildOffsetString(
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildRangeString(
+int32 __stdcall RFmxSpecAn_BuildRangeString(
    char signalName[],
    char resultName[],
    int32 rangeNumber,
@@ -1982,7 +1982,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildRangeString(
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildMarkerString(
+int32 __stdcall RFmxSpecAn_BuildMarkerString(
    char signalName[],
    char resultName[],
    int32 markerNumber,
@@ -1990,7 +1990,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildMarkerString(
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildHarmonicString(
+int32 __stdcall RFmxSpecAn_BuildHarmonicString(
    char signalName[],
    char resultName[],
    int32 harmonicNumber,
@@ -1999,7 +1999,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildHarmonicString(
 );
 
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildRangeSpurString(
+int32 __stdcall RFmxSpecAn_BuildRangeSpurString(
    char signalName[],
    char resultName[],
    int32 rangeNumber,
@@ -2008,21 +2008,21 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_BuildRangeSpurString(
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI8(
+int32 __stdcall RFmxSpecAn_SetAttributeI8(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    int8 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI8(
+int32 __stdcall RFmxSpecAn_GetAttributeI8(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    int8* attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI8Array(
+int32 __stdcall RFmxSpecAn_SetAttributeI8Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2030,7 +2030,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI8Array(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI8Array(
+int32 __stdcall RFmxSpecAn_GetAttributeI8Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2039,35 +2039,35 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI8Array(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI16(
+int32 __stdcall RFmxSpecAn_SetAttributeI16(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    int16 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI16(
+int32 __stdcall RFmxSpecAn_GetAttributeI16(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    int16* attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI32(
+int32 __stdcall RFmxSpecAn_SetAttributeI32(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI32(
+int32 __stdcall RFmxSpecAn_GetAttributeI32(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    int32* attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI32Array(
+int32 __stdcall RFmxSpecAn_SetAttributeI32Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2075,7 +2075,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI32Array(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI32Array(
+int32 __stdcall RFmxSpecAn_GetAttributeI32Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2084,21 +2084,21 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI32Array(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI64(
+int32 __stdcall RFmxSpecAn_SetAttributeI64(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    int64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI64(
+int32 __stdcall RFmxSpecAn_GetAttributeI64(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    int64* attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI64Array(
+int32 __stdcall RFmxSpecAn_SetAttributeI64Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2106,7 +2106,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeI64Array(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI64Array(
+int32 __stdcall RFmxSpecAn_GetAttributeI64Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2115,21 +2115,21 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeI64Array(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeU8(
+int32 __stdcall RFmxSpecAn_SetAttributeU8(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    uInt8 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeU8(
+int32 __stdcall RFmxSpecAn_GetAttributeU8(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    uInt8* attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeU8Array(
+int32 __stdcall RFmxSpecAn_SetAttributeU8Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2137,7 +2137,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeU8Array(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeU8Array(
+int32 __stdcall RFmxSpecAn_GetAttributeU8Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2146,35 +2146,35 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeU8Array(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeU16(
+int32 __stdcall RFmxSpecAn_SetAttributeU16(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    uInt16 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeU16(
+int32 __stdcall RFmxSpecAn_GetAttributeU16(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    uInt16* attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeU32(
+int32 __stdcall RFmxSpecAn_SetAttributeU32(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    uInt32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeU32(
+int32 __stdcall RFmxSpecAn_GetAttributeU32(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    uInt32* attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeU32Array(
+int32 __stdcall RFmxSpecAn_SetAttributeU32Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2182,7 +2182,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeU32Array(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeU32Array(
+int32 __stdcall RFmxSpecAn_GetAttributeU32Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2191,7 +2191,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeU32Array(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeU64Array(
+int32 __stdcall RFmxSpecAn_SetAttributeU64Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2199,7 +2199,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeU64Array(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeU64Array(
+int32 __stdcall RFmxSpecAn_GetAttributeU64Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2208,21 +2208,21 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeU64Array(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeF32(
+int32 __stdcall RFmxSpecAn_SetAttributeF32(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    float32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeF32(
+int32 __stdcall RFmxSpecAn_GetAttributeF32(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    float32* attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeF32Array(
+int32 __stdcall RFmxSpecAn_SetAttributeF32Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2230,7 +2230,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeF32Array(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeF32Array(
+int32 __stdcall RFmxSpecAn_GetAttributeF32Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2239,21 +2239,21 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeF32Array(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeF64(
+int32 __stdcall RFmxSpecAn_SetAttributeF64(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeF64(
+int32 __stdcall RFmxSpecAn_GetAttributeF64(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    float64* attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeF64Array(
+int32 __stdcall RFmxSpecAn_SetAttributeF64Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2261,7 +2261,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeF64Array(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeF64Array(
+int32 __stdcall RFmxSpecAn_GetAttributeF64Array(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2270,7 +2270,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeF64Array(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeNIComplexSingleArray(
+int32 __stdcall RFmxSpecAn_SetAttributeNIComplexSingleArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2278,7 +2278,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeNIComplexSingleArray(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeNIComplexSingleArray(
+int32 __stdcall RFmxSpecAn_GetAttributeNIComplexSingleArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2287,7 +2287,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeNIComplexSingleArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeNIComplexDoubleArray(
+int32 __stdcall RFmxSpecAn_SetAttributeNIComplexDoubleArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2295,7 +2295,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeNIComplexDoubleArray(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeNIComplexDoubleArray(
+int32 __stdcall RFmxSpecAn_GetAttributeNIComplexDoubleArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2305,14 +2305,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeNIComplexDoubleArray(
 );
 
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeString(
+int32 __stdcall RFmxSpecAn_SetAttributeString(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
    char attrVal[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeString(
+int32 __stdcall RFmxSpecAn_GetAttributeString(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -2320,58 +2320,58 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAttributeString(
    char attrVal[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerCfgNumberOfMarkers(
+int32 __stdcall RFmxSpecAn_MarkerCfgNumberOfMarkers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfMarkers
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerCfgReferenceMarker(
+int32 __stdcall RFmxSpecAn_MarkerCfgReferenceMarker(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 referenceMarker
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerCfgThreshold(
+int32 __stdcall RFmxSpecAn_MarkerCfgThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 thresholdEnabled,
    float64 threshold
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerCfgPeakExcursion(
+int32 __stdcall RFmxSpecAn_MarkerCfgPeakExcursion(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 peakExcursionEnabled,
    float64 peakExcursion
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerCfgTrace(
+int32 __stdcall RFmxSpecAn_MarkerCfgTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 trace
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerCfgType(
+int32 __stdcall RFmxSpecAn_MarkerCfgType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 markerType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerCfgXLocation(
+int32 __stdcall RFmxSpecAn_MarkerCfgXLocation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 markerXLocation
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgPreviousDPDPolynomial(
+int32 __stdcall RFmxSpecAn_DPDCfgPreviousDPDPolynomial(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    NIComplexSingle previousDPDPolynomial[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgPreviousDPDPolynomialSplit(
+int32 __stdcall RFmxSpecAn_DPDCfgPreviousDPDPolynomialSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 I[],
@@ -2379,7 +2379,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgPreviousDPDPolynomialSplit(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgReferenceWaveform(
+int32 __stdcall RFmxSpecAn_DPDCfgReferenceWaveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0,
@@ -2390,7 +2390,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgReferenceWaveform(
    int32 signalType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgReferenceWaveformSplit(
+int32 __stdcall RFmxSpecAn_DPDCfgReferenceWaveformSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0,
@@ -2402,7 +2402,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgReferenceWaveformSplit(
    int32 signalType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 LUTInputPowers[],
@@ -2410,7 +2410,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit(
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 LUTInputPowers[],
@@ -2419,14 +2419,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial(
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    NIComplexSingle DPDPolynomial[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit(
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 I[],
@@ -2434,7 +2434,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgReferenceWaveform(
+int32 __stdcall RFmxSpecAn_AMPMCfgReferenceWaveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0,
@@ -2445,7 +2445,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgReferenceWaveform(
    int32 signalType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgReferenceWaveformSplit(
+int32 __stdcall RFmxSpecAn_AMPMCfgReferenceWaveformSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0,
@@ -2457,7 +2457,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgReferenceWaveformSplit(
    int32 signalType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AutoLevel(
+int32 __stdcall RFmxSpecAn_AutoLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 bandwidth,
@@ -2465,45 +2465,45 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AutoLevel(
    float64* referenceLevel
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ClearAllNamedResults(
+int32 __stdcall RFmxSpecAn_ClearAllNamedResults(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ClearNamedResult(
+int32 __stdcall RFmxSpecAn_ClearNamedResult(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_Commit(
+int32 __stdcall RFmxSpecAn_Commit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ResetToDefault(
+int32 __stdcall RFmxSpecAn_ResetToDefault(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CheckMeasurementStatus(
+int32 __stdcall RFmxSpecAn_CheckMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32* isDone
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_WaitForMeasurementComplete(
+int32 __stdcall RFmxSpecAn_WaitForMeasurementComplete(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_Initiate(
+int32 __stdcall RFmxSpecAn_Initiate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char resultName[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeIQ1Waveform(
+int32 __stdcall RFmxSpecAn_AnalyzeIQ1Waveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char resultName[],
@@ -2515,7 +2515,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeIQ1Waveform(
    int64 reserved
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeIQ1WaveformSplit(
+int32 __stdcall RFmxSpecAn_AnalyzeIQ1WaveformSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char resultName[],
@@ -2528,7 +2528,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeIQ1WaveformSplit(
    int64 reserved
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeSpectrum1Waveform(
+int32 __stdcall RFmxSpecAn_AnalyzeSpectrum1Waveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char resultName[],
@@ -2540,48 +2540,48 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeSpectrum1Waveform(
    int64 reserved
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SendSoftwareEdgeTrigger(
+int32 __stdcall RFmxSpecAn_SendSoftwareEdgeTrigger(
    niRFmxInstrHandle instrumentHandle
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CloneSignalConfiguration(
+int32 __stdcall RFmxSpecAn_CloneSignalConfiguration(
    niRFmxInstrHandle instrumentHandle,
    char oldSignalName[],
    char newSignalName[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CreateSignalConfiguration(
+int32 __stdcall RFmxSpecAn_CreateSignalConfiguration(
    niRFmxInstrHandle instrumentHandle,
    char signalName[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DeleteSignalConfiguration(
+int32 __stdcall RFmxSpecAn_DeleteSignalConfiguration(
    niRFmxInstrHandle instrumentHandle,
    char signalName[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ClearNoiseCalibrationDatabase(
+int32 __stdcall RFmxSpecAn_ClearNoiseCalibrationDatabase(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CreateList(
+int32 __stdcall RFmxSpecAn_CreateList(
    niRFmxInstrHandle instrumentHandle,
    char listName[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CreateListStep(
+int32 __stdcall RFmxSpecAn_CreateListStep(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32* createdStepIndex
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DeleteList(
+int32 __stdcall RFmxSpecAn_DeleteList(
    niRFmxInstrHandle instrumentHandle,
    char listName[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgFrequencyList_StartStopStep(
+int32 __stdcall RFmxSpecAn_NFCfgFrequencyList_StartStopStep(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 startFrequency,
@@ -2589,7 +2589,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgFrequencyList_StartStopStep(
    float64 stepSize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgFrequencyList_StartStopPoints(
+int32 __stdcall RFmxSpecAn_NFCfgFrequencyList_StartStopPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 startFrequency,
@@ -2597,7 +2597,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgFrequencyList_StartStopPoints(
    int32 numberOfPoints
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFRecommendReferenceLevel(
+int32 __stdcall RFmxSpecAn_NFRecommendReferenceLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 DUTMaxGain,
@@ -2605,13 +2605,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFRecommendReferenceLevel(
    float64* referenceLevel
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFValidateCalibrationData(
+int32 __stdcall RFmxSpecAn_NFValidateCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32* calibrationDataValid
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgSegmentStartTimeStep(
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentStartTimeStep(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfSegments,
@@ -2619,25 +2619,25 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgSegmentStartTimeStep(
    float64 segmentInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPValidateNoiseCalibrationData(
+int32 __stdcall RFmxSpecAn_ACPValidateNoiseCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32* noiseCalibrationDataValid
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPValidateNoiseCalibrationData(
+int32 __stdcall RFmxSpecAn_CHPValidateNoiseCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32* noiseCalibrationDataValid
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumValidateNoiseCalibrationData(
+int32 __stdcall RFmxSpecAn_SpectrumValidateNoiseCalibrationData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32* noiseCalibrationDataValid
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgAveraging(
+int32 __stdcall RFmxSpecAn_SpurCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -2645,19 +2645,19 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgFFTWindowType(
+int32 __stdcall RFmxSpecAn_SpurCfgFFTWindowType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 FFTWindow
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgNumberOfRanges(
+int32 __stdcall RFmxSpecAn_SpurCfgNumberOfRanges(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfRanges
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeAbsoluteLimit(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeAbsoluteLimit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 absoluteLimitMode,
@@ -2665,7 +2665,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeAbsoluteLimit(
    float64 absoluteLimitStop
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeFrequency(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 startFrequency,
@@ -2673,13 +2673,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeFrequency(
    int32 rangeEnabled
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeNumberOfSpursToReport(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeNumberOfSpursToReport(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfSpursToReport
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeRBWFilter(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto,
@@ -2687,40 +2687,40 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeRBWFilter(
    int32 RBWFilterType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeRelativeAttenuation(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeRelativeAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 relativeAttenuation
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeSweepTime(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeSweepTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sweepTimeAuto,
    float64 sweepTimeInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgTraceRangeIndex(
+int32 __stdcall RFmxSpecAn_SpurCfgTraceRangeIndex(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 traceRangeIndex
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangePeakCriteria(
+int32 __stdcall RFmxSpecAn_SpurCfgRangePeakCriteria(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 threshold,
    float64 excursion
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeDetector(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeDetector(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 detectorType,
    int32 detectorPoints
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeVBWFilter(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeVBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 VBWAuto,
@@ -2728,7 +2728,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeVBWFilter(
    float64 VBWToRBWRatio
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeAbsoluteLimitArray(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeAbsoluteLimitArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 absoluteLimitMode[],
@@ -2737,7 +2737,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeAbsoluteLimitArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeFrequencyArray(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeFrequencyArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 startFrequency[],
@@ -2746,14 +2746,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeFrequencyArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeNumberOfSpursToReportArray(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeNumberOfSpursToReportArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfSpursToReport[],
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeRBWArray(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeRBWArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto[],
@@ -2762,14 +2762,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeRBWArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeRelativeAttenuationArray(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeRelativeAttenuationArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 relativeAttenuation[],
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeSweepTimeArray(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeSweepTimeArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sweepTimeAuto[],
@@ -2777,7 +2777,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeSweepTimeArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangePeakCriteriaArray(
+int32 __stdcall RFmxSpecAn_SpurCfgRangePeakCriteriaArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 threshold[],
@@ -2785,7 +2785,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangePeakCriteriaArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeDetectorArray(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeDetectorArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 detectorType[],
@@ -2793,7 +2793,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeDetectorArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeVBWFilterArray(
+int32 __stdcall RFmxSpecAn_SpurCfgRangeVBWFilterArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 VBWAuto[],
@@ -2802,39 +2802,39 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurCfgRangeVBWFilterArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgFrequencyDefinition(
+int32 __stdcall RFmxSpecAn_IMCfgFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 frequencyDefinition
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgFundamentalTones(
+int32 __stdcall RFmxSpecAn_IMCfgFundamentalTones(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 lowerToneFrequency,
    float64 upperToneFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgAutoIntermodsSetup(
+int32 __stdcall RFmxSpecAn_IMCfgAutoIntermodsSetup(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 autoIntermodsSetupEnabled,
    int32 maximumIntermodOrder
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgMeasurementMethod(
+int32 __stdcall RFmxSpecAn_IMCfgMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 measurementMethod
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgNumberOfIntermods(
+int32 __stdcall RFmxSpecAn_IMCfgNumberOfIntermods(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfIntermods
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgIntermod(
+int32 __stdcall RFmxSpecAn_IMCfgIntermod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 intermodOrder,
@@ -2844,7 +2844,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgIntermod(
    int32 intermodEnabled
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgRBWFilter(
+int32 __stdcall RFmxSpecAn_IMCfgRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto,
@@ -2852,14 +2852,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgRBWFilter(
    int32 RBWFilterType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgSweepTime(
+int32 __stdcall RFmxSpecAn_IMCfgSweepTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sweepTimeAuto,
    float64 sweepTimeInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgAveraging(
+int32 __stdcall RFmxSpecAn_IMCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -2867,14 +2867,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgFFT(
+int32 __stdcall RFmxSpecAn_IMCfgFFT(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 FFTWindow,
    float64 FFTPadding
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgIntermodArray(
+int32 __stdcall RFmxSpecAn_IMCfgIntermodArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 intermodOrder[],
@@ -2885,7 +2885,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMCfgIntermodArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgAveraging(
+int32 __stdcall RFmxSpecAn_SEMCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -2893,25 +2893,25 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgCarrierEnabled(
+int32 __stdcall RFmxSpecAn_SEMCfgCarrierEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 carrierEnabled
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_SEMCfgCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 integrationBandwidth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgCarrierFrequency(
+int32 __stdcall RFmxSpecAn_SEMCfgCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 carrierFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgCarrierRBWFilter(
+int32 __stdcall RFmxSpecAn_SEMCfgCarrierRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto,
@@ -2919,33 +2919,33 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgCarrierRBWFilter(
    int32 RBWFilterType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgCarrierRRCFilter(
+int32 __stdcall RFmxSpecAn_SEMCfgCarrierRRCFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RRCFilterEnabled,
    float64 RRCAlpha
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgFFT(
+int32 __stdcall RFmxSpecAn_SEMCfgFFT(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 FFTWindow,
    float64 FFTPadding
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_SEMCfgNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfCarriers
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgNumberOfOffsets(
+int32 __stdcall RFmxSpecAn_SEMCfgNumberOfOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfOffsets
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetAbsoluteLimit(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetAbsoluteLimit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 absoluteLimitMode,
@@ -2953,13 +2953,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetAbsoluteLimit(
    float64 absoluteLimitStop
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetBandwidthIntegral(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetBandwidthIntegral(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 bandwidthIntegral
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetFrequency(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 offsetStartFrequency,
@@ -2968,13 +2968,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetFrequency(
    int32 offsetSideband
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetLimitFailMask(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetLimitFailMask(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 limitFailMask
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRBWFilter(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto,
@@ -2982,13 +2982,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRBWFilter(
    int32 RBWFilterType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRelativeAttenuation(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetRelativeAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 relativeAttenuation
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRelativeLimit(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetRelativeLimit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 relativeLimitMode,
@@ -2996,38 +2996,38 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRelativeLimit(
    float64 relativeLimitStop
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgPowerUnits(
+int32 __stdcall RFmxSpecAn_SEMCfgPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 powerUnits
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgReferenceType(
+int32 __stdcall RFmxSpecAn_SEMCfgReferenceType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 referenceType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgSweepTime(
+int32 __stdcall RFmxSpecAn_SEMCfgSweepTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sweepTimeAuto,
    float64 sweepTimeInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgCarrierChannelBandwidth(
+int32 __stdcall RFmxSpecAn_SEMCfgCarrierChannelBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 carrierChannelBandwidth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetFrequencyDefinition(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 offsetFrequencyDefinition
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetAbsoluteLimitArray(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetAbsoluteLimitArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 absoluteLimitMode[],
@@ -3036,7 +3036,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetAbsoluteLimitArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetFrequencyArray(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetFrequencyArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 offsetStartFrequency[],
@@ -3046,7 +3046,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetFrequencyArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRBWFilterArray(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetRBWFilterArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto[],
@@ -3055,14 +3055,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRBWFilterArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRelativeAttenuationArray(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetRelativeAttenuationArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 relativeAttenuation[],
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRelativeLimitArray(
+int32 __stdcall RFmxSpecAn_SEMCfgOffsetRelativeLimitArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 relativeLimitMode[],
@@ -3071,13 +3071,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMCfgOffsetRelativeLimitArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgAutoHarmonics(
+int32 __stdcall RFmxSpecAn_HarmCfgAutoHarmonics(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 autoHarmonicsSetupEnabled
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgAveraging(
+int32 __stdcall RFmxSpecAn_HarmCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -3085,13 +3085,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgFundamentalMeasurementInterval(
+int32 __stdcall RFmxSpecAn_HarmCfgFundamentalMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgFundamentalRBW(
+int32 __stdcall RFmxSpecAn_HarmCfgFundamentalRBW(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 RBW,
@@ -3099,7 +3099,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgFundamentalRBW(
    float64 RRCAlpha
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgHarmonic(
+int32 __stdcall RFmxSpecAn_HarmCfgHarmonic(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 harmonicOrder,
@@ -3108,13 +3108,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgHarmonic(
    float64 harmonicMeasurementInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgNumberOfHarmonics(
+int32 __stdcall RFmxSpecAn_HarmCfgNumberOfHarmonics(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfHarmonics
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgHarmonicArray(
+int32 __stdcall RFmxSpecAn_HarmCfgHarmonicArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 harmonicOrder[],
@@ -3124,7 +3124,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmCfgHarmonicArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgAveraging(
+int32 __stdcall RFmxSpecAn_ACPCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -3132,89 +3132,89 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 integrationBandwidth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgCarrierMode(
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 carrierMode
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgCarrierFrequency(
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 carrierFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgCarrierRRCFilter(
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierRRCFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RRCFilterEnabled,
    float64 RRCAlpha
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgFFT(
+int32 __stdcall RFmxSpecAn_ACPCfgFFT(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 FFTWindow,
    float64 FFTPadding
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgMeasurementMethod(
+int32 __stdcall RFmxSpecAn_ACPCfgMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 measurementMethod
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_ACPCfgNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 noiseCompensationEnabled
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_ACPCfgNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfCarriers
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgNumberOfOffsets(
+int32 __stdcall RFmxSpecAn_ACPCfgNumberOfOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfOffsets
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 integrationBandwidth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetPowerReference(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetPowerReference(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 offsetReferenceCarrier,
    int32 offsetReferenceSpecific
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetRelativeAttenuation(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetRelativeAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 relativeAttenuation
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetRRCFilter(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetRRCFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RRCFilterEnabled,
    float64 RRCAlpha
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffset(
+int32 __stdcall RFmxSpecAn_ACPCfgOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 offsetFrequency,
@@ -3222,13 +3222,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffset(
    int32 offsetEnabled
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgPowerUnits(
+int32 __stdcall RFmxSpecAn_ACPCfgPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 powerUnits
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgRBWFilter(
+int32 __stdcall RFmxSpecAn_ACPCfgRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto,
@@ -3236,20 +3236,20 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgRBWFilter(
    int32 RBWFilterType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgSweepTime(
+int32 __stdcall RFmxSpecAn_ACPCfgSweepTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sweepTimeAuto,
    float64 sweepTimeInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetFrequencyDefinition(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 offsetFrequencyDefinition
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetArray(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 offsetFrequency[],
@@ -3258,14 +3258,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetIntegrationBandwidthArray(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetIntegrationBandwidthArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 integrationBandwidth[],
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetPowerReferenceArray(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetPowerReferenceArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 offsetPowerReferenceCarrier[],
@@ -3273,14 +3273,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetPowerReferenceArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetRelativeAttenuationArray(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetRelativeAttenuationArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 relativeAttenuation[],
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetRRCFilterArray(
+int32 __stdcall RFmxSpecAn_ACPCfgOffsetRRCFilterArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RRCFilterEnabled[],
@@ -3288,13 +3288,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgOffsetRRCFilterArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgRangeDefinition(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgRangeDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 rangeDefinition
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgAutoRange(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgAutoRange(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 startFrequency,
@@ -3302,40 +3302,40 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgAutoRange(
    float64 RBWPercentage
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgNumberOfRanges(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgNumberOfRanges(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfRanges
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgAveragingMultiplier(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgAveragingMultiplier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingMultiplier
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgSmoothing(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgSmoothing(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 smoothingType,
    float64 smoothingPercentage
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgSpotNoiseFrequencyList(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgSpotNoiseFrequencyList(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 frequencyList[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgSpurRemoval(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgSpurRemoval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 spurRemovalEnabled,
    float64 peakExcursion
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgCancellation(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgCancellation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 cancellationEnabled,
@@ -3345,7 +3345,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgCancellation(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgIntegratedNoise(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgIntegratedNoise(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 integratedNoiseRangeDefinition,
@@ -3354,7 +3354,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgIntegratedNoise(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgRangeArray(
+int32 __stdcall RFmxSpecAn_PhaseNoiseCfgRangeArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 rangeStartFrequency[],
@@ -3364,65 +3364,65 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseCfgRangeArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgMeasurementLocationType(
+int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementLocationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 measurementLocationType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgMeasurementIntervalMode(
+int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementIntervalMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 measurementIntervalMode
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgNumberOfSegments(
+int32 __stdcall RFmxSpecAn_PAVTCfgNumberOfSegments(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfSegments
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgMeasurementBandwidth(
+int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementBandwidth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgSegmentType(
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 segmentType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgMeasurementInterval(
+int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurermentOffset,
    float64 measurermentLength
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgSegmentMeasurementInterval(
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 segmentMeasurementOffset,
    float64 segmentMeasurementLength
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgSegmentTypeArray(
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentTypeArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 segmentType[],
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgSegmentStartTimeList(
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentStartTimeList(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 segmentStartTime[],
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgSegmentMeasurementIntervalArray(
+int32 __stdcall RFmxSpecAn_PAVTCfgSegmentMeasurementIntervalArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 segmentMeasurementOffset[],
@@ -3430,7 +3430,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgSegmentMeasurementIntervalArray(
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPCfgAveraging(
+int32 __stdcall RFmxSpecAn_TXPCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -3438,13 +3438,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPCfgMeasurementInterval(
+int32 __stdcall RFmxSpecAn_TXPCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPCfgRBWFilter(
+int32 __stdcall RFmxSpecAn_TXPCfgRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 RBW,
@@ -3452,7 +3452,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPCfgRBWFilter(
    float64 RRCAlpha
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPCfgThreshold(
+int32 __stdcall RFmxSpecAn_TXPCfgThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 thresholdEnabled,
@@ -3460,7 +3460,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPCfgThreshold(
    int32 thresholdType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPCfgVBWFilter(
+int32 __stdcall RFmxSpecAn_TXPCfgVBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 VBWAuto,
@@ -3468,26 +3468,26 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPCfgVBWFilter(
    float64 VBWToRBWRatio
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgAveraging(
+int32 __stdcall RFmxSpecAn_DPDCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
    int32 averagingCount
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgDPDModel(
+int32 __stdcall RFmxSpecAn_DPDCfgDPDModel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 DPDModel
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgDUTAverageInputPower(
+int32 __stdcall RFmxSpecAn_DPDCfgDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 DUTAverageInputPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgGeneralizedMemoryPolynomialCrossTerms(
+int32 __stdcall RFmxSpecAn_DPDCfgGeneralizedMemoryPolynomialCrossTerms(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 memoryPolynomialLeadOrder,
@@ -3498,33 +3498,33 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgGeneralizedMemoryPolynomialCrossTerms
    int32 memoryPolynomialMaximumLag
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgIterativeDPDEnabled(
+int32 __stdcall RFmxSpecAn_DPDCfgIterativeDPDEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 iterativeDPDEnabled
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgLookupTableAMToAMCurveFit(
+int32 __stdcall RFmxSpecAn_DPDCfgLookupTableAMToAMCurveFit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 AMToAMCurveFitOrder,
    int32 AMToAMCurveFitType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgLookupTableAMToPMCurveFit(
+int32 __stdcall RFmxSpecAn_DPDCfgLookupTableAMToPMCurveFit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 AMToPMCurveFitOrder,
    int32 AMToPMCurveFitType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgLookupTableStepSize(
+int32 __stdcall RFmxSpecAn_DPDCfgLookupTableStepSize(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 stepSize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgLookupTableThreshold(
+int32 __stdcall RFmxSpecAn_DPDCfgLookupTableThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 thresholdEnabled,
@@ -3532,69 +3532,69 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgLookupTableThreshold(
    int32 thresholdType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgMeasurementInterval(
+int32 __stdcall RFmxSpecAn_DPDCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgMeasurementSampleRate(
+int32 __stdcall RFmxSpecAn_DPDCfgMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sampleRateMode,
    float64 sampleRate
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgMemoryPolynomial(
+int32 __stdcall RFmxSpecAn_DPDCfgMemoryPolynomial(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 memoryPolynomialOrder,
    int32 memoryPolynomialMemoryDepth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDConfigurationInput(
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDConfigurationInput(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 configurationInput
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDLookupTableCorrectionType(
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDLookupTableCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 LUTCorrectionType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDMemoryModelCorrectionType(
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDMemoryModelCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 memoryModelCorrectionType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgLookupTableType(
+int32 __stdcall RFmxSpecAn_DPDCfgLookupTableType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 lookupTableType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgSynchronizationMethod(
+int32 __stdcall RFmxSpecAn_DPDCfgSynchronizationMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 synchronizationMethod
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFCfgMeasurementInterval(
+int32 __stdcall RFmxSpecAn_CCDFCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFCfgNumberOfRecords(
+int32 __stdcall RFmxSpecAn_CCDFCfgNumberOfRecords(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfRecords
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFCfgRBWFilter(
+int32 __stdcall RFmxSpecAn_CCDFCfgRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 RBW,
@@ -3602,7 +3602,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFCfgRBWFilter(
    float64 RRCAlpha
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFCfgThreshold(
+int32 __stdcall RFmxSpecAn_CCDFCfgThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 thresholdEnabled,
@@ -3610,7 +3610,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFCfgThreshold(
    int32 thresholdType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQCfgAcquisition(
+int32 __stdcall RFmxSpecAn_IQCfgAcquisition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 sampleRate,
@@ -3619,54 +3619,54 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQCfgAcquisition(
    float64 pretriggerTime
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQCfgBandwidth(
+int32 __stdcall RFmxSpecAn_IQCfgBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 bandwidthAuto,
    float64 bandwidth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgAMToAMCurveFit(
+int32 __stdcall RFmxSpecAn_AMPMCfgAMToAMCurveFit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 AMToAMCurveFitOrder,
    int32 AMToAMCurveFitType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgAMToPMCurveFit(
+int32 __stdcall RFmxSpecAn_AMPMCfgAMToPMCurveFit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 AMToPMCurveFitOrder,
    int32 AMToPMCurveFitType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgAveraging(
+int32 __stdcall RFmxSpecAn_AMPMCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
    int32 averagingCount
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgDUTAverageInputPower(
+int32 __stdcall RFmxSpecAn_AMPMCfgDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 DUTAverageInputPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgMeasurementInterval(
+int32 __stdcall RFmxSpecAn_AMPMCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgMeasurementSampleRate(
+int32 __stdcall RFmxSpecAn_AMPMCfgMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sampleRateMode,
    float64 sampleRate
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgThreshold(
+int32 __stdcall RFmxSpecAn_AMPMCfgThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 thresholdEnabled,
@@ -3674,13 +3674,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgThreshold(
    int32 thresholdType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgReferencePowerType(
+int32 __stdcall RFmxSpecAn_AMPMCfgReferencePowerType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 referencePowerType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgCompressionPoints(
+int32 __stdcall RFmxSpecAn_AMPMCfgCompressionPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 compressionPointEnabled,
@@ -3688,13 +3688,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgCompressionPoints(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMCfgSynchronizationMethod(
+int32 __stdcall RFmxSpecAn_AMPMCfgSynchronizationMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 synchronizationMethod
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntCfgAveraging(
+int32 __stdcall RFmxSpecAn_FCntCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -3702,13 +3702,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntCfgMeasurementInterval(
+int32 __stdcall RFmxSpecAn_FCntCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntCfgRBWFilter(
+int32 __stdcall RFmxSpecAn_FCntCfgRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 RBW,
@@ -3716,7 +3716,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntCfgRBWFilter(
    float64 RRCAlpha
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntCfgThreshold(
+int32 __stdcall RFmxSpecAn_FCntCfgThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 thresholdEnabled,
@@ -3724,7 +3724,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntCfgThreshold(
    int32 thresholdType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgRF(
+int32 __stdcall RFmxSpecAn_CfgRF(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 centerFrequency,
@@ -3732,25 +3732,25 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgRF(
    float64 externalAttenuation
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgReferenceLevel(
+int32 __stdcall RFmxSpecAn_CfgReferenceLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 referenceLevel
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgExternalAttenuation(
+int32 __stdcall RFmxSpecAn_CfgExternalAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 externalAttenuation
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgFrequency(
+int32 __stdcall RFmxSpecAn_CfgFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 centerFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgAveraging(
+int32 __stdcall RFmxSpecAn_SpectrumCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -3758,20 +3758,20 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgFFT(
+int32 __stdcall RFmxSpecAn_SpectrumCfgFFT(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 FFTWindow,
    float64 FFTPadding
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgPowerUnits(
+int32 __stdcall RFmxSpecAn_SpectrumCfgPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 spectrumPowerUnits
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgRBWFilter(
+int32 __stdcall RFmxSpecAn_SpectrumCfgRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto,
@@ -3779,33 +3779,33 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgRBWFilter(
    int32 RBWFilterType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgSpan(
+int32 __stdcall RFmxSpecAn_SpectrumCfgSpan(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 span
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgSweepTime(
+int32 __stdcall RFmxSpecAn_SpectrumCfgSweepTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sweepTimeAuto,
    float64 sweepTimeInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_SpectrumCfgNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 noiseCompensationEnabled
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgDetector(
+int32 __stdcall RFmxSpecAn_SpectrumCfgDetector(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 detectorType,
    int32 detectorPoints
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgVBWFilter(
+int32 __stdcall RFmxSpecAn_SpectrumCfgVBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 VBWAuto,
@@ -3813,45 +3813,45 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgVBWFilter(
    float64 VBWToRBWRatio
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgFrequencyList(
+int32 __stdcall RFmxSpecAn_NFCfgFrequencyList(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 frequencyList[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgMeasurementBandwidth(
+int32 __stdcall RFmxSpecAn_NFCfgMeasurementBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementBandwidth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgMeasurementInterval(
+int32 __stdcall RFmxSpecAn_NFCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgAveraging(
+int32 __stdcall RFmxSpecAn_NFCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
    int32 averagingCount
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgMeasurementMethod(
+int32 __stdcall RFmxSpecAn_NFCfgMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 measurementMethod
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgYFactorMode(
+int32 __stdcall RFmxSpecAn_NFCfgYFactorMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 yFactorMode
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgYFactorNoiseSourceENR(
+int32 __stdcall RFmxSpecAn_NFCfgYFactorNoiseSourceENR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 ENRFrequency[],
@@ -3861,7 +3861,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgYFactorNoiseSourceENR(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgYFactorNoiseSourceLoss(
+int32 __stdcall RFmxSpecAn_NFCfgYFactorNoiseSourceLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 noiseSourceLossCompensationEnabled,
@@ -3871,13 +3871,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgYFactorNoiseSourceLoss(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgYFactorNoiseSourceSettlingTime(
+int32 __stdcall RFmxSpecAn_NFCfgYFactorNoiseSourceSettlingTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 settlingTime
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgDUTInputLoss(
+int32 __stdcall RFmxSpecAn_NFCfgDUTInputLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 DUTInputLossCompensationEnabled,
@@ -3887,7 +3887,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgDUTInputLoss(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgDUTOutputLoss(
+int32 __stdcall RFmxSpecAn_NFCfgDUTOutputLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 DUTOutputLossCompensationEnabled,
@@ -3897,7 +3897,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgDUTOutputLoss(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgCalibrationLoss(
+int32 __stdcall RFmxSpecAn_NFCfgCalibrationLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 calibrationLossCompensationEnabled,
@@ -3907,13 +3907,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgCalibrationLoss(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgColdSourceMode(
+int32 __stdcall RFmxSpecAn_NFCfgColdSourceMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 coldSourceMode
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgColdSourceInputTermination(
+int32 __stdcall RFmxSpecAn_NFCfgColdSourceInputTermination(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 terminationVSWR[],
@@ -3922,7 +3922,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgColdSourceInputTermination(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgColdSourceDUTSParameters(
+int32 __stdcall RFmxSpecAn_NFCfgColdSourceDUTSParameters(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 DUTSParametersFrequency[],
@@ -3933,7 +3933,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFCfgColdSourceDUTSParameters(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgAveraging(
+int32 __stdcall RFmxSpecAn_CHPCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -3941,20 +3941,20 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgFFT(
+int32 __stdcall RFmxSpecAn_CHPCfgFFT(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 FFTWindow,
    float64 FFTPadding
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_CHPCfgIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 integrationBandwidth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgRBWFilter(
+int32 __stdcall RFmxSpecAn_CHPCfgRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto,
@@ -3962,39 +3962,39 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgRBWFilter(
    int32 RBWFilterType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgRRCFilter(
+int32 __stdcall RFmxSpecAn_CHPCfgRRCFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RRCFilterEnabled,
    float64 RRCAlpha
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgSpan(
+int32 __stdcall RFmxSpecAn_CHPCfgSpan(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 span
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgSweepTime(
+int32 __stdcall RFmxSpecAn_CHPCfgSweepTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sweepTimeAuto,
    float64 sweepTimeInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_CHPCfgNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfCarriers
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPCfgCarrierOffset(
+int32 __stdcall RFmxSpecAn_CHPCfgCarrierOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 carrierFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWCfgAveraging(
+int32 __stdcall RFmxSpecAn_OBWCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 averagingEnabled,
@@ -4002,20 +4002,20 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWCfgAveraging(
    int32 averagingType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWCfgBandwidthPercentage(
+int32 __stdcall RFmxSpecAn_OBWCfgBandwidthPercentage(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 bandwidthPercentage
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWCfgFFT(
+int32 __stdcall RFmxSpecAn_OBWCfgFFT(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 FFTWindow,
    float64 FFTPadding
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWCfgRBWFilter(
+int32 __stdcall RFmxSpecAn_OBWCfgRBWFilter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 RBWAuto,
@@ -4023,39 +4023,39 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWCfgRBWFilter(
    int32 RBWFilterType
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWCfgSpan(
+int32 __stdcall RFmxSpecAn_OBWCfgSpan(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 span
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWCfgSweepTime(
+int32 __stdcall RFmxSpecAn_OBWCfgSweepTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sweepTimeAuto,
    float64 sweepTimeInterval
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWCfgPowerUnits(
+int32 __stdcall RFmxSpecAn_OBWCfgPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 powerUnits
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetCalibrationSetupId(
+int32 __stdcall RFmxSpecAn_NFGetCalibrationSetupId(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetCalibrationSetupId(
+int32 __stdcall RFmxSpecAn_NFSetCalibrationSetupId(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char attrVal[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmFetchHarmonicMeasurementArray(
+int32 __stdcall RFmxSpecAn_HarmFetchHarmonicMeasurementArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4067,7 +4067,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmFetchHarmonicMeasurementArray(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQFetchData(
+int32 __stdcall RFmxSpecAn_IQFetchData(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4080,7 +4080,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQFetchData(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQFetchDataSplit(
+int32 __stdcall RFmxSpecAn_IQFetchDataSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4094,49 +4094,49 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQFetchDataSplit(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerNextPeak(
+int32 __stdcall RFmxSpecAn_MarkerNextPeak(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 nextPeak,
    int32 *nextPeakFound
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerPeakSearch(
+int32 __stdcall RFmxSpecAn_MarkerPeakSearch(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *numberOfPeaks
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AbortMeasurements(
+int32 __stdcall RFmxSpecAn_AbortMeasurements(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SelectMeasurements(
+int32 __stdcall RFmxSpecAn_SelectMeasurements(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    uInt32 measurements,
    int32 enableAllTraces
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFClearCalibrationDatabase(
+int32 __stdcall RFmxSpecAn_NFClearCalibrationDatabase(
    niRFmxInstrHandle instrumentHandle,
    char calibrationSetupID[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DisableTrigger(
+int32 __stdcall RFmxSpecAn_DisableTrigger(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgSoftwareEdgeTrigger(
+int32 __stdcall RFmxSpecAn_CfgSoftwareEdgeTrigger(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 triggerDelay,
    int32 enableTrigger
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgIQPowerEdgeTrigger(
+int32 __stdcall RFmxSpecAn_CfgIQPowerEdgeTrigger(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char IQPowerEdgeSource[],
@@ -4148,7 +4148,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgIQPowerEdgeTrigger(
    int32 enableTrigger
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgDigitalEdgeTrigger(
+int32 __stdcall RFmxSpecAn_CfgDigitalEdgeTrigger(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char digitalEdgeSource[],
@@ -4157,14 +4157,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgDigitalEdgeTrigger(
    int32 enableTrigger
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumCfgFrequencyStartStop(
+int32 __stdcall RFmxSpecAn_SpectrumCfgFrequencyStartStop(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 startFrequency,
    float64 stopFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgCarrierAndOffsets(
+int32 __stdcall RFmxSpecAn_ACPCfgCarrierAndOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 integrationBandwidth,
@@ -4172,7 +4172,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPCfgCarrierAndOffsets(
    float64 channelSpacing
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyDigitalPredistortion(
+int32 __stdcall RFmxSpecAn_DPDApplyDigitalPredistortion(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0In,
@@ -4190,7 +4190,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyDigitalPredistortion(
    float64* powerOffset
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyDigitalPredistortionSplit(
+int32 __stdcall RFmxSpecAn_DPDApplyDigitalPredistortionSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0In,
@@ -4210,7 +4210,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyDigitalPredistortionSplit(
    float64* powerOffset
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAllNamedResultNames(
+int32 __stdcall RFmxSpecAn_GetAllNamedResultNames(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char resultNames[],
@@ -4219,7 +4219,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAllNamedResultNames(
    int32* defaultResultExists
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyPreDPDSignalConditioning(
+int32 __stdcall RFmxSpecAn_DPDApplyPreDPDSignalConditioning(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0In,
@@ -4235,7 +4235,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyPreDPDSignalConditioning(
    float64* PAPR
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyPreDPDSignalConditioningSplit(
+int32 __stdcall RFmxSpecAn_DPDApplyPreDPDSignalConditioningSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0In,
@@ -4253,7 +4253,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyPreDPDSignalConditioningSplit(
    float64* PAPR
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchIntermodMeasurementArray(
+int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurementArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4264,7 +4264,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchIntermodMeasurementArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchInterceptPowerArray(
+int32 __stdcall RFmxSpecAn_IMFetchInterceptPowerArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4276,7 +4276,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchInterceptPowerArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchSpectrum(
+int32 __stdcall RFmxSpecAn_IMFetchSpectrum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4288,7 +4288,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchSpectrum(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchFundamentalMeasurement(
+int32 __stdcall RFmxSpecAn_IMFetchFundamentalMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4296,7 +4296,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchFundamentalMeasurement(
    float64* upperTonePower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchIntermodMeasurement(
+int32 __stdcall RFmxSpecAn_IMFetchIntermodMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4305,7 +4305,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchIntermodMeasurement(
    float64* upperIntermodPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchInterceptPower(
+int32 __stdcall RFmxSpecAn_IMFetchInterceptPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4315,7 +4315,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMFetchInterceptPower(
    float64* upperOutputInterceptPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchSpectrum(
+int32 __stdcall RFmxSpecAn_ACPFetchSpectrum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4326,7 +4326,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchSpectrum(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchOffsetMeasurementArray(
+int32 __stdcall RFmxSpecAn_ACPFetchOffsetMeasurementArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4338,7 +4338,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchOffsetMeasurementArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchAbsolutePowersTrace(
+int32 __stdcall RFmxSpecAn_ACPFetchAbsolutePowersTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4350,7 +4350,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchAbsolutePowersTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchRelativePowersTrace(
+int32 __stdcall RFmxSpecAn_ACPFetchRelativePowersTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4362,7 +4362,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchRelativePowersTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchCarrierMeasurement(
+int32 __stdcall RFmxSpecAn_ACPFetchCarrierMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4372,14 +4372,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchCarrierMeasurement(
    float64* integrationBandwidth
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchFrequencyResolution(
+int32 __stdcall RFmxSpecAn_ACPFetchFrequencyResolution(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* frequencyResolution
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchOffsetMeasurement(
+int32 __stdcall RFmxSpecAn_ACPFetchOffsetMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4389,14 +4389,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchOffsetMeasurement(
    float64* upperAbsolutePower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPFetchTotalCarrierPower(
+int32 __stdcall RFmxSpecAn_ACPFetchTotalCarrierPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* totalCarrierPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPRead(
+int32 __stdcall RFmxSpecAn_ACPRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4407,7 +4407,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPRead(
    float64* offsetCh1UpperRelativePower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPFetchSpectrum(
+int32 __stdcall RFmxSpecAn_CHPFetchSpectrum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4418,7 +4418,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPFetchSpectrum(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPFetchCarrierMeasurement(
+int32 __stdcall RFmxSpecAn_CHPFetchCarrierMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4427,14 +4427,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPFetchCarrierMeasurement(
    float64* relativePower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPFetchTotalCarrierPower(
+int32 __stdcall RFmxSpecAn_CHPFetchTotalCarrierPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* totalCarrierPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPRead(
+int32 __stdcall RFmxSpecAn_CHPRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4442,7 +4442,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPRead(
    float64* PSD
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchRangeAbsoluteLimitTrace(
+int32 __stdcall RFmxSpecAn_SpurFetchRangeAbsoluteLimitTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4453,7 +4453,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchRangeAbsoluteLimitTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchRangeSpectrumTrace(
+int32 __stdcall RFmxSpecAn_SpurFetchRangeSpectrumTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4464,7 +4464,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchRangeSpectrumTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchRangeStatusArray(
+int32 __stdcall RFmxSpecAn_SpurFetchRangeStatusArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4474,7 +4474,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchRangeStatusArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchSpurMeasurementArray(
+int32 __stdcall RFmxSpecAn_SpurFetchSpurMeasurementArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4486,7 +4486,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchSpurMeasurementArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchAllSpurs(
+int32 __stdcall RFmxSpecAn_SpurFetchAllSpurs(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4499,14 +4499,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchAllSpurs(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchMeasurementStatus(
+int32 __stdcall RFmxSpecAn_SpurFetchMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    int32* measurementStatus
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchRangeStatus(
+int32 __stdcall RFmxSpecAn_SpurFetchRangeStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4514,7 +4514,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchRangeStatus(
    int32* detectedSpurs
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchSpurMeasurement(
+int32 __stdcall RFmxSpecAn_SpurFetchSpurMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4524,7 +4524,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurFetchSpurMeasurement(
    float64* spurAbsoluteLimit
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWFetchSpectrumTrace(
+int32 __stdcall RFmxSpecAn_OBWFetchSpectrumTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4535,7 +4535,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWFetchSpectrumTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWFetchMeasurement(
+int32 __stdcall RFmxSpecAn_OBWFetchMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4546,7 +4546,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWFetchMeasurement(
    float64* stopFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWRead(
+int32 __stdcall RFmxSpecAn_OBWRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4557,7 +4557,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWRead(
    float64* stopFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFFetchGaussianProbabilitiesTrace(
+int32 __stdcall RFmxSpecAn_CCDFFetchGaussianProbabilitiesTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4568,7 +4568,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFFetchGaussianProbabilitiesTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFFetchProbabilitiesTrace(
+int32 __stdcall RFmxSpecAn_CCDFFetchProbabilitiesTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4579,7 +4579,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFFetchProbabilitiesTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFFetchBasicPowerProbabilities(
+int32 __stdcall RFmxSpecAn_CCDFFetchBasicPowerProbabilities(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4591,7 +4591,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFFetchBasicPowerProbabilities(
    float64* oneTenThousandthPercentPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFFetchPower(
+int32 __stdcall RFmxSpecAn_CCDFFetchPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4601,7 +4601,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFFetchPower(
    int32* measuredSamplesCount
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFRead(
+int32 __stdcall RFmxSpecAn_CCDFRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4611,7 +4611,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFRead(
    int32* measuredSamplesCount
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPFetchPowerTrace(
+int32 __stdcall RFmxSpecAn_TXPFetchPowerTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4622,7 +4622,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPFetchPowerTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPFetchMeasurement(
+int32 __stdcall RFmxSpecAn_TXPFetchMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4632,7 +4632,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPFetchMeasurement(
    float64* minimumPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPRead(
+int32 __stdcall RFmxSpecAn_TXPRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4642,7 +4642,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPRead(
    float64* minimumPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumFetchPowerTrace(
+int32 __stdcall RFmxSpecAn_SpectrumFetchPowerTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4653,7 +4653,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumFetchPowerTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumFetchSpectrum(
+int32 __stdcall RFmxSpecAn_SpectrumFetchSpectrum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4664,7 +4664,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumFetchSpectrum(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumRead(
+int32 __stdcall RFmxSpecAn_SpectrumRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4675,7 +4675,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumRead(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumFetchMeasurement(
+int32 __stdcall RFmxSpecAn_SpectrumFetchMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4684,7 +4684,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumFetchMeasurement(
    float64* frequencyResolution
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmFetchHarmonicPowerTrace(
+int32 __stdcall RFmxSpecAn_HarmFetchHarmonicPowerTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4695,7 +4695,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmFetchHarmonicPowerTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmFetchHarmonicMeasurement(
+int32 __stdcall RFmxSpecAn_HarmFetchHarmonicMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4705,7 +4705,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmFetchHarmonicMeasurement(
    float64* frequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmFetchTHD(
+int32 __stdcall RFmxSpecAn_HarmFetchTHD(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4714,7 +4714,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmFetchTHD(
    float64* fundamentalFrequency
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmRead(
+int32 __stdcall RFmxSpecAn_HarmRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4722,7 +4722,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmRead(
    float64* averageFundamentalPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchDUTNoiseFigureAndGain(
+int32 __stdcall RFmxSpecAn_NFFetchDUTNoiseFigureAndGain(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4733,7 +4733,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchDUTNoiseFigureAndGain(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchYFactors(
+int32 __stdcall RFmxSpecAn_NFFetchYFactors(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4743,7 +4743,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchYFactors(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchYFactorPowers(
+int32 __stdcall RFmxSpecAn_NFFetchYFactorPowers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4753,7 +4753,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchYFactorPowers(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchAnalyzerNoiseFigure(
+int32 __stdcall RFmxSpecAn_NFFetchAnalyzerNoiseFigure(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4762,7 +4762,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchAnalyzerNoiseFigure(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchColdSourcePower(
+int32 __stdcall RFmxSpecAn_NFFetchColdSourcePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4771,7 +4771,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFFetchColdSourcePower(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchAMToAMTrace(
+int32 __stdcall RFmxSpecAn_AMPMFetchAMToAMTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4782,7 +4782,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchAMToAMTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchAMToPMTrace(
+int32 __stdcall RFmxSpecAn_AMPMFetchAMToPMTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4793,7 +4793,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchAMToPMTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchCurveFitCoefficients(
+int32 __stdcall RFmxSpecAn_AMPMFetchCurveFitCoefficients(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4803,7 +4803,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchCurveFitCoefficients(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform(
+int32 __stdcall RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4814,7 +4814,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveformSplit(
+int32 __stdcall RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveformSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4826,7 +4826,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveformSplit
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchProcessedReferenceWaveform(
+int32 __stdcall RFmxSpecAn_AMPMFetchProcessedReferenceWaveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4837,7 +4837,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchProcessedReferenceWaveform(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchProcessedReferenceWaveformSplit(
+int32 __stdcall RFmxSpecAn_AMPMFetchProcessedReferenceWaveformSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4849,7 +4849,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchProcessedReferenceWaveformSplit(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchRelativePhaseTrace(
+int32 __stdcall RFmxSpecAn_AMPMFetchRelativePhaseTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4860,7 +4860,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchRelativePhaseTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchRelativePowerTrace(
+int32 __stdcall RFmxSpecAn_AMPMFetchRelativePowerTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4871,7 +4871,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchRelativePowerTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchCompressionPoints(
+int32 __stdcall RFmxSpecAn_AMPMFetchCompressionPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4881,7 +4881,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchCompressionPoints(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchCurveFitResidual(
+int32 __stdcall RFmxSpecAn_AMPMFetchCurveFitResidual(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4889,7 +4889,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchCurveFitResidual(
    float64* AMToPMResidual
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchDUTCharacteristics(
+int32 __stdcall RFmxSpecAn_AMPMFetchDUTCharacteristics(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4898,7 +4898,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchDUTCharacteristics(
    float64* meanRMSEVM
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchError(
+int32 __stdcall RFmxSpecAn_AMPMFetchError(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4907,7 +4907,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMFetchError(
    float64* meanPhaseError
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchAbsoluteMaskTrace(
+int32 __stdcall RFmxSpecAn_SEMFetchAbsoluteMaskTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4918,7 +4918,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchAbsoluteMaskTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchRelativeMaskTrace(
+int32 __stdcall RFmxSpecAn_SEMFetchRelativeMaskTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4929,7 +4929,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchRelativeMaskTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchSpectrum(
+int32 __stdcall RFmxSpecAn_SEMFetchSpectrum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4940,7 +4940,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchSpectrum(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchLowerOffsetMarginArray(
+int32 __stdcall RFmxSpecAn_SEMFetchLowerOffsetMarginArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4953,7 +4953,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchLowerOffsetMarginArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchLowerOffsetPowerArray(
+int32 __stdcall RFmxSpecAn_SEMFetchLowerOffsetPowerArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4966,7 +4966,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchLowerOffsetPowerArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchUpperOffsetMarginArray(
+int32 __stdcall RFmxSpecAn_SEMFetchUpperOffsetMarginArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4979,7 +4979,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchUpperOffsetMarginArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchUpperOffsetPowerArray(
+int32 __stdcall RFmxSpecAn_SEMFetchUpperOffsetPowerArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -4992,7 +4992,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchUpperOffsetPowerArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchCarrierMeasurement(
+int32 __stdcall RFmxSpecAn_SEMFetchCarrierMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5002,21 +5002,21 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchCarrierMeasurement(
    float64* totalRelativePower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchCompositeMeasurementStatus(
+int32 __stdcall RFmxSpecAn_SEMFetchCompositeMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    int32* compositeMeasurementStatus
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchFrequencyResolution(
+int32 __stdcall RFmxSpecAn_SEMFetchFrequencyResolution(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* frequencyResolution
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchLowerOffsetMargin(
+int32 __stdcall RFmxSpecAn_SEMFetchLowerOffsetMargin(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5027,7 +5027,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchLowerOffsetMargin(
    float64* marginRelativePower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchLowerOffsetPower(
+int32 __stdcall RFmxSpecAn_SEMFetchLowerOffsetPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5038,14 +5038,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchLowerOffsetPower(
    float64* peakRelativePower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchTotalCarrierPower(
+int32 __stdcall RFmxSpecAn_SEMFetchTotalCarrierPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* totalCarrierPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchUpperOffsetMargin(
+int32 __stdcall RFmxSpecAn_SEMFetchUpperOffsetMargin(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5056,7 +5056,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchUpperOffsetMargin(
    float64* marginRelativePower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchUpperOffsetPower(
+int32 __stdcall RFmxSpecAn_SEMFetchUpperOffsetPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5067,7 +5067,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMFetchUpperOffsetPower(
    float64* peakRelativePower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntFetchFrequencyTrace(
+int32 __stdcall RFmxSpecAn_FCntFetchFrequencyTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5078,7 +5078,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntFetchFrequencyTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntFetchPhaseTrace(
+int32 __stdcall RFmxSpecAn_FCntFetchPhaseTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5089,7 +5089,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntFetchPhaseTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntFetchPowerTrace(
+int32 __stdcall RFmxSpecAn_FCntFetchPowerTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5100,7 +5100,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntFetchPowerTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntFetchMeasurement(
+int32 __stdcall RFmxSpecAn_FCntFetchMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5109,7 +5109,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntFetchMeasurement(
    float64* meanPhase
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntRead(
+int32 __stdcall RFmxSpecAn_FCntRead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5118,14 +5118,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntRead(
    float64* meanPhase
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntFetchAllanDeviation(
+int32 __stdcall RFmxSpecAn_FCntFetchAllanDeviation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* allanDeviation
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchDPDPolynomial(
+int32 __stdcall RFmxSpecAn_DPDFetchDPDPolynomial(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5134,7 +5134,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchDPDPolynomial(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchDPDPolynomialSplit(
+int32 __stdcall RFmxSpecAn_DPDFetchDPDPolynomialSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5144,7 +5144,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchDPDPolynomialSplit(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchLookupTable(
+int32 __stdcall RFmxSpecAn_DPDFetchLookupTable(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5154,7 +5154,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchLookupTable(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchLookupTableSplit(
+int32 __stdcall RFmxSpecAn_DPDFetchLookupTableSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5165,7 +5165,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchLookupTableSplit(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform(
+int32 __stdcall RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5176,7 +5176,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit(
+int32 __stdcall RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5188,7 +5188,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchProcessedReferenceWaveform(
+int32 __stdcall RFmxSpecAn_DPDFetchProcessedReferenceWaveform(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5199,7 +5199,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchProcessedReferenceWaveform(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit(
+int32 __stdcall RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5211,28 +5211,28 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchAverageGain(
+int32 __stdcall RFmxSpecAn_DPDFetchAverageGain(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* averageGain
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchNMSE(
+int32 __stdcall RFmxSpecAn_DPDFetchNMSE(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* NMSE
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR(
+int32 __stdcall RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
    float64* preCFRPAPR
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchSpotNoise(
+int32 __stdcall RFmxSpecAn_PhaseNoiseFetchSpotNoise(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5241,7 +5241,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchSpotNoise(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchIntegratedNoise(
+int32 __stdcall RFmxSpecAn_PhaseNoiseFetchIntegratedNoise(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5254,7 +5254,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchIntegratedNoise(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchMeasuredLogPlotTrace(
+int32 __stdcall RFmxSpecAn_PhaseNoiseFetchMeasuredLogPlotTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5264,7 +5264,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchMeasuredLogPlotTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchSmoothedLogPlotTrace(
+int32 __stdcall RFmxSpecAn_PhaseNoiseFetchSmoothedLogPlotTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5274,7 +5274,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchSmoothedLogPlotTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchCarrierMeasurement(
+int32 __stdcall RFmxSpecAn_PhaseNoiseFetchCarrierMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5282,7 +5282,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseFetchCarrierMeasurement(
    float64* carrierPower
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTFetchPhaseAndAmplitudeArray(
+int32 __stdcall RFmxSpecAn_PAVTFetchPhaseAndAmplitudeArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5294,7 +5294,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTFetchPhaseAndAmplitudeArray(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTFetchPhaseTrace(
+int32 __stdcall RFmxSpecAn_PAVTFetchPhaseTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5306,7 +5306,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTFetchPhaseTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTFetchAmplitudeTrace(
+int32 __stdcall RFmxSpecAn_PAVTFetchAmplitudeTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5318,7 +5318,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTFetchAmplitudeTrace(
    int32* actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTFetchPhaseAndAmplitude(
+int32 __stdcall RFmxSpecAn_PAVTFetchPhaseAndAmplitude(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -5328,3896 +5328,3896 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTFetchPhaseAndAmplitude(
    float64* meanAbsoluteAmplitude
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_MarkerFetchXY(
+int32 __stdcall RFmxSpecAn_MarkerFetchXY(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64* markerXLocation,
    float64* markerYLocation
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQGetRecordsDone(
+int32 __stdcall RFmxSpecAn_IQGetRecordsDone(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32* recordsDone
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_ACPGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_ACPSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_ACPGetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_ACPSetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetCarrierMode(
+int32 __stdcall RFmxSpecAn_ACPGetCarrierMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetCarrierMode(
+int32 __stdcall RFmxSpecAn_ACPSetCarrierMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetCarrierFrequency(
+int32 __stdcall RFmxSpecAn_ACPGetCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetCarrierFrequency(
+int32 __stdcall RFmxSpecAn_ACPSetCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_ACPGetCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_ACPSetCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetCarrierRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_ACPGetCarrierRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetCarrierRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_ACPSetCarrierRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetCarrierRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_ACPGetCarrierRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetCarrierRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_ACPSetCarrierRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetNumberOfOffsets(
+int32 __stdcall RFmxSpecAn_ACPGetNumberOfOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetNumberOfOffsets(
+int32 __stdcall RFmxSpecAn_ACPSetNumberOfOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetEnabled(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetEnabled(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetFrequency(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetFrequency(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetSideband(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetSideband(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetSideband(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetSideband(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetPowerReferenceCarrier(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetPowerReferenceCarrier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetPowerReferenceCarrier(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetPowerReferenceCarrier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetPowerReferenceSpecific(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetPowerReferenceSpecific(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetPowerReferenceSpecific(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetPowerReferenceSpecific(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetRelativeAttenuation(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetRelativeAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetRelativeAttenuation(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetRelativeAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetOffsetFrequencyDefinition(
+int32 __stdcall RFmxSpecAn_ACPGetOffsetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetOffsetFrequencyDefinition(
+int32 __stdcall RFmxSpecAn_ACPSetOffsetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_ACPGetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_ACPSetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_ACPGetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_ACPSetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetRBWFilterType(
+int32 __stdcall RFmxSpecAn_ACPGetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetRBWFilterType(
+int32 __stdcall RFmxSpecAn_ACPSetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_ACPGetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_ACPSetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_ACPGetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_ACPSetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_ACPGetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_ACPSetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetPowerUnits(
+int32 __stdcall RFmxSpecAn_ACPGetPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetPowerUnits(
+int32 __stdcall RFmxSpecAn_ACPSetPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetMeasurementMethod(
+int32 __stdcall RFmxSpecAn_ACPGetMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetMeasurementMethod(
+int32 __stdcall RFmxSpecAn_ACPSetMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetSequentialFFTSize(
+int32 __stdcall RFmxSpecAn_ACPGetSequentialFFTSize(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetSequentialFFTSize(
+int32 __stdcall RFmxSpecAn_ACPSetSequentialFFTSize(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetNoiseCalibrationMode(
+int32 __stdcall RFmxSpecAn_ACPGetNoiseCalibrationMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetNoiseCalibrationMode(
+int32 __stdcall RFmxSpecAn_ACPSetNoiseCalibrationMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetNoiseCalibrationAveragingAuto(
+int32 __stdcall RFmxSpecAn_ACPGetNoiseCalibrationAveragingAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetNoiseCalibrationAveragingAuto(
+int32 __stdcall RFmxSpecAn_ACPSetNoiseCalibrationAveragingAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetNoiseCalibrationAveragingCount(
+int32 __stdcall RFmxSpecAn_ACPGetNoiseCalibrationAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetNoiseCalibrationAveragingCount(
+int32 __stdcall RFmxSpecAn_ACPSetNoiseCalibrationAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_ACPGetNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_ACPSetNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetNoiseCompensationType(
+int32 __stdcall RFmxSpecAn_ACPGetNoiseCompensationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetNoiseCompensationType(
+int32 __stdcall RFmxSpecAn_ACPSetNoiseCompensationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_ACPGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_ACPSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetAveragingCount(
+int32 __stdcall RFmxSpecAn_ACPGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetAveragingCount(
+int32 __stdcall RFmxSpecAn_ACPSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetAveragingType(
+int32 __stdcall RFmxSpecAn_ACPGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetAveragingType(
+int32 __stdcall RFmxSpecAn_ACPSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetMeasurementMode(
+int32 __stdcall RFmxSpecAn_ACPGetMeasurementMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetMeasurementMode(
+int32 __stdcall RFmxSpecAn_ACPSetMeasurementMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetFFTWindow(
+int32 __stdcall RFmxSpecAn_ACPGetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetFFTWindow(
+int32 __stdcall RFmxSpecAn_ACPSetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetFFTPadding(
+int32 __stdcall RFmxSpecAn_ACPGetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetFFTPadding(
+int32 __stdcall RFmxSpecAn_ACPSetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetIFOutputPowerOffsetAuto(
+int32 __stdcall RFmxSpecAn_ACPGetIFOutputPowerOffsetAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetIFOutputPowerOffsetAuto(
+int32 __stdcall RFmxSpecAn_ACPSetIFOutputPowerOffsetAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetNearIFOutputPowerOffset(
+int32 __stdcall RFmxSpecAn_ACPGetNearIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetNearIFOutputPowerOffset(
+int32 __stdcall RFmxSpecAn_ACPSetNearIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetFarIFOutputPowerOffset(
+int32 __stdcall RFmxSpecAn_ACPGetFarIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetFarIFOutputPowerOffset(
+int32 __stdcall RFmxSpecAn_ACPSetFarIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_ACPGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_ACPSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_ACPGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_ACPSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsTotalCarrierPower(
+int32 __stdcall RFmxSpecAn_ACPGetResultsTotalCarrierPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsFrequencyResolution(
+int32 __stdcall RFmxSpecAn_ACPGetResultsFrequencyResolution(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsCarrierFrequency(
+int32 __stdcall RFmxSpecAn_ACPGetResultsCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_ACPGetResultsCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsCarrierAbsolutePower(
+int32 __stdcall RFmxSpecAn_ACPGetResultsCarrierAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsCarrierTotalRelativePower(
+int32 __stdcall RFmxSpecAn_ACPGetResultsCarrierTotalRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsLowerOffsetFrequencyReferenceCarrier(
+int32 __stdcall RFmxSpecAn_ACPGetResultsLowerOffsetFrequencyReferenceCarrier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsLowerOffsetFrequency(
+int32 __stdcall RFmxSpecAn_ACPGetResultsLowerOffsetFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsLowerOffsetIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_ACPGetResultsLowerOffsetIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsLowerOffsetPowerReferenceCarrier(
+int32 __stdcall RFmxSpecAn_ACPGetResultsLowerOffsetPowerReferenceCarrier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsLowerOffsetAbsolutePower(
+int32 __stdcall RFmxSpecAn_ACPGetResultsLowerOffsetAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsLowerOffsetRelativePower(
+int32 __stdcall RFmxSpecAn_ACPGetResultsLowerOffsetRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsUpperOffsetFrequencyReferenceCarrier(
+int32 __stdcall RFmxSpecAn_ACPGetResultsUpperOffsetFrequencyReferenceCarrier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsUpperOffsetFrequency(
+int32 __stdcall RFmxSpecAn_ACPGetResultsUpperOffsetFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsUpperOffsetIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_ACPGetResultsUpperOffsetIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsUpperOffsetPowerReferenceCarrier(
+int32 __stdcall RFmxSpecAn_ACPGetResultsUpperOffsetPowerReferenceCarrier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsUpperOffsetAbsolutePower(
+int32 __stdcall RFmxSpecAn_ACPGetResultsUpperOffsetAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetResultsUpperOffsetRelativePower(
+int32 __stdcall RFmxSpecAn_ACPGetResultsUpperOffsetRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_ACPGetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_ACPSetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetFFTOverlapMode(
+int32 __stdcall RFmxSpecAn_ACPGetFFTOverlapMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetFFTOverlapMode(
+int32 __stdcall RFmxSpecAn_ACPSetFFTOverlapMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPGetFFTOverlap(
+int32 __stdcall RFmxSpecAn_ACPGetFFTOverlap(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_ACPSetFFTOverlap(
+int32 __stdcall RFmxSpecAn_ACPSetFFTOverlap(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_CCDFGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_CCDFSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_CCDFGetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_CCDFSetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetNumberOfRecords(
+int32 __stdcall RFmxSpecAn_CCDFGetNumberOfRecords(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetNumberOfRecords(
+int32 __stdcall RFmxSpecAn_CCDFSetNumberOfRecords(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_CCDFGetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_CCDFSetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetRBWFilterType(
+int32 __stdcall RFmxSpecAn_CCDFGetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetRBWFilterType(
+int32 __stdcall RFmxSpecAn_CCDFSetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetRBWFilterRRCAlpha(
+int32 __stdcall RFmxSpecAn_CCDFGetRBWFilterRRCAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetRBWFilterRRCAlpha(
+int32 __stdcall RFmxSpecAn_CCDFSetRBWFilterRRCAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetThresholdEnabled(
+int32 __stdcall RFmxSpecAn_CCDFGetThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetThresholdEnabled(
+int32 __stdcall RFmxSpecAn_CCDFSetThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetThresholdType(
+int32 __stdcall RFmxSpecAn_CCDFGetThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetThresholdType(
+int32 __stdcall RFmxSpecAn_CCDFSetThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetThresholdLevel(
+int32 __stdcall RFmxSpecAn_CCDFGetThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetThresholdLevel(
+int32 __stdcall RFmxSpecAn_CCDFSetThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_CCDFGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_CCDFSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_CCDFGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_CCDFSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsMeanPower(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsMeanPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsMeanPowerPercentile(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsMeanPowerPercentile(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsTenPercentPower(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsTenPercentPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsOnePercentPower(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsOnePercentPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsOneTenthPercentPower(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsOneTenthPercentPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsOneHundredthPercentPower(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsOneHundredthPercentPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsOneThousandthPercentPower(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsOneThousandthPercentPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsOneTenThousandthPercentPower(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsOneTenThousandthPercentPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsPeakPower(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsPeakPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CCDFGetResultsMeasuredSampleCount(
+int32 __stdcall RFmxSpecAn_CCDFGetResultsMeasuredSampleCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_CHPGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_CHPSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetSpan(
+int32 __stdcall RFmxSpecAn_CHPGetSpan(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetSpan(
+int32 __stdcall RFmxSpecAn_CHPSetSpan(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_CHPGetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_CHPSetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetCarrierFrequency(
+int32 __stdcall RFmxSpecAn_CHPGetCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetCarrierFrequency(
+int32 __stdcall RFmxSpecAn_CHPSetCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_CHPGetCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_CHPSetCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetCarrierRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_CHPGetCarrierRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetCarrierRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_CHPSetCarrierRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetCarrierRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_CHPGetCarrierRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetCarrierRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_CHPSetCarrierRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_CHPGetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_CHPSetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_CHPGetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_CHPSetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetRBWFilterType(
+int32 __stdcall RFmxSpecAn_CHPGetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetRBWFilterType(
+int32 __stdcall RFmxSpecAn_CHPSetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_CHPGetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_CHPSetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_CHPGetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_CHPSetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_CHPGetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_CHPSetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetNoiseCalibrationMode(
+int32 __stdcall RFmxSpecAn_CHPGetNoiseCalibrationMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetNoiseCalibrationMode(
+int32 __stdcall RFmxSpecAn_CHPSetNoiseCalibrationMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetNoiseCalibrationAveragingAuto(
+int32 __stdcall RFmxSpecAn_CHPGetNoiseCalibrationAveragingAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetNoiseCalibrationAveragingAuto(
+int32 __stdcall RFmxSpecAn_CHPSetNoiseCalibrationAveragingAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetNoiseCalibrationAveragingCount(
+int32 __stdcall RFmxSpecAn_CHPGetNoiseCalibrationAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetNoiseCalibrationAveragingCount(
+int32 __stdcall RFmxSpecAn_CHPSetNoiseCalibrationAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_CHPGetNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_CHPSetNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetNoiseCompensationType(
+int32 __stdcall RFmxSpecAn_CHPGetNoiseCompensationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetNoiseCompensationType(
+int32 __stdcall RFmxSpecAn_CHPSetNoiseCompensationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_CHPGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_CHPSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetAveragingCount(
+int32 __stdcall RFmxSpecAn_CHPGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetAveragingCount(
+int32 __stdcall RFmxSpecAn_CHPSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetAveragingType(
+int32 __stdcall RFmxSpecAn_CHPGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetAveragingType(
+int32 __stdcall RFmxSpecAn_CHPSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetMeasurementMode(
+int32 __stdcall RFmxSpecAn_CHPGetMeasurementMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetMeasurementMode(
+int32 __stdcall RFmxSpecAn_CHPSetMeasurementMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetFFTWindow(
+int32 __stdcall RFmxSpecAn_CHPGetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetFFTWindow(
+int32 __stdcall RFmxSpecAn_CHPSetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetFFTPadding(
+int32 __stdcall RFmxSpecAn_CHPGetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetFFTPadding(
+int32 __stdcall RFmxSpecAn_CHPSetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_CHPGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_CHPSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_CHPGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_CHPSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetResultsTotalCarrierPower(
+int32 __stdcall RFmxSpecAn_CHPGetResultsTotalCarrierPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetResultsFrequencyResolution(
+int32 __stdcall RFmxSpecAn_CHPGetResultsFrequencyResolution(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetResultsCarrierFrequency(
+int32 __stdcall RFmxSpecAn_CHPGetResultsCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetResultsCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_CHPGetResultsCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetResultsCarrierAbsolutePower(
+int32 __stdcall RFmxSpecAn_CHPGetResultsCarrierAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetResultsCarrierPSD(
+int32 __stdcall RFmxSpecAn_CHPGetResultsCarrierPSD(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetResultsCarrierRelativePower(
+int32 __stdcall RFmxSpecAn_CHPGetResultsCarrierRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_CHPGetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_CHPSetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_FCntGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_FCntSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_FCntGetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_FCntSetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_FCntGetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_FCntSetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetRBWFilterType(
+int32 __stdcall RFmxSpecAn_FCntGetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetRBWFilterType(
+int32 __stdcall RFmxSpecAn_FCntSetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetRBWFilterRRCAlpha(
+int32 __stdcall RFmxSpecAn_FCntGetRBWFilterRRCAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetRBWFilterRRCAlpha(
+int32 __stdcall RFmxSpecAn_FCntSetRBWFilterRRCAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetThresholdEnabled(
+int32 __stdcall RFmxSpecAn_FCntGetThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetThresholdEnabled(
+int32 __stdcall RFmxSpecAn_FCntSetThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetThresholdType(
+int32 __stdcall RFmxSpecAn_FCntGetThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetThresholdType(
+int32 __stdcall RFmxSpecAn_FCntSetThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetThresholdLevel(
+int32 __stdcall RFmxSpecAn_FCntGetThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetThresholdLevel(
+int32 __stdcall RFmxSpecAn_FCntSetThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_FCntGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_FCntSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetAveragingCount(
+int32 __stdcall RFmxSpecAn_FCntGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetAveragingCount(
+int32 __stdcall RFmxSpecAn_FCntSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetAveragingType(
+int32 __stdcall RFmxSpecAn_FCntGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetAveragingType(
+int32 __stdcall RFmxSpecAn_FCntSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_FCntGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_FCntSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_FCntGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_FCntSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetResultsAverageRelativeFrequency(
+int32 __stdcall RFmxSpecAn_FCntGetResultsAverageRelativeFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetResultsAverageAbsoluteFrequency(
+int32 __stdcall RFmxSpecAn_FCntGetResultsAverageAbsoluteFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetResultsMeanPhase(
+int32 __stdcall RFmxSpecAn_FCntGetResultsMeanPhase(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_FCntGetResultsAllanDeviation(
+int32 __stdcall RFmxSpecAn_FCntGetResultsAllanDeviation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_HarmGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_HarmSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetFundamentalRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_HarmGetFundamentalRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetFundamentalRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_HarmSetFundamentalRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetFundamentalRBWFilterType(
+int32 __stdcall RFmxSpecAn_HarmGetFundamentalRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetFundamentalRBWFilterType(
+int32 __stdcall RFmxSpecAn_HarmSetFundamentalRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetFundamentalRBWFilterAlpha(
+int32 __stdcall RFmxSpecAn_HarmGetFundamentalRBWFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetFundamentalRBWFilterAlpha(
+int32 __stdcall RFmxSpecAn_HarmSetFundamentalRBWFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetFundamentalMeasurementInterval(
+int32 __stdcall RFmxSpecAn_HarmGetFundamentalMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetFundamentalMeasurementInterval(
+int32 __stdcall RFmxSpecAn_HarmSetFundamentalMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetNumberOfHarmonics(
+int32 __stdcall RFmxSpecAn_HarmGetNumberOfHarmonics(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetNumberOfHarmonics(
+int32 __stdcall RFmxSpecAn_HarmSetNumberOfHarmonics(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetAutoSetupEnabled(
+int32 __stdcall RFmxSpecAn_HarmGetAutoSetupEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetAutoSetupEnabled(
+int32 __stdcall RFmxSpecAn_HarmSetAutoSetupEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetHarmonicEnabled(
+int32 __stdcall RFmxSpecAn_HarmGetHarmonicEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetHarmonicEnabled(
+int32 __stdcall RFmxSpecAn_HarmSetHarmonicEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetHarmonicOrder(
+int32 __stdcall RFmxSpecAn_HarmGetHarmonicOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetHarmonicOrder(
+int32 __stdcall RFmxSpecAn_HarmSetHarmonicOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetHarmonicBandwidth(
+int32 __stdcall RFmxSpecAn_HarmGetHarmonicBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetHarmonicBandwidth(
+int32 __stdcall RFmxSpecAn_HarmSetHarmonicBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetHarmonicMeasurementInterval(
+int32 __stdcall RFmxSpecAn_HarmGetHarmonicMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetHarmonicMeasurementInterval(
+int32 __stdcall RFmxSpecAn_HarmSetHarmonicMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_HarmGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_HarmSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetAveragingCount(
+int32 __stdcall RFmxSpecAn_HarmGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetAveragingCount(
+int32 __stdcall RFmxSpecAn_HarmSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetAveragingType(
+int32 __stdcall RFmxSpecAn_HarmGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetAveragingType(
+int32 __stdcall RFmxSpecAn_HarmSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_HarmGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_HarmSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_HarmGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_HarmSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetResultsTotalHarmonicDistortion(
+int32 __stdcall RFmxSpecAn_HarmGetResultsTotalHarmonicDistortion(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetResultsAverageFundamentalPower(
+int32 __stdcall RFmxSpecAn_HarmGetResultsAverageFundamentalPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetResultsFundamentalFrequency(
+int32 __stdcall RFmxSpecAn_HarmGetResultsFundamentalFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetResultsHarmonicAverageAbsolutePower(
+int32 __stdcall RFmxSpecAn_HarmGetResultsHarmonicAverageAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetResultsHarmonicAverageRelativePower(
+int32 __stdcall RFmxSpecAn_HarmGetResultsHarmonicAverageRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetResultsHarmonicFrequency(
+int32 __stdcall RFmxSpecAn_HarmGetResultsHarmonicFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetResultsHarmonicRBW(
+int32 __stdcall RFmxSpecAn_HarmGetResultsHarmonicRBW(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetMeasurementMethod(
+int32 __stdcall RFmxSpecAn_HarmGetMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetMeasurementMethod(
+int32 __stdcall RFmxSpecAn_HarmSetMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmGetNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_HarmGetNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_HarmSetNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_HarmSetNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_OBWGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_OBWSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetSpan(
+int32 __stdcall RFmxSpecAn_OBWGetSpan(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetSpan(
+int32 __stdcall RFmxSpecAn_OBWSetSpan(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetBandwidthPercentage(
+int32 __stdcall RFmxSpecAn_OBWGetBandwidthPercentage(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetBandwidthPercentage(
+int32 __stdcall RFmxSpecAn_OBWSetBandwidthPercentage(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetPowerUnits(
+int32 __stdcall RFmxSpecAn_OBWGetPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetPowerUnits(
+int32 __stdcall RFmxSpecAn_OBWSetPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_OBWGetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_OBWSetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_OBWGetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_OBWSetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetRBWFilterType(
+int32 __stdcall RFmxSpecAn_OBWGetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetRBWFilterType(
+int32 __stdcall RFmxSpecAn_OBWSetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_OBWGetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_OBWSetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_OBWGetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_OBWSetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_OBWGetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_OBWSetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_OBWGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_OBWSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetAveragingCount(
+int32 __stdcall RFmxSpecAn_OBWGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetAveragingCount(
+int32 __stdcall RFmxSpecAn_OBWSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetAveragingType(
+int32 __stdcall RFmxSpecAn_OBWGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetAveragingType(
+int32 __stdcall RFmxSpecAn_OBWSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetFFTWindow(
+int32 __stdcall RFmxSpecAn_OBWGetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetFFTWindow(
+int32 __stdcall RFmxSpecAn_OBWSetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetFFTPadding(
+int32 __stdcall RFmxSpecAn_OBWGetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetFFTPadding(
+int32 __stdcall RFmxSpecAn_OBWSetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_OBWGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_OBWSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_OBWGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_OBWSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetResultsOccupiedBandwidth(
+int32 __stdcall RFmxSpecAn_OBWGetResultsOccupiedBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetResultsAveragePower(
+int32 __stdcall RFmxSpecAn_OBWGetResultsAveragePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetResultsStartFrequency(
+int32 __stdcall RFmxSpecAn_OBWGetResultsStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetResultsStopFrequency(
+int32 __stdcall RFmxSpecAn_OBWGetResultsStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetResultsFrequencyResolution(
+int32 __stdcall RFmxSpecAn_OBWGetResultsFrequencyResolution(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWGetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_OBWGetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_OBWSetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_OBWSetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_SEMGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_SEMSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_SEMGetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_SEMSetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierEnabled(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierEnabled(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierFrequency(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierChannelBandwidth(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierChannelBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierChannelBandwidth(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierChannelBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierRBWFilterType(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierRBWFilterType(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetCarrierRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_SEMGetCarrierRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetCarrierRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_SEMSetCarrierRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetNumberOfOffsets(
+int32 __stdcall RFmxSpecAn_SEMGetNumberOfOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetNumberOfOffsets(
+int32 __stdcall RFmxSpecAn_SEMSetNumberOfOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetEnabled(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetEnabled(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetStartFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetStartFrequency(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetStopFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetStopFrequency(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetSideband(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetSideband(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetSideband(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetSideband(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetRBWFilterType(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetRBWFilterType(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetBandwidthIntegral(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetBandwidthIntegral(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetBandwidthIntegral(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetBandwidthIntegral(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetRelativeAttenuation(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetRelativeAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetRelativeAttenuation(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetRelativeAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetLimitFailMask(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetLimitFailMask(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetLimitFailMask(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetLimitFailMask(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetAbsoluteLimitMode(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetAbsoluteLimitMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetAbsoluteLimitMode(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetAbsoluteLimitMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetAbsoluteLimitStart(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetAbsoluteLimitStart(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetAbsoluteLimitStart(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetAbsoluteLimitStart(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetAbsoluteLimitStop(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetAbsoluteLimitStop(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetAbsoluteLimitStop(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetAbsoluteLimitStop(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetRelativeLimitMode(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetRelativeLimitMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetRelativeLimitMode(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetRelativeLimitMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetRelativeLimitStart(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetRelativeLimitStart(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetRelativeLimitStart(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetRelativeLimitStart(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetRelativeLimitStop(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetRelativeLimitStop(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetRelativeLimitStop(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetRelativeLimitStop(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetOffsetFrequencyDefinition(
+int32 __stdcall RFmxSpecAn_SEMGetOffsetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetOffsetFrequencyDefinition(
+int32 __stdcall RFmxSpecAn_SEMSetOffsetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetPowerUnits(
+int32 __stdcall RFmxSpecAn_SEMGetPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetPowerUnits(
+int32 __stdcall RFmxSpecAn_SEMSetPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetReferenceType(
+int32 __stdcall RFmxSpecAn_SEMGetReferenceType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetReferenceType(
+int32 __stdcall RFmxSpecAn_SEMSetReferenceType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_SEMGetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_SEMSetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_SEMGetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_SEMSetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_SEMGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_SEMSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetAveragingCount(
+int32 __stdcall RFmxSpecAn_SEMGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetAveragingCount(
+int32 __stdcall RFmxSpecAn_SEMSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetAveragingType(
+int32 __stdcall RFmxSpecAn_SEMGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetAveragingType(
+int32 __stdcall RFmxSpecAn_SEMSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetFFTWindow(
+int32 __stdcall RFmxSpecAn_SEMGetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetFFTWindow(
+int32 __stdcall RFmxSpecAn_SEMSetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetFFTPadding(
+int32 __stdcall RFmxSpecAn_SEMGetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetFFTPadding(
+int32 __stdcall RFmxSpecAn_SEMSetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_SEMGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_SEMSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_SEMGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_SEMSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsTotalCarrierPower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsTotalCarrierPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsCompositeMeasurementStatus(
+int32 __stdcall RFmxSpecAn_SEMGetResultsCompositeMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsFrequencyResolution(
+int32 __stdcall RFmxSpecAn_SEMGetResultsFrequencyResolution(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsCarrierTotalRelativePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsCarrierTotalRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsCarrierAbsolutePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsCarrierAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsCarrierPeakAbsolutePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsCarrierPeakAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsCarrierPeakFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsCarrierPeakFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsCarrierFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsCarrierIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_SEMGetResultsCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetMeasurementStatus(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetTotalAbsolutePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetTotalAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetTotalRelativePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetTotalRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetPeakAbsolutePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetPeakAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetPeakRelativePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetPeakRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetPeakFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetPeakFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetMargin(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetMargin(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetMarginAbsolutePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetMarginAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetMarginRelativePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetMarginRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetMarginFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetMarginFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetStartFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetStopFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsLowerOffsetPowerReferenceCarrier(
+int32 __stdcall RFmxSpecAn_SEMGetResultsLowerOffsetPowerReferenceCarrier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetMeasurementStatus(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetTotalAbsolutePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetTotalAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetTotalRelativePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetTotalRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetPeakAbsolutePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetPeakAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetPeakRelativePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetPeakRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetPeakFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetPeakFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetMargin(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetMargin(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetMarginAbsolutePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetMarginAbsolutePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetMarginRelativePower(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetMarginRelativePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetMarginFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetMarginFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetStartFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetStopFrequency(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetResultsUpperOffsetPowerReferenceCarrier(
+int32 __stdcall RFmxSpecAn_SEMGetResultsUpperOffsetPowerReferenceCarrier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMGetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_SEMGetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SEMSetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_SEMSetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_SpectrumGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_SpectrumSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetSpan(
+int32 __stdcall RFmxSpecAn_SpectrumGetSpan(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetSpan(
+int32 __stdcall RFmxSpecAn_SpectrumSetSpan(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetPowerUnits(
+int32 __stdcall RFmxSpecAn_SpectrumGetPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetPowerUnits(
+int32 __stdcall RFmxSpecAn_SpectrumSetPowerUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SpectrumGetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SpectrumSetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SpectrumGetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SpectrumSetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetRBWFilterType(
+int32 __stdcall RFmxSpecAn_SpectrumGetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetRBWFilterType(
+int32 __stdcall RFmxSpecAn_SpectrumSetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_SpectrumGetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_SpectrumSetRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_SpectrumGetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_SpectrumSetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_SpectrumGetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_SpectrumSetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetNoiseCalibrationMode(
+int32 __stdcall RFmxSpecAn_SpectrumGetNoiseCalibrationMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetNoiseCalibrationMode(
+int32 __stdcall RFmxSpecAn_SpectrumSetNoiseCalibrationMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetNoiseCalibrationAveragingAuto(
+int32 __stdcall RFmxSpecAn_SpectrumGetNoiseCalibrationAveragingAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetNoiseCalibrationAveragingAuto(
+int32 __stdcall RFmxSpecAn_SpectrumSetNoiseCalibrationAveragingAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetNoiseCalibrationAveragingCount(
+int32 __stdcall RFmxSpecAn_SpectrumGetNoiseCalibrationAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetNoiseCalibrationAveragingCount(
+int32 __stdcall RFmxSpecAn_SpectrumSetNoiseCalibrationAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_SpectrumGetNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetNoiseCompensationEnabled(
+int32 __stdcall RFmxSpecAn_SpectrumSetNoiseCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetNoiseCompensationType(
+int32 __stdcall RFmxSpecAn_SpectrumGetNoiseCompensationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetNoiseCompensationType(
+int32 __stdcall RFmxSpecAn_SpectrumSetNoiseCompensationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_SpectrumGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_SpectrumSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetAveragingCount(
+int32 __stdcall RFmxSpecAn_SpectrumGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetAveragingCount(
+int32 __stdcall RFmxSpecAn_SpectrumSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetAveragingType(
+int32 __stdcall RFmxSpecAn_SpectrumGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetAveragingType(
+int32 __stdcall RFmxSpecAn_SpectrumSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetMeasurementMode(
+int32 __stdcall RFmxSpecAn_SpectrumGetMeasurementMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetMeasurementMode(
+int32 __stdcall RFmxSpecAn_SpectrumSetMeasurementMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetFFTWindow(
+int32 __stdcall RFmxSpecAn_SpectrumGetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetFFTWindow(
+int32 __stdcall RFmxSpecAn_SpectrumSetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetFFTPadding(
+int32 __stdcall RFmxSpecAn_SpectrumGetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetFFTPadding(
+int32 __stdcall RFmxSpecAn_SpectrumSetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_SpectrumGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_SpectrumSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetResultsPeakAmplitude(
+int32 __stdcall RFmxSpecAn_SpectrumGetResultsPeakAmplitude(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetResultsPeakFrequency(
+int32 __stdcall RFmxSpecAn_SpectrumGetResultsPeakFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetResultsFrequencyResolution(
+int32 __stdcall RFmxSpecAn_SpectrumGetResultsFrequencyResolution(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetDetectorType(
+int32 __stdcall RFmxSpecAn_SpectrumGetDetectorType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetDetectorType(
+int32 __stdcall RFmxSpecAn_SpectrumSetDetectorType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetDetectorPoints(
+int32 __stdcall RFmxSpecAn_SpectrumGetDetectorPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetDetectorPoints(
+int32 __stdcall RFmxSpecAn_SpectrumSetDetectorPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetVBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SpectrumGetVBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetVBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SpectrumSetVBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetVBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SpectrumGetVBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetVBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SpectrumSetVBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetVBWFilterVBWToRBWRatio(
+int32 __stdcall RFmxSpecAn_SpectrumGetVBWFilterVBWToRBWRatio(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetVBWFilterVBWToRBWRatio(
+int32 __stdcall RFmxSpecAn_SpectrumSetVBWFilterVBWToRBWRatio(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_SpectrumGetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_SpectrumSetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumGetAnalysisInput(
+int32 __stdcall RFmxSpecAn_SpectrumGetAnalysisInput(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpectrumSetAnalysisInput(
+int32 __stdcall RFmxSpecAn_SpectrumSetAnalysisInput(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_SpurGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_SpurSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetNumberOfRanges(
+int32 __stdcall RFmxSpecAn_SpurGetNumberOfRanges(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetNumberOfRanges(
+int32 __stdcall RFmxSpecAn_SpurSetNumberOfRanges(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeEnabled(
+int32 __stdcall RFmxSpecAn_SpurGetRangeEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeEnabled(
+int32 __stdcall RFmxSpecAn_SpurSetRangeEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeStartFrequency(
+int32 __stdcall RFmxSpecAn_SpurGetRangeStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeStartFrequency(
+int32 __stdcall RFmxSpecAn_SpurSetRangeStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeStopFrequency(
+int32 __stdcall RFmxSpecAn_SpurGetRangeStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeStopFrequency(
+int32 __stdcall RFmxSpecAn_SpurSetRangeStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SpurGetRangeRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SpurSetRangeRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SpurGetRangeRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SpurSetRangeRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeRBWFilterType(
+int32 __stdcall RFmxSpecAn_SpurGetRangeRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeRBWFilterType(
+int32 __stdcall RFmxSpecAn_SpurSetRangeRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_SpurGetRangeRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeRBWFilterBandwidthDefinition(
+int32 __stdcall RFmxSpecAn_SpurSetRangeRBWFilterBandwidthDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_SpurGetRangeSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_SpurSetRangeSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_SpurGetRangeSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_SpurSetRangeSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeAbsoluteLimitMode(
+int32 __stdcall RFmxSpecAn_SpurGetRangeAbsoluteLimitMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeAbsoluteLimitMode(
+int32 __stdcall RFmxSpecAn_SpurSetRangeAbsoluteLimitMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeAbsoluteLimitStart(
+int32 __stdcall RFmxSpecAn_SpurGetRangeAbsoluteLimitStart(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeAbsoluteLimitStart(
+int32 __stdcall RFmxSpecAn_SpurSetRangeAbsoluteLimitStart(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeAbsoluteLimitStop(
+int32 __stdcall RFmxSpecAn_SpurGetRangeAbsoluteLimitStop(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeAbsoluteLimitStop(
+int32 __stdcall RFmxSpecAn_SpurSetRangeAbsoluteLimitStop(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeRelativeAttenuation(
+int32 __stdcall RFmxSpecAn_SpurGetRangeRelativeAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeRelativeAttenuation(
+int32 __stdcall RFmxSpecAn_SpurSetRangeRelativeAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangePeakThreshold(
+int32 __stdcall RFmxSpecAn_SpurGetRangePeakThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangePeakThreshold(
+int32 __stdcall RFmxSpecAn_SpurSetRangePeakThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangePeakExcursion(
+int32 __stdcall RFmxSpecAn_SpurGetRangePeakExcursion(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangePeakExcursion(
+int32 __stdcall RFmxSpecAn_SpurSetRangePeakExcursion(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeNumberOfSpursToReport(
+int32 __stdcall RFmxSpecAn_SpurGetRangeNumberOfSpursToReport(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeNumberOfSpursToReport(
+int32 __stdcall RFmxSpecAn_SpurSetRangeNumberOfSpursToReport(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_SpurGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_SpurSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetAveragingCount(
+int32 __stdcall RFmxSpecAn_SpurGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetAveragingCount(
+int32 __stdcall RFmxSpecAn_SpurSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetAveragingType(
+int32 __stdcall RFmxSpecAn_SpurGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetAveragingType(
+int32 __stdcall RFmxSpecAn_SpurSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetFFTWindow(
+int32 __stdcall RFmxSpecAn_SpurGetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetFFTWindow(
+int32 __stdcall RFmxSpecAn_SpurSetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetTraceRangeIndex(
+int32 __stdcall RFmxSpecAn_SpurGetTraceRangeIndex(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetTraceRangeIndex(
+int32 __stdcall RFmxSpecAn_SpurSetTraceRangeIndex(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_SpurGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_SpurSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_SpurGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_SpurSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetResultsMeasurementStatus(
+int32 __stdcall RFmxSpecAn_SpurGetResultsMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetResultsRangeMeasurementStatus(
+int32 __stdcall RFmxSpecAn_SpurGetResultsRangeMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetResultsRangeNumberOfDetectedSpurs(
+int32 __stdcall RFmxSpecAn_SpurGetResultsRangeNumberOfDetectedSpurs(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetResultsRangeFrequency(
+int32 __stdcall RFmxSpecAn_SpurGetResultsRangeFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetResultsRangeMargin(
+int32 __stdcall RFmxSpecAn_SpurGetResultsRangeMargin(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetResultsRangeAmplitude(
+int32 __stdcall RFmxSpecAn_SpurGetResultsRangeAmplitude(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetResultsRangeAbsoluteLimit(
+int32 __stdcall RFmxSpecAn_SpurGetResultsRangeAbsoluteLimit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeDetectorType(
+int32 __stdcall RFmxSpecAn_SpurGetRangeDetectorType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeDetectorType(
+int32 __stdcall RFmxSpecAn_SpurSetRangeDetectorType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeDetectorPoints(
+int32 __stdcall RFmxSpecAn_SpurGetRangeDetectorPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeDetectorPoints(
+int32 __stdcall RFmxSpecAn_SpurSetRangeDetectorPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeVBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SpurGetRangeVBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeVBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_SpurSetRangeVBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeVBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SpurGetRangeVBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeVBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_SpurSetRangeVBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetRangeVBWFilterVBWToRBWRatio(
+int32 __stdcall RFmxSpecAn_SpurGetRangeVBWFilterVBWToRBWRatio(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetRangeVBWFilterVBWToRBWRatio(
+int32 __stdcall RFmxSpecAn_SpurSetRangeVBWFilterVBWToRBWRatio(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurGetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_SpurGetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SpurSetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_SpurSetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_TXPGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_TXPSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_TXPGetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_TXPSetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_TXPGetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_TXPSetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetRBWFilterType(
+int32 __stdcall RFmxSpecAn_TXPGetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetRBWFilterType(
+int32 __stdcall RFmxSpecAn_TXPSetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetRBWFilterAlpha(
+int32 __stdcall RFmxSpecAn_TXPGetRBWFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetRBWFilterAlpha(
+int32 __stdcall RFmxSpecAn_TXPSetRBWFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetThresholdEnabled(
+int32 __stdcall RFmxSpecAn_TXPGetThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetThresholdEnabled(
+int32 __stdcall RFmxSpecAn_TXPSetThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetThresholdType(
+int32 __stdcall RFmxSpecAn_TXPGetThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetThresholdType(
+int32 __stdcall RFmxSpecAn_TXPSetThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetThresholdLevel(
+int32 __stdcall RFmxSpecAn_TXPGetThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetThresholdLevel(
+int32 __stdcall RFmxSpecAn_TXPSetThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_TXPGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_TXPSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetAveragingCount(
+int32 __stdcall RFmxSpecAn_TXPGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetAveragingCount(
+int32 __stdcall RFmxSpecAn_TXPSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetAveragingType(
+int32 __stdcall RFmxSpecAn_TXPGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetAveragingType(
+int32 __stdcall RFmxSpecAn_TXPSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_TXPGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_TXPSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_TXPGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_TXPSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetResultsAverageMeanPower(
+int32 __stdcall RFmxSpecAn_TXPGetResultsAverageMeanPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetResultsPeaktoAverageRatio(
+int32 __stdcall RFmxSpecAn_TXPGetResultsPeaktoAverageRatio(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetResultsMaximumPower(
+int32 __stdcall RFmxSpecAn_TXPGetResultsMaximumPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetResultsMinimumPower(
+int32 __stdcall RFmxSpecAn_TXPGetResultsMinimumPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetVBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_TXPGetVBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetVBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_TXPSetVBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetVBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_TXPGetVBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetVBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_TXPSetVBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPGetVBWFilterVBWToRBWRatio(
+int32 __stdcall RFmxSpecAn_TXPGetVBWFilterVBWToRBWRatio(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_TXPSetVBWFilterVBWToRBWRatio(
+int32 __stdcall RFmxSpecAn_TXPSetVBWFilterVBWToRBWRatio(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetMeasurementSampleRateMode(
+int32 __stdcall RFmxSpecAn_AMPMGetMeasurementSampleRateMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetMeasurementSampleRateMode(
+int32 __stdcall RFmxSpecAn_AMPMSetMeasurementSampleRateMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetMeasurementSampleRate(
+int32 __stdcall RFmxSpecAn_AMPMGetMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetMeasurementSampleRate(
+int32 __stdcall RFmxSpecAn_AMPMSetMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_AMPMGetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_AMPMSetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetSignalType(
+int32 __stdcall RFmxSpecAn_AMPMGetSignalType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetSignalType(
+int32 __stdcall RFmxSpecAn_AMPMSetSignalType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetDUTAverageInputPower(
+int32 __stdcall RFmxSpecAn_AMPMGetDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetDUTAverageInputPower(
+int32 __stdcall RFmxSpecAn_AMPMSetDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAMToAMCurveFitOrder(
+int32 __stdcall RFmxSpecAn_AMPMGetAMToAMCurveFitOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAMToAMCurveFitOrder(
+int32 __stdcall RFmxSpecAn_AMPMSetAMToAMCurveFitOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAMToAMCurveFitType(
+int32 __stdcall RFmxSpecAn_AMPMGetAMToAMCurveFitType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAMToAMCurveFitType(
+int32 __stdcall RFmxSpecAn_AMPMSetAMToAMCurveFitType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAMToPMCurveFitOrder(
+int32 __stdcall RFmxSpecAn_AMPMGetAMToPMCurveFitOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAMToPMCurveFitOrder(
+int32 __stdcall RFmxSpecAn_AMPMSetAMToPMCurveFitOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAMToPMCurveFitType(
+int32 __stdcall RFmxSpecAn_AMPMGetAMToPMCurveFitType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAMToPMCurveFitType(
+int32 __stdcall RFmxSpecAn_AMPMSetAMToPMCurveFitType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetThresholdEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetThresholdEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetThresholdType(
+int32 __stdcall RFmxSpecAn_AMPMGetThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetThresholdType(
+int32 __stdcall RFmxSpecAn_AMPMSetThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetThresholdLevel(
+int32 __stdcall RFmxSpecAn_AMPMGetThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetThresholdLevel(
+int32 __stdcall RFmxSpecAn_AMPMSetThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetFrequencyOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetFrequencyOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetFrequencyOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetFrequencyOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAveragingCount(
+int32 __stdcall RFmxSpecAn_AMPMGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAveragingCount(
+int32 __stdcall RFmxSpecAn_AMPMSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_AMPMGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_AMPMSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsMeanLinearGain(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsMeanLinearGain(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResults1dBCompressionPoint(
+int32 __stdcall RFmxSpecAn_AMPMGetResults1dBCompressionPoint(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsMeanRMSEVM(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsMeanRMSEVM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsGainErrorRange(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsGainErrorRange(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsPhaseErrorRange(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsPhaseErrorRange(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsMeanPhaseError(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsMeanPhaseError(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsAMToAMCurveFitResidual(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsAMToAMCurveFitResidual(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsAMToPMCurveFitResidual(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsAMToPMCurveFitResidual(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsAMToAMCurveFitCoefficients(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsAMToAMCurveFitCoefficients(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 attrVal[],
@@ -9225,7 +9225,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsAMToAMCurveFitCoefficients(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsAMToPMCurveFitCoefficients(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsAMToPMCurveFitCoefficients(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 attrVal[],
@@ -9233,43 +9233,43 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsAMToPMCurveFitCoefficients(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetReferencePowerType(
+int32 __stdcall RFmxSpecAn_AMPMGetReferencePowerType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetReferencePowerType(
+int32 __stdcall RFmxSpecAn_AMPMSetReferencePowerType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetMaximumTimingError(
+int32 __stdcall RFmxSpecAn_AMPMGetMaximumTimingError(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetMaximumTimingError(
+int32 __stdcall RFmxSpecAn_AMPMSetMaximumTimingError(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetCompressionPointEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetCompressionPointEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetCompressionPointLevel(
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -9277,38 +9277,38 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetCompressionPointLevel(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetCompressionPointLevel(
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetCompressionPointGainReference(
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointGainReference(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetCompressionPointGainReference(
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointGainReference(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetCompressionPointGainReferencePower(
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointGainReferencePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetCompressionPointGainReferencePower(
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointGainReferencePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsInputCompressionPoint(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsInputCompressionPoint(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -9316,7 +9316,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsInputCompressionPoint(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsOutputCompressionPoint(
+int32 __stdcall RFmxSpecAn_AMPMGetResultsOutputCompressionPoint(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -9324,595 +9324,595 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetResultsOutputCompressionPoint(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetIQOriginOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetIQOriginOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetIQOriginOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetIQOriginOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetSynchronizationMethod(
+int32 __stdcall RFmxSpecAn_AMPMGetSynchronizationMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetSynchronizationMethod(
+int32 __stdcall RFmxSpecAn_AMPMSetSynchronizationMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAutoCarrierDetectionEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetAutoCarrierDetectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAutoCarrierDetectionEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetAutoCarrierDetectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_AMPMGetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_AMPMSetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetCarrierOffset(
+int32 __stdcall RFmxSpecAn_AMPMGetCarrierOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetCarrierOffset(
+int32 __stdcall RFmxSpecAn_AMPMSetCarrierOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetCarrierBandwidth(
+int32 __stdcall RFmxSpecAn_AMPMGetCarrierBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetCarrierBandwidth(
+int32 __stdcall RFmxSpecAn_AMPMSetCarrierBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetEqualizerMode(
+int32 __stdcall RFmxSpecAn_AMPMGetEqualizerMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetEqualizerMode(
+int32 __stdcall RFmxSpecAn_AMPMSetEqualizerMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetEqualizerFilterLength(
+int32 __stdcall RFmxSpecAn_AMPMGetEqualizerFilterLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetEqualizerFilterLength(
+int32 __stdcall RFmxSpecAn_AMPMSetEqualizerFilterLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAMToAMEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetAMToAMEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAMToAMEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetAMToAMEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetAMToPMEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetAMToPMEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetAMToPMEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetAMToPMEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMGetEVMEnabled(
+int32 __stdcall RFmxSpecAn_AMPMGetEVMEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AMPMSetEVMEnabled(
+int32 __stdcall RFmxSpecAn_AMPMSetEVMEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMeasurementSampleRateMode(
+int32 __stdcall RFmxSpecAn_DPDGetMeasurementSampleRateMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMeasurementSampleRateMode(
+int32 __stdcall RFmxSpecAn_DPDSetMeasurementSampleRateMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMeasurementSampleRate(
+int32 __stdcall RFmxSpecAn_DPDGetMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMeasurementSampleRate(
+int32 __stdcall RFmxSpecAn_DPDSetMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_DPDGetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_DPDSetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetSignalType(
+int32 __stdcall RFmxSpecAn_DPDGetSignalType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetSignalType(
+int32 __stdcall RFmxSpecAn_DPDSetSignalType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetDUTAverageInputPower(
+int32 __stdcall RFmxSpecAn_DPDGetDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetDUTAverageInputPower(
+int32 __stdcall RFmxSpecAn_DPDSetDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetModel(
+int32 __stdcall RFmxSpecAn_DPDGetModel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetModel(
+int32 __stdcall RFmxSpecAn_DPDSetModel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetTargetGainType(
+int32 __stdcall RFmxSpecAn_DPDGetTargetGainType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetTargetGainType(
+int32 __stdcall RFmxSpecAn_DPDSetTargetGainType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetLookupTableType(
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetLookupTableType(
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetLookupTableAMToAMCurveFitOrder(
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableAMToAMCurveFitOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetLookupTableAMToAMCurveFitOrder(
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableAMToAMCurveFitOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetLookupTableAMToAMCurveFitType(
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableAMToAMCurveFitType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetLookupTableAMToAMCurveFitType(
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableAMToAMCurveFitType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetLookupTableAMToPMCurveFitOrder(
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableAMToPMCurveFitOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetLookupTableAMToPMCurveFitOrder(
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableAMToPMCurveFitOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetLookupTableAMToPMCurveFitType(
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableAMToPMCurveFitType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetLookupTableAMToPMCurveFitType(
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableAMToPMCurveFitType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetLookupTableThresholdEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetLookupTableThresholdEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableThresholdEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetLookupTableThresholdType(
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetLookupTableThresholdType(
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableThresholdType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetLookupTableThresholdLevel(
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetLookupTableThresholdLevel(
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetLookupTableStepSize(
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableStepSize(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetLookupTableStepSize(
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableStepSize(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMemoryPolynomialOrder(
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMemoryPolynomialOrder(
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMemoryPolynomialMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMemoryPolynomialMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMemoryPolynomialLeadOrder(
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialLeadOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMemoryPolynomialLeadOrder(
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialLeadOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMemoryPolynomialLagOrder(
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialLagOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMemoryPolynomialLagOrder(
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialLagOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMemoryPolynomialLeadMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialLeadMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMemoryPolynomialLeadMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialLeadMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMemoryPolynomialLagMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialLagMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMemoryPolynomialLagMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialLagMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMemoryPolynomialMaximumLead(
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialMaximumLead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMemoryPolynomialMaximumLead(
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialMaximumLead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMemoryPolynomialMaximumLag(
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialMaximumLag(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMemoryPolynomialMaximumLag(
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialMaximumLag(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetIterativeDPDEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetIterativeDPDEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetIterativeDPDEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetIterativeDPDEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetFrequencyOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetFrequencyOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetFrequencyOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetFrequencyOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetAveragingCount(
+int32 __stdcall RFmxSpecAn_DPDGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetAveragingCount(
+int32 __stdcall RFmxSpecAn_DPDSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetNumberofAnalysisThreads(
+int32 __stdcall RFmxSpecAn_DPDGetNumberofAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetNumberofAnalysisThreads(
+int32 __stdcall RFmxSpecAn_DPDSetNumberofAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDConfigurationInput(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDConfigurationInput(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDConfigurationInput(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDConfigurationInput(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDLookupTableCorrectionType(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDLookupTableCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDLookupTableCorrectionType(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDLookupTableCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDMemoryModelCorrectionType(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDMemoryModelCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDMemoryModelCorrectionType(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDMemoryModelCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserDUTAverageInputPower(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserDUTAverageInputPower(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserDUTAverageInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserDPDModel(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserDPDModel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserDPDModel(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserDPDModel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserMeasurementSampleRate(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserMeasurementSampleRate(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMeasurementSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserLookupTableType(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserLookupTableType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserLookupTableType(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserLookupTableType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserLookupTableInputPower(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserLookupTableInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 attrVal[],
@@ -9920,986 +9920,986 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserLookupTableInputPower(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserLookupTableInputPower(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserLookupTableInputPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialOrder(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialOrder(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLeadOrder(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLeadOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLeadOrder(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLeadOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLagOrder(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLagOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLagOrder(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLagOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLeadMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLeadMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLeadMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLeadMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLagMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialLagMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLagMemoryDepth(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialLagMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMaximumLead(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMaximumLead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMaximumLead(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMaximumLead(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMaximumLag(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDUserMemoryPolynomialMaximumLag(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMaximumLag(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDUserMemoryPolynomialMaximumLag(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetResultsAverageGain(
+int32 __stdcall RFmxSpecAn_DPDGetResultsAverageGain(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetMaximumTimingError(
+int32 __stdcall RFmxSpecAn_DPDGetMaximumTimingError(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetMaximumTimingError(
+int32 __stdcall RFmxSpecAn_DPDSetMaximumTimingError(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetNMSEEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetNMSEEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetNMSEEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetNMSEEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFREnabled(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFREnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFREnabled(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFREnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFRMethod(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFRMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFRMethod(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFRMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFRMaximumIterations(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFRMaximumIterations(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFRMaximumIterations(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFRMaximumIterations(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFRTargetPAPR(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFRTargetPAPR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFRTargetPAPR(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFRTargetPAPR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFRWindowType(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFRWindowType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFRWindowType(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFRWindowType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFRWindowLength(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFRWindowLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFRWindowLength(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFRWindowLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFRShapingFactor(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFRShapingFactor(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFRShapingFactor(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFRShapingFactor(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFRShapingThreshold(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFRShapingThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFRShapingThreshold(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFRShapingThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFRFilterEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFRFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFRFilterEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFRFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCFRNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCFRNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCFRNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCFRNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCarrierOffset(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCarrierOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCarrierOffset(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCarrierOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetPreDPDCarrierBandwidth(
+int32 __stdcall RFmxSpecAn_DPDGetPreDPDCarrierBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetPreDPDCarrierBandwidth(
+int32 __stdcall RFmxSpecAn_DPDSetPreDPDCarrierBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDCFREnabled(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFREnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDCFREnabled(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFREnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDCFRMethod(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFRMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDCFRMethod(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFRMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDCFRMaximumIterations(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFRMaximumIterations(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDCFRMaximumIterations(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFRMaximumIterations(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDCFRTargetPAPRType(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFRTargetPAPRType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDCFRTargetPAPRType(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFRTargetPAPRType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDCFRTargetPAPR(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFRTargetPAPR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDCFRTargetPAPR(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFRTargetPAPR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDCFRWindowType(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFRWindowType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDCFRWindowType(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFRWindowType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDCFRWindowLength(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFRWindowLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDCFRWindowLength(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFRWindowLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDCFRShapingFactor(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFRShapingFactor(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDCFRShapingFactor(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFRShapingFactor(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDCFRShapingThreshold(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDCFRShapingThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDCFRShapingThreshold(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDCFRShapingThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetResultsNMSE(
+int32 __stdcall RFmxSpecAn_DPDGetResultsNMSE(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetIQOriginOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetIQOriginOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetIQOriginOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetIQOriginOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetSynchronizationMethod(
+int32 __stdcall RFmxSpecAn_DPDGetSynchronizationMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetSynchronizationMethod(
+int32 __stdcall RFmxSpecAn_DPDSetSynchronizationMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetAutoCarrierDetectionEnabled(
+int32 __stdcall RFmxSpecAn_DPDGetAutoCarrierDetectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetAutoCarrierDetectionEnabled(
+int32 __stdcall RFmxSpecAn_DPDSetAutoCarrierDetectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_DPDGetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetNumberOfCarriers(
+int32 __stdcall RFmxSpecAn_DPDSetNumberOfCarriers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetCarrierOffset(
+int32 __stdcall RFmxSpecAn_DPDGetCarrierOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetCarrierOffset(
+int32 __stdcall RFmxSpecAn_DPDSetCarrierOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetCarrierBandwidth(
+int32 __stdcall RFmxSpecAn_DPDGetCarrierBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetCarrierBandwidth(
+int32 __stdcall RFmxSpecAn_DPDSetCarrierBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_IQGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_IQSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQGetSampleRate(
+int32 __stdcall RFmxSpecAn_IQGetSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQSetSampleRate(
+int32 __stdcall RFmxSpecAn_IQSetSampleRate(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQGetAcquisitionTime(
+int32 __stdcall RFmxSpecAn_IQGetAcquisitionTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQSetAcquisitionTime(
+int32 __stdcall RFmxSpecAn_IQSetAcquisitionTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQGetPretriggerTime(
+int32 __stdcall RFmxSpecAn_IQGetPretriggerTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQSetPretriggerTime(
+int32 __stdcall RFmxSpecAn_IQSetPretriggerTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQGetBandwidthAuto(
+int32 __stdcall RFmxSpecAn_IQGetBandwidthAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQSetBandwidthAuto(
+int32 __stdcall RFmxSpecAn_IQSetBandwidthAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQGetBandwidth(
+int32 __stdcall RFmxSpecAn_IQGetBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQSetBandwidth(
+int32 __stdcall RFmxSpecAn_IQSetBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQGetNumberOfRecords(
+int32 __stdcall RFmxSpecAn_IQGetNumberOfRecords(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQSetNumberOfRecords(
+int32 __stdcall RFmxSpecAn_IQSetNumberOfRecords(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQGetDeleteRecordOnFetch(
+int32 __stdcall RFmxSpecAn_IQGetDeleteRecordOnFetch(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IQSetDeleteRecordOnFetch(
+int32 __stdcall RFmxSpecAn_IQSetDeleteRecordOnFetch(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_IMGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_IMSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetFrequencyDefinition(
+int32 __stdcall RFmxSpecAn_IMGetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetFrequencyDefinition(
+int32 __stdcall RFmxSpecAn_IMSetFrequencyDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetFundamentalLowerToneFrequency(
+int32 __stdcall RFmxSpecAn_IMGetFundamentalLowerToneFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetFundamentalLowerToneFrequency(
+int32 __stdcall RFmxSpecAn_IMSetFundamentalLowerToneFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetFundamentalUpperToneFrequency(
+int32 __stdcall RFmxSpecAn_IMGetFundamentalUpperToneFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetFundamentalUpperToneFrequency(
+int32 __stdcall RFmxSpecAn_IMSetFundamentalUpperToneFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetAutoIntermodsSetupEnabled(
+int32 __stdcall RFmxSpecAn_IMGetAutoIntermodsSetupEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetAutoIntermodsSetupEnabled(
+int32 __stdcall RFmxSpecAn_IMSetAutoIntermodsSetupEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetMaximumIntermodOrder(
+int32 __stdcall RFmxSpecAn_IMGetMaximumIntermodOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetMaximumIntermodOrder(
+int32 __stdcall RFmxSpecAn_IMSetMaximumIntermodOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetNumberOfIntermods(
+int32 __stdcall RFmxSpecAn_IMGetNumberOfIntermods(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetNumberOfIntermods(
+int32 __stdcall RFmxSpecAn_IMSetNumberOfIntermods(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetIntermodEnabled(
+int32 __stdcall RFmxSpecAn_IMGetIntermodEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetIntermodEnabled(
+int32 __stdcall RFmxSpecAn_IMSetIntermodEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetIntermodOrder(
+int32 __stdcall RFmxSpecAn_IMGetIntermodOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetIntermodOrder(
+int32 __stdcall RFmxSpecAn_IMSetIntermodOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetIntermodSide(
+int32 __stdcall RFmxSpecAn_IMGetIntermodSide(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetIntermodSide(
+int32 __stdcall RFmxSpecAn_IMSetIntermodSide(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetLowerIntermodFrequency(
+int32 __stdcall RFmxSpecAn_IMGetLowerIntermodFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetLowerIntermodFrequency(
+int32 __stdcall RFmxSpecAn_IMSetLowerIntermodFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetUpperIntermodFrequency(
+int32 __stdcall RFmxSpecAn_IMGetUpperIntermodFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetUpperIntermodFrequency(
+int32 __stdcall RFmxSpecAn_IMSetUpperIntermodFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetMeasurementMethod(
+int32 __stdcall RFmxSpecAn_IMGetMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetMeasurementMethod(
+int32 __stdcall RFmxSpecAn_IMSetMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetLocalPeakSearchEnabled(
+int32 __stdcall RFmxSpecAn_IMGetLocalPeakSearchEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetLocalPeakSearchEnabled(
+int32 __stdcall RFmxSpecAn_IMSetLocalPeakSearchEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_IMGetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetRBWFilterAutoBandwidth(
+int32 __stdcall RFmxSpecAn_IMSetRBWFilterAutoBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_IMGetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetRBWFilterBandwidth(
+int32 __stdcall RFmxSpecAn_IMSetRBWFilterBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetRBWFilterType(
+int32 __stdcall RFmxSpecAn_IMGetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetRBWFilterType(
+int32 __stdcall RFmxSpecAn_IMSetRBWFilterType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_IMGetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetSweepTimeAuto(
+int32 __stdcall RFmxSpecAn_IMSetSweepTimeAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_IMGetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetSweepTimeInterval(
+int32 __stdcall RFmxSpecAn_IMSetSweepTimeInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_IMGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_IMSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetAveragingCount(
+int32 __stdcall RFmxSpecAn_IMGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetAveragingCount(
+int32 __stdcall RFmxSpecAn_IMSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetAveragingType(
+int32 __stdcall RFmxSpecAn_IMGetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetAveragingType(
+int32 __stdcall RFmxSpecAn_IMSetAveragingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetFFTWindow(
+int32 __stdcall RFmxSpecAn_IMGetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetFFTWindow(
+int32 __stdcall RFmxSpecAn_IMSetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetFFTPadding(
+int32 __stdcall RFmxSpecAn_IMGetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetFFTPadding(
+int32 __stdcall RFmxSpecAn_IMSetFFTPadding(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetIFOutputPowerOffsetAuto(
+int32 __stdcall RFmxSpecAn_IMGetIFOutputPowerOffsetAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetIFOutputPowerOffsetAuto(
+int32 __stdcall RFmxSpecAn_IMSetIFOutputPowerOffsetAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetNearIFOutputPowerOffset(
+int32 __stdcall RFmxSpecAn_IMGetNearIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetNearIFOutputPowerOffset(
+int32 __stdcall RFmxSpecAn_IMSetNearIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetFarIFOutputPowerOffset(
+int32 __stdcall RFmxSpecAn_IMGetFarIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetFarIFOutputPowerOffset(
+int32 __stdcall RFmxSpecAn_IMSetFarIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_IMGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_IMSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_IMGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_IMSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetResultsFundamentalLowerTonePower(
+int32 __stdcall RFmxSpecAn_IMGetResultsFundamentalLowerTonePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetResultsFundamentalUpperTonePower(
+int32 __stdcall RFmxSpecAn_IMGetResultsFundamentalUpperTonePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetResultsIntermodOrder(
+int32 __stdcall RFmxSpecAn_IMGetResultsIntermodOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetResultsLowerIntermodPower(
+int32 __stdcall RFmxSpecAn_IMGetResultsLowerIntermodPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetResultsUpperIntermodPower(
+int32 __stdcall RFmxSpecAn_IMGetResultsUpperIntermodPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetResultsLowerOutputInterceptPower(
+int32 __stdcall RFmxSpecAn_IMGetResultsLowerOutputInterceptPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetResultsUpperOutputInterceptPower(
+int32 __stdcall RFmxSpecAn_IMGetResultsUpperOutputInterceptPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetResultsWorstCaseOutputInterceptPower(
+int32 __stdcall RFmxSpecAn_IMGetResultsWorstCaseOutputInterceptPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMGetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_IMGetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_IMSetAmplitudeCorrectionType(
+int32 __stdcall RFmxSpecAn_IMSetAmplitudeCorrectionType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_NFGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_NFSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetFrequencyList(
+int32 __stdcall RFmxSpecAn_NFGetFrequencyList(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -10907,74 +10907,74 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetFrequencyList(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetFrequencyList(
+int32 __stdcall RFmxSpecAn_NFSetFrequencyList(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetMeasurementBandwidth(
+int32 __stdcall RFmxSpecAn_NFGetMeasurementBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetMeasurementBandwidth(
+int32 __stdcall RFmxSpecAn_NFSetMeasurementBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_NFGetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetMeasurementInterval(
+int32 __stdcall RFmxSpecAn_NFSetMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_NFGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetAveragingEnabled(
+int32 __stdcall RFmxSpecAn_NFSetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetAveragingCount(
+int32 __stdcall RFmxSpecAn_NFGetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetAveragingCount(
+int32 __stdcall RFmxSpecAn_NFSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetExternalPreampPresent(
+int32 __stdcall RFmxSpecAn_NFGetExternalPreampPresent(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetExternalPreampPresent(
+int32 __stdcall RFmxSpecAn_NFSetExternalPreampPresent(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetExternalPreampFrequency(
+int32 __stdcall RFmxSpecAn_NFGetExternalPreampFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -10982,14 +10982,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetExternalPreampFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetExternalPreampFrequency(
+int32 __stdcall RFmxSpecAn_NFSetExternalPreampFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetExternalPreampGain(
+int32 __stdcall RFmxSpecAn_NFGetExternalPreampGain(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -10997,26 +10997,26 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetExternalPreampGain(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetExternalPreampGain(
+int32 __stdcall RFmxSpecAn_NFSetExternalPreampGain(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTInputLossCompensationEnabled(
+int32 __stdcall RFmxSpecAn_NFGetDUTInputLossCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDUTInputLossCompensationEnabled(
+int32 __stdcall RFmxSpecAn_NFSetDUTInputLossCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTInputLossFrequency(
+int32 __stdcall RFmxSpecAn_NFGetDUTInputLossFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11024,14 +11024,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTInputLossFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDUTInputLossFrequency(
+int32 __stdcall RFmxSpecAn_NFSetDUTInputLossFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTInputLoss(
+int32 __stdcall RFmxSpecAn_NFGetDUTInputLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11039,38 +11039,38 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTInputLoss(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDUTInputLoss(
+int32 __stdcall RFmxSpecAn_NFSetDUTInputLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTInputLossTemperature(
+int32 __stdcall RFmxSpecAn_NFGetDUTInputLossTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDUTInputLossTemperature(
+int32 __stdcall RFmxSpecAn_NFSetDUTInputLossTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTOutputLossCompensationEnabled(
+int32 __stdcall RFmxSpecAn_NFGetDUTOutputLossCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDUTOutputLossCompensationEnabled(
+int32 __stdcall RFmxSpecAn_NFSetDUTOutputLossCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTOutputLossFrequency(
+int32 __stdcall RFmxSpecAn_NFGetDUTOutputLossFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11078,14 +11078,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTOutputLossFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDUTOutputLossFrequency(
+int32 __stdcall RFmxSpecAn_NFSetDUTOutputLossFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTOutputLoss(
+int32 __stdcall RFmxSpecAn_NFGetDUTOutputLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11093,38 +11093,38 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTOutputLoss(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDUTOutputLoss(
+int32 __stdcall RFmxSpecAn_NFSetDUTOutputLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTOutputLossTemperature(
+int32 __stdcall RFmxSpecAn_NFGetDUTOutputLossTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDUTOutputLossTemperature(
+int32 __stdcall RFmxSpecAn_NFSetDUTOutputLossTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetCalibrationLossCompensationEnabled(
+int32 __stdcall RFmxSpecAn_NFGetCalibrationLossCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetCalibrationLossCompensationEnabled(
+int32 __stdcall RFmxSpecAn_NFSetCalibrationLossCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetCalibrationLossFrequency(
+int32 __stdcall RFmxSpecAn_NFGetCalibrationLossFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11132,14 +11132,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetCalibrationLossFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetCalibrationLossFrequency(
+int32 __stdcall RFmxSpecAn_NFSetCalibrationLossFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetCalibrationLoss(
+int32 __stdcall RFmxSpecAn_NFGetCalibrationLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11147,50 +11147,50 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetCalibrationLoss(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetCalibrationLoss(
+int32 __stdcall RFmxSpecAn_NFSetCalibrationLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetCalibrationLossTemperature(
+int32 __stdcall RFmxSpecAn_NFGetCalibrationLossTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetCalibrationLossTemperature(
+int32 __stdcall RFmxSpecAn_NFSetCalibrationLossTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetMeasurementMethod(
+int32 __stdcall RFmxSpecAn_NFGetMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetMeasurementMethod(
+int32 __stdcall RFmxSpecAn_NFSetMeasurementMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorMode(
+int32 __stdcall RFmxSpecAn_NFGetYFactorMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorMode(
+int32 __stdcall RFmxSpecAn_NFSetYFactorMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceENRFrequency(
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceENRFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11198,14 +11198,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceENRFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorNoiseSourceENRFrequency(
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceENRFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceENR(
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceENR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11213,62 +11213,62 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceENR(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorNoiseSourceENR(
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceENR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceColdTemperature(
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceColdTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorNoiseSourceColdTemperature(
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceColdTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceOffTemperature(
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceOffTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorNoiseSourceOffTemperature(
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceOffTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceSettlingTime(
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceSettlingTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorNoiseSourceSettlingTime(
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceSettlingTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceLossCompensationEnabled(
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceLossCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorNoiseSourceLossCompensationEnabled(
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceLossCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceLossFrequency(
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceLossFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11276,14 +11276,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceLossFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorNoiseSourceLossFrequency(
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceLossFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceLoss(
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11291,38 +11291,38 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceLoss(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorNoiseSourceLoss(
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceLoss(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetYFactorNoiseSourceLossTemperature(
+int32 __stdcall RFmxSpecAn_NFGetYFactorNoiseSourceLossTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetYFactorNoiseSourceLossTemperature(
+int32 __stdcall RFmxSpecAn_NFSetYFactorNoiseSourceLossTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceMode(
+int32 __stdcall RFmxSpecAn_NFGetColdSourceMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetColdSourceMode(
+int32 __stdcall RFmxSpecAn_NFSetColdSourceMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceInputTerminationVSWR(
+int32 __stdcall RFmxSpecAn_NFGetColdSourceInputTerminationVSWR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11330,14 +11330,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceInputTerminationVSWR(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetColdSourceInputTerminationVSWR(
+int32 __stdcall RFmxSpecAn_NFSetColdSourceInputTerminationVSWR(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceInputTerminationVSWRFrequency(
+int32 __stdcall RFmxSpecAn_NFGetColdSourceInputTerminationVSWRFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11345,26 +11345,26 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceInputTerminationVSWRFrequenc
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetColdSourceInputTerminationVSWRFrequency(
+int32 __stdcall RFmxSpecAn_NFSetColdSourceInputTerminationVSWRFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceInputTerminationTemperature(
+int32 __stdcall RFmxSpecAn_NFGetColdSourceInputTerminationTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetColdSourceInputTerminationTemperature(
+int32 __stdcall RFmxSpecAn_NFSetColdSourceInputTerminationTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTSParametersFrequency(
+int32 __stdcall RFmxSpecAn_NFGetColdSourceDUTSParametersFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11372,14 +11372,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTSParametersFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetColdSourceDUTSParametersFrequency(
+int32 __stdcall RFmxSpecAn_NFSetColdSourceDUTSParametersFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTS21(
+int32 __stdcall RFmxSpecAn_NFGetColdSourceDUTS21(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11387,14 +11387,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTS21(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetColdSourceDUTS21(
+int32 __stdcall RFmxSpecAn_NFSetColdSourceDUTS21(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTS12(
+int32 __stdcall RFmxSpecAn_NFGetColdSourceDUTS12(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11402,14 +11402,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTS12(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetColdSourceDUTS12(
+int32 __stdcall RFmxSpecAn_NFSetColdSourceDUTS12(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTS11(
+int32 __stdcall RFmxSpecAn_NFGetColdSourceDUTS11(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11417,14 +11417,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTS11(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetColdSourceDUTS11(
+int32 __stdcall RFmxSpecAn_NFSetColdSourceDUTS11(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTS22(
+int32 __stdcall RFmxSpecAn_NFGetColdSourceDUTS22(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11432,26 +11432,26 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetColdSourceDUTS22(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetColdSourceDUTS22(
+int32 __stdcall RFmxSpecAn_NFSetColdSourceDUTS22(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_NFGetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetNumberOfAnalysisThreads(
+int32 __stdcall RFmxSpecAn_NFSetNumberOfAnalysisThreads(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsDUTNoiseFigure(
+int32 __stdcall RFmxSpecAn_NFGetResultsDUTNoiseFigure(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11459,7 +11459,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsDUTNoiseFigure(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsDUTNoiseTemperature(
+int32 __stdcall RFmxSpecAn_NFGetResultsDUTNoiseTemperature(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11467,7 +11467,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsDUTNoiseTemperature(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsDUTGain(
+int32 __stdcall RFmxSpecAn_NFGetResultsDUTGain(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11475,7 +11475,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsDUTGain(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsAnalyzerNoiseFigure(
+int32 __stdcall RFmxSpecAn_NFGetResultsAnalyzerNoiseFigure(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11483,7 +11483,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsAnalyzerNoiseFigure(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsMeasurementYFactor(
+int32 __stdcall RFmxSpecAn_NFGetResultsMeasurementYFactor(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11491,7 +11491,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsMeasurementYFactor(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsCalibrationYFactor(
+int32 __stdcall RFmxSpecAn_NFGetResultsCalibrationYFactor(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11499,7 +11499,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsCalibrationYFactor(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsYFactorHotPower(
+int32 __stdcall RFmxSpecAn_NFGetResultsYFactorHotPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11507,7 +11507,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsYFactorHotPower(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsYFactorColdPower(
+int32 __stdcall RFmxSpecAn_NFGetResultsYFactorColdPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11515,7 +11515,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsYFactorColdPower(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsColdSourcePower(
+int32 __stdcall RFmxSpecAn_NFGetResultsColdSourcePower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -11523,529 +11523,502 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetResultsColdSourcePower(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDeviceTemperatureTolerance(
+int32 __stdcall RFmxSpecAn_NFGetDeviceTemperatureTolerance(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDeviceTemperatureTolerance(
+int32 __stdcall RFmxSpecAn_NFSetDeviceTemperatureTolerance(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetDUTType(
+int32 __stdcall RFmxSpecAn_NFGetDUTType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetDUTType(
+int32 __stdcall RFmxSpecAn_NFSetDUTType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetFrequencyConverterLOFrequency(
+int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterLOFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetFrequencyConverterLOFrequency(
+int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterLOFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetFrequencyConverterFrequencyContext(
+int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterFrequencyContext(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetFrequencyConverterFrequencyContext(
+int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterFrequencyContext(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetFrequencyConverterSideband(
+int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterSideband(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetFrequencyConverterSideband(
+int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterSideband(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFGetFrequencyConverterImageRejection(
+int32 __stdcall RFmxSpecAn_NFGetFrequencyConverterImageRejection(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_NFSetFrequencyConverterImageRejection(
+int32 __stdcall RFmxSpecAn_NFSetFrequencyConverterImageRejection(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetAutoLevelInitialReferenceLevel(
+int32 __stdcall RFmxSpecAn_GetAutoLevelInitialReferenceLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAutoLevelInitialReferenceLevel(
+int32 __stdcall RFmxSpecAn_SetAutoLevelInitialReferenceLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetLimitedConfigurationChange(
+int32 __stdcall RFmxSpecAn_GetLimitedConfigurationChange(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetLimitedConfigurationChange(
+int32 __stdcall RFmxSpecAn_SetLimitedConfigurationChange(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetResultFetchTimeout(
+int32 __stdcall RFmxSpecAn_GetResultFetchTimeout(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetResultFetchTimeout(
+int32 __stdcall RFmxSpecAn_SetResultFetchTimeout(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetCenterFrequency(
+int32 __stdcall RFmxSpecAn_GetCenterFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetCenterFrequency(
+int32 __stdcall RFmxSpecAn_SetCenterFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetReferenceLevel(
+int32 __stdcall RFmxSpecAn_GetReferenceLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetReferenceLevel(
+int32 __stdcall RFmxSpecAn_SetReferenceLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetExternalAttenuation(
+int32 __stdcall RFmxSpecAn_GetExternalAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetExternalAttenuation(
+int32 __stdcall RFmxSpecAn_SetExternalAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetTriggerType(
+int32 __stdcall RFmxSpecAn_GetTriggerType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetTriggerType(
+int32 __stdcall RFmxSpecAn_SetTriggerType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetDigitalEdgeTriggerSource(
+int32 __stdcall RFmxSpecAn_GetDigitalEdgeTriggerSource(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 arraySize,
    char attrVal[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetDigitalEdgeTriggerSource(
+int32 __stdcall RFmxSpecAn_SetDigitalEdgeTriggerSource(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char attrVal[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetDigitalEdgeTriggerEdge(
+int32 __stdcall RFmxSpecAn_GetDigitalEdgeTriggerEdge(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetDigitalEdgeTriggerEdge(
+int32 __stdcall RFmxSpecAn_SetDigitalEdgeTriggerEdge(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetIQPowerEdgeTriggerSource(
+int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerSource(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 arraySize,
    char attrVal[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetIQPowerEdgeTriggerSource(
+int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerSource(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char attrVal[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetIQPowerEdgeTriggerLevel(
+int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetIQPowerEdgeTriggerLevel(
+int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetIQPowerEdgeTriggerLevelType(
+int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerLevelType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetIQPowerEdgeTriggerLevelType(
+int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerLevelType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetIQPowerEdgeTriggerSlope(
+int32 __stdcall RFmxSpecAn_GetIQPowerEdgeTriggerSlope(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetIQPowerEdgeTriggerSlope(
+int32 __stdcall RFmxSpecAn_SetIQPowerEdgeTriggerSlope(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetTriggerDelay(
+int32 __stdcall RFmxSpecAn_GetTriggerDelay(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetTriggerDelay(
+int32 __stdcall RFmxSpecAn_SetTriggerDelay(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetTriggerMinimumQuietTimeMode(
+int32 __stdcall RFmxSpecAn_GetTriggerMinimumQuietTimeMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetTriggerMinimumQuietTimeMode(
+int32 __stdcall RFmxSpecAn_SetTriggerMinimumQuietTimeMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetTriggerMinimumQuietTimeDuration(
+int32 __stdcall RFmxSpecAn_GetTriggerMinimumQuietTimeDuration(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetTriggerMinimumQuietTimeDuration(
+int32 __stdcall RFmxSpecAn_SetTriggerMinimumQuietTimeDuration(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetSelectedPorts(
+int32 __stdcall RFmxSpecAn_GetSelectedPorts(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 arraySize,
    char attrVal[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetSelectedPorts(
+int32 __stdcall RFmxSpecAn_SetSelectedPorts(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char attrVal[]
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetReferenceLevelHeadroom(
+int32 __stdcall RFmxSpecAn_GetReferenceLevelHeadroom(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetReferenceLevelHeadroom(
+int32 __stdcall RFmxSpecAn_SetReferenceLevelHeadroom(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetNumberOfSteps(
+int32 __stdcall RFmxSpecAn_GetNumberOfSteps(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetNumberOfSteps(
+int32 __stdcall RFmxSpecAn_SetNumberOfSteps(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetListStepTimerDuration(
+int32 __stdcall RFmxSpecAn_GetListStepTimerDuration(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetListStepTimerDuration(
+int32 __stdcall RFmxSpecAn_SetListStepTimerDuration(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_GetListStepTimerOffset(
+int32 __stdcall RFmxSpecAn_GetListStepTimerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetListStepTimerOffset(
+int32 __stdcall RFmxSpecAn_SetListStepTimerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetRangeDefinition(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetRangeDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetRangeDefinition(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetRangeDefinition(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetStartFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetStartFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetStopFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetStopFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetRBWPercentage(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetRBWPercentage(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetRBWPercentage(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetRBWPercentage(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetNumberOfRanges(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetNumberOfRanges(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetNumberOfRanges(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetNumberOfRanges(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetRangeStartFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetRangeStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetRangeStartFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetRangeStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetRangeStopFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetRangeStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetRangeStopFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetRangeStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetRangeRBWPercentage(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetRangeRBWPercentage(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetRangeRBWPercentage(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetRangeRBWPercentage(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetRangeAveragingCount(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetRangeAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetRangeAveragingCount(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetRangeAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetAveragingMultiplier(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetAveragingMultiplier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetAveragingMultiplier(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetAveragingMultiplier(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetFFTWindow(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetFFTWindow(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetFFTWindow(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetSmoothingType(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetSmoothingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetSmoothingType(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetSmoothingType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetSmoothingPercentage(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetSmoothingPercentage(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetSmoothingPercentage(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetSmoothingPercentage(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetSpotNoiseFrequencyList(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal[],
-   int32 arraySize,
-   int32 *actualArraySize
-);
-
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetSpotNoiseFrequencyList(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal[],
-   int32 arraySize
-);
-
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetIntegratedNoiseRangeDefinition(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetIntegratedNoiseRangeDefinition(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetIntegratedNoiseStartFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetSpotNoiseFrequencyList(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -12053,14 +12026,26 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetIntegratedNoiseStartFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetIntegratedNoiseStartFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetSpotNoiseFrequencyList(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetIntegratedNoiseStopFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetIntegratedNoiseRangeDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetIntegratedNoiseRangeDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetIntegratedNoiseStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -12068,74 +12053,89 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetIntegratedNoiseStopFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetIntegratedNoiseStopFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetIntegratedNoiseStartFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetIntegratedNoiseStopFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetIntegratedNoiseStopFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetSpurRemovalEnabled(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetSpurRemovalEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetSpurRemovalEnabled(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetSpurRemovalEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetSpurRemovalPeakExcursion(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetSpurRemovalPeakExcursion(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetSpurRemovalPeakExcursion(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetSpurRemovalPeakExcursion(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetCancellationEnabled(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetCancellationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetCancellationEnabled(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetCancellationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetCancellationThreshold(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetCancellationThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetCancellationThreshold(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetCancellationThreshold(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetCancellationFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetCancellationFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 attrVal[],
@@ -12143,14 +12143,14 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetCancellationFrequency(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetCancellationFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetCancellationFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetCancellationReferencePhaseNoise(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetCancellationReferencePhaseNoise(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 attrVal[],
@@ -12158,26 +12158,26 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetCancellationReferencePhaseNois
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseSetCancellationReferencePhaseNoise(
+int32 __stdcall RFmxSpecAn_PhaseNoiseSetCancellationReferencePhaseNoise(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float32 attrVal[],
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsCarrierPower(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetResultsCarrierPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsCarrierFrequency(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetResultsCarrierFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsSpotPhaseNoise(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetResultsSpotPhaseNoise(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -12185,7 +12185,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsSpotPhaseNoise(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsIntegratedPhaseNoise(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetResultsIntegratedPhaseNoise(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -12193,7 +12193,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsIntegratedPhaseNoise(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsResidualPMInRadian(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetResultsResidualPMInRadian(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -12201,7 +12201,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsResidualPMInRadian(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsResidualPMInDegree(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetResultsResidualPMInDegree(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -12209,7 +12209,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsResidualPMInDegree(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsResidualFM(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetResultsResidualFM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -12217,7 +12217,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsResidualFM(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsJitter(
+int32 __stdcall RFmxSpecAn_PhaseNoiseGetResultsJitter(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal[],
@@ -12225,211 +12225,211 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PhaseNoiseGetResultsJitter(
    int32 *actualArraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_PAVTGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetMeasurementEnabled(
+int32 __stdcall RFmxSpecAn_PAVTSetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetMeasurementLocationType(
+int32 __stdcall RFmxSpecAn_PAVTGetMeasurementLocationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetMeasurementLocationType(
+int32 __stdcall RFmxSpecAn_PAVTSetMeasurementLocationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetMeasurementBandwidth(
+int32 __stdcall RFmxSpecAn_PAVTGetMeasurementBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetMeasurementBandwidth(
+int32 __stdcall RFmxSpecAn_PAVTSetMeasurementBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetMeasurementIntervalMode(
+int32 __stdcall RFmxSpecAn_PAVTGetMeasurementIntervalMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetMeasurementIntervalMode(
+int32 __stdcall RFmxSpecAn_PAVTSetMeasurementIntervalMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetNumberOfSegments(
+int32 __stdcall RFmxSpecAn_PAVTGetNumberOfSegments(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetNumberOfSegments(
+int32 __stdcall RFmxSpecAn_PAVTSetNumberOfSegments(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetSegmentType(
+int32 __stdcall RFmxSpecAn_PAVTGetSegmentType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetSegmentType(
+int32 __stdcall RFmxSpecAn_PAVTSetSegmentType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetSegmentStartTime(
+int32 __stdcall RFmxSpecAn_PAVTGetSegmentStartTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetSegmentStartTime(
+int32 __stdcall RFmxSpecAn_PAVTSetSegmentStartTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetMeasurementOffset(
+int32 __stdcall RFmxSpecAn_PAVTGetMeasurementOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetMeasurementOffset(
+int32 __stdcall RFmxSpecAn_PAVTSetMeasurementOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetMeasurementLength(
+int32 __stdcall RFmxSpecAn_PAVTGetMeasurementLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetMeasurementLength(
+int32 __stdcall RFmxSpecAn_PAVTSetMeasurementLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetSegmentMeasurementOffset(
+int32 __stdcall RFmxSpecAn_PAVTGetSegmentMeasurementOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetSegmentMeasurementOffset(
+int32 __stdcall RFmxSpecAn_PAVTSetSegmentMeasurementOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetSegmentMeasurementLength(
+int32 __stdcall RFmxSpecAn_PAVTGetSegmentMeasurementLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetSegmentMeasurementLength(
+int32 __stdcall RFmxSpecAn_PAVTSetSegmentMeasurementLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetPhaseUnwrapEnabled(
+int32 __stdcall RFmxSpecAn_PAVTGetPhaseUnwrapEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetPhaseUnwrapEnabled(
+int32 __stdcall RFmxSpecAn_PAVTSetPhaseUnwrapEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetFrequencyOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_PAVTGetFrequencyOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetFrequencyOffsetCorrectionEnabled(
+int32 __stdcall RFmxSpecAn_PAVTSetFrequencyOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetFrequencyTrackingEnabled(
+int32 __stdcall RFmxSpecAn_PAVTGetFrequencyTrackingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetFrequencyTrackingEnabled(
+int32 __stdcall RFmxSpecAn_PAVTSetFrequencyTrackingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_PAVTGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetAllTracesEnabled(
+int32 __stdcall RFmxSpecAn_PAVTSetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetResultsMeanRelativePhase(
+int32 __stdcall RFmxSpecAn_PAVTGetResultsMeanRelativePhase(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetResultsMeanRelativeAmplitude(
+int32 __stdcall RFmxSpecAn_PAVTGetResultsMeanRelativeAmplitude(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetResultsMeanAbsolutePhase(
+int32 __stdcall RFmxSpecAn_PAVTGetResultsMeanAbsolutePhase(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetResultsMeanAbsoluteAmplitude(
+int32 __stdcall RFmxSpecAn_PAVTGetResultsMeanAbsoluteAmplitude(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetResultsFrequencyErrorMean(
+int32 __stdcall RFmxSpecAn_PAVTGetResultsFrequencyErrorMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
@@ -12556,55 +12556,55 @@ extern "C"
 {
 #endif
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_CHPSetIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetIntegrationBandwidth(
+int32 __stdcall RFmxSpecAn_CHPGetIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_CHPSetRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetRRCFilterAlpha(
+int32 __stdcall RFmxSpecAn_CHPGetRRCFilterAlpha(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPSetRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_CHPSetRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetRRCFilterEnabled(
+int32 __stdcall RFmxSpecAn_CHPGetRRCFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetResultsAverageChannelPower(
+int32 __stdcall RFmxSpecAn_CHPGetResultsAverageChannelPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPGetResultsAverageChannelPSD(
+int32 __stdcall RFmxSpecAn_CHPGetResultsAverageChannelPSD(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeCSGArray(
+int32 __stdcall RFmxSpecAn_SetAttributeCSGArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attributeID,
@@ -12612,7 +12612,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_SetAttributeCSGArray(
    int32 arraySize
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyDPD(
+int32 __stdcall RFmxSpecAn_DPDApplyDPD(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 x0In,
@@ -12629,38 +12629,38 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDApplyDPD(
    float64* appliedHeadroom
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDCfgApplyDPDHeadroom(
+int32 __stdcall RFmxSpecAn_DPDCfgApplyDPDHeadroom(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 headroomMode,
    float64 headroom
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDHeadroomMode(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDHeadroomMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDHeadroomMode(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDHeadroomMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDGetApplyDPDHeadroom(
+int32 __stdcall RFmxSpecAn_DPDGetApplyDPDHeadroom(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_DPDSetApplyDPDHeadroom(
+int32 __stdcall RFmxSpecAn_DPDSetApplyDPDHeadroom(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPFetchMeasurement(
+int32 __stdcall RFmxSpecAn_CHPFetchMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -12669,13 +12669,13 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CHPFetchMeasurement(
    float64* frequencyResolution
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_CfgReferenceLevelUnits(
+int32 __stdcall RFmxSpecAn_CfgReferenceLevelUnits(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 referenceLevelUnits
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeIQ(
+int32 __stdcall RFmxSpecAn_AnalyzeIQ(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char resultName[],
@@ -12687,7 +12687,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeIQ(
    int32* averagingDone
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeIQSplit(
+int32 __stdcall RFmxSpecAn_AnalyzeIQSplit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char resultName[],
@@ -12700,7 +12700,7 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeIQSplit(
    int32* averagingDone
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeSpectrum(
+int32 __stdcall RFmxSpecAn_AnalyzeSpectrum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char resultName[],
@@ -12712,26 +12712,26 @@ int32 NIRFMXINSTR_STDCALL RFmxSpecAn_AnalyzeSpectrum(
    int32* averagingDone
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTGetMeasurementStartTime(
+int32 __stdcall RFmxSpecAn_PAVTGetMeasurementStartTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTSetMeasurementStartTime(
+int32 __stdcall RFmxSpecAn_PAVTSetMeasurementStartTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgMeasurementStartTimeList(
+int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementStartTimeList(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 measurementStartTime[],
    int32 numberOfElements
 );
 
-int32 NIRFMXINSTR_STDCALL RFmxSpecAn_PAVTCfgMeasurementStartTimeStep(
+int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementStartTimeStep(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 numberOfSegments,

@@ -101,7 +101,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSess
   ::grpc::ClientContext context;
   rfmxspecan::CloseRequest close_request;
   close_request.mutable_instrument()->set_id(session.id());
-  close_request.set_force_destroy(false);
+  close_request.set_force_destroy(rfmxspecan::Boolean::BOOLEAN_FALSE);
   rfmxspecan::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -127,7 +127,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessio
   ::grpc::ClientContext context;
   rfmxspecan::CloseRequest request;
   request.mutable_instrument()->set_id(session.id());
-  request.set_force_destroy(false);
+  request.set_force_destroy(rfmxspecan::Boolean::BOOLEAN_FALSE);
   rfmxspecan::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 

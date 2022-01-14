@@ -94,6 +94,7 @@ public:
   ::grpc::Status PoorlyNamedSimpleFunction(::grpc::ServerContext* context, const PoorlyNamedSimpleFunctionRequest* request, PoorlyNamedSimpleFunctionResponse* response) override;
   ::grpc::Status Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response) override;
   ::grpc::Status ReadDataWithInOutIviTwist(::grpc::ServerContext* context, const ReadDataWithInOutIviTwistRequest* request, ReadDataWithInOutIviTwistResponse* response) override;
+  ::grpc::Status ReadDataWithMultpleIviTwistParamSets(::grpc::ServerContext* context, const ReadDataWithMultpleIviTwistParamSetsRequest* request, ReadDataWithMultpleIviTwistParamSetsResponse* response) override;
   ::grpc::Status ReadFromChannel(::grpc::ServerContext* context, const ReadFromChannelRequest* request, ReadFromChannelResponse* response) override;
   ::grpc::Status ReturnANumberAndAString(::grpc::ServerContext* context, const ReturnANumberAndAStringRequest* request, ReturnANumberAndAStringResponse* response) override;
   ::grpc::Status ReturnDurationInSeconds(::grpc::ServerContext* context, const ReturnDurationInSecondsRequest* request, ReturnDurationInSecondsResponse* response) override;

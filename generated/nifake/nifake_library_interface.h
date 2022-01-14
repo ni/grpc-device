@@ -70,6 +70,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus PoorlyNamedSimpleFunction(ViSession vi) = 0;
   virtual ViStatus Read(ViSession vi, ViReal64 maximumTime, ViReal64* reading) = 0;
   virtual ViStatus ReadDataWithInOutIviTwist(ViInt32 data[], ViInt32* bufferSize) = 0;
+  virtual ViStatus ReadDataWithMultpleIviTwistParamSets(ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize, ViInt32 otherBufferSize, ViInt32 otherArrayOut[], ViInt32* otherActualSize) = 0;
   virtual ViStatus ReadFromChannel(ViSession vi, ViConstString channelName, ViInt32 maximumTime, ViReal64* reading) = 0;
   virtual ViStatus ReturnANumberAndAString(ViSession vi, ViInt16* aNumber, ViChar aString[256]) = 0;
   virtual ViStatus ReturnDurationInSeconds(ViSession vi, ViReal64* timedelta) = 0;
