@@ -76,7 +76,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nirfmxinstr" "nirfmxspecan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nirfmxbt" "nirfmxinstr" "nirfmxnr" "nirfmxspecan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -113,6 +113,17 @@ set(codegen_scripts
 set(nidriver_service_srcs "")
 set(nidriver_client_srcs "")
 
+# We'll codegen all drivers, but some are not included in the server build.
+set(nidrivers_to_build ${nidrivers})
+# Fake drivers are not in the server and are added manually to the UnitTestRunner build.
+list(FILTER nidrivers_to_build EXCLUDE REGEX "^nifake.*")
+if (NOT WIN32)
+  # None of the RFmx drivers support Linux and building against the headers fails.
+  # Exclude them on Linux.
+  list(FILTER nidrivers_to_build EXCLUDE REGEX "^nirfmx.*")
+endif()
+
+
 foreach(api ${nidrivers})
   set(codegen_dependencies
     "${metadata_dir}/${api}/attributes.py"
@@ -138,7 +149,7 @@ foreach(api ${nidrivers})
     ${service_output_dir}/${api}/${api}_service_registrar.h
   )
   set(gen_command COMMAND ${PYTHON_EXE} ${codegen_dir}/generate_service.py ${metadata_dir}/${api}/ -o ${service_output_dir}/)
-  if (NOT api MATCHES "^nifake.*")
+  if (api IN_LIST nidrivers_to_build)
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${service_output_dir}/${api}/${api}_service.cpp"
@@ -242,7 +253,7 @@ foreach(api ${nidrivers})
       "${proto_srcs_dir}/${api}.grpc.pb.cc"
       "${proto_srcs_dir}/${api}.grpc.pb.h"
   )
-  if(NOT api MATCHES "^nifake.*")
+  if(api IN_LIST nidrivers_to_build)
     set(nidriver_service_srcs
       ${nidriver_service_srcs}
       "${proto_srcs_dir}/${api}.pb.cc"
@@ -285,9 +296,9 @@ target_link_libraries(ni_grpc_device_server
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
 
 if(WIN32)
-  target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen niScope niRFmxInstr niRFmxSpecAn niRFSA niRFSG niswitch nisync niTClk)
-  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
-  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+  target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen niScope niRFmxBT niRFmxInstr niRFmxNR niRFmxSpecAn niRFSA niRFSG niswitch nisync niTClk)
+  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -420,47 +431,62 @@ add_custom_command(
            ${CMAKE_SOURCE_DIR}/source/tests/assets/
            $<TARGET_FILE_DIR:UnitTestsRunner>/)
 
-add_executable(SystemTestsRunner
-    "source/tests/utilities/run_all_tests.cpp"
-    "source/server/core_service_registrar.cpp"
-    "source/tests/system/device_server.cpp"
-    "source/tests/system/enumerate_devices.cpp"
-    "source/tests/system/session_utilities_service_tests.cpp"
-    "source/tests/system/nidaqmx_driver_api_tests.cpp"
-    "source/tests/system/nidaqmx_session_tests.cpp"
-    "source/tests/system/nidcpower_driver_api_tests.cpp"
-    "source/tests/system/nidcpower_session_tests.cpp"
-    "source/tests/system/nidigital_driver_api_tests.cpp"
-    "source/tests/system/nidigital_session_tests.cpp"
-    "source/tests/system/nidmm_driver_api_tests.cpp"
-    "source/tests/system/nidmm_session_tests.cpp"
-    "source/tests/system/nifgen_driver_api_tests.cpp"
-    "source/tests/system/nifgen_session_tests.cpp"
-    "source/tests/system/nirfmxinstr_driver_api_tests.cpp"
-    "source/tests/system/nirfmxspecan_driver_api_tests.cpp"
-    "source/tests/system/nirfmxspecan_session_tests.cpp"
-    "source/tests/system/nirfsa_driver_api_tests.cpp"
-    "source/tests/system/nirfsg_driver_api_tests.cpp"
-    "source/tests/system/nirfsg_session_tests.cpp"
-    "source/tests/system/niscope_driver_api_tests.cpp"
-    "source/tests/system/niscope_session_tests.cpp"
-    "source/tests/system/niswitch_driver_api_tests.cpp"
-    "source/tests/system/niswitch_session_tests.cpp"
-    "source/tests/system/nisync_driver_api_tests.cpp"
-    "source/tests/system/nisync_session_tests.cpp"
-    "source/tests/system/nitclk_driver_api_tests.cpp"
-    "source/server/device_enumerator.cpp"
-    "source/server/feature_toggles.cpp"
-    "source/server/session_repository.cpp"
-    "source/server/semaphore.cpp"
-    "source/server/session_utilities_service.cpp"
-    "source/server/shared_library.cpp"
-    "source/server/syscfg_library.cpp"
-    ${nidevice_proto_srcs}
-    ${session_proto_srcs}
-    ${session_grpc_srcs}
-    ${nidriver_service_srcs}
-    ${nidriver_client_srcs})
+
+set(system_test_runner_sources
+  "source/tests/utilities/run_all_tests.cpp"
+  "source/server/core_service_registrar.cpp"
+  "source/tests/system/device_server.cpp"
+  "source/tests/system/enumerate_devices.cpp"
+  "source/tests/system/session_utilities_service_tests.cpp"
+  "source/tests/system/nidaqmx_driver_api_tests.cpp"
+  "source/tests/system/nidaqmx_session_tests.cpp"
+  "source/tests/system/nidcpower_driver_api_tests.cpp"
+  "source/tests/system/nidcpower_session_tests.cpp"
+  "source/tests/system/nidigital_driver_api_tests.cpp"
+  "source/tests/system/nidigital_session_tests.cpp"
+  "source/tests/system/nidmm_driver_api_tests.cpp"
+  "source/tests/system/nidmm_session_tests.cpp"
+  "source/tests/system/nifgen_driver_api_tests.cpp"
+  "source/tests/system/nifgen_session_tests.cpp"
+  "source/tests/system/nirfsa_driver_api_tests.cpp"
+  "source/tests/system/nirfsg_driver_api_tests.cpp"
+  "source/tests/system/nirfsg_session_tests.cpp"
+  "source/tests/system/niscope_driver_api_tests.cpp"
+  "source/tests/system/niscope_session_tests.cpp"
+  "source/tests/system/niswitch_driver_api_tests.cpp"
+  "source/tests/system/niswitch_session_tests.cpp"
+  "source/tests/system/nisync_driver_api_tests.cpp"
+  "source/tests/system/nisync_session_tests.cpp"
+  "source/tests/system/nitclk_driver_api_tests.cpp"
+  "source/server/device_enumerator.cpp"
+  "source/server/feature_toggles.cpp"
+  "source/server/session_repository.cpp"
+  "source/server/semaphore.cpp"
+  "source/server/session_utilities_service.cpp"
+  "source/server/shared_library.cpp"
+  "source/server/syscfg_library.cpp"
+  ${nidevice_proto_srcs}
+  ${session_proto_srcs}
+  ${session_grpc_srcs}
+  ${nidriver_service_srcs}
+  ${nidriver_client_srcs}
+)
+
+if(WIN32)
+  list(
+    APPEND 
+      system_test_runner_sources
+        "source/tests/system/nirfmxbt_driver_api_tests.cpp"
+        "source/tests/system/nirfmxbt_session_tests.cpp"
+        "source/tests/system/nirfmxinstr_driver_api_tests.cpp"
+        "source/tests/system/nirfmxnr_driver_api_tests.cpp"
+        "source/tests/system/nirfmxnr_session_tests.cpp"
+        "source/tests/system/nirfmxspecan_driver_api_tests.cpp"
+        "source/tests/system/nirfmxspecan_session_tests.cpp"
+  )
+endif()
+
+add_executable(SystemTestsRunner ${system_test_runner_sources})
 
 target_link_libraries(SystemTestsRunner
     gtest
@@ -477,9 +503,9 @@ add_custom_command(
             $<TARGET_FILE_DIR:SystemTestsRunner>/)
 
 if(WIN32)
-    target_link_libraries(SystemTestsRunner Delayimp nidaqmx nidcpower niDigital nidmm niFgen niRFmxInstr niRFmxSpecAn niRFSA niRFSG niScope niswitch nisync niTClk)
-    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxInstr.dll  /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
-    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+    target_link_libraries(SystemTestsRunner Delayimp nidaqmx nidcpower niDigital nidmm niFgen niRFmxBT niRFmxInstr niRFmxNR niRFmxSpecAn niRFSA niRFSG niScope niswitch nisync niTClk)
+    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
+    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope.dll /DELAYLOAD:niswitch.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll")
 endif()
 
 # Hook up different google test runners to CTest

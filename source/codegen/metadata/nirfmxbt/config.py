@@ -57,5 +57,6 @@ config = {
     'metadata_version': '0.1',
     'module_name': 'nirfmxbt',
     'session_class_description': 'An NI-RFmxBT instrument handle',
-    'session_handle_parameter_name': 'instrumentHandle'
+    'session_handle_parameter_name': 'instrumentHandle',
+    'windows_only': True
 }
