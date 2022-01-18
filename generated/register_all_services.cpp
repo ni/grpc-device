@@ -28,6 +28,9 @@
 #if defined(_MSC_VER)
 #include "nirfmxspecan/nirfmxspecan_service_registrar.h"
 #endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+#include "nirfmxwlan/nirfmxwlan_service_registrar.h"
+#endif // defined(_MSC_VER)
 #include "nirfsa/nirfsa_service_registrar.h"
 #include "nirfsg/nirfsg_service_registrar.h"
 #include "niscope/niscope_service_registrar.h"
@@ -105,6 +108,13 @@ std::shared_ptr<void> register_all_services(
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxspecan_grpc::register_service(
+      server_builder, 
+      ni_r_fmx_instr_handle_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
+    nirfmxwlan_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
       feature_toggles));
