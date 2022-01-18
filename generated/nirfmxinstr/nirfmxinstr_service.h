@@ -139,6 +139,8 @@ private:
   NiRFmxInstrLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
+  std::map<std::int32_t, std::string> nirfmxinstrstringattributevaluesmapped_input_map_ { {1, ""},{2, "RefOut"},{3, "RefOut2"},{4, "ClkOut"},{5, ""},{6, "OnboardClock"},{7, "RefIn"},{8, "PXI_Clk"},{9, "ClkIn"},{10, "RefIn2"},{11, "PXI_ClkMaster"},{12, "Automatic_SG_SA_Shared"},{13, "LO_In"},{14, "None"},{15, "Onboard"},{16, "Secondary"},{17, "SG_SA_Shared"},{18, "PFI0"},{19, "PFI1"},{20, "PXI_Trig0"},{21, "PXI_Trig1"},{22, "PXI_Trig2"},{23, "PXI_Trig3"},{24, "PXI_Trig4"},{25, "PXI_Trig5"},{26, "PXI_Trig6"},{27, "PXI_Trig7"},{28, "PXI_STAR"},{29, "PXIe_DStarC"},{30, "PXIe_DStarB"},{31, "TimerEvent"}, };
+  std::map<std::string, std::int32_t> nirfmxinstrstringattributevaluesmapped_output_map_ { {"", 1},{"RefOut", 2},{"RefOut2", 3},{"ClkOut", 4},{"", 5},{"OnboardClock", 6},{"RefIn", 7},{"PXI_Clk", 8},{"ClkIn", 9},{"RefIn2", 10},{"PXI_ClkMaster", 11},{"Automatic_SG_SA_Shared", 12},{"LO_In", 13},{"None", 14},{"Onboard", 15},{"Secondary", 16},{"SG_SA_Shared", 17},{"PFI0", 18},{"PFI1", 19},{"PXI_Trig0", 20},{"PXI_Trig1", 21},{"PXI_Trig2", 22},{"PXI_Trig3", 23},{"PXI_Trig4", 24},{"PXI_Trig5", 25},{"PXI_Trig6", 26},{"PXI_Trig7", 27},{"PXI_STAR", 28},{"PXIe_DStarC", 29},{"PXIe_DStarB", 30},{"TimerEvent", 31}, };
 
   NiRFmxInstrFeatureToggles feature_toggles_;
 };

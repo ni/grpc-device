@@ -1492,7 +1492,7 @@ set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 SetAttributeStringResponse
-set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::string& attr_val)
+set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const simple_variant<NiRFmxInstrStringAttributeValuesMapped, std::string>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -1500,7 +1500,14 @@ set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
-  request.set_attr_val(attr_val);
+  const auto attr_val_ptr = attr_val.get_if<NiRFmxInstrStringAttributeValuesMapped>();
+  const auto attr_val_raw_ptr = attr_val.get_if<std::string>();
+  if (attr_val_ptr) {
+    request.set_attr_val_mapped(*attr_val_ptr);
+  }
+  else if (attr_val_raw_ptr) {
+    request.set_attr_val_raw(*attr_val_raw_ptr);
+  }
 
   auto response = SetAttributeStringResponse{};
 

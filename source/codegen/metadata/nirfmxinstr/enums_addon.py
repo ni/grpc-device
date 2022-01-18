@@ -4,3 +4,6 @@
 enums_override_metadata = {
 }
 
+enums_validation_suppressions = {
+    "FrequencyReferenceExportedTerminal": ["ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES"]
+}

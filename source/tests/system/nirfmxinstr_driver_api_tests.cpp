@@ -4,12 +4,14 @@
 #include "device_server.h"
 #include "niRFmxInstr.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
+#include "nirfmxspecan/nirfmxspecan_client.h"
 #include "nirfsa/nirfsa_client.h"
 
 using namespace ::testing;
 using namespace nirfmxinstr_grpc;
 namespace client = nirfmxinstr_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
+namespace specan_client = nirfmxspecan_grpc::experimental::client;
 namespace pb = google::protobuf;
 
 namespace ni {
@@ -63,6 +65,15 @@ class NiRFmxInstrDriverApiTests : public Test {
   std::unique_ptr<typename TService::Stub> create_stub()
   {
     return TService::NewStub(device_server_->InProcessChannel());
+  }
+
+  // Some APIs (GetAttribute) require you Initate/Commit the session. Use an arbitrary SpecAn measurement type
+  // to enter this state.
+  void initiate_to_enter_committed_state(const nidevice_grpc::Session& session)
+  {
+    auto specan_stub = create_stub<nirfmxspecan_grpc::NiRFmxSpecAn>();
+    EXPECT_SUCCESS(session, specan_client::select_measurements(specan_stub, session, "", nirfmxspecan_grpc::MeasurementTypes::MEASUREMENT_TYPES_CHP, true));
+    EXPECT_SUCCESS(session, specan_client::initiate(specan_stub, session, "", ""));
   }
 
  private:
@@ -130,6 +141,29 @@ TEST_F(NiRFmxInstrDriverApiTests, NoActiveList_GetListNames_ReturnsEmptyLists)
   EXPECT_SUCCESS(session, response);
   EXPECT_THAT(response.list_names(), IsEmpty());
   EXPECT_THAT(response.personality(), IsEmpty());
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, SetAndGetTuningSpeed_ReturnsTuningSpeed)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED, NiRFmxInstrInt32AttributeValues::NIRFMXINSTR_INT32_TUNING_SPEED_FAST));
+  initiate_to_enter_committed_state(session);
+  const auto response = client::get_attribute_i32(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ(response.attr_val(), NiRFmxInstrInt32AttributeValues::NIRFMXINSTR_INT32_TUNING_SPEED_FAST);
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, SetAndGetFrequencyReferenceSource_ReturnsFrequencyReferenceSource)
+{
+  constexpr auto MIXER_LEVEL = 5.5e7;
+  const auto session = init_session(stub(), PXI_5663E);
+  EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_FREQUENCY_REFERENCE_SOURCE, NiRFmxInstrStringAttributeValuesMapped::NIRFMXINSTR_STRING_FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK));
+  initiate_to_enter_committed_state(session);
+  const auto response = client::get_attribute_string(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_FREQUENCY_REFERENCE_SOURCE);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ(response.attr_val(), "OnboardClock");
 }
 
 }  // namespace
