@@ -177,7 +177,7 @@ def validate_function(function_name: str, metadata: dict):
             FUNCTION_SCHEMA.validate(function)
             if 'documentation' in function:
                 DOCUMENTATION_SCHEMA.validate(function['documentation'])
-            disallow_session_reverse_lookup = metadata['config'].get('disallow_session_reverse_lookup', False)
+            duplicate_resource_handles_allowed = metadata['config'].get('duplicate_resource_handles_allowed', False)
             is_init_method = function.get('init_method', False)
             for parameter in function['parameters']:
                 validate_parameter_size(parameter, function_name, metadata)
@@ -231,11 +231,11 @@ def validate_function(function_name: str, metadata: dict):
                     ivi_dance_with_a_twist_params.append(parameter['name'])
                     ivi_dance_with_a_twist_sizes.add(size['value'])
                     ivi_dance_with_a_twist_twists.add(size['value_twist'])
-                if disallow_session_reverse_lookup:
+                if duplicate_resource_handles_allowed:
                     if not is_init_method:
                         if parameter['direction'] == 'out' and parameter['type'] == service_helpers.get_resource_handle_type(metadata['config']):
                             raise  Exception(
-                               f"Since reverse session lookup is disallowed for this driver, {function_name} is not valid since it's not marked as an init_method but has a session output!")
+                               f"{metadata['config']['namespace_component']} allows duplicate resource handles in the session repository. Therefore, the handle we'd get for \"{parameter['name']}\" can't be mapped back to a Session to provide to the client!")
     except Exception as e:
         raise Exception(f"Failed to validate function {function_name}") from e
 

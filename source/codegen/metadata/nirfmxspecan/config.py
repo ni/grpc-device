@@ -58,5 +58,5 @@ config = {
     'metadata_version': '0.1',
     'module_name': 'nirfmxspecan',
     'session_class_description': 'An NI-RFmxSpecAn instrument handle',
-    'disallow_session_reverse_lookup': True
+    'duplicate_resource_handles_allowed': True
 }
