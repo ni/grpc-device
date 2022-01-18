@@ -17,6 +17,9 @@
 #include "nidmm/nidmm_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
 #if defined(_MSC_VER)
+#include "nirfmxbt/nirfmxbt_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
 #include "nirfmxinstr/nirfmxinstr_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
@@ -25,7 +28,6 @@
 #if defined(_MSC_VER)
 #include "nirfmxspecan/nirfmxspecan_service_registrar.h"
 #endif // defined(_MSC_VER)
-#include "nirfmxwlan/nirfmxwlan_service_registrar.h"
 #include "nirfsa/nirfsa_service_registrar.h"
 #include "nirfsg/nirfsg_service_registrar.h"
 #include "niscope/niscope_service_registrar.h"
@@ -49,7 +51,9 @@ std::shared_ptr<void> register_all_services(
 
   auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository.get());
   auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository.get());
+#if defined(_MSC_VER)
   auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository.get());
+#endif // defined(_MSC_VER)
 
   service_vector->push_back(
     nidaqmx_grpc::register_service(
@@ -78,6 +82,13 @@ std::shared_ptr<void> register_all_services(
       feature_toggles));
 #if defined(_MSC_VER)
   service_vector->push_back(
+    nirfmxbt_grpc::register_service(
+      server_builder, 
+      ni_r_fmx_instr_handle_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
     nirfmxinstr_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
@@ -98,11 +109,6 @@ std::shared_ptr<void> register_all_services(
       ni_r_fmx_instr_handle_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
-  service_vector->push_back(
-    nirfmxwlan_grpc::register_service(
-      server_builder, 
-      ni_r_fmx_instr_handle_repository,
-      feature_toggles));
   service_vector->push_back(
     nirfsa_grpc::register_service(
       server_builder, 
