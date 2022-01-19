@@ -35,6 +35,7 @@ def mutate_metadata(metadata: dict):
         metadata_mutation.mark_mapped_enum_params(
             parameters, metadata["enums"])
         metadata_mutation.populate_grpc_types(parameters, config)
+        metadata_mutation.mark_coerced_narrow_numeric_parameters(parameters)
         attribute_expander.expand_attribute_value_params(function)
         attribute_expander.patch_attribute_enum_type(function_name, function)
 

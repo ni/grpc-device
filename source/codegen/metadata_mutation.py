@@ -50,6 +50,20 @@ def mark_size_params(parameters):
             if mechanism == 'passed-in-by-ptr':
                 size_param['pointer'] = True
 
+
+# These are all of the coerced narrow numerics used in RFmx and DAQmx.
+# This will not account for other aliases of narrow numerics.
+# Note that params can also be marked coerced instead of updating this list.
+# uint8 is not included because it can be represented as a byte.
+KNOWN_COERCED_NARROW_NUMERIC_TYPES = ["int16", "uInt16", "int8"]
+
+def mark_coerced_narrow_numeric_parameters(parameters: dict) -> None:
+    for param in parameters:
+        param_type = common_helpers.get_underlying_type(param)
+        if param_type in KNOWN_COERCED_NARROW_NUMERIC_TYPES:
+            param["coerced"] = True
+
+
 def mark_non_proto_params(parameters):
     """Mark the parameters that shouldn't be included in the proto request message. 
        Their values should be derived from other sources in the service handlers."""

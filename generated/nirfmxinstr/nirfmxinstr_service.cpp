@@ -2471,13 +2471,25 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
-      int16 attr_val = request->attr_val();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int16>::min() || attr_val_raw > std::numeric_limits<int16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int16>(attr_val_raw);
+
       auto status = library_->SetAttributeI16(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
     }
   }
 
@@ -2770,13 +2782,25 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
-      uInt16 attr_val = request->attr_val();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<uInt16>::min() || attr_val_raw > std::numeric_limits<uInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<uInt16>(attr_val_raw);
+
       auto status = library_->SetAttributeU16(instrument, channel_name, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
     }
   }
 
