@@ -1479,7 +1479,7 @@ functions = {
             {
                 'cross_driver_session': 'ViSession',
                 'direction': 'out',
-                'grpc_type': "nidevice_grpc.Session",
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'niRfsaSession',
                 'type': 'uInt32'
             }
@@ -1665,7 +1665,7 @@ functions = {
             {
                 'cross_driver_session': 'ViSession',
                 'direction': 'in',
-                'grpc_type': "nidevice_grpc.Session",
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'nirfsaSession',
                 'type': 'uInt32'
             },
