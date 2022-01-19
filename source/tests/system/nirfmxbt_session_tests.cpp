@@ -15,6 +15,7 @@ const int kInvalidRFmxBTSession = -380598;
 const char* kRFmxBTTestRsrc = "FakeDevice";
 const char* kRFmxBTOptionsString = "Simulate=1, DriverSetup=Model:5663E";
 const char* kRFmxBTTestSession = "SessionName";
+const char* kRFmxBTTestSessionTwo = "SessionTwoName";
 const char* kRFmxBTTestInvalidRsrc = "";
 
 class NiRFmxBTSessionTest : public ::testing::Test {
@@ -42,6 +43,17 @@ class NiRFmxBTSessionTest : public ::testing::Test {
     request.set_session_name(session_name);
 
     ::grpc::Status status = GetStub()->Initialize(&context, request, response);
+    return status;
+  }
+
+  ::grpc::Status call_close(nidevice_grpc::Session session, nirfmxbt_grpc::Boolean force_destroy, rfmxbt::CloseResponse* response)
+  {
+    ::grpc::ClientContext context;
+    rfmxbt::CloseRequest request;
+    request.mutable_instrument_handle()->set_id(session.id());
+    request.set_force_destroy(force_destroy);
+
+    ::grpc::Status status = GetStub()->Close(&context, request, response);
     return status;
   }
 
@@ -95,6 +107,28 @@ TEST_F(NiRFmxBTSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, close_response.status());
+}
+
+TEST_F(NiRFmxBTSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_ClosesDriverSessions)
+{
+  rfmxbt::InitializeResponse init_response_one, init_response_two;
+  ::grpc::Status status_one = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSession, &init_response_one);
+  ::grpc::Status status_two = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionTwo, &init_response_two);
+  EXPECT_TRUE(status_one.ok());
+  EXPECT_EQ(0, init_response_one.status());
+  EXPECT_TRUE(status_two.ok());
+  EXPECT_EQ(0, init_response_two.status());
+
+  nidevice_grpc::Session session_one = init_response_one.handle_out();
+  nidevice_grpc::Session session_two = init_response_two.handle_out();
+  rfmxbt::CloseResponse close_response_one, close_response_two;
+  status_one = call_close(session_one, nirfmxbt_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
+  status_two = call_close(session_two, nirfmxbt_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
+
+  EXPECT_TRUE(status_one.ok());
+  EXPECT_EQ(0, close_response_one.status());
+  EXPECT_TRUE(status_two.ok());
+  EXPECT_EQ(0, close_response_two.status());
 }
 
 TEST_F(NiRFmxBTSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
