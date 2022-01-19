@@ -58,5 +58,6 @@ config = {
     'module_name': 'nirfmxbt',
     'session_class_description': 'An NI-RFmxBT instrument handle',
     'session_handle_parameter_name': 'instrumentHandle',
-    'windows_only': True
+    'windows_only': True,
+    'duplicate_resource_handles_allowed': True
 }
