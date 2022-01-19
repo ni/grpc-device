@@ -185,8 +185,9 @@ attributes = {
     },
     39: {
         'access': 'read-write',
+        'enum': 'RecommendedAcquisitionType',
         'name': 'RECOMMENDED_ACQUISITION_TYPE',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     40: {
         'access': 'read-write',
@@ -220,8 +221,9 @@ attributes = {
     },
     46: {
         'access': 'read-write',
+        'enum': 'RecommendedSpectralFftWindow',
         'name': 'RECOMMENDED_SPECTRAL_FFT_WINDOW',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     47: {
         'access': 'read-write',

@@ -242,15 +242,67 @@ enums = {
             }
         ]
     },
-    'SelfCalibrationValidityCheck': {
+    'RecommendedAcquisitionType': {
         'values': [
             {
-                'name': 'OFF',
+                'name': 'IQ',
                 'value': 0
             },
             {
+                'name': 'IQ_OR_SPECTRAL',
+                'value': 2
+            },
+            {
+                'name': 'SPECTRAL',
+                'value': 1
+            }
+        ]
+    },
+    'RecommendedSpectralFftWindow': {
+        'values': [
+            {
+                'name': 'BLACKMAN',
+                'value': 5
+            },
+            {
+                'name': 'BLACKMAN_HARRIS',
+                'value': 6
+            },
+            {
+                'name': 'FLAT_TOP',
+                'value': 1
+            },
+            {
+                'name': 'GAUSSIAN',
+                'value': 4
+            },
+            {
+                'name': 'HAMMING',
+                'value': 3
+            },
+            {
+                'name': 'HANNING',
+                'value': 2
+            },
+            {
+                'name': 'KAISER_BESSEL',
+                'value': 7
+            },
+            {
+                'name': 'NONE',
+                'value': 0
+            }
+        ]
+    },
+    'SelfCalibrationValidityCheck': {
+        'values': [
+            {
                 'name': 'ENABLED',
                 'value': 1
+            },
+            {
+                'name': 'OFF',
+                'value': 0
             }
         ]
     },
