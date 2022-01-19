@@ -176,14 +176,14 @@ TEST_F(NiRFmxInstrDriverApiTests, GetModelName_ReturnsModelName)
 
 TEST_F(NiRFmxInstrDriverApiTests, TimestampFromValuesRoundTrip_SucceedsWithOriginalValues)
 {
-  constexpr auto SECONDS_SINCE_1970 = 10000;
+  constexpr auto UNIX_TIMESTAMP = 10000;
   constexpr auto FRACTIONAL_SECONDS = .75;
-  const auto timestamp_response = client::timestamp_from_values(stub(), SECONDS_SINCE_1970, FRACTIONAL_SECONDS);
+  const auto timestamp_response = client::timestamp_from_values(stub(), UNIX_TIMESTAMP, FRACTIONAL_SECONDS);
   const auto values_response = client::values_from_timestamp(stub(), timestamp_response.timestamp());
 
   ni::tests::system::EXPECT_SUCCESS(timestamp_response);
   ni::tests::system::EXPECT_SUCCESS(values_response);
-  EXPECT_EQ(SECONDS_SINCE_1970, values_response.seconds_since1970());
+  EXPECT_EQ(UNIX_TIMESTAMP, values_response.seconds_since1970());
   EXPECT_NEAR(FRACTIONAL_SECONDS, values_response.fractional_seconds(), .001);
 }
 
