@@ -34,10 +34,12 @@ struct NiRFmxSpecAnFeatureToggles
 class NiRFmxSpecAnService final : public NiRFmxSpecAn::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
+  using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxSpecAnService(
     NiRFmxSpecAnLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
+    ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxSpecAnFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxSpecAnService();
   
@@ -85,7 +87,6 @@ public:
   ::grpc::Status AMPMCfgMeasurementSampleRate(::grpc::ServerContext* context, const AMPMCfgMeasurementSampleRateRequest* request, AMPMCfgMeasurementSampleRateResponse* response) override;
   ::grpc::Status AMPMCfgReferencePowerType(::grpc::ServerContext* context, const AMPMCfgReferencePowerTypeRequest* request, AMPMCfgReferencePowerTypeResponse* response) override;
   ::grpc::Status AMPMCfgReferenceWaveform(::grpc::ServerContext* context, const AMPMCfgReferenceWaveformRequest* request, AMPMCfgReferenceWaveformResponse* response) override;
-  ::grpc::Status AMPMCfgReferenceWaveformSplit(::grpc::ServerContext* context, const AMPMCfgReferenceWaveformSplitRequest* request, AMPMCfgReferenceWaveformSplitResponse* response) override;
   ::grpc::Status AMPMCfgSynchronizationMethod(::grpc::ServerContext* context, const AMPMCfgSynchronizationMethodRequest* request, AMPMCfgSynchronizationMethodResponse* response) override;
   ::grpc::Status AMPMCfgThreshold(::grpc::ServerContext* context, const AMPMCfgThresholdRequest* request, AMPMCfgThresholdResponse* response) override;
   ::grpc::Status AMPMFetchAMToAMTrace(::grpc::ServerContext* context, const AMPMFetchAMToAMTraceRequest* request, AMPMFetchAMToAMTraceResponse* response) override;
@@ -96,14 +97,11 @@ public:
   ::grpc::Status AMPMFetchDUTCharacteristics(::grpc::ServerContext* context, const AMPMFetchDUTCharacteristicsRequest* request, AMPMFetchDUTCharacteristicsResponse* response) override;
   ::grpc::Status AMPMFetchError(::grpc::ServerContext* context, const AMPMFetchErrorRequest* request, AMPMFetchErrorResponse* response) override;
   ::grpc::Status AMPMFetchProcessedMeanAcquiredWaveform(::grpc::ServerContext* context, const AMPMFetchProcessedMeanAcquiredWaveformRequest* request, AMPMFetchProcessedMeanAcquiredWaveformResponse* response) override;
-  ::grpc::Status AMPMFetchProcessedMeanAcquiredWaveformSplit(::grpc::ServerContext* context, const AMPMFetchProcessedMeanAcquiredWaveformSplitRequest* request, AMPMFetchProcessedMeanAcquiredWaveformSplitResponse* response) override;
   ::grpc::Status AMPMFetchProcessedReferenceWaveform(::grpc::ServerContext* context, const AMPMFetchProcessedReferenceWaveformRequest* request, AMPMFetchProcessedReferenceWaveformResponse* response) override;
-  ::grpc::Status AMPMFetchProcessedReferenceWaveformSplit(::grpc::ServerContext* context, const AMPMFetchProcessedReferenceWaveformSplitRequest* request, AMPMFetchProcessedReferenceWaveformSplitResponse* response) override;
   ::grpc::Status AMPMFetchRelativePhaseTrace(::grpc::ServerContext* context, const AMPMFetchRelativePhaseTraceRequest* request, AMPMFetchRelativePhaseTraceResponse* response) override;
   ::grpc::Status AMPMFetchRelativePowerTrace(::grpc::ServerContext* context, const AMPMFetchRelativePowerTraceRequest* request, AMPMFetchRelativePowerTraceResponse* response) override;
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
   ::grpc::Status AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response) override;
-  ::grpc::Status AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response) override;
   ::grpc::Status AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
   ::grpc::Status BuildCarrierString(::grpc::ServerContext* context, const BuildCarrierStringRequest* request, BuildCarrierStringResponse* response) override;
@@ -162,16 +160,12 @@ public:
   ::grpc::Status CreateListStep(::grpc::ServerContext* context, const CreateListStepRequest* request, CreateListStepResponse* response) override;
   ::grpc::Status CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response) override;
   ::grpc::Status DPDApplyDigitalPredistortion(::grpc::ServerContext* context, const DPDApplyDigitalPredistortionRequest* request, DPDApplyDigitalPredistortionResponse* response) override;
-  ::grpc::Status DPDApplyDigitalPredistortionSplit(::grpc::ServerContext* context, const DPDApplyDigitalPredistortionSplitRequest* request, DPDApplyDigitalPredistortionSplitResponse* response) override;
   ::grpc::Status DPDApplyPreDPDSignalConditioning(::grpc::ServerContext* context, const DPDApplyPreDPDSignalConditioningRequest* request, DPDApplyPreDPDSignalConditioningResponse* response) override;
-  ::grpc::Status DPDApplyPreDPDSignalConditioningSplit(::grpc::ServerContext* context, const DPDApplyPreDPDSignalConditioningSplitRequest* request, DPDApplyPreDPDSignalConditioningSplitResponse* response) override;
   ::grpc::Status DPDCfgApplyDPDConfigurationInput(::grpc::ServerContext* context, const DPDCfgApplyDPDConfigurationInputRequest* request, DPDCfgApplyDPDConfigurationInputResponse* response) override;
   ::grpc::Status DPDCfgApplyDPDLookupTableCorrectionType(::grpc::ServerContext* context, const DPDCfgApplyDPDLookupTableCorrectionTypeRequest* request, DPDCfgApplyDPDLookupTableCorrectionTypeResponse* response) override;
   ::grpc::Status DPDCfgApplyDPDMemoryModelCorrectionType(::grpc::ServerContext* context, const DPDCfgApplyDPDMemoryModelCorrectionTypeRequest* request, DPDCfgApplyDPDMemoryModelCorrectionTypeResponse* response) override;
   ::grpc::Status DPDCfgApplyDPDUserDPDPolynomial(::grpc::ServerContext* context, const DPDCfgApplyDPDUserDPDPolynomialRequest* request, DPDCfgApplyDPDUserDPDPolynomialResponse* response) override;
-  ::grpc::Status DPDCfgApplyDPDUserDPDPolynomialSplit(::grpc::ServerContext* context, const DPDCfgApplyDPDUserDPDPolynomialSplitRequest* request, DPDCfgApplyDPDUserDPDPolynomialSplitResponse* response) override;
   ::grpc::Status DPDCfgApplyDPDUserLookupTable(::grpc::ServerContext* context, const DPDCfgApplyDPDUserLookupTableRequest* request, DPDCfgApplyDPDUserLookupTableResponse* response) override;
-  ::grpc::Status DPDCfgApplyDPDUserLookupTableSplit(::grpc::ServerContext* context, const DPDCfgApplyDPDUserLookupTableSplitRequest* request, DPDCfgApplyDPDUserLookupTableSplitResponse* response) override;
   ::grpc::Status DPDCfgAveraging(::grpc::ServerContext* context, const DPDCfgAveragingRequest* request, DPDCfgAveragingResponse* response) override;
   ::grpc::Status DPDCfgDPDModel(::grpc::ServerContext* context, const DPDCfgDPDModelRequest* request, DPDCfgDPDModelResponse* response) override;
   ::grpc::Status DPDCfgDUTAverageInputPower(::grpc::ServerContext* context, const DPDCfgDUTAverageInputPowerRequest* request, DPDCfgDUTAverageInputPowerResponse* response) override;
@@ -186,21 +180,15 @@ public:
   ::grpc::Status DPDCfgMeasurementSampleRate(::grpc::ServerContext* context, const DPDCfgMeasurementSampleRateRequest* request, DPDCfgMeasurementSampleRateResponse* response) override;
   ::grpc::Status DPDCfgMemoryPolynomial(::grpc::ServerContext* context, const DPDCfgMemoryPolynomialRequest* request, DPDCfgMemoryPolynomialResponse* response) override;
   ::grpc::Status DPDCfgPreviousDPDPolynomial(::grpc::ServerContext* context, const DPDCfgPreviousDPDPolynomialRequest* request, DPDCfgPreviousDPDPolynomialResponse* response) override;
-  ::grpc::Status DPDCfgPreviousDPDPolynomialSplit(::grpc::ServerContext* context, const DPDCfgPreviousDPDPolynomialSplitRequest* request, DPDCfgPreviousDPDPolynomialSplitResponse* response) override;
   ::grpc::Status DPDCfgReferenceWaveform(::grpc::ServerContext* context, const DPDCfgReferenceWaveformRequest* request, DPDCfgReferenceWaveformResponse* response) override;
-  ::grpc::Status DPDCfgReferenceWaveformSplit(::grpc::ServerContext* context, const DPDCfgReferenceWaveformSplitRequest* request, DPDCfgReferenceWaveformSplitResponse* response) override;
   ::grpc::Status DPDCfgSynchronizationMethod(::grpc::ServerContext* context, const DPDCfgSynchronizationMethodRequest* request, DPDCfgSynchronizationMethodResponse* response) override;
   ::grpc::Status DPDFetchApplyDPDPreCFRPAPR(::grpc::ServerContext* context, const DPDFetchApplyDPDPreCFRPAPRRequest* request, DPDFetchApplyDPDPreCFRPAPRResponse* response) override;
   ::grpc::Status DPDFetchAverageGain(::grpc::ServerContext* context, const DPDFetchAverageGainRequest* request, DPDFetchAverageGainResponse* response) override;
   ::grpc::Status DPDFetchDPDPolynomial(::grpc::ServerContext* context, const DPDFetchDPDPolynomialRequest* request, DPDFetchDPDPolynomialResponse* response) override;
-  ::grpc::Status DPDFetchDPDPolynomialSplit(::grpc::ServerContext* context, const DPDFetchDPDPolynomialSplitRequest* request, DPDFetchDPDPolynomialSplitResponse* response) override;
   ::grpc::Status DPDFetchLookupTable(::grpc::ServerContext* context, const DPDFetchLookupTableRequest* request, DPDFetchLookupTableResponse* response) override;
-  ::grpc::Status DPDFetchLookupTableSplit(::grpc::ServerContext* context, const DPDFetchLookupTableSplitRequest* request, DPDFetchLookupTableSplitResponse* response) override;
   ::grpc::Status DPDFetchNMSE(::grpc::ServerContext* context, const DPDFetchNMSERequest* request, DPDFetchNMSEResponse* response) override;
   ::grpc::Status DPDFetchProcessedMeanAcquiredWaveform(::grpc::ServerContext* context, const DPDFetchProcessedMeanAcquiredWaveformRequest* request, DPDFetchProcessedMeanAcquiredWaveformResponse* response) override;
-  ::grpc::Status DPDFetchProcessedMeanAcquiredWaveformSplit(::grpc::ServerContext* context, const DPDFetchProcessedMeanAcquiredWaveformSplitRequest* request, DPDFetchProcessedMeanAcquiredWaveformSplitResponse* response) override;
   ::grpc::Status DPDFetchProcessedReferenceWaveform(::grpc::ServerContext* context, const DPDFetchProcessedReferenceWaveformRequest* request, DPDFetchProcessedReferenceWaveformResponse* response) override;
-  ::grpc::Status DPDFetchProcessedReferenceWaveformSplit(::grpc::ServerContext* context, const DPDFetchProcessedReferenceWaveformSplitRequest* request, DPDFetchProcessedReferenceWaveformSplitResponse* response) override;
   ::grpc::Status DeleteList(::grpc::ServerContext* context, const DeleteListRequest* request, DeleteListResponse* response) override;
   ::grpc::Status DeleteSignalConfiguration(::grpc::ServerContext* context, const DeleteSignalConfigurationRequest* request, DeleteSignalConfigurationResponse* response) override;
   ::grpc::Status DisableTrigger(::grpc::ServerContext* context, const DisableTriggerRequest* request, DisableTriggerResponse* response) override;
@@ -269,7 +257,6 @@ public:
   ::grpc::Status IQCfgAcquisition(::grpc::ServerContext* context, const IQCfgAcquisitionRequest* request, IQCfgAcquisitionResponse* response) override;
   ::grpc::Status IQCfgBandwidth(::grpc::ServerContext* context, const IQCfgBandwidthRequest* request, IQCfgBandwidthResponse* response) override;
   ::grpc::Status IQFetchData(::grpc::ServerContext* context, const IQFetchDataRequest* request, IQFetchDataResponse* response) override;
-  ::grpc::Status IQFetchDataSplit(::grpc::ServerContext* context, const IQFetchDataSplitRequest* request, IQFetchDataSplitResponse* response) override;
   ::grpc::Status IQGetRecordsDone(::grpc::ServerContext* context, const IQGetRecordsDoneRequest* request, IQGetRecordsDoneResponse* response) override;
   ::grpc::Status Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response) override;
   ::grpc::Status InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response) override;
@@ -307,9 +294,7 @@ public:
   ::grpc::Status NFFetchDUTNoiseFigureAndGain(::grpc::ServerContext* context, const NFFetchDUTNoiseFigureAndGainRequest* request, NFFetchDUTNoiseFigureAndGainResponse* response) override;
   ::grpc::Status NFFetchYFactorPowers(::grpc::ServerContext* context, const NFFetchYFactorPowersRequest* request, NFFetchYFactorPowersResponse* response) override;
   ::grpc::Status NFFetchYFactors(::grpc::ServerContext* context, const NFFetchYFactorsRequest* request, NFFetchYFactorsResponse* response) override;
-  ::grpc::Status NFGetCalibrationSetupId(::grpc::ServerContext* context, const NFGetCalibrationSetupIdRequest* request, NFGetCalibrationSetupIdResponse* response) override;
   ::grpc::Status NFRecommendReferenceLevel(::grpc::ServerContext* context, const NFRecommendReferenceLevelRequest* request, NFRecommendReferenceLevelResponse* response) override;
-  ::grpc::Status NFSetCalibrationSetupId(::grpc::ServerContext* context, const NFSetCalibrationSetupIdRequest* request, NFSetCalibrationSetupIdResponse* response) override;
   ::grpc::Status NFValidateCalibrationData(::grpc::ServerContext* context, const NFValidateCalibrationDataRequest* request, NFValidateCalibrationDataResponse* response) override;
   ::grpc::Status OBWCfgAveraging(::grpc::ServerContext* context, const OBWCfgAveragingRequest* request, OBWCfgAveragingResponse* response) override;
   ::grpc::Status OBWCfgBandwidthPercentage(::grpc::ServerContext* context, const OBWCfgBandwidthPercentageRequest* request, OBWCfgBandwidthPercentageResponse* response) override;
@@ -474,6 +459,7 @@ public:
 private:
   NiRFmxSpecAnLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
   std::map<std::int32_t, std::string> digitaledgetriggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"}, };
   std::map<std::string, std::int32_t> digitaledgetriggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"PXIe_DStarB", 12},{"TimerEvent", 13}, };
   std::map<std::int32_t, std::string> frequencyreferencesource_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_Clk"},{4, "ClkIn"}, };
