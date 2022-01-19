@@ -66,7 +66,7 @@ namespace nirfmxnr_grpc {
         }
       }
 
-      session_repository_->remove_session(instrument_handle);
+      session_repository_->remove_session(instrument_handle_grpc_session.id(), instrument_handle_grpc_session.name());
       auto status = library_->Close(instrument_handle, force_destroy);
       response->set_status(status);
       return ::grpc::Status::OK;

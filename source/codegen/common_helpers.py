@@ -525,6 +525,14 @@ def get_param_with_name(parameters: List[dict], name: str) -> dict:
     )
     return next(matched_params)
 
+def get_first_session_param(parameters: List[dict]) -> dict:
+    matched_params = (
+        p
+        for p in parameters
+        if p.get('grpc_type', None) == 'nidevice_grpc.Session'
+    )
+    return next(matched_params)
+
 
 class IviDanceWithATwistParamSet(NamedTuple):
     array_params: List[dict]

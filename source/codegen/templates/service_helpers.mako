@@ -48,10 +48,11 @@ ${initialize_output_params(output_parameters_to_initialize)}\
   cross_driver_dep = service_helpers.get_cross_driver_session_dependency(session_output_param)
   session_output_var_name = common_helpers.get_cpp_local_name(session_output_param)
   initiating_driver_input_var_name = common_helpers.get_cpp_local_name(initiating_driver_input_param)
+  initiating_driver_c_name = f'{initiating_driver_input_var_name}_grpc_session'
 %>\
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
-      auto initiating_session_id = session_repository_->resolve_session_id(${initiating_driver_input_var_name});
+      auto initiating_session_id = session_repository_->access_session_id(${initiating_driver_c_name}.id(), ${initiating_driver_c_name}.name());
       auto init_lambda = [&] () {
         ${cross_driver_dep.resource_handle_type} ${session_output_var_name};
         int status = library_->${function_name}(${service_helpers.create_args(parameters)});
@@ -242,7 +243,11 @@ ${set_response_values(output_parameters=output_parameters)}\
 ${initialize_input_params(function_name, parameters)}\
 ${initialize_output_params(output_parameters)}\
 % if function_name == config['close_function'] or service_helpers.is_custom_close_method(function_data):
-      session_repository_->remove_session(${service_helpers.create_args(parameters[:1])});
+<%
+  session_param = common_helpers.get_first_session_param(parameters)
+  session_param_name = f'{common_helpers.get_cpp_local_name(session_param)}_grpc_session'
+%>\
+      session_repository_->remove_session(${session_param_name}.id(), ${session_param_name}.name());
 % endif
       auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
       response->set_status(status);

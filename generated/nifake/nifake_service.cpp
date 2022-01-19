@@ -1968,7 +1968,7 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      session_repository_->remove_session(vi);
+      session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->close(vi);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1989,7 +1989,7 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 action = request->action();
-      session_repository_->remove_session(vi);
+      session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->CloseExtCal(vi, action);
       response->set_status(status);
       return ::grpc::Status::OK;

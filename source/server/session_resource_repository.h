@@ -29,9 +29,10 @@ class SessionResourceRepository {
       uint32_t& session_id);
 
   TResourceHandle access_session(uint32_t session_id, const std::string& session_name) const;
+  uint32_t access_session_id(uint32_t session_id, const std::string& session_name) const;
   uint32_t resolve_session_id(TResourceHandle handle) const;
   int add_dependent_session(const std::string& session_name, InitFunc init_func, uint32_t initiating_session, uint32_t& session_id);
-  void remove_session(TResourceHandle handle);
+  void remove_session(uint32_t session_id, const std::string& session_name);
 
  private:
   // Wraps init_func_ and caches the result as handle_.
@@ -60,7 +61,6 @@ class SessionResourceRepository {
     TResourceHandle get_handle(uint32_t session_id) const;
     uint32_t get_session_id(TResourceHandle handle) const;
 
-    uint32_t remove_handle(TResourceHandle handle);
     TResourceHandle remove_session_id(uint32_t session_id);
 
    private:
@@ -146,16 +146,23 @@ TResourceHandle SessionResourceRepository<TResourceHandle>::access_session(uint3
 }
 
 template <typename TResourceHandle>
+uint32_t SessionResourceRepository<TResourceHandle>::access_session_id(uint32_t session_id, const std::string& session_name) const
+{
+  return session_repository_->access_session(session_id, session_name);
+}
+
+template <typename TResourceHandle>
 uint32_t SessionResourceRepository<TResourceHandle>::resolve_session_id(TResourceHandle handle) const
 {
   return resource_map_.get_session_id(handle);
 }
 
 template <typename TResourceHandle>
-void SessionResourceRepository<TResourceHandle>::remove_session(TResourceHandle handle)
+void SessionResourceRepository<TResourceHandle>::remove_session(uint32_t session_id, const std::string& session_name)
 {
-  auto id = resource_map_.remove_handle(handle);
+  auto id = session_repository_->access_session(session_id, session_name);
   if (id) {
+    resource_map_.remove_session_id(id);
     session_repository_->remove_session(id);
   }
 }
@@ -215,18 +222,6 @@ uint32_t SessionResourceRepository<TResourceHandle>::ResourceMap::get_session_id
   // Note: failed resolve will ultimately be reported as a bad resource by the driver
   // on use.
   return 0;
-}
-
-template <typename TResourceHandle>
-uint32_t SessionResourceRepository<TResourceHandle>::ResourceMap::remove_handle(TResourceHandle handle)
-{
-  MapLock lock(map_mutex_);
-  auto session_id = get_session_id(handle);
-  if (session_id) {
-    map_.erase(session_id);
-    reverse_map_.erase(handle);
-  }
-  return session_id;
 }
 
 template <typename TResourceHandle>

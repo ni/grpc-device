@@ -66,7 +66,7 @@ namespace nirfmxwlan_grpc {
         }
       }
 
-      session_repository_->remove_session(instrument);
+      session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       response->set_status(status);
       return ::grpc::Status::OK;
