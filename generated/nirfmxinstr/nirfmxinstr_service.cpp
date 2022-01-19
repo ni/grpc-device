@@ -263,7 +263,22 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
-      int32 format = request->format();
+      int32 format;
+      switch (request->format_enum_case()) {
+        case nirfmxinstr_grpc::CfgExternalAttenuationInterpolationLinearRequest::FormatEnumCase::kFormat: {
+          format = static_cast<int32>(request->format());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgExternalAttenuationInterpolationLinearRequest::FormatEnumCase::kFormatRaw: {
+          format = static_cast<int32>(request->format_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgExternalAttenuationInterpolationLinearRequest::FormatEnumCase::FORMAT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for format was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CfgExternalAttenuationInterpolationLinear(instrument, selector_string, table_name, format);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -361,7 +376,26 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
-      char* frequency_reference_source = (char*)request->frequency_reference_source().c_str();
+      char* frequency_reference_source;
+      switch (request->frequency_reference_source_enum_case()) {
+        case nirfmxinstr_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceMapped: {
+          auto frequency_reference_source_imap_it = frequencyreferencesource_input_map_.find(request->frequency_reference_source_mapped());
+          if (frequency_reference_source_imap_it == frequencyreferencesource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source_mapped was not specified or out of range.");
+          }
+          frequency_reference_source = const_cast<char*>((frequency_reference_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceRaw: {
+          frequency_reference_source = const_cast<char*>(request->frequency_reference_source_raw().c_str());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::FREQUENCY_REFERENCE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source was not specified or out of range");
+          break;
+        }
+      }
+
       float64 frequency_reference_frequency = request->frequency_reference_frequency();
       auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
       response->set_status(status);
@@ -383,7 +417,22 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
-      int32 mechanical_attenuation_auto = request->mechanical_attenuation_auto();
+      int32 mechanical_attenuation_auto;
+      switch (request->mechanical_attenuation_auto_enum_case()) {
+        case nirfmxinstr_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAuto: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAutoRaw: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::MECHANICAL_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mechanical_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
       auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
       response->set_status(status);
@@ -405,7 +454,22 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
-      int32 rf_attenuation_auto = request->rf_attenuation_auto();
+      int32 rf_attenuation_auto;
+      switch (request->rf_attenuation_auto_enum_case()) {
+        case nirfmxinstr_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAuto: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAutoRaw: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::RF_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rf_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
       float64 rf_attenuation_value = request->rf_attenuation_value();
       auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
       response->set_status(status);
@@ -433,7 +497,22 @@ namespace nirfmxinstr_grpc {
       auto s_parameters = convert_from_grpc<NIComplexDouble>(request->s_parameters());
       int32 s_parameter_table_size = static_cast<int32>(request->s_parameters().size());
       int32 number_of_ports = request->number_of_ports();
-      int32 s_parameter_orientation = request->s_parameter_orientation();
+      int32 s_parameter_orientation;
+      switch (request->s_parameter_orientation_enum_case()) {
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTableRequest::SParameterOrientationEnumCase::kSParameterOrientation: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTableRequest::SParameterOrientationEnumCase::kSParameterOrientationRaw: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTableRequest::SParameterOrientationEnumCase::S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CfgSParameterExternalAttenuationTable(instrument, selector_string, table_name, frequency, frequency_array_size, s_parameters.data(), s_parameter_table_size, number_of_ports, s_parameter_orientation);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -454,7 +533,22 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 s_parameter_type = request->s_parameter_type();
+      int32 s_parameter_type;
+      switch (request->s_parameter_type_enum_case()) {
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTypeRequest::SParameterTypeEnumCase::kSParameterType: {
+          s_parameter_type = static_cast<int32>(request->s_parameter_type());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTypeRequest::SParameterTypeEnumCase::kSParameterTypeRaw: {
+          s_parameter_type = static_cast<int32>(request->s_parameter_type_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTypeRequest::SParameterTypeEnumCase::S_PARAMETER_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for s_parameter_type was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CfgSParameterExternalAttenuationType(instrument, selector_string, s_parameter_type);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -478,7 +572,8 @@ namespace nirfmxinstr_grpc {
       auto status = library_->CheckAcquisitionStatus(instrument, &acquisition_done);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_acquisition_done(acquisition_done);
+        response->set_acquisition_done(static_cast<nirfmxinstr_grpc::Boolean>(acquisition_done));
+        response->set_acquisition_done_raw(acquisition_done);
       }
       return ::grpc::Status::OK;
     }
@@ -503,8 +598,10 @@ namespace nirfmxinstr_grpc {
       auto status = library_->CheckIfListExists(instrument, list_name, &list_exists, &personality);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_list_exists(list_exists);
-        response->set_personality(personality);
+        response->set_list_exists(static_cast<nirfmxinstr_grpc::Boolean>(list_exists));
+        response->set_list_exists_raw(list_exists);
+        response->set_personality(static_cast<nirfmxinstr_grpc::Personality>(personality));
+        response->set_personality_raw(personality);
       }
       return ::grpc::Status::OK;
     }
@@ -529,8 +626,10 @@ namespace nirfmxinstr_grpc {
       auto status = library_->CheckIfSignalConfigurationExists(instrument, signal_name, &signal_configuration_exists, &personality);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_signal_configuration_exists(signal_configuration_exists);
-        response->set_personality(personality);
+        response->set_signal_configuration_exists(static_cast<nirfmxinstr_grpc::Boolean>(signal_configuration_exists));
+        response->set_signal_configuration_exists_raw(signal_configuration_exists);
+        response->set_personality(static_cast<nirfmxinstr_grpc::Personality>(personality));
+        response->set_personality_raw(personality);
       }
       return ::grpc::Status::OK;
     }
@@ -549,7 +648,22 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      int32 force_destroy = request->force_destroy();
+      int32 force_destroy;
+      switch (request->force_destroy_enum_case()) {
+        case nirfmxinstr_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroy: {
+          force_destroy = static_cast<int32>(request->force_destroy());
+          break;
+        }
+        case nirfmxinstr_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroyRaw: {
+          force_destroy = static_cast<int32>(request->force_destroy_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::CloseRequest::ForceDestroyEnumCase::FORCE_DESTROY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for force_destroy was not specified or out of range");
+          break;
+        }
+      }
+
       session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       response->set_status(status);
@@ -651,7 +765,22 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      int32 export_signal_source = request->export_signal_source();
+      int32 export_signal_source;
+      switch (request->export_signal_source_enum_case()) {
+        case nirfmxinstr_grpc::ExportSignalRequest::ExportSignalSourceEnumCase::kExportSignalSource: {
+          export_signal_source = static_cast<int32>(request->export_signal_source());
+          break;
+        }
+        case nirfmxinstr_grpc::ExportSignalRequest::ExportSignalSourceEnumCase::kExportSignalSourceRaw: {
+          export_signal_source = static_cast<int32>(request->export_signal_source_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::ExportSignalRequest::ExportSignalSourceEnumCase::EXPORT_SIGNAL_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for export_signal_source was not specified or out of range");
+          break;
+        }
+      }
+
       char* export_signal_output_terminal = (char*)request->export_signal_output_terminal().c_str();
       auto status = library_->ExportSignal(instrument, export_signal_source, export_signal_output_terminal);
       response->set_status(status);
@@ -1532,7 +1661,22 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 personality_filter = request->personality_filter();
+      int32 personality_filter;
+      switch (request->personality_filter_enum_case()) {
+        case nirfmxinstr_grpc::GetListNamesRequest::PersonalityFilterEnumCase::kPersonalityFilter: {
+          personality_filter = static_cast<int32>(request->personality_filter());
+          break;
+        }
+        case nirfmxinstr_grpc::GetListNamesRequest::PersonalityFilterEnumCase::kPersonalityFilterRaw: {
+          personality_filter = static_cast<int32>(request->personality_filter_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::GetListNamesRequest::PersonalityFilterEnumCase::PERSONALITY_FILTER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for personality_filter was not specified or out of range");
+          break;
+        }
+      }
+
       int32 actual_list_names_size {};
       int32 actual_personality_array_size {};
       while (true) {
@@ -1545,8 +1689,8 @@ namespace nirfmxinstr_grpc {
         if (actual_list_names_size > 0) {
             list_names.resize(actual_list_names_size - 1);
         }
-        response->mutable_personality()->Resize(actual_personality_array_size, 0);
-        int32* personality = reinterpret_cast<int32*>(response->mutable_personality()->mutable_data());
+        response->mutable_personality_raw()->Resize(actual_personality_array_size, 0);
+        int32* personality = reinterpret_cast<int32*>(response->mutable_personality_raw()->mutable_data());
         auto list_names_size = actual_list_names_size;
         auto personality_array_size = actual_personality_array_size;
         status = library_->GetListNames(instrument, selector_string, personality_filter, (char*)list_names.data(), list_names_size, &actual_list_names_size, personality, personality_array_size, &actual_personality_array_size);
@@ -1559,6 +1703,15 @@ namespace nirfmxinstr_grpc {
           response->set_list_names(list_names);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_list_names()));
           response->set_actual_list_names_size(actual_list_names_size);
+          response->mutable_personality()->Clear();
+          response->mutable_personality()->Reserve(actual_personality_array_size);
+          std::transform(
+            response->personality_raw().begin(),
+            response->personality_raw().begin() + actual_personality_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_personality()),
+            [&](auto x) { 
+                return static_cast<nirfmxinstr_grpc::Personality>(x);
+            });
           response->mutable_personality()->Resize(actual_personality_array_size, 0);
           response->set_actual_personality_array_size(actual_personality_array_size);
         }
@@ -1650,7 +1803,22 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int64 self_calibrate_step = request->self_calibrate_step();
+      int64 self_calibrate_step;
+      switch (request->self_calibrate_step_enum_case()) {
+        case nirfmxinstr_grpc::GetSelfCalibrateLastDateAndTimeRequest::SelfCalibrateStepEnumCase::kSelfCalibrateStep: {
+          self_calibrate_step = static_cast<int64>(request->self_calibrate_step());
+          break;
+        }
+        case nirfmxinstr_grpc::GetSelfCalibrateLastDateAndTimeRequest::SelfCalibrateStepEnumCase::kSelfCalibrateStepRaw: {
+          self_calibrate_step = static_cast<int64>(request->self_calibrate_step_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::GetSelfCalibrateLastDateAndTimeRequest::SelfCalibrateStepEnumCase::SELF_CALIBRATE_STEP_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for self_calibrate_step was not specified or out of range");
+          break;
+        }
+      }
+
       CVIAbsoluteTime timestamp {};
       auto status = library_->GetSelfCalibrateLastDateAndTime(instrument, selector_string, self_calibrate_step, &timestamp);
       response->set_status(status);
@@ -1675,7 +1843,22 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int64 self_calibrate_step = request->self_calibrate_step();
+      int64 self_calibrate_step;
+      switch (request->self_calibrate_step_enum_case()) {
+        case nirfmxinstr_grpc::GetSelfCalibrateLastTemperatureRequest::SelfCalibrateStepEnumCase::kSelfCalibrateStep: {
+          self_calibrate_step = static_cast<int64>(request->self_calibrate_step());
+          break;
+        }
+        case nirfmxinstr_grpc::GetSelfCalibrateLastTemperatureRequest::SelfCalibrateStepEnumCase::kSelfCalibrateStepRaw: {
+          self_calibrate_step = static_cast<int64>(request->self_calibrate_step_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::GetSelfCalibrateLastTemperatureRequest::SelfCalibrateStepEnumCase::SELF_CALIBRATE_STEP_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for self_calibrate_step was not specified or out of range");
+          break;
+        }
+      }
+
       float64 temperature {};
       auto status = library_->GetSelfCalibrateLastTemperature(instrument, selector_string, self_calibrate_step, &temperature);
       response->set_status(status);
@@ -1700,7 +1883,22 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 personality_filter = request->personality_filter();
+      int32 personality_filter;
+      switch (request->personality_filter_enum_case()) {
+        case nirfmxinstr_grpc::GetSignalConfigurationNamesRequest::PersonalityFilterEnumCase::kPersonalityFilter: {
+          personality_filter = static_cast<int32>(request->personality_filter());
+          break;
+        }
+        case nirfmxinstr_grpc::GetSignalConfigurationNamesRequest::PersonalityFilterEnumCase::kPersonalityFilterRaw: {
+          personality_filter = static_cast<int32>(request->personality_filter_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::GetSignalConfigurationNamesRequest::PersonalityFilterEnumCase::PERSONALITY_FILTER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for personality_filter was not specified or out of range");
+          break;
+        }
+      }
+
       int32 actual_signal_names_size {};
       int32 actual_personality_array_size {};
       while (true) {
@@ -1848,8 +2046,29 @@ namespace nirfmxinstr_grpc {
       auto status = library_->IsSelfCalibrateValid(instrument, selector_string, &self_calibrate_valid, &valid_steps);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_self_calibrate_valid(self_calibrate_valid);
-        response->set_valid_steps(valid_steps);
+        response->set_self_calibrate_valid(static_cast<nirfmxinstr_grpc::Boolean>(self_calibrate_valid));
+        response->set_self_calibrate_valid_raw(self_calibrate_valid);
+        if (valid_steps & 0x20)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_AMPLITUDE_ACCURACY);
+        if (valid_steps & 0x200)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_DC_OFFSET);
+        if (valid_steps & 0x8)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_DIGITIZER_SELF_CAL);
+        if (valid_steps & 0x2)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_GAIN_REFERENCE);
+        if (valid_steps & 0x4)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_IF_FLATNESS);
+        if (valid_steps & 0x80)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_IMAGE_SUPPRESSION);
+        if (valid_steps & 0x10)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_LO_SELF_CAL);
+        if (valid_steps & 0x1)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_PRESELECTOR_ALIGNMENT);
+        if (valid_steps & 0x40)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_RESIDUAL_LO_POWER);
+        if (valid_steps & 0x100)
+          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_SYNTHESIZER_ALIGNMENT);
+        response->set_valid_steps_raw(valid_steps);
       }
       return ::grpc::Status::OK;
     }
@@ -1892,7 +2111,22 @@ namespace nirfmxinstr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
       char* s2_p_file_path = (char*)request->s2_p_file_path().c_str();
-      int32 s_parameter_orientation = request->s_parameter_orientation();
+      int32 s_parameter_orientation;
+      switch (request->s_parameter_orientation_enum_case()) {
+        case nirfmxinstr_grpc::LoadSParameterExternalAttenuationTableFromS2PFileRequest::SParameterOrientationEnumCase::kSParameterOrientation: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation());
+          break;
+        }
+        case nirfmxinstr_grpc::LoadSParameterExternalAttenuationTableFromS2PFileRequest::SParameterOrientationEnumCase::kSParameterOrientationRaw: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::LoadSParameterExternalAttenuationTableFromS2PFileRequest::SParameterOrientationEnumCase::S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->LoadSParameterExternalAttenuationTableFromS2PFile(instrument, selector_string, table_name, s2_p_file_path, s_parameter_orientation);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2032,7 +2266,22 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 steps_to_omit = request->steps_to_omit();
+      int32 steps_to_omit;
+      switch (request->steps_to_omit_enum_case()) {
+        case nirfmxinstr_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::kStepsToOmit: {
+          steps_to_omit = static_cast<int32>(request->steps_to_omit());
+          break;
+        }
+        case nirfmxinstr_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::kStepsToOmitRaw: {
+          steps_to_omit = static_cast<int32>(request->steps_to_omit_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::STEPS_TO_OMIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for steps_to_omit was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SelfCalibrate(instrument, selector_string, steps_to_omit);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2053,7 +2302,22 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 steps_to_omit = request->steps_to_omit();
+      int32 steps_to_omit;
+      switch (request->steps_to_omit_enum_case()) {
+        case nirfmxinstr_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::kStepsToOmit: {
+          steps_to_omit = static_cast<int32>(request->steps_to_omit());
+          break;
+        }
+        case nirfmxinstr_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::kStepsToOmitRaw: {
+          steps_to_omit = static_cast<int32>(request->steps_to_omit_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::STEPS_TO_OMIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for steps_to_omit was not specified or out of range");
+          break;
+        }
+      }
+
       float64 minimum_frequency = request->minimum_frequency();
       float64 maximum_frequency = request->maximum_frequency();
       float64 minimum_reference_level = request->minimum_reference_level();

@@ -170,6 +170,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'LinearInterpolationFormat',
                 'name': 'format',
                 'type': 'int32'
             }
@@ -277,6 +278,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FrequencyReferenceSource',
                 'name': 'frequencyReferenceSource',
                 'type': 'char[]'
             },
@@ -303,6 +305,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'MechanicalAttenuationAuto',
                 'name': 'mechanicalAttenuationAuto',
                 'type': 'int32'
             },
@@ -329,6 +332,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'RFAttenuationAuto',
                 'name': 'rfAttenuationAuto',
                 'type': 'int32'
             },
@@ -393,6 +397,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SParameterOrientation',
                 'name': 'sParameterOrientation',
                 'type': 'int32'
             }
@@ -414,6 +419,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SParameterType',
                 'name': 'sParameterType',
                 'type': 'int32'
             }
@@ -430,6 +436,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'enum': 'Boolean',
                 'name': 'acquisitionDone',
                 'type': 'int32'
             }
@@ -451,11 +458,13 @@ functions = {
             },
             {
                 'direction': 'out',
+                'enum': 'Boolean',
                 'name': 'listExists',
                 'type': 'int32'
             },
             {
                 'direction': 'out',
+                'enum': 'Personality',
                 'name': 'personality',
                 'type': 'int32'
             }
@@ -477,11 +486,13 @@ functions = {
             },
             {
                 'direction': 'out',
+                'enum': 'Boolean',
                 'name': 'signalConfigurationExists',
                 'type': 'int32'
             },
             {
                 'direction': 'out',
+                'enum': 'Personality',
                 'name': 'personality',
                 'type': 'int32'
             }
@@ -498,6 +509,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'Boolean',
                 'name': 'forceDestroy',
                 'type': 'int32'
             }
@@ -583,6 +595,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'ExportSignalSource',
                 'name': 'exportSignalSource',
                 'type': 'int32'
             },
@@ -1421,6 +1434,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'Personality',
                 'name': 'personalityFilter',
                 'type': 'int32'
             },
@@ -1446,6 +1460,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'enum': 'Personality',
                 'name': 'personality',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -1532,6 +1547,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SelfCalStep',
                 'name': 'selfCalibrateStep',
                 'type': 'int64'
             },
@@ -1558,6 +1574,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SelfCalStep',
                 'name': 'selfCalibrateStep',
                 'type': 'int64'
             },
@@ -1584,6 +1601,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'Personality',
                 'name': 'personalityFilter',
                 'type': 'int32'
             },
@@ -1720,10 +1738,12 @@ functions = {
             },
             {
                 'direction': 'out',
+                'enum': 'Boolean',
                 'name': 'selfCalibrateValid',
                 'type': 'int32'
             },
             {
+                'bitfield_as_enum_array': 'SelfCalStep',
                 'direction': 'out',
                 'name': 'validSteps',
                 'type': 'int32'
@@ -1777,6 +1797,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SParameterOrientation',
                 'name': 'sParameterOrientation',
                 'type': 'int32'
             }
@@ -1890,6 +1911,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SelfCalStep',
                 'name': 'stepsToOmit',
                 'type': 'int32'
             }
@@ -1911,6 +1933,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SelfCalStep',
                 'name': 'stepsToOmit',
                 'type': 'int32'
             },

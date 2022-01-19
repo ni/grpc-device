@@ -104,7 +104,7 @@ build_port_string(const StubPtr& stub, const pb::string& selector_string, const 
 }
 
 CfgExternalAttenuationInterpolationLinearResponse
-cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::int32& format)
+cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const simple_variant<LinearInterpolationFormat, pb::int32>& format)
 {
   ::grpc::ClientContext context;
 
@@ -112,7 +112,14 @@ cfg_external_attenuation_interpolation_linear(const StubPtr& stub, const nidevic
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
-  request.set_format(format);
+  const auto format_ptr = format.get_if<LinearInterpolationFormat>();
+  const auto format_raw_ptr = format.get_if<pb::int32>();
+  if (format_ptr) {
+    request.set_format(*format_ptr);
+  }
+  else if (format_raw_ptr) {
+    request.set_format_raw(*format_raw_ptr);
+  }
 
   auto response = CfgExternalAttenuationInterpolationLinearResponse{};
 
@@ -179,14 +186,21 @@ cfg_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 CfgFrequencyReferenceResponse
-cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::string& frequency_reference_source, const double& frequency_reference_frequency)
+cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<FrequencyReferenceSource, std::string>& frequency_reference_source, const double& frequency_reference_frequency)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgFrequencyReferenceRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
-  request.set_frequency_reference_source(frequency_reference_source);
+  const auto frequency_reference_source_ptr = frequency_reference_source.get_if<FrequencyReferenceSource>();
+  const auto frequency_reference_source_raw_ptr = frequency_reference_source.get_if<std::string>();
+  if (frequency_reference_source_ptr) {
+    request.set_frequency_reference_source_mapped(*frequency_reference_source_ptr);
+  }
+  else if (frequency_reference_source_raw_ptr) {
+    request.set_frequency_reference_source_raw(*frequency_reference_source_raw_ptr);
+  }
   request.set_frequency_reference_frequency(frequency_reference_frequency);
 
   auto response = CfgFrequencyReferenceResponse{};
@@ -198,14 +212,21 @@ cfg_frequency_reference(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 CfgMechanicalAttenuationResponse
-cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
+cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<MechanicalAttenuationAuto, pb::int32>& mechanical_attenuation_auto, const double& mechanical_attenuation_value)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgMechanicalAttenuationRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
-  request.set_mechanical_attenuation_auto(mechanical_attenuation_auto);
+  const auto mechanical_attenuation_auto_ptr = mechanical_attenuation_auto.get_if<MechanicalAttenuationAuto>();
+  const auto mechanical_attenuation_auto_raw_ptr = mechanical_attenuation_auto.get_if<pb::int32>();
+  if (mechanical_attenuation_auto_ptr) {
+    request.set_mechanical_attenuation_auto(*mechanical_attenuation_auto_ptr);
+  }
+  else if (mechanical_attenuation_auto_raw_ptr) {
+    request.set_mechanical_attenuation_auto_raw(*mechanical_attenuation_auto_raw_ptr);
+  }
   request.set_mechanical_attenuation_value(mechanical_attenuation_value);
 
   auto response = CfgMechanicalAttenuationResponse{};
@@ -217,14 +238,21 @@ cfg_mechanical_attenuation(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 CfgRFAttenuationResponse
-cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& rf_attenuation_auto, const double& rf_attenuation_value)
+cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<RFAttenuationAuto, pb::int32>& rf_attenuation_auto, const double& rf_attenuation_value)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgRFAttenuationRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
-  request.set_rf_attenuation_auto(rf_attenuation_auto);
+  const auto rf_attenuation_auto_ptr = rf_attenuation_auto.get_if<RFAttenuationAuto>();
+  const auto rf_attenuation_auto_raw_ptr = rf_attenuation_auto.get_if<pb::int32>();
+  if (rf_attenuation_auto_ptr) {
+    request.set_rf_attenuation_auto(*rf_attenuation_auto_ptr);
+  }
+  else if (rf_attenuation_auto_raw_ptr) {
+    request.set_rf_attenuation_auto_raw(*rf_attenuation_auto_raw_ptr);
+  }
   request.set_rf_attenuation_value(rf_attenuation_value);
 
   auto response = CfgRFAttenuationResponse{};
@@ -236,7 +264,7 @@ cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 CfgSParameterExternalAttenuationTableResponse
-cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const std::vector<double>& frequency, const std::vector<nidevice_grpc::NIComplexNumber>& s_parameters, const pb::int32& number_of_ports, const pb::int32& s_parameter_orientation)
+cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const std::vector<double>& frequency, const std::vector<nidevice_grpc::NIComplexNumber>& s_parameters, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
 {
   ::grpc::ClientContext context;
 
@@ -247,7 +275,14 @@ cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_g
   copy_array(frequency, request.mutable_frequency());
   copy_array(s_parameters, request.mutable_s_parameters());
   request.set_number_of_ports(number_of_ports);
-  request.set_s_parameter_orientation(s_parameter_orientation);
+  const auto s_parameter_orientation_ptr = s_parameter_orientation.get_if<SParameterOrientation>();
+  const auto s_parameter_orientation_raw_ptr = s_parameter_orientation.get_if<pb::int32>();
+  if (s_parameter_orientation_ptr) {
+    request.set_s_parameter_orientation(*s_parameter_orientation_ptr);
+  }
+  else if (s_parameter_orientation_raw_ptr) {
+    request.set_s_parameter_orientation_raw(*s_parameter_orientation_raw_ptr);
+  }
 
   auto response = CfgSParameterExternalAttenuationTableResponse{};
 
@@ -258,14 +293,21 @@ cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_g
 }
 
 CfgSParameterExternalAttenuationTypeResponse
-cfg_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& s_parameter_type)
+cfg_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SParameterType, pb::int32>& s_parameter_type)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgSParameterExternalAttenuationTypeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_s_parameter_type(s_parameter_type);
+  const auto s_parameter_type_ptr = s_parameter_type.get_if<SParameterType>();
+  const auto s_parameter_type_raw_ptr = s_parameter_type.get_if<pb::int32>();
+  if (s_parameter_type_ptr) {
+    request.set_s_parameter_type(*s_parameter_type_ptr);
+  }
+  else if (s_parameter_type_raw_ptr) {
+    request.set_s_parameter_type_raw(*s_parameter_type_raw_ptr);
+  }
 
   auto response = CfgSParameterExternalAttenuationTypeResponse{};
 
@@ -326,13 +368,20 @@ check_if_signal_configuration_exists(const StubPtr& stub, const nidevice_grpc::S
 }
 
 CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& force_destroy)
+close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<Boolean, pb::int32>& force_destroy)
 {
   ::grpc::ClientContext context;
 
   auto request = CloseRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
-  request.set_force_destroy(force_destroy);
+  const auto force_destroy_ptr = force_destroy.get_if<Boolean>();
+  const auto force_destroy_raw_ptr = force_destroy.get_if<pb::int32>();
+  if (force_destroy_ptr) {
+    request.set_force_destroy(*force_destroy_ptr);
+  }
+  else if (force_destroy_raw_ptr) {
+    request.set_force_destroy_raw(*force_destroy_raw_ptr);
+  }
 
   auto response = CloseResponse{};
 
@@ -412,13 +461,20 @@ enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& export_signal_source, const pb::string& export_signal_output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<ExportSignalSource, pb::int32>& export_signal_source, const pb::string& export_signal_output_terminal)
 {
   ::grpc::ClientContext context;
 
   auto request = ExportSignalRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
-  request.set_export_signal_source(export_signal_source);
+  const auto export_signal_source_ptr = export_signal_source.get_if<ExportSignalSource>();
+  const auto export_signal_source_raw_ptr = export_signal_source.get_if<pb::int32>();
+  if (export_signal_source_ptr) {
+    request.set_export_signal_source(*export_signal_source_ptr);
+  }
+  else if (export_signal_source_raw_ptr) {
+    request.set_export_signal_source_raw(*export_signal_source_raw_ptr);
+  }
   request.set_export_signal_output_terminal(export_signal_output_terminal);
 
   auto response = ExportSignalResponse{};
@@ -857,14 +913,21 @@ get_external_attenuation_table_actual_value(const StubPtr& stub, const nidevice_
 }
 
 GetListNamesResponse
-get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& personality_filter)
+get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<Personality, pb::int32>& personality_filter)
 {
   ::grpc::ClientContext context;
 
   auto request = GetListNamesRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_personality_filter(personality_filter);
+  const auto personality_filter_ptr = personality_filter.get_if<Personality>();
+  const auto personality_filter_raw_ptr = personality_filter.get_if<pb::int32>();
+  if (personality_filter_ptr) {
+    request.set_personality_filter(*personality_filter_ptr);
+  }
+  else if (personality_filter_raw_ptr) {
+    request.set_personality_filter_raw(*personality_filter_raw_ptr);
+  }
 
   auto response = GetListNamesResponse{};
 
@@ -907,14 +970,21 @@ get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 GetSelfCalibrateLastDateAndTimeResponse
-get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int64& self_calibrate_step)
+get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step)
 {
   ::grpc::ClientContext context;
 
   auto request = GetSelfCalibrateLastDateAndTimeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_self_calibrate_step(self_calibrate_step);
+  const auto self_calibrate_step_ptr = self_calibrate_step.get_if<SelfCalStep>();
+  const auto self_calibrate_step_raw_ptr = self_calibrate_step.get_if<pb::int64>();
+  if (self_calibrate_step_ptr) {
+    request.set_self_calibrate_step(*self_calibrate_step_ptr);
+  }
+  else if (self_calibrate_step_raw_ptr) {
+    request.set_self_calibrate_step_raw(*self_calibrate_step_raw_ptr);
+  }
 
   auto response = GetSelfCalibrateLastDateAndTimeResponse{};
 
@@ -925,14 +995,21 @@ get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::
 }
 
 GetSelfCalibrateLastTemperatureResponse
-get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int64& self_calibrate_step)
+get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step)
 {
   ::grpc::ClientContext context;
 
   auto request = GetSelfCalibrateLastTemperatureRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_self_calibrate_step(self_calibrate_step);
+  const auto self_calibrate_step_ptr = self_calibrate_step.get_if<SelfCalStep>();
+  const auto self_calibrate_step_raw_ptr = self_calibrate_step.get_if<pb::int64>();
+  if (self_calibrate_step_ptr) {
+    request.set_self_calibrate_step(*self_calibrate_step_ptr);
+  }
+  else if (self_calibrate_step_raw_ptr) {
+    request.set_self_calibrate_step_raw(*self_calibrate_step_raw_ptr);
+  }
 
   auto response = GetSelfCalibrateLastTemperatureResponse{};
 
@@ -943,14 +1020,21 @@ get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 GetSignalConfigurationNamesResponse
-get_signal_configuration_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& personality_filter)
+get_signal_configuration_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<Personality, pb::int32>& personality_filter)
 {
   ::grpc::ClientContext context;
 
   auto request = GetSignalConfigurationNamesRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_personality_filter(personality_filter);
+  const auto personality_filter_ptr = personality_filter.get_if<Personality>();
+  const auto personality_filter_raw_ptr = personality_filter.get_if<pb::int32>();
+  if (personality_filter_ptr) {
+    request.set_personality_filter(*personality_filter_ptr);
+  }
+  else if (personality_filter_raw_ptr) {
+    request.set_personality_filter_raw(*personality_filter_raw_ptr);
+  }
 
   auto response = GetSignalConfigurationNamesResponse{};
 
@@ -1045,7 +1129,7 @@ load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 LoadSParameterExternalAttenuationTableFromS2PFileResponse
-load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::string& s2_p_file_path, const pb::int32& s_parameter_orientation)
+load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::string& s2_p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
 {
   ::grpc::ClientContext context;
 
@@ -1054,7 +1138,14 @@ load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, c
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
   request.set_s2_p_file_path(s2_p_file_path);
-  request.set_s_parameter_orientation(s_parameter_orientation);
+  const auto s_parameter_orientation_ptr = s_parameter_orientation.get_if<SParameterOrientation>();
+  const auto s_parameter_orientation_raw_ptr = s_parameter_orientation.get_if<pb::int32>();
+  if (s_parameter_orientation_ptr) {
+    request.set_s_parameter_orientation(*s_parameter_orientation_ptr);
+  }
+  else if (s_parameter_orientation_raw_ptr) {
+    request.set_s_parameter_orientation_raw(*s_parameter_orientation_raw_ptr);
+  }
 
   auto response = LoadSParameterExternalAttenuationTableFromS2PFileResponse{};
 
@@ -1166,14 +1257,21 @@ select_active_external_attenuation_table(const StubPtr& stub, const nidevice_grp
 }
 
 SelfCalibrateResponse
-self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& steps_to_omit)
+self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int32>& steps_to_omit)
 {
   ::grpc::ClientContext context;
 
   auto request = SelfCalibrateRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_steps_to_omit(steps_to_omit);
+  const auto steps_to_omit_ptr = steps_to_omit.get_if<SelfCalStep>();
+  const auto steps_to_omit_raw_ptr = steps_to_omit.get_if<pb::int32>();
+  if (steps_to_omit_ptr) {
+    request.set_steps_to_omit(*steps_to_omit_ptr);
+  }
+  else if (steps_to_omit_raw_ptr) {
+    request.set_steps_to_omit_raw(*steps_to_omit_raw_ptr);
+  }
 
   auto response = SelfCalibrateResponse{};
 
@@ -1184,14 +1282,21 @@ self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& instrument, co
 }
 
 SelfCalibrateRangeResponse
-self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& steps_to_omit, const double& minimum_frequency, const double& maximum_frequency, const double& minimum_reference_level, const double& maximum_reference_level)
+self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int32>& steps_to_omit, const double& minimum_frequency, const double& maximum_frequency, const double& minimum_reference_level, const double& maximum_reference_level)
 {
   ::grpc::ClientContext context;
 
   auto request = SelfCalibrateRangeRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_steps_to_omit(steps_to_omit);
+  const auto steps_to_omit_ptr = steps_to_omit.get_if<SelfCalStep>();
+  const auto steps_to_omit_raw_ptr = steps_to_omit.get_if<pb::int32>();
+  if (steps_to_omit_ptr) {
+    request.set_steps_to_omit(*steps_to_omit_ptr);
+  }
+  else if (steps_to_omit_raw_ptr) {
+    request.set_steps_to_omit_raw(*steps_to_omit_raw_ptr);
+  }
   request.set_minimum_frequency(minimum_frequency);
   request.set_maximum_frequency(maximum_frequency);
   request.set_minimum_reference_level(minimum_reference_level);
