@@ -165,6 +165,28 @@ TEST_F(NiRFmxInstrDriverApiTests, SetAndGetFrequencyReferenceSource_ReturnsFrequ
   EXPECT_EQ(response.attr_val(), "OnboardClock");
 }
 
+TEST_F(NiRFmxInstrDriverApiTests, GetModelName_ReturnsModelName)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+  const auto response = client::get_attribute_string(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_INSTRUMENT_MODEL);
+
+  EXPECT_SUCCESS(session, response);
+  EXPECT_EQ(response.attr_val(), "NI PXIe-5663E");
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, TimestampFromValuesRoundTrip_SucceedsWithOriginalValues)
+{
+  constexpr auto SECONDS_SINCE_1970 = 10000;
+  constexpr auto FRACTIONAL_SECONDS = .75;
+  const auto timestamp_response = client::timestamp_from_values(stub(), SECONDS_SINCE_1970, FRACTIONAL_SECONDS);
+  const auto values_response = client::values_from_timestamp(stub(), timestamp_response.timestamp());
+
+  ni::tests::system::EXPECT_SUCCESS(timestamp_response);
+  ni::tests::system::EXPECT_SUCCESS(values_response);
+  EXPECT_EQ(SECONDS_SINCE_1970, values_response.seconds_since1970());
+  EXPECT_NEAR(FRACTIONAL_SECONDS, values_response.fractional_seconds(), .001);
+}
+
 }  // namespace
 }  // namespace system
 }  // namespace tests
