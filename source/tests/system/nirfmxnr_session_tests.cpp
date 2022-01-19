@@ -50,7 +50,7 @@ class NiRFmxNRSessionTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     rfmxnr::CloseRequest request;
-    request.mutable_instrument_handle()->set_id(session.id());
+    request.mutable_instrument()->set_id(session.id());
     request.set_force_destroy(force_destroy);
 
     ::grpc::Status status = GetStub()->Close(&context, request, response);
@@ -69,7 +69,7 @@ TEST_F(NiRFmxNRSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDri
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.handle_out().id());
+  EXPECT_NE(0, response.instrument().id());
 }
 
 TEST_F(NiRFmxNRSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -79,7 +79,7 @@ TEST_F(NiRFmxNRSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesD
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.handle_out().id());
+  EXPECT_NE(0, response.instrument().id());
 }
 
 TEST_F(NiRFmxNRSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -89,7 +89,7 @@ TEST_F(NiRFmxNRSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kInvalidRsrc, response.status());
-  EXPECT_EQ(0, response.handle_out().id());
+  EXPECT_EQ(0, response.instrument().id());
 }
 
 TEST_F(NiRFmxNRSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -97,10 +97,10 @@ TEST_F(NiRFmxNRSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   rfmxnr::InitializeResponse init_response;
   call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSessionOne, &init_response);
 
-  nidevice_grpc::Session session = init_response.handle_out();
+  nidevice_grpc::Session session = init_response.instrument();
   ::grpc::ClientContext context;
   rfmxnr::CloseRequest close_request;
-  close_request.mutable_instrument_handle()->set_id(session.id());
+  close_request.mutable_instrument()->set_id(session.id());
   close_request.set_force_destroy(nirfmxnr_grpc::Boolean::BOOLEAN_FALSE);
   rfmxnr::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
@@ -119,8 +119,8 @@ TEST_F(NiRFmxNRSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_Clo
   EXPECT_TRUE(status_two.ok());
   EXPECT_EQ(0, init_response_two.status());
 
-  nidevice_grpc::Session session_one = init_response_one.handle_out();
-  nidevice_grpc::Session session_two = init_response_two.handle_out();
+  nidevice_grpc::Session session_one = init_response_one.instrument();
+  nidevice_grpc::Session session_two = init_response_two.instrument();
   rfmxnr::CloseResponse close_response_one, close_response_two;
   status_one = call_close(session_one, nirfmxnr_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
   status_two = call_close(session_two, nirfmxnr_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
@@ -138,7 +138,7 @@ TEST_F(NiRFmxNRSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionErr
 
   ::grpc::ClientContext context;
   rfmxnr::CloseRequest request;
-  request.mutable_instrument_handle()->set_id(session.id());
+  request.mutable_instrument()->set_id(session.id());
   request.set_force_destroy(nirfmxnr_grpc::Boolean::BOOLEAN_FALSE);
   rfmxnr::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
