@@ -19,6 +19,7 @@ namespace tests {
 namespace system {
 namespace {
 
+const auto PXI_5663 = "5663";
 const auto PXI_5663E = "5663E";
 
 template <typename TResponse>
@@ -55,10 +56,11 @@ class NiRFmxInstrDriverApiTests : public Test {
   }
 
   template <typename TResponse>
-  void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
+  TResponse EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
   {
     ni::tests::system::EXPECT_SUCCESS(response);
     check_error(session);
+    return response;
   }
 
   template <typename TService>
@@ -163,6 +165,49 @@ TEST_F(NiRFmxInstrDriverApiTests, SetAndGetFrequencyReferenceSource_ReturnsFrequ
 
   EXPECT_SUCCESS(session, response);
   EXPECT_EQ(response.attr_val(), "OnboardClock");
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, CallCfgMethods_Succeeds)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+
+  EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
+  EXPECT_SUCCESS(session, client::cfg_mechanical_attenuation(stub(), session, "", MechanicalAttenuationAuto::MECHANICAL_ATTENUATION_AUTO_TRUE, 10.0));
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, CallCheckMethods_SucceedsWithReasonableResponseValues)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+  const auto status_response = EXPECT_SUCCESS(session, client::check_acquisition_status(stub(), session));
+  const auto list_exists_response = EXPECT_SUCCESS(session, client::check_if_list_exists(stub(), session, "NOTALIST"));
+  const auto self_cal_response = EXPECT_SUCCESS(session, client::is_self_calibrate_valid(stub(), session, ""));
+
+  EXPECT_EQ(status_response.acquisition_done(), Boolean::BOOLEAN_TRUE);
+  EXPECT_EQ(list_exists_response.list_exists(), Boolean::BOOLEAN_FALSE);
+  EXPECT_EQ(list_exists_response.personality(), Personality::PERSONALITY_NONE);
+  EXPECT_EQ(self_cal_response.self_calibrate_valid(), Boolean::BOOLEAN_TRUE);
+  EXPECT_THAT(self_cal_response.valid_steps_array(), ElementsAreArray(std::vector<SelfCalStep>{SelfCalStep::SELF_CAL_STEP_DIGITIZER_SELF_CAL}));
+}
+
+// Use a mix of RFmxSpecAn and RFmxInstr APIs in an RFmxInstr session.
+TEST_F(NiRFmxInstrDriverApiTests, SpectrumBasicWithRFmxInstr_DataLooksReasonable)
+{
+  auto specan_stub = create_stub<nirfmxspecan_grpc::NiRFmxSpecAn>();
+  auto session = init_session(stub(), PXI_5663);
+  EXPECT_SUCCESS(session, specan_client::cfg_rf(specan_stub, session, "", 1e9, 0, 0));
+  EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
+  EXPECT_SUCCESS(session, specan_client::spectrum_cfg_span(specan_stub, session, "", 1e6));
+  EXPECT_SUCCESS(session, specan_client::spectrum_cfg_rbw_filter(specan_stub, session, "", true, 100e3, nirfmxspecan_grpc::SpectrumRbwFilterType::SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN));
+  EXPECT_SUCCESS(session, specan_client::spectrum_cfg_averaging(specan_stub, session, "", false, 10, nirfmxspecan_grpc::SpectrumAveragingType::SPECTRUM_AVERAGING_TYPE_RMS));
+
+  auto read_response = specan_client::spectrum_read(specan_stub, session, "", 10.0);
+
+  EXPECT_SUCCESS(session, read_response);
+  constexpr auto EXPECTED_SPECTRUM_SIZE = 1005;
+  EXPECT_EQ(EXPECTED_SPECTRUM_SIZE, read_response.spectrum().size());
+  constexpr auto MIDPOINT_X = EXPECTED_SPECTRUM_SIZE / 2;
+  EXPECT_LT(read_response.spectrum(0), read_response.spectrum(MIDPOINT_X));
+  EXPECT_LT(read_response.spectrum(EXPECTED_SPECTRUM_SIZE - 1), read_response.spectrum(MIDPOINT_X));
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, GetModelName_ReturnsModelName)

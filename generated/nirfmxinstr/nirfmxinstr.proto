@@ -211,6 +211,106 @@ enum NiRFmxInstrAttribute {
   NIRFMXINSTR_ATTRIBUTE_THERMAL_CORRECTION_TEMPERATURE_RESOLUTION = 120;
 }
 
+enum Boolean {
+  option allow_alias = true;
+  BOOLEAN_UNSPECIFIED = 0;
+  BOOLEAN_TRUE = 1;
+  BOOLEAN_FALSE = 0;
+}
+
+enum ExportSignalSource {
+  option allow_alias = true;
+  EXPORT_SIGNAL_SOURCE_UNSPECIFIED = 0;
+  EXPORT_SIGNAL_SOURCE_START_TRIGGER = 0;
+  EXPORT_SIGNAL_SOURCE_REFERENCE_TRIGGER = 1;
+  EXPORT_SIGNAL_SOURCE_ADVANCE_TRIGGER = 2;
+  EXPORT_SIGNAL_SOURCE_READY_FOR_START_EVENT = 3;
+  EXPORT_SIGNAL_SOURCE_READY_FOR_REFERENCE_EVENT = 4;
+  EXPORT_SIGNAL_SOURCE_READY_FOR_ADVANCE_EVENT = 5;
+  EXPORT_SIGNAL_SOURCE_END_OF_RECORD_EVENT = 6;
+  EXPORT_SIGNAL_SOURCE_DONE_EVENT = 7;
+  EXPORT_SIGNAL_SOURCE_REFERENCE_CLOCK = 8;
+}
+
+enum FrequencyReferenceSource {
+  FREQUENCY_REFERENCE_SOURCE_UNSPECIFIED = 0;
+  FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK = 1;
+  FREQUENCY_REFERENCE_SOURCE_REF_IN = 2;
+  FREQUENCY_REFERENCE_SOURCE_PXI_CLK = 3;
+  FREQUENCY_REFERENCE_SOURCE_CLK_IN = 4;
+  FREQUENCY_REFERENCE_SOURCE_REF_IN2 = 5;
+  FREQUENCY_REFERENCE_SOURCE_PXI_CLK_MASTER = 6;
+}
+
+enum LinearInterpolationFormat {
+  option allow_alias = true;
+  LINEAR_INTERPOLATION_FORMAT_UNSPECIFIED = 0;
+  LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_AND_PHASE = 1;
+  LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_DB_AND_PHASE = 2;
+  LINEAR_INTERPOLATION_FORMAT_REAL_AND_IMAGINARY = 0;
+}
+
+enum MechanicalAttenuationAuto {
+  option allow_alias = true;
+  MECHANICAL_ATTENUATION_AUTO_UNSPECIFIED = 0;
+  MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
+  MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum Personality {
+  option allow_alias = true;
+  PERSONALITY_UNSPECIFIED = 0;
+  PERSONALITY_ALL = 2147483647;
+  PERSONALITY_BT = 1024;
+  PERSONALITY_CDMA2_K = 32;
+  PERSONALITY_DEMOD = 2;
+  PERSONALITY_EVDO = 128;
+  PERSONALITY_GSM = 8;
+  PERSONALITY_LTE = 4;
+  PERSONALITY_NONE = 0;
+  PERSONALITY_NR = 256;
+  PERSONALITY_SPECAN = 1;
+  PERSONALITY_TDSCDMA = 64;
+  PERSONALITY_WCDMA = 16;
+  PERSONALITY_WLAN = 512;
+}
+
+enum RFAttenuationAuto {
+  option allow_alias = true;
+  RF_ATTENUATION_AUTO_UNSPECIFIED = 0;
+  RF_ATTENUATION_AUTO_FALSE = 0;
+  RF_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum SParameterOrientation {
+  option allow_alias = true;
+  S_PARAMETER_ORIENTATION_UNSPECIFIED = 0;
+  S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 0;
+  S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 1;
+}
+
+enum SParameterType {
+  S_PARAMETER_TYPE_UNSPECIFIED = 0;
+  S_PARAMETER_TYPE_SPARAMETER_TYPE_SCALAR = 1;
+  S_PARAMETER_TYPE_SPARAMETER_TYPE_VECTOR = 2;
+}
+
+enum SelfCalStep {
+  option allow_alias = true;
+  SELF_CAL_STEP_UNSPECIFIED = 0;
+  SELF_CAL_STEP_AMPLITUDE_ACCURACY = 32;
+  SELF_CAL_STEP_DC_OFFSET = 512;
+  SELF_CAL_STEP_DIGITIZER_SELF_CAL = 8;
+  SELF_CAL_STEP_GAIN_REFERENCE = 2;
+  SELF_CAL_STEP_IF_FLATNESS = 4;
+  SELF_CAL_STEP_IMAGE_SUPPRESSION = 128;
+  SELF_CAL_STEP_LO_SELF_CAL = 16;
+  SELF_CAL_STEP_NONE = 0;
+  SELF_CAL_STEP_PRESELECTOR_ALIGNMENT = 1;
+  SELF_CAL_STEP_RESIDUAL_LO_POWER = 64;
+  SELF_CAL_STEP_SYNTHESIZER_ALIGNMENT = 256;
+}
+
 enum NiRFmxInstrStringAttributeValuesMapped {
   NIRFMXINSTR_STRING_MAPPED_UNSPECIFIED = 0;
   NIRFMXINSTR_STRING_FREQUENCY_REFERENCE_EXPORTED_TERMINAL_NONE = 1;
@@ -355,7 +455,10 @@ message CfgExternalAttenuationInterpolationLinearRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
-  int32 format = 4;
+  oneof format_enum {
+    LinearInterpolationFormat format = 4;
+    int32 format_raw = 5;
+  }
 }
 
 message CfgExternalAttenuationInterpolationLinearResponse {
@@ -397,8 +500,11 @@ message CfgExternalAttenuationTableResponse {
 message CfgFrequencyReferenceRequest {
   nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
-  string frequency_reference_source = 3;
-  double frequency_reference_frequency = 4;
+  oneof frequency_reference_source_enum {
+    FrequencyReferenceSource frequency_reference_source_mapped = 3;
+    string frequency_reference_source_raw = 4;
+  }
+  double frequency_reference_frequency = 5;
 }
 
 message CfgFrequencyReferenceResponse {
@@ -408,8 +514,11 @@ message CfgFrequencyReferenceResponse {
 message CfgMechanicalAttenuationRequest {
   nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
-  int32 mechanical_attenuation_auto = 3;
-  double mechanical_attenuation_value = 4;
+  oneof mechanical_attenuation_auto_enum {
+    MechanicalAttenuationAuto mechanical_attenuation_auto = 3;
+    int32 mechanical_attenuation_auto_raw = 4;
+  }
+  double mechanical_attenuation_value = 5;
 }
 
 message CfgMechanicalAttenuationResponse {
@@ -419,8 +528,11 @@ message CfgMechanicalAttenuationResponse {
 message CfgRFAttenuationRequest {
   nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
-  int32 rf_attenuation_auto = 3;
-  double rf_attenuation_value = 4;
+  oneof rf_attenuation_auto_enum {
+    RFAttenuationAuto rf_attenuation_auto = 3;
+    int32 rf_attenuation_auto_raw = 4;
+  }
+  double rf_attenuation_value = 5;
 }
 
 message CfgRFAttenuationResponse {
@@ -434,7 +546,10 @@ message CfgSParameterExternalAttenuationTableRequest {
   repeated double frequency = 4;
   repeated nidevice_grpc.NIComplexNumber s_parameters = 5;
   int32 number_of_ports = 6;
-  int32 s_parameter_orientation = 7;
+  oneof s_parameter_orientation_enum {
+    SParameterOrientation s_parameter_orientation = 7;
+    int32 s_parameter_orientation_raw = 8;
+  }
 }
 
 message CfgSParameterExternalAttenuationTableResponse {
@@ -444,7 +559,10 @@ message CfgSParameterExternalAttenuationTableResponse {
 message CfgSParameterExternalAttenuationTypeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 s_parameter_type = 3;
+  oneof s_parameter_type_enum {
+    SParameterType s_parameter_type = 3;
+    int32 s_parameter_type_raw = 4;
+  }
 }
 
 message CfgSParameterExternalAttenuationTypeResponse {
@@ -457,7 +575,8 @@ message CheckAcquisitionStatusRequest {
 
 message CheckAcquisitionStatusResponse {
   int32 status = 1;
-  int32 acquisition_done = 2;
+  Boolean acquisition_done = 2;
+  int32 acquisition_done_raw = 3;
 }
 
 message CheckIfListExistsRequest {
@@ -467,8 +586,10 @@ message CheckIfListExistsRequest {
 
 message CheckIfListExistsResponse {
   int32 status = 1;
-  int32 list_exists = 2;
-  int32 personality = 3;
+  Boolean list_exists = 2;
+  int32 list_exists_raw = 3;
+  Personality personality = 4;
+  int32 personality_raw = 5;
 }
 
 message CheckIfSignalConfigurationExistsRequest {
@@ -478,13 +599,18 @@ message CheckIfSignalConfigurationExistsRequest {
 
 message CheckIfSignalConfigurationExistsResponse {
   int32 status = 1;
-  int32 signal_configuration_exists = 2;
-  int32 personality = 3;
+  Boolean signal_configuration_exists = 2;
+  int32 signal_configuration_exists_raw = 3;
+  Personality personality = 4;
+  int32 personality_raw = 5;
 }
 
 message CloseRequest {
   nidevice_grpc.Session instrument = 1;
-  int32 force_destroy = 2;
+  oneof force_destroy_enum {
+    Boolean force_destroy = 2;
+    int32 force_destroy_raw = 3;
+  }
 }
 
 message CloseResponse {
@@ -530,8 +656,11 @@ message EnableCalibrationPlaneResponse {
 
 message ExportSignalRequest {
   nidevice_grpc.Session instrument = 1;
-  int32 export_signal_source = 2;
-  string export_signal_output_terminal = 3;
+  oneof export_signal_source_enum {
+    ExportSignalSource export_signal_source = 2;
+    int32 export_signal_source_raw = 3;
+  }
+  string export_signal_output_terminal = 4;
 }
 
 message ExportSignalResponse {
@@ -813,15 +942,19 @@ message GetExternalAttenuationTableActualValueResponse {
 message GetListNamesRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 personality_filter = 3;
+  oneof personality_filter_enum {
+    Personality personality_filter = 3;
+    int32 personality_filter_raw = 4;
+  }
 }
 
 message GetListNamesResponse {
   int32 status = 1;
   string list_names = 2;
   int32 actual_list_names_size = 3;
-  repeated int32 personality = 4;
-  int32 actual_personality_array_size = 5;
+  repeated Personality personality = 4;
+  repeated int32 personality_raw = 5;
+  int32 actual_personality_array_size = 6;
 }
 
 message GetNIRFSASessionRequest {
@@ -847,7 +980,10 @@ message GetNIRFSASessionArrayResponse {
 message GetSelfCalibrateLastDateAndTimeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int64 self_calibrate_step = 3;
+  oneof self_calibrate_step_enum {
+    SelfCalStep self_calibrate_step = 3;
+    int64 self_calibrate_step_raw = 4;
+  }
 }
 
 message GetSelfCalibrateLastDateAndTimeResponse {
@@ -858,7 +994,10 @@ message GetSelfCalibrateLastDateAndTimeResponse {
 message GetSelfCalibrateLastTemperatureRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int64 self_calibrate_step = 3;
+  oneof self_calibrate_step_enum {
+    SelfCalStep self_calibrate_step = 3;
+    int64 self_calibrate_step_raw = 4;
+  }
 }
 
 message GetSelfCalibrateLastTemperatureResponse {
@@ -869,7 +1008,10 @@ message GetSelfCalibrateLastTemperatureResponse {
 message GetSignalConfigurationNamesRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 personality_filter = 3;
+  oneof personality_filter_enum {
+    Personality personality_filter = 3;
+    int32 personality_filter_raw = 4;
+  }
 }
 
 message GetSignalConfigurationNamesResponse {
@@ -919,8 +1061,10 @@ message IsSelfCalibrateValidRequest {
 
 message IsSelfCalibrateValidResponse {
   int32 status = 1;
-  int32 self_calibrate_valid = 2;
-  int32 valid_steps = 3;
+  Boolean self_calibrate_valid = 2;
+  int32 self_calibrate_valid_raw = 3;
+  repeated SelfCalStep valid_steps_array = 4;
+  int32 valid_steps_raw = 5;
 }
 
 message LoadAllConfigurationsRequest {
@@ -938,7 +1082,10 @@ message LoadSParameterExternalAttenuationTableFromS2PFileRequest {
   string selector_string = 2;
   string table_name = 3;
   string s2_p_file_path = 4;
-  int32 s_parameter_orientation = 5;
+  oneof s_parameter_orientation_enum {
+    SParameterOrientation s_parameter_orientation = 5;
+    int32 s_parameter_orientation_raw = 6;
+  }
 }
 
 message LoadSParameterExternalAttenuationTableFromS2PFileResponse {
@@ -1001,7 +1148,10 @@ message SelectActiveExternalAttenuationTableResponse {
 message SelfCalibrateRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 steps_to_omit = 3;
+  oneof steps_to_omit_enum {
+    SelfCalStep steps_to_omit = 3;
+    int32 steps_to_omit_raw = 4;
+  }
 }
 
 message SelfCalibrateResponse {
@@ -1011,11 +1161,14 @@ message SelfCalibrateResponse {
 message SelfCalibrateRangeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 steps_to_omit = 3;
-  double minimum_frequency = 4;
-  double maximum_frequency = 5;
-  double minimum_reference_level = 6;
-  double maximum_reference_level = 7;
+  oneof steps_to_omit_enum {
+    SelfCalStep steps_to_omit = 3;
+    int32 steps_to_omit_raw = 4;
+  }
+  double minimum_frequency = 5;
+  double maximum_frequency = 6;
+  double minimum_reference_level = 7;
+  double maximum_reference_level = 8;
 }
 
 message SelfCalibrateRangeResponse {

@@ -27,6 +27,18 @@ enums = {
             }
         ]
     },
+    'Boolean': {
+        'values': [
+            {
+                'name': 'TRUE',
+                'value': 1
+            },
+            {
+                'name': 'FALSE',
+                'value': 0
+            }
+        ]
+    },
     'ChannelCoupling': {
         'values': [
             {
@@ -48,6 +60,46 @@ enums = {
             {
                 'name': 'ENABLED',
                 'value': 1
+            }
+        ]
+    },
+    'ExportSignalSource': {
+        'values': [
+            {
+                'name': 'START_TRIGGER',
+                'value': 0
+            },
+            {
+                'name': 'REFERENCE_TRIGGER',
+                'value': 1
+            },
+            {
+                'name': 'ADVANCE_TRIGGER',
+                'value': 2
+            },
+            {
+                'name': 'READY_FOR_START_EVENT',
+                'value': 3
+            },
+            {
+                'name': 'READY_FOR_REFERENCE_EVENT',
+                'value': 4
+            },
+            {
+                'name': 'READY_FOR_ADVANCE_EVENT',
+                'value': 5
+            },
+            {
+                'name': 'END_OF_RECORD_EVENT',
+                'value': 6
+            },
+            {
+                'name': 'DONE_EVENT',
+                'value': 7
+            },
+            {
+                'name': 'REFERENCE_CLOCK',
+                'value': 8
             }
         ]
     },
@@ -190,6 +242,22 @@ enums = {
             }
         ]
     },
+    'LinearInterpolationFormat': {
+        'values': [
+            {
+                'name': 'MAGNITUDE_AND_PHASE',
+                'value': 1
+            },
+            {
+                'name': 'MAGNITUDE_DB_AND_PHASE',
+                'value': 2
+            },
+            {
+                'name': 'REAL_AND_IMAGINARY',
+                'value': 0
+            }
+        ]
+    },
     'MechanicalAttenuationAuto': {
         'values': [
             {
@@ -227,6 +295,62 @@ enums = {
             {
                 'name': 'WARNING',
                 'value': 0
+            }
+        ]
+    },
+    'Personality': {
+        'values': [
+            {
+                'name': 'ALL',
+                'value': 2147483647
+            },
+            {
+                'name': 'BT',
+                'value': 1024
+            },
+            {
+                'name': 'CDMA2_K',
+                'value': 32
+            },
+            {
+                'name': 'DEMOD',
+                'value': 2
+            },
+            {
+                'name': 'EVDO',
+                'value': 128
+            },
+            {
+                'name': 'GSM',
+                'value': 8
+            },
+            {
+                'name': 'LTE',
+                'value': 4
+            },
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'NR',
+                'value': 256
+            },
+            {
+                'name': 'SPECAN',
+                'value': 1
+            },
+            {
+                'name': 'TDSCDMA',
+                'value': 64
+            },
+            {
+                'name': 'WCDMA',
+                'value': 16
+            },
+            {
+                'name': 'WLAN',
+                'value': 512
             }
         ]
     },
@@ -291,6 +415,78 @@ enums = {
             {
                 'name': 'NONE',
                 'value': 0
+            }
+        ]
+    },
+    'SParameterOrientation': {
+        'values': [
+            {
+                'name': 'PORT1_TOWARDS_DUT',
+                'value': 0
+            },
+            {
+                'name': 'PORT2_TOWARDS_DUT',
+                'value': 1
+            }
+        ]
+    },
+    'SParameterType': {
+        'values': [
+            {
+                'name': 'SPARAMETER_TYPE_SCALAR',
+                'value': 1
+            },
+            {
+                'name': 'SPARAMETER_TYPE_VECTOR',
+                'value': 2
+            }
+        ]
+    },
+    'SelfCalStep': {
+        'values': [
+            {
+                'name': 'AMPLITUDE_ACCURACY',
+                'value': 32
+            },
+            {
+                'name': 'DC_OFFSET',
+                'value': 512
+            },
+            {
+                'name': 'DIGITIZER_SELF_CAL',
+                'value': 8
+            },
+            {
+                'name': 'GAIN_REFERENCE',
+                'value': 2
+            },
+            {
+                'name': 'IF_FLATNESS',
+                'value': 4
+            },
+            {
+                'name': 'IMAGE_SUPPRESSION',
+                'value': 128
+            },
+            {
+                'name': 'LO_SELF_CAL',
+                'value': 16
+            },
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'PRESELECTOR_ALIGNMENT',
+                'value': 1
+            },
+            {
+                'name': 'RESIDUAL_LO_POWER',
+                'value': 64
+            },
+            {
+                'name': 'SYNTHESIZER_ALIGNMENT',
+                'value': 256
             }
         ]
     },
