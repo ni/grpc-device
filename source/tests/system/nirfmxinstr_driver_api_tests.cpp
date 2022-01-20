@@ -145,6 +145,7 @@ TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSAArray_SelfCalibrate_Succee
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
   auto init_rfsa_response_2 = init_rfsa(rfsa_stub, "Sim2");
   ni::tests::system::EXPECT_SUCCESS(init_rfsa_response);
+  ni::tests::system::EXPECT_SUCCESS(init_rfsa_response_2);
   auto init_response = client::initialize_from_nirfsa_session_array(stub(), {init_rfsa_response.vi(), init_rfsa_response_2.vi()});
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
