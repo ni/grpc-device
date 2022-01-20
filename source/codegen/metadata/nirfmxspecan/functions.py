@@ -5345,7 +5345,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'coerced': True,
                 'direction': 'out',
                 'name': 'attrVal',
                 'type': 'int16'
@@ -5511,7 +5510,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'coerced': True,
                 'direction': 'out',
                 'name': 'attrVal',
                 'type': 'int8'
@@ -5539,7 +5537,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'coerced': True,
                 'direction': 'out',
                 'name': 'attrVal',
                 'size': {
@@ -5702,7 +5699,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'coerced': True,
                 'direction': 'out',
                 'name': 'attrVal',
                 'type': 'uInt16'
@@ -11633,7 +11629,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'coerced': True,
                 'direction': 'in',
                 'name': 'attrVal',
                 'type': 'int16'
@@ -11787,7 +11782,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'coerced': True,
                 'direction': 'in',
                 'name': 'attrVal',
                 'type': 'int8'
@@ -11815,7 +11809,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'coerced': True,
                 'direction': 'in',
                 'name': 'attrVal',
                 'size': {
@@ -11951,7 +11944,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'coerced': True,
                 'direction': 'in',
                 'name': 'attrVal',
                 'type': 'uInt16'
