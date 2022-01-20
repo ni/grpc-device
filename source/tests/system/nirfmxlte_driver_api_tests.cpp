@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niRFmxWLAN.h"
-#include "nirfmxwlan/nirfmxwlan_client.h"
+#include "niRFmxLTE.h"
+#include "nirfmxlte/nirfmxlte_client.h"
 
 using namespace ::testing;
-using namespace nirfmxwlan_grpc;
-namespace client = nirfmxwlan_grpc::experimental::client;
+using namespace nirfmxlte_grpc;
+namespace client = nirfmxlte_grpc::experimental::client;
 
 namespace ni {
 namespace tests {
@@ -21,23 +21,23 @@ void EXPECT_SUCCESS(const TResponse& response)
   EXPECT_EQ(0, response.status());
 }
 
-class NiRFmxWLANDriverApiTests : public Test {
+class NiRFmxLTEDriverApiTests : public Test {
  protected:
-  NiRFmxWLANDriverApiTests()
+  NiRFmxLTEDriverApiTests()
       : device_server_(DeviceServerInterface::Singleton()),
-        stub_(NiRFmxWLAN::NewStub(device_server_->InProcessChannel()))
+        stub_(NiRFmxLTE::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
 
-  virtual ~NiRFmxWLANDriverApiTests() {}
+  virtual ~NiRFmxLTEDriverApiTests() {}
 
   void TearDown() override
   {
     device_server_->ResetServer();
   }
 
-  const std::unique_ptr<NiRFmxWLAN::Stub>& stub() const
+  const std::unique_ptr<NiRFmxLTE::Stub>& stub() const
   {
     return stub_;
   }
@@ -56,7 +56,7 @@ class NiRFmxWLANDriverApiTests : public Test {
 
  private:
   DeviceServerInterface* device_server_;
-  std::unique_ptr<NiRFmxWLAN::Stub> stub_;
+  std::unique_ptr<NiRFmxLTE::Stub> stub_;
 };
 
 InitializeResponse init(const client::StubPtr& stub, const std::string& model)
@@ -65,7 +65,7 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model)
   return client::initialize(stub, "FakeDevice", options);
 }
 
-TEST_F(NiRFmxWLANDriverApiTests, Init_Close_Succeeds)
+TEST_F(NiRFmxLTEDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
   auto session = init_response.instrument();

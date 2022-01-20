@@ -23,6 +23,9 @@
 #include "nirfmxinstr/nirfmxinstr_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
+#include "nirfmxlte/nirfmxlte_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
 #include "nirfmxnr/nirfmxnr_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
@@ -96,6 +99,13 @@ std::shared_ptr<void> register_all_services(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
       vi_session_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
+    nirfmxlte_grpc::register_service(
+      server_builder, 
+      ni_r_fmx_instr_handle_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
