@@ -1,5 +1,5 @@
 # Default code owner for the repository
-* @astarche
+* @astarche @mgumble
 
 # Owners for the build files
 /CMakeLists.txt      @SparkingSpork @astarche
