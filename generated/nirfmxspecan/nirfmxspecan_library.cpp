@@ -65,7 +65,6 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
   function_pointers_.AMPMCfgMeasurementSampleRate = reinterpret_cast<AMPMCfgMeasurementSampleRatePtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMCfgMeasurementSampleRate"));
   function_pointers_.AMPMCfgReferencePowerType = reinterpret_cast<AMPMCfgReferencePowerTypePtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMCfgReferencePowerType"));
   function_pointers_.AMPMCfgReferenceWaveform = reinterpret_cast<AMPMCfgReferenceWaveformPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMCfgReferenceWaveform"));
-  function_pointers_.AMPMCfgReferenceWaveformSplit = reinterpret_cast<AMPMCfgReferenceWaveformSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMCfgReferenceWaveformSplit"));
   function_pointers_.AMPMCfgSynchronizationMethod = reinterpret_cast<AMPMCfgSynchronizationMethodPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMCfgSynchronizationMethod"));
   function_pointers_.AMPMCfgThreshold = reinterpret_cast<AMPMCfgThresholdPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMCfgThreshold"));
   function_pointers_.AMPMFetchAMToAMTrace = reinterpret_cast<AMPMFetchAMToAMTracePtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMFetchAMToAMTrace"));
@@ -76,14 +75,11 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
   function_pointers_.AMPMFetchDUTCharacteristics = reinterpret_cast<AMPMFetchDUTCharacteristicsPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMFetchDUTCharacteristics"));
   function_pointers_.AMPMFetchError = reinterpret_cast<AMPMFetchErrorPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMFetchError"));
   function_pointers_.AMPMFetchProcessedMeanAcquiredWaveform = reinterpret_cast<AMPMFetchProcessedMeanAcquiredWaveformPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform"));
-  function_pointers_.AMPMFetchProcessedMeanAcquiredWaveformSplit = reinterpret_cast<AMPMFetchProcessedMeanAcquiredWaveformSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveformSplit"));
   function_pointers_.AMPMFetchProcessedReferenceWaveform = reinterpret_cast<AMPMFetchProcessedReferenceWaveformPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMFetchProcessedReferenceWaveform"));
-  function_pointers_.AMPMFetchProcessedReferenceWaveformSplit = reinterpret_cast<AMPMFetchProcessedReferenceWaveformSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMFetchProcessedReferenceWaveformSplit"));
   function_pointers_.AMPMFetchRelativePhaseTrace = reinterpret_cast<AMPMFetchRelativePhaseTracePtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMFetchRelativePhaseTrace"));
   function_pointers_.AMPMFetchRelativePowerTrace = reinterpret_cast<AMPMFetchRelativePowerTracePtr>(shared_library_.get_function_pointer("RFmxSpecAn_AMPMFetchRelativePowerTrace"));
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AnalyzeIQ1Waveform"));
-  function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AnalyzeIQ1WaveformSplit"));
   function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AnalyzeSpectrum1Waveform"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxSpecAn_AutoLevel"));
   function_pointers_.BuildCarrierString = reinterpret_cast<BuildCarrierStringPtr>(shared_library_.get_function_pointer("RFmxSpecAn_BuildCarrierString2"));
@@ -142,16 +138,12 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateListStep = reinterpret_cast<CreateListStepPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CreateListStep"));
   function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CreateSignalConfiguration"));
   function_pointers_.DPDApplyDigitalPredistortion = reinterpret_cast<DPDApplyDigitalPredistortionPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDApplyDigitalPredistortion"));
-  function_pointers_.DPDApplyDigitalPredistortionSplit = reinterpret_cast<DPDApplyDigitalPredistortionSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDApplyDigitalPredistortionSplit"));
   function_pointers_.DPDApplyPreDPDSignalConditioning = reinterpret_cast<DPDApplyPreDPDSignalConditioningPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDApplyPreDPDSignalConditioning"));
-  function_pointers_.DPDApplyPreDPDSignalConditioningSplit = reinterpret_cast<DPDApplyPreDPDSignalConditioningSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDApplyPreDPDSignalConditioningSplit"));
   function_pointers_.DPDCfgApplyDPDConfigurationInput = reinterpret_cast<DPDCfgApplyDPDConfigurationInputPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDConfigurationInput"));
   function_pointers_.DPDCfgApplyDPDLookupTableCorrectionType = reinterpret_cast<DPDCfgApplyDPDLookupTableCorrectionTypePtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDLookupTableCorrectionType"));
   function_pointers_.DPDCfgApplyDPDMemoryModelCorrectionType = reinterpret_cast<DPDCfgApplyDPDMemoryModelCorrectionTypePtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDMemoryModelCorrectionType"));
   function_pointers_.DPDCfgApplyDPDUserDPDPolynomial = reinterpret_cast<DPDCfgApplyDPDUserDPDPolynomialPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial"));
-  function_pointers_.DPDCfgApplyDPDUserDPDPolynomialSplit = reinterpret_cast<DPDCfgApplyDPDUserDPDPolynomialSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit"));
   function_pointers_.DPDCfgApplyDPDUserLookupTable = reinterpret_cast<DPDCfgApplyDPDUserLookupTablePtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserLookupTable"));
-  function_pointers_.DPDCfgApplyDPDUserLookupTableSplit = reinterpret_cast<DPDCfgApplyDPDUserLookupTableSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit"));
   function_pointers_.DPDCfgAveraging = reinterpret_cast<DPDCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgAveraging"));
   function_pointers_.DPDCfgDPDModel = reinterpret_cast<DPDCfgDPDModelPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgDPDModel"));
   function_pointers_.DPDCfgDUTAverageInputPower = reinterpret_cast<DPDCfgDUTAverageInputPowerPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgDUTAverageInputPower"));
@@ -166,21 +158,15 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
   function_pointers_.DPDCfgMeasurementSampleRate = reinterpret_cast<DPDCfgMeasurementSampleRatePtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgMeasurementSampleRate"));
   function_pointers_.DPDCfgMemoryPolynomial = reinterpret_cast<DPDCfgMemoryPolynomialPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgMemoryPolynomial"));
   function_pointers_.DPDCfgPreviousDPDPolynomial = reinterpret_cast<DPDCfgPreviousDPDPolynomialPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgPreviousDPDPolynomial"));
-  function_pointers_.DPDCfgPreviousDPDPolynomialSplit = reinterpret_cast<DPDCfgPreviousDPDPolynomialSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgPreviousDPDPolynomialSplit"));
   function_pointers_.DPDCfgReferenceWaveform = reinterpret_cast<DPDCfgReferenceWaveformPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgReferenceWaveform"));
-  function_pointers_.DPDCfgReferenceWaveformSplit = reinterpret_cast<DPDCfgReferenceWaveformSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgReferenceWaveformSplit"));
   function_pointers_.DPDCfgSynchronizationMethod = reinterpret_cast<DPDCfgSynchronizationMethodPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDCfgSynchronizationMethod"));
   function_pointers_.DPDFetchApplyDPDPreCFRPAPR = reinterpret_cast<DPDFetchApplyDPDPreCFRPAPRPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR"));
   function_pointers_.DPDFetchAverageGain = reinterpret_cast<DPDFetchAverageGainPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchAverageGain"));
   function_pointers_.DPDFetchDPDPolynomial = reinterpret_cast<DPDFetchDPDPolynomialPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchDPDPolynomial"));
-  function_pointers_.DPDFetchDPDPolynomialSplit = reinterpret_cast<DPDFetchDPDPolynomialSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchDPDPolynomialSplit"));
   function_pointers_.DPDFetchLookupTable = reinterpret_cast<DPDFetchLookupTablePtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchLookupTable"));
-  function_pointers_.DPDFetchLookupTableSplit = reinterpret_cast<DPDFetchLookupTableSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchLookupTableSplit"));
   function_pointers_.DPDFetchNMSE = reinterpret_cast<DPDFetchNMSEPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchNMSE"));
   function_pointers_.DPDFetchProcessedMeanAcquiredWaveform = reinterpret_cast<DPDFetchProcessedMeanAcquiredWaveformPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform"));
-  function_pointers_.DPDFetchProcessedMeanAcquiredWaveformSplit = reinterpret_cast<DPDFetchProcessedMeanAcquiredWaveformSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit"));
   function_pointers_.DPDFetchProcessedReferenceWaveform = reinterpret_cast<DPDFetchProcessedReferenceWaveformPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchProcessedReferenceWaveform"));
-  function_pointers_.DPDFetchProcessedReferenceWaveformSplit = reinterpret_cast<DPDFetchProcessedReferenceWaveformSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit"));
   function_pointers_.DeleteList = reinterpret_cast<DeleteListPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DeleteList"));
   function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DeleteSignalConfiguration"));
   function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_.get_function_pointer("RFmxSpecAn_DisableTrigger"));
@@ -249,7 +235,6 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
   function_pointers_.IQCfgAcquisition = reinterpret_cast<IQCfgAcquisitionPtr>(shared_library_.get_function_pointer("RFmxSpecAn_IQCfgAcquisition"));
   function_pointers_.IQCfgBandwidth = reinterpret_cast<IQCfgBandwidthPtr>(shared_library_.get_function_pointer("RFmxSpecAn_IQCfgBandwidth"));
   function_pointers_.IQFetchData = reinterpret_cast<IQFetchDataPtr>(shared_library_.get_function_pointer("RFmxSpecAn_IQFetchData"));
-  function_pointers_.IQFetchDataSplit = reinterpret_cast<IQFetchDataSplitPtr>(shared_library_.get_function_pointer("RFmxSpecAn_IQFetchDataSplit"));
   function_pointers_.IQGetRecordsDone = reinterpret_cast<IQGetRecordsDonePtr>(shared_library_.get_function_pointer("RFmxSpecAn_IQGetRecordsDone"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxSpecAn_Initialize"));
   function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxSpecAn_InitializeFromNIRFSASession"));
@@ -287,9 +272,7 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary() : shared_library_(kLibraryName)
   function_pointers_.NFFetchDUTNoiseFigureAndGain = reinterpret_cast<NFFetchDUTNoiseFigureAndGainPtr>(shared_library_.get_function_pointer("RFmxSpecAn_NFFetchDUTNoiseFigureAndGain"));
   function_pointers_.NFFetchYFactorPowers = reinterpret_cast<NFFetchYFactorPowersPtr>(shared_library_.get_function_pointer("RFmxSpecAn_NFFetchYFactorPowers"));
   function_pointers_.NFFetchYFactors = reinterpret_cast<NFFetchYFactorsPtr>(shared_library_.get_function_pointer("RFmxSpecAn_NFFetchYFactors"));
-  function_pointers_.NFGetCalibrationSetupId = reinterpret_cast<NFGetCalibrationSetupIdPtr>(shared_library_.get_function_pointer("RFmxSpecAn_NFGetCalibrationSetupId"));
   function_pointers_.NFRecommendReferenceLevel = reinterpret_cast<NFRecommendReferenceLevelPtr>(shared_library_.get_function_pointer("RFmxSpecAn_NFRecommendReferenceLevel"));
-  function_pointers_.NFSetCalibrationSetupId = reinterpret_cast<NFSetCalibrationSetupIdPtr>(shared_library_.get_function_pointer("RFmxSpecAn_NFSetCalibrationSetupId"));
   function_pointers_.NFValidateCalibrationData = reinterpret_cast<NFValidateCalibrationDataPtr>(shared_library_.get_function_pointer("RFmxSpecAn_NFValidateCalibrationData"));
   function_pointers_.OBWCfgAveraging = reinterpret_cast<OBWCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxSpecAn_OBWCfgAveraging"));
   function_pointers_.OBWCfgBandwidthPercentage = reinterpret_cast<OBWCfgBandwidthPercentagePtr>(shared_library_.get_function_pointer("RFmxSpecAn_OBWCfgBandwidthPercentage"));
@@ -992,18 +975,6 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgReferenceWaveform(niRFmxInstrHandle instrument
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::AMPMCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 i[], float32 q[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
-{
-  if (!function_pointers_.AMPMCfgReferenceWaveformSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgReferenceWaveformSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_AMPMCfgReferenceWaveformSplit(instrumentHandle, selectorString, x0, dx, i, q, arraySize, idleDurationPresent, signalType);
-#else
-  return function_pointers_.AMPMCfgReferenceWaveformSplit(instrumentHandle, selectorString, x0, dx, i, q, arraySize, idleDurationPresent, signalType);
-#endif
-}
-
 int32 NiRFmxSpecAnLibrary::AMPMCfgSynchronizationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMethod)
 {
   if (!function_pointers_.AMPMCfgSynchronizationMethod) {
@@ -1124,18 +1095,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedMeanAcquiredWaveform(niRFmxInstrHan
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 i[], float32 q[], int32 arraySize, int32* actualArraySize)
-{
-  if (!function_pointers_.AMPMFetchProcessedMeanAcquiredWaveformSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveformSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, i, q, arraySize, actualArraySize);
-#else
-  return function_pointers_.AMPMFetchProcessedMeanAcquiredWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, i, q, arraySize, actualArraySize);
-#endif
-}
-
 int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.AMPMFetchProcessedReferenceWaveform) {
@@ -1145,18 +1104,6 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedReferenceWaveform(niRFmxInstrHandle
   return RFmxSpecAn_AMPMFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
 #else
   return function_pointers_.AMPMFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
-#endif
-}
-
-int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 i[], float32 q[], int32 arraySize, int32* actualArraySize)
-{
-  if (!function_pointers_.AMPMFetchProcessedReferenceWaveformSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchProcessedReferenceWaveformSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_AMPMFetchProcessedReferenceWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, i, q, arraySize, actualArraySize);
-#else
-  return function_pointers_.AMPMFetchProcessedReferenceWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, i, q, arraySize, actualArraySize);
 #endif
 }
 
@@ -1205,18 +1152,6 @@ int32 NiRFmxSpecAnLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle
   return RFmxSpecAn_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 #else
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
-#endif
-}
-
-int32 NiRFmxSpecAnLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 i[], float32 q[], int32 arraySize, int32 reset, int64 reserved)
-{
-  if (!function_pointers_.AnalyzeIQ1WaveformSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AnalyzeIQ1WaveformSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, i, q, arraySize, reset, reserved);
-#else
-  return function_pointers_.AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, i, q, arraySize, reset, reserved);
 #endif
 }
 
@@ -1916,18 +1851,6 @@ int32 NiRFmxSpecAnLibrary::DPDApplyDigitalPredistortion(niRFmxInstrHandle instru
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::DPDApplyDigitalPredistortionSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64 measurementTimeout, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr, float64* powerOffset)
-{
-  if (!function_pointers_.DPDApplyDigitalPredistortionSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyDigitalPredistortionSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDApplyDigitalPredistortionSplit(instrumentHandle, selectorString, x0In, dxIn, waveformInI, waveformInQ, arraySizeIn, idleDurationPresent, measurementTimeout, x0Out, dxOut, waveformOutI, waveformOutQ, arraySizeOut, actualArraySize, papr, powerOffset);
-#else
-  return function_pointers_.DPDApplyDigitalPredistortionSplit(instrumentHandle, selectorString, x0In, dxIn, waveformInI, waveformInQ, arraySizeIn, idleDurationPresent, measurementTimeout, x0Out, dxOut, waveformOutI, waveformOutQ, arraySizeOut, actualArraySize, papr, powerOffset);
-#endif
-}
-
 int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioning(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, NIComplexSingle waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
 {
   if (!function_pointers_.DPDApplyPreDPDSignalConditioning) {
@@ -1937,18 +1860,6 @@ int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioning(niRFmxInstrHandle in
   return RFmxSpecAn_DPDApplyPreDPDSignalConditioning(instrumentHandle, selectorString, x0In, dxIn, waveformIn, arraySizeIn, idleDurationPresent, x0Out, dxOut, waveformOut, arraySizeOut, actualArraySize, papr);
 #else
   return function_pointers_.DPDApplyPreDPDSignalConditioning(instrumentHandle, selectorString, x0In, dxIn, waveformIn, arraySizeIn, idleDurationPresent, x0Out, dxOut, waveformOut, arraySizeOut, actualArraySize, papr);
-#endif
-}
-
-int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioningSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
-{
-  if (!function_pointers_.DPDApplyPreDPDSignalConditioningSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyPreDPDSignalConditioningSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDApplyPreDPDSignalConditioningSplit(instrumentHandle, selectorString, x0In, dxIn, waveformInI, waveformInQ, arraySizeIn, idleDurationPresent, x0Out, dxOut, waveformOutI, waveformOutQ, arraySizeOut, actualArraySize, papr);
-#else
-  return function_pointers_.DPDApplyPreDPDSignalConditioningSplit(instrumentHandle, selectorString, x0In, dxIn, waveformInI, waveformInQ, arraySizeIn, idleDurationPresent, x0Out, dxOut, waveformOutI, waveformOutQ, arraySizeOut, actualArraySize, papr);
 #endif
 }
 
@@ -2000,18 +1911,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserDPDPolynomial(niRFmxInstrHandle ins
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 i[], float32 q[], int32 arraySize)
-{
-  if (!function_pointers_.DPDCfgApplyDPDUserDPDPolynomialSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit(instrumentHandle, selectorString, i, q, arraySize);
-#else
-  return function_pointers_.DPDCfgApplyDPDUserDPDPolynomialSplit(instrumentHandle, selectorString, i, q, arraySize);
-#endif
-}
-
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], NIComplexSingle lutComplexGains[], int32 arraySize)
 {
   if (!function_pointers_.DPDCfgApplyDPDUserLookupTable) {
@@ -2021,18 +1920,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTable(niRFmxInstrHandle instr
   return RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, lutComplexGains, arraySize);
 #else
   return function_pointers_.DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, lutComplexGains, arraySize);
-#endif
-}
-
-int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 i[], float32 q[], int32 arraySize)
-{
-  if (!function_pointers_.DPDCfgApplyDPDUserLookupTableSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit(instrumentHandle, selectorString, lutInputPowers, i, q, arraySize);
-#else
-  return function_pointers_.DPDCfgApplyDPDUserLookupTableSplit(instrumentHandle, selectorString, lutInputPowers, i, q, arraySize);
 #endif
 }
 
@@ -2204,18 +2091,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgPreviousDPDPolynomial(niRFmxInstrHandle instrum
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::DPDCfgPreviousDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 i[], float32 q[], int32 arraySize)
-{
-  if (!function_pointers_.DPDCfgPreviousDPDPolynomialSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgPreviousDPDPolynomialSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDCfgPreviousDPDPolynomialSplit(instrumentHandle, selectorString, i, q, arraySize);
-#else
-  return function_pointers_.DPDCfgPreviousDPDPolynomialSplit(instrumentHandle, selectorString, i, q, arraySize);
-#endif
-}
-
 int32 NiRFmxSpecAnLibrary::DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
 {
   if (!function_pointers_.DPDCfgReferenceWaveform) {
@@ -2225,18 +2100,6 @@ int32 NiRFmxSpecAnLibrary::DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentH
   return RFmxSpecAn_DPDCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize, idleDurationPresent, signalType);
 #else
   return function_pointers_.DPDCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize, idleDurationPresent, signalType);
-#endif
-}
-
-int32 NiRFmxSpecAnLibrary::DPDCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 i[], float32 q[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
-{
-  if (!function_pointers_.DPDCfgReferenceWaveformSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgReferenceWaveformSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDCfgReferenceWaveformSplit(instrumentHandle, selectorString, x0, dx, i, q, arraySize, idleDurationPresent, signalType);
-#else
-  return function_pointers_.DPDCfgReferenceWaveformSplit(instrumentHandle, selectorString, x0, dx, i, q, arraySize, idleDurationPresent, signalType);
 #endif
 }
 
@@ -2288,18 +2151,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHan
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 i[], float32 q[], int32 arraySize, int32* actualArraySize)
-{
-  if (!function_pointers_.DPDFetchDPDPolynomialSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchDPDPolynomialSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDFetchDPDPolynomialSplit(instrumentHandle, selectorString, timeout, i, q, arraySize, actualArraySize);
-#else
-  return function_pointers_.DPDFetchDPDPolynomialSplit(instrumentHandle, selectorString, timeout, i, q, arraySize, actualArraySize);
-#endif
-}
-
 int32 NiRFmxSpecAnLibrary::DPDFetchLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], NIComplexSingle complexGains[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.DPDFetchLookupTable) {
@@ -2309,18 +2160,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchLookupTable(niRFmxInstrHandle instrumentHandl
   return RFmxSpecAn_DPDFetchLookupTable(instrumentHandle, selectorString, timeout, inputPowers, complexGains, arraySize, actualArraySize);
 #else
   return function_pointers_.DPDFetchLookupTable(instrumentHandle, selectorString, timeout, inputPowers, complexGains, arraySize, actualArraySize);
-#endif
-}
-
-int32 NiRFmxSpecAnLibrary::DPDFetchLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], float32 i[], float32 q[], int32 arraySize, int32* actualArraySize)
-{
-  if (!function_pointers_.DPDFetchLookupTableSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchLookupTableSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDFetchLookupTableSplit(instrumentHandle, selectorString, timeout, inputPowers, i, q, arraySize, actualArraySize);
-#else
-  return function_pointers_.DPDFetchLookupTableSplit(instrumentHandle, selectorString, timeout, inputPowers, i, q, arraySize, actualArraySize);
 #endif
 }
 
@@ -2348,18 +2187,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHand
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::DPDFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 i[], float32 q[], int32 arraySize, int32* actualArraySize)
-{
-  if (!function_pointers_.DPDFetchProcessedMeanAcquiredWaveformSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, i, q, arraySize, actualArraySize);
-#else
-  return function_pointers_.DPDFetchProcessedMeanAcquiredWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, i, q, arraySize, actualArraySize);
-#endif
-}
-
 int32 NiRFmxSpecAnLibrary::DPDFetchProcessedReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.DPDFetchProcessedReferenceWaveform) {
@@ -2369,18 +2196,6 @@ int32 NiRFmxSpecAnLibrary::DPDFetchProcessedReferenceWaveform(niRFmxInstrHandle 
   return RFmxSpecAn_DPDFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
 #else
   return function_pointers_.DPDFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
-#endif
-}
-
-int32 NiRFmxSpecAnLibrary::DPDFetchProcessedReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 i[], float32 q[], int32 arraySize, int32* actualArraySize)
-{
-  if (!function_pointers_.DPDFetchProcessedReferenceWaveformSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, i, q, arraySize, actualArraySize);
-#else
-  return function_pointers_.DPDFetchProcessedReferenceWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, i, q, arraySize, actualArraySize);
 #endif
 }
 
@@ -3200,18 +3015,6 @@ int32 NiRFmxSpecAnLibrary::IQFetchData(niRFmxInstrHandle instrumentHandle, char 
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, float64* t0, float64* dt, float32 i[], float32 q[], int32 arraySize, int32* actualArraySize)
-{
-  if (!function_pointers_.IQFetchDataSplit) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQFetchDataSplit.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_IQFetchDataSplit(instrumentHandle, selectorString, timeout, recordToFetch, samplesToRead, t0, dt, i, q, arraySize, actualArraySize);
-#else
-  return function_pointers_.IQFetchDataSplit(instrumentHandle, selectorString, timeout, recordToFetch, samplesToRead, t0, dt, i, q, arraySize, actualArraySize);
-#endif
-}
-
 int32 NiRFmxSpecAnLibrary::IQGetRecordsDone(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* recordsDone)
 {
   if (!function_pointers_.IQGetRecordsDone) {
@@ -3656,18 +3459,6 @@ int32 NiRFmxSpecAnLibrary::NFFetchYFactors(niRFmxInstrHandle instrumentHandle, c
 #endif
 }
 
-int32 NiRFmxSpecAnLibrary::NFGetCalibrationSetupId(niRFmxInstrHandle instrumentHandle, char selectorString[], char attrVal[], int32 arraySize)
-{
-  if (!function_pointers_.NFGetCalibrationSetupId) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFGetCalibrationSetupId.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_NFGetCalibrationSetupId(instrumentHandle, selectorString, attrVal, arraySize);
-#else
-  return function_pointers_.NFGetCalibrationSetupId(instrumentHandle, selectorString, attrVal, arraySize);
-#endif
-}
-
 int32 NiRFmxSpecAnLibrary::NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel)
 {
   if (!function_pointers_.NFRecommendReferenceLevel) {
@@ -3677,18 +3468,6 @@ int32 NiRFmxSpecAnLibrary::NFRecommendReferenceLevel(niRFmxInstrHandle instrumen
   return RFmxSpecAn_NFRecommendReferenceLevel(instrumentHandle, selectorString, dutMaxGain, dutMaxNoiseFigure, referenceLevel);
 #else
   return function_pointers_.NFRecommendReferenceLevel(instrumentHandle, selectorString, dutMaxGain, dutMaxNoiseFigure, referenceLevel);
-#endif
-}
-
-int32 NiRFmxSpecAnLibrary::NFSetCalibrationSetupId(niRFmxInstrHandle instrumentHandle, char selectorString[], char attrVal[])
-{
-  if (!function_pointers_.NFSetCalibrationSetupId) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFSetCalibrationSetupId.");
-  }
-#if defined(_MSC_VER)
-  return RFmxSpecAn_NFSetCalibrationSetupId(instrumentHandle, selectorString, attrVal);
-#else
-  return function_pointers_.NFSetCalibrationSetupId(instrumentHandle, selectorString, attrVal);
 #endif
 }
 
