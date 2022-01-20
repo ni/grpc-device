@@ -100,7 +100,6 @@ def create_standard_arg(parameter):
         return f'&{parameter_name}_copy, '
     elif not is_array and is_output:
         return f'&{parameter_name}, '
-
     return f'{parameter_name}, '
 
 
