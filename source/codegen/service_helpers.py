@@ -62,7 +62,7 @@ def create_args_for_callback(parameters):
     ])
 
 
-def _is_array_requiring_conversion(parameter):
+def _is_array_that_requires_conversion(parameter):
     """
     Returns True for any array parameter where the protobuf representation is not the same
     as the C API representation.
@@ -89,7 +89,7 @@ def create_standard_arg(parameter):
         type_without_brackets = common_helpers.get_underlying_type_name(
             parameter['type'])
         return f'({type_without_brackets}*){parameter_name}.data(), '
-    elif _is_array_requiring_conversion(parameter):
+    elif _is_array_that_requires_conversion(parameter):
         # Converted arrays are allocated into a std::vector. Access the C array via data().
         return f'{parameter_name}.data(), '
     elif 'callback_params' in parameter:
