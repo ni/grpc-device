@@ -15,6 +15,7 @@ const int kInvalidRFmxWLANSession = -380598;
 const char* kRFmxWLANTestRsrc = "FakeDevice";
 const char* kRFmxWLANOptionsString = "Simulate=1, DriverSetup=Model:5663E";
 const char* kRFmxWLANTestSession = "SessionName";
+const char* kRFmxWLANTestSessionTwo = "SessionTwoName";
 const char* kRFmxWLANTestInvalidRsrc = "";
 
 class NiRFmxWLANSessionTest : public ::testing::Test {
@@ -42,6 +43,17 @@ class NiRFmxWLANSessionTest : public ::testing::Test {
     request.set_session_name(session_name);
 
     ::grpc::Status status = GetStub()->Initialize(&context, request, response);
+    return status;
+  }
+
+  ::grpc::Status call_close(nidevice_grpc::Session session, nirfmxwlan_grpc::Boolean force_destroy, rfmxwlan::CloseResponse* response)
+  {
+    ::grpc::ClientContext context;
+    rfmxwlan::CloseRequest request;
+    request.mutable_instrument()->set_id(session.id());
+    request.set_force_destroy(force_destroy);
+
+    ::grpc::Status status = GetStub()->Close(&context, request, response);
     return status;
   }
 
@@ -95,6 +107,28 @@ TEST_F(NiRFmxWLANSessionTest, InitializedSession_CloseSession_ClosesDriverSessio
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, close_response.status());
+}
+
+TEST_F(NiRFmxWLANSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_ClosesDriverSessions)
+{
+  rfmxwlan::InitializeResponse init_response_one, init_response_two;
+  ::grpc::Status status_one = call_initialize(kRFmxWLANTestRsrc, kRFmxWLANOptionsString, kRFmxWLANTestSession, &init_response_one);
+  ::grpc::Status status_two = call_initialize(kRFmxWLANTestRsrc, kRFmxWLANOptionsString, kRFmxWLANTestSessionTwo, &init_response_two);
+  EXPECT_TRUE(status_one.ok());
+  EXPECT_EQ(0, init_response_one.status());
+  EXPECT_TRUE(status_two.ok());
+  EXPECT_EQ(0, init_response_two.status());
+
+  nidevice_grpc::Session session_one = init_response_one.instrument();
+  nidevice_grpc::Session session_two = init_response_two.instrument();
+  rfmxwlan::CloseResponse close_response_one, close_response_two;
+  status_one = call_close(session_one, nirfmxwlan_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
+  status_two = call_close(session_two, nirfmxwlan_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
+
+  EXPECT_TRUE(status_one.ok());
+  EXPECT_EQ(0, close_response_one.status());
+  EXPECT_TRUE(status_two.ok());
+  EXPECT_EQ(0, close_response_two.status());
 }
 
 TEST_F(NiRFmxWLANSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
