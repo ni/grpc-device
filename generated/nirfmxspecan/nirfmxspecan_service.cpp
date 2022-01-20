@@ -26,9 +26,11 @@ namespace nirfmxspecan_grpc {
   NiRFmxSpecAnService::NiRFmxSpecAnService(
       NiRFmxSpecAnLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
+      ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxSpecAnFeatureToggles& feature_toggles)
       : library_(library),
       session_repository_(session_repository),
+      vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -1571,74 +1573,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::AMPMCfgReferenceWaveformSplit(::grpc::ServerContext* context, const AMPMCfgReferenceWaveformSplitRequest* request, AMPMCfgReferenceWaveformSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 x0 = request->x0();
-      float64 dx = request->dx();
-      auto i = const_cast<float32*>(request->i().data());
-      auto q = const_cast<float32*>(request->q().data());
-      auto array_size_determine_from_sizes = std::array<int, 2>
-      {
-        request->i_size(),
-        request->q_size()
-      };
-      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
-
-      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
-      }
-      auto array_size = array_size_size_calculation.size;
-
-      int32 idle_duration_present;
-      switch (request->idle_duration_present_enum_case()) {
-        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
-          idle_duration_present = static_cast<int32>(request->idle_duration_present());
-          break;
-        }
-        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
-          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
-          break;
-        }
-        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
-          break;
-        }
-      }
-
-      int32 signal_type;
-      switch (request->signal_type_enum_case()) {
-        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::SignalTypeEnumCase::kSignalType: {
-          signal_type = static_cast<int32>(request->signal_type());
-          break;
-        }
-        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::SignalTypeEnumCase::kSignalTypeRaw: {
-          signal_type = static_cast<int32>(request->signal_type_raw());
-          break;
-        }
-        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformSplitRequest::SignalTypeEnumCase::SIGNAL_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_type was not specified or out of range");
-          break;
-        }
-      }
-
-      auto status = library_->AMPMCfgReferenceWaveformSplit(instrument, selector_string, x0, dx, i, q, array_size, idle_duration_present, signal_type);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::AMPMCfgSynchronizationMethod(::grpc::ServerContext* context, const AMPMCfgSynchronizationMethodRequest* request, AMPMCfgSynchronizationMethodResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2041,53 +1975,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::AMPMFetchProcessedMeanAcquiredWaveformSplit(::grpc::ServerContext* context, const AMPMFetchProcessedMeanAcquiredWaveformSplitRequest* request, AMPMFetchProcessedMeanAcquiredWaveformSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 timeout = request->timeout();
-      float64 x0 {};
-      float64 dx {};
-      int32 actual_array_size {};
-      while (true) {
-        auto status = library_->AMPMFetchProcessedMeanAcquiredWaveformSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_i()->Resize(actual_array_size, 0);
-        float32* i = response->mutable_i()->mutable_data();
-        response->mutable_q()->Resize(actual_array_size, 0);
-        float32* q = response->mutable_q()->mutable_data();
-        auto array_size = actual_array_size;
-        status = library_->AMPMFetchProcessedMeanAcquiredWaveformSplit(instrument, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_x0(x0);
-          response->set_dx(dx);
-          response->mutable_i()->Resize(actual_array_size, 0);
-          response->mutable_q()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::AMPMFetchProcessedReferenceWaveform(::grpc::ServerContext* context, const AMPMFetchProcessedReferenceWaveformRequest* request, AMPMFetchProcessedReferenceWaveformResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2126,53 +2013,6 @@ namespace nirfmxspecan_grpc {
               response->mutable_processed_reference_waveform()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
-          response->set_actual_array_size(actual_array_size);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::AMPMFetchProcessedReferenceWaveformSplit(::grpc::ServerContext* context, const AMPMFetchProcessedReferenceWaveformSplitRequest* request, AMPMFetchProcessedReferenceWaveformSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 timeout = request->timeout();
-      float64 x0 {};
-      float64 dx {};
-      int32 actual_array_size {};
-      while (true) {
-        auto status = library_->AMPMFetchProcessedReferenceWaveformSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_i()->Resize(actual_array_size, 0);
-        float32* i = response->mutable_i()->mutable_data();
-        response->mutable_q()->Resize(actual_array_size, 0);
-        float32* q = response->mutable_q()->mutable_data();
-        auto array_size = actual_array_size;
-        status = library_->AMPMFetchProcessedReferenceWaveformSplit(instrument, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_x0(x0);
-          response->set_dx(dx);
-          response->mutable_i()->Resize(actual_array_size, 0);
-          response->mutable_q()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -2310,45 +2150,6 @@ namespace nirfmxspecan_grpc {
       int32 reset = request->reset();
       int64 reserved = request->reserved();
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* result_name = (char*)request->result_name().c_str();
-      float64 x0 = request->x0();
-      float64 dx = request->dx();
-      auto i = const_cast<float32*>(request->i().data());
-      auto q = const_cast<float32*>(request->q().data());
-      auto array_size_determine_from_sizes = std::array<int, 2>
-      {
-        request->i_size(),
-        request->q_size()
-      };
-      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
-
-      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
-      }
-      auto array_size = array_size_size_calculation.size;
-
-      int32 reset = request->reset();
-      int64 reserved = request->reserved();
-      auto status = library_->AnalyzeIQ1WaveformSplit(instrument, selector_string, result_name, x0, dx, i, q, array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4293,89 +4094,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDApplyDigitalPredistortionSplit(::grpc::ServerContext* context, const DPDApplyDigitalPredistortionSplitRequest* request, DPDApplyDigitalPredistortionSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 x0_in = request->x0_in();
-      float64 dx_in = request->dx_in();
-      auto waveform_in_i = const_cast<float32*>(request->waveform_in_i().data());
-      auto waveform_in_q = const_cast<float32*>(request->waveform_in_q().data());
-      auto array_size_in_determine_from_sizes = std::array<int, 2>
-      {
-        request->waveform_in_i_size(),
-        request->waveform_in_q_size()
-      };
-      const auto array_size_in_size_calculation = calculate_linked_array_size(array_size_in_determine_from_sizes, false);
-
-      if (array_size_in_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformInI, waveformInQ] do not match");
-      }
-      auto array_size_in = array_size_in_size_calculation.size;
-
-      int32 idle_duration_present;
-      switch (request->idle_duration_present_enum_case()) {
-        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
-          idle_duration_present = static_cast<int32>(request->idle_duration_present());
-          break;
-        }
-        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
-          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
-          break;
-        }
-        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionSplitRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
-          break;
-        }
-      }
-
-      float64 measurement_timeout = request->measurement_timeout();
-      float64 x0_out {};
-      float64 dx_out {};
-      int32 actual_array_size {};
-      float64 papr {};
-      float64 power_offset {};
-      while (true) {
-        auto status = library_->DPDApplyDigitalPredistortionSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, nullptr, 0, &actual_array_size, &papr, &power_offset);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
-        float32* waveform_out_i = response->mutable_waveform_out_i()->mutable_data();
-        response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
-        float32* waveform_out_q = response->mutable_waveform_out_q()->mutable_data();
-        auto array_size_out = actual_array_size;
-        status = library_->DPDApplyDigitalPredistortionSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr, &power_offset);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_x0_out(x0_out);
-          response->set_dx_out(dx_out);
-          response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
-          response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
-          response->set_papr(papr);
-          response->set_power_offset(power_offset);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDApplyPreDPDSignalConditioning(::grpc::ServerContext* context, const DPDApplyPreDPDSignalConditioningRequest* request, DPDApplyPreDPDSignalConditioningResponse* response)
   {
     if (context->IsCancelled()) {
@@ -4434,86 +4152,6 @@ namespace nirfmxspecan_grpc {
               response->mutable_waveform_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
-          response->set_actual_array_size(actual_array_size);
-          response->set_papr(papr);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDApplyPreDPDSignalConditioningSplit(::grpc::ServerContext* context, const DPDApplyPreDPDSignalConditioningSplitRequest* request, DPDApplyPreDPDSignalConditioningSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 x0_in = request->x0_in();
-      float64 dx_in = request->dx_in();
-      auto waveform_in_i = const_cast<float32*>(request->waveform_in_i().data());
-      auto waveform_in_q = const_cast<float32*>(request->waveform_in_q().data());
-      auto array_size_in_determine_from_sizes = std::array<int, 2>
-      {
-        request->waveform_in_i_size(),
-        request->waveform_in_q_size()
-      };
-      const auto array_size_in_size_calculation = calculate_linked_array_size(array_size_in_determine_from_sizes, false);
-
-      if (array_size_in_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformInI, waveformInQ] do not match");
-      }
-      auto array_size_in = array_size_in_size_calculation.size;
-
-      int32 idle_duration_present;
-      switch (request->idle_duration_present_enum_case()) {
-        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
-          idle_duration_present = static_cast<int32>(request->idle_duration_present());
-          break;
-        }
-        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
-          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
-          break;
-        }
-        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningSplitRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
-          break;
-        }
-      }
-
-      float64 x0_out {};
-      float64 dx_out {};
-      int32 actual_array_size {};
-      float64 papr {};
-      while (true) {
-        auto status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, nullptr, nullptr, 0, &actual_array_size, &papr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
-        float32* waveform_out_i = response->mutable_waveform_out_i()->mutable_data();
-        response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
-        float32* waveform_out_q = response->mutable_waveform_out_q()->mutable_data();
-        auto array_size_out = actual_array_size;
-        status = library_->DPDApplyPreDPDSignalConditioningSplit(instrument, selector_string, x0_in, dx_in, waveform_in_i, waveform_in_q, array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out_i, waveform_out_q, array_size_out, &actual_array_size, &papr);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_x0_out(x0_out);
-          response->set_dx_out(dx_out);
-          response->mutable_waveform_out_i()->Resize(actual_array_size, 0);
-          response->mutable_waveform_out_q()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
           response->set_papr(papr);
         }
@@ -4657,40 +4295,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDCfgApplyDPDUserDPDPolynomialSplit(::grpc::ServerContext* context, const DPDCfgApplyDPDUserDPDPolynomialSplitRequest* request, DPDCfgApplyDPDUserDPDPolynomialSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      auto i = const_cast<float32*>(request->i().data());
-      auto q = const_cast<float32*>(request->q().data());
-      auto array_size_determine_from_sizes = std::array<int, 2>
-      {
-        request->i_size(),
-        request->q_size()
-      };
-      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
-
-      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
-      }
-      auto array_size = array_size_size_calculation.size;
-
-      auto status = library_->DPDCfgApplyDPDUserDPDPolynomialSplit(instrument, selector_string, i, q, array_size);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDCfgApplyDPDUserLookupTable(::grpc::ServerContext* context, const DPDCfgApplyDPDUserLookupTableRequest* request, DPDCfgApplyDPDUserLookupTableResponse* response)
   {
     if (context->IsCancelled()) {
@@ -4715,42 +4319,6 @@ namespace nirfmxspecan_grpc {
       auto array_size = array_size_size_calculation.size;
 
       auto status = library_->DPDCfgApplyDPDUserLookupTable(instrument, selector_string, lut_input_powers, lut_complex_gains.data(), array_size);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDCfgApplyDPDUserLookupTableSplit(::grpc::ServerContext* context, const DPDCfgApplyDPDUserLookupTableSplitRequest* request, DPDCfgApplyDPDUserLookupTableSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      auto lut_input_powers = const_cast<float32*>(request->lut_input_powers().data());
-      auto i = const_cast<float32*>(request->i().data());
-      auto q = const_cast<float32*>(request->q().data());
-      auto array_size_determine_from_sizes = std::array<int, 3>
-      {
-        request->lut_input_powers_size(),
-        request->i_size(),
-        request->q_size()
-      };
-      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
-
-      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [lutInputPowers, i, q] do not match");
-      }
-      auto array_size = array_size_size_calculation.size;
-
-      auto status = library_->DPDCfgApplyDPDUserLookupTableSplit(instrument, selector_string, lut_input_powers, i, q, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5203,40 +4771,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDCfgPreviousDPDPolynomialSplit(::grpc::ServerContext* context, const DPDCfgPreviousDPDPolynomialSplitRequest* request, DPDCfgPreviousDPDPolynomialSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      auto i = const_cast<float32*>(request->i().data());
-      auto q = const_cast<float32*>(request->q().data());
-      auto array_size_determine_from_sizes = std::array<int, 2>
-      {
-        request->i_size(),
-        request->q_size()
-      };
-      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
-
-      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
-      }
-      auto array_size = array_size_size_calculation.size;
-
-      auto status = library_->DPDCfgPreviousDPDPolynomialSplit(instrument, selector_string, i, q, array_size);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDCfgReferenceWaveform(::grpc::ServerContext* context, const DPDCfgReferenceWaveformRequest* request, DPDCfgReferenceWaveformResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5283,74 +4817,6 @@ namespace nirfmxspecan_grpc {
       }
 
       auto status = library_->DPDCfgReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size, idle_duration_present, signal_type);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDCfgReferenceWaveformSplit(::grpc::ServerContext* context, const DPDCfgReferenceWaveformSplitRequest* request, DPDCfgReferenceWaveformSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 x0 = request->x0();
-      float64 dx = request->dx();
-      auto i = const_cast<float32*>(request->i().data());
-      auto q = const_cast<float32*>(request->q().data());
-      auto array_size_determine_from_sizes = std::array<int, 2>
-      {
-        request->i_size(),
-        request->q_size()
-      };
-      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
-
-      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i, q] do not match");
-      }
-      auto array_size = array_size_size_calculation.size;
-
-      int32 idle_duration_present;
-      switch (request->idle_duration_present_enum_case()) {
-        case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
-          idle_duration_present = static_cast<int32>(request->idle_duration_present());
-          break;
-        }
-        case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
-          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
-          break;
-        }
-        case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
-          break;
-        }
-      }
-
-      int32 signal_type;
-      switch (request->signal_type_enum_case()) {
-        case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::SignalTypeEnumCase::kSignalType: {
-          signal_type = static_cast<int32>(request->signal_type());
-          break;
-        }
-        case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::SignalTypeEnumCase::kSignalTypeRaw: {
-          signal_type = static_cast<int32>(request->signal_type_raw());
-          break;
-        }
-        case nirfmxspecan_grpc::DPDCfgReferenceWaveformSplitRequest::SignalTypeEnumCase::SIGNAL_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_type was not specified or out of range");
-          break;
-        }
-      }
-
-      auto status = library_->DPDCfgReferenceWaveformSplit(instrument, selector_string, x0, dx, i, q, array_size, idle_duration_present, signal_type);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -5493,49 +4959,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDFetchDPDPolynomialSplit(::grpc::ServerContext* context, const DPDFetchDPDPolynomialSplitRequest* request, DPDFetchDPDPolynomialSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 timeout = request->timeout();
-      int32 actual_array_size {};
-      while (true) {
-        auto status = library_->DPDFetchDPDPolynomialSplit(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_i()->Resize(actual_array_size, 0);
-        float32* i = response->mutable_i()->mutable_data();
-        response->mutable_q()->Resize(actual_array_size, 0);
-        float32* q = response->mutable_q()->mutable_data();
-        auto array_size = actual_array_size;
-        status = library_->DPDFetchDPDPolynomialSplit(instrument, selector_string, timeout, i, q, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_i()->Resize(actual_array_size, 0);
-          response->mutable_q()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDFetchLookupTable(::grpc::ServerContext* context, const DPDFetchLookupTableRequest* request, DPDFetchLookupTableResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5573,52 +4996,6 @@ namespace nirfmxspecan_grpc {
               response->mutable_complex_gains()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
-          response->set_actual_array_size(actual_array_size);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDFetchLookupTableSplit(::grpc::ServerContext* context, const DPDFetchLookupTableSplitRequest* request, DPDFetchLookupTableSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 timeout = request->timeout();
-      int32 actual_array_size {};
-      while (true) {
-        auto status = library_->DPDFetchLookupTableSplit(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_input_powers()->Resize(actual_array_size, 0);
-        float32* input_powers = response->mutable_input_powers()->mutable_data();
-        response->mutable_i()->Resize(actual_array_size, 0);
-        float32* i = response->mutable_i()->mutable_data();
-        response->mutable_q()->Resize(actual_array_size, 0);
-        float32* q = response->mutable_q()->mutable_data();
-        auto array_size = actual_array_size;
-        status = library_->DPDFetchLookupTableSplit(instrument, selector_string, timeout, input_powers, i, q, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_input_powers()->Resize(actual_array_size, 0);
-          response->mutable_i()->Resize(actual_array_size, 0);
-          response->mutable_q()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5706,53 +5083,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDFetchProcessedMeanAcquiredWaveformSplit(::grpc::ServerContext* context, const DPDFetchProcessedMeanAcquiredWaveformSplitRequest* request, DPDFetchProcessedMeanAcquiredWaveformSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 timeout = request->timeout();
-      float64 x0 {};
-      float64 dx {};
-      int32 actual_array_size {};
-      while (true) {
-        auto status = library_->DPDFetchProcessedMeanAcquiredWaveformSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_i()->Resize(actual_array_size, 0);
-        float32* i = response->mutable_i()->mutable_data();
-        response->mutable_q()->Resize(actual_array_size, 0);
-        float32* q = response->mutable_q()->mutable_data();
-        auto array_size = actual_array_size;
-        status = library_->DPDFetchProcessedMeanAcquiredWaveformSplit(instrument, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_x0(x0);
-          response->set_dx(dx);
-          response->mutable_i()->Resize(actual_array_size, 0);
-          response->mutable_q()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDFetchProcessedReferenceWaveform(::grpc::ServerContext* context, const DPDFetchProcessedReferenceWaveformRequest* request, DPDFetchProcessedReferenceWaveformResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5791,53 +5121,6 @@ namespace nirfmxspecan_grpc {
               response->mutable_processed_reference_waveform()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
-          response->set_actual_array_size(actual_array_size);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDFetchProcessedReferenceWaveformSplit(::grpc::ServerContext* context, const DPDFetchProcessedReferenceWaveformSplitRequest* request, DPDFetchProcessedReferenceWaveformSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 timeout = request->timeout();
-      float64 x0 {};
-      float64 dx {};
-      int32 actual_array_size {};
-      while (true) {
-        auto status = library_->DPDFetchProcessedReferenceWaveformSplit(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_i()->Resize(actual_array_size, 0);
-        float32* i = response->mutable_i()->mutable_data();
-        response->mutable_q()->Resize(actual_array_size, 0);
-        float32* q = response->mutable_q()->mutable_data();
-        auto array_size = actual_array_size;
-        status = library_->DPDFetchProcessedReferenceWaveformSplit(instrument, selector_string, timeout, &x0, &dx, i, q, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_x0(x0);
-          response->set_dx(dx);
-          response->mutable_i()->Resize(actual_array_size, 0);
-          response->mutable_q()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -8344,55 +7627,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::IQFetchDataSplit(::grpc::ServerContext* context, const IQFetchDataSplitRequest* request, IQFetchDataSplitResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      float64 timeout = request->timeout();
-      int32 record_to_fetch = request->record_to_fetch();
-      int64 samples_to_read = request->samples_to_read();
-      float64 t0 {};
-      float64 dt {};
-      int32 actual_array_size {};
-      while (true) {
-        auto status = library_->IQFetchDataSplit(instrument, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_i()->Resize(actual_array_size, 0);
-        float32* i = response->mutable_i()->mutable_data();
-        response->mutable_q()->Resize(actual_array_size, 0);
-        float32* q = response->mutable_q()->mutable_data();
-        auto array_size = actual_array_size;
-        status = library_->IQFetchDataSplit(instrument, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, i, q, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_t0(t0);
-          response->set_dt(dt);
-          response->mutable_i()->Resize(actual_array_size, 0);
-          response->mutable_q()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::IQGetRecordsDone(::grpc::ServerContext* context, const IQGetRecordsDoneRequest* request, IQGetRecordsDoneResponse* response)
   {
     if (context->IsCancelled()) {
@@ -8455,7 +7689,8 @@ namespace nirfmxspecan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      uInt32 nirfsa_session = request->nirfsa_session();
+      auto nirfsa_session_grpc_session = request->nirfsa_session();
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.id(), nirfsa_session_grpc_session.name());
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
@@ -9622,48 +8857,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::NFGetCalibrationSetupId(::grpc::ServerContext* context, const NFGetCalibrationSetupIdRequest* request, NFGetCalibrationSetupIdResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-
-      while (true) {
-        auto status = library_->NFGetCalibrationSetupId(instrument, selector_string, nullptr, 0);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        int32 array_size = status;
-      
-        std::string attr_val;
-        if (array_size > 0) {
-            attr_val.resize(array_size - 1);
-        }
-        status = library_->NFGetCalibrationSetupId(instrument, selector_string, (char*)attr_val.data(), array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_attr_val(attr_val);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::NFRecommendReferenceLevel(::grpc::ServerContext* context, const NFRecommendReferenceLevelRequest* request, NFRecommendReferenceLevelResponse* response)
   {
     if (context->IsCancelled()) {
@@ -9681,27 +8874,6 @@ namespace nirfmxspecan_grpc {
       if (status_ok(status)) {
         response->set_reference_level(reference_level);
       }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::NFSetCalibrationSetupId(::grpc::ServerContext* context, const NFSetCalibrationSetupIdRequest* request, NFSetCalibrationSetupIdResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* attr_val = (char*)request->attr_val().c_str();
-      auto status = library_->NFSetCalibrationSetupId(instrument, selector_string, attr_val);
-      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

@@ -123,6 +123,7 @@ if (NOT WIN32)
   list(FILTER nidrivers_to_build EXCLUDE REGEX "^nirfmx.*")
 endif()
 
+set(all_codegen_dependencies "")
 
 foreach(api ${nidrivers})
   set(codegen_dependencies
@@ -135,6 +136,11 @@ foreach(api ${nidrivers})
     "${metadata_dir}/${api}/functions.py"
     "${metadata_dir}/${api}/functions_addon.py"
     "${metadata_dir}/${api}/__init__.py")
+  set(all_codegen_dependencies
+    ${all_codegen_dependencies}
+    ${codegen_dependencies}
+  )
+
   set(output_files
     ${service_output_dir}/${api}/${api}_client.cpp
     ${service_output_dir}/${api}/${api}_client.h
@@ -176,7 +182,9 @@ add_custom_command(
   COMMENT 
     "Generating shared service files"
   DEPENDS
-    ${proto_dependencies}
+    ${all_codegen_dependencies}
+    ${codegen_scripts} 
+    virtual_environment
 )
 
 set(nidriver_service_srcs
