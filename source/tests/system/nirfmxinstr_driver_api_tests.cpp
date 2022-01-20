@@ -89,6 +89,11 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model)
   return client::initialize(stub, "FakeDevice", options);
 }
 
+nirfsa_grpc::InitWithOptionsResponse init_rfsa(const std::unique_ptr<nirfsa_grpc::NiRFSA::Stub>& stub, const std::string& resource_name)
+{
+  return nirfsa_client::init_with_options(stub, resource_name, false, false, "Simulate=1, DriverSetup=Model:5663E");
+}
+
 nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model)
 {
   auto response = init(stub, model);
@@ -125,13 +130,26 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASession_SelfTest_Succeeds)
 TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSA_SelfCalibrate_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
-  auto init_rfsa_response = nirfsa_client::init_with_options(rfsa_stub, "Sim", false, false, "Simulate=1, DriverSetup=Model:5663E");
+  auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
   ni::tests::system::EXPECT_SUCCESS(init_rfsa_response);
   auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 
-  client::self_calibrate(stub(), session, "", 0);
+  EXPECT_SUCCESS(session, client::self_calibrate(stub(), session, "", 0));
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSAArray_SelfCalibrate_Succeeds)
+{
+  auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
+  auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
+  auto init_rfsa_response_2 = init_rfsa(rfsa_stub, "Sim2");
+  ni::tests::system::EXPECT_SUCCESS(init_rfsa_response);
+  auto init_response = client::initialize_from_nirfsa_session_array(stub(), {init_rfsa_response.vi(), init_rfsa_response_2.vi()});
+  auto session = init_response.instrument();
+  EXPECT_SUCCESS(session, init_response);
+
+  EXPECT_SUCCESS(session, client::self_calibrate(stub(), session, "", 0));
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, NoActiveList_GetListNames_ReturnsEmptyLists)

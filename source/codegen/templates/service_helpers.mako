@@ -513,7 +513,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       auto ${parameter_name} = ${request_snippet}.c_str();\
 % elif common_helpers.is_string_arg(parameter):
       ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
-% elif c_type == 'ViSession[]':
+% elif grpc_type == 'repeated nidevice_grpc.Session':
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
       std::transform(

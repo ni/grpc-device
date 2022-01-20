@@ -22,6 +22,7 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 GetMarbleAttributeInt32Array(FakeHandle handle, int32 attribute, int32 value[]) = 0;
   virtual int32 Init(const char sessionName[], FakeHandle* handle) = 0;
   virtual int32 InitFromCrossDriverSession(int32 crossDriverSession, FakeHandle* handle) = 0;
+  virtual int32 InitFromCrossDriverSessionArray(int32 crossDriverSessionArray[], int32 numberOfCrossDriverSessions, FakeHandle* handle) = 0;
   virtual int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle) = 0;
   virtual int32 InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]) = 0;
   virtual int32 IotaWithCustomSize(int32 sizeOne, int32 sizeTwo, int32 data[]) = 0;

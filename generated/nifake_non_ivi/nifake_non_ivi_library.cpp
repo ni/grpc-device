@@ -28,6 +28,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetMarbleAttributeInt32Array = reinterpret_cast<GetMarbleAttributeInt32ArrayPtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetMarbleAttributeInt32Array"));
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFakeNonIvi_Init"));
   function_pointers_.InitFromCrossDriverSession = reinterpret_cast<InitFromCrossDriverSessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitFromCrossDriverSession"));
+  function_pointers_.InitFromCrossDriverSessionArray = reinterpret_cast<InitFromCrossDriverSessionArrayPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitFromCrossDriverSessionArray"));
   function_pointers_.InitWithHandleNameAsSessionName = reinterpret_cast<InitWithHandleNameAsSessionNamePtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithHandleNameAsSessionName"));
   function_pointers_.InputArraysWithNarrowIntegerTypes = reinterpret_cast<InputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArraysWithNarrowIntegerTypes"));
   function_pointers_.IotaWithCustomSize = reinterpret_cast<IotaWithCustomSizePtr>(shared_library_.get_function_pointer("niFakeNonIvi_IotaWithCustomSize"));
@@ -144,6 +145,18 @@ int32 NiFakeNonIviLibrary::InitFromCrossDriverSession(int32 crossDriverSession, 
   return niFakeNonIvi_InitFromCrossDriverSession(crossDriverSession, handle);
 #else
   return function_pointers_.InitFromCrossDriverSession(crossDriverSession, handle);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::InitFromCrossDriverSessionArray(int32 crossDriverSessionArray[], int32 numberOfCrossDriverSessions, FakeHandle* handle)
+{
+  if (!function_pointers_.InitFromCrossDriverSessionArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InitFromCrossDriverSessionArray.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_InitFromCrossDriverSessionArray(crossDriverSessionArray, numberOfCrossDriverSessions, handle);
+#else
+  return function_pointers_.InitFromCrossDriverSessionArray(crossDriverSessionArray, numberOfCrossDriverSessions, handle);
 #endif
 }
 

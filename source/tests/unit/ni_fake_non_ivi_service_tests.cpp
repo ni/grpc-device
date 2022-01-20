@@ -1485,16 +1485,22 @@ TEST_F(NiFakeNonIviServiceTests, WriteBooleanArray_PassesBooleansAsInt32s)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSession)
+template <typename TSessionRepository, typename TResource>
+void add_session(TSessionRepository& repository, TResource resource_handle, const std::string name)
+{
+  uint32_t session_id;
+  repository->add_session(
+      name,
+      [resource_handle]() { return std::make_tuple(0, resource_handle); },
+      [](TResource handle) {},
+      session_id);
+}
+
+TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSession_PassesSessionResourcesAndSucceeds)
 {
   constexpr FakeCrossDriverHandle CROSS_DRIVER_HANDLE = 1234;
   constexpr auto CROSS_DRIVER_SESSION_NAME = "cross_driver_session";
-  uint32_t cross_driver_session_id;
-  cross_driver_resource_repository_->add_session(
-      CROSS_DRIVER_SESSION_NAME,
-      [CROSS_DRIVER_HANDLE]() { return std::make_tuple(0, CROSS_DRIVER_HANDLE); },
-      [](FakeCrossDriverHandle handle) {},
-      cross_driver_session_id);
+  add_session(cross_driver_resource_repository_, CROSS_DRIVER_HANDLE, CROSS_DRIVER_SESSION_NAME);
   EXPECT_CALL(library_, InitFromCrossDriverSession(CROSS_DRIVER_HANDLE, _))
       .WillOnce(DoAll(
           SetArgPointee<1, FakeHandle>(4567), Return(kDriverSuccess)));
@@ -1504,6 +1510,36 @@ TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSession)
   request.set_session_name("fake_session");
   request.mutable_cross_driver_session()->set_name(CROSS_DRIVER_SESSION_NAME);
   service_.InitFromCrossDriverSession(&context, &request, &response);
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+template <size_t N>
+InitFromCrossDriverSessionArrayRequest create_init_from_cross_driver_session_array_request(const std::array<std::string, N>& session_names)
+{
+  InitFromCrossDriverSessionArrayRequest request;
+  request.set_session_name("fake_session");
+  for (const auto& session_name : session_names) {
+    auto session_in = request.add_cross_driver_session_array();
+    session_in->set_name(session_name);
+  }
+  return request;
+}
+
+TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSessionArray_PassesSessionResourcesAndSucceeds)
+{
+  constexpr auto CROSS_DRIVER_HANDLES = std::array<FakeCrossDriverHandle, 2>{1234, 5678};
+  const auto CROSS_DRIVER_SESSION_NAMES = std::array<std::string, 2>{"cross_driver_session", "cross_driver_session_2"};
+  add_session(cross_driver_resource_repository_, CROSS_DRIVER_HANDLES[0], CROSS_DRIVER_SESSION_NAMES[0]);
+  add_session(cross_driver_resource_repository_, CROSS_DRIVER_HANDLES[1], CROSS_DRIVER_SESSION_NAMES[1]);
+  EXPECT_CALL(library_, InitFromCrossDriverSessionArray(_, _, _))
+      .With(Args<0, 1>(ElementsAreArray(CROSS_DRIVER_HANDLES.data(), CROSS_DRIVER_HANDLES.size())))
+      .WillOnce(DoAll(
+          SetArgPointee<2, FakeHandle>(4567), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  auto request = create_init_from_cross_driver_session_array_request(CROSS_DRIVER_SESSION_NAMES);
+  InitFromCrossDriverSessionArrayResponse response;
+  service_.InitFromCrossDriverSessionArray(&context, &request, &response);
 
   EXPECT_EQ(kDriverSuccess, response.status());
 }

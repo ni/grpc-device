@@ -304,6 +304,43 @@ namespace nifake_non_ivi_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitFromCrossDriverSessionArray(::grpc::ServerContext* context, const InitFromCrossDriverSessionArrayRequest* request, InitFromCrossDriverSessionArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto cross_driver_session_array_request = request->cross_driver_session_array();
+      std::vector<int32> cross_driver_session_array;
+      std::transform(
+        cross_driver_session_array_request.begin(),
+        cross_driver_session_array_request.end(),
+        std::back_inserter(cross_driver_session_array),
+        [&](auto session) { return fake_cross_driver_handle_resource_repository_->access_session(session.id(), session.name()); }); 
+      int32 number_of_cross_driver_sessions = static_cast<int32>(request->cross_driver_session_array().size());
+
+      auto init_lambda = [&] () {
+        FakeHandle handle;
+        int status = library_->InitFromCrossDriverSessionArray(cross_driver_session_array.data(), number_of_cross_driver_sessions, &handle);
+        return std::make_tuple(status, handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->mutable_handle()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeNonIviService::InitWithHandleNameAsSessionName(::grpc::ServerContext* context, const InitWithHandleNameAsSessionNameRequest* request, InitWithHandleNameAsSessionNameResponse* response)
   {
     if (context->IsCancelled()) {

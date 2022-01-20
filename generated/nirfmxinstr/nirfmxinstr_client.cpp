@@ -1078,7 +1078,7 @@ initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 InitializeFromNIRFSASessionArrayResponse
-initialize_from_nirfsa_session_array(const StubPtr& stub, const std::vector<pb::uint32>& nirfsa_sessions)
+initialize_from_nirfsa_session_array(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& nirfsa_sessions)
 {
   ::grpc::ClientContext context;
 

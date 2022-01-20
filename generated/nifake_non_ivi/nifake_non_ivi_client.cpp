@@ -153,6 +153,22 @@ init_from_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+InitFromCrossDriverSessionArrayResponse
+init_from_cross_driver_session_array(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& cross_driver_session_array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitFromCrossDriverSessionArrayRequest{};
+  copy_array(cross_driver_session_array, request.mutable_cross_driver_session_array());
+
+  auto response = InitFromCrossDriverSessionArrayResponse{};
+
+  raise_if_error(
+      stub->InitFromCrossDriverSessionArray(&context, request, &response));
+
+  return response;
+}
+
 InitWithHandleNameAsSessionNameResponse
 init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& handle_name)
 {
