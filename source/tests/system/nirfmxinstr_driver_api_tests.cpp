@@ -178,7 +178,6 @@ TEST_F(NiRFmxInstrDriverApiTests, CallCfgMethods_Succeeds)
 TEST_F(NiRFmxInstrDriverApiTests, CallCheckMethods_SucceedsWithReasonableResponseValues)
 {
   const auto session = init_session(stub(), PXI_5663E);
-
   const auto status_response = EXPECT_SUCCESS(session, client::check_acquisition_status(stub(), session));
   const auto list_exists_response = EXPECT_SUCCESS(session, client::check_if_list_exists(stub(), session, "NOTALIST"));
   const auto self_cal_response = EXPECT_SUCCESS(session, client::is_self_calibrate_valid(stub(), session, ""));
@@ -204,9 +203,11 @@ TEST_F(NiRFmxInstrDriverApiTests, SpectrumBasicWithRFmxInstr_DataLooksReasonable
   auto read_response = specan_client::spectrum_read(specan_stub, session, "", 10.0);
 
   EXPECT_SUCCESS(session, read_response);
-  int midpoint_x = 1005 / 2;
-  EXPECT_LT(read_response.spectrum(0), read_response.spectrum(midpoint_x));
-  EXPECT_LT(read_response.spectrum(1004), read_response.spectrum(midpoint_x));
+  constexpr auto EXPECTED_SPECTRUM_SIZE = 1005;
+  EXPECT_EQ(EXPECTED_SPECTRUM_SIZE, read_response.spectrum().size());
+  constexpr auto MIDPOINT_X = EXPECTED_SPECTRUM_SIZE / 2;
+  EXPECT_LT(read_response.spectrum(0), read_response.spectrum(MIDPOINT_X));
+  EXPECT_LT(read_response.spectrum(EXPECTED_SPECTRUM_SIZE - 1), read_response.spectrum(MIDPOINT_X));
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, GetModelName_ReturnsModelName)
