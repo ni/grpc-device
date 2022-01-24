@@ -192,7 +192,7 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArray_SelfTest_Succeeds)
   ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_named_session));
 }
 
-TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayWithTooManyNames_Fails)
+TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayWithTooManyNames_ReturnsBadStatus)
 {
   auto session = init_session(stub(), PXI_5663E);
 
