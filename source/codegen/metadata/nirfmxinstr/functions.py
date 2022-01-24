@@ -1699,7 +1699,9 @@ functions = {
         'init_method': True,
         'parameters': [
             {
+                'cross_driver_session': 'ViSession',
                 'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'name': 'nirfsaSessions',
                 'size': {
                     'mechanism': 'len',

@@ -1046,7 +1046,7 @@ message InitializeFromNIRFSASessionResponse {
 
 message InitializeFromNIRFSASessionArrayRequest {
   string session_name = 1;
-  repeated uint32 nirfsa_sessions = 2;
+  repeated nidevice_grpc.Session nirfsa_sessions = 2;
 }
 
 message InitializeFromNIRFSASessionArrayResponse {

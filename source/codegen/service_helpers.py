@@ -62,6 +62,25 @@ def create_args_for_callback(parameters):
     ])
 
 
+def _is_array_that_requires_conversion(parameter):
+    """
+    Returns True for any array parameter where the protobuf representation is not the same
+    as the C API representation.
+    """
+    is_array = common_helpers.is_array(parameter['type'])
+
+    if is_array:
+        return (
+            common_helpers.supports_standard_copy_conversion_routines(parameter)
+            or get_c_element_type_for_array_that_needs_coercion(parameter) is not None
+            # Sessions are "converted" by accessing the session repository.
+            or parameter['grpc_type'] == 'repeated nidevice_grpc.Session'
+            # ViInt16s have a hardcoded copy convert routine that predates the coerced flag.
+            or parameter['type'] == 'ViInt16[]'
+        )
+
+    return False
+
 def create_standard_arg(parameter):
     parameter_name = common_helpers.get_cpp_local_name(parameter)
     is_array = common_helpers.is_array(parameter['type'])
@@ -70,7 +89,8 @@ def create_standard_arg(parameter):
         type_without_brackets = common_helpers.get_underlying_type_name(
             parameter['type'])
         return f'({type_without_brackets}*){parameter_name}.data(), '
-    elif parameter['type'] in {"ViBoolean[]", "ViSession[]", "ViInt16[]"}:
+    elif _is_array_that_requires_conversion(parameter):
+        # Converted arrays are allocated into a std::vector. Access the C array via data().
         return f'{parameter_name}.data(), '
     elif 'callback_params' in parameter:
         return f'CallbackRouter::handle_callback, '
@@ -78,14 +98,9 @@ def create_standard_arg(parameter):
         return f'handler->token(), '
     elif not is_output and common_helpers.is_pointer_parameter(parameter) and 'hardcoded_value' not in parameter:
         return f'&{parameter_name}_copy, '
-    else:
-        if is_array and common_helpers.supports_standard_copy_conversion_routines(parameter):
-            parameter_name = parameter_name + ".data()"
-        elif not is_array and is_output:
-            parameter_name = f'&{parameter_name}'
-        elif get_c_element_type_for_array_that_needs_coercion(parameter) is not None:
-            parameter_name = parameter_name + ".data()"
-        return f'{parameter_name}, '
+    elif not is_array and is_output:
+        return f'&{parameter_name}, '
+    return f'{parameter_name}, '
 
 
 def create_args(parameters):

@@ -2007,12 +2007,18 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto nirfsa_sessions = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->nirfsa_sessions().data()));
+      auto nirfsa_sessions_request = request->nirfsa_sessions();
+      std::vector<uInt32> nirfsa_sessions;
+      std::transform(
+        nirfsa_sessions_request.begin(),
+        nirfsa_sessions_request.end(),
+        std::back_inserter(nirfsa_sessions),
+        [&](auto session) { return vi_session_resource_repository_->access_session(session.id(), session.name()); }); 
       int32 number_of_nirfsa_sessions = static_cast<int32>(request->nirfsa_sessions().size());
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->InitializeFromNIRFSASessionArray(nirfsa_sessions, number_of_nirfsa_sessions, &instrument);
+        int status = library_->InitializeFromNIRFSASessionArray(nirfsa_sessions.data(), number_of_nirfsa_sessions, &instrument);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;

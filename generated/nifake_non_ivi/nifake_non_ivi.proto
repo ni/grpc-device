@@ -24,6 +24,7 @@ service NiFakeNonIvi {
   rpc GetMarbleAttributeInt32Array(GetMarbleAttributeInt32ArrayRequest) returns (GetMarbleAttributeInt32ArrayResponse);
   rpc Init(InitRequest) returns (InitResponse);
   rpc InitFromCrossDriverSession(InitFromCrossDriverSessionRequest) returns (InitFromCrossDriverSessionResponse);
+  rpc InitFromCrossDriverSessionArray(InitFromCrossDriverSessionArrayRequest) returns (InitFromCrossDriverSessionArrayResponse);
   rpc InitWithHandleNameAsSessionName(InitWithHandleNameAsSessionNameRequest) returns (InitWithHandleNameAsSessionNameResponse);
   rpc InputArraysWithNarrowIntegerTypes(InputArraysWithNarrowIntegerTypesRequest) returns (InputArraysWithNarrowIntegerTypesResponse);
   rpc IotaWithCustomSize(IotaWithCustomSizeRequest) returns (IotaWithCustomSizeResponse);
@@ -179,6 +180,16 @@ message InitFromCrossDriverSessionRequest {
 }
 
 message InitFromCrossDriverSessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session handle = 2;
+}
+
+message InitFromCrossDriverSessionArrayRequest {
+  string session_name = 1;
+  repeated nidevice_grpc.Session cross_driver_session_array = 2;
+}
+
+message InitFromCrossDriverSessionArrayResponse {
   int32 status = 1;
   nidevice_grpc.Session handle = 2;
 }

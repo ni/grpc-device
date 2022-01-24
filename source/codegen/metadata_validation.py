@@ -218,7 +218,7 @@ def validate_function(function_name: str, metadata: dict):
                 if 'cross_driver_session' in parameter:
                     # Assumption: there's no code that automatically sets the grpc_type for cross_driver_sessions and nidevice_grpc.Session
                     # is the only type that works.
-                    if parameter.get('grpc_type', None) != 'nidevice_grpc.Session':
+                    if parameter.get('grpc_type', None) not in ['nidevice_grpc.Session', 'repeated nidevice_grpc.Session']:
                         raise  Exception(
                            f"parameter {parameter['name']} is a cross_driver_session but does not have a grpc_type of nidevice_grpc.Session!")
                     # Assumption: a method that creates a session (via accessing a cross-driver session) must be an init_method to ensure

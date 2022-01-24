@@ -130,6 +130,33 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'InitFromCrossDriverSessionArray': {
+        'init_method': True,
+        'parameters': [
+            {
+                'cross_driver_session': 'FakeCrossDriverHandle',
+                'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.Session',
+                'name': 'crossDriverSessionArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfCrossDriverSessions'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfCrossDriverSessions',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'handle',
+                'type': 'FakeHandle'
+            }
+        ],
+        'returns': 'int32'
+    },
     'InitWithHandleNameAsSessionName': {
         'init_method': True,
         'parameters': [
