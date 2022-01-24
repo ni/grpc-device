@@ -221,7 +221,7 @@ TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSAArray_SelfCalibrate_Succee
   EXPECT_SUCCESS(session, client::self_calibrate(stub(), session, "", 0));
 }
 
-TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSAArray_GetNIRFSASessionArrayAnonymous_SelfTestEachSessionSucceeds)
+TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSASessionArrayAnonymous_SelfTestEachSessionSucceeds)
 {
   const auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   const auto session = init_from_rfsa_session_array(stub(), rfsa_stub, {"Sim1", "Sim2"});
