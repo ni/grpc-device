@@ -1,3 +1,4 @@
+from typing import List
 import common_helpers
 
 def should_allow_alias(enum):
@@ -132,14 +133,25 @@ def is_session_name(parameter):
   return parameter.get('is_session_name', False)
 
 
+def _prepend_proto_only_session_name_parameter_if_necessary(func, input_parameters: List[dict]) -> None:
+    has_session_input = any(is_session_name(param) for param in input_parameters)
+    # If the API defines a "session_name" param, we don't need to add another one.
+    if not has_session_input:
+      is_array_init = common_helpers.is_init_array_method(func)
+      session_name_param = {
+        'direction': 'in',
+        'name': 'session_names' if is_array_init else 'session_name',
+        'type': 'ViString', # Not really used since this is proto/service-only
+        'grpc_type': 'repeated string' if is_array_init else 'string'
+      }
+      input_parameters.insert(0, session_name_param)
+
+
 def get_parameters(function):
   parameter_array = common_helpers.filter_parameters_for_grpc_fields(function['parameters'])
   input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
   if common_helpers.is_init_method(function):
-    has_session_input = any(is_session_name(param) for param in input_parameters)
-    if not has_session_input:
-      session_name_param = {'direction': 'in','name': 'session_name','type': 'ViString', 'grpc_type': 'string'}
-      input_parameters.insert(0, session_name_param)
+    _prepend_proto_only_session_name_parameter_if_necessary(function, input_parameters)
 
   default_status_param = {'name': 'status', 'type': 'int32', 'grpc_type': 'int32'}
   output_parameters = [default_status_param]
