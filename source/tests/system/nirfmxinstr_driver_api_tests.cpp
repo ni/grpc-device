@@ -177,7 +177,7 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayAnonymous_SelfTest_Succee
   ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, get_rfsa_response.nirfsa_sessions()[0]));
 }
 
-TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArray_SelfTest_Succeeds)
+TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayNamed_SelfTest_Succeeds)
 {
   constexpr auto RFSA_SESSION_NAME = "test_rfsa_session";
   auto session = init_session(stub(), PXI_5663E);
@@ -254,7 +254,7 @@ TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSASession
   EXPECT_GET_RFSA_ARRAY_WRONG_NUMBER_OF_SESSIONS_ERROR(status, 2);
 }
 
-TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSAArrayNamed_ReturnsTwoSessions)
+TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSASessionArrayNamed_ReturnsTwoSessions)
 {
   const auto RFSA_SESSION_NAMES = std::vector<std::string>{"rfsa_1", "rfsa_2"};
   const auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
