@@ -6,6 +6,10 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+// Starting with session_id 1 isn't functionally important, but we want to start with
+// something intentional. NOT an uninitialized uint.
+constexpr auto EXPECTED_FIRST_SESSION_ID = 1;
+
 TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_ReturnsStatusAndDoesNotStoreSession)
 {
   nidevice_grpc::SessionRepository session_repository;
@@ -31,7 +35,7 @@ TEST(SessionRepositoryTests, AddSession_StoresSessionWithGivenId)
       session_id);
 
   EXPECT_EQ(status, 0);
-  EXPECT_NE(session_id, 0);
+  EXPECT_EQ(session_id, EXPECTED_FIRST_SESSION_ID);
   EXPECT_EQ(session_repository.access_session(session_id, ""), session_id);
 }
 
@@ -47,7 +51,7 @@ TEST(SessionRepositoryTests, AddNamedSession_StoresSessionWithGivenIdAndName)
       session_id);
 
   EXPECT_EQ(status, 0);
-  EXPECT_NE(session_id, 0);
+  EXPECT_EQ(session_id, EXPECTED_FIRST_SESSION_ID);
   EXPECT_EQ(session_repository.access_session(session_id, ""), session_id);
   EXPECT_EQ(session_repository.access_session(0, session_name), session_id);
 }

@@ -87,7 +87,7 @@ class SessionRepository {
   // These entries point at SessionInfo objects that are also contained in sessions_.
   NamedSessionMap named_sessions_;
   ReservationMap reservations_;
-  std::atomic<uint32_t> _next_id;
+  std::atomic<uint32_t> _next_id{0};
 };
 }  // namespace nidevice_grpc
 
