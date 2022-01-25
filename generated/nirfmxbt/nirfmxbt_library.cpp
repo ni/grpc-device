@@ -21,8 +21,146 @@ NiRFmxBTLibrary::NiRFmxBTLibrary() : shared_library_(kLibraryName)
   if (!loaded) {
     return;
   }
+  function_pointers_.ACPCfgAveraging = reinterpret_cast<ACPCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxBT_ACPCfgAveraging"));
+  function_pointers_.ACPCfgBurstSynchronizationType = reinterpret_cast<ACPCfgBurstSynchronizationTypePtr>(shared_library_.get_function_pointer("RFmxBT_ACPCfgBurstSynchronizationType"));
+  function_pointers_.ACPCfgNumberOfOffsets = reinterpret_cast<ACPCfgNumberOfOffsetsPtr>(shared_library_.get_function_pointer("RFmxBT_ACPCfgNumberOfOffsets"));
+  function_pointers_.ACPCfgOffsetChannelMode = reinterpret_cast<ACPCfgOffsetChannelModePtr>(shared_library_.get_function_pointer("RFmxBT_ACPCfgOffsetChannelMode"));
+  function_pointers_.ACPFetchAbsolutePowerTrace = reinterpret_cast<ACPFetchAbsolutePowerTracePtr>(shared_library_.get_function_pointer("RFmxBT_ACPFetchAbsolutePowerTrace"));
+  function_pointers_.ACPFetchMaskTrace = reinterpret_cast<ACPFetchMaskTracePtr>(shared_library_.get_function_pointer("RFmxBT_ACPFetchMaskTrace"));
+  function_pointers_.ACPFetchMeasurementStatus = reinterpret_cast<ACPFetchMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxBT_ACPFetchMeasurementStatus"));
+  function_pointers_.ACPFetchOffsetMeasurement = reinterpret_cast<ACPFetchOffsetMeasurementPtr>(shared_library_.get_function_pointer("RFmxBT_ACPFetchOffsetMeasurement"));
+  function_pointers_.ACPFetchOffsetMeasurementArray = reinterpret_cast<ACPFetchOffsetMeasurementArrayPtr>(shared_library_.get_function_pointer("RFmxBT_ACPFetchOffsetMeasurementArray"));
+  function_pointers_.ACPFetchReferenceChannelPower = reinterpret_cast<ACPFetchReferenceChannelPowerPtr>(shared_library_.get_function_pointer("RFmxBT_ACPFetchReferenceChannelPower"));
+  function_pointers_.ACPFetchSpectrum = reinterpret_cast<ACPFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxBT_ACPFetchSpectrum"));
+  function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_.get_function_pointer("RFmxBT_AbortMeasurements"));
+  function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_.get_function_pointer("RFmxBT_AnalyzeIQ1Waveform"));
+  function_pointers_.AutoDetectSignal = reinterpret_cast<AutoDetectSignalPtr>(shared_library_.get_function_pointer("RFmxBT_AutoDetectSignal"));
+  function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxBT_AutoLevel"));
+  function_pointers_.BuildBandwidthPartString = reinterpret_cast<BuildBandwidthPartStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildBandwidthPartString"));
+  function_pointers_.BuildCORESETClusterString = reinterpret_cast<BuildCORESETClusterStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildCORESETClusterString"));
+  function_pointers_.BuildCORESETString = reinterpret_cast<BuildCORESETStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildCORESETString"));
+  function_pointers_.BuildCarrierString = reinterpret_cast<BuildCarrierStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildCarrierString"));
+  function_pointers_.BuildListStepString = reinterpret_cast<BuildListStepStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildListStepString"));
+  function_pointers_.BuildListString = reinterpret_cast<BuildListStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildListString"));
+  function_pointers_.BuildOffsetString = reinterpret_cast<BuildOffsetStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildOffsetString"));
+  function_pointers_.BuildPDCCHString = reinterpret_cast<BuildPDCCHStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPDCCHString"));
+  function_pointers_.BuildPDSCHClusterString = reinterpret_cast<BuildPDSCHClusterStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPDSCHClusterString"));
+  function_pointers_.BuildPDSCHString = reinterpret_cast<BuildPDSCHStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPDSCHString"));
+  function_pointers_.BuildPUSCHClusterString = reinterpret_cast<BuildPUSCHClusterStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPUSCHClusterString"));
+  function_pointers_.BuildPUSCHString = reinterpret_cast<BuildPUSCHStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPUSCHString"));
+  function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildSignalString"));
+  function_pointers_.BuildSubblockString = reinterpret_cast<BuildSubblockStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildSubblockString"));
+  function_pointers_.BuildUserString = reinterpret_cast<BuildUserStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildUserString"));
+  function_pointers_.CfgChannelNumber = reinterpret_cast<CfgChannelNumberPtr>(shared_library_.get_function_pointer("RFmxBT_CfgChannelNumber"));
+  function_pointers_.CfgDataRate = reinterpret_cast<CfgDataRatePtr>(shared_library_.get_function_pointer("RFmxBT_CfgDataRate"));
+  function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxBT_CfgDigitalEdgeTrigger"));
+  function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_.get_function_pointer("RFmxBT_CfgExternalAttenuation"));
+  function_pointers_.CfgFrequency = reinterpret_cast<CfgFrequencyPtr>(shared_library_.get_function_pointer("RFmxBT_CfgFrequency"));
+  function_pointers_.CfgFrequencyChannelNumber = reinterpret_cast<CfgFrequencyChannelNumberPtr>(shared_library_.get_function_pointer("RFmxBT_CfgFrequencyChannelNumber"));
+  function_pointers_.CfgFrequencyReference = reinterpret_cast<CfgFrequencyReferencePtr>(shared_library_.get_function_pointer("RFmxBT_CfgFrequencyReference"));
+  function_pointers_.CfgIQPowerEdgeTrigger = reinterpret_cast<CfgIQPowerEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxBT_CfgIQPowerEdgeTrigger"));
+  function_pointers_.CfgLEDirectionFinding = reinterpret_cast<CfgLEDirectionFindingPtr>(shared_library_.get_function_pointer("RFmxBT_CfgLEDirectionFinding"));
+  function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_.get_function_pointer("RFmxBT_CfgMechanicalAttenuation"));
+  function_pointers_.CfgPacketType = reinterpret_cast<CfgPacketTypePtr>(shared_library_.get_function_pointer("RFmxBT_CfgPacketType"));
+  function_pointers_.CfgPayloadBitPattern = reinterpret_cast<CfgPayloadBitPatternPtr>(shared_library_.get_function_pointer("RFmxBT_CfgPayloadBitPattern"));
+  function_pointers_.CfgPayloadLength = reinterpret_cast<CfgPayloadLengthPtr>(shared_library_.get_function_pointer("RFmxBT_CfgPayloadLength"));
+  function_pointers_.CfgRF = reinterpret_cast<CfgRFPtr>(shared_library_.get_function_pointer("RFmxBT_CfgRF"));
+  function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_.get_function_pointer("RFmxBT_CfgRFAttenuation"));
+  function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_.get_function_pointer("RFmxBT_CfgReferenceLevel"));
+  function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxBT_CfgSoftwareEdgeTrigger"));
+  function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxBT_CheckMeasurementStatus"));
+  function_pointers_.ClearAllNamedResults = reinterpret_cast<ClearAllNamedResultsPtr>(shared_library_.get_function_pointer("RFmxBT_ClearAllNamedResults"));
+  function_pointers_.ClearNamedResult = reinterpret_cast<ClearNamedResultPtr>(shared_library_.get_function_pointer("RFmxBT_ClearNamedResult"));
+  function_pointers_.CloneSignalConfiguration = reinterpret_cast<CloneSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxBT_CloneSignalConfiguration"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("RFmxBT_Close"));
+  function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("RFmxBT_Commit"));
+  function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxBT_CreateSignalConfiguration"));
+  function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_.get_function_pointer("RFmxBT_DeleteSignalConfiguration"));
+  function_pointers_.DisableTrigger = reinterpret_cast<DisableTriggerPtr>(shared_library_.get_function_pointer("RFmxBT_DisableTrigger"));
+  function_pointers_.FrequencyRangeCfgAveraging = reinterpret_cast<FrequencyRangeCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxBT_FrequencyRangeCfgAveraging"));
+  function_pointers_.FrequencyRangeCfgSpan = reinterpret_cast<FrequencyRangeCfgSpanPtr>(shared_library_.get_function_pointer("RFmxBT_FrequencyRangeCfgSpan"));
+  function_pointers_.FrequencyRangeFetchMeasurement = reinterpret_cast<FrequencyRangeFetchMeasurementPtr>(shared_library_.get_function_pointer("RFmxBT_FrequencyRangeFetchMeasurement"));
+  function_pointers_.FrequencyRangeFetchSpectrum = reinterpret_cast<FrequencyRangeFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxBT_FrequencyRangeFetchSpectrum"));
+  function_pointers_.GetAllNamedResultNames = reinterpret_cast<GetAllNamedResultNamesPtr>(shared_library_.get_function_pointer("RFmxBT_GetAllNamedResultNames"));
+  function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeF32"));
+  function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeF32Array"));
+  function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeF64"));
+  function_pointers_.GetAttributeF64Array = reinterpret_cast<GetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeF64Array"));
+  function_pointers_.GetAttributeI16 = reinterpret_cast<GetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeI16"));
+  function_pointers_.GetAttributeI32 = reinterpret_cast<GetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeI32"));
+  function_pointers_.GetAttributeI32Array = reinterpret_cast<GetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeI32Array"));
+  function_pointers_.GetAttributeI64 = reinterpret_cast<GetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeI64"));
+  function_pointers_.GetAttributeI64Array = reinterpret_cast<GetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeI64Array"));
+  function_pointers_.GetAttributeI8 = reinterpret_cast<GetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeI8"));
+  function_pointers_.GetAttributeI8Array = reinterpret_cast<GetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeI8Array"));
+  function_pointers_.GetAttributeNIComplexDoubleArray = reinterpret_cast<GetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeNIComplexDoubleArray"));
+  function_pointers_.GetAttributeNIComplexSingleArray = reinterpret_cast<GetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeNIComplexSingleArray"));
+  function_pointers_.GetAttributeString = reinterpret_cast<GetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeString"));
+  function_pointers_.GetAttributeU16 = reinterpret_cast<GetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeU16"));
+  function_pointers_.GetAttributeU32 = reinterpret_cast<GetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeU32"));
+  function_pointers_.GetAttributeU32Array = reinterpret_cast<GetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeU32Array"));
+  function_pointers_.GetAttributeU64Array = reinterpret_cast<GetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeU64Array"));
+  function_pointers_.GetAttributeU8 = reinterpret_cast<GetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeU8"));
+  function_pointers_.GetAttributeU8Array = reinterpret_cast<GetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_GetAttributeU8Array"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxBT_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxBT_GetErrorString"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_.get_function_pointer("RFmxBT_Initialize"));
+  function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxBT_InitializeFromNIRFSASession"));
+  function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("RFmxBT_Initiate"));
+  function_pointers_.ModAccCfgAveraging = reinterpret_cast<ModAccCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccCfgAveraging"));
+  function_pointers_.ModAccCfgBurstSynchronizationType = reinterpret_cast<ModAccCfgBurstSynchronizationTypePtr>(shared_library_.get_function_pointer("RFmxBT_ModAccCfgBurstSynchronizationType"));
+  function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchConstellationTrace"));
+  function_pointers_.ModAccFetchDEVM = reinterpret_cast<ModAccFetchDEVMPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchDEVM"));
+  function_pointers_.ModAccFetchDEVMMagnitudeError = reinterpret_cast<ModAccFetchDEVMMagnitudeErrorPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchDEVMMagnitudeError"));
+  function_pointers_.ModAccFetchDEVMPerSymbolTrace = reinterpret_cast<ModAccFetchDEVMPerSymbolTracePtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchDEVMPerSymbolTrace"));
+  function_pointers_.ModAccFetchDEVMPhaseError = reinterpret_cast<ModAccFetchDEVMPhaseErrorPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchDEVMPhaseError"));
+  function_pointers_.ModAccFetchDemodulatedBitTrace = reinterpret_cast<ModAccFetchDemodulatedBitTracePtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchDemodulatedBitTrace"));
+  function_pointers_.ModAccFetchDf1 = reinterpret_cast<ModAccFetchDf1Ptr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchDf1"));
+  function_pointers_.ModAccFetchDf1maxTrace = reinterpret_cast<ModAccFetchDf1maxTracePtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchDf1maxTrace"));
+  function_pointers_.ModAccFetchDf2 = reinterpret_cast<ModAccFetchDf2Ptr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchDf2"));
+  function_pointers_.ModAccFetchDf2maxTrace = reinterpret_cast<ModAccFetchDf2maxTracePtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchDf2maxTrace"));
+  function_pointers_.ModAccFetchFrequencyErrorBR = reinterpret_cast<ModAccFetchFrequencyErrorBRPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorBR"));
+  function_pointers_.ModAccFetchFrequencyErrorEDR = reinterpret_cast<ModAccFetchFrequencyErrorEDRPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorEDR"));
+  function_pointers_.ModAccFetchFrequencyErrorLE = reinterpret_cast<ModAccFetchFrequencyErrorLEPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorLE"));
+  function_pointers_.ModAccFetchFrequencyErrorTraceBR = reinterpret_cast<ModAccFetchFrequencyErrorTraceBRPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorTraceBR"));
+  function_pointers_.ModAccFetchFrequencyErrorTraceLE = reinterpret_cast<ModAccFetchFrequencyErrorTraceLEPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorTraceLE"));
+  function_pointers_.ModAccFetchFrequencyErrorWiPlusW0TraceEDR = reinterpret_cast<ModAccFetchFrequencyErrorWiPlusW0TraceEDRPtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchFrequencyErrorWiPlusW0TraceEDR"));
+  function_pointers_.ModAccFetchFrequencyTrace = reinterpret_cast<ModAccFetchFrequencyTracePtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchFrequencyTrace"));
+  function_pointers_.ModAccFetchRMSDEVMTrace = reinterpret_cast<ModAccFetchRMSDEVMTracePtr>(shared_library_.get_function_pointer("RFmxBT_ModAccFetchRMSDEVMTrace"));
+  function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_.get_function_pointer("RFmxBT_ResetAttribute"));
+  function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_.get_function_pointer("RFmxBT_ResetToDefault"));
+  function_pointers_.SelectMeasurements = reinterpret_cast<SelectMeasurementsPtr>(shared_library_.get_function_pointer("RFmxBT_SelectMeasurements"));
+  function_pointers_.SendSoftwareEdgeTrigger = reinterpret_cast<SendSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxBT_SendSoftwareEdgeTrigger"));
+  function_pointers_.SetAttributeF32 = reinterpret_cast<SetAttributeF32Ptr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeF32"));
+  function_pointers_.SetAttributeF32Array = reinterpret_cast<SetAttributeF32ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeF32Array"));
+  function_pointers_.SetAttributeF64 = reinterpret_cast<SetAttributeF64Ptr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeF64"));
+  function_pointers_.SetAttributeF64Array = reinterpret_cast<SetAttributeF64ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeF64Array"));
+  function_pointers_.SetAttributeI16 = reinterpret_cast<SetAttributeI16Ptr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeI16"));
+  function_pointers_.SetAttributeI32 = reinterpret_cast<SetAttributeI32Ptr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeI32"));
+  function_pointers_.SetAttributeI32Array = reinterpret_cast<SetAttributeI32ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeI32Array"));
+  function_pointers_.SetAttributeI64 = reinterpret_cast<SetAttributeI64Ptr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeI64"));
+  function_pointers_.SetAttributeI64Array = reinterpret_cast<SetAttributeI64ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeI64Array"));
+  function_pointers_.SetAttributeI8 = reinterpret_cast<SetAttributeI8Ptr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeI8"));
+  function_pointers_.SetAttributeI8Array = reinterpret_cast<SetAttributeI8ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeI8Array"));
+  function_pointers_.SetAttributeNIComplexDoubleArray = reinterpret_cast<SetAttributeNIComplexDoubleArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeNIComplexDoubleArray"));
+  function_pointers_.SetAttributeNIComplexSingleArray = reinterpret_cast<SetAttributeNIComplexSingleArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeNIComplexSingleArray"));
+  function_pointers_.SetAttributeString = reinterpret_cast<SetAttributeStringPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeString"));
+  function_pointers_.SetAttributeU16 = reinterpret_cast<SetAttributeU16Ptr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeU16"));
+  function_pointers_.SetAttributeU32 = reinterpret_cast<SetAttributeU32Ptr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeU32"));
+  function_pointers_.SetAttributeU32Array = reinterpret_cast<SetAttributeU32ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeU32Array"));
+  function_pointers_.SetAttributeU64Array = reinterpret_cast<SetAttributeU64ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeU64Array"));
+  function_pointers_.SetAttributeU8 = reinterpret_cast<SetAttributeU8Ptr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeU8"));
+  function_pointers_.SetAttributeU8Array = reinterpret_cast<SetAttributeU8ArrayPtr>(shared_library_.get_function_pointer("RFmxBT_SetAttributeU8Array"));
+  function_pointers_.TXPCfgAveraging = reinterpret_cast<TXPCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxBT_TXPCfgAveraging"));
+  function_pointers_.TXPCfgBurstSynchronizationType = reinterpret_cast<TXPCfgBurstSynchronizationTypePtr>(shared_library_.get_function_pointer("RFmxBT_TXPCfgBurstSynchronizationType"));
+  function_pointers_.TXPFetchEDRPowers = reinterpret_cast<TXPFetchEDRPowersPtr>(shared_library_.get_function_pointer("RFmxBT_TXPFetchEDRPowers"));
+  function_pointers_.TXPFetchLECTEReferencePeriodPowers = reinterpret_cast<TXPFetchLECTEReferencePeriodPowersPtr>(shared_library_.get_function_pointer("RFmxBT_TXPFetchLECTEReferencePeriodPowers"));
+  function_pointers_.TXPFetchLECTETransmitSlotPowers = reinterpret_cast<TXPFetchLECTETransmitSlotPowersPtr>(shared_library_.get_function_pointer("RFmxBT_TXPFetchLECTETransmitSlotPowers"));
+  function_pointers_.TXPFetchLECTETransmitSlotPowersArray = reinterpret_cast<TXPFetchLECTETransmitSlotPowersArrayPtr>(shared_library_.get_function_pointer("RFmxBT_TXPFetchLECTETransmitSlotPowersArray"));
+  function_pointers_.TXPFetchPowerTrace = reinterpret_cast<TXPFetchPowerTracePtr>(shared_library_.get_function_pointer("RFmxBT_TXPFetchPowerTrace"));
+  function_pointers_.TXPFetchPowers = reinterpret_cast<TXPFetchPowersPtr>(shared_library_.get_function_pointer("RFmxBT_TXPFetchPowers"));
+  function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_.get_function_pointer("RFmxBT_WaitForAcquisitionComplete"));
+  function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_.get_function_pointer("RFmxBT_WaitForMeasurementComplete"));
 }
 
 NiRFmxBTLibrary::~NiRFmxBTLibrary()
@@ -34,6 +172,618 @@ NiRFmxBTLibrary::~NiRFmxBTLibrary()
   return shared_library_.function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
+}
+
+int32 NiRFmxBTLibrary::ACPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.ACPCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPCfgAveraging.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#else
+  return function_pointers_.ACPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType)
+{
+  if (!function_pointers_.ACPCfgBurstSynchronizationType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPCfgBurstSynchronizationType.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+#else
+  return function_pointers_.ACPCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPCfgNumberOfOffsets(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfOffsets)
+{
+  if (!function_pointers_.ACPCfgNumberOfOffsets) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPCfgNumberOfOffsets.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPCfgNumberOfOffsets(instrumentHandle, selectorString, numberOfOffsets);
+#else
+  return function_pointers_.ACPCfgNumberOfOffsets(instrumentHandle, selectorString, numberOfOffsets);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPCfgOffsetChannelMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 offsetChannelMode)
+{
+  if (!function_pointers_.ACPCfgOffsetChannelMode) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPCfgOffsetChannelMode.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPCfgOffsetChannelMode(instrumentHandle, selectorString, offsetChannelMode);
+#else
+  return function_pointers_.ACPCfgOffsetChannelMode(instrumentHandle, selectorString, offsetChannelMode);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPFetchAbsolutePowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 absolutePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchAbsolutePowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchAbsolutePowerTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPFetchAbsolutePowerTrace(instrumentHandle, selectorString, timeout, x0, dx, absolutePower, arraySize, actualArraySize);
+#else
+  return function_pointers_.ACPFetchAbsolutePowerTrace(instrumentHandle, selectorString, timeout, x0, dx, absolutePower, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPFetchMaskTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 limitWithExceptionMask[], float32 limitWithoutExceptionMask[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchMaskTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchMaskTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPFetchMaskTrace(instrumentHandle, selectorString, timeout, x0, dx, limitWithExceptionMask, limitWithoutExceptionMask, arraySize, actualArraySize);
+#else
+  return function_pointers_.ACPFetchMaskTrace(instrumentHandle, selectorString, timeout, x0, dx, limitWithExceptionMask, limitWithoutExceptionMask, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
+{
+  if (!function_pointers_.ACPFetchMeasurementStatus) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchMeasurementStatus.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
+#else
+  return function_pointers_.ACPFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPFetchOffsetMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lowerAbsolutePower, float64* upperAbsolutePower, float64* lowerRelativePower, float64* upperRelativePower, float64* lowerMargin, float64* upperMargin)
+{
+  if (!function_pointers_.ACPFetchOffsetMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchOffsetMeasurement.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPFetchOffsetMeasurement(instrumentHandle, selectorString, timeout, lowerAbsolutePower, upperAbsolutePower, lowerRelativePower, upperRelativePower, lowerMargin, upperMargin);
+#else
+  return function_pointers_.ACPFetchOffsetMeasurement(instrumentHandle, selectorString, timeout, lowerAbsolutePower, upperAbsolutePower, lowerRelativePower, upperRelativePower, lowerMargin, upperMargin);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPFetchOffsetMeasurementArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 lowerAbsolutePower[], float64 upperAbsolutePower[], float64 lowerRelativePower[], float64 upperRelativePower[], float64 lowerMargin[], float64 upperMargin[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchOffsetMeasurementArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchOffsetMeasurementArray.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPFetchOffsetMeasurementArray(instrumentHandle, selectorString, timeout, lowerAbsolutePower, upperAbsolutePower, lowerRelativePower, upperRelativePower, lowerMargin, upperMargin, arraySize, actualArraySize);
+#else
+  return function_pointers_.ACPFetchOffsetMeasurementArray(instrumentHandle, selectorString, timeout, lowerAbsolutePower, upperAbsolutePower, lowerRelativePower, upperRelativePower, lowerMargin, upperMargin, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPFetchReferenceChannelPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* referenceChannelPower)
+{
+  if (!function_pointers_.ACPFetchReferenceChannelPower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchReferenceChannelPower.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPFetchReferenceChannelPower(instrumentHandle, selectorString, timeout, referenceChannelPower);
+#else
+  return function_pointers_.ACPFetchReferenceChannelPower(instrumentHandle, selectorString, timeout, referenceChannelPower);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ACPFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ACPFetchSpectrum.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ACPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+#else
+  return function_pointers_.ACPFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.AbortMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AbortMeasurements.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_AbortMeasurements(instrumentHandle, selectorString);
+#else
+  return function_pointers_.AbortMeasurements(instrumentHandle, selectorString);
+#endif
+}
+
+int32 NiRFmxBTLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1Waveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AnalyzeIQ1Waveform.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+#else
+  return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+#endif
+}
+
+int32 NiRFmxBTLibrary::AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  if (!function_pointers_.AutoDetectSignal) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AutoDetectSignal.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_AutoDetectSignal(instrumentHandle, selectorString, timeout);
+#else
+  return function_pointers_.AutoDetectSignal(instrumentHandle, selectorString, timeout);
+#endif
+}
+
+int32 NiRFmxBTLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel)
+{
+  if (!function_pointers_.AutoLevel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AutoLevel.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_AutoLevel(instrumentHandle, selectorString, measurementInterval, referenceLevel);
+#else
+  return function_pointers_.AutoLevel(instrumentHandle, selectorString, measurementInterval, referenceLevel);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildBandwidthPartString(char selectorString[], int32 bandwidthPartNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildBandwidthPartString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildBandwidthPartString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildBandwidthPartString(selectorString, bandwidthPartNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildBandwidthPartString(selectorString, bandwidthPartNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildCORESETClusterString(char selectorString[], int32 coresetClusterNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildCORESETClusterString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildCORESETClusterString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildCORESETClusterString(selectorString, coresetClusterNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildCORESETClusterString(selectorString, coresetClusterNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildCORESETString(char selectorString[], int32 coresetNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildCORESETString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildCORESETString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildCORESETString(selectorString, coresetNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildCORESETString(selectorString, coresetNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildCarrierString(char selectorString[], int32 carrierNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildCarrierString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildCarrierString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildCarrierString(selectorString, carrierNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildCarrierString(selectorString, carrierNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildListStepString(char listName[], char resultName[], int32 stepNumber, int32 selectorStringLength, char selectorString[])
+{
+  if (!function_pointers_.BuildListStepString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildListStepString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildListStepString(listName, resultName, stepNumber, selectorStringLength, selectorString);
+#else
+  return function_pointers_.BuildListStepString(listName, resultName, stepNumber, selectorStringLength, selectorString);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildListString(char listName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  if (!function_pointers_.BuildListString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildListString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildListString(listName, resultName, selectorStringLength, selectorString);
+#else
+  return function_pointers_.BuildListString(listName, resultName, selectorStringLength, selectorString);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildOffsetString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildOffsetString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildOffsetString(selectorString, offsetNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildPDCCHString(char selectorString[], int32 pdcchNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildPDCCHString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPDCCHString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildPDCCHString(selectorString, pdcchNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildPDCCHString(selectorString, pdcchNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildPDSCHClusterString(char selectorString[], int32 pdschClusterNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildPDSCHClusterString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPDSCHClusterString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildPDSCHClusterString(selectorString, pdschClusterNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildPDSCHClusterString(selectorString, pdschClusterNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildPDSCHString(char selectorString[], int32 pdschNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildPDSCHString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPDSCHString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildPDSCHString(selectorString, pdschNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildPDSCHString(selectorString, pdschNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildPUSCHClusterString(char selectorString[], int32 puschClusterNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildPUSCHClusterString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPUSCHClusterString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildPUSCHClusterString(selectorString, puschClusterNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildPUSCHClusterString(selectorString, puschClusterNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildPUSCHString(char selectorString[], int32 puschNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildPUSCHString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPUSCHString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildPUSCHString(selectorString, puschNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildPUSCHString(selectorString, puschNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
+{
+  if (!function_pointers_.BuildSignalString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildSignalString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
+#else
+  return function_pointers_.BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildSubblockString(char selectorString[], int32 subblockNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildSubblockString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildSubblockString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildSubblockString(selectorString, subblockNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildSubblockString(selectorString, subblockNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::BuildUserString(char selectorString[], int32 userNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildUserString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildUserString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildUserString(selectorString, userNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildUserString(selectorString, userNumber, selectorStringOutLength, selectorStringOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgChannelNumber(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 channelNumber)
+{
+  if (!function_pointers_.CfgChannelNumber) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgChannelNumber.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgChannelNumber(instrumentHandle, selectorString, channelNumber);
+#else
+  return function_pointers_.CfgChannelNumber(instrumentHandle, selectorString, channelNumber);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgDataRate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dataRate)
+{
+  if (!function_pointers_.CfgDataRate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgDataRate.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgDataRate(instrumentHandle, selectorString, dataRate);
+#else
+  return function_pointers_.CfgDataRate(instrumentHandle, selectorString, dataRate);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgDigitalEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgDigitalEdgeTrigger.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
+#else
+  return function_pointers_.CfgDigitalEdgeTrigger(instrumentHandle, selectorString, digitalEdgeSource, digitalEdge, triggerDelay, enableTrigger);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgExternalAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 externalAttenuation)
+{
+  if (!function_pointers_.CfgExternalAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgExternalAttenuation.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
+#else
+  return function_pointers_.CfgExternalAttenuation(instrumentHandle, selectorString, externalAttenuation);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency)
+{
+  if (!function_pointers_.CfgFrequency) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgFrequency.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgFrequency(instrumentHandle, selectorString, centerFrequency);
+#else
+  return function_pointers_.CfgFrequency(instrumentHandle, selectorString, centerFrequency);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgFrequencyChannelNumber(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 standard, int32 channelNumber)
+{
+  if (!function_pointers_.CfgFrequencyChannelNumber) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgFrequencyChannelNumber.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgFrequencyChannelNumber(instrumentHandle, selectorString, standard, channelNumber);
+#else
+  return function_pointers_.CfgFrequencyChannelNumber(instrumentHandle, selectorString, standard, channelNumber);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgFrequencyReference(niRFmxInstrHandle instrumentHandle, char channelName[], char frequencyReferenceSource[], float64 frequencyReferenceFrequency)
+{
+  if (!function_pointers_.CfgFrequencyReference) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgFrequencyReference.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+#else
+  return function_pointers_.CfgFrequencyReference(instrumentHandle, channelName, frequencyReferenceSource, frequencyReferenceFrequency);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgIQPowerEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char iqPowerEdgeSource[], int32 iqPowerEdgeSlope, float64 iqPowerEdgeLevel, float64 triggerDelay, int32 triggerMinQuietTimeMode, float64 triggerMinQuietTimeDuration, int32 iqPowerEdgeLevelType, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgIQPowerEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgIQPowerEdgeTrigger.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, triggerMinQuietTimeMode, triggerMinQuietTimeDuration, iqPowerEdgeLevelType, enableTrigger);
+#else
+  return function_pointers_.CfgIQPowerEdgeTrigger(instrumentHandle, selectorString, iqPowerEdgeSource, iqPowerEdgeSlope, iqPowerEdgeLevel, triggerDelay, triggerMinQuietTimeMode, triggerMinQuietTimeDuration, iqPowerEdgeLevelType, enableTrigger);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgLEDirectionFinding(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 directionFindingMode, float64 cteLength, float64 cteSlotDuration)
+{
+  if (!function_pointers_.CfgLEDirectionFinding) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgLEDirectionFinding.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgLEDirectionFinding(instrumentHandle, selectorString, directionFindingMode, cteLength, cteSlotDuration);
+#else
+  return function_pointers_.CfgLEDirectionFinding(instrumentHandle, selectorString, directionFindingMode, cteLength, cteSlotDuration);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue)
+{
+  if (!function_pointers_.CfgMechanicalAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgMechanicalAttenuation.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+#else
+  return function_pointers_.CfgMechanicalAttenuation(instrumentHandle, channelName, mechanicalAttenuationAuto, mechanicalAttenuationValue);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgPacketType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 packetType)
+{
+  if (!function_pointers_.CfgPacketType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgPacketType.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgPacketType(instrumentHandle, selectorString, packetType);
+#else
+  return function_pointers_.CfgPacketType(instrumentHandle, selectorString, packetType);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgPayloadBitPattern(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 payloadBitPattern)
+{
+  if (!function_pointers_.CfgPayloadBitPattern) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgPayloadBitPattern.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgPayloadBitPattern(instrumentHandle, selectorString, payloadBitPattern);
+#else
+  return function_pointers_.CfgPayloadBitPattern(instrumentHandle, selectorString, payloadBitPattern);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgPayloadLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 payloadLengthMode, int32 payloadLength)
+{
+  if (!function_pointers_.CfgPayloadLength) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgPayloadLength.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgPayloadLength(instrumentHandle, selectorString, payloadLengthMode, payloadLength);
+#else
+  return function_pointers_.CfgPayloadLength(instrumentHandle, selectorString, payloadLengthMode, payloadLength);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgRF(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency, float64 referenceLevel, float64 externalAttenuation)
+{
+  if (!function_pointers_.CfgRF) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgRF.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgRF(instrumentHandle, selectorString, centerFrequency, referenceLevel, externalAttenuation);
+#else
+  return function_pointers_.CfgRF(instrumentHandle, selectorString, centerFrequency, referenceLevel, externalAttenuation);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue)
+{
+  if (!function_pointers_.CfgRFAttenuation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgRFAttenuation.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+#else
+  return function_pointers_.CfgRFAttenuation(instrumentHandle, channelName, rfAttenuationAuto, rfAttenuationValue);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel)
+{
+  if (!function_pointers_.CfgReferenceLevel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgReferenceLevel.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
+#else
+  return function_pointers_.CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)
+{
+  if (!function_pointers_.CfgSoftwareEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CfgSoftwareEdgeTrigger.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
+#else
+  return function_pointers_.CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone)
+{
+  if (!function_pointers_.CheckMeasurementStatus) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CheckMeasurementStatus.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CheckMeasurementStatus(instrumentHandle, selectorString, isDone);
+#else
+  return function_pointers_.CheckMeasurementStatus(instrumentHandle, selectorString, isDone);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ClearAllNamedResults(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearAllNamedResults) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ClearAllNamedResults.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ClearAllNamedResults(instrumentHandle, selectorString);
+#else
+  return function_pointers_.ClearAllNamedResults(instrumentHandle, selectorString);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ClearNamedResult(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ClearNamedResult) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ClearNamedResult.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ClearNamedResult(instrumentHandle, selectorString);
+#else
+  return function_pointers_.ClearNamedResult(instrumentHandle, selectorString);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CloneSignalConfiguration(niRFmxInstrHandle instrumentHandle, char oldSignalName[], char newSignalName[])
+{
+  if (!function_pointers_.CloneSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CloneSignalConfiguration.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
+#else
+  return function_pointers_.CloneSignalConfiguration(instrumentHandle, oldSignalName, newSignalName);
+#endif
 }
 
 int32 NiRFmxBTLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy)
@@ -48,6 +798,378 @@ int32 NiRFmxBTLibrary::Close(niRFmxInstrHandle instrumentHandle, int32 forceDest
 #endif
 }
 
+int32 NiRFmxBTLibrary::Commit(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.Commit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_Commit.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_Commit(instrumentHandle, selectorString);
+#else
+  return function_pointers_.Commit(instrumentHandle, selectorString);
+#endif
+}
+
+int32 NiRFmxBTLibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.CreateSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_CreateSignalConfiguration.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_CreateSignalConfiguration(instrumentHandle, signalName);
+#else
+  return function_pointers_.CreateSignalConfiguration(instrumentHandle, signalName);
+#endif
+}
+
+int32 NiRFmxBTLibrary::DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
+{
+  if (!function_pointers_.DeleteSignalConfiguration) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_DeleteSignalConfiguration.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_DeleteSignalConfiguration(instrumentHandle, signalName);
+#else
+  return function_pointers_.DeleteSignalConfiguration(instrumentHandle, signalName);
+#endif
+}
+
+int32 NiRFmxBTLibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.DisableTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_DisableTrigger.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_DisableTrigger(instrumentHandle, selectorString);
+#else
+  return function_pointers_.DisableTrigger(instrumentHandle, selectorString);
+#endif
+}
+
+int32 NiRFmxBTLibrary::FrequencyRangeCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.FrequencyRangeCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_FrequencyRangeCfgAveraging.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_FrequencyRangeCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#else
+  return function_pointers_.FrequencyRangeCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#endif
+}
+
+int32 NiRFmxBTLibrary::FrequencyRangeCfgSpan(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 span)
+{
+  if (!function_pointers_.FrequencyRangeCfgSpan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_FrequencyRangeCfgSpan.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_FrequencyRangeCfgSpan(instrumentHandle, selectorString, span);
+#else
+  return function_pointers_.FrequencyRangeCfgSpan(instrumentHandle, selectorString, span);
+#endif
+}
+
+int32 NiRFmxBTLibrary::FrequencyRangeFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* highFrequency, float64* lowFrequency)
+{
+  if (!function_pointers_.FrequencyRangeFetchMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_FrequencyRangeFetchMeasurement.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_FrequencyRangeFetchMeasurement(instrumentHandle, selectorString, timeout, highFrequency, lowFrequency);
+#else
+  return function_pointers_.FrequencyRangeFetchMeasurement(instrumentHandle, selectorString, timeout, highFrequency, lowFrequency);
+#endif
+}
+
+int32 NiRFmxBTLibrary::FrequencyRangeFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FrequencyRangeFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_FrequencyRangeFetchSpectrum.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_FrequencyRangeFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+#else
+  return function_pointers_.FrequencyRangeFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAllNamedResultNames(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultNames[], int32 resultNamesBufferSize, int32* actualResultNamesSize, int32* defaultResultExists)
+{
+  if (!function_pointers_.GetAllNamedResultNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAllNamedResultNames.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
+#else
+  return function_pointers_.GetAllNamedResultNames(instrumentHandle, selectorString, resultNames, resultNamesBufferSize, actualResultNamesSize, defaultResultExists);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32* attrVal)
+{
+  if (!function_pointers_.GetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeF32.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.GetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeF32Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64* attrVal)
+{
+  if (!function_pointers_.GetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeF64.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.GetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeF64Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16* attrVal)
+{
+  if (!function_pointers_.GetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI16.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.GetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32* attrVal)
+{
+  if (!function_pointers_.GetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI32.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.GetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI32Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64* attrVal)
+{
+  if (!function_pointers_.GetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI64.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.GetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI64Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8* attrVal)
+{
+  if (!function_pointers_.GetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI8.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.GetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeI8Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeNIComplexDoubleArray.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeNIComplexSingleArray.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 arraySize, char attrVal[])
+{
+  if (!function_pointers_.GetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
+#else
+  return function_pointers_.GetAttributeString(instrumentHandle, selectorString, attributeID, arraySize, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16* attrVal)
+{
+  if (!function_pointers_.GetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU16.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.GetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32* attrVal)
+{
+  if (!function_pointers_.GetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU32.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.GetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU32Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU64Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8* attrVal)
+{
+  if (!function_pointers_.GetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU8.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.GetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.GetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetAttributeU8Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#else
+  return function_pointers_.GetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetError) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetError.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+#else
+  return function_pointers_.GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+#endif
+}
+
+int32 NiRFmxBTLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetErrorString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_GetErrorString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+#else
+  return function_pointers_.GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+#endif
+}
+
 int32 NiRFmxBTLibrary::Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession)
 {
   if (!function_pointers_.Initialize) {
@@ -57,6 +1179,678 @@ int32 NiRFmxBTLibrary::Initialize(char resourceName[], char optionString[], niRF
   return RFmxBT_Initialize(resourceName, optionString, handleOut, isNewSession);
 #else
   return function_pointers_.Initialize(resourceName, optionString, handleOut, isNewSession);
+#endif
+}
+
+int32 NiRFmxBTLibrary::InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut)
+{
+  if (!function_pointers_.InitializeFromNIRFSASession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_InitializeFromNIRFSASession.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_InitializeFromNIRFSASession(nirfsaSession, handleOut);
+#else
+  return function_pointers_.InitializeFromNIRFSASession(nirfsaSession, handleOut);
+#endif
+}
+
+int32 NiRFmxBTLibrary::Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[])
+{
+  if (!function_pointers_.Initiate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_Initiate.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_Initiate(instrumentHandle, selectorString, resultName);
+#else
+  return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.ModAccCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccCfgAveraging.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#else
+  return function_pointers_.ModAccCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType)
+{
+  if (!function_pointers_.ModAccCfgBurstSynchronizationType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccCfgBurstSynchronizationType.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+#else
+  return function_pointers_.ModAccCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchConstellationTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchConstellationTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchDEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakRMSDEVMMaximum, float64* peakDEVMMaximum, float64* ninetyninePercentDEVM)
+{
+  if (!function_pointers_.ModAccFetchDEVM) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDEVM.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchDEVM(instrumentHandle, selectorString, timeout, peakRMSDEVMMaximum, peakDEVMMaximum, ninetyninePercentDEVM);
+#else
+  return function_pointers_.ModAccFetchDEVM(instrumentHandle, selectorString, timeout, peakRMSDEVMMaximum, peakDEVMMaximum, ninetyninePercentDEVM);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchDEVMMagnitudeError(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRMSMagnitudeErrorMean, float64* peakRMSMagnitudeErrorMaximum)
+{
+  if (!function_pointers_.ModAccFetchDEVMMagnitudeError) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDEVMMagnitudeError.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchDEVMMagnitudeError(instrumentHandle, selectorString, timeout, averageRMSMagnitudeErrorMean, peakRMSMagnitudeErrorMaximum);
+#else
+  return function_pointers_.ModAccFetchDEVMMagnitudeError(instrumentHandle, selectorString, timeout, averageRMSMagnitudeErrorMean, peakRMSMagnitudeErrorMaximum);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchDEVMPerSymbolTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 devmPerSymbol[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchDEVMPerSymbolTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDEVMPerSymbolTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchDEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, devmPerSymbol, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchDEVMPerSymbolTrace(instrumentHandle, selectorString, timeout, devmPerSymbol, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchDEVMPhaseError(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averageRMSPhaseErrorMean, float64* peakRMSPhaseErrorMaximum)
+{
+  if (!function_pointers_.ModAccFetchDEVMPhaseError) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDEVMPhaseError.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchDEVMPhaseError(instrumentHandle, selectorString, timeout, averageRMSPhaseErrorMean, peakRMSPhaseErrorMaximum);
+#else
+  return function_pointers_.ModAccFetchDEVMPhaseError(instrumentHandle, selectorString, timeout, averageRMSPhaseErrorMean, peakRMSPhaseErrorMaximum);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchDemodulatedBitTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int8 demodulatedBits[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchDemodulatedBitTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDemodulatedBitTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchDemodulatedBitTrace(instrumentHandle, selectorString, timeout, demodulatedBits, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchDemodulatedBitTrace(instrumentHandle, selectorString, timeout, demodulatedBits, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchDf1(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* df1avgMaximum, float64* df1avgMinimum)
+{
+  if (!function_pointers_.ModAccFetchDf1) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDf1.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchDf1(instrumentHandle, selectorString, timeout, df1avgMaximum, df1avgMinimum);
+#else
+  return function_pointers_.ModAccFetchDf1(instrumentHandle, selectorString, timeout, df1avgMaximum, df1avgMinimum);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchDf1maxTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 df1max[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchDf1maxTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDf1maxTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchDf1maxTrace(instrumentHandle, selectorString, timeout, time, df1max, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchDf1maxTrace(instrumentHandle, selectorString, timeout, time, df1max, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchDf2(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* df2avgMinimum, float64* percentageOfSymbolsAboveDf2maxThreshold)
+{
+  if (!function_pointers_.ModAccFetchDf2) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDf2.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchDf2(instrumentHandle, selectorString, timeout, df2avgMinimum, percentageOfSymbolsAboveDf2maxThreshold);
+#else
+  return function_pointers_.ModAccFetchDf2(instrumentHandle, selectorString, timeout, df2avgMinimum, percentageOfSymbolsAboveDf2maxThreshold);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchDf2maxTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 df2max[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchDf2maxTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchDf2maxTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchDf2maxTrace(instrumentHandle, selectorString, timeout, time, df2max, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchDf2maxTrace(instrumentHandle, selectorString, timeout, time, df2max, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchFrequencyErrorBR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* initialFrequencyErrorMaximum, float64* peakFrequencyDriftMaximum, float64* peakFrequencyDriftRateMaximum)
+{
+  if (!function_pointers_.ModAccFetchFrequencyErrorBR) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorBR.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchFrequencyErrorBR(instrumentHandle, selectorString, timeout, initialFrequencyErrorMaximum, peakFrequencyDriftMaximum, peakFrequencyDriftRateMaximum);
+#else
+  return function_pointers_.ModAccFetchFrequencyErrorBR(instrumentHandle, selectorString, timeout, initialFrequencyErrorMaximum, peakFrequencyDriftMaximum, peakFrequencyDriftRateMaximum);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchFrequencyErrorEDR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* headerFrequencyErrorWiMaximum, float64* peakFrequencyErrorWiPlusW0Maximum, float64* peakFrequencyErrorW0Maximum)
+{
+  if (!function_pointers_.ModAccFetchFrequencyErrorEDR) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorEDR.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchFrequencyErrorEDR(instrumentHandle, selectorString, timeout, headerFrequencyErrorWiMaximum, peakFrequencyErrorWiPlusW0Maximum, peakFrequencyErrorW0Maximum);
+#else
+  return function_pointers_.ModAccFetchFrequencyErrorEDR(instrumentHandle, selectorString, timeout, headerFrequencyErrorWiMaximum, peakFrequencyErrorWiPlusW0Maximum, peakFrequencyErrorW0Maximum);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchFrequencyErrorLE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakFrequencyErrorMaximum, float64* initialFrequencyDriftMaximum, float64* peakFrequencyDriftMaximum, float64* peakFrequencyDriftRateMaximum)
+{
+  if (!function_pointers_.ModAccFetchFrequencyErrorLE) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorLE.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchFrequencyErrorLE(instrumentHandle, selectorString, timeout, peakFrequencyErrorMaximum, initialFrequencyDriftMaximum, peakFrequencyDriftMaximum, peakFrequencyDriftRateMaximum);
+#else
+  return function_pointers_.ModAccFetchFrequencyErrorLE(instrumentHandle, selectorString, timeout, peakFrequencyErrorMaximum, initialFrequencyDriftMaximum, peakFrequencyDriftMaximum, peakFrequencyDriftRateMaximum);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchFrequencyErrorTraceBR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 frequencyError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchFrequencyErrorTraceBR) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorTraceBR.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchFrequencyErrorTraceBR(instrumentHandle, selectorString, timeout, time, frequencyError, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchFrequencyErrorTraceBR(instrumentHandle, selectorString, timeout, time, frequencyError, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchFrequencyErrorTraceLE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 frequencyError[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchFrequencyErrorTraceLE) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorTraceLE.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchFrequencyErrorTraceLE(instrumentHandle, selectorString, timeout, time, frequencyError, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchFrequencyErrorTraceLE(instrumentHandle, selectorString, timeout, time, frequencyError, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchFrequencyErrorWiPlusW0TraceEDR(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 time[], float32 frequencyErrorWiPlusW0[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchFrequencyErrorWiPlusW0TraceEDR) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyErrorWiPlusW0TraceEDR.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchFrequencyErrorWiPlusW0TraceEDR(instrumentHandle, selectorString, timeout, time, frequencyErrorWiPlusW0, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchFrequencyErrorWiPlusW0TraceEDR(instrumentHandle, selectorString, timeout, time, frequencyErrorWiPlusW0, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchFrequencyTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequency[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchFrequencyTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchFrequencyTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchFrequencyTrace(instrumentHandle, selectorString, timeout, x0, dx, frequency, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchFrequencyTrace(instrumentHandle, selectorString, timeout, x0, dx, frequency, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ModAccFetchRMSDEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 rmsdevm[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchRMSDEVMTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchRMSDEVMTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ModAccFetchRMSDEVMTrace(instrumentHandle, selectorString, timeout, rmsdevm, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchRMSDEVMTrace(instrumentHandle, selectorString, timeout, rmsdevm, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)
+{
+  if (!function_pointers_.ResetAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ResetAttribute.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ResetAttribute(instrumentHandle, selectorString, attributeID);
+#else
+  return function_pointers_.ResetAttribute(instrumentHandle, selectorString, attributeID);
+#endif
+}
+
+int32 NiRFmxBTLibrary::ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.ResetToDefault) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ResetToDefault.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_ResetToDefault(instrumentHandle, selectorString);
+#else
+  return function_pointers_.ResetToDefault(instrumentHandle, selectorString);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SelectMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[], uInt32 measurements, int32 enableAllTraces)
+{
+  if (!function_pointers_.SelectMeasurements) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SelectMeasurements.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
+#else
+  return function_pointers_.SelectMeasurements(instrumentHandle, selectorString, measurements, enableAllTraces);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SendSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle)
+{
+  if (!function_pointers_.SendSoftwareEdgeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SendSoftwareEdgeTrigger.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SendSoftwareEdgeTrigger(instrumentHandle);
+#else
+  return function_pointers_.SendSoftwareEdgeTrigger(instrumentHandle);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeF32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal)
+{
+  if (!function_pointers_.SetAttributeF32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeF32.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeF32(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeF32Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeF32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeF64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal)
+{
+  if (!function_pointers_.SetAttributeF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeF64.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeF64(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeF64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, float64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeF64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeF64Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeF64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeI16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int16 attrVal)
+{
+  if (!function_pointers_.SetAttributeI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI16.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeI16(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeI32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal)
+{
+  if (!function_pointers_.SetAttributeI32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI32.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeI32(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeI32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI32Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeI32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeI64(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal)
+{
+  if (!function_pointers_.SetAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI64.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeI64(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeI64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI64Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeI64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeI8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal)
+{
+  if (!function_pointers_.SetAttributeI8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI8.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeI8(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeI8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, int8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeI8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeI8Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeI8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeNIComplexDoubleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexDouble attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexDoubleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeNIComplexDoubleArray.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeNIComplexDoubleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeNIComplexSingleArray(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, NIComplexSingle attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeNIComplexSingleArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeNIComplexSingleArray.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeNIComplexSingleArray(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeString(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, char attrVal[])
+{
+  if (!function_pointers_.SetAttributeString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeString(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeU16(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt16 attrVal)
+{
+  if (!function_pointers_.SetAttributeU16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU16.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeU16(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeU32(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal)
+{
+  if (!function_pointers_.SetAttributeU32) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU32.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeU32(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeU32Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt32 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU32Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU32Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeU32Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeU64Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt64 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU64Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU64Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeU64Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeU8(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal)
+{
+  if (!function_pointers_.SetAttributeU8) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU8.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+#else
+  return function_pointers_.SetAttributeU8(instrumentHandle, selectorString, attributeID, attrVal);
+#endif
+}
+
+int32 NiRFmxBTLibrary::SetAttributeU8Array(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID, uInt8 attrVal[], int32 arraySize)
+{
+  if (!function_pointers_.SetAttributeU8Array) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_SetAttributeU8Array.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#else
+  return function_pointers_.SetAttributeU8Array(instrumentHandle, selectorString, attributeID, attrVal, arraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::TXPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.TXPCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPCfgAveraging.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_TXPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#else
+  return function_pointers_.TXPCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#endif
+}
+
+int32 NiRFmxBTLibrary::TXPCfgBurstSynchronizationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 burstSynchronizationType)
+{
+  if (!function_pointers_.TXPCfgBurstSynchronizationType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPCfgBurstSynchronizationType.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_TXPCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+#else
+  return function_pointers_.TXPCfgBurstSynchronizationType(instrumentHandle, selectorString, burstSynchronizationType);
+#endif
+}
+
+int32 NiRFmxBTLibrary::TXPFetchEDRPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* edrgfskAveragePowerMean, float64* edrdpskAveragePowerMean, float64* edr_DPSK_GFSKAveragePowerRatioMean)
+{
+  if (!function_pointers_.TXPFetchEDRPowers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchEDRPowers.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_TXPFetchEDRPowers(instrumentHandle, selectorString, timeout, edrgfskAveragePowerMean, edrdpskAveragePowerMean, edr_DPSK_GFSKAveragePowerRatioMean);
+#else
+  return function_pointers_.TXPFetchEDRPowers(instrumentHandle, selectorString, timeout, edrgfskAveragePowerMean, edrdpskAveragePowerMean, edr_DPSK_GFSKAveragePowerRatioMean);
+#endif
+}
+
+int32 NiRFmxBTLibrary::TXPFetchLECTEReferencePeriodPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* referencePeriodAveragePowerMean, float64* referencePeriodPeakAbsolutePowerDeviationMaximum)
+{
+  if (!function_pointers_.TXPFetchLECTEReferencePeriodPowers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchLECTEReferencePeriodPowers.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_TXPFetchLECTEReferencePeriodPowers(instrumentHandle, selectorString, timeout, referencePeriodAveragePowerMean, referencePeriodPeakAbsolutePowerDeviationMaximum);
+#else
+  return function_pointers_.TXPFetchLECTEReferencePeriodPowers(instrumentHandle, selectorString, timeout, referencePeriodAveragePowerMean, referencePeriodPeakAbsolutePowerDeviationMaximum);
+#endif
+}
+
+int32 NiRFmxBTLibrary::TXPFetchLECTETransmitSlotPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* transmitSlotAveragePowerMean, float64* transmitSlotPeakAbsolutePowerDeviationMaximum)
+{
+  if (!function_pointers_.TXPFetchLECTETransmitSlotPowers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchLECTETransmitSlotPowers.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_TXPFetchLECTETransmitSlotPowers(instrumentHandle, selectorString, timeout, transmitSlotAveragePowerMean, transmitSlotPeakAbsolutePowerDeviationMaximum);
+#else
+  return function_pointers_.TXPFetchLECTETransmitSlotPowers(instrumentHandle, selectorString, timeout, transmitSlotAveragePowerMean, transmitSlotPeakAbsolutePowerDeviationMaximum);
+#endif
+}
+
+int32 NiRFmxBTLibrary::TXPFetchLECTETransmitSlotPowersArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 transmitSlotAveragePowerMean[], float64 transmitSlotPeakAbsolutePowerDeviationMaximum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.TXPFetchLECTETransmitSlotPowersArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchLECTETransmitSlotPowersArray.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_TXPFetchLECTETransmitSlotPowersArray(instrumentHandle, selectorString, timeout, transmitSlotAveragePowerMean, transmitSlotPeakAbsolutePowerDeviationMaximum, arraySize, actualArraySize);
+#else
+  return function_pointers_.TXPFetchLECTETransmitSlotPowersArray(instrumentHandle, selectorString, timeout, transmitSlotAveragePowerMean, transmitSlotPeakAbsolutePowerDeviationMaximum, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.TXPFetchPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchPowerTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_TXPFetchPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, power, arraySize, actualArraySize);
+#else
+  return function_pointers_.TXPFetchPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, power, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxBTLibrary::TXPFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* averagePowerMaximum, float64* averagePowerMinimum, float64* peakToAveragePowerRatioMaximum)
+{
+  if (!function_pointers_.TXPFetchPowers) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_TXPFetchPowers.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_TXPFetchPowers(instrumentHandle, selectorString, timeout, averagePowerMean, averagePowerMaximum, averagePowerMinimum, peakToAveragePowerRatioMaximum);
+#else
+  return function_pointers_.TXPFetchPowers(instrumentHandle, selectorString, timeout, averagePowerMean, averagePowerMaximum, averagePowerMinimum, peakToAveragePowerRatioMaximum);
+#endif
+}
+
+int32 NiRFmxBTLibrary::WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout)
+{
+  if (!function_pointers_.WaitForAcquisitionComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_WaitForAcquisitionComplete.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_WaitForAcquisitionComplete(instrumentHandle, timeout);
+#else
+  return function_pointers_.WaitForAcquisitionComplete(instrumentHandle, timeout);
+#endif
+}
+
+int32 NiRFmxBTLibrary::WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout)
+{
+  if (!function_pointers_.WaitForMeasurementComplete) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_WaitForMeasurementComplete.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
+#else
+  return function_pointers_.WaitForMeasurementComplete(instrumentHandle, selectorString, timeout);
 #endif
 }
 
