@@ -18,7 +18,8 @@ class SessionResourceRepository {
   typedef std::function<void(TResourceHandle)> CleanupSessionFunc;
 
   SessionResourceRepository(SessionRepository* session_repository)
-      : session_repository_(session_repository)
+      : session_repository_(session_repository),
+        resource_map_(std::make_shared<ResourceMap>())
   {
   }
 
@@ -26,7 +27,8 @@ class SessionResourceRepository {
       const std::string& session_name,
       InitFunc init_func,
       CleanupSessionFunc cleanup_func,
-      uint32_t& session_id);
+      uint32_t& session_id,
+      bool include_in_reverse_lookup = true);
 
   TResourceHandle access_session(uint32_t session_id, const std::string& session_name) const;
   uint32_t access_session_id(uint32_t session_id, const std::string& session_name) const;
@@ -55,7 +57,7 @@ class SessionResourceRepository {
   // A thread-safe bi-directional map of session_id to TResourceHandle.
   class ResourceMap {
    public:
-    void add(uint32_t session_id, TResourceHandle handle);
+    void add(uint32_t session_id, TResourceHandle handle, bool include_in_reverse_lookup);
 
     bool contains(uint32_t session_id) const;
     TResourceHandle get_handle(uint32_t session_id) const;
@@ -74,7 +76,8 @@ class SessionResourceRepository {
   };
 
   SessionRepository* session_repository_;
-  ResourceMap resource_map_;
+  // shared_ptr to allow sharing ownership with cleanup delegate in register_dependent_session.
+  std::shared_ptr<ResourceMap> resource_map_;
 };
 
 template <typename TResourceHandle>
@@ -82,7 +85,8 @@ int SessionResourceRepository<TResourceHandle>::add_session(
     const std::string& session_name,
     InitFunc init_func,
     CleanupSessionFunc cleanup_func,
-    uint32_t& session_id)
+    uint32_t& session_id,
+    bool include_in_reverse_lookup)
 {
   uint32_t session_from_repository = 0;
 
@@ -92,7 +96,7 @@ int SessionResourceRepository<TResourceHandle>::add_session(
       [&]() { return session_creator.init_resource_handle(); },
       // By val capture to keep cleanup_func in memory.
       [=](uint32_t id) {
-        auto handle = resource_map_.remove_session_id(id);
+        auto handle = resource_map_->remove_session_id(id);
         return cleanup_func(handle);
       },
       session_from_repository);
@@ -103,12 +107,12 @@ int SessionResourceRepository<TResourceHandle>::add_session(
   }
 
   if (session_creator.added_new_handle_) {
-    resource_map_.add(session_from_repository, session_creator.handle_);
+    resource_map_->add(session_from_repository, session_creator.handle_, include_in_reverse_lookup);
   }
 
   // session_name resolves to a session in a different resource repository.
   // Report error.
-  if (!resource_map_.contains(session_from_repository)) {
+  if (!resource_map_->contains(session_from_repository)) {
     session_id = 0;
     const int kError_InvalidArg = 1;
     return kError_InvalidArg;
@@ -130,11 +134,12 @@ int SessionResourceRepository<TResourceHandle>::add_dependent_session(
   // cleanup code will be executed when the initiating session is closed.
   // We're only responsible for cleaning up the map structures.
   auto status = add_session(
-      session_name, init_func, [](uint32_t id) {}, session_id);
+      session_name, init_func, [](uint32_t id) {}, session_id, /* include_in_reverse_lookup = */ false);
+  auto resource_map = resource_map_;
   session_repository_->register_dependent_session(
       initiating_session,
       session_id,
-      [session_id, this]() { resource_map_.remove_session_id(session_id); });
+      [session_id, resource_map]() { resource_map->remove_session_id(session_id); });
   return status;
 }
 
@@ -142,7 +147,7 @@ template <typename TResourceHandle>
 TResourceHandle SessionResourceRepository<TResourceHandle>::access_session(uint32_t session_id, const std::string& session_name) const
 {
   auto id = session_repository_->access_session(session_id, session_name);
-  return resource_map_.get_handle(id);
+  return resource_map_->get_handle(id);
 }
 
 template <typename TResourceHandle>
@@ -154,7 +159,7 @@ uint32_t SessionResourceRepository<TResourceHandle>::access_session_id(uint32_t 
 template <typename TResourceHandle>
 uint32_t SessionResourceRepository<TResourceHandle>::resolve_session_id(TResourceHandle handle) const
 {
-  return resource_map_.get_session_id(handle);
+  return resource_map_->get_session_id(handle);
 }
 
 template <typename TResourceHandle>
@@ -162,7 +167,7 @@ void SessionResourceRepository<TResourceHandle>::remove_session(uint32_t session
 {
   auto id = session_repository_->access_session(session_id, session_name);
   if (id) {
-    resource_map_.remove_session_id(id);
+    resource_map_->remove_session_id(id);
     session_repository_->remove_session(id);
   }
 }
@@ -183,11 +188,13 @@ uint32_t SessionResourceRepository<TResourceHandle>::SessionResourceCreator::ini
 }
 
 template <typename TResourceHandle>
-void SessionResourceRepository<TResourceHandle>::ResourceMap::add(uint32_t session_id, TResourceHandle handle)
+void SessionResourceRepository<TResourceHandle>::ResourceMap::add(uint32_t session_id, TResourceHandle handle, bool include_in_reverse_lookup)
 {
   MapLock lock(map_mutex_);
   map_[session_id] = handle;
-  reverse_map_[handle] = session_id;
+  if (include_in_reverse_lookup) {
+    reverse_map_[handle] = session_id;
+  }
 }
 
 template <typename TResourceHandle>
