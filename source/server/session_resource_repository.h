@@ -91,12 +91,13 @@ int SessionResourceRepository<TResourceHandle>::add_session(
   uint32_t session_from_repository = 0;
 
   auto session_creator = SessionResourceCreator(init_func);
+  auto resource_map = resource_map_;
   auto status = session_repository_->add_session(
       session_name,
       [&]() { return session_creator.init_resource_handle(); },
       // By val capture to keep cleanup_func in memory.
-      [=](uint32_t id) {
-        auto handle = resource_map_->remove_session_id(id);
+      [resource_map, cleanup_func](uint32_t id) {
+        auto handle = resource_map->remove_session_id(id);
         return cleanup_func(handle);
       },
       session_from_repository);
