@@ -1,3 +1,4 @@
+import os
 import re
 from collections import defaultdict, namedtuple
 from typing import List, NamedTuple, Optional
@@ -665,9 +666,13 @@ def os_conditional_compile_block(config):
     """For use as a mako filter.
         That wraps a block of text in #if blocks based on the config's OS support."""
     def windows_only_block_impl(text):
-        return f"""#if defined(_MSC_VER)
-{text}#endif // defined(_MSC_VER)
-"""
+        # Pure python code, by default, will convert to platform-specific linesep characters on save.
+        # But mako uses the platform-specific linesep characters from the template file in the template string. 
+        # This is balanced by the newline="" args in template_helpers, which preserve newlines from the input.
+        #
+        # We use os.linesep here for consistency with makos template strings and to ensure that we don't
+        # get a mix of CRLF and LF on windows.
+        return f"#if defined(_MSC_VER){os.linesep}{text}#endif // defined(_MSC_VER){os.linesep}"
     if windows_only:
         return lambda text : windows_only_block_impl(text)
     
