@@ -312,8 +312,8 @@ TEST(SessionResourceRepositoryTests, SessionAlreadyInResourceRepository_AddDepen
 {
   constexpr auto DUPE_SESSION_HANDLE = 1234U;
   constexpr auto INITIATING_SESSION_HANDLE = 5678U;
-  auto repository = SessionRepository{};
-  auto resource_repository = SessionResourceRepository<uint32_t>(&repository);
+  SessionRepository repository;
+  SessionResourceRepository<uint32_t> resource_repository(&repository);
   const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
   const auto primary_with_dupe_session_id = simple_add_session(resource_repository, "primary_session_with_dupe_handle", DUPE_SESSION_HANDLE);
 
@@ -330,8 +330,8 @@ TEST(SessionResourceRepositoryTests, AddDependentSession_DependentSessionIsNotRe
 {
   constexpr auto DEPENDENT_SESSION_HANDLE = 1234U;
   constexpr auto INITIATING_SESSION_HANDLE = 5678U;
-  auto repository = SessionRepository{};
-  auto resource_repository = SessionResourceRepository<uint32_t>(&repository);
+  SessionRepository repository;
+  SessionResourceRepository<uint32_t> resource_repository(&repository);
   const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
   const auto dupe_dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DEPENDENT_SESSION_HANDLE);
 
