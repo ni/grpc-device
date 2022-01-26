@@ -2,13 +2,13 @@
 * @astarche @mgumble
 
 # Owners for the build files
-/CMakeLists.txt      @SparkingSpork @astarche
-/.github/**/*.yml    @SparkingSpork @astarche
-/scripts/            @SparkingSpork @astarche
+/CMakeLists.txt      @SparkingSpork @astarche @mgumble
+/.github/**/*.yml    @SparkingSpork @astarche @mgumble
+/scripts/            @SparkingSpork @astarche @mgumble
 
 # Codegen
-/generated           @reckenro @astarche
-/source/codegen/     @reckenro @astarche
+/generated           @reckenro @astarche @mgumble
+/source/codegen/     @reckenro @astarche @mgumble
 
 # Test
-/source/tests/       @reckenro @astarche
+/source/tests/       @reckenro @astarche @mgumble
