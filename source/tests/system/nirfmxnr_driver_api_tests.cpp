@@ -44,10 +44,17 @@ class NiRFmxNRDriverApiTests : public Test {
     return stub_;
   }
 
+  void check_error(const nidevice_grpc::Session& session)
+  {
+    auto response = client::get_error(stub(), session);
+    EXPECT_EQ("", std::string(response.error_description().c_str()));
+  }
+
   template <typename TResponse>
   void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
   {
     ni::tests::system::EXPECT_SUCCESS(response);
+    check_error(session);
   }
 
   template <typename TService>
@@ -83,7 +90,7 @@ TEST_F(NiRFmxNRDriverApiTests, Init_Close_Succeeds)
   ni::tests::system::EXPECT_SUCCESS(close_response);
 }
 
-TEST_F(NiRFmxNRDriverApiTests, InitializeFromNIRFSA_SelfCalibrate_Succeeds)
+TEST_F(NiRFmxNRDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
@@ -92,7 +99,9 @@ TEST_F(NiRFmxNRDriverApiTests, InitializeFromNIRFSA_SelfCalibrate_Succeeds)
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 
-  EXPECT_SUCCESS(session, client::close(stub(), session, false));
+  auto close_response = client::close(stub(), session, 0);
+
+  ni::tests::system::EXPECT_SUCCESS(close_response);
 }
 
 }  // namespace
