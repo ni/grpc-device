@@ -79,7 +79,7 @@ TEST_F(NiRFmxBTSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesD
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.mutable_instrument()->id());
+  EXPECT_NE(0, response.instrument().id());
 }
 
 TEST_F(NiRFmxBTSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
