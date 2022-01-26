@@ -164,15 +164,15 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
   using FakeCrossDriverResourceRepository = nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>;
   nidevice_grpc::SessionRepository session_repository_;
-  std::shared_ptr<FakeResourceRepository> resource_repository_;
   std::shared_ptr<FakeCrossDriverResourceRepository> cross_driver_resource_repository_;
+  std::shared_ptr<FakeResourceRepository> resource_repository_;
   NiFakeNonIviMockLibrary library_;
   NiFakeNonIviService service_;
 
   NiFakeNonIviServiceTests(const nidevice_grpc::FeatureToggles& feature_toggles = {})
       : session_repository_(),
-        resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
         cross_driver_resource_repository_(std::make_shared<FakeCrossDriverResourceRepository>(&session_repository_)),
+        resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
         library_(),
         service_(
             &library_,
@@ -1593,6 +1593,34 @@ TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_ResetServer_RemovesBothSe
 
   EXPECT_EQ(cross_driver_resource_repository_->access_session(0, CROSS_DRIVER_SESSION_NAME), 0);
   EXPECT_EQ(resource_repository_->access_session(0, INITIATING_SESSION_NAME), 0);
+}
+
+TEST_F(NiFakeNonIviServiceTests, SessionAlreadyInCrossDriverSessionRepository_GetCrossDriverSessionForSameResourceHandle_ReverseLookupStillReturnsOriginalSession)
+{
+  constexpr auto INITIATING_DRIVER_HANDLE = 5678;
+  constexpr auto CROSS_DRIVER_HANDLE = 1234;
+  constexpr auto INITIATING_SESSION_NAME = "initiating_session";
+  constexpr auto CROSS_DRIVER_SESSION_NAME = "cross_driver_session";
+  constexpr auto ORIGINAL_NAME_FOR_CROSS_DRIVER_RESOURCE = "original_cross_driver_resource_name";
+  uint32_t original_session_id;
+  cross_driver_resource_repository_->add_session(
+      ORIGINAL_NAME_FOR_CROSS_DRIVER_RESOURCE,
+      [&]() { return std::make_tuple(0, CROSS_DRIVER_HANDLE); },
+      [](FakeCrossDriverHandle handle) {},
+      original_session_id);
+
+  const auto initiating_session_id = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
+  EXPECT_CALL(library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
+      .WillOnce(DoAll(
+          SetArgPointee<1, FakeCrossDriverHandle>(CROSS_DRIVER_HANDLE), Return(kDriverSuccess)));
+  ::grpc::ServerContext context;
+  GetCrossDriverSessionRequest request;
+  GetCrossDriverSessionResponse response;
+  request.mutable_handle()->set_name(INITIATING_SESSION_NAME);
+  request.set_session_name(CROSS_DRIVER_SESSION_NAME);
+  service_.GetCrossDriverSession(&context, &request, &response);
+
+  EXPECT_EQ(original_session_id, cross_driver_resource_repository_->resolve_session_id(CROSS_DRIVER_HANDLE));
 }
 }  // namespace unit
 }  // namespace tests

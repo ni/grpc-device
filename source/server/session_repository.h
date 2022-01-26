@@ -19,6 +19,7 @@ namespace nidevice_grpc {
 class SessionRepository {
  public:
   SessionRepository();
+  ~SessionRepository();
 
   typedef std::function<int32_t()> InitFunc;
   typedef std::function<void(uint32_t)> CleanupSessionFunc;
@@ -36,7 +37,7 @@ class SessionRepository {
       ::grpc::Status& status);
   bool is_reserved_by_client(const std::string& reservation_id, const std::string& client_id);
   bool unreserve(const std::string& reservation_id, const std::string& client_id);
-  bool reset_server();
+  bool reset_server(bool cleanup=true);
 
  private:
   struct ReservationInfo {
@@ -76,7 +77,7 @@ class SessionRepository {
 
   std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
   void clear_reservations();
-  bool close_sessions();
+  bool close_sessions(bool cleanup);
   void cleanup_session(const std::shared_ptr<SessionInfo>& session_info);
   bool release_reservation(const ReservationInfo* reservation_info);
   uint32_t next_id() { return ++_next_id; }

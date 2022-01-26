@@ -8,6 +8,16 @@ SessionRepository::SessionRepository()
 {
 }
 
+SessionRepository::~SessionRepository()
+{
+  // Do not cleanup external resources during shutdown. At this stage, all of the
+  // driver Library objects have been cleaned up so it's not safe to call them.
+  // To fix that, we'd have to change up our resource management. But right now we
+  // don't have a structured cleanup process and will let the driver figure out how
+  // to handle ctrl+c shutdown.
+  reset_server(/* cleanup_external_resources =*/false);
+}
+
 // Either returns (via session_id) an existing session with the specified name or initializes and
 // adds a new session using the init_func provided. The init_func is only called when an existing
 // session with session_name is not found. It is expected to return a tuple, where the first value
@@ -220,15 +230,15 @@ void SessionRepository::clear_reservations()
   }
 }
 
-bool SessionRepository::reset_server()
+bool SessionRepository::reset_server(bool cleanup_external_resources)
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   clear_reservations();
-  bool is_server_reset = close_sessions();
+  bool is_server_reset = close_sessions(cleanup_external_resources);
   return is_server_reset && reservations_.empty();
 }
 
-bool SessionRepository::close_sessions()
+bool SessionRepository::close_sessions(bool cleanup_external_resources)
 {
   named_sessions_.clear();
   // Copy sessions for cleanup to avoid invalidating iterators when dependent sessions
@@ -241,8 +251,10 @@ bool SessionRepository::close_sessions()
       [](const SessionMap::value_type& entry) { return entry.second; });
 
   sessions_.clear();
-  for (auto session_info : sessions_cleanup) {
-    cleanup_session(session_info);
+  if (cleanup_external_resources) {
+    for (auto session_info : sessions_cleanup) {
+      cleanup_session(session_info);
+    }
   }
   sessions_cleanup.clear();
   return named_sessions_.empty() && sessions_.empty();
