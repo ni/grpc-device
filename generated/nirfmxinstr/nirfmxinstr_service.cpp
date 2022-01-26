@@ -1756,44 +1756,6 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxInstrService::GetNIRFSASessionArray(::grpc::ServerContext* context, const GetNIRFSASessionArrayRequest* request, GetNIRFSASessionArrayResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      int32 actual_array_size {};
-      while (true) {
-        auto status = library_->GetNIRFSASessionArray(instrument, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->mutable_nirfsa_sessions()->Resize(actual_array_size, 0);
-        uInt32* nirfsa_sessions = reinterpret_cast<uInt32*>(response->mutable_nirfsa_sessions()->mutable_data());
-        auto array_size = actual_array_size;
-        status = library_->GetNIRFSASessionArray(instrument, nirfsa_sessions, array_size, &actual_array_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_nirfsa_sessions()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::GetSelfCalibrateLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalibrateLastDateAndTimeRequest* request, GetSelfCalibrateLastDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {

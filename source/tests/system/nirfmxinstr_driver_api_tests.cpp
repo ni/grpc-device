@@ -89,7 +89,7 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model)
   return client::initialize(stub, "FakeDevice", options);
 }
 
-nirfsa_grpc::InitWithOptionsResponse init_rfsa(const std::unique_ptr<nirfsa_grpc::NiRFSA::Stub>& stub, const std::string& resource_name)
+nirfsa_grpc::InitWithOptionsResponse init_rfsa(const nirfsa_client::StubPtr& stub, const std::string& resource_name)
 {
   return nirfsa_client::init_with_options(stub, resource_name, false, false, "Simulate=1, DriverSetup=Model:5663E");
 }
@@ -99,6 +99,43 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::stri
   auto response = init(stub, model);
   auto session = response.instrument();
   EXPECT_SUCCESS(response);
+  return session;
+}
+
+::grpc::Status get_rfsa_session_array(const client::StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<std::string>& session_names, GetNIRFSASessionArrayResponse& response)
+{
+  auto request = GetNIRFSASessionArrayRequest{};
+
+  for (const auto& name : session_names) {
+    request.add_session_names(name);
+  }
+  request.mutable_instrument()->CopyFrom(session);
+  ::grpc::ClientContext context;
+  // Note: this can't use the experimental::client APIs, because those omit the session name
+  // for simplicity (for most cases that we test).
+  return stub->GetNIRFSASessionArray(&context, request, &response);
+}
+
+void EXPECT_GET_RFSA_ARRAY_WRONG_NUMBER_OF_SESSIONS_ERROR(const ::grpc::Status& actual_status, size_t expected_number_of_sessions)
+{
+  EXPECT_EQ(::grpc::INVALID_ARGUMENT, actual_status.error_code());
+  std::stringstream stream;
+  stream << "Number of session_names must be zero or match actual array size (" << expected_number_of_sessions << ").";
+  EXPECT_EQ(stream.str(), actual_status.error_message());
+}
+
+nidevice_grpc::Session init_from_rfsa_session_array(const client::StubPtr& stub, const nirfsa_client::StubPtr& rfsa_stub, const std::vector<std::string>& rfsa_resource_names)
+{
+  auto rfsa_sessions = std::vector<nidevice_grpc::Session>{};
+  for (const auto& resource_name : rfsa_resource_names) {
+    auto init_rfsa_response = init_rfsa(rfsa_stub, resource_name);
+    ni::tests::system::EXPECT_SUCCESS(init_rfsa_response);
+    rfsa_sessions.push_back(init_rfsa_response.vi());
+  }
+
+  auto init_response = client::initialize_from_nirfsa_session_array(stub, rfsa_sessions);
+  auto session = init_response.instrument();
+  ni::tests::system::EXPECT_SUCCESS(init_response);
   return session;
 }
 
@@ -127,6 +164,44 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASession_SelfTest_Succeeds)
   ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_response.ni_rfsa_session()));
 }
 
+TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayAnonymous_SelfTest_Succeeds)
+{
+  auto init_response = init(stub(), PXI_5663E);
+  auto session = init_response.instrument();
+  EXPECT_SUCCESS(session, init_response);
+
+  const auto get_rfsa_response = client::get_nirfsa_session_array(stub(), session);
+  EXPECT_SUCCESS(session, get_rfsa_response);
+
+  auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
+  ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, get_rfsa_response.nirfsa_sessions()[0]));
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayNamed_SelfTest_Succeeds)
+{
+  constexpr auto RFSA_SESSION_NAME = "test_rfsa_session";
+  auto session = init_session(stub(), PXI_5663E);
+
+  auto get_rfsa_response = GetNIRFSASessionArrayResponse{};
+  const auto status = get_rfsa_session_array(stub(), session, {RFSA_SESSION_NAME}, get_rfsa_response);
+  EXPECT_SUCCESS(session, get_rfsa_response);
+
+  auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
+  auto rfsa_named_session = nidevice_grpc::Session{};
+  rfsa_named_session.set_name(RFSA_SESSION_NAME);
+  ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_named_session));
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayWithTooManyNames_ReturnsBadStatus)
+{
+  auto session = init_session(stub(), PXI_5663E);
+
+  auto get_rfsa_response = GetNIRFSASessionArrayResponse{};
+  const auto status = get_rfsa_session_array(stub(), session, {"rfsa_1", "one_too_many"}, get_rfsa_response);
+
+  EXPECT_GET_RFSA_ARRAY_WRONG_NUMBER_OF_SESSIONS_ERROR(status, 1);
+}
+
 TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSA_SelfCalibrate_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
@@ -141,16 +216,60 @@ TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSA_SelfCalibrate_Succeeds)
 
 TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSAArray_SelfCalibrate_Succeeds)
 {
-  auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
-  auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
-  auto init_rfsa_response_2 = init_rfsa(rfsa_stub, "Sim2");
-  ni::tests::system::EXPECT_SUCCESS(init_rfsa_response);
-  ni::tests::system::EXPECT_SUCCESS(init_rfsa_response_2);
-  auto init_response = client::initialize_from_nirfsa_session_array(stub(), {init_rfsa_response.vi(), init_rfsa_response_2.vi()});
-  auto session = init_response.instrument();
-  EXPECT_SUCCESS(session, init_response);
+  const auto session = init_from_rfsa_session_array(stub(), create_stub<nirfsa_grpc::NiRFSA>(), {"Sim1", "Sim2"});
 
   EXPECT_SUCCESS(session, client::self_calibrate(stub(), session, "", 0));
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSASessionArrayAnonymous_SelfTestEachSessionSucceeds)
+{
+  const auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
+  const auto session = init_from_rfsa_session_array(stub(), rfsa_stub, {"Sim1", "Sim2"});
+
+  const auto get_rfsa_response = EXPECT_SUCCESS(session, client::get_nirfsa_session_array(stub(), session));
+
+  EXPECT_EQ(2, get_rfsa_response.nirfsa_sessions_size());
+  for (const auto& session : get_rfsa_response.nirfsa_sessions()) {
+    ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, session));
+  }
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSASessionArrayWithTooFewNames_ReturnsBadStatus)
+{
+  const auto session = init_from_rfsa_session_array(stub(), create_stub<nirfsa_grpc::NiRFSA>(), {"Sim1", "Sim2"});
+
+  auto get_rfsa_response = GetNIRFSASessionArrayResponse{};
+  const auto status = get_rfsa_session_array(stub(), session, {"rfsa_1"}, get_rfsa_response);
+
+  EXPECT_GET_RFSA_ARRAY_WRONG_NUMBER_OF_SESSIONS_ERROR(status, 2);
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSASessionArrayWithTooManyNames_ReturnsBadStatus)
+{
+  const auto session = init_from_rfsa_session_array(stub(), create_stub<nirfsa_grpc::NiRFSA>(), {"Sim1", "Sim2"});
+
+  auto get_rfsa_response = GetNIRFSASessionArrayResponse{};
+  const auto status = get_rfsa_session_array(stub(), session, {"rfsa_1", "rfsa_2", "rfsa_one_too_many"}, get_rfsa_response);
+
+  EXPECT_GET_RFSA_ARRAY_WRONG_NUMBER_OF_SESSIONS_ERROR(status, 2);
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSASessionArrayNamed_ReturnsTwoSessions)
+{
+  const auto RFSA_SESSION_NAMES = std::vector<std::string>{"rfsa_1", "rfsa_2"};
+  const auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
+  const auto session = init_from_rfsa_session_array(stub(), rfsa_stub, {"Sim1", "Sim2"});
+
+  auto get_rfsa_response = GetNIRFSASessionArrayResponse{};
+  const auto status = get_rfsa_session_array(stub(), session, RFSA_SESSION_NAMES, get_rfsa_response);
+
+  EXPECT_EQ(::grpc::OK, status.error_code());
+  EXPECT_EQ(2, get_rfsa_response.nirfsa_sessions_size());
+  for (const auto& session_name : RFSA_SESSION_NAMES) {
+    auto session = nidevice_grpc::Session{};
+    session.set_name(session_name);
+    ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, session));
+  }
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, NoActiveList_GetListNames_ReturnsEmptyLists)
