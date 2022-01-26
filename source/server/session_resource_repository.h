@@ -237,8 +237,8 @@ TResourceHandle SessionResourceRepository<TResourceHandle>::ResourceMap::remove_
 {
   MapLock lock(map_mutex_);
   auto handle = get_handle(session_id);
-  map_.erase(session_id);
   if (handle != TResourceHandle()) {
+    map_.erase(session_id);
     reverse_map_.erase(handle);
   }
   return handle;

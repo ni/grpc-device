@@ -338,6 +338,35 @@ TEST(SessionResourceRepositoryTests, AddDependentSession_DependentSessionIsNotRe
   EXPECT_EQ(0, resource_repository.resolve_session_id(DEPENDENT_SESSION_HANDLE));
 }
 
+TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveDependentSession_SessionIsRemoved)
+{
+  constexpr auto DEPENDENT_SESSION_HANDLE = 1234U;
+  constexpr auto INITIATING_SESSION_HANDLE = 5678U;
+  SessionRepository repository;
+  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
+  const auto dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DEPENDENT_SESSION_HANDLE);
+
+  resource_repository.remove_session(dependent_session_id, "");
+
+  EXPECT_EQ(0, resource_repository.access_session(dependent_session_id, ""));
+}
+
+TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveInitiatingSession_BothSessionsAreRemoved)
+{
+  constexpr auto DEPENDENT_SESSION_HANDLE = 1234U;
+  constexpr auto INITIATING_SESSION_HANDLE = 5678U;
+  SessionRepository repository;
+  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
+  const auto dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DEPENDENT_SESSION_HANDLE);
+
+  resource_repository.remove_session(initiating_session_id, "");
+
+  EXPECT_EQ(0, resource_repository.access_session(initiating_session_id, ""));
+  EXPECT_EQ(0, resource_repository.access_session(dependent_session_id, ""));
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
