@@ -36,21 +36,8 @@ NiRFmxBTLibrary::NiRFmxBTLibrary() : shared_library_(kLibraryName)
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_.get_function_pointer("RFmxBT_AnalyzeIQ1Waveform"));
   function_pointers_.AutoDetectSignal = reinterpret_cast<AutoDetectSignalPtr>(shared_library_.get_function_pointer("RFmxBT_AutoDetectSignal"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxBT_AutoLevel"));
-  function_pointers_.BuildBandwidthPartString = reinterpret_cast<BuildBandwidthPartStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildBandwidthPartString"));
-  function_pointers_.BuildCORESETClusterString = reinterpret_cast<BuildCORESETClusterStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildCORESETClusterString"));
-  function_pointers_.BuildCORESETString = reinterpret_cast<BuildCORESETStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildCORESETString"));
-  function_pointers_.BuildCarrierString = reinterpret_cast<BuildCarrierStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildCarrierString"));
-  function_pointers_.BuildListStepString = reinterpret_cast<BuildListStepStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildListStepString"));
-  function_pointers_.BuildListString = reinterpret_cast<BuildListStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildListString"));
   function_pointers_.BuildOffsetString = reinterpret_cast<BuildOffsetStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildOffsetString"));
-  function_pointers_.BuildPDCCHString = reinterpret_cast<BuildPDCCHStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPDCCHString"));
-  function_pointers_.BuildPDSCHClusterString = reinterpret_cast<BuildPDSCHClusterStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPDSCHClusterString"));
-  function_pointers_.BuildPDSCHString = reinterpret_cast<BuildPDSCHStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPDSCHString"));
-  function_pointers_.BuildPUSCHClusterString = reinterpret_cast<BuildPUSCHClusterStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPUSCHClusterString"));
-  function_pointers_.BuildPUSCHString = reinterpret_cast<BuildPUSCHStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildPUSCHString"));
   function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildSignalString"));
-  function_pointers_.BuildSubblockString = reinterpret_cast<BuildSubblockStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildSubblockString"));
-  function_pointers_.BuildUserString = reinterpret_cast<BuildUserStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildUserString"));
   function_pointers_.CfgChannelNumber = reinterpret_cast<CfgChannelNumberPtr>(shared_library_.get_function_pointer("RFmxBT_CfgChannelNumber"));
   function_pointers_.CfgDataRate = reinterpret_cast<CfgDataRatePtr>(shared_library_.get_function_pointer("RFmxBT_CfgDataRate"));
   function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxBT_CfgDigitalEdgeTrigger"));
@@ -354,78 +341,6 @@ int32 NiRFmxBTLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char select
 #endif
 }
 
-int32 NiRFmxBTLibrary::BuildBandwidthPartString(char selectorString[], int32 bandwidthPartNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildBandwidthPartString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildBandwidthPartString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildBandwidthPartString(selectorString, bandwidthPartNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildBandwidthPartString(selectorString, bandwidthPartNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildCORESETClusterString(char selectorString[], int32 coresetClusterNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildCORESETClusterString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildCORESETClusterString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildCORESETClusterString(selectorString, coresetClusterNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildCORESETClusterString(selectorString, coresetClusterNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildCORESETString(char selectorString[], int32 coresetNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildCORESETString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildCORESETString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildCORESETString(selectorString, coresetNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildCORESETString(selectorString, coresetNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildCarrierString(char selectorString[], int32 carrierNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildCarrierString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildCarrierString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildCarrierString(selectorString, carrierNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildCarrierString(selectorString, carrierNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildListStepString(char listName[], char resultName[], int32 stepNumber, int32 selectorStringLength, char selectorString[])
-{
-  if (!function_pointers_.BuildListStepString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildListStepString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildListStepString(listName, resultName, stepNumber, selectorStringLength, selectorString);
-#else
-  return function_pointers_.BuildListStepString(listName, resultName, stepNumber, selectorStringLength, selectorString);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildListString(char listName[], char resultName[], int32 selectorStringLength, char selectorString[])
-{
-  if (!function_pointers_.BuildListString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildListString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildListString(listName, resultName, selectorStringLength, selectorString);
-#else
-  return function_pointers_.BuildListString(listName, resultName, selectorStringLength, selectorString);
-#endif
-}
-
 int32 NiRFmxBTLibrary::BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[])
 {
   if (!function_pointers_.BuildOffsetString) {
@@ -438,66 +353,6 @@ int32 NiRFmxBTLibrary::BuildOffsetString(char selectorString[], int32 offsetNumb
 #endif
 }
 
-int32 NiRFmxBTLibrary::BuildPDCCHString(char selectorString[], int32 pdcchNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildPDCCHString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPDCCHString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildPDCCHString(selectorString, pdcchNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildPDCCHString(selectorString, pdcchNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildPDSCHClusterString(char selectorString[], int32 pdschClusterNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildPDSCHClusterString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPDSCHClusterString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildPDSCHClusterString(selectorString, pdschClusterNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildPDSCHClusterString(selectorString, pdschClusterNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildPDSCHString(char selectorString[], int32 pdschNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildPDSCHString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPDSCHString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildPDSCHString(selectorString, pdschNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildPDSCHString(selectorString, pdschNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildPUSCHClusterString(char selectorString[], int32 puschClusterNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildPUSCHClusterString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPUSCHClusterString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildPUSCHClusterString(selectorString, puschClusterNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildPUSCHClusterString(selectorString, puschClusterNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildPUSCHString(char selectorString[], int32 puschNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildPUSCHString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildPUSCHString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildPUSCHString(selectorString, puschNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildPUSCHString(selectorString, puschNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
 int32 NiRFmxBTLibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
 {
   if (!function_pointers_.BuildSignalString) {
@@ -507,30 +362,6 @@ int32 NiRFmxBTLibrary::BuildSignalString(char signalName[], char resultName[], i
   return RFmxBT_BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
 #else
   return function_pointers_.BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildSubblockString(char selectorString[], int32 subblockNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildSubblockString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildSubblockString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildSubblockString(selectorString, subblockNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildSubblockString(selectorString, subblockNumber, selectorStringOutLength, selectorStringOut);
-#endif
-}
-
-int32 NiRFmxBTLibrary::BuildUserString(char selectorString[], int32 userNumber, int32 selectorStringOutLength, char selectorStringOut[])
-{
-  if (!function_pointers_.BuildUserString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildUserString.");
-  }
-#if defined(_MSC_VER)
-  return RFmxBT_BuildUserString(selectorString, userNumber, selectorStringOutLength, selectorStringOut);
-#else
-  return function_pointers_.BuildUserString(selectorString, userNumber, selectorStringOutLength, selectorStringOut);
 #endif
 }
 

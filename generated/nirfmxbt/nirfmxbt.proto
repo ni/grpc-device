@@ -32,21 +32,8 @@ service NiRFmxBT {
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
   rpc AutoDetectSignal(AutoDetectSignalRequest) returns (AutoDetectSignalResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
-  rpc BuildBandwidthPartString(BuildBandwidthPartStringRequest) returns (BuildBandwidthPartStringResponse);
-  rpc BuildCORESETClusterString(BuildCORESETClusterStringRequest) returns (BuildCORESETClusterStringResponse);
-  rpc BuildCORESETString(BuildCORESETStringRequest) returns (BuildCORESETStringResponse);
-  rpc BuildCarrierString(BuildCarrierStringRequest) returns (BuildCarrierStringResponse);
-  rpc BuildListStepString(BuildListStepStringRequest) returns (BuildListStepStringResponse);
-  rpc BuildListString(BuildListStringRequest) returns (BuildListStringResponse);
   rpc BuildOffsetString(BuildOffsetStringRequest) returns (BuildOffsetStringResponse);
-  rpc BuildPDCCHString(BuildPDCCHStringRequest) returns (BuildPDCCHStringResponse);
-  rpc BuildPDSCHClusterString(BuildPDSCHClusterStringRequest) returns (BuildPDSCHClusterStringResponse);
-  rpc BuildPDSCHString(BuildPDSCHStringRequest) returns (BuildPDSCHStringResponse);
-  rpc BuildPUSCHClusterString(BuildPUSCHClusterStringRequest) returns (BuildPUSCHClusterStringResponse);
-  rpc BuildPUSCHString(BuildPUSCHStringRequest) returns (BuildPUSCHStringResponse);
   rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
-  rpc BuildSubblockString(BuildSubblockStringRequest) returns (BuildSubblockStringResponse);
-  rpc BuildUserString(BuildUserStringRequest) returns (BuildUserStringResponse);
   rpc CfgChannelNumber(CfgChannelNumberRequest) returns (CfgChannelNumberResponse);
   rpc CfgDataRate(CfgDataRateRequest) returns (CfgDataRateResponse);
   rpc CfgDigitalEdgeTrigger(CfgDigitalEdgeTriggerRequest) returns (CfgDigitalEdgeTriggerResponse);
@@ -743,123 +730,12 @@ message AutoLevelResponse {
   double reference_level = 2;
 }
 
-message BuildBandwidthPartStringRequest {
-  string selector_string = 1;
-  int32 bandwidth_part_number = 2;
-}
-
-message BuildBandwidthPartStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildCORESETClusterStringRequest {
-  string selector_string = 1;
-  int32 coreset_cluster_number = 2;
-}
-
-message BuildCORESETClusterStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildCORESETStringRequest {
-  string selector_string = 1;
-  int32 coreset_number = 2;
-}
-
-message BuildCORESETStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildCarrierStringRequest {
-  string selector_string = 1;
-  int32 carrier_number = 2;
-}
-
-message BuildCarrierStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildListStepStringRequest {
-  string list_name = 1;
-  string result_name = 2;
-  int32 step_number = 3;
-}
-
-message BuildListStepStringResponse {
-  int32 status = 1;
-  string selector_string = 2;
-}
-
-message BuildListStringRequest {
-  string list_name = 1;
-  string result_name = 2;
-}
-
-message BuildListStringResponse {
-  int32 status = 1;
-  string selector_string = 2;
-}
-
 message BuildOffsetStringRequest {
   string selector_string = 1;
   int32 offset_number = 2;
 }
 
 message BuildOffsetStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildPDCCHStringRequest {
-  string selector_string = 1;
-  int32 pdcch_number = 2;
-}
-
-message BuildPDCCHStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildPDSCHClusterStringRequest {
-  string selector_string = 1;
-  int32 pdsch_cluster_number = 2;
-}
-
-message BuildPDSCHClusterStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildPDSCHStringRequest {
-  string selector_string = 1;
-  int32 pdsch_number = 2;
-}
-
-message BuildPDSCHStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildPUSCHClusterStringRequest {
-  string selector_string = 1;
-  int32 pusch_cluster_number = 2;
-}
-
-message BuildPUSCHClusterStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildPUSCHStringRequest {
-  string selector_string = 1;
-  int32 pusch_number = 2;
-}
-
-message BuildPUSCHStringResponse {
   int32 status = 1;
   string selector_string_out = 2;
 }
@@ -872,26 +748,6 @@ message BuildSignalStringRequest {
 message BuildSignalStringResponse {
   int32 status = 1;
   string selector_string = 2;
-}
-
-message BuildSubblockStringRequest {
-  string selector_string = 1;
-  int32 subblock_number = 2;
-}
-
-message BuildSubblockStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
-}
-
-message BuildUserStringRequest {
-  string selector_string = 1;
-  int32 user_number = 2;
-}
-
-message BuildUserStringResponse {
-  int32 status = 1;
-  string selector_string_out = 2;
 }
 
 message CfgChannelNumberRequest {
