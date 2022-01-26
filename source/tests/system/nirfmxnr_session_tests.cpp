@@ -132,7 +132,7 @@ TEST_F(NiRFmxNRSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_Clo
   EXPECT_EQ(0, close_response_two.status());
 }
 
-TEST_F(NiRFmxNRSessionTest, InitializeTwiceWithSameSessionNameOnSameDevice_CloseSessionTwice_SecondCloseReturnsInvalidSessionError)
+TEST_F(NiRFmxNRSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_CloseSessionTwice_SecondCloseReturnsInvalidSessionError)
 {
   rfmxnr::InitializeResponse init_response_one, init_response_two;
   ::grpc::Status status_one = call_initialize(kRFmxNRTestRsrc, kRFmxNROptionsString, kRFmxNRTestSessionOne, &init_response_one);
