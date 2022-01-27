@@ -1904,12 +1904,12 @@ initialize(const StubPtr& stub, const pb::string& resource_name, const pb::strin
 }
 
 InitializeFromNIRFSASessionResponse
-initialize_from_nirfsa_session(const StubPtr& stub, const pb::uint32& nirfsa_session)
+initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session)
 {
   ::grpc::ClientContext context;
 
   auto request = InitializeFromNIRFSASessionRequest{};
-  request.set_nirfsa_session(nirfsa_session);
+  request.mutable_nirfsa_session()->CopyFrom(nirfsa_session);
 
   auto response = InitializeFromNIRFSASessionResponse{};
 
