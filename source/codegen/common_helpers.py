@@ -610,6 +610,18 @@ def is_init_method(function_data):
     return function_data.get('init_method', False)
 
 
+def _get_session_output_param(function_data):
+    return next(
+        p 
+        for p in function_data["parameters"] 
+        if p["direction"] == "out" and "nidevice_grpc.Session" in p["grpc_type"]
+    )
+
+
+def is_init_array_method(function_data):
+    return is_init_method(function_data) and "repeated" in _get_session_output_param(function_data)["grpc_type"]
+
+
 def is_cross_driver_init_method(function_data: dict) -> bool:
     return (
         is_init_method(function_data) 

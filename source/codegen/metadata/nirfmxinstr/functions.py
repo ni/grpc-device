@@ -1500,6 +1500,8 @@ functions = {
         'returns': 'int32'
     },
     'GetNIRFSASessionArray': {
+        'codegen_method': 'CustomCode',
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1508,7 +1510,9 @@ functions = {
                 'type': 'niRFmxInstrHandle'
             },
             {
+                'cross_driver_session': 'ViSession',
                 'direction': 'out',
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'name': 'nirfsaSessions',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',

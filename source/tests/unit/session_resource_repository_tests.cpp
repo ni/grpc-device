@@ -275,6 +275,98 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
   EXPECT_EQ(kNoSession, second_session_id);
   EXPECT_NE(kNoError, result);
 }
+
+template <typename TResource>
+uint32_t simple_add_session(SessionResourceRepository<TResource> resource_repository, const std::string& session_name, TResource new_resource_handle)
+{
+  auto session_id = uint32_t{};
+  const auto status = resource_repository.add_session(
+      session_name,
+      [new_resource_handle]() { return std::make_tuple(0, new_resource_handle); },
+      [](TResource handle) {},
+      session_id);
+  EXPECT_EQ(0, status);
+  return session_id;
+}
+
+template <typename TResource>
+uint32_t simple_add_dependent_session(
+    SessionResourceRepository<TResource> resource_repository,
+    const std::string& session_name,
+    uint32_t initiating_session_id,
+    TResource new_resource_handle)
+{
+  auto session_id = uint32_t{};
+  const auto status = resource_repository.add_dependent_session(
+      session_name,
+      [new_resource_handle]() { return std::make_tuple(0, new_resource_handle); },
+      initiating_session_id,
+      session_id);
+  EXPECT_EQ(0, status);
+  return session_id;
+}
+
+// Note: this is the key functional criteria. Make sure that dependent sessions can't "overwrite" primary sessions in the reverse lookup.
+// This ensures that any reverse lookups are consistently scoped to the owning service's lifetime management/etc.
+TEST(SessionResourceRepositoryTests, SessionAlreadyInResourceRepository_AddDependentSessionWithSameHandle_ResolveSessionByHandleGivesOriginalSession)
+{
+  constexpr auto DUPE_SESSION_HANDLE = 1234U;
+  constexpr auto INITIATING_SESSION_HANDLE = 5678U;
+  SessionRepository repository;
+  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
+  const auto primary_with_dupe_session_id = simple_add_session(resource_repository, "primary_session_with_dupe_handle", DUPE_SESSION_HANDLE);
+
+  const auto dupe_dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DUPE_SESSION_HANDLE);
+
+  EXPECT_EQ(primary_with_dupe_session_id, resource_repository.resolve_session_id(DUPE_SESSION_HANDLE));
+}
+
+// Note: This is how the above criteria (SessionAlreadyInResourceRepository_AddDependentSessionWithSameHandle_ResolveSessionByHandleGivesOriginalSession)
+// is implemented.
+// If there is no dupe primary session, it's probably OK to include the dependent session in the reverse lookup. But it's simpler to leave it out
+// completely. This also gives us more wiggle room to change behavior in the future because we are exposing less functionality.
+TEST(SessionResourceRepositoryTests, AddDependentSession_DependentSessionIsNotResolvableByHandle)
+{
+  constexpr auto DEPENDENT_SESSION_HANDLE = 1234U;
+  constexpr auto INITIATING_SESSION_HANDLE = 5678U;
+  SessionRepository repository;
+  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
+  const auto dupe_dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DEPENDENT_SESSION_HANDLE);
+
+  EXPECT_EQ(0, resource_repository.resolve_session_id(DEPENDENT_SESSION_HANDLE));
+}
+
+TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveDependentSession_SessionIsRemoved)
+{
+  constexpr auto DEPENDENT_SESSION_HANDLE = 1234U;
+  constexpr auto INITIATING_SESSION_HANDLE = 5678U;
+  SessionRepository repository;
+  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
+  const auto dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DEPENDENT_SESSION_HANDLE);
+
+  resource_repository.remove_session(dependent_session_id, "");
+
+  EXPECT_EQ(0, resource_repository.access_session(dependent_session_id, ""));
+}
+
+TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveInitiatingSession_BothSessionsAreRemoved)
+{
+  constexpr auto DEPENDENT_SESSION_HANDLE = 1234U;
+  constexpr auto INITIATING_SESSION_HANDLE = 5678U;
+  SessionRepository repository;
+  SessionResourceRepository<uint32_t> resource_repository(&repository);
+  const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
+  const auto dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DEPENDENT_SESSION_HANDLE);
+
+  resource_repository.remove_session(initiating_session_id, "");
+
+  EXPECT_EQ(0, resource_repository.access_session(initiating_session_id, ""));
+  EXPECT_EQ(0, resource_repository.access_session(dependent_session_id, ""));
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
