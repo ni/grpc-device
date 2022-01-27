@@ -1390,7 +1390,7 @@ message InitializeResponse {
 
 message InitializeFromNIRFSASessionRequest {
   string session_name = 1;
-  uint32 nirfsa_session = 2;
+  nidevice_grpc.Session nirfsa_session = 2;
 }
 
 message InitializeFromNIRFSASessionResponse {
