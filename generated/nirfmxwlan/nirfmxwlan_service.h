@@ -34,10 +34,12 @@ struct NiRFmxWLANFeatureToggles
 class NiRFmxWLANService final : public NiRFmxWLAN::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>;
+  using ViSessionResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
 
   NiRFmxWLANService(
     NiRFmxWLANLibraryInterface* library,
     ResourceRepositorySharedPtr session_repository,
+    ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxWLANFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxWLANService();
   
@@ -271,6 +273,7 @@ public:
 private:
   NiRFmxWLANLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
   std::map<std::int32_t, std::string> frequencyreferencesource_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_Clk"},{4, "ClkIn"}, };
   std::map<std::string, std::int32_t> frequencyreferencesource_output_map_ { {"OnboardClock", 1},{"RefIn", 2},{"PXI_Clk", 3},{"ClkIn", 4}, };
 

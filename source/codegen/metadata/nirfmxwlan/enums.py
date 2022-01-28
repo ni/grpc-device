@@ -1160,22 +1160,6 @@ enums = {
             }
         ]
     },
-    'RFmxWLANMXSemOffsetSideband': {
-        'values': [
-            {
-                'name': 'NEGATIVE',
-                'value': 0
-            },
-            {
-                'name': 'POSITIVE',
-                'value': 1
-            },
-            {
-                'name': 'BOTH',
-                'value': 2
-            }
-        ]
-    },
     'SemAmplitudeCorrectionType': {
         'values': [
             {

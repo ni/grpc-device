@@ -865,14 +865,6 @@ enum RFAttenuationAuto {
   RF_ATTENUATION_AUTO_TRUE = 1;
 }
 
-enum RFmxWLANMXSemOffsetSideband {
-  option allow_alias = true;
-  R_FMX_WLANMX_SEM_OFFSET_SIDEBAND_UNSPECIFIED = 0;
-  R_FMX_WLANMX_SEM_OFFSET_SIDEBAND_NEGATIVE = 0;
-  R_FMX_WLANMX_SEM_OFFSET_SIDEBAND_POSITIVE = 1;
-  R_FMX_WLANMX_SEM_OFFSET_SIDEBAND_BOTH = 2;
-}
-
 enum SemAveragingEnabled {
   option allow_alias = true;
   SEM_AVERAGING_ENABLED_UNSPECIFIED = 0;
@@ -909,6 +901,14 @@ enum SemMeasurementStatus {
   SEM_MEASUREMENT_STATUS_UNSPECIFIED = 0;
   SEM_MEASUREMENT_STATUS_FAIL = 0;
   SEM_MEASUREMENT_STATUS_PASS = 1;
+}
+
+enum SemOffsetSideband {
+  option allow_alias = true;
+  SEM_OFFSET_SIDEBAND_UNSPECIFIED = 0;
+  SEM_OFFSET_SIDEBAND_NEGATIVE = 0;
+  SEM_OFFSET_SIDEBAND_POSITIVE = 1;
+  SEM_OFFSET_SIDEBAND_BOTH = 2;
 }
 
 enum SemSpanAuto {
@@ -2104,7 +2104,7 @@ message InitializeResponse {
 
 message InitializeFromNIRFSASessionRequest {
   string session_name = 1;
-  uint32 nirfsa_session = 2;
+  nidevice_grpc.Session nirfsa_session = 2;
 }
 
 message InitializeFromNIRFSASessionResponse {
@@ -3468,7 +3468,7 @@ message SEMCfgOffsetFrequencyArrayRequest {
   string selector_string = 2;
   repeated double offset_start_frequency = 3;
   repeated double offset_stop_frequency = 4;
-  repeated RFmxWLANMXSemOffsetSideband offset_sideband = 5;
+  repeated SemOffsetSideband offset_sideband = 5;
 }
 
 message SEMCfgOffsetFrequencyArrayResponse {
