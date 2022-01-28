@@ -26,9 +26,11 @@ namespace nirfmxbt_grpc {
   NiRFmxBTService::NiRFmxBTService(
       NiRFmxBTLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
+      ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxBTFeatureToggles& feature_toggles)
       : library_(library),
       session_repository_(session_repository),
+      vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -2392,7 +2394,8 @@ namespace nirfmxbt_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      uInt32 nirfsa_session = request->nirfsa_session();
+      auto nirfsa_session_grpc_session = request->nirfsa_session();
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.id(), nirfsa_session_grpc_session.name());
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;

@@ -14,7 +14,7 @@ const int kInvalidRsrc = -200220;
 const int kInvalidRFmxBTSession = -380598;
 const char* kRFmxBTTestRsrc = "FakeDevice";
 const char* kRFmxBTOptionsString = "Simulate=1, DriverSetup=Model:5663E";
-const char* kRFmxBTTestSession = "SessionName";
+const char* kRFmxBTTestSessionOne = "SessionOneName";
 const char* kRFmxBTTestSessionTwo = "SessionTwoName";
 const char* kRFmxBTTestInvalidRsrc = "";
 
@@ -65,7 +65,7 @@ class NiRFmxBTSessionTest : public ::testing::Test {
 TEST_F(NiRFmxBTSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
 {
   rfmxbt::InitializeResponse response;
-  ::grpc::Status status = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSession, &response);
+  ::grpc::Status status = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
@@ -95,7 +95,7 @@ TEST_F(NiRFmxBTSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 TEST_F(NiRFmxBTSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   rfmxbt::InitializeResponse init_response;
-  call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSession, &init_response);
+  call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &init_response);
 
   nidevice_grpc::Session session = init_response.instrument();
   ::grpc::ClientContext context;
@@ -112,12 +112,13 @@ TEST_F(NiRFmxBTSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 TEST_F(NiRFmxBTSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_ClosesDriverSessions)
 {
   rfmxbt::InitializeResponse init_response_one, init_response_two;
-  ::grpc::Status status_one = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSession, &init_response_one);
+  ::grpc::Status status_one = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &init_response_one);
   ::grpc::Status status_two = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionTwo, &init_response_two);
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, init_response_one.status());
   EXPECT_TRUE(status_two.ok());
   EXPECT_EQ(0, init_response_two.status());
+  EXPECT_NE(init_response_one.instrument().id(), init_response_two.instrument().id());
 
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
@@ -129,6 +130,31 @@ TEST_F(NiRFmxBTSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_Clo
   EXPECT_EQ(0, close_response_one.status());
   EXPECT_TRUE(status_two.ok());
   EXPECT_EQ(0, close_response_two.status());
+}
+
+TEST_F(NiRFmxBTSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_CloseSessionTwice_SecondCloseReturnsInvalidSessionError)
+{
+  rfmxbt::InitializeResponse init_response_one, init_response_two;
+  ::grpc::Status status_one = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &init_response_one);
+  ::grpc::Status status_two = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &init_response_two);
+  EXPECT_TRUE(status_one.ok());
+  EXPECT_EQ(0, init_response_one.status());
+  EXPECT_TRUE(status_two.ok());
+  EXPECT_EQ(0, init_response_two.status());
+  EXPECT_EQ(init_response_one.instrument().id(), init_response_two.instrument().id());
+
+  nidevice_grpc::Session session_one = init_response_one.instrument();
+  nidevice_grpc::Session session_two = init_response_two.instrument();
+  rfmxbt::CloseResponse close_response_one, close_response_two;
+  status_one = call_close(session_one, nirfmxbt_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
+  status_two = call_close(session_two, nirfmxbt_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
+
+  EXPECT_TRUE(status_one.ok());
+  EXPECT_EQ(0, close_response_one.status());
+  EXPECT_TRUE(status_two.ok());
+  // Initialize was only called once in the driver since the second init call to the service found the Session by the same name and returned it.
+  // Therefore if we try to close the session again the driver will respond that it's not a valid session (it's already been closed).
+  EXPECT_EQ(kInvalidRFmxBTSession, close_response_two.status());
 }
 
 TEST_F(NiRFmxBTSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
