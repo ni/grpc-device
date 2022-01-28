@@ -13,15 +13,574 @@ option csharp_namespace = "NationalInstruments.Grpc.NiRFmxWLAN";
 
 package nirfmxwlan_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiRFmxWLAN {
+  rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
+  rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
+  rpc AutoDetectSignal(AutoDetectSignalRequest) returns (AutoDetectSignalResponse);
+  rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
+  rpc BuildChainString(BuildChainStringRequest) returns (BuildChainStringResponse);
+  rpc BuildGateString(BuildGateStringRequest) returns (BuildGateStringResponse);
+  rpc BuildOffsetString(BuildOffsetStringRequest) returns (BuildOffsetStringResponse);
+  rpc BuildSegmentString(BuildSegmentStringRequest) returns (BuildSegmentStringResponse);
+  rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
+  rpc BuildStreamString(BuildStreamStringRequest) returns (BuildStreamStringResponse);
+  rpc BuildUserString(BuildUserStringRequest) returns (BuildUserStringResponse);
+  rpc CfgChannelBandwidth(CfgChannelBandwidthRequest) returns (CfgChannelBandwidthResponse);
+  rpc CfgDigitalEdgeTrigger(CfgDigitalEdgeTriggerRequest) returns (CfgDigitalEdgeTriggerResponse);
+  rpc CfgExternalAttenuation(CfgExternalAttenuationRequest) returns (CfgExternalAttenuationResponse);
+  rpc CfgFrequency(CfgFrequencyRequest) returns (CfgFrequencyResponse);
+  rpc CfgFrequencyArray(CfgFrequencyArrayRequest) returns (CfgFrequencyArrayResponse);
+  rpc CfgFrequencyReference(CfgFrequencyReferenceRequest) returns (CfgFrequencyReferenceResponse);
+  rpc CfgIQPowerEdgeTrigger(CfgIQPowerEdgeTriggerRequest) returns (CfgIQPowerEdgeTriggerResponse);
+  rpc CfgMechanicalAttenuation(CfgMechanicalAttenuationRequest) returns (CfgMechanicalAttenuationResponse);
+  rpc CfgNumberOfFrequencySegmentsAndReceiveChains(CfgNumberOfFrequencySegmentsAndReceiveChainsRequest) returns (CfgNumberOfFrequencySegmentsAndReceiveChainsResponse);
+  rpc CfgRFAttenuation(CfgRFAttenuationRequest) returns (CfgRFAttenuationResponse);
+  rpc CfgReferenceLevel(CfgReferenceLevelRequest) returns (CfgReferenceLevelResponse);
+  rpc CfgSelectedPortsMultiple(CfgSelectedPortsMultipleRequest) returns (CfgSelectedPortsMultipleResponse);
+  rpc CfgSoftwareEdgeTrigger(CfgSoftwareEdgeTriggerRequest) returns (CfgSoftwareEdgeTriggerResponse);
+  rpc CfgStandard(CfgStandardRequest) returns (CfgStandardResponse);
+  rpc CheckMeasurementStatus(CheckMeasurementStatusRequest) returns (CheckMeasurementStatusResponse);
+  rpc ClearAllNamedResults(ClearAllNamedResultsRequest) returns (ClearAllNamedResultsResponse);
+  rpc ClearNamedResult(ClearNamedResultRequest) returns (ClearNamedResultResponse);
+  rpc CloneSignalConfiguration(CloneSignalConfigurationRequest) returns (CloneSignalConfigurationResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc Commit(CommitRequest) returns (CommitResponse);
+  rpc CreateSignalConfiguration(CreateSignalConfigurationRequest) returns (CreateSignalConfigurationResponse);
+  rpc DSSSModAccCfgAcquisitionLength(DSSSModAccCfgAcquisitionLengthRequest) returns (DSSSModAccCfgAcquisitionLengthResponse);
+  rpc DSSSModAccCfgAveraging(DSSSModAccCfgAveragingRequest) returns (DSSSModAccCfgAveragingResponse);
+  rpc DSSSModAccCfgEVMUnit(DSSSModAccCfgEVMUnitRequest) returns (DSSSModAccCfgEVMUnitResponse);
+  rpc DSSSModAccCfgMeasurementLength(DSSSModAccCfgMeasurementLengthRequest) returns (DSSSModAccCfgMeasurementLengthResponse);
+  rpc DSSSModAccCfgPowerMeasurementCustomGateArray(DSSSModAccCfgPowerMeasurementCustomGateArrayRequest) returns (DSSSModAccCfgPowerMeasurementCustomGateArrayResponse);
+  rpc DSSSModAccCfgPowerMeasurementEnabled(DSSSModAccCfgPowerMeasurementEnabledRequest) returns (DSSSModAccCfgPowerMeasurementEnabledResponse);
+  rpc DSSSModAccCfgPowerMeasurementNumberOfCustomGates(DSSSModAccCfgPowerMeasurementNumberOfCustomGatesRequest) returns (DSSSModAccCfgPowerMeasurementNumberOfCustomGatesResponse);
+  rpc DSSSModAccFetchAveragePowers(DSSSModAccFetchAveragePowersRequest) returns (DSSSModAccFetchAveragePowersResponse);
+  rpc DSSSModAccFetchConstellationTrace(DSSSModAccFetchConstellationTraceRequest) returns (DSSSModAccFetchConstellationTraceResponse);
+  rpc DSSSModAccFetchCustomGatePowersArray(DSSSModAccFetchCustomGatePowersArrayRequest) returns (DSSSModAccFetchCustomGatePowersArrayResponse);
+  rpc DSSSModAccFetchDecodedHeaderBitsTrace(DSSSModAccFetchDecodedHeaderBitsTraceRequest) returns (DSSSModAccFetchDecodedHeaderBitsTraceResponse);
+  rpc DSSSModAccFetchDecodedPSDUBitsTrace(DSSSModAccFetchDecodedPSDUBitsTraceRequest) returns (DSSSModAccFetchDecodedPSDUBitsTraceResponse);
+  rpc DSSSModAccFetchEVM(DSSSModAccFetchEVMRequest) returns (DSSSModAccFetchEVMResponse);
+  rpc DSSSModAccFetchEVMPerChipMeanTrace(DSSSModAccFetchEVMPerChipMeanTraceRequest) returns (DSSSModAccFetchEVMPerChipMeanTraceResponse);
+  rpc DSSSModAccFetchIQImpairments(DSSSModAccFetchIQImpairmentsRequest) returns (DSSSModAccFetchIQImpairmentsResponse);
+  rpc DSSSModAccFetchPPDUInformation(DSSSModAccFetchPPDUInformationRequest) returns (DSSSModAccFetchPPDUInformationResponse);
+  rpc DSSSModAccFetchPeakPowers(DSSSModAccFetchPeakPowersRequest) returns (DSSSModAccFetchPeakPowersResponse);
+  rpc DeleteSignalConfiguration(DeleteSignalConfigurationRequest) returns (DeleteSignalConfigurationResponse);
+  rpc DisableTrigger(DisableTriggerRequest) returns (DisableTriggerResponse);
+  rpc GetAllNamedResultNames(GetAllNamedResultNamesRequest) returns (GetAllNamedResultNamesResponse);
+  rpc GetAttributeF32(GetAttributeF32Request) returns (GetAttributeF32Response);
+  rpc GetAttributeF32Array(GetAttributeF32ArrayRequest) returns (GetAttributeF32ArrayResponse);
+  rpc GetAttributeF64(GetAttributeF64Request) returns (GetAttributeF64Response);
+  rpc GetAttributeF64Array(GetAttributeF64ArrayRequest) returns (GetAttributeF64ArrayResponse);
+  rpc GetAttributeI16(GetAttributeI16Request) returns (GetAttributeI16Response);
+  rpc GetAttributeI32(GetAttributeI32Request) returns (GetAttributeI32Response);
+  rpc GetAttributeI32Array(GetAttributeI32ArrayRequest) returns (GetAttributeI32ArrayResponse);
+  rpc GetAttributeI64(GetAttributeI64Request) returns (GetAttributeI64Response);
+  rpc GetAttributeI64Array(GetAttributeI64ArrayRequest) returns (GetAttributeI64ArrayResponse);
+  rpc GetAttributeI8(GetAttributeI8Request) returns (GetAttributeI8Response);
+  rpc GetAttributeI8Array(GetAttributeI8ArrayRequest) returns (GetAttributeI8ArrayResponse);
+  rpc GetAttributeNIComplexDoubleArray(GetAttributeNIComplexDoubleArrayRequest) returns (GetAttributeNIComplexDoubleArrayResponse);
+  rpc GetAttributeNIComplexSingleArray(GetAttributeNIComplexSingleArrayRequest) returns (GetAttributeNIComplexSingleArrayResponse);
+  rpc GetAttributeString(GetAttributeStringRequest) returns (GetAttributeStringResponse);
+  rpc GetAttributeU16(GetAttributeU16Request) returns (GetAttributeU16Response);
+  rpc GetAttributeU32(GetAttributeU32Request) returns (GetAttributeU32Response);
+  rpc GetAttributeU32Array(GetAttributeU32ArrayRequest) returns (GetAttributeU32ArrayResponse);
+  rpc GetAttributeU64Array(GetAttributeU64ArrayRequest) returns (GetAttributeU64ArrayResponse);
+  rpc GetAttributeU8(GetAttributeU8Request) returns (GetAttributeU8Response);
+  rpc GetAttributeU8Array(GetAttributeU8ArrayRequest) returns (GetAttributeU8ArrayResponse);
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
   rpc Initialize(InitializeRequest) returns (InitializeResponse);
+  rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
+  rpc Initiate(InitiateRequest) returns (InitiateResponse);
+  rpc OFDMModAccAutoLevel(OFDMModAccAutoLevelRequest) returns (OFDMModAccAutoLevelResponse);
+  rpc OFDMModAccCfg1ReferenceWaveform(OFDMModAccCfg1ReferenceWaveformRequest) returns (OFDMModAccCfg1ReferenceWaveformResponse);
+  rpc OFDMModAccCfgAcquisitionLength(OFDMModAccCfgAcquisitionLengthRequest) returns (OFDMModAccCfgAcquisitionLengthResponse);
+  rpc OFDMModAccCfgAmplitudeTrackingEnabled(OFDMModAccCfgAmplitudeTrackingEnabledRequest) returns (OFDMModAccCfgAmplitudeTrackingEnabledResponse);
+  rpc OFDMModAccCfgAveraging(OFDMModAccCfgAveragingRequest) returns (OFDMModAccCfgAveragingResponse);
+  rpc OFDMModAccCfgChannelEstimationType(OFDMModAccCfgChannelEstimationTypeRequest) returns (OFDMModAccCfgChannelEstimationTypeResponse);
+  rpc OFDMModAccCfgCommonClockSourceEnabled(OFDMModAccCfgCommonClockSourceEnabledRequest) returns (OFDMModAccCfgCommonClockSourceEnabledResponse);
+  rpc OFDMModAccCfgEVMUnit(OFDMModAccCfgEVMUnitRequest) returns (OFDMModAccCfgEVMUnitResponse);
+  rpc OFDMModAccCfgFrequencyErrorEstimationMethod(OFDMModAccCfgFrequencyErrorEstimationMethodRequest) returns (OFDMModAccCfgFrequencyErrorEstimationMethodResponse);
+  rpc OFDMModAccCfgMeasurementLength(OFDMModAccCfgMeasurementLengthRequest) returns (OFDMModAccCfgMeasurementLengthResponse);
+  rpc OFDMModAccCfgMeasurementMode(OFDMModAccCfgMeasurementModeRequest) returns (OFDMModAccCfgMeasurementModeResponse);
+  rpc OFDMModAccCfgNoiseCompensationEnabled(OFDMModAccCfgNoiseCompensationEnabledRequest) returns (OFDMModAccCfgNoiseCompensationEnabledResponse);
+  rpc OFDMModAccCfgOptimizeDynamicRangeForEVM(OFDMModAccCfgOptimizeDynamicRangeForEVMRequest) returns (OFDMModAccCfgOptimizeDynamicRangeForEVMResponse);
+  rpc OFDMModAccCfgPhaseTrackingEnabled(OFDMModAccCfgPhaseTrackingEnabledRequest) returns (OFDMModAccCfgPhaseTrackingEnabledResponse);
+  rpc OFDMModAccCfgSymbolClockErrorCorrectionEnabled(OFDMModAccCfgSymbolClockErrorCorrectionEnabledRequest) returns (OFDMModAccCfgSymbolClockErrorCorrectionEnabledResponse);
+  rpc OFDMModAccClearNoiseCalibrationDatabase(OFDMModAccClearNoiseCalibrationDatabaseRequest) returns (OFDMModAccClearNoiseCalibrationDatabaseResponse);
+  rpc OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTraceResponse);
+  rpc OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTraceResponse);
+  rpc OFDMModAccFetchChainRMSEVM(OFDMModAccFetchChainRMSEVMRequest) returns (OFDMModAccFetchChainRMSEVMResponse);
+  rpc OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceRequest) returns (OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceResponse);
+  rpc OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(OFDMModAccFetchChainRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchChainRMSEVMPerSymbolMeanTraceResponse);
+  rpc OFDMModAccFetchChannelFrequencyResponseMeanTrace(OFDMModAccFetchChannelFrequencyResponseMeanTraceRequest) returns (OFDMModAccFetchChannelFrequencyResponseMeanTraceResponse);
+  rpc OFDMModAccFetchCommonPilotErrorTrace(OFDMModAccFetchCommonPilotErrorTraceRequest) returns (OFDMModAccFetchCommonPilotErrorTraceResponse);
+  rpc OFDMModAccFetchCompositeRMSEVM(OFDMModAccFetchCompositeRMSEVMRequest) returns (OFDMModAccFetchCompositeRMSEVMResponse);
+  rpc OFDMModAccFetchCrossPower(OFDMModAccFetchCrossPowerRequest) returns (OFDMModAccFetchCrossPowerResponse);
+  rpc OFDMModAccFetchCustomGatePowersArray(OFDMModAccFetchCustomGatePowersArrayRequest) returns (OFDMModAccFetchCustomGatePowersArrayResponse);
+  rpc OFDMModAccFetchDataAveragePower(OFDMModAccFetchDataAveragePowerRequest) returns (OFDMModAccFetchDataAveragePowerResponse);
+  rpc OFDMModAccFetchDataConstellationTrace(OFDMModAccFetchDataConstellationTraceRequest) returns (OFDMModAccFetchDataConstellationTraceResponse);
+  rpc OFDMModAccFetchDataPeakPower(OFDMModAccFetchDataPeakPowerRequest) returns (OFDMModAccFetchDataPeakPowerResponse);
+  rpc OFDMModAccFetchDecodedEHTSIGBitsTrace(OFDMModAccFetchDecodedEHTSIGBitsTraceRequest) returns (OFDMModAccFetchDecodedEHTSIGBitsTraceResponse);
+  rpc OFDMModAccFetchDecodedLSIGBitsTrace(OFDMModAccFetchDecodedLSIGBitsTraceRequest) returns (OFDMModAccFetchDecodedLSIGBitsTraceResponse);
+  rpc OFDMModAccFetchDecodedPSDUBitsTrace(OFDMModAccFetchDecodedPSDUBitsTraceRequest) returns (OFDMModAccFetchDecodedPSDUBitsTraceResponse);
+  rpc OFDMModAccFetchDecodedSIGBBitsTrace(OFDMModAccFetchDecodedSIGBBitsTraceRequest) returns (OFDMModAccFetchDecodedSIGBBitsTraceResponse);
+  rpc OFDMModAccFetchDecodedSIGBitsTrace(OFDMModAccFetchDecodedSIGBitsTraceRequest) returns (OFDMModAccFetchDecodedSIGBitsTraceResponse);
+  rpc OFDMModAccFetchDecodedServiceBitsTrace(OFDMModAccFetchDecodedServiceBitsTraceRequest) returns (OFDMModAccFetchDecodedServiceBitsTraceResponse);
+  rpc OFDMModAccFetchDecodedUSIGBitsTrace(OFDMModAccFetchDecodedUSIGBitsTraceRequest) returns (OFDMModAccFetchDecodedUSIGBitsTraceResponse);
+  rpc OFDMModAccFetchEVMSubcarrierIndices(OFDMModAccFetchEVMSubcarrierIndicesRequest) returns (OFDMModAccFetchEVMSubcarrierIndicesResponse);
+  rpc OFDMModAccFetchFrequencyErrorCCDF10Percent(OFDMModAccFetchFrequencyErrorCCDF10PercentRequest) returns (OFDMModAccFetchFrequencyErrorCCDF10PercentResponse);
+  rpc OFDMModAccFetchFrequencyErrorMean(OFDMModAccFetchFrequencyErrorMeanRequest) returns (OFDMModAccFetchFrequencyErrorMeanResponse);
+  rpc OFDMModAccFetchGroupDelayMeanTrace(OFDMModAccFetchGroupDelayMeanTraceRequest) returns (OFDMModAccFetchGroupDelayMeanTraceResponse);
+  rpc OFDMModAccFetchGuardIntervalType(OFDMModAccFetchGuardIntervalTypeRequest) returns (OFDMModAccFetchGuardIntervalTypeResponse);
+  rpc OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTraceRequest) returns (OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse);
+  rpc OFDMModAccFetchIQImpairments(OFDMModAccFetchIQImpairmentsRequest) returns (OFDMModAccFetchIQImpairmentsResponse);
+  rpc OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceRequest) returns (OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceResponse);
+  rpc OFDMModAccFetchLSIGParityCheckStatus(OFDMModAccFetchLSIGParityCheckStatusRequest) returns (OFDMModAccFetchLSIGParityCheckStatusResponse);
+  rpc OFDMModAccFetchLTFSize(OFDMModAccFetchLTFSizeRequest) returns (OFDMModAccFetchLTFSizeResponse);
+  rpc OFDMModAccFetchMCSIndex(OFDMModAccFetchMCSIndexRequest) returns (OFDMModAccFetchMCSIndexResponse);
+  rpc OFDMModAccFetchNumberOfHESIGBSymbols(OFDMModAccFetchNumberOfHESIGBSymbolsRequest) returns (OFDMModAccFetchNumberOfHESIGBSymbolsResponse);
+  rpc OFDMModAccFetchNumberOfSpaceTimeStreams(OFDMModAccFetchNumberOfSpaceTimeStreamsRequest) returns (OFDMModAccFetchNumberOfSpaceTimeStreamsResponse);
+  rpc OFDMModAccFetchNumberOfUsers(OFDMModAccFetchNumberOfUsersRequest) returns (OFDMModAccFetchNumberOfUsersResponse);
+  rpc OFDMModAccFetchNumberofSymbolsUsed(OFDMModAccFetchNumberofSymbolsUsedRequest) returns (OFDMModAccFetchNumberofSymbolsUsedResponse);
+  rpc OFDMModAccFetchPEAveragePower(OFDMModAccFetchPEAveragePowerRequest) returns (OFDMModAccFetchPEAveragePowerResponse);
+  rpc OFDMModAccFetchPEDuration(OFDMModAccFetchPEDurationRequest) returns (OFDMModAccFetchPEDurationResponse);
+  rpc OFDMModAccFetchPEPeakPower(OFDMModAccFetchPEPeakPowerRequest) returns (OFDMModAccFetchPEPeakPowerResponse);
+  rpc OFDMModAccFetchPPDUAveragePower(OFDMModAccFetchPPDUAveragePowerRequest) returns (OFDMModAccFetchPPDUAveragePowerResponse);
+  rpc OFDMModAccFetchPPDUPeakPower(OFDMModAccFetchPPDUPeakPowerRequest) returns (OFDMModAccFetchPPDUPeakPowerResponse);
+  rpc OFDMModAccFetchPPDUType(OFDMModAccFetchPPDUTypeRequest) returns (OFDMModAccFetchPPDUTypeResponse);
+  rpc OFDMModAccFetchPSDUCRCStatus(OFDMModAccFetchPSDUCRCStatusRequest) returns (OFDMModAccFetchPSDUCRCStatusResponse);
+  rpc OFDMModAccFetchPilotConstellationTrace(OFDMModAccFetchPilotConstellationTraceRequest) returns (OFDMModAccFetchPilotConstellationTraceResponse);
+  rpc OFDMModAccFetchPreambleAveragePowers80211ac(OFDMModAccFetchPreambleAveragePowers80211acRequest) returns (OFDMModAccFetchPreambleAveragePowers80211acResponse);
+  rpc OFDMModAccFetchPreambleAveragePowers80211ax(OFDMModAccFetchPreambleAveragePowers80211axRequest) returns (OFDMModAccFetchPreambleAveragePowers80211axResponse);
+  rpc OFDMModAccFetchPreambleAveragePowers80211n(OFDMModAccFetchPreambleAveragePowers80211nRequest) returns (OFDMModAccFetchPreambleAveragePowers80211nResponse);
+  rpc OFDMModAccFetchPreambleAveragePowersCommon(OFDMModAccFetchPreambleAveragePowersCommonRequest) returns (OFDMModAccFetchPreambleAveragePowersCommonResponse);
+  rpc OFDMModAccFetchPreambleFrequencyErrorTrace(OFDMModAccFetchPreambleFrequencyErrorTraceRequest) returns (OFDMModAccFetchPreambleFrequencyErrorTraceResponse);
+  rpc OFDMModAccFetchPreamblePeakPowers80211ac(OFDMModAccFetchPreamblePeakPowers80211acRequest) returns (OFDMModAccFetchPreamblePeakPowers80211acResponse);
+  rpc OFDMModAccFetchPreamblePeakPowers80211ax(OFDMModAccFetchPreamblePeakPowers80211axRequest) returns (OFDMModAccFetchPreamblePeakPowers80211axResponse);
+  rpc OFDMModAccFetchPreamblePeakPowers80211n(OFDMModAccFetchPreamblePeakPowers80211nRequest) returns (OFDMModAccFetchPreamblePeakPowers80211nResponse);
+  rpc OFDMModAccFetchPreamblePeakPowersCommon(OFDMModAccFetchPreamblePeakPowersCommonRequest) returns (OFDMModAccFetchPreamblePeakPowersCommonResponse);
+  rpc OFDMModAccFetchRUOffsetAndSize(OFDMModAccFetchRUOffsetAndSizeRequest) returns (OFDMModAccFetchRUOffsetAndSizeResponse);
+  rpc OFDMModAccFetchSIGBCRCStatus(OFDMModAccFetchSIGBCRCStatusRequest) returns (OFDMModAccFetchSIGBCRCStatusResponse);
+  rpc OFDMModAccFetchSIGCRCStatus(OFDMModAccFetchSIGCRCStatusRequest) returns (OFDMModAccFetchSIGCRCStatusResponse);
+  rpc OFDMModAccFetchSpectralFlatness(OFDMModAccFetchSpectralFlatnessRequest) returns (OFDMModAccFetchSpectralFlatnessResponse);
+  rpc OFDMModAccFetchSpectralFlatnessMeanTrace(OFDMModAccFetchSpectralFlatnessMeanTraceRequest) returns (OFDMModAccFetchSpectralFlatnessMeanTraceResponse);
+  rpc OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTraceResponse);
+  rpc OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTraceResponse);
+  rpc OFDMModAccFetchStreamRMSEVM(OFDMModAccFetchStreamRMSEVMRequest) returns (OFDMModAccFetchStreamRMSEVMResponse);
+  rpc OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceRequest) returns (OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceResponse);
+  rpc OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(OFDMModAccFetchStreamRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchStreamRMSEVMPerSymbolMeanTraceResponse);
+  rpc OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(OFDMModAccFetchSubcarrierChainEVMPerSymbolTraceRequest) returns (OFDMModAccFetchSubcarrierChainEVMPerSymbolTraceResponse);
+  rpc OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(OFDMModAccFetchSubcarrierStreamEVMPerSymbolTraceRequest) returns (OFDMModAccFetchSubcarrierStreamEVMPerSymbolTraceResponse);
+  rpc OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(OFDMModAccFetchSymbolChainEVMPerSubcarrierTraceRequest) returns (OFDMModAccFetchSymbolChainEVMPerSubcarrierTraceResponse);
+  rpc OFDMModAccFetchSymbolClockErrorMean(OFDMModAccFetchSymbolClockErrorMeanRequest) returns (OFDMModAccFetchSymbolClockErrorMeanResponse);
+  rpc OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(OFDMModAccFetchSymbolStreamEVMPerSubcarrierTraceRequest) returns (OFDMModAccFetchSymbolStreamEVMPerSubcarrierTraceResponse);
+  rpc OFDMModAccFetchUnusedToneError(OFDMModAccFetchUnusedToneErrorRequest) returns (OFDMModAccFetchUnusedToneErrorResponse);
+  rpc OFDMModAccFetchUnusedToneErrorMarginPerRU(OFDMModAccFetchUnusedToneErrorMarginPerRURequest) returns (OFDMModAccFetchUnusedToneErrorMarginPerRUResponse);
+  rpc OFDMModAccFetchUnusedToneErrorMeanTrace(OFDMModAccFetchUnusedToneErrorMeanTraceRequest) returns (OFDMModAccFetchUnusedToneErrorMeanTraceResponse);
+  rpc OFDMModAccFetchUserDataConstellationTrace(OFDMModAccFetchUserDataConstellationTraceRequest) returns (OFDMModAccFetchUserDataConstellationTraceResponse);
+  rpc OFDMModAccFetchUserPilotConstellationTrace(OFDMModAccFetchUserPilotConstellationTraceRequest) returns (OFDMModAccFetchUserPilotConstellationTraceResponse);
+  rpc OFDMModAccFetchUserPower(OFDMModAccFetchUserPowerRequest) returns (OFDMModAccFetchUserPowerResponse);
+  rpc OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceResponse);
+  rpc OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTraceResponse);
+  rpc OFDMModAccFetchUserStreamRMSEVM(OFDMModAccFetchUserStreamRMSEVMRequest) returns (OFDMModAccFetchUserStreamRMSEVMResponse);
+  rpc OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceRequest) returns (OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceResponse);
+  rpc OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTraceResponse);
+  rpc OFDMModAccValidateCalibrationData(OFDMModAccValidateCalibrationDataRequest) returns (OFDMModAccValidateCalibrationDataResponse);
+  rpc PowerRampCfgAcquisitionLength(PowerRampCfgAcquisitionLengthRequest) returns (PowerRampCfgAcquisitionLengthResponse);
+  rpc PowerRampCfgAveraging(PowerRampCfgAveragingRequest) returns (PowerRampCfgAveragingResponse);
+  rpc PowerRampFetchFallTrace(PowerRampFetchFallTraceRequest) returns (PowerRampFetchFallTraceResponse);
+  rpc PowerRampFetchMeasurement(PowerRampFetchMeasurementRequest) returns (PowerRampFetchMeasurementResponse);
+  rpc PowerRampFetchRiseTrace(PowerRampFetchRiseTraceRequest) returns (PowerRampFetchRiseTraceResponse);
+  rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
+  rpc ResetToDefault(ResetToDefaultRequest) returns (ResetToDefaultResponse);
+  rpc SEMCfgAveraging(SEMCfgAveragingRequest) returns (SEMCfgAveragingResponse);
+  rpc SEMCfgMaskType(SEMCfgMaskTypeRequest) returns (SEMCfgMaskTypeResponse);
+  rpc SEMCfgNumberOfOffsets(SEMCfgNumberOfOffsetsRequest) returns (SEMCfgNumberOfOffsetsResponse);
+  rpc SEMCfgOffsetFrequencyArray(SEMCfgOffsetFrequencyArrayRequest) returns (SEMCfgOffsetFrequencyArrayResponse);
+  rpc SEMCfgOffsetRelativeLimitArray(SEMCfgOffsetRelativeLimitArrayRequest) returns (SEMCfgOffsetRelativeLimitArrayResponse);
+  rpc SEMCfgSpan(SEMCfgSpanRequest) returns (SEMCfgSpanResponse);
+  rpc SEMCfgSweepTime(SEMCfgSweepTimeRequest) returns (SEMCfgSweepTimeResponse);
+  rpc SEMFetchCarrierMeasurement(SEMFetchCarrierMeasurementRequest) returns (SEMFetchCarrierMeasurementResponse);
+  rpc SEMFetchLowerOffsetMargin(SEMFetchLowerOffsetMarginRequest) returns (SEMFetchLowerOffsetMarginResponse);
+  rpc SEMFetchLowerOffsetMarginArray(SEMFetchLowerOffsetMarginArrayRequest) returns (SEMFetchLowerOffsetMarginArrayResponse);
+  rpc SEMFetchLowerOffsetPower(SEMFetchLowerOffsetPowerRequest) returns (SEMFetchLowerOffsetPowerResponse);
+  rpc SEMFetchLowerOffsetPowerArray(SEMFetchLowerOffsetPowerArrayRequest) returns (SEMFetchLowerOffsetPowerArrayResponse);
+  rpc SEMFetchMeasurementStatus(SEMFetchMeasurementStatusRequest) returns (SEMFetchMeasurementStatusResponse);
+  rpc SEMFetchSpectrum(SEMFetchSpectrumRequest) returns (SEMFetchSpectrumResponse);
+  rpc SEMFetchUpperOffsetMargin(SEMFetchUpperOffsetMarginRequest) returns (SEMFetchUpperOffsetMarginResponse);
+  rpc SEMFetchUpperOffsetMarginArray(SEMFetchUpperOffsetMarginArrayRequest) returns (SEMFetchUpperOffsetMarginArrayResponse);
+  rpc SEMFetchUpperOffsetPower(SEMFetchUpperOffsetPowerRequest) returns (SEMFetchUpperOffsetPowerResponse);
+  rpc SEMFetchUpperOffsetPowerArray(SEMFetchUpperOffsetPowerArrayRequest) returns (SEMFetchUpperOffsetPowerArrayResponse);
+  rpc SelectMeasurements(SelectMeasurementsRequest) returns (SelectMeasurementsResponse);
+  rpc SendSoftwareEdgeTrigger(SendSoftwareEdgeTriggerRequest) returns (SendSoftwareEdgeTriggerResponse);
+  rpc SetAttributeF32(SetAttributeF32Request) returns (SetAttributeF32Response);
+  rpc SetAttributeF32Array(SetAttributeF32ArrayRequest) returns (SetAttributeF32ArrayResponse);
+  rpc SetAttributeF64(SetAttributeF64Request) returns (SetAttributeF64Response);
+  rpc SetAttributeF64Array(SetAttributeF64ArrayRequest) returns (SetAttributeF64ArrayResponse);
+  rpc SetAttributeI16(SetAttributeI16Request) returns (SetAttributeI16Response);
+  rpc SetAttributeI32(SetAttributeI32Request) returns (SetAttributeI32Response);
+  rpc SetAttributeI32Array(SetAttributeI32ArrayRequest) returns (SetAttributeI32ArrayResponse);
+  rpc SetAttributeI64(SetAttributeI64Request) returns (SetAttributeI64Response);
+  rpc SetAttributeI64Array(SetAttributeI64ArrayRequest) returns (SetAttributeI64ArrayResponse);
+  rpc SetAttributeI8(SetAttributeI8Request) returns (SetAttributeI8Response);
+  rpc SetAttributeI8Array(SetAttributeI8ArrayRequest) returns (SetAttributeI8ArrayResponse);
+  rpc SetAttributeNIComplexDoubleArray(SetAttributeNIComplexDoubleArrayRequest) returns (SetAttributeNIComplexDoubleArrayResponse);
+  rpc SetAttributeNIComplexSingleArray(SetAttributeNIComplexSingleArrayRequest) returns (SetAttributeNIComplexSingleArrayResponse);
+  rpc SetAttributeString(SetAttributeStringRequest) returns (SetAttributeStringResponse);
+  rpc SetAttributeU16(SetAttributeU16Request) returns (SetAttributeU16Response);
+  rpc SetAttributeU32(SetAttributeU32Request) returns (SetAttributeU32Response);
+  rpc SetAttributeU32Array(SetAttributeU32ArrayRequest) returns (SetAttributeU32ArrayResponse);
+  rpc SetAttributeU64Array(SetAttributeU64ArrayRequest) returns (SetAttributeU64ArrayResponse);
+  rpc SetAttributeU8(SetAttributeU8Request) returns (SetAttributeU8Response);
+  rpc SetAttributeU8Array(SetAttributeU8ArrayRequest) returns (SetAttributeU8ArrayResponse);
+  rpc TXPCfgAveraging(TXPCfgAveragingRequest) returns (TXPCfgAveragingResponse);
+  rpc TXPCfgBurstDetectionEnabled(TXPCfgBurstDetectionEnabledRequest) returns (TXPCfgBurstDetectionEnabledResponse);
+  rpc TXPCfgMaximumMeasurementInterval(TXPCfgMaximumMeasurementIntervalRequest) returns (TXPCfgMaximumMeasurementIntervalResponse);
+  rpc TXPFetchMeasurement(TXPFetchMeasurementRequest) returns (TXPFetchMeasurementResponse);
+  rpc TXPFetchPowerTrace(TXPFetchPowerTraceRequest) returns (TXPFetchPowerTraceResponse);
+  rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
+  rpc WaitForMeasurementComplete(WaitForMeasurementCompleteRequest) returns (WaitForMeasurementCompleteResponse);
 }
 
 enum NiRFmxWLANAttribute {
   NIRFMXWLAN_ATTRIBUTE_UNSPECIFIED = 0;
+  NIRFMXWLAN_ATTRIBUTE_CENTER_FREQUENCY = 10485761;
+  NIRFMXWLAN_ATTRIBUTE_REFERENCE_LEVEL = 10485762;
+  NIRFMXWLAN_ATTRIBUTE_EXTERNAL_ATTENUATION = 10485763;
+  NIRFMXWLAN_ATTRIBUTE_TRIGGER_TYPE = 10485764;
+  NIRFMXWLAN_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE = 10485765;
+  NIRFMXWLAN_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_EDGE = 10485766;
+  NIRFMXWLAN_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_SOURCE = 10485767;
+  NIRFMXWLAN_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL = 10485768;
+  NIRFMXWLAN_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_SLOPE = 10485769;
+  NIRFMXWLAN_ATTRIBUTE_TRIGGER_DELAY = 10485770;
+  NIRFMXWLAN_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_MODE = 10485771;
+  NIRFMXWLAN_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_DURATION = 10485772;
+  NIRFMXWLAN_ATTRIBUTE_STANDARD = 10485773;
+  NIRFMXWLAN_ATTRIBUTE_CHANNEL_BANDWIDTH = 10485774;
+  NIRFMXWLAN_ATTRIBUTE_NUMBER_OF_FREQUENCY_SEGMENTS = 10485775;
+  NIRFMXWLAN_ATTRIBUTE_NUMBER_OF_RECEIVE_CHAINS = 10485776;
+  NIRFMXWLAN_ATTRIBUTE_AUTO_DETECT_SIGNAL_DETECTED_STANDARD = 10485777;
+  NIRFMXWLAN_ATTRIBUTE_AUTO_DETECT_SIGNAL_DETECTED_CHANNEL_BANDWIDTH = 10485778;
+  NIRFMXWLAN_ATTRIBUTE_AUTO_DETECT_SIGNAL_DETECTED_BURST_LENGTH = 10485779;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_FREQUENCY_SEGMENT_INDEX = 10485780;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_TRANSMIT_POWER_CLASS = 10485781;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_FREQUENCY_BAND = 10485782;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_PPDU_TYPE = 10485783;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_NUMBER_OF_USERS = 10485784;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_MCS_INDEX = 10485785;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_RU_SIZE = 10485786;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_RU_OFFSET_MRU_INDEX = 10485787;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_GUARD_INTERVAL_TYPE = 10485788;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_LTF_SIZE = 10485789;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_NUMBER_OF_SPACE_TIME_STREAMS = 10485790;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_SPACE_TIME_STREAM_OFFSET = 10485791;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_NUMBER_OF_HE_SIG_B_SYMBOLS = 10485792;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED = 10485793;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_NUMBER_OF_LTF_SYMBOLS = 10485794;
+  NIRFMXWLAN_ATTRIBUTE_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL = 10485796;
+  NIRFMXWLAN_ATTRIBUTE_LIMITED_CONFIGURATION_CHANGE = 10485797;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_AUTO_PPDU_TYPE_DETECTION_ENABLED = 10485799;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_HEADER_DECODING_ENABLED = 10485800;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_MU_MIMO_LTF_MODE_ENABLED = 10485801;
+  NIRFMXWLAN_ATTRIBUTE_TRIGGER_GATE_ENABLED = 10485802;
+  NIRFMXWLAN_ATTRIBUTE_TRIGGER_GATE_LENGTH = 10485803;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_PREAMBLE_PUNCTURING_ENABLED = 10485807;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_PREAMBLE_PUNCTURING_BITMAP = 10485808;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_PE_DISAMBIGUITY = 10485809;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_FEC_CODING_TYPE = 10485810;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_PRE_FEC_PADDING_FACTOR = 10485811;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_LDPC_EXTRA_SYMBOL_SEGMENT = 10485812;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_STBC_ENABLED = 10485813;
+  NIRFMXWLAN_ATTRIBUTE_SAMPLE_CLOCK_RATE_FACTOR = 10485814;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_PHASE_ROTATION_COEFFICIENT_1 = 10485815;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_PHASE_ROTATION_COEFFICIENT_2 = 10485816;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_PHASE_ROTATION_COEFFICIENT_3 = 10485817;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_EHT_SIG_COMPRESSION_ENABLED = 10485818;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_NUMBER_OF_EHT_SIG_SYMBOLS = 10485819;
+  NIRFMXWLAN_ATTRIBUTE_OFDM_AUTO_PHASE_ROTATION_DETECTION_ENABLED = 10485820;
+  NIRFMXWLAN_ATTRIBUTE_REFERENCE_LEVEL_HEADROOM = 10489852;
+  NIRFMXWLAN_ATTRIBUTE_SELECTED_PORTS = 10489853;
+  NIRFMXWLAN_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE = 10489855;
+  NIRFMXWLAN_ATTRIBUTE_TXP_MEASUREMENT_ENABLED = 10489856;
+  NIRFMXWLAN_ATTRIBUTE_TXP_MAXIMUM_MEASUREMENT_INTERVAL = 10489858;
+  NIRFMXWLAN_ATTRIBUTE_TXP_BURST_DETECTION_ENABLED = 10489859;
+  NIRFMXWLAN_ATTRIBUTE_TXP_AVERAGING_ENABLED = 10489860;
+  NIRFMXWLAN_ATTRIBUTE_TXP_AVERAGING_COUNT = 10489861;
+  NIRFMXWLAN_ATTRIBUTE_TXP_ALL_TRACES_ENABLED = 10489862;
+  NIRFMXWLAN_ATTRIBUTE_TXP_NUMBER_OF_ANALYSIS_THREADS = 10489863;
+  NIRFMXWLAN_ATTRIBUTE_TXP_RESULTS_AVERAGE_POWER_MEAN = 10489865;
+  NIRFMXWLAN_ATTRIBUTE_TXP_RESULTS_PEAK_POWER_MAXIMUM = 10489873;
+  NIRFMXWLAN_ATTRIBUTE_TXP_RESULTS_AVERAGE_POWER_MAXIMUM = 10489877;
+  NIRFMXWLAN_ATTRIBUTE_TXP_RESULTS_AVERAGE_POWER_MINIMUM = 10489878;
+  NIRFMXWLAN_ATTRIBUTE_TXP_RESULTS_PEAK_POWER_MEAN = 10489879;
+  NIRFMXWLAN_ATTRIBUTE_TXP_RESULTS_PEAK_POWER_MINIMUM = 10489880;
+  NIRFMXWLAN_ATTRIBUTE_POWERRAMP_MEASUREMENT_ENABLED = 10493962;
+  NIRFMXWLAN_ATTRIBUTE_POWERRAMP_ACQUISITION_LENGTH = 10493964;
+  NIRFMXWLAN_ATTRIBUTE_POWERRAMP_AVERAGING_ENABLED = 10493972;
+  NIRFMXWLAN_ATTRIBUTE_POWERRAMP_AVERAGING_COUNT = 10493973;
+  NIRFMXWLAN_ATTRIBUTE_POWERRAMP_ALL_TRACES_ENABLED = 10493974;
+  NIRFMXWLAN_ATTRIBUTE_POWERRAMP_NUMBER_OF_ANALYSIS_THREADS = 10493975;
+  NIRFMXWLAN_ATTRIBUTE_POWERRAMP_RESULTS_RISE_TIME_MEAN = 10493976;
+  NIRFMXWLAN_ATTRIBUTE_POWERRAMP_RESULTS_FALL_TIME_MEAN = 10493977;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_MEASUREMENT_ENABLED = 10498058;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_ACQUISITION_LENGTH_MODE = 10498059;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_ACQUISITION_LENGTH = 10498060;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_MEASUREMENT_OFFSET = 10498061;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_MAXIMUM_MEASUREMENT_LENGTH = 10498062;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_PULSE_SHAPING_FILTER_TYPE = 10498063;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_PULSE_SHAPING_FILTER_PARAMETER = 10498064;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_EQUALIZATION_ENABLED = 10498065;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_EVM_UNIT = 10498066;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_POWER_MEASUREMENT_ENABLED = 10498067;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_POWER_NUMBER_OF_CUSTOM_GATES = 10498068;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_POWER_CUSTOM_GATE_START_TIME = 10498069;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_POWER_CUSTOM_GATE_STOP_TIME = 10498070;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_FREQUENCY_ERROR_CORRECTION_ENABLED = 10498092;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_CHIP_CLOCK_ERROR_CORRECTION_ENABLED = 10498093;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED = 10498094;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_AVERAGING_ENABLED = 10498095;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_AVERAGING_COUNT = 10498096;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_ALL_TRACES_ENABLED = 10498097;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_RMS_EVM_MEAN = 10498098;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PEAK_EVM_802_11_1999_MEAN = 10498099;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PEAK_EVM_802_11_1999_MAXIMUM = 10498100;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PEAK_EVM_802_11_2007_MEAN = 10498101;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PEAK_EVM_802_11_2007_MAXIMUM = 10498102;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PEAK_EVM_802_11_2016_MEAN = 10498108;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PEAK_EVM_802_11_2016_MAXIMUM = 10498109;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_CUSTOM_GATE_AVERAGE_POWER_MEAN = 10498110;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_CUSTOM_GATE_PEAK_POWER_MAXIMUM = 10498111;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_NUMBER_OF_CHIPS_USED = 10498125;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_FREQUENCY_ERROR_MEAN = 10498126;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_CHIP_CLOCK_ERROR_MEAN = 10498130;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_IQ_GAIN_IMBALANCE_MEAN = 10498131;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_IQ_QUADRATURE_ERROR_MEAN = 10498135;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_IQ_ORIGIN_OFFSET_MEAN = 10498139;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_RMS_MAGNITUDE_ERROR_MEAN = 10498146;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_RMS_PHASE_ERROR_MEAN = 10498147;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_DATA_MODULATION_FORMAT = 10498152;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PAYLOAD_LENGTH = 10498153;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PREAMBLE_TYPE = 10498154;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_LOCKED_CLOCKS_BIT = 10498156;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_HEADER_CRC_STATUS = 10498157;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PSDU_CRC_STATUS = 10498158;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_NUMBER_OF_ANALYSIS_THREADS = 10498161;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PREAMBLE_AVERAGE_POWER_MEAN = 10498162;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PREAMBLE_PEAK_POWER_MAXIMUM = 10498163;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_HEADER_AVERAGE_POWER_MEAN = 10498164;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_HEADER_PEAK_POWER_MAXIMUM = 10498165;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_DATA_AVERAGE_POWER_MEAN = 10498166;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_DATA_PEAK_POWER_MAXIMUM = 10498167;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PPDU_AVERAGE_POWER_MEAN = 10498168;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_RESULTS_PPDU_PEAK_POWER_MAXIMUM = 10498169;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_BURST_START_DETECTION_ENABLED = 10498170;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_SPECTRUM_INVERTED = 10498171;
+  NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_DATA_DECODING_ENABLED = 10498172;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_MEASUREMENT_ENABLED = 10502144;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_AVERAGING_ENABLED = 10502146;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_AVERAGING_COUNT = 10502147;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_NUMBER_OF_ANALYSIS_THREADS = 10502148;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_ALL_TRACES_ENABLED = 10502149;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_EVM_UNIT = 10502152;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_ACQUISITION_LENGTH_MODE = 10502153;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_ACQUISITION_LENGTH = 10502154;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_MEASUREMENT_OFFSET = 10502155;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_MAXIMUM_MEASUREMENT_LENGTH = 10502156;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_COMMON_CLOCK_SOURCE_ENABLED = 10502157;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_AMPLITUDE_TRACKING_ENABLED = 10502158;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_PHASE_TRACKING_ENABLED = 10502159;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED = 10502160;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_ESTIMATION_TYPE = 10502161;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_NUMBER_OF_SYMBOLS_USED = 10502166;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_POWER_MEASUREMENT_ENABLED = 10502167;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_POWER_NUMBER_OF_CUSTOM_GATES = 10502168;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_POWER_CUSTOM_GATE_START_TIME = 10502169;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_POWER_CUSTOM_GATE_STOP_TIME = 10502170;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_IQ_IMPAIRMENTS_MODEL = 10502171;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED = 10502172;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_IQ_QUADRATURE_ERROR_CORRECTION_ENABLED = 10502173;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_IQ_TIMING_SKEW_CORRECTION_ENABLED = 10502174;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPECTRAL_FLATNESS_MARGIN = 10502179;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPECTRAL_FLATNESS_MARGIN_SUBCARRIER_INDEX = 10502180;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_UNUSED_TONE_ERROR_MARGIN = 10502181;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_UNUSED_TONE_ERROR_MARGIN_RU_INDEX = 10502182;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_NOISE_COMPENSATION_APPLIED = 10502183;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_FREQUENCY_ERROR_MEAN = 10502184;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_FREQUENCY_ERROR_CCDF_10_PERCENT = 10502185;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SYMBOL_CLOCK_ERROR_MEAN = 10502186;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_RELATIVE_IQ_ORIGIN_OFFSET_MEAN = 10502187;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_ABSOLUTE_IQ_ORIGIN_OFFSET_MEAN = 10502188;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_IQ_GAIN_IMBALANCE_MEAN = 10502189;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_IQ_QUADRATURE_ERROR_MEAN = 10502190;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_IQ_TIMING_SKEW_MEAN = 10502191;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_RMS_COMMON_PHASE_ERROR_MEAN = 10502192;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_PPDU_TYPE = 10502193;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_MCS_INDEX = 10502194;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_RU_SIZE = 10502195;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_RU_OFFSET_MRU_INDEX = 10502196;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_NUMBER_OF_USERS = 10502197;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_NUMBER_OF_HE_SIG_B_SYMBOLS = 10502198;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_GUARD_INTERVAL_TYPE = 10502199;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_LTF_SIZE = 10502200;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_NUMBER_OF_SPACE_TIME_STREAMS = 10502201;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_L_STF_AVERAGE_POWER_MEAN = 10502202;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_L_STF_PEAK_POWER_MAXIMUM = 10502203;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_L_LTF_AVERAGE_POWER_MEAN = 10502204;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_L_LTF_PEAK_POWER_MAXIMUM = 10502205;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_L_SIG_AVERAGE_POWER_MEAN = 10502206;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_L_SIG_PEAK_POWER_MAXIMUM = 10502207;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_RL_SIG_AVERAGE_POWER_MEAN = 10502208;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_RL_SIG_PEAK_POWER_MAXIMUM = 10502209;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_SIG_AVERAGE_POWER_MEAN = 10502210;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_SIG_PEAK_POWER_MAXIMUM = 10502211;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_VHT_SIG_A_AVERAGE_POWER_MEAN = 10502212;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_VHT_SIG_A_PEAK_POWER_MAXIMUM = 10502213;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HE_SIG_A_AVERAGE_POWER_MEAN = 10502214;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HE_SIG_A_PEAK_POWER_MAXIMUM = 10502215;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_VHT_SIG_B_AVERAGE_POWER_MEAN = 10502216;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_VHT_SIG_B_PEAK_POWER_MAXIMUM = 10502217;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HE_SIG_B_AVERAGE_POWER_MEAN = 10502218;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HE_SIG_B_PEAK_POWER_MAXIMUM = 10502219;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_STF_AVERAGE_POWER_MEAN = 10502220;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_STF_PEAK_POWER_MAXIMUM = 10502221;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_GF_STF_AVERAGE_POWER_MEAN = 10502222;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_GF_STF_PEAK_POWER_MAXIMUM = 10502223;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_VHT_STF_AVERAGE_POWER_MEAN = 10502224;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_VHT_STF_PEAK_POWER_MAXIMUM = 10502225;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HE_STF_AVERAGE_POWER_MEAN = 10502226;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HE_STF_PEAK_POWER_MAXIMUM = 10502227;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_DLTF_AVERAGE_POWER_MEAN = 10502228;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_DLTF_PEAK_POWER_MAXIMUM = 10502229;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_ELTF_AVERAGE_POWER_MEAN = 10502230;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HT_ELTF_PEAK_POWER_MAXIMUM = 10502231;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_VHT_LTF_AVERAGE_POWER_MEAN = 10502232;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_VHT_LTF_PEAK_POWER_MAXIMUM = 10502233;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HE_LTF_AVERAGE_POWER_MEAN = 10502234;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_HE_LTF_PEAK_POWER_MAXIMUM = 10502235;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_DATA_AVERAGE_POWER_MEAN = 10502236;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_DATA_PEAK_POWER_MAXIMUM = 10502237;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_PE_AVERAGE_POWER_MEAN = 10502238;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_PE_PEAK_POWER_MAXIMUM = 10502239;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_PPDU_AVERAGE_POWER_MEAN = 10502240;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_PPDU_PEAK_POWER_MAXIMUM = 10502241;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_CUSTOM_GATE_AVERAGE_POWER_MEAN = 10502242;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_POWER_CUSTOM_GATE_PEAK_POWER_MAXIMUM = 10502243;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_MEASUREMENT_MODE = 10502246;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_NOISE_COMPENSATION_ENABLED = 10502247;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_NOISE_COMPENSATION_INPUT_POWER_CHECK_ENABLED = 10502248;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_NOISE_COMPENSATION_REFERENCE_LEVEL_COERCION_LIMIT = 10502249;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED = 10502250;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_LENGTH = 10502251;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE = 10502252;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_RMS_COMMON_PILOT_ERROR_MEAN = 10502253;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN = 10502254;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_COMPOSITE_DATA_RMS_EVM_MEAN = 10502255;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_COMPOSITE_PILOT_RMS_EVM_MEAN = 10502256;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_CHAIN_RMS_EVM_MEAN = 10502257;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_CHAIN_DATA_RMS_EVM_MEAN = 10502258;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_CHAIN_PILOT_RMS_EVM_MEAN = 10502259;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_STREAM_RMS_EVM_MEAN = 10502260;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_STREAM_DATA_RMS_EVM_MEAN = 10502261;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_STREAM_PILOT_RMS_EVM_MEAN = 10502262;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_USER_STREAM_RMS_EVM_MEAN = 10502263;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_USER_STREAM_DATA_RMS_EVM_MEAN = 10502264;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_USER_STREAM_PILOT_RMS_EVM_MEAN = 10502265;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_SPECTRUM_INVERTED = 10502266;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED = 10502267;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED = 10502268;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_MARGIN = 10502269;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD = 10502270;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_IQ_IMPAIRMENTS_PER_SUBCARRIER_ENABLED = 10502271;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_BURST_START_DETECTION_ENABLED = 10502277;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED = 10502279;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_L_SIG_PARITY_CHECK_STATUS = 10502280;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SIG_CRC_STATUS = 10502281;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SIG_B_CRC_STATUS = 10502282;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_DATA_DECODING_ENABLED = 10502283;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_PSDU_CRC_STATUS = 10502284;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_MATRIX_POWER_ENABLED = 10502285;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_CROSS_POWER_MEAN = 10502286;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_USER_POWER_MEAN = 10502287;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET = 10502288;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_U_SIG_CRC_STATUS = 10502289;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_EHT_SIG_CRC_STATUS = 10502290;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE = 10502291;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_PE_DURATION = 10502293;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_STREAM_RMS_EVM_MAXIMUM = 10502294;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_STREAM_RMS_EVM_MINIMUM = 10502295;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_CHAIN_RMS_EVM_MAXIMUM = 10502296;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_CHAIN_RMS_EVM_MINIMUM = 10502297;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_USER_STREAM_RMS_EVM_MAXIMUM = 10502298;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_USER_STREAM_RMS_EVM_MINIMUM = 10502299;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_USER_POWER_MAXIMUM = 10502300;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_USER_POWER_MINIMUM = 10502301;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPECTRAL_FLATNESS_MARGIN_MAXIMUM = 10502302;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPECTRAL_FLATNESS_MARGIN_MINIMUM = 10502303;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_FREQUENCY_ERROR_MAXIMUM = 10502304;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_FREQUENCY_ERROR_MINIMUM = 10502305;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SYMBOL_CLOCK_ERROR_MAXIMUM = 10502306;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SYMBOL_CLOCK_ERROR_MINIMUM = 10502307;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_RELATIVE_IQ_ORIGIN_OFFSET_MAXIMUM = 10502308;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_RELATIVE_IQ_ORIGIN_OFFSET_MINIMUM = 10502309;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_IQ_GAIN_IMBALANCE_MAXIMUM = 10502310;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_IQ_GAIN_IMBALANCE_MINIMUM = 10502311;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_IQ_QUADRATURE_ERROR_MAXIMUM = 10502312;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_IQ_QUADRATURE_ERROR_MINIMUM = 10502313;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_FEC_CODING_TYPE = 10502314;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_DCM_ENABLED = 10502315;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_AVERAGING_TYPE = 10502316;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_VECTOR_AVERAGING_TIME_ALIGNMENT_ENABLED = 10502317;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_VECTOR_AVERAGING_PHASE_ALIGNMENT_ENABLED = 10502318;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_AUTO_LEVEL_ALLOW_OVERFLOW = 10502321;
+  NIRFMXWLAN_ATTRIBUTE_SEM_MEASUREMENT_ENABLED = 10506240;
+  NIRFMXWLAN_ATTRIBUTE_SEM_MASK_TYPE = 10506242;
+  NIRFMXWLAN_ATTRIBUTE_SEM_CARRIER_INTEGRATION_BANDWIDTH = 10506245;
+  NIRFMXWLAN_ATTRIBUTE_SEM_NUMBER_OF_OFFSETS = 10506246;
+  NIRFMXWLAN_ATTRIBUTE_SEM_OFFSET_START_FREQUENCY = 10506247;
+  NIRFMXWLAN_ATTRIBUTE_SEM_OFFSET_STOP_FREQUENCY = 10506248;
+  NIRFMXWLAN_ATTRIBUTE_SEM_OFFSET_SIDEBAND = 10506249;
+  NIRFMXWLAN_ATTRIBUTE_SEM_OFFSET_RELATIVE_LIMIT_START = 10506250;
+  NIRFMXWLAN_ATTRIBUTE_SEM_OFFSET_RELATIVE_LIMIT_STOP = 10506251;
+  NIRFMXWLAN_ATTRIBUTE_SEM_SPAN_AUTO = 10506252;
+  NIRFMXWLAN_ATTRIBUTE_SEM_SPAN = 10506253;
+  NIRFMXWLAN_ATTRIBUTE_SEM_SWEEP_TIME_AUTO = 10506257;
+  NIRFMXWLAN_ATTRIBUTE_SEM_SWEEP_TIME_INTERVAL = 10506258;
+  NIRFMXWLAN_ATTRIBUTE_SEM_AVERAGING_ENABLED = 10506259;
+  NIRFMXWLAN_ATTRIBUTE_SEM_AVERAGING_COUNT = 10506260;
+  NIRFMXWLAN_ATTRIBUTE_SEM_AVERAGING_TYPE = 10506261;
+  NIRFMXWLAN_ATTRIBUTE_SEM_AMPLITUDE_CORRECTION_TYPE = 10506262;
+  NIRFMXWLAN_ATTRIBUTE_SEM_ALL_TRACES_ENABLED = 10506263;
+  NIRFMXWLAN_ATTRIBUTE_SEM_NUMBER_OF_ANALYSIS_THREADS = 10506264;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_MEASUREMENT_STATUS = 10506267;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_CARRIER_ABSOLUTE_INTEGRATED_POWER = 10506268;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_CARRIER_ABSOLUTE_PEAK_POWER = 10506270;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_CARRIER_PEAK_FREQUENCY = 10506271;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MEASUREMENT_STATUS = 10506273;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_ABSOLUTE_INTEGRATED_POWER = 10506274;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_RELATIVE_INTEGRATED_POWER = 10506275;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_ABSOLUTE_PEAK_POWER = 10506276;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_RELATIVE_PEAK_POWER = 10506277;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_PEAK_FREQUENCY = 10506278;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MARGIN = 10506279;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MARGIN_ABSOLUTE_POWER = 10506280;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MARGIN_RELATIVE_POWER = 10506281;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MARGIN_FREQUENCY = 10506282;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MEASUREMENT_STATUS = 10506283;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_ABSOLUTE_INTEGRATED_POWER = 10506284;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_RELATIVE_INTEGRATED_POWER = 10506285;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_ABSOLUTE_PEAK_POWER = 10506286;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_RELATIVE_PEAK_POWER = 10506287;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_PEAK_FREQUENCY = 10506288;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MARGIN = 10506289;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MARGIN_ABSOLUTE_POWER = 10506290;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MARGIN_RELATIVE_POWER = 10506291;
+  NIRFMXWLAN_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MARGIN_FREQUENCY = 10506292;
+  NIRFMXWLAN_ATTRIBUTE_RESULT_FETCH_TIMEOUT = 10534912;
 }
 
 enum Boolean {
@@ -29,6 +588,967 @@ enum Boolean {
   BOOLEAN_UNSPECIFIED = 0;
   BOOLEAN_FALSE = 0;
   BOOLEAN_TRUE = 1;
+}
+
+enum DigitalEdgeTriggerEdge {
+  option allow_alias = true;
+  DIGITAL_EDGE_TRIGGER_EDGE_UNSPECIFIED = 0;
+  DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE = 0;
+  DIGITAL_EDGE_TRIGGER_EDGE_FALLING_EDGE = 1;
+}
+
+enum DsssModAccAcquisitionLengthMode {
+  option allow_alias = true;
+  DSSS_MOD_ACC_ACQUISITION_LENGTH_MODE_UNSPECIFIED = 0;
+  DSSS_MOD_ACC_ACQUISITION_LENGTH_MODE_DSSSMODACC_ACQUISITION_LENGTH_MODE_MANUAL = 0;
+  DSSS_MOD_ACC_ACQUISITION_LENGTH_MODE_DSSSMODACC_ACQUISITION_LENGTH_MODE_AUTO = 1;
+}
+
+enum DsssModAccAveragingEnabled {
+  option allow_alias = true;
+  DSSS_MOD_ACC_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  DSSS_MOD_ACC_AVERAGING_ENABLED_FALSE = 0;
+  DSSS_MOD_ACC_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum DsssModAccDataModulationFormat {
+  option allow_alias = true;
+  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_UNSPECIFIED = 0;
+  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_DSSS1_MBPS = 0;
+  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_DSSS2_MBPS = 1;
+  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_CCK5_5_MBPS = 2;
+  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_CCK11_MBPS = 3;
+  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_PBCC5_5_MBPS = 4;
+  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_PBCC11_MBPS = 5;
+  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_PBCC22_MBPS = 6;
+  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_PBCC33_MBPS = 7;
+}
+
+enum DsssModAccEvmUnit {
+  option allow_alias = true;
+  DSSS_MOD_ACC_EVM_UNIT_UNSPECIFIED = 0;
+  DSSS_MOD_ACC_EVM_UNIT_DSSSMODACC_EVM_UNIT_PERCENTAGE = 0;
+  DSSS_MOD_ACC_EVM_UNIT_DSSSMODACC_EVM_UNIT_DB = 1;
+}
+
+enum DsssModAccPayloadHeaderCrcStatus {
+  option allow_alias = true;
+  DSSS_MOD_ACC_PAYLOAD_HEADER_CRC_STATUS_UNSPECIFIED = 0;
+  DSSS_MOD_ACC_PAYLOAD_HEADER_CRC_STATUS_DSSSMODACC_HEADER_CRC_STATUS_FAIL = 0;
+  DSSS_MOD_ACC_PAYLOAD_HEADER_CRC_STATUS_DSSSMODACC_HEADER_CRC_STATUS_PASS = 1;
+}
+
+enum DsssModAccPowerMeasurementEnabled {
+  option allow_alias = true;
+  DSSS_MOD_ACC_POWER_MEASUREMENT_ENABLED_UNSPECIFIED = 0;
+  DSSS_MOD_ACC_POWER_MEASUREMENT_ENABLED_FALSE = 0;
+  DSSS_MOD_ACC_POWER_MEASUREMENT_ENABLED_TRUE = 1;
+}
+
+enum DsssModAccPreambleType {
+  option allow_alias = true;
+  DSSS_MOD_ACC_PREAMBLE_TYPE_UNSPECIFIED = 0;
+  DSSS_MOD_ACC_PREAMBLE_TYPE_DSSSMODACC_PREAMBLE_TYPE_LONG = 0;
+  DSSS_MOD_ACC_PREAMBLE_TYPE_DSSSMODACC_PREAMBLE_TYPE_SHORT = 1;
+}
+
+enum DsssModAccPsduCrcStaus {
+  option allow_alias = true;
+  DSSS_MOD_ACC_PSDU_CRC_STAUS_UNSPECIFIED = 0;
+  DSSS_MOD_ACC_PSDU_CRC_STAUS_DSSSMODACC_PSDU_CRC_STATUS_FAIL = 0;
+  DSSS_MOD_ACC_PSDU_CRC_STAUS_DSSSMODACC_PSDU_CRC_STATUS_PASS = 1;
+}
+
+enum FrequencyReferenceSource {
+  FREQUENCY_REFERENCE_SOURCE_UNSPECIFIED = 0;
+  FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK = 1;
+  FREQUENCY_REFERENCE_SOURCE_REF_IN = 2;
+  FREQUENCY_REFERENCE_SOURCE_PXI_CLK = 3;
+  FREQUENCY_REFERENCE_SOURCE_CLK_IN = 4;
+}
+
+enum IQPowerEdgeTriggerLevelType {
+  option allow_alias = true;
+  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_UNSPECIFIED = 0;
+  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
+  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
+}
+
+enum IQPowerEdgeTriggerSlope {
+  option allow_alias = true;
+  IQ_POWER_EDGE_TRIGGER_SLOPE_UNSPECIFIED = 0;
+  IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE = 0;
+  IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING_SLOPE = 1;
+}
+
+enum MeasurementTypes {
+  MEASUREMENT_TYPES_UNSPECIFIED = 0;
+  MEASUREMENT_TYPES_TXP = 1;
+  MEASUREMENT_TYPES_POWERRAMP = 2;
+  MEASUREMENT_TYPES_DSSSMODACC = 4;
+  MEASUREMENT_TYPES_OFDMMODACC = 8;
+  MEASUREMENT_TYPES_SEM = 16;
+}
+
+enum MechanicalAttenuationAuto {
+  option allow_alias = true;
+  MECHANICAL_ATTENUATION_AUTO_UNSPECIFIED = 0;
+  MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
+  MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum OfdmGuardIntervalType {
+  option allow_alias = true;
+  OFDM_GUARD_INTERVAL_TYPE_UNSPECIFIED = 0;
+  OFDM_GUARD_INTERVAL_TYPE_1_4 = 0;
+  OFDM_GUARD_INTERVAL_TYPE_1_8 = 1;
+  OFDM_GUARD_INTERVAL_TYPE_1_16 = 2;
+}
+
+enum OfdmLtfSize {
+  option allow_alias = true;
+  OFDM_LTF_SIZE_UNSPECIFIED = 0;
+  OFDM_LTF_SIZE_NOT_APPLICABLE = -1;
+  OFDM_LTF_SIZE_4_X = 0;
+  OFDM_LTF_SIZE_2_X = 1;
+  OFDM_LTF_SIZE_1_X = 2;
+}
+
+enum OfdmModAccAcquisitionLengthMode {
+  option allow_alias = true;
+  OFDM_MOD_ACC_ACQUISITION_LENGTH_MODE_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_ACQUISITION_LENGTH_MODE_OFDMMODACC_ACQUISITION_LENGTH_MODE_MANUAL = 0;
+  OFDM_MOD_ACC_ACQUISITION_LENGTH_MODE_OFDMMODACC_ACQUISITION_LENGTH_MODE_AUTO = 1;
+}
+
+enum OfdmModAccAmplitudeTrackingEnabled {
+  option allow_alias = true;
+  OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_FALSE = 0;
+  OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_TRUE = 1;
+}
+
+enum OfdmModAccAveragingEnabled {
+  option allow_alias = true;
+  OFDM_MOD_ACC_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_AVERAGING_ENABLED_FALSE = 0;
+  OFDM_MOD_ACC_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum OfdmModAccCalibrationDataValid {
+  option allow_alias = true;
+  OFDM_MOD_ACC_CALIBRATION_DATA_VALID_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_CALIBRATION_DATA_VALID_FALSE = 0;
+  OFDM_MOD_ACC_CALIBRATION_DATA_VALID_TRUE = 1;
+}
+
+enum OfdmModAccChannelEstimationType {
+  option allow_alias = true;
+  OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_OFDMMODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE = 0;
+  OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_OFDMMODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE_AND_DATA = 1;
+}
+
+enum OfdmModAccCommonClockSourceEnabled {
+  option allow_alias = true;
+  OFDM_MOD_ACC_COMMON_CLOCK_SOURCE_ENABLED_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_COMMON_CLOCK_SOURCE_ENABLED_FALSE = 0;
+  OFDM_MOD_ACC_COMMON_CLOCK_SOURCE_ENABLED_TRUE = 1;
+}
+
+enum OfdmModAccEvmUnit {
+  option allow_alias = true;
+  OFDM_MOD_ACC_EVM_UNIT_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_EVM_UNIT_OFDMMODACC_EVM_UNIT_PERCENTAGE = 0;
+  OFDM_MOD_ACC_EVM_UNIT_OFDMMODACC_EVM_UNIT_DB = 1;
+}
+
+enum OfdmModAccFrequencyErrorEstimationMethod {
+  option allow_alias = true;
+  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_DISABLED = 0;
+  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_INITIAL_PREAMBLE = 1;
+  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE = 2;
+  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS = 3;
+  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_PILOTS_AND_DATA = 4;
+}
+
+enum OfdmModAccLSigParityCheckStatus {
+  option allow_alias = true;
+  OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_NOT_APPLICABLE = -1;
+  OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_FAIL = 0;
+  OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_PASS = 1;
+}
+
+enum OfdmModAccMeasurementMode {
+  option allow_alias = true;
+  OFDM_MOD_ACC_MEASUREMENT_MODE_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_MEASUREMENT_MODE_OFDMMODACC_MEASUREMENT_MODE_MEASURE = 0;
+  OFDM_MOD_ACC_MEASUREMENT_MODE_OFDMMODACC_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR = 1;
+}
+
+enum OfdmModAccNoiseCompensationEnabled {
+  option allow_alias = true;
+  OFDM_MOD_ACC_NOISE_COMPENSATION_ENABLED_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_NOISE_COMPENSATION_ENABLED_FALSE = 0;
+  OFDM_MOD_ACC_NOISE_COMPENSATION_ENABLED_TRUE = 1;
+}
+
+enum OfdmModAccOptimizeDynamicRangeForEvmEnabled {
+  option allow_alias = true;
+  OFDM_MOD_ACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_FALSE = 0;
+  OFDM_MOD_ACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_TRUE = 1;
+}
+
+enum OfdmModAccPhaseTrackingEnabled {
+  option allow_alias = true;
+  OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_FALSE = 0;
+  OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_TRUE = 1;
+}
+
+enum OfdmModAccPsduCrcStatus {
+  option allow_alias = true;
+  OFDM_MOD_ACC_PSDU_CRC_STATUS_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_PSDU_CRC_STATUS_OFDMMODACC_PSDU_CRC_STATUS_FAIL = 0;
+  OFDM_MOD_ACC_PSDU_CRC_STATUS_OFDMMODACC_PSDU_CRC_STATUS_PASS = 1;
+}
+
+enum OfdmModAccSigBCrcStatus {
+  option allow_alias = true;
+  OFDM_MOD_ACC_SIG_B_CRC_STATUS_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_SIG_B_CRC_STATUS_OFDMMODACC_SIG_B_CRC_STATUS_NOT_APPLICABLE = -1;
+  OFDM_MOD_ACC_SIG_B_CRC_STATUS_OFDMMODACC_SIG_B_CRC_STATUS_FAIL = 0;
+  OFDM_MOD_ACC_SIG_B_CRC_STATUS_OFDMMODACC_SIG_B_CRC_STATUS_PASS = 1;
+}
+
+enum OfdmModAccSigCrcStatus {
+  option allow_alias = true;
+  OFDM_MOD_ACC_SIG_CRC_STATUS_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_SIG_CRC_STATUS_OFDMMODACC_SIG_CRC_STATUS_NOT_APPLICABLE = -1;
+  OFDM_MOD_ACC_SIG_CRC_STATUS_OFDMMODACC_SIG_CRC_STATUS_FAIL = 0;
+  OFDM_MOD_ACC_SIG_CRC_STATUS_OFDMMODACC_SIG_CRC_STATUS_PASS = 1;
+}
+
+enum OfdmModAccSymbolClockErrorCorrectionEnabled {
+  option allow_alias = true;
+  OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_UNSPECIFIED = 0;
+  OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_FALSE = 0;
+  OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE = 1;
+}
+
+enum OfdmPpduType {
+  option allow_alias = true;
+  OFDM_PPDU_TYPE_UNSPECIFIED = 0;
+  OFDM_PPDU_TYPE_NON_HT = 0;
+  OFDM_PPDU_TYPE_MIXED = 1;
+  OFDM_PPDU_TYPE_GREENFIELD = 2;
+  OFDM_PPDU_TYPE_SU = 3;
+  OFDM_PPDU_TYPE_MU = 4;
+  OFDM_PPDU_TYPE_EXTENDED_RANGE_SU = 5;
+  OFDM_PPDU_TYPE_TRIGGER_BASED = 6;
+}
+
+enum PowerRampAveragingEnabled {
+  option allow_alias = true;
+  POWER_RAMP_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  POWER_RAMP_AVERAGING_ENABLED_FALSE = 0;
+  POWER_RAMP_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum RFAttenuationAuto {
+  option allow_alias = true;
+  RF_ATTENUATION_AUTO_UNSPECIFIED = 0;
+  RF_ATTENUATION_AUTO_FALSE = 0;
+  RF_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum SemAveragingEnabled {
+  option allow_alias = true;
+  SEM_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  SEM_AVERAGING_ENABLED_FALSE = 0;
+  SEM_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum SemAveragingType {
+  option allow_alias = true;
+  SEM_AVERAGING_TYPE_UNSPECIFIED = 0;
+  SEM_AVERAGING_TYPE_RMS = 0;
+  SEM_AVERAGING_TYPE_LOG = 1;
+  SEM_AVERAGING_TYPE_SCALAR = 2;
+  SEM_AVERAGING_TYPE_MAXIMUM = 3;
+  SEM_AVERAGING_TYPE_MINIMUM = 4;
+}
+
+enum SemLowerOffsetMeasurementStatus {
+  option allow_alias = true;
+  SEM_LOWER_OFFSET_MEASUREMENT_STATUS_UNSPECIFIED = 0;
+  SEM_LOWER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
+  SEM_LOWER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
+}
+
+enum SemMaskType {
+  option allow_alias = true;
+  SEM_MASK_TYPE_UNSPECIFIED = 0;
+  SEM_MASK_TYPE_STANDARD = 0;
+  SEM_MASK_TYPE_CUSTOM = 1;
+}
+
+enum SemMeasurementStatus {
+  option allow_alias = true;
+  SEM_MEASUREMENT_STATUS_UNSPECIFIED = 0;
+  SEM_MEASUREMENT_STATUS_FAIL = 0;
+  SEM_MEASUREMENT_STATUS_PASS = 1;
+}
+
+enum SemOffsetSideband {
+  option allow_alias = true;
+  SEM_OFFSET_SIDEBAND_UNSPECIFIED = 0;
+  SEM_OFFSET_SIDEBAND_NEGATIVE = 0;
+  SEM_OFFSET_SIDEBAND_POSITIVE = 1;
+  SEM_OFFSET_SIDEBAND_BOTH = 2;
+}
+
+enum SemSpanAuto {
+  option allow_alias = true;
+  SEM_SPAN_AUTO_UNSPECIFIED = 0;
+  SEM_SPAN_AUTO_FALSE = 0;
+  SEM_SPAN_AUTO_TRUE = 1;
+}
+
+enum SemSweepTimeAuto {
+  option allow_alias = true;
+  SEM_SWEEP_TIME_AUTO_UNSPECIFIED = 0;
+  SEM_SWEEP_TIME_AUTO_FALSE = 0;
+  SEM_SWEEP_TIME_AUTO_TRUE = 1;
+}
+
+enum SemUpperOffsetMeasurementStatus {
+  option allow_alias = true;
+  SEM_UPPER_OFFSET_MEASUREMENT_STATUS_UNSPECIFIED = 0;
+  SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
+  SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
+}
+
+enum Standard {
+  option allow_alias = true;
+  STANDARD_UNSPECIFIED = 0;
+  STANDARD_802_11_AG = 0;
+  STANDARD_802_11_B = 1;
+  STANDARD_802_11_J = 2;
+  STANDARD_802_11_P = 3;
+  STANDARD_802_11_N = 4;
+  STANDARD_802_11_AC = 5;
+  STANDARD_802_11_AX = 6;
+  STANDARD_802_11_BE = 7;
+  STANDARD_UNKNOWN = -1;
+}
+
+enum TriggerMinimumQuietTimeMode {
+  option allow_alias = true;
+  TRIGGER_MINIMUM_QUIET_TIME_MODE_UNSPECIFIED = 0;
+  TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
+  TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+}
+
+enum TxpAveragingEnabled {
+  option allow_alias = true;
+  TXP_AVERAGING_ENABLED_UNSPECIFIED = 0;
+  TXP_AVERAGING_ENABLED_FALSE = 0;
+  TXP_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum TxpBurstDetectionEnabled {
+  option allow_alias = true;
+  TXP_BURST_DETECTION_ENABLED_UNSPECIFIED = 0;
+  TXP_BURST_DETECTION_ENABLED_FALSE = 0;
+  TXP_BURST_DETECTION_ENABLED_TRUE = 1;
+}
+
+enum NiRFmxWLANInt32AttributeValues {
+  option allow_alias = true;
+  NIRFMXWLAN_INT32_UNSPECIFIED = 0;
+  NIRFMXWLAN_INT32_DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE = 0;
+  NIRFMXWLAN_INT32_DIGITAL_EDGE_TRIGGER_EDGE_FALLING_EDGE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_ACQUISITION_LENGTH_MODE_DSSSMODACC_ACQUISITION_LENGTH_MODE_MANUAL = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_ACQUISITION_LENGTH_MODE_DSSSMODACC_ACQUISITION_LENGTH_MODE_AUTO = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_BURST_START_DETECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_BURST_START_DETECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_CHIP_CLOCK_ERROR_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_CHIP_CLOCK_ERROR_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_DECODING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_DECODING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_DSSS1_MBPS = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_DSSS2_MBPS = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_CCK5_5_MBPS = 2;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_CCK11_MBPS = 3;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_PBCC5_5_MBPS = 4;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_PBCC11_MBPS = 5;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_PBCC22_MBPS = 6;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSSMODACC_DATA_MODULATION_FORMAT_PBCC33_MBPS = 7;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_EQUALIZATION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_EQUALIZATION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_EVM_UNIT_DSSSMODACC_EVM_UNIT_PERCENTAGE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_EVM_UNIT_DSSSMODACC_EVM_UNIT_DB = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_FREQUENCY_ERROR_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_FREQUENCY_ERROR_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PAYLOAD_HEADER_CRC_STATUS_DSSSMODACC_HEADER_CRC_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PAYLOAD_HEADER_CRC_STATUS_DSSSMODACC_HEADER_CRC_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_POWER_MEASUREMENT_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_POWER_MEASUREMENT_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PREAMBLE_TYPE_DSSSMODACC_PREAMBLE_TYPE_LONG = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PREAMBLE_TYPE_DSSSMODACC_PREAMBLE_TYPE_SHORT = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PSDU_CRC_STAUS_DSSSMODACC_PSDU_CRC_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PSDU_CRC_STAUS_DSSSMODACC_PSDU_CRC_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PULSE_SHAPING_FILTER_TYPE_DSSSMODACC_PULSE_SHAPING_FILTER_TYPE_RECTANGULAR = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PULSE_SHAPING_FILTER_TYPE_DSSSMODACC_PULSE_SHAPING_FILTER_TYPE_RAISED_COSINE = 1;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PULSE_SHAPING_FILTER_TYPE_DSSSMODACC_PULSE_SHAPING_FILTER_TYPE_ROOT_RAISED_COSINE = 2;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_PULSE_SHAPING_FILTER_TYPE_DSSSMODACC_PULSE_SHAPING_FILTER_TYPE_GAUSSIAN = 3;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_SPECTRUM_INVERTED_FALSE = 0;
+  NIRFMXWLAN_INT32_DSSS_MOD_ACC_SPECTRUM_INVERTED_TRUE = 1;
+  NIRFMXWLAN_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
+  NIRFMXWLAN_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
+  NIRFMXWLAN_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE = 0;
+  NIRFMXWLAN_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING_SLOPE = 1;
+  NIRFMXWLAN_INT32_LIMITED_CONFIGURATION_CHANGE_DISABLED = 0;
+  NIRFMXWLAN_INT32_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE = 1;
+  NIRFMXWLAN_INT32_LIMITED_CONFIGURATION_CHANGE_FREQUENCY = 2;
+  NIRFMXWLAN_INT32_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL = 3;
+  NIRFMXWLAN_INT32_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL = 4;
+  NIRFMXWLAN_INT32_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL = 5;
+  NIRFMXWLAN_INT32_OFDM_AUTO_PHASE_ROTATION_DETECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_AUTO_PHASE_ROTATION_DETECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_AUTO_PPDU_TYPE_DETECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_AUTO_PPDU_TYPE_DETECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_DCM_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_DCM_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_EHT_SIG_COMPRESSION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_EHT_SIG_COMPRESSION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_FEC_CODING_TYPE_BCC = 0;
+  NIRFMXWLAN_INT32_OFDM_FEC_CODING_TYPE_LDPC = 1;
+  NIRFMXWLAN_INT32_OFDM_FREQUENCY_BAND_2_4_GHZ = 0;
+  NIRFMXWLAN_INT32_OFDM_FREQUENCY_BAND_5_GHZ = 1;
+  NIRFMXWLAN_INT32_OFDM_GUARD_INTERVAL_TYPE_1_4 = 0;
+  NIRFMXWLAN_INT32_OFDM_GUARD_INTERVAL_TYPE_1_8 = 1;
+  NIRFMXWLAN_INT32_OFDM_GUARD_INTERVAL_TYPE_1_16 = 2;
+  NIRFMXWLAN_INT32_OFDM_HEADER_DECODING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_HEADER_DECODING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_LTF_SIZE_NOT_APPLICABLE = -1;
+  NIRFMXWLAN_INT32_OFDM_LTF_SIZE_4_X = 0;
+  NIRFMXWLAN_INT32_OFDM_LTF_SIZE_2_X = 1;
+  NIRFMXWLAN_INT32_OFDM_LTF_SIZE_1_X = 2;
+  NIRFMXWLAN_INT32_OFDM_MU_MIMO_LTF_MODE_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MU_MIMO_LTF_MODE_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_ACQUISITION_LENGTH_MODE_OFDMMODACC_ACQUISITION_LENGTH_MODE_MANUAL = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_ACQUISITION_LENGTH_MODE_OFDMMODACC_ACQUISITION_LENGTH_MODE_AUTO = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_AUTO_LEVEL_ALLOW_OVERFLOW_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_AUTO_LEVEL_ALLOW_OVERFLOW_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_AVERAGING_TYPE_OFDMMODACC_AVERAGING_TYPE_RMS = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_AVERAGING_TYPE_OFDMMODACC_AVERAGING_TYPE_VECTOR = 5;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_BURST_START_DETECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_BURST_START_DETECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_CHANNEL_ESTIMATION_L_LTF_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_CHANNEL_ESTIMATION_L_LTF_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_OFDMMODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_OFDMMODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE_AND_DATA = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_CHANNEL_MATRIX_POWER_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_CHANNEL_MATRIX_POWER_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_COMMON_CLOCK_SOURCE_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_COMMON_CLOCK_SOURCE_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_DATA_DECODING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_DATA_DECODING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_DCM_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_DCM_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_EHT_SIG_CRC_STATUS_OFDMMODACC_EHT_SIG_CRC_STATUS_NOT_APPLICABLE = -1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_EHT_SIG_CRC_STATUS_OFDMMODACC_EHT_SIG_CRC_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_EHT_SIG_CRC_STATUS_OFDMMODACC_EHT_SIG_CRC_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_OFDMMODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_ACQUIRED_WAVEFORM = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_OFDMMODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_REFERENCE_WAVEFORM = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_EVM_UNIT_OFDMMODACC_EVM_UNIT_PERCENTAGE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_EVM_UNIT_OFDMMODACC_EVM_UNIT_DB = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_FEC_CODING_TYPE_OFDMMODACC_FEC_CODING_TYPE_BCC = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_FEC_CODING_TYPE_OFDMMODACC_FEC_CODING_TYPE_LDPC = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_DISABLED = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_INITIAL_PREAMBLE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE = 2;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS = 3;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_PILOTS_AND_DATA = 4;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_IMPAIRMENTS_MODEL_OFDMMODACC_IQ_IMPAIRMENTS_MODEL_TX = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_IMPAIRMENTS_MODEL_OFDMMODACC_IQ_IMPAIRMENTS_MODEL_RX = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_IMPAIRMENTS_PER_SUBCARRIER_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_IMPAIRMENTS_PER_SUBCARRIER_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_QUADRATURE_ERROR_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_QUADRATURE_ERROR_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_TIMING_SKEW_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_TIMING_SKEW_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_NOT_APPLICABLE = -1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_MEASUREMENT_MODE_OFDMMODACC_MEASUREMENT_MODE_MEASURE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_MEASUREMENT_MODE_OFDMMODACC_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_NOISE_COMPENSATION_APPLIED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_NOISE_COMPENSATION_APPLIED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_NOISE_COMPENSATION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_NOISE_COMPENSATION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_NOISE_COMPENSATION_INPUT_POWER_CHECK_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_NOISE_COMPENSATION_INPUT_POWER_CHECK_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_POWER_MEASUREMENT_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_POWER_MEASUREMENT_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_PSDU_CRC_STATUS_OFDMMODACC_PSDU_CRC_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_PSDU_CRC_STATUS_OFDMMODACC_PSDU_CRC_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SIG_B_CRC_STATUS_OFDMMODACC_SIG_B_CRC_STATUS_NOT_APPLICABLE = -1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SIG_B_CRC_STATUS_OFDMMODACC_SIG_B_CRC_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SIG_B_CRC_STATUS_OFDMMODACC_SIG_B_CRC_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SIG_CRC_STATUS_OFDMMODACC_SIG_CRC_STATUS_NOT_APPLICABLE = -1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SIG_CRC_STATUS_OFDMMODACC_SIG_CRC_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SIG_CRC_STATUS_OFDMMODACC_SIG_CRC_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SPECTRUM_INVERTED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SPECTRUM_INVERTED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_U_SIG_CRC_STATUS_OFDMMODACC_U_SIG_CRC_STATUS_NOT_APPLICABLE = -1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_U_SIG_CRC_STATUS_OFDMMODACC_U_SIG_CRC_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_U_SIG_CRC_STATUS_OFDMMODACC_U_SIG_CRC_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_UNUSED_TONE_ERROR_MASK_REFERENCE_OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE_LIMIT1 = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_UNUSED_TONE_ERROR_MASK_REFERENCE_OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE_LIMIT2 = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_VECTOR_AVERAGING_PHASE_ALIGNMENT_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_VECTOR_AVERAGING_PHASE_ALIGNMENT_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_VECTOR_AVERAGING_TIME_ALIGNMENT_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_MOD_ACC_VECTOR_AVERAGING_TIME_ALIGNMENT_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT1_PLUS_ONE = 0;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT1_MINUS_ONE = 1;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT2_PLUS_ONE = 0;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT2_MINUS_ONE = 1;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT3_PLUS_ONE = 0;
+  NIRFMXWLAN_INT32_OFDM_PHASE_ROTATION_COEFFICIENT3_MINUS_ONE = 1;
+  NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_NON_HT = 0;
+  NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_MIXED = 1;
+  NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_GREENFIELD = 2;
+  NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_SU = 3;
+  NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_MU = 4;
+  NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_EXTENDED_RANGE_SU = 5;
+  NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_TRIGGER_BASED = 6;
+  NIRFMXWLAN_INT32_OFDM_PREAMBLE_PUNCTURING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_PREAMBLE_PUNCTURING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_STBC_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_OFDM_STBC_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDM_TRANSMIT_POWER_CLASS_A = 0;
+  NIRFMXWLAN_INT32_OFDM_TRANSMIT_POWER_CLASS_B = 1;
+  NIRFMXWLAN_INT32_OFDM_TRANSMIT_POWER_CLASS_C = 2;
+  NIRFMXWLAN_INT32_OFDM_TRANSMIT_POWER_CLASS_D = 3;
+  NIRFMXWLAN_INT32_POWER_RAMP_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_POWER_RAMP_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_SEM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY = 0;
+  NIRFMXWLAN_INT32_SEM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN = 1;
+  NIRFMXWLAN_INT32_SEM_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_SEM_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_SEM_AVERAGING_TYPE_RMS = 0;
+  NIRFMXWLAN_INT32_SEM_AVERAGING_TYPE_LOG = 1;
+  NIRFMXWLAN_INT32_SEM_AVERAGING_TYPE_SCALAR = 2;
+  NIRFMXWLAN_INT32_SEM_AVERAGING_TYPE_MAXIMUM = 3;
+  NIRFMXWLAN_INT32_SEM_AVERAGING_TYPE_MINIMUM = 4;
+  NIRFMXWLAN_INT32_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_SEM_MASK_TYPE_STANDARD = 0;
+  NIRFMXWLAN_INT32_SEM_MASK_TYPE_CUSTOM = 1;
+  NIRFMXWLAN_INT32_SEM_MEASUREMENT_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_SEM_MEASUREMENT_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_SEM_OFFSET_SIDEBAND_NEGATIVE = 0;
+  NIRFMXWLAN_INT32_SEM_OFFSET_SIDEBAND_POSITIVE = 1;
+  NIRFMXWLAN_INT32_SEM_OFFSET_SIDEBAND_BOTH = 2;
+  NIRFMXWLAN_INT32_SEM_SPAN_AUTO_FALSE = 0;
+  NIRFMXWLAN_INT32_SEM_SPAN_AUTO_TRUE = 1;
+  NIRFMXWLAN_INT32_SEM_SWEEP_TIME_AUTO_FALSE = 0;
+  NIRFMXWLAN_INT32_SEM_SWEEP_TIME_AUTO_TRUE = 1;
+  NIRFMXWLAN_INT32_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
+  NIRFMXWLAN_INT32_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
+  NIRFMXWLAN_INT32_STANDARD_802_11_AG = 0;
+  NIRFMXWLAN_INT32_STANDARD_802_11_B = 1;
+  NIRFMXWLAN_INT32_STANDARD_802_11_J = 2;
+  NIRFMXWLAN_INT32_STANDARD_802_11_P = 3;
+  NIRFMXWLAN_INT32_STANDARD_802_11_N = 4;
+  NIRFMXWLAN_INT32_STANDARD_802_11_AC = 5;
+  NIRFMXWLAN_INT32_STANDARD_802_11_AX = 6;
+  NIRFMXWLAN_INT32_STANDARD_802_11_BE = 7;
+  NIRFMXWLAN_INT32_STANDARD_UNKNOWN = -1;
+  NIRFMXWLAN_INT32_TRIGGER_GATE_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_TRIGGER_GATE_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
+  NIRFMXWLAN_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+  NIRFMXWLAN_INT32_TRIGGER_TYPE_NONE = 0;
+  NIRFMXWLAN_INT32_TRIGGER_TYPE_DIGITAL_EDGE = 1;
+  NIRFMXWLAN_INT32_TRIGGER_TYPE_IQ_POWER_EDGE = 2;
+  NIRFMXWLAN_INT32_TRIGGER_TYPE_SOFTWARE = 3;
+  NIRFMXWLAN_INT32_TXP_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_TXP_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_TXP_BURST_DETECTION_ENABLED_FALSE = 0;
+  NIRFMXWLAN_INT32_TXP_BURST_DETECTION_ENABLED_TRUE = 1;
+}
+
+message AbortMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message AbortMeasurementsResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
+  int32 reset = 7;
+  int64 reserved = 8;
+}
+
+message AnalyzeIQ1WaveformResponse {
+  int32 status = 1;
+}
+
+message AnalyzeSpectrum1WaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float spectrum = 6;
+  int32 reset = 7;
+  int64 reserved = 8;
+}
+
+message AnalyzeSpectrum1WaveformResponse {
+  int32 status = 1;
+}
+
+message AutoDetectSignalRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message AutoDetectSignalResponse {
+  int32 status = 1;
+}
+
+message AutoLevelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double measurement_interval = 3;
+}
+
+message AutoLevelResponse {
+  int32 status = 1;
+}
+
+message BuildChainStringRequest {
+  string selector_string = 1;
+  int32 chain_number = 2;
+}
+
+message BuildChainStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildGateStringRequest {
+  string selector_string = 1;
+  int32 gate_number = 2;
+}
+
+message BuildGateStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildOffsetStringRequest {
+  string selector_string = 1;
+  int32 offset_number = 2;
+}
+
+message BuildOffsetStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildSegmentStringRequest {
+  string selector_string = 1;
+  int32 segment_number = 2;
+}
+
+message BuildSegmentStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildSignalStringRequest {
+  string signal_name = 1;
+  string result_name = 2;
+}
+
+message BuildSignalStringResponse {
+  int32 status = 1;
+  string selector_string = 2;
+}
+
+message BuildStreamStringRequest {
+  string selector_string = 1;
+  int32 stream_number = 2;
+}
+
+message BuildStreamStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildUserStringRequest {
+  string selector_string = 1;
+  int32 user_number = 2;
+}
+
+message BuildUserStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message CfgChannelBandwidthRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double channel_bandwidth = 3;
+}
+
+message CfgChannelBandwidthResponse {
+  int32 status = 1;
+}
+
+message CfgDigitalEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string digital_edge_source = 3;
+  oneof digital_edge_enum {
+    DigitalEdgeTriggerEdge digital_edge = 4;
+    int32 digital_edge_raw = 5;
+  }
+  double trigger_delay = 6;
+  int32 enable_trigger = 7;
+}
+
+message CfgDigitalEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgExternalAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double external_attenuation = 3;
+}
+
+message CfgExternalAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double center_frequency = 3;
+}
+
+message CfgFrequencyResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double center_frequency = 3;
+}
+
+message CfgFrequencyArrayResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyReferenceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof frequency_reference_source_enum {
+    FrequencyReferenceSource frequency_reference_source_mapped = 3;
+    string frequency_reference_source_raw = 4;
+  }
+  double frequency_reference_frequency = 5;
+}
+
+message CfgFrequencyReferenceResponse {
+  int32 status = 1;
+}
+
+message CfgIQPowerEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string iq_power_edge_source = 3;
+  oneof iq_power_edge_slope_enum {
+    IQPowerEdgeTriggerSlope iq_power_edge_slope = 4;
+    int32 iq_power_edge_slope_raw = 5;
+  }
+  double iq_power_edge_level = 6;
+  double trigger_delay = 7;
+  oneof trigger_min_quiet_time_mode_enum {
+    TriggerMinimumQuietTimeMode trigger_min_quiet_time_mode = 8;
+    int32 trigger_min_quiet_time_mode_raw = 9;
+  }
+  double trigger_min_quiet_time_duration = 10;
+  oneof iq_power_edge_level_type_enum {
+    IQPowerEdgeTriggerLevelType iq_power_edge_level_type = 11;
+    int32 iq_power_edge_level_type_raw = 12;
+  }
+  int32 enable_trigger = 13;
+}
+
+message CfgIQPowerEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgMechanicalAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof mechanical_attenuation_auto_enum {
+    MechanicalAttenuationAuto mechanical_attenuation_auto = 3;
+    int32 mechanical_attenuation_auto_raw = 4;
+  }
+  double mechanical_attenuation_value = 5;
+}
+
+message CfgMechanicalAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgNumberOfFrequencySegmentsAndReceiveChainsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 number_of_frequency_segments = 3;
+  int32 number_of_receive_chains = 4;
+}
+
+message CfgNumberOfFrequencySegmentsAndReceiveChainsResponse {
+  int32 status = 1;
+}
+
+message CfgRFAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof rf_attenuation_auto_enum {
+    RFAttenuationAuto rf_attenuation_auto = 3;
+    int32 rf_attenuation_auto_raw = 4;
+  }
+  double rf_attenuation_value = 5;
+}
+
+message CfgRFAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgReferenceLevelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double reference_level = 3;
+}
+
+message CfgReferenceLevelResponse {
+  int32 status = 1;
+}
+
+message CfgSelectedPortsMultipleRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string selected_ports = 3;
+}
+
+message CfgSelectedPortsMultipleResponse {
+  int32 status = 1;
+}
+
+message CfgSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double trigger_delay = 3;
+  int32 enable_trigger = 4;
+}
+
+message CfgSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgStandardRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof standard_enum {
+    Standard standard = 3;
+    int32 standard_raw = 4;
+  }
+}
+
+message CfgStandardResponse {
+  int32 status = 1;
+}
+
+message CheckMeasurementStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CheckMeasurementStatusResponse {
+  int32 status = 1;
+  int32 is_done = 2;
+}
+
+message ClearAllNamedResultsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearAllNamedResultsResponse {
+  int32 status = 1;
+}
+
+message ClearNamedResultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearNamedResultResponse {
+  int32 status = 1;
+}
+
+message CloneSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string old_signal_name = 2;
+  string new_signal_name = 3;
+}
+
+message CloneSignalConfigurationResponse {
+  int32 status = 1;
 }
 
 message CloseRequest {
@@ -43,6 +1563,533 @@ message CloseResponse {
   int32 status = 1;
 }
 
+message CommitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CommitResponse {
+  int32 status = 1;
+}
+
+message CreateSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message CreateSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DSSSModAccCfgAcquisitionLengthRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof acquisition_length_mode_enum {
+    DsssModAccAcquisitionLengthMode acquisition_length_mode = 3;
+    int32 acquisition_length_mode_raw = 4;
+  }
+  double acquisition_length = 5;
+}
+
+message DSSSModAccCfgAcquisitionLengthResponse {
+  int32 status = 1;
+}
+
+message DSSSModAccCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    DsssModAccAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message DSSSModAccCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message DSSSModAccCfgEVMUnitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof evm_unit_enum {
+    DsssModAccEvmUnit evm_unit = 3;
+    int32 evm_unit_raw = 4;
+  }
+}
+
+message DSSSModAccCfgEVMUnitResponse {
+  int32 status = 1;
+}
+
+message DSSSModAccCfgMeasurementLengthRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 measurement_offset = 3;
+  int32 maximum_measurement_length = 4;
+}
+
+message DSSSModAccCfgMeasurementLengthResponse {
+  int32 status = 1;
+}
+
+message DSSSModAccCfgPowerMeasurementCustomGateArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double start_time = 3;
+  repeated double stop_time = 4;
+}
+
+message DSSSModAccCfgPowerMeasurementCustomGateArrayResponse {
+  int32 status = 1;
+}
+
+message DSSSModAccCfgPowerMeasurementEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof power_measurement_enabled_enum {
+    DsssModAccPowerMeasurementEnabled power_measurement_enabled = 3;
+    int32 power_measurement_enabled_raw = 4;
+  }
+}
+
+message DSSSModAccCfgPowerMeasurementEnabledResponse {
+  int32 status = 1;
+}
+
+message DSSSModAccCfgPowerMeasurementNumberOfCustomGatesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 number_of_custom_gates = 3;
+}
+
+message DSSSModAccCfgPowerMeasurementNumberOfCustomGatesResponse {
+  int32 status = 1;
+}
+
+message DSSSModAccFetchAveragePowersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchAveragePowersResponse {
+  int32 status = 1;
+  double preamble_average_power_mean = 2;
+  double header_average_power_mean = 3;
+  double data_average_power_mean = 4;
+  double ppdu_average_power_mean = 5;
+}
+
+message DSSSModAccFetchConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message DSSSModAccFetchCustomGatePowersArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchCustomGatePowersArrayResponse {
+  int32 status = 1;
+  repeated double average_power_mean = 2;
+  repeated double peak_power_maximum = 3;
+  int32 actual_array_size = 4;
+}
+
+message DSSSModAccFetchDecodedHeaderBitsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchDecodedHeaderBitsTraceResponse {
+  int32 status = 1;
+  repeated int32 decoded_header_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message DSSSModAccFetchDecodedPSDUBitsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchDecodedPSDUBitsTraceResponse {
+  int32 status = 1;
+  repeated int32 decoded_psdu_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message DSSSModAccFetchEVMRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchEVMResponse {
+  int32 status = 1;
+  double rmsevm_mean = 2;
+  double peak_evm80211_2016_maximum = 3;
+  double peak_evm80211_2007_maximum = 4;
+  double peak_evm80211_1999_maximum = 5;
+  double frequency_error_mean = 6;
+  double chip_clock_error_mean = 7;
+  int32 number_of_chips_used = 8;
+}
+
+message DSSSModAccFetchEVMPerChipMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchEVMPerChipMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float evm_per_chip_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message DSSSModAccFetchIQImpairmentsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchIQImpairmentsResponse {
+  int32 status = 1;
+  double iq_origin_offset_mean = 2;
+  double iq_gain_imbalance_mean = 3;
+  double iq_quadrature_error_mean = 4;
+}
+
+message DSSSModAccFetchPPDUInformationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchPPDUInformationResponse {
+  int32 status = 1;
+  DsssModAccDataModulationFormat data_modulation_format = 2;
+  int32 data_modulation_format_raw = 3;
+  int32 payload_length = 4;
+  DsssModAccPreambleType preamble_type = 5;
+  int32 preamble_type_raw = 6;
+  int32 locked_clocks_bit = 7;
+  DsssModAccPayloadHeaderCrcStatus header_crc_status = 8;
+  int32 header_crc_status_raw = 9;
+  DsssModAccPsduCrcStaus psducrc_status = 10;
+  int32 psducrc_status_raw = 11;
+}
+
+message DSSSModAccFetchPeakPowersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchPeakPowersResponse {
+  int32 status = 1;
+  double preamble_peak_power_maximum = 2;
+  double header_peak_power_maximum = 3;
+  double data_peak_power_maximum = 4;
+  double ppdu_peak_power_maximum = 5;
+}
+
+message DeleteSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message DeleteSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DisableTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message DisableTriggerResponse {
+  int32 status = 1;
+}
+
+message GetAllNamedResultNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetAllNamedResultNamesResponse {
+  int32 status = 1;
+  string result_names = 2;
+  int32 actual_result_names_size = 3;
+  int32 default_result_exists = 4;
+}
+
+message GetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeF32Response {
+  int32 status = 1;
+  float attr_val = 2;
+}
+
+message GetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeF32ArrayResponse {
+  int32 status = 1;
+  repeated float attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeF64Response {
+  int32 status = 1;
+  double attr_val = 2;
+}
+
+message GetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeF64ArrayResponse {
+  int32 status = 1;
+  repeated double attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeI16Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeI32Response {
+  int32 status = 1;
+  NiRFmxWLANInt32AttributeValues attr_val = 2;
+  int32 attr_val_raw = 3;
+}
+
+message GetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeI32ArrayResponse {
+  int32 status = 1;
+  repeated NiRFmxWLANInt32AttributeValues attr_val = 2;
+  repeated int32 attr_val_raw = 3;
+  int32 actual_array_size = 4;
+}
+
+message GetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeI64Response {
+  int32 status = 1;
+  int64 attr_val = 2;
+}
+
+message GetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeI64ArrayResponse {
+  int32 status = 1;
+  repeated int64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeI8Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeI8ArrayResponse {
+  int32 status = 1;
+  repeated int32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeStringResponse {
+  int32 status = 1;
+  string attr_val = 2;
+}
+
+message GetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeU16Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeU32Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeU32ArrayResponse {
+  int32 status = 1;
+  repeated uint32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeU64ArrayResponse {
+  int32 status = 1;
+  repeated uint64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeU8Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message GetAttributeU8ArrayResponse {
+  int32 status = 1;
+  bytes attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetErrorRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  int32 error_code = 2;
+  string error_description = 3;
+}
+
+message GetErrorStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  int32 error_code = 2;
+}
+
+message GetErrorStringResponse {
+  int32 status = 1;
+  string error_description = 2;
+}
+
 message InitializeRequest {
   string session_name = 1;
   string resource_name = 2;
@@ -53,5 +2100,1911 @@ message InitializeResponse {
   int32 status = 1;
   nidevice_grpc.Session instrument = 2;
   int32 is_new_session = 3;
+}
+
+message InitializeFromNIRFSASessionRequest {
+  string session_name = 1;
+  nidevice_grpc.Session nirfsa_session = 2;
+}
+
+message InitializeFromNIRFSASessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session instrument = 2;
+}
+
+message InitiateRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+}
+
+message InitiateResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccAutoLevelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccAutoLevelResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfg1ReferenceWaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated nidevice_grpc.NIComplexNumberF32 reference_waveform = 5;
+}
+
+message OFDMModAccCfg1ReferenceWaveformResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgAcquisitionLengthRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof acquisition_length_mode_enum {
+    OfdmModAccAcquisitionLengthMode acquisition_length_mode = 3;
+    int32 acquisition_length_mode_raw = 4;
+  }
+  double acquisition_length = 5;
+}
+
+message OFDMModAccCfgAcquisitionLengthResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgAmplitudeTrackingEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof amplitude_tracking_enabled_enum {
+    OfdmModAccAmplitudeTrackingEnabled amplitude_tracking_enabled = 3;
+    int32 amplitude_tracking_enabled_raw = 4;
+  }
+}
+
+message OFDMModAccCfgAmplitudeTrackingEnabledResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    OfdmModAccAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message OFDMModAccCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgChannelEstimationTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof channel_estimation_type_enum {
+    OfdmModAccChannelEstimationType channel_estimation_type = 3;
+    int32 channel_estimation_type_raw = 4;
+  }
+}
+
+message OFDMModAccCfgChannelEstimationTypeResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgCommonClockSourceEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof common_clock_source_enabled_enum {
+    OfdmModAccCommonClockSourceEnabled common_clock_source_enabled = 3;
+    int32 common_clock_source_enabled_raw = 4;
+  }
+}
+
+message OFDMModAccCfgCommonClockSourceEnabledResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgEVMUnitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof evm_unit_enum {
+    OfdmModAccEvmUnit evm_unit = 3;
+    int32 evm_unit_raw = 4;
+  }
+}
+
+message OFDMModAccCfgEVMUnitResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgFrequencyErrorEstimationMethodRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof frequency_error_estimation_method_enum {
+    OfdmModAccFrequencyErrorEstimationMethod frequency_error_estimation_method = 3;
+    int32 frequency_error_estimation_method_raw = 4;
+  }
+}
+
+message OFDMModAccCfgFrequencyErrorEstimationMethodResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgMeasurementLengthRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 measurement_offset = 3;
+  int32 maximum_measurement_length = 4;
+}
+
+message OFDMModAccCfgMeasurementLengthResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgMeasurementModeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof measurement_mode_enum {
+    OfdmModAccMeasurementMode measurement_mode = 3;
+    int32 measurement_mode_raw = 4;
+  }
+}
+
+message OFDMModAccCfgMeasurementModeResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgNoiseCompensationEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof noise_compensation_enabled_enum {
+    OfdmModAccNoiseCompensationEnabled noise_compensation_enabled = 3;
+    int32 noise_compensation_enabled_raw = 4;
+  }
+}
+
+message OFDMModAccCfgNoiseCompensationEnabledResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgOptimizeDynamicRangeForEVMRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof optimize_dynamic_range_for_evm_enabled_enum {
+    OfdmModAccOptimizeDynamicRangeForEvmEnabled optimize_dynamic_range_for_evm_enabled = 3;
+    int32 optimize_dynamic_range_for_evm_enabled_raw = 4;
+  }
+  double optimize_dynamic_range_for_evm_margin = 5;
+}
+
+message OFDMModAccCfgOptimizeDynamicRangeForEVMResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgPhaseTrackingEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof phase_tracking_enabled_enum {
+    OfdmModAccPhaseTrackingEnabled phase_tracking_enabled = 3;
+    int32 phase_tracking_enabled_raw = 4;
+  }
+}
+
+message OFDMModAccCfgPhaseTrackingEnabledResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgSymbolClockErrorCorrectionEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof symbol_clock_error_correction_enabled_enum {
+    OfdmModAccSymbolClockErrorCorrectionEnabled symbol_clock_error_correction_enabled = 3;
+    int32 symbol_clock_error_correction_enabled_raw = 4;
+  }
+}
+
+message OFDMModAccCfgSymbolClockErrorCorrectionEnabledResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccClearNoiseCalibrationDatabaseRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message OFDMModAccClearNoiseCalibrationDatabaseResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float chain_data_rmsevm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float chain_pilot_rmsevm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchChainRMSEVMRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchChainRMSEVMResponse {
+  int32 status = 1;
+  double chain_rmsevm_mean = 2;
+  double chain_data_rmsevm_mean = 3;
+  double chain_pilot_rmsevm_mean = 4;
+}
+
+message OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float chain_rmsevm_per_subcarrier_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchChainRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchChainRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float chain_rmsevm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchChannelFrequencyResponseMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchChannelFrequencyResponseMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float channel_frequency_response_mean_magnitude = 4;
+  repeated float channel_frequency_response_mean_phase = 5;
+  int32 actual_array_size = 6;
+}
+
+message OFDMModAccFetchCommonPilotErrorTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchCommonPilotErrorTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float common_pilot_error_magnitude = 4;
+  repeated float common_pilot_error_phase = 5;
+  int32 actual_array_size = 6;
+}
+
+message OFDMModAccFetchCompositeRMSEVMRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchCompositeRMSEVMResponse {
+  int32 status = 1;
+  double composite_rmsevm_mean = 2;
+  double composite_data_rmsevm_mean = 3;
+  double composite_pilot_rmsevm_mean = 4;
+}
+
+message OFDMModAccFetchCrossPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchCrossPowerResponse {
+  int32 status = 1;
+  double cross_power_mean = 2;
+}
+
+message OFDMModAccFetchCustomGatePowersArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchCustomGatePowersArrayResponse {
+  int32 status = 1;
+  repeated double average_power_mean = 2;
+  repeated double peak_power_maximum = 3;
+  int32 actual_array_size = 4;
+}
+
+message OFDMModAccFetchDataAveragePowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDataAveragePowerResponse {
+  int32 status = 1;
+  double data_average_power_mean = 2;
+}
+
+message OFDMModAccFetchDataConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDataConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 data_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchDataPeakPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDataPeakPowerResponse {
+  int32 status = 1;
+  double data_peak_power_maximum = 2;
+}
+
+message OFDMModAccFetchDecodedEHTSIGBitsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDecodedEHTSIGBitsTraceResponse {
+  int32 status = 1;
+  repeated int32 decoded_ehtsig_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchDecodedLSIGBitsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDecodedLSIGBitsTraceResponse {
+  int32 status = 1;
+  repeated int32 decoded_lsig_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchDecodedPSDUBitsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDecodedPSDUBitsTraceResponse {
+  int32 status = 1;
+  repeated int32 decoded_psdu_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchDecodedSIGBBitsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDecodedSIGBBitsTraceResponse {
+  int32 status = 1;
+  repeated int32 decoded_sigb_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchDecodedSIGBitsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDecodedSIGBitsTraceResponse {
+  int32 status = 1;
+  repeated int32 decoded_sig_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchDecodedServiceBitsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDecodedServiceBitsTraceResponse {
+  int32 status = 1;
+  repeated int32 decoded_service_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchDecodedUSIGBitsTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDecodedUSIGBitsTraceResponse {
+  int32 status = 1;
+  repeated int32 decoded_usig_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchEVMSubcarrierIndicesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchEVMSubcarrierIndicesResponse {
+  int32 status = 1;
+  repeated int32 subcarrier_indices = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchFrequencyErrorCCDF10PercentRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchFrequencyErrorCCDF10PercentResponse {
+  int32 status = 1;
+  double frequency_error_ccdf10_percent = 2;
+}
+
+message OFDMModAccFetchFrequencyErrorMeanRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchFrequencyErrorMeanResponse {
+  int32 status = 1;
+  double frequency_error_mean = 2;
+}
+
+message OFDMModAccFetchGroupDelayMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchGroupDelayMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float group_delay_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchGuardIntervalTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchGuardIntervalTypeResponse {
+  int32 status = 1;
+  OfdmGuardIntervalType guard_interval_type = 2;
+  int32 guard_interval_type_raw = 3;
+}
+
+message OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float iq_gain_imbalance_per_subcarrier_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchIQImpairmentsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchIQImpairmentsResponse {
+  int32 status = 1;
+  double relative_iq_origin_offset_mean = 2;
+  double iq_gain_imbalance_mean = 3;
+  double iq_quadrature_error_mean = 4;
+  double absolute_iq_origin_offset_mean = 5;
+  double iq_timing_skew_mean = 6;
+}
+
+message OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float iq_quadrature_error_per_subcarrier_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchLSIGParityCheckStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchLSIGParityCheckStatusResponse {
+  int32 status = 1;
+  OfdmModAccLSigParityCheckStatus lsig_parity_check_status = 2;
+  int32 lsig_parity_check_status_raw = 3;
+}
+
+message OFDMModAccFetchLTFSizeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchLTFSizeResponse {
+  int32 status = 1;
+  OfdmLtfSize ltf_size = 2;
+  int32 ltf_size_raw = 3;
+}
+
+message OFDMModAccFetchMCSIndexRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchMCSIndexResponse {
+  int32 status = 1;
+  int32 mcs_index = 2;
+}
+
+message OFDMModAccFetchNumberOfHESIGBSymbolsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchNumberOfHESIGBSymbolsResponse {
+  int32 status = 1;
+  int32 number_of_hesigb_symbols = 2;
+}
+
+message OFDMModAccFetchNumberOfSpaceTimeStreamsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchNumberOfSpaceTimeStreamsResponse {
+  int32 status = 1;
+  int32 number_of_space_time_streams = 2;
+}
+
+message OFDMModAccFetchNumberOfUsersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchNumberOfUsersResponse {
+  int32 status = 1;
+  int32 number_of_users = 2;
+}
+
+message OFDMModAccFetchNumberofSymbolsUsedRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchNumberofSymbolsUsedResponse {
+  int32 status = 1;
+  int32 number_of_symbols_used = 2;
+}
+
+message OFDMModAccFetchPEAveragePowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPEAveragePowerResponse {
+  int32 status = 1;
+  double pe_average_power_mean = 2;
+}
+
+message OFDMModAccFetchPEDurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPEDurationResponse {
+  int32 status = 1;
+  double pe_duration = 2;
+}
+
+message OFDMModAccFetchPEPeakPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPEPeakPowerResponse {
+  int32 status = 1;
+  double pe_peak_power_maximum = 2;
+}
+
+message OFDMModAccFetchPPDUAveragePowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPPDUAveragePowerResponse {
+  int32 status = 1;
+  double ppdu_average_power_mean = 2;
+}
+
+message OFDMModAccFetchPPDUPeakPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPPDUPeakPowerResponse {
+  int32 status = 1;
+  double ppdu_peak_power_maximum = 2;
+}
+
+message OFDMModAccFetchPPDUTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPPDUTypeResponse {
+  int32 status = 1;
+  OfdmPpduType ppdu_type = 2;
+  int32 ppdu_type_raw = 3;
+}
+
+message OFDMModAccFetchPSDUCRCStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPSDUCRCStatusResponse {
+  int32 status = 1;
+  OfdmModAccPsduCrcStatus psducrc_status = 2;
+  int32 psducrc_status_raw = 3;
+}
+
+message OFDMModAccFetchPilotConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPilotConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 pilot_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchPreambleAveragePowers80211acRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreambleAveragePowers80211acResponse {
+  int32 status = 1;
+  double vhtsiga_average_power_mean = 2;
+  double vhtstf_average_power_mean = 3;
+  double vhtltf_average_power_mean = 4;
+  double vhtsigb_average_power_mean = 5;
+}
+
+message OFDMModAccFetchPreambleAveragePowers80211axRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreambleAveragePowers80211axResponse {
+  int32 status = 1;
+  double rlsig_average_power_mean = 2;
+  double hesiga_average_power_mean = 3;
+  double hesigb_average_power_mean = 4;
+  double hestf_average_power_mean = 5;
+  double heltf_average_power_mean = 6;
+}
+
+message OFDMModAccFetchPreambleAveragePowers80211nRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreambleAveragePowers80211nResponse {
+  int32 status = 1;
+  double htsig_average_power_mean = 2;
+  double htstf_average_power_mean = 3;
+  double htdltf_average_power_mean = 4;
+  double hteltf_average_power_mean = 5;
+}
+
+message OFDMModAccFetchPreambleAveragePowersCommonRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreambleAveragePowersCommonResponse {
+  int32 status = 1;
+  double lstf_average_power_mean = 2;
+  double lltf_average_power_mean = 3;
+  double lsig_average_power_mean = 4;
+}
+
+message OFDMModAccFetchPreambleFrequencyErrorTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreambleFrequencyErrorTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float preamble_frequency_error = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchPreamblePeakPowers80211acRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreamblePeakPowers80211acResponse {
+  int32 status = 1;
+  double vhtsiga_peak_power_maximum = 2;
+  double vhtstf_peak_power_maximum = 3;
+  double vhtltf_peak_power_maximum = 4;
+  double vhtsigb_peak_power_maximum = 5;
+}
+
+message OFDMModAccFetchPreamblePeakPowers80211axRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreamblePeakPowers80211axResponse {
+  int32 status = 1;
+  double rlsig_peak_power_maximum = 2;
+  double hesiga_peak_power_maximum = 3;
+  double hesigb_peak_power_maximum = 4;
+  double hestf_peak_power_maximum = 5;
+  double heltf_peak_power_maximum = 6;
+}
+
+message OFDMModAccFetchPreamblePeakPowers80211nRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreamblePeakPowers80211nResponse {
+  int32 status = 1;
+  double htsig_peak_power_maximum = 2;
+  double htstf_peak_power_maximum = 3;
+  double htdltf_peak_power_maximum = 4;
+  double hteltf_peak_power_maximum = 5;
+}
+
+message OFDMModAccFetchPreamblePeakPowersCommonRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPreamblePeakPowersCommonResponse {
+  int32 status = 1;
+  double lstf_peak_power_maximum = 2;
+  double lltf_peak_power_maximum = 3;
+  double lsig_peak_power_maximum = 4;
+}
+
+message OFDMModAccFetchRUOffsetAndSizeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchRUOffsetAndSizeResponse {
+  int32 status = 1;
+  int32 ru_offset = 2;
+  int32 ru_size = 3;
+}
+
+message OFDMModAccFetchSIGBCRCStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchSIGBCRCStatusResponse {
+  int32 status = 1;
+  OfdmModAccSigBCrcStatus sigbcrc_status = 2;
+  int32 sigbcrc_status_raw = 3;
+}
+
+message OFDMModAccFetchSIGCRCStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchSIGCRCStatusResponse {
+  int32 status = 1;
+  OfdmModAccSigCrcStatus sigcrc_status = 2;
+  int32 sigcrc_status_raw = 3;
+}
+
+message OFDMModAccFetchSpectralFlatnessRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchSpectralFlatnessResponse {
+  int32 status = 1;
+  double spectral_flatness_margin = 2;
+  int32 spectral_flatness_margin_subcarrier_index = 3;
+}
+
+message OFDMModAccFetchSpectralFlatnessMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchSpectralFlatnessMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectral_flatness_mean = 4;
+  repeated float spectral_flatness_lower_mask = 5;
+  repeated float spectral_flatness_upper_mask = 6;
+  int32 actual_array_size = 7;
+}
+
+message OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float stream_data_rmsevm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float stream_pilot_rmsevm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchStreamRMSEVMRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchStreamRMSEVMResponse {
+  int32 status = 1;
+  double stream_rmsevm_mean = 2;
+  double stream_data_rmsevm_mean = 3;
+  double stream_pilot_rmsevm_mean = 4;
+}
+
+message OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float stream_rmsevm_per_subcarrier_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchStreamRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchStreamRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float stream_rmsevm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchSubcarrierChainEVMPerSymbolTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 subcarrier_index = 4;
+}
+
+message OFDMModAccFetchSubcarrierChainEVMPerSymbolTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float subcarrier_chain_evm_per_symbol = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchSubcarrierStreamEVMPerSymbolTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 subcarrier_index = 4;
+}
+
+message OFDMModAccFetchSubcarrierStreamEVMPerSymbolTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float subcarrier_stream_evm_per_symbol = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchSymbolChainEVMPerSubcarrierTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 symbol_index = 4;
+}
+
+message OFDMModAccFetchSymbolChainEVMPerSubcarrierTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float symbol_chain_evm_per_subcarrier = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchSymbolClockErrorMeanRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchSymbolClockErrorMeanResponse {
+  int32 status = 1;
+  double symbol_clock_error_mean = 2;
+}
+
+message OFDMModAccFetchSymbolStreamEVMPerSubcarrierTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 symbol_index = 4;
+}
+
+message OFDMModAccFetchSymbolStreamEVMPerSubcarrierTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float symbol_stream_evm_per_subcarrier = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchUnusedToneErrorRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUnusedToneErrorResponse {
+  int32 status = 1;
+  double unused_tone_error_margin = 2;
+  int32 unused_tone_error_margin_ru_index = 3;
+}
+
+message OFDMModAccFetchUnusedToneErrorMarginPerRURequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUnusedToneErrorMarginPerRUResponse {
+  int32 status = 1;
+  repeated double unused_tone_error_margin_per_ru = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchUnusedToneErrorMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUnusedToneErrorMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float unused_tone_error = 4;
+  repeated float unused_tone_error_mask = 5;
+  int32 actual_array_size = 6;
+}
+
+message OFDMModAccFetchUserDataConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserDataConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 user_data_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchUserPilotConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserPilotConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 user_pilot_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchUserPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserPowerResponse {
+  int32 status = 1;
+  double user_power_mean = 2;
+}
+
+message OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float user_stream_data_rmsevm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float user_stream_pilot_rmsevm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchUserStreamRMSEVMRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserStreamRMSEVMResponse {
+  int32 status = 1;
+  double user_stream_rmsevm_mean = 2;
+  double user_stream_data_rmsevm_mean = 3;
+  double user_stream_pilot_rmsevm_mean = 4;
+}
+
+message OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float user_stream_rmsevm_per_subcarrier_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float user_stream_rmsevm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message OFDMModAccValidateCalibrationDataRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message OFDMModAccValidateCalibrationDataResponse {
+  int32 status = 1;
+  OfdmModAccCalibrationDataValid calibration_data_valid = 2;
+  int32 calibration_data_valid_raw = 3;
+}
+
+message PowerRampCfgAcquisitionLengthRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double acquisition_length = 3;
+}
+
+message PowerRampCfgAcquisitionLengthResponse {
+  int32 status = 1;
+}
+
+message PowerRampCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    PowerRampAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message PowerRampCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message PowerRampFetchFallTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message PowerRampFetchFallTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float raw_waveform = 4;
+  repeated float processed_waveform = 5;
+  repeated float threshold = 6;
+  repeated float power_reference = 7;
+  int32 actual_array_size = 8;
+}
+
+message PowerRampFetchMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message PowerRampFetchMeasurementResponse {
+  int32 status = 1;
+  double rise_time_mean = 2;
+  double fall_time_mean = 3;
+}
+
+message PowerRampFetchRiseTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message PowerRampFetchRiseTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float raw_waveform = 4;
+  repeated float processed_waveform = 5;
+  repeated float threshold = 6;
+  repeated float power_reference = 7;
+  int32 actual_array_size = 8;
+}
+
+message ResetAttributeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+}
+
+message ResetAttributeResponse {
+  int32 status = 1;
+}
+
+message ResetToDefaultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ResetToDefaultResponse {
+  int32 status = 1;
+}
+
+message SEMCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    SemAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+  oneof averaging_type_enum {
+    SemAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
+  }
+}
+
+message SEMCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message SEMCfgMaskTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof mask_type_enum {
+    SemMaskType mask_type = 3;
+    int32 mask_type_raw = 4;
+  }
+}
+
+message SEMCfgMaskTypeResponse {
+  int32 status = 1;
+}
+
+message SEMCfgNumberOfOffsetsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 number_of_offsets = 3;
+}
+
+message SEMCfgNumberOfOffsetsResponse {
+  int32 status = 1;
+}
+
+message SEMCfgOffsetFrequencyArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double offset_start_frequency = 3;
+  repeated double offset_stop_frequency = 4;
+  repeated SemOffsetSideband offset_sideband = 5;
+}
+
+message SEMCfgOffsetFrequencyArrayResponse {
+  int32 status = 1;
+}
+
+message SEMCfgOffsetRelativeLimitArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double relative_limit_start = 3;
+  repeated double relative_limit_stop = 4;
+}
+
+message SEMCfgOffsetRelativeLimitArrayResponse {
+  int32 status = 1;
+}
+
+message SEMCfgSpanRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof span_auto_enum {
+    SemSpanAuto span_auto = 3;
+    int32 span_auto_raw = 4;
+  }
+  double span = 5;
+}
+
+message SEMCfgSpanResponse {
+  int32 status = 1;
+}
+
+message SEMCfgSweepTimeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof sweep_time_auto_enum {
+    SemSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
+}
+
+message SEMCfgSweepTimeResponse {
+  int32 status = 1;
+}
+
+message SEMFetchCarrierMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchCarrierMeasurementResponse {
+  int32 status = 1;
+  double absolute_power = 2;
+  double relative_power = 3;
+}
+
+message SEMFetchLowerOffsetMarginRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchLowerOffsetMarginResponse {
+  int32 status = 1;
+  SemLowerOffsetMeasurementStatus measurement_status = 2;
+  int32 measurement_status_raw = 3;
+  double margin = 4;
+  double margin_frequency = 5;
+  double margin_absolute_power = 6;
+  double margin_relative_power = 7;
+}
+
+message SEMFetchLowerOffsetMarginArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchLowerOffsetMarginArrayResponse {
+  int32 status = 1;
+  repeated SemLowerOffsetMeasurementStatus measurement_status = 2;
+  repeated int32 measurement_status_raw = 3;
+  repeated double margin = 4;
+  repeated double margin_frequency = 5;
+  repeated double margin_absolute_power = 6;
+  repeated double margin_relative_power = 7;
+  int32 actual_array_size = 8;
+}
+
+message SEMFetchLowerOffsetPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchLowerOffsetPowerResponse {
+  int32 status = 1;
+  double total_absolute_power = 2;
+  double total_relative_power = 3;
+  double peak_absolute_power = 4;
+  double peak_frequency = 5;
+  double peak_relative_power = 6;
+}
+
+message SEMFetchLowerOffsetPowerArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchLowerOffsetPowerArrayResponse {
+  int32 status = 1;
+  repeated double total_absolute_power = 2;
+  repeated double total_relative_power = 3;
+  repeated double peak_absolute_power = 4;
+  repeated double peak_frequency = 5;
+  repeated double peak_relative_power = 6;
+  int32 actual_array_size = 7;
+}
+
+message SEMFetchMeasurementStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchMeasurementStatusResponse {
+  int32 status = 1;
+  SemMeasurementStatus measurement_status = 2;
+  int32 measurement_status_raw = 3;
+}
+
+message SEMFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  repeated float composite_mask = 5;
+  int32 actual_array_size = 6;
+}
+
+message SEMFetchUpperOffsetMarginRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchUpperOffsetMarginResponse {
+  int32 status = 1;
+  SemUpperOffsetMeasurementStatus measurement_status = 2;
+  int32 measurement_status_raw = 3;
+  double margin = 4;
+  double margin_frequency = 5;
+  double margin_absolute_power = 6;
+  double margin_relative_power = 7;
+}
+
+message SEMFetchUpperOffsetMarginArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchUpperOffsetMarginArrayResponse {
+  int32 status = 1;
+  repeated SemUpperOffsetMeasurementStatus measurement_status = 2;
+  repeated int32 measurement_status_raw = 3;
+  repeated double margin = 4;
+  repeated double margin_frequency = 5;
+  repeated double margin_absolute_power = 6;
+  repeated double margin_relative_power = 7;
+  int32 actual_array_size = 8;
+}
+
+message SEMFetchUpperOffsetPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchUpperOffsetPowerResponse {
+  int32 status = 1;
+  double total_absolute_power = 2;
+  double total_relative_power = 3;
+  double peak_absolute_power = 4;
+  double peak_frequency = 5;
+  double peak_relative_power = 6;
+}
+
+message SEMFetchUpperOffsetPowerArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchUpperOffsetPowerArrayResponse {
+  int32 status = 1;
+  repeated double total_absolute_power = 2;
+  repeated double total_relative_power = 3;
+  repeated double peak_absolute_power = 4;
+  repeated double peak_frequency = 5;
+  repeated double peak_relative_power = 6;
+  int32 actual_array_size = 7;
+}
+
+message SelectMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof measurements_enum {
+    MeasurementTypes measurements = 3;
+    uint32 measurements_raw = 4;
+  }
+  bool enable_all_traces = 5;
+}
+
+message SelectMeasurementsResponse {
+  int32 status = 1;
+}
+
+message SendSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message SendSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  float attr_val = 4;
+}
+
+message SetAttributeF32Response {
+  int32 status = 1;
+}
+
+message SetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  repeated float attr_val = 4;
+}
+
+message SetAttributeF32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  double attr_val = 4;
+}
+
+message SetAttributeF64Response {
+  int32 status = 1;
+}
+
+message SetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  repeated double attr_val = 4;
+}
+
+message SetAttributeF64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI16Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxWLANInt32AttributeValues attr_val = 4;
+    int32 attr_val_raw = 5;
+  }
+}
+
+message SetAttributeI32Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  repeated NiRFmxWLANInt32AttributeValues attr_val = 4;
+}
+
+message SetAttributeI32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  int64 attr_val = 4;
+}
+
+message SetAttributeI64Response {
+  int32 status = 1;
+}
+
+message SetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  repeated int64 attr_val = 4;
+}
+
+message SetAttributeI64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI8Response {
+  int32 status = 1;
+}
+
+message SetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  repeated int32 attr_val = 4;
+}
+
+message SetAttributeI8ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 4;
+}
+
+message SetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 4;
+}
+
+message SetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  string attr_val = 4;
+}
+
+message SetAttributeStringResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU16Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU32Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  repeated uint32 attr_val = 4;
+}
+
+message SetAttributeU32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  repeated uint64 attr_val = 4;
+}
+
+message SetAttributeU64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU8Response {
+  int32 status = 1;
+}
+
+message SetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxWLANAttribute attribute_id = 3;
+  bytes attr_val = 4;
+}
+
+message SetAttributeU8ArrayResponse {
+  int32 status = 1;
+}
+
+message TXPCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    TxpAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message TXPCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message TXPCfgBurstDetectionEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof burst_detection_enabled_enum {
+    TxpBurstDetectionEnabled burst_detection_enabled = 3;
+    int32 burst_detection_enabled_raw = 4;
+  }
+}
+
+message TXPCfgBurstDetectionEnabledResponse {
+  int32 status = 1;
+}
+
+message TXPCfgMaximumMeasurementIntervalRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double maximum_measurement_interval = 3;
+}
+
+message TXPCfgMaximumMeasurementIntervalResponse {
+  int32 status = 1;
+}
+
+message TXPFetchMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchMeasurementResponse {
+  int32 status = 1;
+  double average_power_mean = 2;
+  double peak_power_maximum = 3;
+}
+
+message TXPFetchPowerTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchPowerTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float power = 4;
+  int32 actual_array_size = 5;
+}
+
+message WaitForAcquisitionCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  double timeout = 2;
+}
+
+message WaitForAcquisitionCompleteResponse {
+  int32 status = 1;
+}
+
+message WaitForMeasurementCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message WaitForMeasurementCompleteResponse {
+  int32 status = 1;
 }
 

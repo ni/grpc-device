@@ -20,12 +20,17 @@ namespace nirfmxwlan_grpc {
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
 
+  const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
+
   NiRFmxWLANService::NiRFmxWLANService(
       NiRFmxWLANLibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
+      ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxWLANFeatureToggles& feature_toggles)
       : library_(library),
       session_repository_(session_repository),
+      vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -38,6 +43,928 @@ namespace nirfmxwlan_grpc {
   inline bool status_ok(int32 status)
   {
     return status >= 0;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* result_name = (char*)request->result_name().c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
+      int32 array_size = static_cast<int32>(request->iq().size());
+      int32 reset = request->reset();
+      int64 reserved = request->reserved();
+      auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* result_name = (char*)request->result_name().c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto spectrum = const_cast<float32*>(request->spectrum().data());
+      int32 array_size = static_cast<int32>(request->spectrum().size());
+      int32 reset = request->reset();
+      int64 reserved = request->reserved();
+      auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::AutoDetectSignal(::grpc::ServerContext* context, const AutoDetectSignalRequest* request, AutoDetectSignalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      auto status = library_->AutoDetectSignal(instrument, selector_string, timeout);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 measurement_interval = request->measurement_interval();
+      auto status = library_->AutoLevel(instrument, selector_string, measurement_interval);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::BuildChainString(::grpc::ServerContext* context, const BuildChainStringRequest* request, BuildChainStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 chain_number = request->chain_number();
+
+      while (true) {
+        auto status = library_->BuildChainString(selector_string, chain_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildChainString(selector_string, chain_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::BuildGateString(::grpc::ServerContext* context, const BuildGateStringRequest* request, BuildGateStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 gate_number = request->gate_number();
+
+      while (true) {
+        auto status = library_->BuildGateString(selector_string, gate_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildGateString(selector_string, gate_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::BuildOffsetString(::grpc::ServerContext* context, const BuildOffsetStringRequest* request, BuildOffsetStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 offset_number = request->offset_number();
+
+      while (true) {
+        auto status = library_->BuildOffsetString(selector_string, offset_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildOffsetString(selector_string, offset_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::BuildSegmentString(::grpc::ServerContext* context, const BuildSegmentStringRequest* request, BuildSegmentStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 segment_number = request->segment_number();
+
+      while (true) {
+        auto status = library_->BuildSegmentString(selector_string, segment_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildSegmentString(selector_string, segment_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* signal_name = (char*)request->signal_name().c_str();
+      char* result_name = (char*)request->result_name().c_str();
+
+      while (true) {
+        auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_length = status;
+      
+        std::string selector_string;
+        if (selector_string_length > 0) {
+            selector_string.resize(selector_string_length - 1);
+        }
+        status = library_->BuildSignalString(signal_name, result_name, selector_string_length, (char*)selector_string.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string(selector_string);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::BuildStreamString(::grpc::ServerContext* context, const BuildStreamStringRequest* request, BuildStreamStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 stream_number = request->stream_number();
+
+      while (true) {
+        auto status = library_->BuildStreamString(selector_string, stream_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildStreamString(selector_string, stream_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::BuildUserString(::grpc::ServerContext* context, const BuildUserStringRequest* request, BuildUserStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 user_number = request->user_number();
+
+      while (true) {
+        auto status = library_->BuildUserString(selector_string, user_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildUserString(selector_string, user_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgChannelBandwidth(::grpc::ServerContext* context, const CfgChannelBandwidthRequest* request, CfgChannelBandwidthResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 channel_bandwidth = request->channel_bandwidth();
+      auto status = library_->CfgChannelBandwidth(instrument, selector_string, channel_bandwidth);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgDigitalEdgeTrigger(::grpc::ServerContext* context, const CfgDigitalEdgeTriggerRequest* request, CfgDigitalEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* digital_edge_source = (char*)request->digital_edge_source().c_str();
+      int32 digital_edge;
+      switch (request->digital_edge_enum_case()) {
+        case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdge: {
+          digital_edge = static_cast<int32>(request->digital_edge());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdgeRaw: {
+          digital_edge = static_cast<int32>(request->digital_edge_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::DIGITAL_EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 trigger_delay = request->trigger_delay();
+      int32 enable_trigger = request->enable_trigger();
+      auto status = library_->CfgDigitalEdgeTrigger(instrument, selector_string, digital_edge_source, digital_edge, trigger_delay, enable_trigger);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgExternalAttenuation(::grpc::ServerContext* context, const CfgExternalAttenuationRequest* request, CfgExternalAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 external_attenuation = request->external_attenuation();
+      auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgFrequency(::grpc::ServerContext* context, const CfgFrequencyRequest* request, CfgFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 center_frequency = request->center_frequency();
+      auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgFrequencyArray(::grpc::ServerContext* context, const CfgFrequencyArrayRequest* request, CfgFrequencyArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto center_frequency = const_cast<float64*>(request->center_frequency().data());
+      int32 number_of_elements = static_cast<int32>(request->center_frequency().size());
+      auto status = library_->CfgFrequencyArray(instrument, selector_string, center_frequency, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgFrequencyReference(::grpc::ServerContext* context, const CfgFrequencyReferenceRequest* request, CfgFrequencyReferenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* channel_name = (char*)request->channel_name().c_str();
+      char* frequency_reference_source;
+      switch (request->frequency_reference_source_enum_case()) {
+        case nirfmxwlan_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceMapped: {
+          auto frequency_reference_source_imap_it = frequencyreferencesource_input_map_.find(request->frequency_reference_source_mapped());
+          if (frequency_reference_source_imap_it == frequencyreferencesource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source_mapped was not specified or out of range.");
+          }
+          frequency_reference_source = const_cast<char*>((frequency_reference_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceRaw: {
+          frequency_reference_source = const_cast<char*>(request->frequency_reference_source_raw().c_str());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::FREQUENCY_REFERENCE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 frequency_reference_frequency = request->frequency_reference_frequency();
+      auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgIQPowerEdgeTrigger(::grpc::ServerContext* context, const CfgIQPowerEdgeTriggerRequest* request, CfgIQPowerEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* iq_power_edge_source = (char*)request->iq_power_edge_source().c_str();
+      int32 iq_power_edge_slope;
+      switch (request->iq_power_edge_slope_enum_case()) {
+        case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::kIqPowerEdgeSlope: {
+          iq_power_edge_slope = static_cast<int32>(request->iq_power_edge_slope());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::kIqPowerEdgeSlopeRaw: {
+          iq_power_edge_slope = static_cast<int32>(request->iq_power_edge_slope_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::IQ_POWER_EDGE_SLOPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for iq_power_edge_slope was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 iq_power_edge_level = request->iq_power_edge_level();
+      float64 trigger_delay = request->trigger_delay();
+      int32 trigger_min_quiet_time_mode;
+      switch (request->trigger_min_quiet_time_mode_enum_case()) {
+        case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::TriggerMinQuietTimeModeEnumCase::kTriggerMinQuietTimeMode: {
+          trigger_min_quiet_time_mode = static_cast<int32>(request->trigger_min_quiet_time_mode());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::TriggerMinQuietTimeModeEnumCase::kTriggerMinQuietTimeModeRaw: {
+          trigger_min_quiet_time_mode = static_cast<int32>(request->trigger_min_quiet_time_mode_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::TriggerMinQuietTimeModeEnumCase::TRIGGER_MIN_QUIET_TIME_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_min_quiet_time_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 trigger_min_quiet_time_duration = request->trigger_min_quiet_time_duration();
+      int32 iq_power_edge_level_type;
+      switch (request->iq_power_edge_level_type_enum_case()) {
+        case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeLevelTypeEnumCase::kIqPowerEdgeLevelType: {
+          iq_power_edge_level_type = static_cast<int32>(request->iq_power_edge_level_type());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeLevelTypeEnumCase::kIqPowerEdgeLevelTypeRaw: {
+          iq_power_edge_level_type = static_cast<int32>(request->iq_power_edge_level_type_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeLevelTypeEnumCase::IQ_POWER_EDGE_LEVEL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for iq_power_edge_level_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 enable_trigger = request->enable_trigger();
+      auto status = library_->CfgIQPowerEdgeTrigger(instrument, selector_string, iq_power_edge_source, iq_power_edge_slope, iq_power_edge_level, trigger_delay, trigger_min_quiet_time_mode, trigger_min_quiet_time_duration, iq_power_edge_level_type, enable_trigger);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgMechanicalAttenuation(::grpc::ServerContext* context, const CfgMechanicalAttenuationRequest* request, CfgMechanicalAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* channel_name = (char*)request->channel_name().c_str();
+      int32 mechanical_attenuation_auto;
+      switch (request->mechanical_attenuation_auto_enum_case()) {
+        case nirfmxwlan_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAuto: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAutoRaw: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::MECHANICAL_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mechanical_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
+      auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgNumberOfFrequencySegmentsAndReceiveChains(::grpc::ServerContext* context, const CfgNumberOfFrequencySegmentsAndReceiveChainsRequest* request, CfgNumberOfFrequencySegmentsAndReceiveChainsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_frequency_segments = request->number_of_frequency_segments();
+      int32 number_of_receive_chains = request->number_of_receive_chains();
+      auto status = library_->CfgNumberOfFrequencySegmentsAndReceiveChains(instrument, selector_string, number_of_frequency_segments, number_of_receive_chains);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* channel_name = (char*)request->channel_name().c_str();
+      int32 rf_attenuation_auto;
+      switch (request->rf_attenuation_auto_enum_case()) {
+        case nirfmxwlan_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAuto: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAutoRaw: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::RF_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rf_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 rf_attenuation_value = request->rf_attenuation_value();
+      auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgReferenceLevel(::grpc::ServerContext* context, const CfgReferenceLevelRequest* request, CfgReferenceLevelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 reference_level = request->reference_level();
+      auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgSelectedPortsMultiple(::grpc::ServerContext* context, const CfgSelectedPortsMultipleRequest* request, CfgSelectedPortsMultipleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* selected_ports = (char*)request->selected_ports().c_str();
+      auto status = library_->CfgSelectedPortsMultiple(instrument, selector_string, selected_ports);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgSoftwareEdgeTrigger(::grpc::ServerContext* context, const CfgSoftwareEdgeTriggerRequest* request, CfgSoftwareEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 trigger_delay = request->trigger_delay();
+      int32 enable_trigger = request->enable_trigger();
+      auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CfgStandard(::grpc::ServerContext* context, const CfgStandardRequest* request, CfgStandardResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 standard;
+      switch (request->standard_enum_case()) {
+        case nirfmxwlan_grpc::CfgStandardRequest::StandardEnumCase::kStandard: {
+          standard = static_cast<int32>(request->standard());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgStandardRequest::StandardEnumCase::kStandardRaw: {
+          standard = static_cast<int32>(request->standard_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgStandardRequest::StandardEnumCase::STANDARD_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for standard was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgStandard(instrument, selector_string, standard);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CheckMeasurementStatus(::grpc::ServerContext* context, const CheckMeasurementStatusRequest* request, CheckMeasurementStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 is_done {};
+      auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_is_done(is_done);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::ClearAllNamedResults(::grpc::ServerContext* context, const ClearAllNamedResultsRequest* request, ClearAllNamedResultsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->ClearAllNamedResults(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::ClearNamedResult(::grpc::ServerContext* context, const ClearNamedResultRequest* request, ClearNamedResultResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->ClearNamedResult(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CloneSignalConfiguration(::grpc::ServerContext* context, const CloneSignalConfigurationRequest* request, CloneSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* old_signal_name = (char*)request->old_signal_name().c_str();
+      char* new_signal_name = (char*)request->new_signal_name().c_str();
+      auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -78,6 +1005,1526 @@ namespace nirfmxwlan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->Commit(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* signal_name = (char*)request->signal_name().c_str();
+      auto status = library_->CreateSignalConfiguration(instrument, signal_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccCfgAcquisitionLength(::grpc::ServerContext* context, const DSSSModAccCfgAcquisitionLengthRequest* request, DSSSModAccCfgAcquisitionLengthResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 acquisition_length_mode;
+      switch (request->acquisition_length_mode_enum_case()) {
+        case nirfmxwlan_grpc::DSSSModAccCfgAcquisitionLengthRequest::AcquisitionLengthModeEnumCase::kAcquisitionLengthMode: {
+          acquisition_length_mode = static_cast<int32>(request->acquisition_length_mode());
+          break;
+        }
+        case nirfmxwlan_grpc::DSSSModAccCfgAcquisitionLengthRequest::AcquisitionLengthModeEnumCase::kAcquisitionLengthModeRaw: {
+          acquisition_length_mode = static_cast<int32>(request->acquisition_length_mode_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::DSSSModAccCfgAcquisitionLengthRequest::AcquisitionLengthModeEnumCase::ACQUISITION_LENGTH_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for acquisition_length_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 acquisition_length = request->acquisition_length();
+      auto status = library_->DSSSModAccCfgAcquisitionLength(instrument, selector_string, acquisition_length_mode, acquisition_length);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccCfgAveraging(::grpc::ServerContext* context, const DSSSModAccCfgAveragingRequest* request, DSSSModAccCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxwlan_grpc::DSSSModAccCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::DSSSModAccCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::DSSSModAccCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      auto status = library_->DSSSModAccCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccCfgEVMUnit(::grpc::ServerContext* context, const DSSSModAccCfgEVMUnitRequest* request, DSSSModAccCfgEVMUnitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 evm_unit;
+      switch (request->evm_unit_enum_case()) {
+        case nirfmxwlan_grpc::DSSSModAccCfgEVMUnitRequest::EvmUnitEnumCase::kEvmUnit: {
+          evm_unit = static_cast<int32>(request->evm_unit());
+          break;
+        }
+        case nirfmxwlan_grpc::DSSSModAccCfgEVMUnitRequest::EvmUnitEnumCase::kEvmUnitRaw: {
+          evm_unit = static_cast<int32>(request->evm_unit_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::DSSSModAccCfgEVMUnitRequest::EvmUnitEnumCase::EVM_UNIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for evm_unit was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->DSSSModAccCfgEVMUnit(instrument, selector_string, evm_unit);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccCfgMeasurementLength(::grpc::ServerContext* context, const DSSSModAccCfgMeasurementLengthRequest* request, DSSSModAccCfgMeasurementLengthResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 measurement_offset = request->measurement_offset();
+      int32 maximum_measurement_length = request->maximum_measurement_length();
+      auto status = library_->DSSSModAccCfgMeasurementLength(instrument, selector_string, measurement_offset, maximum_measurement_length);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccCfgPowerMeasurementCustomGateArray(::grpc::ServerContext* context, const DSSSModAccCfgPowerMeasurementCustomGateArrayRequest* request, DSSSModAccCfgPowerMeasurementCustomGateArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto start_time = const_cast<float64*>(request->start_time().data());
+      auto stop_time = const_cast<float64*>(request->stop_time().data());
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->start_time_size(),
+        request->stop_time_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [startTime, stopTime] do not match");
+      }
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
+      auto status = library_->DSSSModAccCfgPowerMeasurementCustomGateArray(instrument, selector_string, start_time, stop_time, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccCfgPowerMeasurementEnabled(::grpc::ServerContext* context, const DSSSModAccCfgPowerMeasurementEnabledRequest* request, DSSSModAccCfgPowerMeasurementEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 power_measurement_enabled;
+      switch (request->power_measurement_enabled_enum_case()) {
+        case nirfmxwlan_grpc::DSSSModAccCfgPowerMeasurementEnabledRequest::PowerMeasurementEnabledEnumCase::kPowerMeasurementEnabled: {
+          power_measurement_enabled = static_cast<int32>(request->power_measurement_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::DSSSModAccCfgPowerMeasurementEnabledRequest::PowerMeasurementEnabledEnumCase::kPowerMeasurementEnabledRaw: {
+          power_measurement_enabled = static_cast<int32>(request->power_measurement_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::DSSSModAccCfgPowerMeasurementEnabledRequest::PowerMeasurementEnabledEnumCase::POWER_MEASUREMENT_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for power_measurement_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->DSSSModAccCfgPowerMeasurementEnabled(instrument, selector_string, power_measurement_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccCfgPowerMeasurementNumberOfCustomGates(::grpc::ServerContext* context, const DSSSModAccCfgPowerMeasurementNumberOfCustomGatesRequest* request, DSSSModAccCfgPowerMeasurementNumberOfCustomGatesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_custom_gates = request->number_of_custom_gates();
+      auto status = library_->DSSSModAccCfgPowerMeasurementNumberOfCustomGates(instrument, selector_string, number_of_custom_gates);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchAveragePowers(::grpc::ServerContext* context, const DSSSModAccFetchAveragePowersRequest* request, DSSSModAccFetchAveragePowersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 preamble_average_power_mean {};
+      float64 header_average_power_mean {};
+      float64 data_average_power_mean {};
+      float64 ppdu_average_power_mean {};
+      auto status = library_->DSSSModAccFetchAveragePowers(instrument, selector_string, timeout, &preamble_average_power_mean, &header_average_power_mean, &data_average_power_mean, &ppdu_average_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_preamble_average_power_mean(preamble_average_power_mean);
+        response->set_header_average_power_mean(header_average_power_mean);
+        response->set_data_average_power_mean(data_average_power_mean);
+        response->set_ppdu_average_power_mean(ppdu_average_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchConstellationTrace(::grpc::ServerContext* context, const DSSSModAccFetchConstellationTraceRequest* request, DSSSModAccFetchConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DSSSModAccFetchConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->DSSSModAccFetchConstellationTrace(instrument, selector_string, timeout, constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(constellation, response->mutable_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchCustomGatePowersArray(::grpc::ServerContext* context, const DSSSModAccFetchCustomGatePowersArrayRequest* request, DSSSModAccFetchCustomGatePowersArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DSSSModAccFetchCustomGatePowersArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_average_power_mean()->Resize(actual_array_size, 0);
+        float64* average_power_mean = response->mutable_average_power_mean()->mutable_data();
+        response->mutable_peak_power_maximum()->Resize(actual_array_size, 0);
+        float64* peak_power_maximum = response->mutable_peak_power_maximum()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DSSSModAccFetchCustomGatePowersArray(instrument, selector_string, timeout, average_power_mean, peak_power_maximum, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_average_power_mean()->Resize(actual_array_size, 0);
+          response->mutable_peak_power_maximum()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchDecodedHeaderBitsTrace(::grpc::ServerContext* context, const DSSSModAccFetchDecodedHeaderBitsTraceRequest* request, DSSSModAccFetchDecodedHeaderBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DSSSModAccFetchDecodedHeaderBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_decoded_header_bits()->Resize(actual_array_size, 0);
+        int32* decoded_header_bits = reinterpret_cast<int32*>(response->mutable_decoded_header_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->DSSSModAccFetchDecodedHeaderBitsTrace(instrument, selector_string, timeout, decoded_header_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_decoded_header_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchDecodedPSDUBitsTrace(::grpc::ServerContext* context, const DSSSModAccFetchDecodedPSDUBitsTraceRequest* request, DSSSModAccFetchDecodedPSDUBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DSSSModAccFetchDecodedPSDUBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_decoded_psdu_bits()->Resize(actual_array_size, 0);
+        int32* decoded_psdu_bits = reinterpret_cast<int32*>(response->mutable_decoded_psdu_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->DSSSModAccFetchDecodedPSDUBitsTrace(instrument, selector_string, timeout, decoded_psdu_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_decoded_psdu_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchEVM(::grpc::ServerContext* context, const DSSSModAccFetchEVMRequest* request, DSSSModAccFetchEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 rmsevm_mean {};
+      float64 peak_evm80211_2016_maximum {};
+      float64 peak_evm80211_2007_maximum {};
+      float64 peak_evm80211_1999_maximum {};
+      float64 frequency_error_mean {};
+      float64 chip_clock_error_mean {};
+      int32 number_of_chips_used {};
+      auto status = library_->DSSSModAccFetchEVM(instrument, selector_string, timeout, &rmsevm_mean, &peak_evm80211_2016_maximum, &peak_evm80211_2007_maximum, &peak_evm80211_1999_maximum, &frequency_error_mean, &chip_clock_error_mean, &number_of_chips_used);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_rmsevm_mean(rmsevm_mean);
+        response->set_peak_evm80211_2016_maximum(peak_evm80211_2016_maximum);
+        response->set_peak_evm80211_2007_maximum(peak_evm80211_2007_maximum);
+        response->set_peak_evm80211_1999_maximum(peak_evm80211_1999_maximum);
+        response->set_frequency_error_mean(frequency_error_mean);
+        response->set_chip_clock_error_mean(chip_clock_error_mean);
+        response->set_number_of_chips_used(number_of_chips_used);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchEVMPerChipMeanTrace(::grpc::ServerContext* context, const DSSSModAccFetchEVMPerChipMeanTraceRequest* request, DSSSModAccFetchEVMPerChipMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DSSSModAccFetchEVMPerChipMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_evm_per_chip_mean()->Resize(actual_array_size, 0);
+        float32* evm_per_chip_mean = response->mutable_evm_per_chip_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DSSSModAccFetchEVMPerChipMeanTrace(instrument, selector_string, timeout, &x0, &dx, evm_per_chip_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_evm_per_chip_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchIQImpairments(::grpc::ServerContext* context, const DSSSModAccFetchIQImpairmentsRequest* request, DSSSModAccFetchIQImpairmentsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 iq_origin_offset_mean {};
+      float64 iq_gain_imbalance_mean {};
+      float64 iq_quadrature_error_mean {};
+      auto status = library_->DSSSModAccFetchIQImpairments(instrument, selector_string, timeout, &iq_origin_offset_mean, &iq_gain_imbalance_mean, &iq_quadrature_error_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_iq_origin_offset_mean(iq_origin_offset_mean);
+        response->set_iq_gain_imbalance_mean(iq_gain_imbalance_mean);
+        response->set_iq_quadrature_error_mean(iq_quadrature_error_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchPPDUInformation(::grpc::ServerContext* context, const DSSSModAccFetchPPDUInformationRequest* request, DSSSModAccFetchPPDUInformationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 data_modulation_format {};
+      int32 payload_length {};
+      int32 preamble_type {};
+      int32 locked_clocks_bit {};
+      int32 header_crc_status {};
+      int32 psducrc_status {};
+      auto status = library_->DSSSModAccFetchPPDUInformation(instrument, selector_string, timeout, &data_modulation_format, &payload_length, &preamble_type, &locked_clocks_bit, &header_crc_status, &psducrc_status);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_data_modulation_format(static_cast<nirfmxwlan_grpc::DsssModAccDataModulationFormat>(data_modulation_format));
+        response->set_data_modulation_format_raw(data_modulation_format);
+        response->set_payload_length(payload_length);
+        response->set_preamble_type(static_cast<nirfmxwlan_grpc::DsssModAccPreambleType>(preamble_type));
+        response->set_preamble_type_raw(preamble_type);
+        response->set_locked_clocks_bit(locked_clocks_bit);
+        response->set_header_crc_status(static_cast<nirfmxwlan_grpc::DsssModAccPayloadHeaderCrcStatus>(header_crc_status));
+        response->set_header_crc_status_raw(header_crc_status);
+        response->set_psducrc_status(static_cast<nirfmxwlan_grpc::DsssModAccPsduCrcStaus>(psducrc_status));
+        response->set_psducrc_status_raw(psducrc_status);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DSSSModAccFetchPeakPowers(::grpc::ServerContext* context, const DSSSModAccFetchPeakPowersRequest* request, DSSSModAccFetchPeakPowersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 preamble_peak_power_maximum {};
+      float64 header_peak_power_maximum {};
+      float64 data_peak_power_maximum {};
+      float64 ppdu_peak_power_maximum {};
+      auto status = library_->DSSSModAccFetchPeakPowers(instrument, selector_string, timeout, &preamble_peak_power_maximum, &header_peak_power_maximum, &data_peak_power_maximum, &ppdu_peak_power_maximum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_preamble_peak_power_maximum(preamble_peak_power_maximum);
+        response->set_header_peak_power_maximum(header_peak_power_maximum);
+        response->set_data_peak_power_maximum(data_peak_power_maximum);
+        response->set_ppdu_peak_power_maximum(ppdu_peak_power_maximum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DeleteSignalConfiguration(::grpc::ServerContext* context, const DeleteSignalConfigurationRequest* request, DeleteSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* signal_name = (char*)request->signal_name().c_str();
+      auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::DisableTrigger(::grpc::ServerContext* context, const DisableTriggerRequest* request, DisableTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->DisableTrigger(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAllNamedResultNames(::grpc::ServerContext* context, const GetAllNamedResultNamesRequest* request, GetAllNamedResultNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 actual_result_names_size {};
+      int32 default_result_exists {};
+      while (true) {
+        auto status = library_->GetAllNamedResultNames(instrument, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string result_names;
+        if (actual_result_names_size > 0) {
+            result_names.resize(actual_result_names_size - 1);
+        }
+        auto result_names_buffer_size = actual_result_names_size;
+        status = library_->GetAllNamedResultNames(instrument, selector_string, (char*)result_names.data(), result_names_buffer_size, &actual_result_names_size, &default_result_exists);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_result_names(result_names);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
+          response->set_actual_result_names_size(actual_result_names_size);
+          response->set_default_result_exists(default_result_exists);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      float32 attr_val {};
+      auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        float32* attr_val = response->mutable_attr_val()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      float64 attr_val {};
+      auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeF64Array(::grpc::ServerContext* context, const GetAttributeF64ArrayRequest* request, GetAttributeF64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        float64* attr_val = response->mutable_attr_val()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeI16(::grpc::ServerContext* context, const GetAttributeI16Request* request, GetAttributeI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int16 attr_val {};
+      auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeI32(::grpc::ServerContext* context, const GetAttributeI32Request* request, GetAttributeI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 attr_val {};
+      auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        auto checked_convert_attr_val = [](auto raw_value) {
+          bool raw_value_is_valid = nirfmxwlan_grpc::NiRFmxWLANInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nirfmxwlan_grpc::NiRFmxWLANInt32AttributeValues>(valid_enum_value);
+        };
+        response->set_attr_val(checked_convert_attr_val(attr_val));
+        response->set_attr_val_raw(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeI32Array(::grpc::ServerContext* context, const GetAttributeI32ArrayRequest* request, GetAttributeI32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
+        int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          auto checked_convert_attr_val = [](auto raw_value) {
+            bool raw_value_is_valid = nirfmxwlan_grpc::NiRFmxWLANInt32AttributeValues_IsValid(raw_value);
+            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+            return static_cast<nirfmxwlan_grpc::NiRFmxWLANInt32AttributeValues>(valid_enum_value);
+          };
+          response->mutable_attr_val()->Clear();
+          response->mutable_attr_val()->Reserve(actual_array_size);
+          std::transform(
+            response->attr_val_raw().begin(),
+            response->attr_val_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+            [&](auto x) { 
+                return checked_convert_attr_val(x);
+            });
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeI64(::grpc::ServerContext* context, const GetAttributeI64Request* request, GetAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attr_val {};
+      auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeI64Array(::grpc::ServerContext* context, const GetAttributeI64ArrayRequest* request, GetAttributeI64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeI8(::grpc::ServerContext* context, const GetAttributeI8Request* request, GetAttributeI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int8 attr_val {};
+      auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeI8Array(::grpc::ServerContext* context, const GetAttributeI8ArrayRequest* request, GetAttributeI8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<int8> attr_val(actual_array_size);
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Clear();
+          response->mutable_attr_val()->Reserve(actual_array_size);
+          std::transform(
+            attr_val.begin(),
+            attr_val.begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+            [&](auto x) { 
+                return x;
+            });
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const GetAttributeNIComplexDoubleArrayRequest* request, GetAttributeNIComplexDoubleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(attr_val, response->mutable_attr_val());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_attr_val()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const GetAttributeNIComplexSingleArrayRequest* request, GetAttributeNIComplexSingleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(attr_val, response->mutable_attr_val());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_attr_val()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeString(::grpc::ServerContext* context, const GetAttributeStringRequest* request, GetAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+
+      while (true) {
+        auto status = library_->GetAttributeString(instrument, selector_string, attribute_id, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 array_size = status;
+      
+        std::string attr_val;
+        if (array_size > 0) {
+            attr_val.resize(array_size - 1);
+        }
+        status = library_->GetAttributeString(instrument, selector_string, attribute_id, array_size, (char*)attr_val.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_attr_val(attr_val);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeU16(::grpc::ServerContext* context, const GetAttributeU16Request* request, GetAttributeU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt16 attr_val {};
+      auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeU32(::grpc::ServerContext* context, const GetAttributeU32Request* request, GetAttributeU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt32 attr_val {};
+      auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeU32Array(::grpc::ServerContext* context, const GetAttributeU32ArrayRequest* request, GetAttributeU32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeU64Array(::grpc::ServerContext* context, const GetAttributeU64ArrayRequest* request, GetAttributeU64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeU8(::grpc::ServerContext* context, const GetAttributeU8Request* request, GetAttributeU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8 attr_val {};
+      auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetAttributeU8Array(::grpc::ServerContext* context, const GetAttributeU8ArrayRequest* request, GetAttributeU8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string attr_val(actual_array_size, '\0');
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_attr_val(attr_val);
+          response->mutable_attr_val()->resize(actual_array_size);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+
+      while (true) {
+        auto status = library_->GetError(instrument, nullptr, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 error_description_buffer_size = status;
+      
+        int32 error_code {};
+        std::string error_description;
+        if (error_description_buffer_size > 0) {
+            error_description.resize(error_description_buffer_size - 1);
+        }
+        status = library_->GetError(instrument, &error_code, error_description_buffer_size, (char*)error_description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_error_code(error_code);
+          response->set_error_description(error_description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      int32 error_code = request->error_code();
+
+      while (true) {
+        auto status = library_->GetErrorString(instrument, error_code, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 error_description_buffer_size = status;
+      
+        std::string error_description;
+        if (error_description_buffer_size > 0) {
+            error_description.resize(error_description_buffer_size - 1);
+        }
+        status = library_->GetErrorString(instrument, error_code, error_description_buffer_size, (char*)error_description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_error_description(error_description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANService::Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -101,6 +2548,5096 @@ namespace nirfmxwlan_grpc {
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto nirfsa_session_grpc_session = request->nirfsa_session();
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.id(), nirfsa_session_grpc_session.name());
+
+      auto init_lambda = [&] () {
+        niRFmxInstrHandle instrument;
+        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        return std::make_tuple(status, instrument);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXWLAN_VAL_FALSE); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->mutable_instrument()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* result_name = (char*)request->result_name().c_str();
+      auto status = library_->Initiate(instrument, selector_string, result_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccAutoLevel(::grpc::ServerContext* context, const OFDMModAccAutoLevelRequest* request, OFDMModAccAutoLevelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      auto status = library_->OFDMModAccAutoLevel(instrument, selector_string, timeout);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfg1ReferenceWaveform(::grpc::ServerContext* context, const OFDMModAccCfg1ReferenceWaveformRequest* request, OFDMModAccCfg1ReferenceWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
+      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto status = library_->OFDMModAccCfg1ReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgAcquisitionLength(::grpc::ServerContext* context, const OFDMModAccCfgAcquisitionLengthRequest* request, OFDMModAccCfgAcquisitionLengthResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 acquisition_length_mode;
+      switch (request->acquisition_length_mode_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgAcquisitionLengthRequest::AcquisitionLengthModeEnumCase::kAcquisitionLengthMode: {
+          acquisition_length_mode = static_cast<int32>(request->acquisition_length_mode());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgAcquisitionLengthRequest::AcquisitionLengthModeEnumCase::kAcquisitionLengthModeRaw: {
+          acquisition_length_mode = static_cast<int32>(request->acquisition_length_mode_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgAcquisitionLengthRequest::AcquisitionLengthModeEnumCase::ACQUISITION_LENGTH_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for acquisition_length_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 acquisition_length = request->acquisition_length();
+      auto status = library_->OFDMModAccCfgAcquisitionLength(instrument, selector_string, acquisition_length_mode, acquisition_length);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgAmplitudeTrackingEnabled(::grpc::ServerContext* context, const OFDMModAccCfgAmplitudeTrackingEnabledRequest* request, OFDMModAccCfgAmplitudeTrackingEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 amplitude_tracking_enabled;
+      switch (request->amplitude_tracking_enabled_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgAmplitudeTrackingEnabledRequest::AmplitudeTrackingEnabledEnumCase::kAmplitudeTrackingEnabled: {
+          amplitude_tracking_enabled = static_cast<int32>(request->amplitude_tracking_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgAmplitudeTrackingEnabledRequest::AmplitudeTrackingEnabledEnumCase::kAmplitudeTrackingEnabledRaw: {
+          amplitude_tracking_enabled = static_cast<int32>(request->amplitude_tracking_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgAmplitudeTrackingEnabledRequest::AmplitudeTrackingEnabledEnumCase::AMPLITUDE_TRACKING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for amplitude_tracking_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OFDMModAccCfgAmplitudeTrackingEnabled(instrument, selector_string, amplitude_tracking_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgAveraging(::grpc::ServerContext* context, const OFDMModAccCfgAveragingRequest* request, OFDMModAccCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      auto status = library_->OFDMModAccCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgChannelEstimationType(::grpc::ServerContext* context, const OFDMModAccCfgChannelEstimationTypeRequest* request, OFDMModAccCfgChannelEstimationTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 channel_estimation_type;
+      switch (request->channel_estimation_type_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgChannelEstimationTypeRequest::ChannelEstimationTypeEnumCase::kChannelEstimationType: {
+          channel_estimation_type = static_cast<int32>(request->channel_estimation_type());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgChannelEstimationTypeRequest::ChannelEstimationTypeEnumCase::kChannelEstimationTypeRaw: {
+          channel_estimation_type = static_cast<int32>(request->channel_estimation_type_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgChannelEstimationTypeRequest::ChannelEstimationTypeEnumCase::CHANNEL_ESTIMATION_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for channel_estimation_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OFDMModAccCfgChannelEstimationType(instrument, selector_string, channel_estimation_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgCommonClockSourceEnabled(::grpc::ServerContext* context, const OFDMModAccCfgCommonClockSourceEnabledRequest* request, OFDMModAccCfgCommonClockSourceEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 common_clock_source_enabled;
+      switch (request->common_clock_source_enabled_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgCommonClockSourceEnabledRequest::CommonClockSourceEnabledEnumCase::kCommonClockSourceEnabled: {
+          common_clock_source_enabled = static_cast<int32>(request->common_clock_source_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgCommonClockSourceEnabledRequest::CommonClockSourceEnabledEnumCase::kCommonClockSourceEnabledRaw: {
+          common_clock_source_enabled = static_cast<int32>(request->common_clock_source_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgCommonClockSourceEnabledRequest::CommonClockSourceEnabledEnumCase::COMMON_CLOCK_SOURCE_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for common_clock_source_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OFDMModAccCfgCommonClockSourceEnabled(instrument, selector_string, common_clock_source_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgEVMUnit(::grpc::ServerContext* context, const OFDMModAccCfgEVMUnitRequest* request, OFDMModAccCfgEVMUnitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 evm_unit;
+      switch (request->evm_unit_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgEVMUnitRequest::EvmUnitEnumCase::kEvmUnit: {
+          evm_unit = static_cast<int32>(request->evm_unit());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgEVMUnitRequest::EvmUnitEnumCase::kEvmUnitRaw: {
+          evm_unit = static_cast<int32>(request->evm_unit_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgEVMUnitRequest::EvmUnitEnumCase::EVM_UNIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for evm_unit was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OFDMModAccCfgEVMUnit(instrument, selector_string, evm_unit);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgFrequencyErrorEstimationMethod(::grpc::ServerContext* context, const OFDMModAccCfgFrequencyErrorEstimationMethodRequest* request, OFDMModAccCfgFrequencyErrorEstimationMethodResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 frequency_error_estimation_method;
+      switch (request->frequency_error_estimation_method_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgFrequencyErrorEstimationMethodRequest::FrequencyErrorEstimationMethodEnumCase::kFrequencyErrorEstimationMethod: {
+          frequency_error_estimation_method = static_cast<int32>(request->frequency_error_estimation_method());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgFrequencyErrorEstimationMethodRequest::FrequencyErrorEstimationMethodEnumCase::kFrequencyErrorEstimationMethodRaw: {
+          frequency_error_estimation_method = static_cast<int32>(request->frequency_error_estimation_method_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgFrequencyErrorEstimationMethodRequest::FrequencyErrorEstimationMethodEnumCase::FREQUENCY_ERROR_ESTIMATION_METHOD_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_error_estimation_method was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OFDMModAccCfgFrequencyErrorEstimationMethod(instrument, selector_string, frequency_error_estimation_method);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgMeasurementLength(::grpc::ServerContext* context, const OFDMModAccCfgMeasurementLengthRequest* request, OFDMModAccCfgMeasurementLengthResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 measurement_offset = request->measurement_offset();
+      int32 maximum_measurement_length = request->maximum_measurement_length();
+      auto status = library_->OFDMModAccCfgMeasurementLength(instrument, selector_string, measurement_offset, maximum_measurement_length);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgMeasurementMode(::grpc::ServerContext* context, const OFDMModAccCfgMeasurementModeRequest* request, OFDMModAccCfgMeasurementModeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 measurement_mode;
+      switch (request->measurement_mode_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgMeasurementModeRequest::MeasurementModeEnumCase::kMeasurementMode: {
+          measurement_mode = static_cast<int32>(request->measurement_mode());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgMeasurementModeRequest::MeasurementModeEnumCase::kMeasurementModeRaw: {
+          measurement_mode = static_cast<int32>(request->measurement_mode_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgMeasurementModeRequest::MeasurementModeEnumCase::MEASUREMENT_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurement_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OFDMModAccCfgMeasurementMode(instrument, selector_string, measurement_mode);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const OFDMModAccCfgNoiseCompensationEnabledRequest* request, OFDMModAccCfgNoiseCompensationEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 noise_compensation_enabled;
+      switch (request->noise_compensation_enabled_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabled: {
+          noise_compensation_enabled = static_cast<int32>(request->noise_compensation_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabledRaw: {
+          noise_compensation_enabled = static_cast<int32>(request->noise_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::NOISE_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for noise_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OFDMModAccCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgOptimizeDynamicRangeForEVM(::grpc::ServerContext* context, const OFDMModAccCfgOptimizeDynamicRangeForEVMRequest* request, OFDMModAccCfgOptimizeDynamicRangeForEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 optimize_dynamic_range_for_evm_enabled;
+      switch (request->optimize_dynamic_range_for_evm_enabled_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgOptimizeDynamicRangeForEVMRequest::OptimizeDynamicRangeForEvmEnabledEnumCase::kOptimizeDynamicRangeForEvmEnabled: {
+          optimize_dynamic_range_for_evm_enabled = static_cast<int32>(request->optimize_dynamic_range_for_evm_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgOptimizeDynamicRangeForEVMRequest::OptimizeDynamicRangeForEvmEnabledEnumCase::kOptimizeDynamicRangeForEvmEnabledRaw: {
+          optimize_dynamic_range_for_evm_enabled = static_cast<int32>(request->optimize_dynamic_range_for_evm_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgOptimizeDynamicRangeForEVMRequest::OptimizeDynamicRangeForEvmEnabledEnumCase::OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for optimize_dynamic_range_for_evm_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      double optimize_dynamic_range_for_evm_margin = request->optimize_dynamic_range_for_evm_margin();
+      auto status = library_->OFDMModAccCfgOptimizeDynamicRangeForEVM(instrument, selector_string, optimize_dynamic_range_for_evm_enabled, optimize_dynamic_range_for_evm_margin);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgPhaseTrackingEnabled(::grpc::ServerContext* context, const OFDMModAccCfgPhaseTrackingEnabledRequest* request, OFDMModAccCfgPhaseTrackingEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 phase_tracking_enabled;
+      switch (request->phase_tracking_enabled_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgPhaseTrackingEnabledRequest::PhaseTrackingEnabledEnumCase::kPhaseTrackingEnabled: {
+          phase_tracking_enabled = static_cast<int32>(request->phase_tracking_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgPhaseTrackingEnabledRequest::PhaseTrackingEnabledEnumCase::kPhaseTrackingEnabledRaw: {
+          phase_tracking_enabled = static_cast<int32>(request->phase_tracking_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgPhaseTrackingEnabledRequest::PhaseTrackingEnabledEnumCase::PHASE_TRACKING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for phase_tracking_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OFDMModAccCfgPhaseTrackingEnabled(instrument, selector_string, phase_tracking_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgSymbolClockErrorCorrectionEnabled(::grpc::ServerContext* context, const OFDMModAccCfgSymbolClockErrorCorrectionEnabledRequest* request, OFDMModAccCfgSymbolClockErrorCorrectionEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 symbol_clock_error_correction_enabled;
+      switch (request->symbol_clock_error_correction_enabled_enum_case()) {
+        case nirfmxwlan_grpc::OFDMModAccCfgSymbolClockErrorCorrectionEnabledRequest::SymbolClockErrorCorrectionEnabledEnumCase::kSymbolClockErrorCorrectionEnabled: {
+          symbol_clock_error_correction_enabled = static_cast<int32>(request->symbol_clock_error_correction_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgSymbolClockErrorCorrectionEnabledRequest::SymbolClockErrorCorrectionEnabledEnumCase::kSymbolClockErrorCorrectionEnabledRaw: {
+          symbol_clock_error_correction_enabled = static_cast<int32>(request->symbol_clock_error_correction_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::OFDMModAccCfgSymbolClockErrorCorrectionEnabledRequest::SymbolClockErrorCorrectionEnabledEnumCase::SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for symbol_clock_error_correction_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OFDMModAccCfgSymbolClockErrorCorrectionEnabled(instrument, selector_string, symbol_clock_error_correction_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccClearNoiseCalibrationDatabase(::grpc::ServerContext* context, const OFDMModAccClearNoiseCalibrationDatabaseRequest* request, OFDMModAccClearNoiseCalibrationDatabaseResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      auto status = library_->OFDMModAccClearNoiseCalibrationDatabase(instrument);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_chain_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* chain_data_rmsevm_per_symbol_mean = response->mutable_chain_data_rmsevm_per_symbol_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_data_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_chain_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_chain_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* chain_pilot_rmsevm_per_symbol_mean = response->mutable_chain_pilot_rmsevm_per_symbol_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_pilot_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_chain_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainRMSEVM(::grpc::ServerContext* context, const OFDMModAccFetchChainRMSEVMRequest* request, OFDMModAccFetchChainRMSEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 chain_rmsevm_mean {};
+      float64 chain_data_rmsevm_mean {};
+      float64 chain_pilot_rmsevm_mean {};
+      auto status = library_->OFDMModAccFetchChainRMSEVM(instrument, selector_string, timeout, &chain_rmsevm_mean, &chain_data_rmsevm_mean, &chain_pilot_rmsevm_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_chain_rmsevm_mean(chain_rmsevm_mean);
+        response->set_chain_data_rmsevm_mean(chain_data_rmsevm_mean);
+        response->set_chain_pilot_rmsevm_mean(chain_pilot_rmsevm_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceRequest* request, OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_chain_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* chain_rmsevm_per_subcarrier_mean = response->mutable_chain_rmsevm_per_subcarrier_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_rmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_chain_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChainRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchChainRMSEVMPerSymbolMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_chain_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* chain_rmsevm_per_symbol_mean = response->mutable_chain_rmsevm_per_symbol_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_chain_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChannelFrequencyResponseMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChannelFrequencyResponseMeanTraceRequest* request, OFDMModAccFetchChannelFrequencyResponseMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchChannelFrequencyResponseMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_channel_frequency_response_mean_magnitude()->Resize(actual_array_size, 0);
+        float32* channel_frequency_response_mean_magnitude = response->mutable_channel_frequency_response_mean_magnitude()->mutable_data();
+        response->mutable_channel_frequency_response_mean_phase()->Resize(actual_array_size, 0);
+        float32* channel_frequency_response_mean_phase = response->mutable_channel_frequency_response_mean_phase()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchChannelFrequencyResponseMeanTrace(instrument, selector_string, timeout, &x0, &dx, channel_frequency_response_mean_magnitude, channel_frequency_response_mean_phase, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_channel_frequency_response_mean_magnitude()->Resize(actual_array_size, 0);
+          response->mutable_channel_frequency_response_mean_phase()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchCommonPilotErrorTrace(::grpc::ServerContext* context, const OFDMModAccFetchCommonPilotErrorTraceRequest* request, OFDMModAccFetchCommonPilotErrorTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchCommonPilotErrorTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_common_pilot_error_magnitude()->Resize(actual_array_size, 0);
+        float32* common_pilot_error_magnitude = response->mutable_common_pilot_error_magnitude()->mutable_data();
+        response->mutable_common_pilot_error_phase()->Resize(actual_array_size, 0);
+        float32* common_pilot_error_phase = response->mutable_common_pilot_error_phase()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchCommonPilotErrorTrace(instrument, selector_string, timeout, &x0, &dx, common_pilot_error_magnitude, common_pilot_error_phase, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_common_pilot_error_magnitude()->Resize(actual_array_size, 0);
+          response->mutable_common_pilot_error_phase()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchCompositeRMSEVM(::grpc::ServerContext* context, const OFDMModAccFetchCompositeRMSEVMRequest* request, OFDMModAccFetchCompositeRMSEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 composite_rmsevm_mean {};
+      float64 composite_data_rmsevm_mean {};
+      float64 composite_pilot_rmsevm_mean {};
+      auto status = library_->OFDMModAccFetchCompositeRMSEVM(instrument, selector_string, timeout, &composite_rmsevm_mean, &composite_data_rmsevm_mean, &composite_pilot_rmsevm_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_composite_rmsevm_mean(composite_rmsevm_mean);
+        response->set_composite_data_rmsevm_mean(composite_data_rmsevm_mean);
+        response->set_composite_pilot_rmsevm_mean(composite_pilot_rmsevm_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchCrossPower(::grpc::ServerContext* context, const OFDMModAccFetchCrossPowerRequest* request, OFDMModAccFetchCrossPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 cross_power_mean {};
+      auto status = library_->OFDMModAccFetchCrossPower(instrument, selector_string, timeout, &cross_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_cross_power_mean(cross_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchCustomGatePowersArray(::grpc::ServerContext* context, const OFDMModAccFetchCustomGatePowersArrayRequest* request, OFDMModAccFetchCustomGatePowersArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchCustomGatePowersArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_average_power_mean()->Resize(actual_array_size, 0);
+        float64* average_power_mean = response->mutable_average_power_mean()->mutable_data();
+        response->mutable_peak_power_maximum()->Resize(actual_array_size, 0);
+        float64* peak_power_maximum = response->mutable_peak_power_maximum()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchCustomGatePowersArray(instrument, selector_string, timeout, average_power_mean, peak_power_maximum, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_average_power_mean()->Resize(actual_array_size, 0);
+          response->mutable_peak_power_maximum()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDataAveragePower(::grpc::ServerContext* context, const OFDMModAccFetchDataAveragePowerRequest* request, OFDMModAccFetchDataAveragePowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 data_average_power_mean {};
+      auto status = library_->OFDMModAccFetchDataAveragePower(instrument, selector_string, timeout, &data_average_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_data_average_power_mean(data_average_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDataConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchDataConstellationTraceRequest* request, OFDMModAccFetchDataConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDataConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> data_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDataConstellationTrace(instrument, selector_string, timeout, data_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(data_constellation, response->mutable_data_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_data_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDataPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchDataPeakPowerRequest* request, OFDMModAccFetchDataPeakPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 data_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchDataPeakPower(instrument, selector_string, timeout, &data_peak_power_maximum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_data_peak_power_maximum(data_peak_power_maximum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedEHTSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedEHTSIGBitsTraceRequest* request, OFDMModAccFetchDecodedEHTSIGBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedEHTSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_decoded_ehtsig_bits()->Resize(actual_array_size, 0);
+        int32* decoded_ehtsig_bits = reinterpret_cast<int32*>(response->mutable_decoded_ehtsig_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDecodedEHTSIGBitsTrace(instrument, selector_string, timeout, decoded_ehtsig_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_decoded_ehtsig_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedLSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedLSIGBitsTraceRequest* request, OFDMModAccFetchDecodedLSIGBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedLSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_decoded_lsig_bits()->Resize(actual_array_size, 0);
+        int32* decoded_lsig_bits = reinterpret_cast<int32*>(response->mutable_decoded_lsig_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDecodedLSIGBitsTrace(instrument, selector_string, timeout, decoded_lsig_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_decoded_lsig_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedPSDUBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedPSDUBitsTraceRequest* request, OFDMModAccFetchDecodedPSDUBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedPSDUBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_decoded_psdu_bits()->Resize(actual_array_size, 0);
+        int32* decoded_psdu_bits = reinterpret_cast<int32*>(response->mutable_decoded_psdu_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDecodedPSDUBitsTrace(instrument, selector_string, timeout, decoded_psdu_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_decoded_psdu_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedSIGBBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedSIGBBitsTraceRequest* request, OFDMModAccFetchDecodedSIGBBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedSIGBBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_decoded_sigb_bits()->Resize(actual_array_size, 0);
+        int32* decoded_sigb_bits = reinterpret_cast<int32*>(response->mutable_decoded_sigb_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDecodedSIGBBitsTrace(instrument, selector_string, timeout, decoded_sigb_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_decoded_sigb_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedSIGBitsTraceRequest* request, OFDMModAccFetchDecodedSIGBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_decoded_sig_bits()->Resize(actual_array_size, 0);
+        int32* decoded_sig_bits = reinterpret_cast<int32*>(response->mutable_decoded_sig_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDecodedSIGBitsTrace(instrument, selector_string, timeout, decoded_sig_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_decoded_sig_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedServiceBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedServiceBitsTraceRequest* request, OFDMModAccFetchDecodedServiceBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedServiceBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_decoded_service_bits()->Resize(actual_array_size, 0);
+        int32* decoded_service_bits = reinterpret_cast<int32*>(response->mutable_decoded_service_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDecodedServiceBitsTrace(instrument, selector_string, timeout, decoded_service_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_decoded_service_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedUSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedUSIGBitsTraceRequest* request, OFDMModAccFetchDecodedUSIGBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedUSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_decoded_usig_bits()->Resize(actual_array_size, 0);
+        int32* decoded_usig_bits = reinterpret_cast<int32*>(response->mutable_decoded_usig_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDecodedUSIGBitsTrace(instrument, selector_string, timeout, decoded_usig_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_decoded_usig_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchEVMSubcarrierIndices(::grpc::ServerContext* context, const OFDMModAccFetchEVMSubcarrierIndicesRequest* request, OFDMModAccFetchEVMSubcarrierIndicesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchEVMSubcarrierIndices(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_subcarrier_indices()->Resize(actual_array_size, 0);
+        int32* subcarrier_indices = reinterpret_cast<int32*>(response->mutable_subcarrier_indices()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchEVMSubcarrierIndices(instrument, selector_string, timeout, subcarrier_indices, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_subcarrier_indices()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchFrequencyErrorCCDF10Percent(::grpc::ServerContext* context, const OFDMModAccFetchFrequencyErrorCCDF10PercentRequest* request, OFDMModAccFetchFrequencyErrorCCDF10PercentResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 frequency_error_ccdf10_percent {};
+      auto status = library_->OFDMModAccFetchFrequencyErrorCCDF10Percent(instrument, selector_string, timeout, &frequency_error_ccdf10_percent);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_frequency_error_ccdf10_percent(frequency_error_ccdf10_percent);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchFrequencyErrorMean(::grpc::ServerContext* context, const OFDMModAccFetchFrequencyErrorMeanRequest* request, OFDMModAccFetchFrequencyErrorMeanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 frequency_error_mean {};
+      auto status = library_->OFDMModAccFetchFrequencyErrorMean(instrument, selector_string, timeout, &frequency_error_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_frequency_error_mean(frequency_error_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchGroupDelayMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchGroupDelayMeanTraceRequest* request, OFDMModAccFetchGroupDelayMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchGroupDelayMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_group_delay_mean()->Resize(actual_array_size, 0);
+        float32* group_delay_mean = response->mutable_group_delay_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchGroupDelayMeanTrace(instrument, selector_string, timeout, &x0, &dx, group_delay_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_group_delay_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchGuardIntervalType(::grpc::ServerContext* context, const OFDMModAccFetchGuardIntervalTypeRequest* request, OFDMModAccFetchGuardIntervalTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 guard_interval_type {};
+      auto status = library_->OFDMModAccFetchGuardIntervalType(instrument, selector_string, timeout, &guard_interval_type);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_guard_interval_type(static_cast<nirfmxwlan_grpc::OfdmGuardIntervalType>(guard_interval_type));
+        response->set_guard_interval_type_raw(guard_interval_type);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTraceRequest* request, OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_iq_gain_imbalance_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* iq_gain_imbalance_per_subcarrier_mean = response->mutable_iq_gain_imbalance_per_subcarrier_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, iq_gain_imbalance_per_subcarrier_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_iq_gain_imbalance_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchIQImpairments(::grpc::ServerContext* context, const OFDMModAccFetchIQImpairmentsRequest* request, OFDMModAccFetchIQImpairmentsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 relative_iq_origin_offset_mean {};
+      float64 iq_gain_imbalance_mean {};
+      float64 iq_quadrature_error_mean {};
+      float64 absolute_iq_origin_offset_mean {};
+      float64 iq_timing_skew_mean {};
+      auto status = library_->OFDMModAccFetchIQImpairments(instrument, selector_string, timeout, &relative_iq_origin_offset_mean, &iq_gain_imbalance_mean, &iq_quadrature_error_mean, &absolute_iq_origin_offset_mean, &iq_timing_skew_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_relative_iq_origin_offset_mean(relative_iq_origin_offset_mean);
+        response->set_iq_gain_imbalance_mean(iq_gain_imbalance_mean);
+        response->set_iq_quadrature_error_mean(iq_quadrature_error_mean);
+        response->set_absolute_iq_origin_offset_mean(absolute_iq_origin_offset_mean);
+        response->set_iq_timing_skew_mean(iq_timing_skew_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceRequest* request, OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_iq_quadrature_error_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* iq_quadrature_error_per_subcarrier_mean = response->mutable_iq_quadrature_error_per_subcarrier_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, iq_quadrature_error_per_subcarrier_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_iq_quadrature_error_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchLSIGParityCheckStatus(::grpc::ServerContext* context, const OFDMModAccFetchLSIGParityCheckStatusRequest* request, OFDMModAccFetchLSIGParityCheckStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 lsig_parity_check_status {};
+      auto status = library_->OFDMModAccFetchLSIGParityCheckStatus(instrument, selector_string, timeout, &lsig_parity_check_status);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_lsig_parity_check_status(static_cast<nirfmxwlan_grpc::OfdmModAccLSigParityCheckStatus>(lsig_parity_check_status));
+        response->set_lsig_parity_check_status_raw(lsig_parity_check_status);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchLTFSize(::grpc::ServerContext* context, const OFDMModAccFetchLTFSizeRequest* request, OFDMModAccFetchLTFSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 ltf_size {};
+      auto status = library_->OFDMModAccFetchLTFSize(instrument, selector_string, timeout, &ltf_size);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_ltf_size(static_cast<nirfmxwlan_grpc::OfdmLtfSize>(ltf_size));
+        response->set_ltf_size_raw(ltf_size);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchMCSIndex(::grpc::ServerContext* context, const OFDMModAccFetchMCSIndexRequest* request, OFDMModAccFetchMCSIndexResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 mcs_index {};
+      auto status = library_->OFDMModAccFetchMCSIndex(instrument, selector_string, timeout, &mcs_index);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mcs_index(mcs_index);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchNumberOfHESIGBSymbols(::grpc::ServerContext* context, const OFDMModAccFetchNumberOfHESIGBSymbolsRequest* request, OFDMModAccFetchNumberOfHESIGBSymbolsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 number_of_hesigb_symbols {};
+      auto status = library_->OFDMModAccFetchNumberOfHESIGBSymbols(instrument, selector_string, timeout, &number_of_hesigb_symbols);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_number_of_hesigb_symbols(number_of_hesigb_symbols);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchNumberOfSpaceTimeStreams(::grpc::ServerContext* context, const OFDMModAccFetchNumberOfSpaceTimeStreamsRequest* request, OFDMModAccFetchNumberOfSpaceTimeStreamsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 number_of_space_time_streams {};
+      auto status = library_->OFDMModAccFetchNumberOfSpaceTimeStreams(instrument, selector_string, timeout, &number_of_space_time_streams);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_number_of_space_time_streams(number_of_space_time_streams);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchNumberOfUsers(::grpc::ServerContext* context, const OFDMModAccFetchNumberOfUsersRequest* request, OFDMModAccFetchNumberOfUsersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 number_of_users {};
+      auto status = library_->OFDMModAccFetchNumberOfUsers(instrument, selector_string, timeout, &number_of_users);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_number_of_users(number_of_users);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchNumberofSymbolsUsed(::grpc::ServerContext* context, const OFDMModAccFetchNumberofSymbolsUsedRequest* request, OFDMModAccFetchNumberofSymbolsUsedResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 number_of_symbols_used {};
+      auto status = library_->OFDMModAccFetchNumberofSymbolsUsed(instrument, selector_string, timeout, &number_of_symbols_used);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_number_of_symbols_used(number_of_symbols_used);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPEAveragePower(::grpc::ServerContext* context, const OFDMModAccFetchPEAveragePowerRequest* request, OFDMModAccFetchPEAveragePowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 pe_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPEAveragePower(instrument, selector_string, timeout, &pe_average_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_pe_average_power_mean(pe_average_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPEDuration(::grpc::ServerContext* context, const OFDMModAccFetchPEDurationRequest* request, OFDMModAccFetchPEDurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 pe_duration {};
+      auto status = library_->OFDMModAccFetchPEDuration(instrument, selector_string, timeout, &pe_duration);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_pe_duration(pe_duration);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPEPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchPEPeakPowerRequest* request, OFDMModAccFetchPEPeakPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 pe_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPEPeakPower(instrument, selector_string, timeout, &pe_peak_power_maximum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_pe_peak_power_maximum(pe_peak_power_maximum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPPDUAveragePower(::grpc::ServerContext* context, const OFDMModAccFetchPPDUAveragePowerRequest* request, OFDMModAccFetchPPDUAveragePowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 ppdu_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPPDUAveragePower(instrument, selector_string, timeout, &ppdu_average_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_ppdu_average_power_mean(ppdu_average_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPPDUPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchPPDUPeakPowerRequest* request, OFDMModAccFetchPPDUPeakPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 ppdu_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPPDUPeakPower(instrument, selector_string, timeout, &ppdu_peak_power_maximum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_ppdu_peak_power_maximum(ppdu_peak_power_maximum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPPDUType(::grpc::ServerContext* context, const OFDMModAccFetchPPDUTypeRequest* request, OFDMModAccFetchPPDUTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 ppdu_type {};
+      auto status = library_->OFDMModAccFetchPPDUType(instrument, selector_string, timeout, &ppdu_type);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_ppdu_type(static_cast<nirfmxwlan_grpc::OfdmPpduType>(ppdu_type));
+        response->set_ppdu_type_raw(ppdu_type);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPSDUCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchPSDUCRCStatusRequest* request, OFDMModAccFetchPSDUCRCStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 psducrc_status {};
+      auto status = library_->OFDMModAccFetchPSDUCRCStatus(instrument, selector_string, timeout, &psducrc_status);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_psducrc_status(static_cast<nirfmxwlan_grpc::OfdmModAccPsduCrcStatus>(psducrc_status));
+        response->set_psducrc_status_raw(psducrc_status);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPilotConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchPilotConstellationTraceRequest* request, OFDMModAccFetchPilotConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchPilotConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> pilot_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchPilotConstellationTrace(instrument, selector_string, timeout, pilot_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(pilot_constellation, response->mutable_pilot_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_pilot_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_pilot_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowers80211ac(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211acRequest* request, OFDMModAccFetchPreambleAveragePowers80211acResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 vhtsiga_average_power_mean {};
+      float64 vhtstf_average_power_mean {};
+      float64 vhtltf_average_power_mean {};
+      float64 vhtsigb_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ac(instrument, selector_string, timeout, &vhtsiga_average_power_mean, &vhtstf_average_power_mean, &vhtltf_average_power_mean, &vhtsigb_average_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_vhtsiga_average_power_mean(vhtsiga_average_power_mean);
+        response->set_vhtstf_average_power_mean(vhtstf_average_power_mean);
+        response->set_vhtltf_average_power_mean(vhtltf_average_power_mean);
+        response->set_vhtsigb_average_power_mean(vhtsigb_average_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowers80211ax(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211axRequest* request, OFDMModAccFetchPreambleAveragePowers80211axResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 rlsig_average_power_mean {};
+      float64 hesiga_average_power_mean {};
+      float64 hesigb_average_power_mean {};
+      float64 hestf_average_power_mean {};
+      float64 heltf_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ax(instrument, selector_string, timeout, &rlsig_average_power_mean, &hesiga_average_power_mean, &hesigb_average_power_mean, &hestf_average_power_mean, &heltf_average_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_rlsig_average_power_mean(rlsig_average_power_mean);
+        response->set_hesiga_average_power_mean(hesiga_average_power_mean);
+        response->set_hesigb_average_power_mean(hesigb_average_power_mean);
+        response->set_hestf_average_power_mean(hestf_average_power_mean);
+        response->set_heltf_average_power_mean(heltf_average_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowers80211n(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211nRequest* request, OFDMModAccFetchPreambleAveragePowers80211nResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 htsig_average_power_mean {};
+      float64 htstf_average_power_mean {};
+      float64 htdltf_average_power_mean {};
+      float64 hteltf_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211n(instrument, selector_string, timeout, &htsig_average_power_mean, &htstf_average_power_mean, &htdltf_average_power_mean, &hteltf_average_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_htsig_average_power_mean(htsig_average_power_mean);
+        response->set_htstf_average_power_mean(htstf_average_power_mean);
+        response->set_htdltf_average_power_mean(htdltf_average_power_mean);
+        response->set_hteltf_average_power_mean(hteltf_average_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowersCommon(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowersCommonRequest* request, OFDMModAccFetchPreambleAveragePowersCommonResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 lstf_average_power_mean {};
+      float64 lltf_average_power_mean {};
+      float64 lsig_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPreambleAveragePowersCommon(instrument, selector_string, timeout, &lstf_average_power_mean, &lltf_average_power_mean, &lsig_average_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_lstf_average_power_mean(lstf_average_power_mean);
+        response->set_lltf_average_power_mean(lltf_average_power_mean);
+        response->set_lsig_average_power_mean(lsig_average_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleFrequencyErrorTrace(::grpc::ServerContext* context, const OFDMModAccFetchPreambleFrequencyErrorTraceRequest* request, OFDMModAccFetchPreambleFrequencyErrorTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchPreambleFrequencyErrorTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_preamble_frequency_error()->Resize(actual_array_size, 0);
+        float32* preamble_frequency_error = response->mutable_preamble_frequency_error()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchPreambleFrequencyErrorTrace(instrument, selector_string, timeout, &x0, &dx, preamble_frequency_error, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_preamble_frequency_error()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreamblePeakPowers80211ac(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowers80211acRequest* request, OFDMModAccFetchPreamblePeakPowers80211acResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 vhtsiga_peak_power_maximum {};
+      float64 vhtstf_peak_power_maximum {};
+      float64 vhtltf_peak_power_maximum {};
+      float64 vhtsigb_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ac(instrument, selector_string, timeout, &vhtsiga_peak_power_maximum, &vhtstf_peak_power_maximum, &vhtltf_peak_power_maximum, &vhtsigb_peak_power_maximum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_vhtsiga_peak_power_maximum(vhtsiga_peak_power_maximum);
+        response->set_vhtstf_peak_power_maximum(vhtstf_peak_power_maximum);
+        response->set_vhtltf_peak_power_maximum(vhtltf_peak_power_maximum);
+        response->set_vhtsigb_peak_power_maximum(vhtsigb_peak_power_maximum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreamblePeakPowers80211ax(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowers80211axRequest* request, OFDMModAccFetchPreamblePeakPowers80211axResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 rlsig_peak_power_maximum {};
+      float64 hesiga_peak_power_maximum {};
+      float64 hesigb_peak_power_maximum {};
+      float64 hestf_peak_power_maximum {};
+      float64 heltf_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ax(instrument, selector_string, timeout, &rlsig_peak_power_maximum, &hesiga_peak_power_maximum, &hesigb_peak_power_maximum, &hestf_peak_power_maximum, &heltf_peak_power_maximum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_rlsig_peak_power_maximum(rlsig_peak_power_maximum);
+        response->set_hesiga_peak_power_maximum(hesiga_peak_power_maximum);
+        response->set_hesigb_peak_power_maximum(hesigb_peak_power_maximum);
+        response->set_hestf_peak_power_maximum(hestf_peak_power_maximum);
+        response->set_heltf_peak_power_maximum(heltf_peak_power_maximum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreamblePeakPowers80211n(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowers80211nRequest* request, OFDMModAccFetchPreamblePeakPowers80211nResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 htsig_peak_power_maximum {};
+      float64 htstf_peak_power_maximum {};
+      float64 htdltf_peak_power_maximum {};
+      float64 hteltf_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211n(instrument, selector_string, timeout, &htsig_peak_power_maximum, &htstf_peak_power_maximum, &htdltf_peak_power_maximum, &hteltf_peak_power_maximum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_htsig_peak_power_maximum(htsig_peak_power_maximum);
+        response->set_htstf_peak_power_maximum(htstf_peak_power_maximum);
+        response->set_htdltf_peak_power_maximum(htdltf_peak_power_maximum);
+        response->set_hteltf_peak_power_maximum(hteltf_peak_power_maximum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreamblePeakPowersCommon(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowersCommonRequest* request, OFDMModAccFetchPreamblePeakPowersCommonResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 lstf_peak_power_maximum {};
+      float64 lltf_peak_power_maximum {};
+      float64 lsig_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPreamblePeakPowersCommon(instrument, selector_string, timeout, &lstf_peak_power_maximum, &lltf_peak_power_maximum, &lsig_peak_power_maximum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_lstf_peak_power_maximum(lstf_peak_power_maximum);
+        response->set_lltf_peak_power_maximum(lltf_peak_power_maximum);
+        response->set_lsig_peak_power_maximum(lsig_peak_power_maximum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchRUOffsetAndSize(::grpc::ServerContext* context, const OFDMModAccFetchRUOffsetAndSizeRequest* request, OFDMModAccFetchRUOffsetAndSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 ru_offset {};
+      int32 ru_size {};
+      auto status = library_->OFDMModAccFetchRUOffsetAndSize(instrument, selector_string, timeout, &ru_offset, &ru_size);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_ru_offset(ru_offset);
+        response->set_ru_size(ru_size);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSIGBCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchSIGBCRCStatusRequest* request, OFDMModAccFetchSIGBCRCStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 sigbcrc_status {};
+      auto status = library_->OFDMModAccFetchSIGBCRCStatus(instrument, selector_string, timeout, &sigbcrc_status);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_sigbcrc_status(static_cast<nirfmxwlan_grpc::OfdmModAccSigBCrcStatus>(sigbcrc_status));
+        response->set_sigbcrc_status_raw(sigbcrc_status);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSIGCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchSIGCRCStatusRequest* request, OFDMModAccFetchSIGCRCStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 sigcrc_status {};
+      auto status = library_->OFDMModAccFetchSIGCRCStatus(instrument, selector_string, timeout, &sigcrc_status);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_sigcrc_status(static_cast<nirfmxwlan_grpc::OfdmModAccSigCrcStatus>(sigcrc_status));
+        response->set_sigcrc_status_raw(sigcrc_status);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSpectralFlatness(::grpc::ServerContext* context, const OFDMModAccFetchSpectralFlatnessRequest* request, OFDMModAccFetchSpectralFlatnessResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 spectral_flatness_margin {};
+      int32 spectral_flatness_margin_subcarrier_index {};
+      auto status = library_->OFDMModAccFetchSpectralFlatness(instrument, selector_string, timeout, &spectral_flatness_margin, &spectral_flatness_margin_subcarrier_index);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_spectral_flatness_margin(spectral_flatness_margin);
+        response->set_spectral_flatness_margin_subcarrier_index(spectral_flatness_margin_subcarrier_index);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSpectralFlatnessMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchSpectralFlatnessMeanTraceRequest* request, OFDMModAccFetchSpectralFlatnessMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchSpectralFlatnessMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_spectral_flatness_mean()->Resize(actual_array_size, 0);
+        float32* spectral_flatness_mean = response->mutable_spectral_flatness_mean()->mutable_data();
+        response->mutable_spectral_flatness_lower_mask()->Resize(actual_array_size, 0);
+        float32* spectral_flatness_lower_mask = response->mutable_spectral_flatness_lower_mask()->mutable_data();
+        response->mutable_spectral_flatness_upper_mask()->Resize(actual_array_size, 0);
+        float32* spectral_flatness_upper_mask = response->mutable_spectral_flatness_upper_mask()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchSpectralFlatnessMeanTrace(instrument, selector_string, timeout, &x0, &dx, spectral_flatness_mean, spectral_flatness_lower_mask, spectral_flatness_upper_mask, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_spectral_flatness_mean()->Resize(actual_array_size, 0);
+          response->mutable_spectral_flatness_lower_mask()->Resize(actual_array_size, 0);
+          response->mutable_spectral_flatness_upper_mask()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_stream_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* stream_data_rmsevm_per_symbol_mean = response->mutable_stream_data_rmsevm_per_symbol_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_data_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_stream_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_stream_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* stream_pilot_rmsevm_per_symbol_mean = response->mutable_stream_pilot_rmsevm_per_symbol_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_pilot_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_stream_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamRMSEVM(::grpc::ServerContext* context, const OFDMModAccFetchStreamRMSEVMRequest* request, OFDMModAccFetchStreamRMSEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 stream_rmsevm_mean {};
+      float64 stream_data_rmsevm_mean {};
+      float64 stream_pilot_rmsevm_mean {};
+      auto status = library_->OFDMModAccFetchStreamRMSEVM(instrument, selector_string, timeout, &stream_rmsevm_mean, &stream_data_rmsevm_mean, &stream_pilot_rmsevm_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_stream_rmsevm_mean(stream_rmsevm_mean);
+        response->set_stream_data_rmsevm_mean(stream_data_rmsevm_mean);
+        response->set_stream_pilot_rmsevm_mean(stream_pilot_rmsevm_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceRequest* request, OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_stream_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* stream_rmsevm_per_subcarrier_mean = response->mutable_stream_rmsevm_per_subcarrier_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_rmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_stream_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchStreamRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchStreamRMSEVMPerSymbolMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_stream_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* stream_rmsevm_per_symbol_mean = response->mutable_stream_rmsevm_per_symbol_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_stream_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(::grpc::ServerContext* context, const OFDMModAccFetchSubcarrierChainEVMPerSymbolTraceRequest* request, OFDMModAccFetchSubcarrierChainEVMPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 subcarrier_index = request->subcarrier_index();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(instrument, selector_string, timeout, subcarrier_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_subcarrier_chain_evm_per_symbol()->Resize(actual_array_size, 0);
+        float32* subcarrier_chain_evm_per_symbol = response->mutable_subcarrier_chain_evm_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(instrument, selector_string, timeout, subcarrier_index, &x0, &dx, subcarrier_chain_evm_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_subcarrier_chain_evm_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(::grpc::ServerContext* context, const OFDMModAccFetchSubcarrierStreamEVMPerSymbolTraceRequest* request, OFDMModAccFetchSubcarrierStreamEVMPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 subcarrier_index = request->subcarrier_index();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(instrument, selector_string, timeout, subcarrier_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_subcarrier_stream_evm_per_symbol()->Resize(actual_array_size, 0);
+        float32* subcarrier_stream_evm_per_symbol = response->mutable_subcarrier_stream_evm_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(instrument, selector_string, timeout, subcarrier_index, &x0, &dx, subcarrier_stream_evm_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_subcarrier_stream_evm_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(::grpc::ServerContext* context, const OFDMModAccFetchSymbolChainEVMPerSubcarrierTraceRequest* request, OFDMModAccFetchSymbolChainEVMPerSubcarrierTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 symbol_index = request->symbol_index();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(instrument, selector_string, timeout, symbol_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_symbol_chain_evm_per_subcarrier()->Resize(actual_array_size, 0);
+        float32* symbol_chain_evm_per_subcarrier = response->mutable_symbol_chain_evm_per_subcarrier()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(instrument, selector_string, timeout, symbol_index, &x0, &dx, symbol_chain_evm_per_subcarrier, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_symbol_chain_evm_per_subcarrier()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSymbolClockErrorMean(::grpc::ServerContext* context, const OFDMModAccFetchSymbolClockErrorMeanRequest* request, OFDMModAccFetchSymbolClockErrorMeanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 symbol_clock_error_mean {};
+      auto status = library_->OFDMModAccFetchSymbolClockErrorMean(instrument, selector_string, timeout, &symbol_clock_error_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_symbol_clock_error_mean(symbol_clock_error_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(::grpc::ServerContext* context, const OFDMModAccFetchSymbolStreamEVMPerSubcarrierTraceRequest* request, OFDMModAccFetchSymbolStreamEVMPerSubcarrierTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 symbol_index = request->symbol_index();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(instrument, selector_string, timeout, symbol_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_symbol_stream_evm_per_subcarrier()->Resize(actual_array_size, 0);
+        float32* symbol_stream_evm_per_subcarrier = response->mutable_symbol_stream_evm_per_subcarrier()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(instrument, selector_string, timeout, symbol_index, &x0, &dx, symbol_stream_evm_per_subcarrier, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_symbol_stream_evm_per_subcarrier()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUnusedToneError(::grpc::ServerContext* context, const OFDMModAccFetchUnusedToneErrorRequest* request, OFDMModAccFetchUnusedToneErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 unused_tone_error_margin {};
+      int32 unused_tone_error_margin_ru_index {};
+      auto status = library_->OFDMModAccFetchUnusedToneError(instrument, selector_string, timeout, &unused_tone_error_margin, &unused_tone_error_margin_ru_index);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_unused_tone_error_margin(unused_tone_error_margin);
+        response->set_unused_tone_error_margin_ru_index(unused_tone_error_margin_ru_index);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUnusedToneErrorMarginPerRU(::grpc::ServerContext* context, const OFDMModAccFetchUnusedToneErrorMarginPerRURequest* request, OFDMModAccFetchUnusedToneErrorMarginPerRUResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchUnusedToneErrorMarginPerRU(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_unused_tone_error_margin_per_ru()->Resize(actual_array_size, 0);
+        float64* unused_tone_error_margin_per_ru = response->mutable_unused_tone_error_margin_per_ru()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchUnusedToneErrorMarginPerRU(instrument, selector_string, timeout, unused_tone_error_margin_per_ru, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_unused_tone_error_margin_per_ru()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUnusedToneErrorMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUnusedToneErrorMeanTraceRequest* request, OFDMModAccFetchUnusedToneErrorMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchUnusedToneErrorMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_unused_tone_error()->Resize(actual_array_size, 0);
+        float32* unused_tone_error = response->mutable_unused_tone_error()->mutable_data();
+        response->mutable_unused_tone_error_mask()->Resize(actual_array_size, 0);
+        float32* unused_tone_error_mask = response->mutable_unused_tone_error_mask()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchUnusedToneErrorMeanTrace(instrument, selector_string, timeout, &x0, &dx, unused_tone_error, unused_tone_error_mask, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_unused_tone_error()->Resize(actual_array_size, 0);
+          response->mutable_unused_tone_error_mask()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserDataConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserDataConstellationTraceRequest* request, OFDMModAccFetchUserDataConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchUserDataConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> user_data_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchUserDataConstellationTrace(instrument, selector_string, timeout, user_data_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(user_data_constellation, response->mutable_user_data_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_user_data_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_user_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserPilotConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserPilotConstellationTraceRequest* request, OFDMModAccFetchUserPilotConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchUserPilotConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> user_pilot_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchUserPilotConstellationTrace(instrument, selector_string, timeout, user_pilot_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(user_pilot_constellation, response->mutable_user_pilot_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_user_pilot_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_user_pilot_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserPower(::grpc::ServerContext* context, const OFDMModAccFetchUserPowerRequest* request, OFDMModAccFetchUserPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 user_power_mean {};
+      auto status = library_->OFDMModAccFetchUserPower(instrument, selector_string, timeout, &user_power_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_user_power_mean(user_power_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_user_stream_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* user_stream_data_rmsevm_per_symbol_mean = response->mutable_user_stream_data_rmsevm_per_symbol_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_data_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_user_stream_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_user_stream_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* user_stream_pilot_rmsevm_per_symbol_mean = response->mutable_user_stream_pilot_rmsevm_per_symbol_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_pilot_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_user_stream_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamRMSEVM(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamRMSEVMRequest* request, OFDMModAccFetchUserStreamRMSEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 user_stream_rmsevm_mean {};
+      float64 user_stream_data_rmsevm_mean {};
+      float64 user_stream_pilot_rmsevm_mean {};
+      auto status = library_->OFDMModAccFetchUserStreamRMSEVM(instrument, selector_string, timeout, &user_stream_rmsevm_mean, &user_stream_data_rmsevm_mean, &user_stream_pilot_rmsevm_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_user_stream_rmsevm_mean(user_stream_rmsevm_mean);
+        response->set_user_stream_data_rmsevm_mean(user_stream_data_rmsevm_mean);
+        response->set_user_stream_pilot_rmsevm_mean(user_stream_pilot_rmsevm_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceRequest* request, OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_user_stream_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* user_stream_rmsevm_per_subcarrier_mean = response->mutable_user_stream_rmsevm_per_subcarrier_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_rmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_user_stream_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_user_stream_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* user_stream_rmsevm_per_symbol_mean = response->mutable_user_stream_rmsevm_per_symbol_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_user_stream_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccValidateCalibrationData(::grpc::ServerContext* context, const OFDMModAccValidateCalibrationDataRequest* request, OFDMModAccValidateCalibrationDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 calibration_data_valid {};
+      auto status = library_->OFDMModAccValidateCalibrationData(instrument, selector_string, &calibration_data_valid);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_calibration_data_valid(static_cast<nirfmxwlan_grpc::OfdmModAccCalibrationDataValid>(calibration_data_valid));
+        response->set_calibration_data_valid_raw(calibration_data_valid);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::PowerRampCfgAcquisitionLength(::grpc::ServerContext* context, const PowerRampCfgAcquisitionLengthRequest* request, PowerRampCfgAcquisitionLengthResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 acquisition_length = request->acquisition_length();
+      auto status = library_->PowerRampCfgAcquisitionLength(instrument, selector_string, acquisition_length);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::PowerRampCfgAveraging(::grpc::ServerContext* context, const PowerRampCfgAveragingRequest* request, PowerRampCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxwlan_grpc::PowerRampCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::PowerRampCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::PowerRampCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      auto status = library_->PowerRampCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::PowerRampFetchFallTrace(::grpc::ServerContext* context, const PowerRampFetchFallTraceRequest* request, PowerRampFetchFallTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->PowerRampFetchFallTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_raw_waveform()->Resize(actual_array_size, 0);
+        float32* raw_waveform = response->mutable_raw_waveform()->mutable_data();
+        response->mutable_processed_waveform()->Resize(actual_array_size, 0);
+        float32* processed_waveform = response->mutable_processed_waveform()->mutable_data();
+        response->mutable_threshold()->Resize(actual_array_size, 0);
+        float32* threshold = response->mutable_threshold()->mutable_data();
+        response->mutable_power_reference()->Resize(actual_array_size, 0);
+        float32* power_reference = response->mutable_power_reference()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->PowerRampFetchFallTrace(instrument, selector_string, timeout, &x0, &dx, raw_waveform, processed_waveform, threshold, power_reference, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_raw_waveform()->Resize(actual_array_size, 0);
+          response->mutable_processed_waveform()->Resize(actual_array_size, 0);
+          response->mutable_threshold()->Resize(actual_array_size, 0);
+          response->mutable_power_reference()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::PowerRampFetchMeasurement(::grpc::ServerContext* context, const PowerRampFetchMeasurementRequest* request, PowerRampFetchMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 rise_time_mean {};
+      float64 fall_time_mean {};
+      auto status = library_->PowerRampFetchMeasurement(instrument, selector_string, timeout, &rise_time_mean, &fall_time_mean);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_rise_time_mean(rise_time_mean);
+        response->set_fall_time_mean(fall_time_mean);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::PowerRampFetchRiseTrace(::grpc::ServerContext* context, const PowerRampFetchRiseTraceRequest* request, PowerRampFetchRiseTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->PowerRampFetchRiseTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_raw_waveform()->Resize(actual_array_size, 0);
+        float32* raw_waveform = response->mutable_raw_waveform()->mutable_data();
+        response->mutable_processed_waveform()->Resize(actual_array_size, 0);
+        float32* processed_waveform = response->mutable_processed_waveform()->mutable_data();
+        response->mutable_threshold()->Resize(actual_array_size, 0);
+        float32* threshold = response->mutable_threshold()->mutable_data();
+        response->mutable_power_reference()->Resize(actual_array_size, 0);
+        float32* power_reference = response->mutable_power_reference()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->PowerRampFetchRiseTrace(instrument, selector_string, timeout, &x0, &dx, raw_waveform, processed_waveform, threshold, power_reference, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_raw_waveform()->Resize(actual_array_size, 0);
+          response->mutable_processed_waveform()->Resize(actual_array_size, 0);
+          response->mutable_threshold()->Resize(actual_array_size, 0);
+          response->mutable_power_reference()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::ResetToDefault(::grpc::ServerContext* context, const ResetToDefaultRequest* request, ResetToDefaultResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->ResetToDefault(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMCfgAveraging(::grpc::ServerContext* context, const SEMCfgAveragingRequest* request, SEMCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxwlan_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      int32 averaging_type;
+      switch (request->averaging_type_enum_case()) {
+        case nirfmxwlan_grpc::SEMCfgAveragingRequest::AveragingTypeEnumCase::kAveragingType: {
+          averaging_type = static_cast<int32>(request->averaging_type());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgAveragingRequest::AveragingTypeEnumCase::kAveragingTypeRaw: {
+          averaging_type = static_cast<int32>(request->averaging_type_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgAveragingRequest::AveragingTypeEnumCase::AVERAGING_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SEMCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMCfgMaskType(::grpc::ServerContext* context, const SEMCfgMaskTypeRequest* request, SEMCfgMaskTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 mask_type;
+      switch (request->mask_type_enum_case()) {
+        case nirfmxwlan_grpc::SEMCfgMaskTypeRequest::MaskTypeEnumCase::kMaskType: {
+          mask_type = static_cast<int32>(request->mask_type());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgMaskTypeRequest::MaskTypeEnumCase::kMaskTypeRaw: {
+          mask_type = static_cast<int32>(request->mask_type_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgMaskTypeRequest::MaskTypeEnumCase::MASK_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mask_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SEMCfgMaskType(instrument, selector_string, mask_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMCfgNumberOfOffsets(::grpc::ServerContext* context, const SEMCfgNumberOfOffsetsRequest* request, SEMCfgNumberOfOffsetsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_offsets = request->number_of_offsets();
+      auto status = library_->SEMCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMCfgOffsetFrequencyArray(::grpc::ServerContext* context, const SEMCfgOffsetFrequencyArrayRequest* request, SEMCfgOffsetFrequencyArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto offset_start_frequency = const_cast<float64*>(request->offset_start_frequency().data());
+      auto offset_stop_frequency = const_cast<float64*>(request->offset_stop_frequency().data());
+      auto offset_sideband_vector = std::vector<int32>();
+      offset_sideband_vector.reserve(request->offset_sideband().size());
+      std::transform(
+        request->offset_sideband().begin(),
+        request->offset_sideband().end(),
+        std::back_inserter(offset_sideband_vector),
+        [](auto x) { return x; });
+      auto offset_sideband = offset_sideband_vector.data();
+
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->offset_start_frequency_size(),
+        request->offset_stop_frequency_size(),
+        request->offset_sideband_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offsetStartFrequency, offsetStopFrequency, offsetSideband] do not match");
+      }
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
+      auto status = library_->SEMCfgOffsetFrequencyArray(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_sideband, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMCfgOffsetRelativeLimitArray(::grpc::ServerContext* context, const SEMCfgOffsetRelativeLimitArrayRequest* request, SEMCfgOffsetRelativeLimitArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto relative_limit_start = const_cast<float64*>(request->relative_limit_start().data());
+      auto relative_limit_stop = const_cast<float64*>(request->relative_limit_stop().data());
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->relative_limit_start_size(),
+        request->relative_limit_stop_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [relativeLimitStart, relativeLimitStop] do not match");
+      }
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
+      auto status = library_->SEMCfgOffsetRelativeLimitArray(instrument, selector_string, relative_limit_start, relative_limit_stop, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMCfgSpan(::grpc::ServerContext* context, const SEMCfgSpanRequest* request, SEMCfgSpanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 span_auto;
+      switch (request->span_auto_enum_case()) {
+        case nirfmxwlan_grpc::SEMCfgSpanRequest::SpanAutoEnumCase::kSpanAuto: {
+          span_auto = static_cast<int32>(request->span_auto());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgSpanRequest::SpanAutoEnumCase::kSpanAutoRaw: {
+          span_auto = static_cast<int32>(request->span_auto_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgSpanRequest::SpanAutoEnumCase::SPAN_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for span_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 span = request->span();
+      auto status = library_->SEMCfgSpan(instrument, selector_string, span_auto, span);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMCfgSweepTime(::grpc::ServerContext* context, const SEMCfgSweepTimeRequest* request, SEMCfgSweepTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxwlan_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 sweep_time_interval = request->sweep_time_interval();
+      auto status = library_->SEMCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchCarrierMeasurement(::grpc::ServerContext* context, const SEMFetchCarrierMeasurementRequest* request, SEMFetchCarrierMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 absolute_power {};
+      float64 relative_power {};
+      auto status = library_->SEMFetchCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &relative_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_absolute_power(absolute_power);
+        response->set_relative_power(relative_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchLowerOffsetMargin(::grpc::ServerContext* context, const SEMFetchLowerOffsetMarginRequest* request, SEMFetchLowerOffsetMarginResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 measurement_status {};
+      float64 margin {};
+      float64 margin_frequency {};
+      float64 margin_absolute_power {};
+      float64 margin_relative_power {};
+      auto status = library_->SEMFetchLowerOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_measurement_status(static_cast<nirfmxwlan_grpc::SemLowerOffsetMeasurementStatus>(measurement_status));
+        response->set_measurement_status_raw(measurement_status);
+        response->set_margin(margin);
+        response->set_margin_frequency(margin_frequency);
+        response->set_margin_absolute_power(margin_absolute_power);
+        response->set_margin_relative_power(margin_relative_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchLowerOffsetMarginArray(::grpc::ServerContext* context, const SEMFetchLowerOffsetMarginArrayRequest* request, SEMFetchLowerOffsetMarginArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchLowerOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
+        int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
+        response->mutable_margin()->Resize(actual_array_size, 0);
+        float64* margin = response->mutable_margin()->mutable_data();
+        response->mutable_margin_frequency()->Resize(actual_array_size, 0);
+        float64* margin_frequency = response->mutable_margin_frequency()->mutable_data();
+        response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
+        float64* margin_absolute_power = response->mutable_margin_absolute_power()->mutable_data();
+        response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
+        float64* margin_relative_power = response->mutable_margin_relative_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchLowerOffsetMarginArray(instrument, selector_string, timeout, measurement_status, margin, margin_frequency, margin_absolute_power, margin_relative_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_measurement_status()->Clear();
+          response->mutable_measurement_status()->Reserve(actual_array_size);
+          std::transform(
+            response->measurement_status_raw().begin(),
+            response->measurement_status_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
+            [&](auto x) { 
+                return static_cast<nirfmxwlan_grpc::SemLowerOffsetMeasurementStatus>(x);
+            });
+          response->mutable_measurement_status()->Resize(actual_array_size, 0);
+          response->mutable_margin()->Resize(actual_array_size, 0);
+          response->mutable_margin_frequency()->Resize(actual_array_size, 0);
+          response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchLowerOffsetPower(::grpc::ServerContext* context, const SEMFetchLowerOffsetPowerRequest* request, SEMFetchLowerOffsetPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 total_absolute_power {};
+      float64 total_relative_power {};
+      float64 peak_absolute_power {};
+      float64 peak_frequency {};
+      float64 peak_relative_power {};
+      auto status = library_->SEMFetchLowerOffsetPower(instrument, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_total_absolute_power(total_absolute_power);
+        response->set_total_relative_power(total_relative_power);
+        response->set_peak_absolute_power(peak_absolute_power);
+        response->set_peak_frequency(peak_frequency);
+        response->set_peak_relative_power(peak_relative_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchLowerOffsetPowerArray(::grpc::ServerContext* context, const SEMFetchLowerOffsetPowerArrayRequest* request, SEMFetchLowerOffsetPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchLowerOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
+        float64* total_absolute_power = response->mutable_total_absolute_power()->mutable_data();
+        response->mutable_total_relative_power()->Resize(actual_array_size, 0);
+        float64* total_relative_power = response->mutable_total_relative_power()->mutable_data();
+        response->mutable_peak_absolute_power()->Resize(actual_array_size, 0);
+        float64* peak_absolute_power = response->mutable_peak_absolute_power()->mutable_data();
+        response->mutable_peak_frequency()->Resize(actual_array_size, 0);
+        float64* peak_frequency = response->mutable_peak_frequency()->mutable_data();
+        response->mutable_peak_relative_power()->Resize(actual_array_size, 0);
+        float64* peak_relative_power = response->mutable_peak_relative_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchLowerOffsetPowerArray(instrument, selector_string, timeout, total_absolute_power, total_relative_power, peak_absolute_power, peak_frequency, peak_relative_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_total_relative_power()->Resize(actual_array_size, 0);
+          response->mutable_peak_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_peak_frequency()->Resize(actual_array_size, 0);
+          response->mutable_peak_relative_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchMeasurementStatus(::grpc::ServerContext* context, const SEMFetchMeasurementStatusRequest* request, SEMFetchMeasurementStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 measurement_status {};
+      auto status = library_->SEMFetchMeasurementStatus(instrument, selector_string, timeout, &measurement_status);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_measurement_status(static_cast<nirfmxwlan_grpc::SemMeasurementStatus>(measurement_status));
+        response->set_measurement_status_raw(measurement_status);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchSpectrum(::grpc::ServerContext* context, const SEMFetchSpectrumRequest* request, SEMFetchSpectrumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_spectrum()->Resize(actual_array_size, 0);
+        float32* spectrum = response->mutable_spectrum()->mutable_data();
+        response->mutable_composite_mask()->Resize(actual_array_size, 0);
+        float32* composite_mask = response->mutable_composite_mask()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, composite_mask, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_spectrum()->Resize(actual_array_size, 0);
+          response->mutable_composite_mask()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchUpperOffsetMargin(::grpc::ServerContext* context, const SEMFetchUpperOffsetMarginRequest* request, SEMFetchUpperOffsetMarginResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 measurement_status {};
+      float64 margin {};
+      float64 margin_frequency {};
+      float64 margin_absolute_power {};
+      float64 margin_relative_power {};
+      auto status = library_->SEMFetchUpperOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_measurement_status(static_cast<nirfmxwlan_grpc::SemUpperOffsetMeasurementStatus>(measurement_status));
+        response->set_measurement_status_raw(measurement_status);
+        response->set_margin(margin);
+        response->set_margin_frequency(margin_frequency);
+        response->set_margin_absolute_power(margin_absolute_power);
+        response->set_margin_relative_power(margin_relative_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchUpperOffsetMarginArray(::grpc::ServerContext* context, const SEMFetchUpperOffsetMarginArrayRequest* request, SEMFetchUpperOffsetMarginArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchUpperOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
+        int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
+        response->mutable_margin()->Resize(actual_array_size, 0);
+        float64* margin = response->mutable_margin()->mutable_data();
+        response->mutable_margin_frequency()->Resize(actual_array_size, 0);
+        float64* margin_frequency = response->mutable_margin_frequency()->mutable_data();
+        response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
+        float64* margin_absolute_power = response->mutable_margin_absolute_power()->mutable_data();
+        response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
+        float64* margin_relative_power = response->mutable_margin_relative_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchUpperOffsetMarginArray(instrument, selector_string, timeout, measurement_status, margin, margin_frequency, margin_absolute_power, margin_relative_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_measurement_status()->Clear();
+          response->mutable_measurement_status()->Reserve(actual_array_size);
+          std::transform(
+            response->measurement_status_raw().begin(),
+            response->measurement_status_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
+            [&](auto x) { 
+                return static_cast<nirfmxwlan_grpc::SemUpperOffsetMeasurementStatus>(x);
+            });
+          response->mutable_measurement_status()->Resize(actual_array_size, 0);
+          response->mutable_margin()->Resize(actual_array_size, 0);
+          response->mutable_margin_frequency()->Resize(actual_array_size, 0);
+          response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchUpperOffsetPower(::grpc::ServerContext* context, const SEMFetchUpperOffsetPowerRequest* request, SEMFetchUpperOffsetPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 total_absolute_power {};
+      float64 total_relative_power {};
+      float64 peak_absolute_power {};
+      float64 peak_frequency {};
+      float64 peak_relative_power {};
+      auto status = library_->SEMFetchUpperOffsetPower(instrument, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_total_absolute_power(total_absolute_power);
+        response->set_total_relative_power(total_relative_power);
+        response->set_peak_absolute_power(peak_absolute_power);
+        response->set_peak_frequency(peak_frequency);
+        response->set_peak_relative_power(peak_relative_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SEMFetchUpperOffsetPowerArray(::grpc::ServerContext* context, const SEMFetchUpperOffsetPowerArrayRequest* request, SEMFetchUpperOffsetPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchUpperOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
+        float64* total_absolute_power = response->mutable_total_absolute_power()->mutable_data();
+        response->mutable_total_relative_power()->Resize(actual_array_size, 0);
+        float64* total_relative_power = response->mutable_total_relative_power()->mutable_data();
+        response->mutable_peak_absolute_power()->Resize(actual_array_size, 0);
+        float64* peak_absolute_power = response->mutable_peak_absolute_power()->mutable_data();
+        response->mutable_peak_frequency()->Resize(actual_array_size, 0);
+        float64* peak_frequency = response->mutable_peak_frequency()->mutable_data();
+        response->mutable_peak_relative_power()->Resize(actual_array_size, 0);
+        float64* peak_relative_power = response->mutable_peak_relative_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchUpperOffsetPowerArray(instrument, selector_string, timeout, total_absolute_power, total_relative_power, peak_absolute_power, peak_frequency, peak_relative_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_total_relative_power()->Resize(actual_array_size, 0);
+          response->mutable_peak_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_peak_frequency()->Resize(actual_array_size, 0);
+          response->mutable_peak_relative_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SelectMeasurements(::grpc::ServerContext* context, const SelectMeasurementsRequest* request, SelectMeasurementsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      uInt32 measurements;
+      switch (request->measurements_enum_case()) {
+        case nirfmxwlan_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurements: {
+          measurements = static_cast<uInt32>(request->measurements());
+          break;
+        }
+        case nirfmxwlan_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurementsRaw: {
+          measurements = static_cast<uInt32>(request->measurements_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::MEASUREMENTS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurements was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 enable_all_traces = request->enable_all_traces();
+      auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      auto status = library_->SendSoftwareEdgeTrigger(instrument);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeF32(::grpc::ServerContext* context, const SetAttributeF32Request* request, SetAttributeF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      float32 attr_val = request->attr_val();
+      auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeF32Array(::grpc::ServerContext* context, const SetAttributeF32ArrayRequest* request, SetAttributeF32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<float32*>(request->attr_val().data());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeF64(::grpc::ServerContext* context, const SetAttributeF64Request* request, SetAttributeF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      float64 attr_val = request->attr_val();
+      auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeF64Array(::grpc::ServerContext* context, const SetAttributeF64ArrayRequest* request, SetAttributeF64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<float64*>(request->attr_val().data());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeI16(::grpc::ServerContext* context, const SetAttributeI16Request* request, SetAttributeI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int16>::min() || attr_val_raw > std::numeric_limits<int16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int16>(attr_val_raw);
+
+      auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeI32(::grpc::ServerContext* context, const SetAttributeI32Request* request, SetAttributeI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 attr_val;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxwlan_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrVal: {
+          attr_val = static_cast<int32>(request->attr_val());
+          break;
+        }
+        case nirfmxwlan_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrValRaw: {
+          attr_val = static_cast<int32>(request->attr_val_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::SetAttributeI32Request::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetAttributeI32(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeI32Array(::grpc::ServerContext* context, const SetAttributeI32ArrayRequest* request, SetAttributeI32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_vector = std::vector<int32>();
+      attr_val_vector.reserve(request->attr_val().size());
+      std::transform(
+        request->attr_val().begin(),
+        request->attr_val().end(),
+        std::back_inserter(attr_val_vector),
+        [](auto x) { return x; });
+      auto attr_val = attr_val_vector.data();
+
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeI64(::grpc::ServerContext* context, const SetAttributeI64Request* request, SetAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attr_val = request->attr_val();
+      auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeI64Array(::grpc::ServerContext* context, const SetAttributeI64ArrayRequest* request, SetAttributeI64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeI8(::grpc::ServerContext* context, const SetAttributeI8Request* request, SetAttributeI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int8>::min() || attr_val_raw > std::numeric_limits<int8>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int8");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int8>(attr_val_raw);
+
+      auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeI8Array(::grpc::ServerContext* context, const SetAttributeI8ArrayRequest* request, SetAttributeI8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      auto attr_val = std::vector<int8>();
+      attr_val.reserve(attr_val_raw.size());
+      std::transform(
+        attr_val_raw.begin(),
+        attr_val_raw.end(),
+        std::back_inserter(attr_val),
+        [](auto x) { 
+              if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int8");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int8>(x);
+        });
+
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const SetAttributeNIComplexDoubleArrayRequest* request, SetAttributeNIComplexDoubleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const SetAttributeNIComplexSingleArrayRequest* request, SetAttributeNIComplexSingleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeString(::grpc::ServerContext* context, const SetAttributeStringRequest* request, SetAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      char* attr_val = (char*)request->attr_val().c_str();
+      auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeU16(::grpc::ServerContext* context, const SetAttributeU16Request* request, SetAttributeU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<uInt16>::min() || attr_val_raw > std::numeric_limits<uInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<uInt16>(attr_val_raw);
+
+      auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeU32(::grpc::ServerContext* context, const SetAttributeU32Request* request, SetAttributeU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt32 attr_val = request->attr_val();
+      auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeU32Array(::grpc::ServerContext* context, const SetAttributeU32ArrayRequest* request, SetAttributeU32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeU64Array(::grpc::ServerContext* context, const SetAttributeU64ArrayRequest* request, SetAttributeU64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeU8(::grpc::ServerContext* context, const SetAttributeU8Request* request, SetAttributeU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8 attr_val = request->attr_val();
+      auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::SetAttributeU8Array(::grpc::ServerContext* context, const SetAttributeU8ArrayRequest* request, SetAttributeU8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8* attr_val = (uInt8*)request->attr_val().c_str();
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::TXPCfgAveraging(::grpc::ServerContext* context, const TXPCfgAveragingRequest* request, TXPCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxwlan_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      auto status = library_->TXPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::TXPCfgBurstDetectionEnabled(::grpc::ServerContext* context, const TXPCfgBurstDetectionEnabledRequest* request, TXPCfgBurstDetectionEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 burst_detection_enabled;
+      switch (request->burst_detection_enabled_enum_case()) {
+        case nirfmxwlan_grpc::TXPCfgBurstDetectionEnabledRequest::BurstDetectionEnabledEnumCase::kBurstDetectionEnabled: {
+          burst_detection_enabled = static_cast<int32>(request->burst_detection_enabled());
+          break;
+        }
+        case nirfmxwlan_grpc::TXPCfgBurstDetectionEnabledRequest::BurstDetectionEnabledEnumCase::kBurstDetectionEnabledRaw: {
+          burst_detection_enabled = static_cast<int32>(request->burst_detection_enabled_raw());
+          break;
+        }
+        case nirfmxwlan_grpc::TXPCfgBurstDetectionEnabledRequest::BurstDetectionEnabledEnumCase::BURST_DETECTION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for burst_detection_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->TXPCfgBurstDetectionEnabled(instrument, selector_string, burst_detection_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::TXPCfgMaximumMeasurementInterval(::grpc::ServerContext* context, const TXPCfgMaximumMeasurementIntervalRequest* request, TXPCfgMaximumMeasurementIntervalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 maximum_measurement_interval = request->maximum_measurement_interval();
+      auto status = library_->TXPCfgMaximumMeasurementInterval(instrument, selector_string, maximum_measurement_interval);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::TXPFetchMeasurement(::grpc::ServerContext* context, const TXPFetchMeasurementRequest* request, TXPFetchMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 average_power_mean {};
+      float64 peak_power_maximum {};
+      auto status = library_->TXPFetchMeasurement(instrument, selector_string, timeout, &average_power_mean, &peak_power_maximum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_average_power_mean(average_power_mean);
+        response->set_peak_power_maximum(peak_power_maximum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::TXPFetchPowerTrace(::grpc::ServerContext* context, const TXPFetchPowerTraceRequest* request, TXPFetchPowerTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->TXPFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_power()->Resize(actual_array_size, 0);
+        float32* power = response->mutable_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->TXPFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
