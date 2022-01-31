@@ -42,7 +42,7 @@ def mutate_metadata(metadata: dict):
 
 def generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
     metadata = load_metadata(metadata_dir)
-    metadata_validation.validate_metadata(metadata)
+    # metadata_validation.validate_metadata(metadata)
     if validate_only:
         return
 

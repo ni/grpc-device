@@ -26,11 +26,11 @@ enums = {
     'DsssModAccAcquisitionLengthMode': {
         'values': [
             {
-                'name': 'DSSSMODACC_ACQUISITION_LENGTH_MODE_MANUAL',
+                'name': 'MANUAL',
                 'value': 0
             },
             {
-                'name': 'DSSSMODACC_ACQUISITION_LENGTH_MODE_AUTO',
+                'name': 'AUTO',
                 'value': 1
             }
         ]
@@ -86,35 +86,35 @@ enums = {
     'DsssModAccDataModulationFormat': {
         'values': [
             {
-                'name': 'DSSSMODACC_DATA_MODULATION_FORMAT_DSSS1_MBPS',
+                'name': 'DSSS1_MBPS',
                 'value': 0
             },
             {
-                'name': 'DSSSMODACC_DATA_MODULATION_FORMAT_DSSS2_MBPS',
+                'name': 'DSSS2_MBPS',
                 'value': 1
             },
             {
-                'name': 'DSSSMODACC_DATA_MODULATION_FORMAT_CCK5_5_MBPS',
+                'name': 'CCK5_5_MBPS',
                 'value': 2
             },
             {
-                'name': 'DSSSMODACC_DATA_MODULATION_FORMAT_CCK11_MBPS',
+                'name': 'CCK11_MBPS',
                 'value': 3
             },
             {
-                'name': 'DSSSMODACC_DATA_MODULATION_FORMAT_PBCC5_5_MBPS',
+                'name': 'PBCC5_5_MBPS',
                 'value': 4
             },
             {
-                'name': 'DSSSMODACC_DATA_MODULATION_FORMAT_PBCC11_MBPS',
+                'name': 'PBCC11_MBPS',
                 'value': 5
             },
             {
-                'name': 'DSSSMODACC_DATA_MODULATION_FORMAT_PBCC22_MBPS',
+                'name': 'PBCC22_MBPS',
                 'value': 6
             },
             {
-                'name': 'DSSSMODACC_DATA_MODULATION_FORMAT_PBCC33_MBPS',
+                'name': 'PBCC33_MBPS',
                 'value': 7
             }
         ]
@@ -134,11 +134,11 @@ enums = {
     'DsssModAccEvmUnit': {
         'values': [
             {
-                'name': 'DSSSMODACC_EVM_UNIT_PERCENTAGE',
+                'name': 'PERCENTAGE',
                 'value': 0
             },
             {
-                'name': 'DSSSMODACC_EVM_UNIT_DB',
+                'name': 'DB',
                 'value': 1
             }
         ]
@@ -194,11 +194,11 @@ enums = {
     'DsssModAccPreambleType': {
         'values': [
             {
-                'name': 'DSSSMODACC_PREAMBLE_TYPE_LONG',
+                'name': 'LONG',
                 'value': 0
             },
             {
-                'name': 'DSSSMODACC_PREAMBLE_TYPE_SHORT',
+                'name': 'SHORT',
                 'value': 1
             }
         ]
@@ -218,19 +218,19 @@ enums = {
     'DsssModAccPulseShapingFilterType': {
         'values': [
             {
-                'name': 'DSSSMODACC_PULSE_SHAPING_FILTER_TYPE_RECTANGULAR',
+                'name': 'RECTANGULAR',
                 'value': 0
             },
             {
-                'name': 'DSSSMODACC_PULSE_SHAPING_FILTER_TYPE_RAISED_COSINE',
+                'name': 'RAISED_COSINE',
                 'value': 1
             },
             {
-                'name': 'DSSSMODACC_PULSE_SHAPING_FILTER_TYPE_ROOT_RAISED_COSINE',
+                'name': 'ROOT_RAISED_COSINE',
                 'value': 2
             },
             {
-                'name': 'DSSSMODACC_PULSE_SHAPING_FILTER_TYPE_GAUSSIAN',
+                'name': 'GAUSSIAN',
                 'value': 3
             }
         ]
@@ -491,11 +491,11 @@ enums = {
     'OfdmModAccAcquisitionLengthMode': {
         'values': [
             {
-                'name': 'OFDMMODACC_ACQUISITION_LENGTH_MODE_MANUAL',
+                'name': 'MANUAL',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_ACQUISITION_LENGTH_MODE_AUTO',
+                'name': 'AUTO',
                 'value': 1
             }
         ]
@@ -539,11 +539,11 @@ enums = {
     'OfdmModAccAveragingType': {
         'values': [
             {
-                'name': 'OFDMMODACC_AVERAGING_TYPE_RMS',
+                'name': 'RMS',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_AVERAGING_TYPE_VECTOR',
+                'name': 'VECTOR',
                 'value': 5
             }
         ]
@@ -599,11 +599,11 @@ enums = {
     'OfdmModAccChannelEstimationType': {
         'values': [
             {
-                'name': 'OFDMMODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE',
+                'name': 'REFERENCE',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE_AND_DATA',
+                'name': 'REFERENCE_AND_DATA',
                 'value': 1
             }
         ]
@@ -659,15 +659,15 @@ enums = {
     'OfdmModAccEhtSigCrcStatus': {
         'values': [
             {
-                'name': 'OFDMMODACC_EHT_SIG_CRC_STATUS_NOT_APPLICABLE',
+                'name': 'NOT_APPLICABLE',
                 'value': -1
             },
             {
-                'name': 'OFDMMODACC_EHT_SIG_CRC_STATUS_FAIL',
+                'name': 'FAIL',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_EHT_SIG_CRC_STATUS_PASS',
+                'name': 'PASS',
                 'value': 1
             }
         ]
@@ -675,11 +675,11 @@ enums = {
     'OfdmModAccEvmReferenceDataSymbolsMode': {
         'values': [
             {
-                'name': 'OFDMMODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_ACQUIRED_WAVEFORM',
+                'name': 'ACQUIRED_WAVEFORM',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_REFERENCE_WAVEFORM',
+                'name': 'REFERENCE_WAVEFORM',
                 'value': 1
             }
         ]
@@ -687,11 +687,11 @@ enums = {
     'OfdmModAccEvmUnit': {
         'values': [
             {
-                'name': 'OFDMMODACC_EVM_UNIT_PERCENTAGE',
+                'name': 'PERCENTAGE',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_EVM_UNIT_DB',
+                'name': 'DB',
                 'value': 1
             }
         ]
@@ -699,11 +699,11 @@ enums = {
     'OfdmModAccFecCodingType': {
         'values': [
             {
-                'name': 'OFDMMODACC_FEC_CODING_TYPE_BCC',
+                'name': 'BCC',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_FEC_CODING_TYPE_LDPC',
+                'name': 'LDPC',
                 'value': 1
             }
         ]
@@ -711,23 +711,23 @@ enums = {
     'OfdmModAccFrequencyErrorEstimationMethod': {
         'values': [
             {
-                'name': 'OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_DISABLED',
+                'name': 'DISABLED',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_INITIAL_PREAMBLE',
+                'name': 'INITIAL_PREAMBLE',
                 'value': 1
             },
             {
-                'name': 'OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE',
+                'name': 'PREAMBLE',
                 'value': 2
             },
             {
-                'name': 'OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS',
+                'name': 'PREAMBLE_AND_PILOTS',
                 'value': 3
             },
             {
-                'name': 'OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_PILOTS_AND_DATA',
+                'name': 'PREAMBLE_PILOTS_AND_DATA',
                 'value': 4
             }
         ]
@@ -759,11 +759,11 @@ enums = {
     'OfdmModAccIQImpairmentsModel': {
         'values': [
             {
-                'name': 'OFDMMODACC_IQ_IMPAIRMENTS_MODEL_TX',
+                'name': 'TX',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_IQ_IMPAIRMENTS_MODEL_RX',
+                'name': 'RX',
                 'value': 1
             }
         ]
@@ -807,15 +807,15 @@ enums = {
     'OfdmModAccLSigParityCheckStatus': {
         'values': [
             {
-                'name': 'OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_NOT_APPLICABLE',
+                'name': 'NOT_APPLICABLE',
                 'value': -1
             },
             {
-                'name': 'OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_FAIL',
+                'name': 'FAIL',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_PASS',
+                'name': 'PASS',
                 'value': 1
             }
         ]
@@ -823,11 +823,11 @@ enums = {
     'OfdmModAccMeasurementMode': {
         'values': [
             {
-                'name': 'OFDMMODACC_MEASUREMENT_MODE_MEASURE',
+                'name': 'MEASURE',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR',
+                'name': 'CALIBRATE_NOISE_FLOOR',
                 'value': 1
             }
         ]
@@ -907,11 +907,11 @@ enums = {
     'OfdmModAccPsduCrcStatus': {
         'values': [
             {
-                'name': 'OFDMMODACC_PSDU_CRC_STATUS_FAIL',
+                'name': 'FAIL',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_PSDU_CRC_STATUS_PASS',
+                'name': 'PASS',
                 'value': 1
             }
         ]
@@ -919,15 +919,15 @@ enums = {
     'OfdmModAccSigBCrcStatus': {
         'values': [
             {
-                'name': 'OFDMMODACC_SIG_B_CRC_STATUS_NOT_APPLICABLE',
+                'name': 'NOT_APPLICABLE',
                 'value': -1
             },
             {
-                'name': 'OFDMMODACC_SIG_B_CRC_STATUS_FAIL',
+                'name': 'FAIL',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_SIG_B_CRC_STATUS_PASS',
+                'name': 'PASS',
                 'value': 1
             }
         ]
@@ -935,15 +935,15 @@ enums = {
     'OfdmModAccSigCrcStatus': {
         'values': [
             {
-                'name': 'OFDMMODACC_SIG_CRC_STATUS_NOT_APPLICABLE',
+                'name': 'NOT_APPLICABLE',
                 'value': -1
             },
             {
-                'name': 'OFDMMODACC_SIG_CRC_STATUS_FAIL',
+                'name': 'FAIL',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_SIG_CRC_STATUS_PASS',
+                'name': 'PASS',
                 'value': 1
             }
         ]
@@ -975,15 +975,15 @@ enums = {
     'OfdmModAccUSigCrcStatus': {
         'values': [
             {
-                'name': 'OFDMMODACC_U_SIG_CRC_STATUS_NOT_APPLICABLE',
+                'name': 'NOT_APPLICABLE',
                 'value': -1
             },
             {
-                'name': 'OFDMMODACC_U_SIG_CRC_STATUS_FAIL',
+                'name': 'FAIL',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_U_SIG_CRC_STATUS_PASS',
+                'name': 'PASS',
                 'value': 1
             }
         ]
@@ -991,11 +991,11 @@ enums = {
     'OfdmModAccUnusedToneErrorMaskReference': {
         'values': [
             {
-                'name': 'OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE_LIMIT1',
+                'name': 'LIMIT1',
                 'value': 0
             },
             {
-                'name': 'OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE_LIMIT2',
+                'name': 'LIMIT2',
                 'value': 1
             }
         ]

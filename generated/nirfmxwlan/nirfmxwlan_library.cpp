@@ -23,6 +23,7 @@ NiRFmxWLANLibrary::NiRFmxWLANLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_.get_function_pointer("RFmxWLAN_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_.get_function_pointer("RFmxWLAN_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeNWaveformsIQ = reinterpret_cast<AnalyzeNWaveformsIQPtr>(shared_library_.get_function_pointer("RFmxWLAN_AnalyzeNWaveformsIQ"));
   function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_.get_function_pointer("RFmxWLAN_AnalyzeSpectrum1Waveform"));
   function_pointers_.AutoDetectSignal = reinterpret_cast<AutoDetectSignalPtr>(shared_library_.get_function_pointer("RFmxWLAN_AutoDetectSignal"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxWLAN_AutoLevel"));
@@ -282,6 +283,18 @@ int32 NiRFmxWLANLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, 
   return RFmxWLAN_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 #else
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+#endif
+}
+
+int32 NiRFmxWLANLibrary::AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqLengths[], int32 arraySize, int32 reset)
+{
+  if (!function_pointers_.AnalyzeNWaveformsIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeNWaveformsIQ.");
+  }
+#if defined(_MSC_VER)
+  return RFmxWLAN_AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqLengths, arraySize, reset);
+#else
+  return function_pointers_.AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqLengths, arraySize, reset);
 #endif
 }
 

@@ -20,6 +20,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]);
   int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved);
+  int32 AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqLengths[], int32 arraySize, int32 reset);
   int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved);
   int32 AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout);
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval);
@@ -249,6 +250,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
  private:
   using AbortMeasurementsPtr = decltype(&RFmxWLAN_AbortMeasurements);
   using AnalyzeIQ1WaveformPtr = decltype(&RFmxWLAN_AnalyzeIQ1Waveform);
+  using AnalyzeNWaveformsIQPtr = decltype(&RFmxWLAN_AnalyzeNWaveformsIQ);
   using AnalyzeSpectrum1WaveformPtr = decltype(&RFmxWLAN_AnalyzeSpectrum1Waveform);
   using AutoDetectSignalPtr = decltype(&RFmxWLAN_AutoDetectSignal);
   using AutoLevelPtr = decltype(&RFmxWLAN_AutoLevel);
@@ -478,6 +480,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   typedef struct FunctionPointers {
     AbortMeasurementsPtr AbortMeasurements;
     AnalyzeIQ1WaveformPtr AnalyzeIQ1Waveform;
+    AnalyzeNWaveformsIQPtr AnalyzeNWaveformsIQ;
     AnalyzeSpectrum1WaveformPtr AnalyzeSpectrum1Waveform;
     AutoDetectSignalPtr AutoDetectSignal;
     AutoLevelPtr AutoLevel;
