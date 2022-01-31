@@ -111,13 +111,14 @@ functions = {
                 'name': 'iq',
                 'size': {
                     'mechanism': 'two-dimension',
-                    'value': 'iqLengths'
+                    'value': 'iqSize'
                 },
                 'type': 'NIComplexSingle[]'
             },
             {
                 'direction': 'in',
-                'name': 'iqLengths',
+                'grpc_name': 'iq_lengths',
+                'name': 'iqSize',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'

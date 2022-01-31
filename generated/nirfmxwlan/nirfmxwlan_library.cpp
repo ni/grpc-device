@@ -286,15 +286,15 @@ int32 NiRFmxWLANLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, 
 #endif
 }
 
-int32 NiRFmxWLANLibrary::AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqLengths[], int32 arraySize, int32 reset)
+int32 NiRFmxWLANLibrary::AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset)
 {
   if (!function_pointers_.AnalyzeNWaveformsIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeNWaveformsIQ.");
   }
 #if defined(_MSC_VER)
-  return RFmxWLAN_AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqLengths, arraySize, reset);
+  return RFmxWLAN_AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqSize, arraySize, reset);
 #else
-  return function_pointers_.AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqLengths, arraySize, reset);
+  return function_pointers_.AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqSize, arraySize, reset);
 #endif
 }
 

@@ -267,12 +267,12 @@ ${set_response_values(output_parameters=output_parameters)}\
   input_vararg_parameter = input_vararg_parameters[0] if len(input_vararg_parameters) > 0 else None
 %>\
 % for parameter in input_parameters:
-${initialize_input_param(function_name, parameter, input_vararg_parameter)}\
+${initialize_input_param(function_name, parameter, parameters, input_vararg_parameter)}\
 % endfor
 </%def>
 
 ## Initialize an input parameter for an API call.
-<%def name="initialize_input_param(function_name, parameter, input_vararg_parameter=None)">\
+<%def name="initialize_input_param(function_name, parameter, parameters, input_vararg_parameter=None)">\
 % if common_helpers.is_repeating_parameter(parameter):
 ${initialize_repeating_param(parameter, input_vararg_parameter)}
 % elif common_helpers.is_repeated_varargs_parameter(parameter):
@@ -283,9 +283,9 @@ ${initialize_enum_array_input_param(function_name, parameter)}
 ${initialize_enum_input_param(function_name, parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
-${initialize_len_input_param(parameter)}
+${initialize_len_input_param(parameter, parameters)}
 % elif common_helpers.is_two_dimension_array_param(parameter):
-${initialize_two_dimension_input_param(parameter)}
+${initialize_two_dimension_input_param(parameter, parameters)}
 % elif 'hardcoded_value' in parameter:
 ${initialize_hardcoded_parameter(parameter)}
 % elif parameter.get('pointer', False):
@@ -442,7 +442,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 </%def>
 
 ## Initialize an input parameter that is determined by the 'len' size mechanism.
-<%def name="initialize_len_input_param(parameter)">\
+<%def name="initialize_len_input_param(parameter, parameters)">\
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   size_sources = parameter["determine_size_from"]
@@ -456,7 +456,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%block filter="common_helpers.trim_trailing_comma()">\
 % for size_source in size_sources:
 <%
-  current_size_field_name = common_helpers.get_grpc_field_name_from_str(size_source)
+  current_size_param = common_helpers.get_param_with_name(parameters, size_source)
+  current_size_field_name = common_helpers.get_grpc_field_name(current_size_param)
 %>\
         request->${current_size_field_name}_size(),
 % endfor
@@ -488,15 +489,16 @@ ${initialize_standard_input_param(function_name, parameter)}
 </%def>
 
 ## Initialize an input parameter with the 'two-dimension' size mechanism.
-<%def name="initialize_two_dimension_input_param(parameter)">\
+<%def name="initialize_two_dimension_input_param(parameter, parameters)">\
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   field_name = common_helpers.get_grpc_field_name(parameter)
   request_snippet = f'request->{field_name}()'
   c_type = parameter['type']
   c_type_underlying_type = common_helpers.get_underlying_type_name(c_type)
-  size_source = common_helpers.get_size_param(parameter)
-  size_field_name = common_helpers.get_grpc_field_name_from_str(size_source)
+  size_param_name = common_helpers.get_size_param(parameter)
+  size_param = common_helpers.get_param_with_name(parameters, size_param_name)
+  size_field_name = common_helpers.get_grpc_field_name(size_param)
 %>\
       auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${request_snippet});
       auto total_length = std::accumulate(request->${size_field_name}().cbegin(), request->${size_field_name}().cend(), 0);
