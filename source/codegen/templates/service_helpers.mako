@@ -284,6 +284,8 @@ ${initialize_enum_input_param(function_name, parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter)}
+% elif common_helpers.is_two_dimension_array_param(parameter):
+${initialize_two_dimension_input_param(parameter)}
 % elif 'hardcoded_value' in parameter:
 ${initialize_hardcoded_parameter(parameter)}
 % elif parameter.get('pointer', False):
@@ -483,6 +485,25 @@ ${initialize_standard_input_param(function_name, parameter)}
 %>\
       ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
 % endif
+</%def>
+
+## Initialize an input parameter with the 'two-dimension' size mechanism.
+<%def name="initialize_two_dimension_input_param(parameter)">\
+<%
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
+  field_name = common_helpers.get_grpc_field_name(parameter)
+  request_snippet = f'request->{field_name}()'
+  c_type = parameter['type']
+  c_type_underlying_type = common_helpers.get_underlying_type_name(c_type)
+  size_source = common_helpers.get_size_param(parameter)
+  size_field_name = common_helpers.get_grpc_field_name_from_str(size_source)
+%>\
+      auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${request_snippet});
+      auto total_length = std::accumulate(request->${size_field_name}().cbegin(), request->${size_field_name}().cend(), 0);
+
+      if (total_length != request->${parameter_name}_size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of ${parameter_name} did not match the exected size from ${size_field_name}");
+      }
 </%def>
 
 

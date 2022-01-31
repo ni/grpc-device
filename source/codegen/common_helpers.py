@@ -197,11 +197,12 @@ def is_unsupported_size_mechanism(parameter: dict) -> bool:
 #                     elements filled in to the array as long as that is smaller than the passed-in value. (if it is
 #                     larger, the underlying call will return an error)
 #                     Should only be used for output arrays.
+# - two-dimension: The array is two dimensional
 # - custom-code: The array's size is determined by the C++ code in the 'value' member.
 
 
 def is_unsupported_size_mechanism_type(size_mechanism: str) -> bool:
-    return not size_mechanism in {'fixed', 'len', 'ivi-dance', 'passed-in', 'passed-in-by-ptr', 'ivi-dance-with-a-twist', 'custom-code'}
+    return not size_mechanism in {'fixed', 'len', 'ivi-dance', 'passed-in', 'passed-in-by-ptr', 'ivi-dance-with-a-twist', 'two-dimension', 'custom-code'}
 
 
 def is_unsupported_scalar_array(parameter):
@@ -402,6 +403,9 @@ def get_size_mechanism(parameter: dict) -> Optional[str]:
     size = parameter.get('size', {})
     return size.get('mechanism', None)
 
+def get_size_param(parameter: dict) -> Optional[str]:
+    size = parameter.get('size', {})
+    return size.get('value', None)
 
 def _get_ivi_dance_twist_param_name(parameter: dict) -> Optional[str]:
     return parameter.get('size', {}).get('value_twist')
@@ -468,6 +472,8 @@ def is_ivi_dance_array_param(parameter):
 def has_ivi_dance_param(parameters):
     return any(is_ivi_dance_array_param(p) for p in parameters)
 
+def is_two_dimension_array_param(parameter):
+    return get_size_mechanism(parameter) == 'two-dimension'
 
 def has_repeated_varargs_parameter(parameters):
     return any(is_repeated_varargs_parameter(p) for p in parameters)

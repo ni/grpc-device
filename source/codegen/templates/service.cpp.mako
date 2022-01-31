@@ -33,6 +33,7 @@ cross_driver_session_deps = service_helpers.get_cross_driver_session_dependencie
 
 #include <sstream>
 #include <fstream>
+#include <numeric>
 #include <iostream>
 #include <atomic>
 #include <vector>

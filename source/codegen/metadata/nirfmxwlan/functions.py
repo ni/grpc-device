@@ -71,7 +71,6 @@ functions = {
         'returns': 'int32'
     },
     'AnalyzeNWaveformsIQ': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -110,6 +109,10 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'iq',
+                'size': {
+                    'mechanism': 'two-dimension',
+                    'value': 'iqLengths'
+                },
                 'type': 'NIComplexSingle[]'
             },
             {
