@@ -18,11 +18,11 @@ enums = {
     'AutomaticSGSASharedLO': {
         'values': [
             {
-                'name': 'AUTOMATIC_SG_SA_SHARED_LO_DISABLED',
+                'name': 'DISABLED',
                 'value': 0
             },
             {
-                'name': 'AUTOMATIC_SG_SA_SHARED_LO_ENABLED',
+                'name': 'ENABLED',
                 'value': 1
             }
         ]
@@ -433,11 +433,11 @@ enums = {
     'SParameterType': {
         'values': [
             {
-                'name': 'SPARAMETER_TYPE_SCALAR',
+                'name': 'SCALAR',
                 'value': 1
             },
             {
-                'name': 'SPARAMETER_TYPE_VECTOR',
+                'name': 'VECTOR',
                 'value': 2
             }
         ]
