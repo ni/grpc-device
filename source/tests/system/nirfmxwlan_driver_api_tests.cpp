@@ -16,11 +16,18 @@ namespace system {
 namespace {
 
 const auto PXI_5663E = "5663E";
+const int kRisingEdgeDetectionFailedWarning = 379206;
 
 template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
 {
   EXPECT_EQ(0, response.status());
+}
+
+template <typename TResponse>
+void EXPECT_WARNING(const TResponse& response, const int expected_warning_id)
+{
+  EXPECT_EQ(expected_warning_id, response.status());
 }
 
 class NiRFmxWLANDriverApiTests : public Test {
@@ -142,13 +149,13 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_Dat
   OFDMModAccFetchCompositeRMSEVMResponse ofdm_mod_acc_fetch_composite_rmsevm_response;
   TXPFetchMeasurementResponse txp_fetch_measurement_response;
   ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
+  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
   txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
-
-  // EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
+  EXPECT_WARNING(txp_fetch_measurement_response, kRisingEdgeDetectionFailedWarning);
+  
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rmsevm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rmsevm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rmsevm_mean());
-  // EXPECT_SUCCESS(session, txp_fetch_measurement_response);
   EXPECT_LT(0.0, txp_fetch_measurement_response.average_power_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.peak_power_maximum());
 }
@@ -337,13 +344,13 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPFromExample_FetchData_DataLooksReasonable)
   txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, "", 10.0);
   txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
   
-  // EXPECT_SUCCESS(session, txp_fetch_power_trace_response);
+  EXPECT_WARNING(txp_fetch_power_trace_response, kRisingEdgeDetectionFailedWarning);
   EXPECT_GT(0.0, txp_fetch_power_trace_response.x0());
   EXPECT_LT(0.0, txp_fetch_power_trace_response.dx());
   EXPECT_EQ(25250, txp_fetch_power_trace_response.power_size());
   EXPECT_EQ(25250, txp_fetch_power_trace_response.power().size());
   EXPECT_LT(0.0, txp_fetch_power_trace_response.power(0));
-  // EXPECT_SUCCESS(session, txp_fetch_measurement_response);
+  EXPECT_WARNING(txp_fetch_measurement_response, kRisingEdgeDetectionFailedWarning);
   EXPECT_LT(0.0, txp_fetch_measurement_response.average_power_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.peak_power_maximum());
 }
