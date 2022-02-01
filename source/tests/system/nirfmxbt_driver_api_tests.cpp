@@ -137,48 +137,40 @@ TEST_F(NiRFmxBTDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_ACP, Boolean::BOOLEAN_TRUE));
   EXPECT_SUCCESS(session, client::acp_cfg_burst_synchronization_type(stub(), session, "", AcpBurstSynchronizationType::ACP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE));
   EXPECT_SUCCESS(session, client::acp_cfg_averaging(stub(), session, "", AcpAveragingEnabled::ACP_AVERAGING_ENABLED_FALSE, 10));
-  AcpOffsetChannelMode offsetChannelMode = AcpOffsetChannelMode::ACP_OFFSET_CHANNEL_MODE_SYMMETRIC;
-  EXPECT_SUCCESS(session, client::acp_cfg_offset_channel_mode(stub(), session, "", offsetChannelMode));
-  if (offsetChannelMode == AcpOffsetChannelMode::ACP_OFFSET_CHANNEL_MODE_SYMMETRIC)
-  {
-    EXPECT_SUCCESS(session, client::acp_cfg_number_of_offsets(stub(), session, "", 5));
-  }
-  else if (offsetChannelMode == AcpOffsetChannelMode::ACP_OFFSET_CHANNEL_MODE_INBAND)
-  {
-    EXPECT_SUCCESS(session, client::cfg_channel_number(stub(), session, "", 0));
-  }
+  EXPECT_SUCCESS(session, client::acp_cfg_offset_channel_mode(stub(), session, "", AcpOffsetChannelMode::ACP_OFFSET_CHANNEL_MODE_SYMMETRIC));
+  EXPECT_SUCCESS(session, client::acp_cfg_number_of_offsets(stub(), session, "", 5));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  auto referenceChannelPower = client::acp_fetch_reference_channel_power(stub(), session, "", 10.0);
-  ni::tests::system::EXPECT_SUCCESS(referenceChannelPower);
-  auto measurementResponse = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0);
-  ni::tests::system::EXPECT_SUCCESS(measurementResponse);
-  auto maskTrace = client::acp_fetch_mask_trace(stub(), session, "", 10.0);
-  ni::tests::system::EXPECT_SUCCESS(maskTrace);
-  auto absolutePowerTrace = client::acp_fetch_absolute_power_trace(stub(), session, "", 10.0);
-  ni::tests::system::EXPECT_SUCCESS(absolutePowerTrace);
-  auto fetchedSpectrum = client::acp_fetch_spectrum(stub(), session, "", 10.0);
-  ni::tests::system::EXPECT_SUCCESS(fetchedSpectrum);
+  auto reference_channel_power = client::acp_fetch_reference_channel_power(stub(), session, "", 10.0);
+  EXPECT_SUCCESS(session, reference_channel_power);
+  auto measurement_response = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0);
+  EXPECT_SUCCESS(session, measurement_response);
+  auto mask_trace = client::acp_fetch_mask_trace(stub(), session, "", 10.0);
+  EXPECT_SUCCESS(session, mask_trace);
+  auto absolute_power_trace = client::acp_fetch_absolute_power_trace(stub(), session, "", 10.0);
+  EXPECT_SUCCESS(session, absolute_power_trace);
+  auto fetched_spectrum = client::acp_fetch_spectrum(stub(), session, "", 10.0);
+  EXPECT_SUCCESS(session, fetched_spectrum);
 
-  EXPECT_GT(referenceChannelPower.reference_channel_power(), 0.0);
-  EXPECT_THAT(measurementResponse.lower_absolute_power(), Each(Ne(0.0)));
-  EXPECT_THAT(measurementResponse.upper_absolute_power(), Each(Ne(0.0)));
-  EXPECT_THAT(measurementResponse.lower_relative_power(), Each(Ne(0.0)));
-  EXPECT_THAT(measurementResponse.upper_relative_power(), Each(Ne(0.0)));
-  EXPECT_GT(measurementResponse.actual_array_size(), 0.0);
-  EXPECT_EQ(maskTrace.x0(), 0.0);
-  EXPECT_EQ(maskTrace.dx(), 0.0);
-  EXPECT_THAT(maskTrace.limit_with_exception_mask(), Each(Ne(0.0)));
-  EXPECT_THAT(maskTrace.limit_without_exception_mask(), Each(Ne(0.0)));
-  EXPECT_EQ(maskTrace.actual_array_size(), 0.0);
-  EXPECT_GT(absolutePowerTrace.x0(), 0.0);
-  EXPECT_GT(absolutePowerTrace.dx(), 0.0);
-  EXPECT_THAT(absolutePowerTrace.absolute_power(), Each(Ne(0.0)));
-  EXPECT_GT(absolutePowerTrace.actual_array_size(), 0.0);
-  EXPECT_GT(fetchedSpectrum.x0(), 0.0);
-  EXPECT_GT(fetchedSpectrum.dx(), 0.0);
-  EXPECT_THAT(fetchedSpectrum.spectrum(), Each(Ne(0.0)));
-  EXPECT_GT(fetchedSpectrum.actual_array_size(), 0.0);
+  EXPECT_GT(reference_channel_power.reference_channel_power(), 0.0);
+  EXPECT_THAT(measurement_response.lower_absolute_power(), Each(Ne(0.0)));
+  EXPECT_THAT(measurement_response.upper_absolute_power(), Each(Ne(0.0)));
+  EXPECT_THAT(measurement_response.lower_relative_power(), Each(Ne(0.0)));
+  EXPECT_THAT(measurement_response.upper_relative_power(), Each(Ne(0.0)));
+  EXPECT_GT(measurement_response.actual_array_size(), 0);
+  EXPECT_EQ(mask_trace.x0(), 0.0);
+  EXPECT_EQ(mask_trace.dx(), 0.0);
+  EXPECT_THAT(mask_trace.limit_with_exception_mask(), Each(Ne(0.0)));
+  EXPECT_THAT(mask_trace.limit_without_exception_mask(), Each(Ne(0.0)));
+  EXPECT_EQ(mask_trace.actual_array_size(), 0);
+  EXPECT_GT(absolute_power_trace.x0(), 0.0);
+  EXPECT_GT(absolute_power_trace.dx(), 0.0);
+  EXPECT_THAT(absolute_power_trace.absolute_power(), Each(Ne(0.0)));
+  EXPECT_GT(absolute_power_trace.actual_array_size(), 0);
+  EXPECT_GT(fetched_spectrum.x0(), 0.0);
+  EXPECT_GT(fetched_spectrum.dx(), 0.0);
+  EXPECT_THAT(fetched_spectrum.spectrum(), Each(Ne(0.0)));
+  EXPECT_GT(fetched_spectrum.actual_array_size(), 0);
 }
 
 }  // namespace
