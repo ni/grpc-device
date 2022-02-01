@@ -2362,6 +2362,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'peak_rms_devm_maximum',
                 'name': 'peakRMSDEVMMaximum',
                 'type': 'float64'
             },
@@ -3024,6 +3025,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'rms_devm',
                 'name': 'rmsdevm',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',

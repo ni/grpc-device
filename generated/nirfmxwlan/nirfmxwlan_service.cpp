@@ -1478,17 +1478,17 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 rmsevm_mean {};
+      float64 rms_evm_mean {};
       float64 peak_evm80211_2016_maximum {};
       float64 peak_evm80211_2007_maximum {};
       float64 peak_evm80211_1999_maximum {};
       float64 frequency_error_mean {};
       float64 chip_clock_error_mean {};
       int32 number_of_chips_used {};
-      auto status = library_->DSSSModAccFetchEVM(instrument, selector_string, timeout, &rmsevm_mean, &peak_evm80211_2016_maximum, &peak_evm80211_2007_maximum, &peak_evm80211_1999_maximum, &frequency_error_mean, &chip_clock_error_mean, &number_of_chips_used);
+      auto status = library_->DSSSModAccFetchEVM(instrument, selector_string, timeout, &rms_evm_mean, &peak_evm80211_2016_maximum, &peak_evm80211_2007_maximum, &peak_evm80211_1999_maximum, &frequency_error_mean, &chip_clock_error_mean, &number_of_chips_used);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_rmsevm_mean(rmsevm_mean);
+        response->set_rms_evm_mean(rms_evm_mean);
         response->set_peak_evm80211_2016_maximum(peak_evm80211_2016_maximum);
         response->set_peak_evm80211_2007_maximum(peak_evm80211_2007_maximum);
         response->set_peak_evm80211_1999_maximum(peak_evm80211_1999_maximum);
@@ -1593,8 +1593,8 @@ namespace nirfmxwlan_grpc {
       int32 preamble_type {};
       int32 locked_clocks_bit {};
       int32 header_crc_status {};
-      int32 psducrc_status {};
-      auto status = library_->DSSSModAccFetchPPDUInformation(instrument, selector_string, timeout, &data_modulation_format, &payload_length, &preamble_type, &locked_clocks_bit, &header_crc_status, &psducrc_status);
+      int32 psdu_crc_status {};
+      auto status = library_->DSSSModAccFetchPPDUInformation(instrument, selector_string, timeout, &data_modulation_format, &payload_length, &preamble_type, &locked_clocks_bit, &header_crc_status, &psdu_crc_status);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_data_modulation_format(static_cast<nirfmxwlan_grpc::DsssModAccDataModulationFormat>(data_modulation_format));
@@ -1605,8 +1605,8 @@ namespace nirfmxwlan_grpc {
         response->set_locked_clocks_bit(locked_clocks_bit);
         response->set_header_crc_status(static_cast<nirfmxwlan_grpc::DsssModAccPayloadHeaderCrcStatus>(header_crc_status));
         response->set_header_crc_status_raw(header_crc_status);
-        response->set_psducrc_status(static_cast<nirfmxwlan_grpc::DsssModAccPsduCrcStaus>(psducrc_status));
-        response->set_psducrc_status_raw(psducrc_status);
+        response->set_psdu_crc_status(static_cast<nirfmxwlan_grpc::DsssModAccPsduCrcStaus>(psdu_crc_status));
+        response->set_psdu_crc_status_raw(psdu_crc_status);
       }
       return ::grpc::Status::OK;
     }
@@ -3149,10 +3149,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_chain_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* chain_data_rmsevm_per_symbol_mean = response->mutable_chain_data_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_chain_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* chain_data_rms_evm_per_symbol_mean = response->mutable_chain_data_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_data_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_data_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3161,7 +3161,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_chain_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_chain_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3193,10 +3193,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_chain_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* chain_pilot_rmsevm_per_symbol_mean = response->mutable_chain_pilot_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_chain_pilot_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* chain_pilot_rms_evm_per_symbol_mean = response->mutable_chain_pilot_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_pilot_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_pilot_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3205,7 +3205,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_chain_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_chain_pilot_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3228,15 +3228,15 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 chain_rmsevm_mean {};
-      float64 chain_data_rmsevm_mean {};
-      float64 chain_pilot_rmsevm_mean {};
-      auto status = library_->OFDMModAccFetchChainRMSEVM(instrument, selector_string, timeout, &chain_rmsevm_mean, &chain_data_rmsevm_mean, &chain_pilot_rmsevm_mean);
+      float64 chain_rms_evm_mean {};
+      float64 chain_data_rms_evm_mean {};
+      float64 chain_pilot_rms_evm_mean {};
+      auto status = library_->OFDMModAccFetchChainRMSEVM(instrument, selector_string, timeout, &chain_rms_evm_mean, &chain_data_rms_evm_mean, &chain_pilot_rms_evm_mean);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_chain_rmsevm_mean(chain_rmsevm_mean);
-        response->set_chain_data_rmsevm_mean(chain_data_rmsevm_mean);
-        response->set_chain_pilot_rmsevm_mean(chain_pilot_rmsevm_mean);
+        response->set_chain_rms_evm_mean(chain_rms_evm_mean);
+        response->set_chain_data_rms_evm_mean(chain_data_rms_evm_mean);
+        response->set_chain_pilot_rms_evm_mean(chain_pilot_rms_evm_mean);
       }
       return ::grpc::Status::OK;
     }
@@ -3266,10 +3266,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_chain_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
-        float32* chain_rmsevm_per_subcarrier_mean = response->mutable_chain_rmsevm_per_subcarrier_mean()->mutable_data();
+        response->mutable_chain_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* chain_rms_evm_per_subcarrier_mean = response->mutable_chain_rms_evm_per_subcarrier_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_rmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_rms_evm_per_subcarrier_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3278,7 +3278,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_chain_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->mutable_chain_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3310,10 +3310,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_chain_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* chain_rmsevm_per_symbol_mean = response->mutable_chain_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_chain_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* chain_rms_evm_per_symbol_mean = response->mutable_chain_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, chain_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3322,7 +3322,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_chain_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_chain_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3439,15 +3439,15 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 composite_rmsevm_mean {};
-      float64 composite_data_rmsevm_mean {};
-      float64 composite_pilot_rmsevm_mean {};
-      auto status = library_->OFDMModAccFetchCompositeRMSEVM(instrument, selector_string, timeout, &composite_rmsevm_mean, &composite_data_rmsevm_mean, &composite_pilot_rmsevm_mean);
+      float64 composite_rms_evm_mean {};
+      float64 composite_data_rms_evm_mean {};
+      float64 composite_pilot_rms_evm_mean {};
+      auto status = library_->OFDMModAccFetchCompositeRMSEVM(instrument, selector_string, timeout, &composite_rms_evm_mean, &composite_data_rms_evm_mean, &composite_pilot_rms_evm_mean);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_composite_rmsevm_mean(composite_rmsevm_mean);
-        response->set_composite_data_rmsevm_mean(composite_data_rmsevm_mean);
-        response->set_composite_pilot_rmsevm_mean(composite_pilot_rmsevm_mean);
+        response->set_composite_rms_evm_mean(composite_rms_evm_mean);
+        response->set_composite_data_rms_evm_mean(composite_data_rms_evm_mean);
+        response->set_composite_pilot_rms_evm_mean(composite_pilot_rms_evm_mean);
       }
       return ::grpc::Status::OK;
     }
@@ -3639,17 +3639,17 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_decoded_ehtsig_bits()->Resize(actual_array_size, 0);
-        int32* decoded_ehtsig_bits = reinterpret_cast<int32*>(response->mutable_decoded_ehtsig_bits()->mutable_data());
+        response->mutable_decoded_eht_sig_bits()->Resize(actual_array_size, 0);
+        int32* decoded_eht_sig_bits = reinterpret_cast<int32*>(response->mutable_decoded_eht_sig_bits()->mutable_data());
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchDecodedEHTSIGBitsTrace(instrument, selector_string, timeout, decoded_ehtsig_bits, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchDecodedEHTSIGBitsTrace(instrument, selector_string, timeout, decoded_eht_sig_bits, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status_ok(status)) {
-          response->mutable_decoded_ehtsig_bits()->Resize(actual_array_size, 0);
+          response->mutable_decoded_eht_sig_bits()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4270,11 +4270,11 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      int32 number_of_hesigb_symbols {};
-      auto status = library_->OFDMModAccFetchNumberOfHESIGBSymbols(instrument, selector_string, timeout, &number_of_hesigb_symbols);
+      int32 number_of_he_sigb_symbols {};
+      auto status = library_->OFDMModAccFetchNumberOfHESIGBSymbols(instrument, selector_string, timeout, &number_of_he_sigb_symbols);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_number_of_hesigb_symbols(number_of_hesigb_symbols);
+        response->set_number_of_he_sigb_symbols(number_of_he_sigb_symbols);
       }
       return ::grpc::Status::OK;
     }
@@ -4521,12 +4521,12 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      int32 psducrc_status {};
-      auto status = library_->OFDMModAccFetchPSDUCRCStatus(instrument, selector_string, timeout, &psducrc_status);
+      int32 psdu_crc_status {};
+      auto status = library_->OFDMModAccFetchPSDUCRCStatus(instrument, selector_string, timeout, &psdu_crc_status);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_psducrc_status(static_cast<nirfmxwlan_grpc::OfdmModAccPsduCrcStatus>(psducrc_status));
-        response->set_psducrc_status_raw(psducrc_status);
+        response->set_psdu_crc_status(static_cast<nirfmxwlan_grpc::OfdmModAccPsduCrcStatus>(psdu_crc_status));
+        response->set_psdu_crc_status_raw(psdu_crc_status);
       }
       return ::grpc::Status::OK;
     }
@@ -4626,17 +4626,17 @@ namespace nirfmxwlan_grpc {
       float64 timeout = request->timeout();
       float64 rlsig_average_power_mean {};
       float64 hesiga_average_power_mean {};
-      float64 hesigb_average_power_mean {};
+      float64 he_sigb_average_power_mean {};
       float64 hestf_average_power_mean {};
-      float64 heltf_average_power_mean {};
-      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ax(instrument, selector_string, timeout, &rlsig_average_power_mean, &hesiga_average_power_mean, &hesigb_average_power_mean, &hestf_average_power_mean, &heltf_average_power_mean);
+      float64 he_ltf_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ax(instrument, selector_string, timeout, &rlsig_average_power_mean, &hesiga_average_power_mean, &he_sigb_average_power_mean, &hestf_average_power_mean, &he_ltf_average_power_mean);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_rlsig_average_power_mean(rlsig_average_power_mean);
         response->set_hesiga_average_power_mean(hesiga_average_power_mean);
-        response->set_hesigb_average_power_mean(hesigb_average_power_mean);
+        response->set_he_sigb_average_power_mean(he_sigb_average_power_mean);
         response->set_hestf_average_power_mean(hestf_average_power_mean);
-        response->set_heltf_average_power_mean(heltf_average_power_mean);
+        response->set_he_ltf_average_power_mean(he_ltf_average_power_mean);
       }
       return ::grpc::Status::OK;
     }
@@ -4794,17 +4794,17 @@ namespace nirfmxwlan_grpc {
       float64 timeout = request->timeout();
       float64 rlsig_peak_power_maximum {};
       float64 hesiga_peak_power_maximum {};
-      float64 hesigb_peak_power_maximum {};
+      float64 he_sigb_peak_power_maximum {};
       float64 hestf_peak_power_maximum {};
-      float64 heltf_peak_power_maximum {};
-      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ax(instrument, selector_string, timeout, &rlsig_peak_power_maximum, &hesiga_peak_power_maximum, &hesigb_peak_power_maximum, &hestf_peak_power_maximum, &heltf_peak_power_maximum);
+      float64 he_ltf_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ax(instrument, selector_string, timeout, &rlsig_peak_power_maximum, &hesiga_peak_power_maximum, &he_sigb_peak_power_maximum, &hestf_peak_power_maximum, &he_ltf_peak_power_maximum);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_rlsig_peak_power_maximum(rlsig_peak_power_maximum);
         response->set_hesiga_peak_power_maximum(hesiga_peak_power_maximum);
-        response->set_hesigb_peak_power_maximum(hesigb_peak_power_maximum);
+        response->set_he_sigb_peak_power_maximum(he_sigb_peak_power_maximum);
         response->set_hestf_peak_power_maximum(hestf_peak_power_maximum);
-        response->set_heltf_peak_power_maximum(heltf_peak_power_maximum);
+        response->set_he_ltf_peak_power_maximum(he_ltf_peak_power_maximum);
       }
       return ::grpc::Status::OK;
     }
@@ -4912,12 +4912,12 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      int32 sigbcrc_status {};
-      auto status = library_->OFDMModAccFetchSIGBCRCStatus(instrument, selector_string, timeout, &sigbcrc_status);
+      int32 sigb_crc_status {};
+      auto status = library_->OFDMModAccFetchSIGBCRCStatus(instrument, selector_string, timeout, &sigb_crc_status);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_sigbcrc_status(static_cast<nirfmxwlan_grpc::OfdmModAccSigBCrcStatus>(sigbcrc_status));
-        response->set_sigbcrc_status_raw(sigbcrc_status);
+        response->set_sigb_crc_status(static_cast<nirfmxwlan_grpc::OfdmModAccSigBCrcStatus>(sigb_crc_status));
+        response->set_sigb_crc_status_raw(sigb_crc_status);
       }
       return ::grpc::Status::OK;
     }
@@ -4938,12 +4938,12 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      int32 sigcrc_status {};
-      auto status = library_->OFDMModAccFetchSIGCRCStatus(instrument, selector_string, timeout, &sigcrc_status);
+      int32 sig_crc_status {};
+      auto status = library_->OFDMModAccFetchSIGCRCStatus(instrument, selector_string, timeout, &sig_crc_status);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_sigcrc_status(static_cast<nirfmxwlan_grpc::OfdmModAccSigCrcStatus>(sigcrc_status));
-        response->set_sigcrc_status_raw(sigcrc_status);
+        response->set_sig_crc_status(static_cast<nirfmxwlan_grpc::OfdmModAccSigCrcStatus>(sig_crc_status));
+        response->set_sig_crc_status_raw(sig_crc_status);
       }
       return ::grpc::Status::OK;
     }
@@ -5050,10 +5050,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_stream_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* stream_data_rmsevm_per_symbol_mean = response->mutable_stream_data_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_stream_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* stream_data_rms_evm_per_symbol_mean = response->mutable_stream_data_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_data_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_data_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5062,7 +5062,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_stream_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_stream_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5094,10 +5094,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_stream_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* stream_pilot_rmsevm_per_symbol_mean = response->mutable_stream_pilot_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_stream_pilot_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* stream_pilot_rms_evm_per_symbol_mean = response->mutable_stream_pilot_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_pilot_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_pilot_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5106,7 +5106,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_stream_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_stream_pilot_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5129,15 +5129,15 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 stream_rmsevm_mean {};
-      float64 stream_data_rmsevm_mean {};
-      float64 stream_pilot_rmsevm_mean {};
-      auto status = library_->OFDMModAccFetchStreamRMSEVM(instrument, selector_string, timeout, &stream_rmsevm_mean, &stream_data_rmsevm_mean, &stream_pilot_rmsevm_mean);
+      float64 stream_rms_evm_mean {};
+      float64 stream_data_rms_evm_mean {};
+      float64 stream_pilot_rms_evm_mean {};
+      auto status = library_->OFDMModAccFetchStreamRMSEVM(instrument, selector_string, timeout, &stream_rms_evm_mean, &stream_data_rms_evm_mean, &stream_pilot_rms_evm_mean);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_stream_rmsevm_mean(stream_rmsevm_mean);
-        response->set_stream_data_rmsevm_mean(stream_data_rmsevm_mean);
-        response->set_stream_pilot_rmsevm_mean(stream_pilot_rmsevm_mean);
+        response->set_stream_rms_evm_mean(stream_rms_evm_mean);
+        response->set_stream_data_rms_evm_mean(stream_data_rms_evm_mean);
+        response->set_stream_pilot_rms_evm_mean(stream_pilot_rms_evm_mean);
       }
       return ::grpc::Status::OK;
     }
@@ -5167,10 +5167,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_stream_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
-        float32* stream_rmsevm_per_subcarrier_mean = response->mutable_stream_rmsevm_per_subcarrier_mean()->mutable_data();
+        response->mutable_stream_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* stream_rms_evm_per_subcarrier_mean = response->mutable_stream_rms_evm_per_subcarrier_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_rmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_rms_evm_per_subcarrier_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5179,7 +5179,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_stream_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->mutable_stream_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5211,10 +5211,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_stream_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* stream_rmsevm_per_symbol_mean = response->mutable_stream_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_stream_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* stream_rms_evm_per_symbol_mean = response->mutable_stream_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, stream_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5223,7 +5223,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_stream_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_stream_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5691,10 +5691,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_user_stream_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* user_stream_data_rmsevm_per_symbol_mean = response->mutable_user_stream_data_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_user_stream_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* user_stream_data_rms_evm_per_symbol_mean = response->mutable_user_stream_data_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_data_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_data_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5703,7 +5703,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_user_stream_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_user_stream_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5735,10 +5735,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_user_stream_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* user_stream_pilot_rmsevm_per_symbol_mean = response->mutable_user_stream_pilot_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_user_stream_pilot_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* user_stream_pilot_rms_evm_per_symbol_mean = response->mutable_user_stream_pilot_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_pilot_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_pilot_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5747,7 +5747,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_user_stream_pilot_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_user_stream_pilot_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5770,15 +5770,15 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 user_stream_rmsevm_mean {};
-      float64 user_stream_data_rmsevm_mean {};
-      float64 user_stream_pilot_rmsevm_mean {};
-      auto status = library_->OFDMModAccFetchUserStreamRMSEVM(instrument, selector_string, timeout, &user_stream_rmsevm_mean, &user_stream_data_rmsevm_mean, &user_stream_pilot_rmsevm_mean);
+      float64 user_stream_rms_evm_mean {};
+      float64 user_stream_data_rms_evm_mean {};
+      float64 user_stream_pilot_rms_evm_mean {};
+      auto status = library_->OFDMModAccFetchUserStreamRMSEVM(instrument, selector_string, timeout, &user_stream_rms_evm_mean, &user_stream_data_rms_evm_mean, &user_stream_pilot_rms_evm_mean);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_user_stream_rmsevm_mean(user_stream_rmsevm_mean);
-        response->set_user_stream_data_rmsevm_mean(user_stream_data_rmsevm_mean);
-        response->set_user_stream_pilot_rmsevm_mean(user_stream_pilot_rmsevm_mean);
+        response->set_user_stream_rms_evm_mean(user_stream_rms_evm_mean);
+        response->set_user_stream_data_rms_evm_mean(user_stream_data_rms_evm_mean);
+        response->set_user_stream_pilot_rms_evm_mean(user_stream_pilot_rms_evm_mean);
       }
       return ::grpc::Status::OK;
     }
@@ -5808,10 +5808,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_user_stream_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
-        float32* user_stream_rmsevm_per_subcarrier_mean = response->mutable_user_stream_rmsevm_per_subcarrier_mean()->mutable_data();
+        response->mutable_user_stream_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* user_stream_rms_evm_per_subcarrier_mean = response->mutable_user_stream_rms_evm_per_subcarrier_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_rmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_rms_evm_per_subcarrier_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5820,7 +5820,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_user_stream_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->mutable_user_stream_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5852,10 +5852,10 @@ namespace nirfmxwlan_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_user_stream_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* user_stream_rmsevm_per_symbol_mean = response->mutable_user_stream_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_user_stream_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* user_stream_rms_evm_per_symbol_mean = response->mutable_user_stream_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, user_stream_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5864,7 +5864,7 @@ namespace nirfmxwlan_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_user_stream_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_user_stream_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;

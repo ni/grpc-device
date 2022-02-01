@@ -1298,6 +1298,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'rms_evm_mean',
                 'name': 'rmsevmMean',
                 'type': 'float64'
             },
@@ -1470,6 +1471,7 @@ functions = {
             {
                 'direction': 'out',
                 'enum': 'DsssModAccPsduCrcStaus',
+                'grpc_name': 'psdu_crc_status',
                 'name': 'psducrcStatus',
                 'type': 'int32'
             }
@@ -2825,6 +2827,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'chain_data_rms_evm_per_symbol_mean',
                 'name': 'chainDataRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -2876,6 +2879,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'chain_pilot_rms_evm_per_symbol_mean',
                 'name': 'chainPilotRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -2917,16 +2921,19 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'chain_rms_evm_mean',
                 'name': 'chainRMSEVMMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'chain_data_rms_evm_mean',
                 'name': 'chainDataRMSEVMMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'chain_pilot_rms_evm_mean',
                 'name': 'chainPilotRMSEVMMean',
                 'type': 'float64'
             }
@@ -2963,6 +2970,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'chain_rms_evm_per_subcarrier_mean',
                 'name': 'chainRMSEVMPerSubcarrierMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3014,6 +3022,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'chain_rms_evm_per_symbol_mean',
                 'name': 'chainRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3177,16 +3186,19 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'composite_rms_evm_mean',
                 'name': 'compositeRMSEVMMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'composite_data_rms_evm_mean',
                 'name': 'compositeDataRMSEVMMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'composite_pilot_rms_evm_mean',
                 'name': 'compositePilotRMSEVMMean',
                 'type': 'float64'
             }
@@ -3383,6 +3395,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'decoded_eht_sig_bits',
                 'name': 'decodedEHTSIGBits',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4069,6 +4082,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'number_of_he_sigb_symbols',
                 'name': 'numberOfHESIGBSymbols',
                 'type': 'int32'
             }
@@ -4331,6 +4345,7 @@ functions = {
             {
                 'direction': 'out',
                 'enum': 'OfdmModAccPsduCrcStatus',
+                'grpc_name': 'psdu_crc_status',
                 'name': 'psducrcStatus',
                 'type': 'int32'
             }
@@ -4451,6 +4466,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'he_sigb_average_power_mean',
                 'name': 'hesigbAveragePowerMean',
                 'type': 'float64'
             },
@@ -4461,6 +4477,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'he_ltf_average_power_mean',
                 'name': 'heltfAveragePowerMean',
                 'type': 'float64'
             }
@@ -4669,6 +4686,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'he_sigb_peak_power_maximum',
                 'name': 'hesigbPeakPowerMaximum',
                 'type': 'float64'
             },
@@ -4679,6 +4697,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'he_ltf_peak_power_maximum',
                 'name': 'heltfPeakPowerMaximum',
                 'type': 'float64'
             }
@@ -4815,6 +4834,7 @@ functions = {
             {
                 'direction': 'out',
                 'enum': 'OfdmModAccSigBCrcStatus',
+                'grpc_name': 'sigb_crc_status',
                 'name': 'sigbcrcStatus',
                 'type': 'int32'
             }
@@ -4842,6 +4862,7 @@ functions = {
             {
                 'direction': 'out',
                 'enum': 'OfdmModAccSigCrcStatus',
+                'grpc_name': 'sig_crc_status',
                 'name': 'sigcrcStatus',
                 'type': 'int32'
             }
@@ -4980,6 +5001,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'stream_data_rms_evm_per_symbol_mean',
                 'name': 'streamDataRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -5031,6 +5053,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'stream_pilot_rms_evm_per_symbol_mean',
                 'name': 'streamPilotRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -5072,16 +5095,19 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'stream_rms_evm_mean',
                 'name': 'streamRMSEVMMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'stream_data_rms_evm_mean',
                 'name': 'streamDataRMSEVMMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'stream_pilot_rms_evm_mean',
                 'name': 'streamPilotRMSEVMMean',
                 'type': 'float64'
             }
@@ -5118,6 +5144,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'stream_rms_evm_per_subcarrier_mean',
                 'name': 'streamRMSEVMPerSubcarrierMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -5169,6 +5196,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'stream_rms_evm_per_symbol_mean',
                 'name': 'streamRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -5711,6 +5739,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'user_stream_data_rms_evm_per_symbol_mean',
                 'name': 'userStreamDataRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -5762,6 +5791,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'user_stream_pilot_rms_evm_per_symbol_mean',
                 'name': 'userStreamPilotRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -5803,16 +5833,19 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'user_stream_rms_evm_mean',
                 'name': 'userStreamRMSEVMMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'user_stream_data_rms_evm_mean',
                 'name': 'userStreamDataRMSEVMMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'user_stream_pilot_rms_evm_mean',
                 'name': 'userStreamPilotRMSEVMMean',
                 'type': 'float64'
             }
@@ -5849,6 +5882,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'user_stream_rms_evm_per_subcarrier_mean',
                 'name': 'userStreamRMSEVMPerSubcarrierMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -5900,6 +5934,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'user_stream_rms_evm_per_symbol_mean',
                 'name': 'userStreamRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',

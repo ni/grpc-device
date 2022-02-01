@@ -623,6 +623,63 @@ enums = {
             }
         ]
     },
+    'DigitalEdgeTriggerSource': {
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'PFI0',
+                'value': 'PFI0'
+            },
+            {
+                'name': 'PFI1',
+                'value': 'PFI1'
+            },
+            {
+                'name': 'PXI_TRIG0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'PXI_TRIG1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'PXI_TRIG2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'PXI_TRIG3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'PXI_TRIG4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'PXI_TRIG5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'PXI_TRIG6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'PXI_TRIG7',
+                'value': 'PXI_Trig7'
+            },
+            {
+                'name': 'PXI_STAR',
+                'value': 'PXI_STAR'
+            },
+            {
+                'name': 'PXIE_DSTARB',
+                'value': 'PXIe_DStarB'
+            },
+            {
+                'name': 'TIMER_EVENT',
+                'value': 'TimerEvent'
+            }
+        ]
+    },
     'DownlinkChannelConfigurationMode': {
         'values': [
             {
@@ -941,6 +998,7 @@ enums = {
         ]
     },
     'ModAccAutoLevelAllowOverflow': {
+        'enum-value-prefix': 'MODACC_AUTO_LEVEL_ALLOW_OVERFLOW',
         'values': [
             {
                 'name': 'FALSE',
@@ -953,6 +1011,7 @@ enums = {
         ]
     },
     'ModAccAveragingEnabled': {
+        'enum-value-prefix': 'MODACC_AVERAGING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -965,6 +1024,7 @@ enums = {
         ]
     },
     'ModAccCalibrationDataValid': {
+        'enum-value-prefix': 'MODACC_CALIBRATION_DATA_VALID',
         'values': [
             {
                 'name': 'FALSE',
@@ -977,6 +1037,7 @@ enums = {
         ]
     },
     'ModAccChannelEstimationType': {
+        'enum-value-prefix': 'MODACC_CHANNEL_ESTIMATION_TYPE',
         'values': [
             {
                 'name': 'REFERENCE',
@@ -989,6 +1050,7 @@ enums = {
         ]
     },
     'ModAccCommonClockSourceEnabled': {
+        'enum-value-prefix': 'MODACC_COMMON_CLOCK_SOURCE_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1001,6 +1063,7 @@ enums = {
         ]
     },
     'ModAccCompositeResultsIncludeDmrs': {
+        'enum-value-prefix': 'MODACC_COMPOSITE_RESULTS_INCLUDE_DMRS',
         'values': [
             {
                 'name': 'FALSE',
@@ -1013,6 +1076,7 @@ enums = {
         ]
     },
     'ModAccCompositeResultsIncludePtrs': {
+        'enum-value-prefix': 'MODACC_COMPOSITE_RESULTS_INCLUDE_PTRS',
         'values': [
             {
                 'name': 'FALSE',
@@ -1025,6 +1089,7 @@ enums = {
         ]
     },
     'ModAccDCSubcarrierRemovalEnabled': {
+        'enum-value-prefix': 'MODACC_DC_SUBCARRIER_REMOVAL_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1037,6 +1102,7 @@ enums = {
         ]
     },
     'ModAccEvmReferenceDataSymbolsMode': {
+        'enum-value-prefix': 'MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE',
         'values': [
             {
                 'name': 'ACQUIRED_WAVEFORM',
@@ -1049,6 +1115,7 @@ enums = {
         ]
     },
     'ModAccEvmUnit': {
+        'enum-value-prefix': 'MODACC_EVM_UNIT',
         'values': [
             {
                 'name': 'PERCENTAGE',
@@ -1061,6 +1128,7 @@ enums = {
         ]
     },
     'ModAccFftWindowType': {
+        'enum-value-prefix': 'MODACC_FFT_WINDOW_TYPE',
         'values': [
             {
                 'name': '3_GPP',
@@ -1073,6 +1141,7 @@ enums = {
         ]
     },
     'ModAccFrequencyErrorEstimation': {
+        'enum-value-prefix': 'MODACC_FREQUENCY_ERROR_ESTIMATION',
         'values': [
             {
                 'name': 'DISABLED',
@@ -1089,6 +1158,7 @@ enums = {
         ]
     },
     'ModAccIQGainImbalanceCorrectionEnabled': {
+        'enum-value-prefix': 'MODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1101,6 +1171,7 @@ enums = {
         ]
     },
     'ModAccIQImpairmentsModel': {
+        'enum-value-prefix': 'MODACC_IQ_IMPAIRMENTS_MODEL',
         'values': [
             {
                 'name': 'TX',
@@ -1113,6 +1184,7 @@ enums = {
         ]
     },
     'ModAccIQImpairmentsPerSubcarrierEnabled': {
+        'enum-value-prefix': 'MODACC_IQ_IMPAIRMENTS_PER_SUBCARRIER_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1125,6 +1197,7 @@ enums = {
         ]
     },
     'ModAccIQMismatchEstimationEnabled': {
+        'enum-value-prefix': 'MODACC_IQ_MISMATCH_ESTIMATION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1137,6 +1210,7 @@ enums = {
         ]
     },
     'ModAccIQOriginOffsetEstimationEnabled': {
+        'enum-value-prefix': 'MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1149,6 +1223,7 @@ enums = {
         ]
     },
     'ModAccIQQuadratureErrorCorrectionEnabled': {
+        'enum-value-prefix': 'MODACC_IQ_QUADRATURE_ERROR_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1161,6 +1236,7 @@ enums = {
         ]
     },
     'ModAccIQTimingSkewCorrectionEnabled': {
+        'enum-value-prefix': 'MODACC_IQ_TIMING_SKEW_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1173,6 +1249,7 @@ enums = {
         ]
     },
     'ModAccMagnitudeAndPhaseErrorEnabled': {
+        'enum-value-prefix': 'MODACC_MAGNITUDE_AND_PHASE_ERROR_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1185,6 +1262,7 @@ enums = {
         ]
     },
     'ModAccMeasurementLengthUnit': {
+        'enum-value-prefix': 'MODACC_MEASUREMENT_LENGTH_UNIT',
         'values': [
             {
                 'name': 'SLOT',
@@ -1201,6 +1279,7 @@ enums = {
         ]
     },
     'ModAccMeasurementMode': {
+        'enum-value-prefix': 'MODACC_MEASUREMENT_MODE',
         'values': [
             {
                 'name': 'MEASURE',
@@ -1213,6 +1292,7 @@ enums = {
         ]
     },
     'ModAccMulticarrierFilterEnabled': {
+        'enum-value-prefix': 'MODACC_MULTICARRIER_FILTER_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1225,6 +1305,7 @@ enums = {
         ]
     },
     'ModAccNoiseCompensationApplied': {
+        'enum-value-prefix': 'MODACC_NOISE_COMPENSATION_APPLIED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1237,6 +1318,7 @@ enums = {
         ]
     },
     'ModAccNoiseCompensationEnabled': {
+        'enum-value-prefix': 'MODACC_NOISE_COMPENSATION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1249,6 +1331,7 @@ enums = {
         ]
     },
     'ModAccNoiseCompensationInputPowerCheckEnabled': {
+        'enum-value-prefix': 'MODACC_NOISE_COMPENSATION_INPUT_POWER_CHECK_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1261,6 +1344,7 @@ enums = {
         ]
     },
     'ModAccPhaseTrackingEnabled': {
+        'enum-value-prefix': 'MODACC_PHASE_TRACKING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1273,6 +1357,7 @@ enums = {
         ]
     },
     'ModAccShortFrameEnabled': {
+        'enum-value-prefix': 'MODACC_SHORT_FRAME_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1285,6 +1370,7 @@ enums = {
         ]
     },
     'ModAccShortFrameLengthUnit': {
+        'enum-value-prefix': 'MODACC_SHORT_FRAME_LENGTH_UNIT',
         'values': [
             {
                 'name': 'SLOT',
@@ -1301,6 +1387,7 @@ enums = {
         ]
     },
     'ModAccSpectralFlatnessCondition': {
+        'enum-value-prefix': 'MODACC_SPECTRAL_FLATNESS_CONDITION',
         'values': [
             {
                 'name': 'NORMAL',
@@ -1313,6 +1400,7 @@ enums = {
         ]
     },
     'ModAccSpectrumInverted': {
+        'enum-value-prefix': 'MODACC_SPECTRUM_INVERTED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1325,6 +1413,7 @@ enums = {
         ]
     },
     'ModAccSymbolClockErrorEstimationEnabled': {
+        'enum-value-prefix': 'MODACC_SYMBOL_CLOCK_ERROR_ESTIMATION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1337,6 +1426,7 @@ enums = {
         ]
     },
     'ModAccSynchronizationMode': {
+        'enum-value-prefix': 'MODACC_SYNCHRONIZATION_MODE',
         'values': [
             {
                 'name': 'SLOT',
@@ -1353,6 +1443,7 @@ enums = {
         ]
     },
     'ModAccTimingTrackingEnabled': {
+        'enum-value-prefix': 'MODACC_TIMING_TRACKING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -2225,6 +2316,18 @@ enums = {
             {
                 'name': 'E',
                 'value': 7
+            }
+        ]
+    },
+    'SubblockFrequencyDefinition': {
+        'values': [
+            {
+                'name': 'RELATIVE',
+                'value': 0
+            },
+            {
+                'name': 'ABSOLUTE',
+                'value': 1
             }
         ]
     },

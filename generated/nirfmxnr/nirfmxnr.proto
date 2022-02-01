@@ -252,6 +252,7 @@ enum NiRFmxNRAttribute {
   NIRFMXNR_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_DURATION = 9437196;
   NIRFMXNR_ATTRIBUTE_LINK_DIRECTION = 9437198;
   NIRFMXNR_ATTRIBUTE_NUMBER_OF_SUBBLOCKS = 9437200;
+  NIRFMXNR_ATTRIBUTE_SUBBLOCK_FREQUENCY_DEFINITION = 9437201;
   NIRFMXNR_ATTRIBUTE_BAND = 9437202;
   NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_SPACING_TYPE = 9437203;
   NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_AT_CENTER_FREQUENCY = 9437204;
@@ -776,6 +777,23 @@ enum DigitalEdgeTriggerEdge {
   DIGITAL_EDGE_TRIGGER_EDGE_FALLING_EDGE = 1;
 }
 
+enum DigitalEdgeTriggerSource {
+  DIGITAL_EDGE_TRIGGER_SOURCE_UNSPECIFIED = 0;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PFI0 = 1;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PFI1 = 2;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0 = 3;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG1 = 4;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG2 = 5;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG3 = 6;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG4 = 7;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG5 = 8;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG6 = 9;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG7 = 10;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
+  DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
+}
+
 enum FrequencyReferenceSource {
   FREQUENCY_REFERENCE_SOURCE_UNSPECIFIED = 0;
   FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK = 1;
@@ -823,18 +841,18 @@ enum MechanicalAttenuationAuto {
 }
 
 enum ModAccCalibrationDataValid {
-  MOD_ACC_CALIBRATION_DATA_VALID_FALSE = 0;
-  MOD_ACC_CALIBRATION_DATA_VALID_TRUE = 1;
+  MODACC_CALIBRATION_DATA_VALID_FALSE = 0;
+  MODACC_CALIBRATION_DATA_VALID_TRUE = 1;
 }
 
 enum ModAccMeasurementMode {
-  MOD_ACC_MEASUREMENT_MODE_MEASURE = 0;
-  MOD_ACC_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR = 1;
+  MODACC_MEASUREMENT_MODE_MEASURE = 0;
+  MODACC_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR = 1;
 }
 
 enum ModAccNoiseCompensationEnabled {
-  MOD_ACC_NOISE_COMPENSATION_ENABLED_FALSE = 0;
-  MOD_ACC_NOISE_COMPENSATION_ENABLED_TRUE = 1;
+  MODACC_NOISE_COMPENSATION_ENABLED_FALSE = 0;
+  MODACC_NOISE_COMPENSATION_ENABLED_TRUE = 1;
 }
 
 enum ObwAveragingEnabled {
@@ -1345,6 +1363,8 @@ enum NiRFmxNRInt32AttributeValues {
   NIRFMXNR_INT32_SSB_PATTERN_C_3_GHZ_TO_6_GHZ = 5;
   NIRFMXNR_INT32_SSB_PATTERN_D = 6;
   NIRFMXNR_INT32_SSB_PATTERN_E = 7;
+  NIRFMXNR_INT32_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE = 0;
+  NIRFMXNR_INT32_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE = 1;
   NIRFMXNR_INT32_TRANSMITTER_ARCHITECTURE_LO_PER_COMPONENT_CARRIER = 0;
   NIRFMXNR_INT32_TRANSMITTER_ARCHITECTURE_LO_PER_SUBBLOCK = 1;
   NIRFMXNR_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
@@ -1355,6 +1375,23 @@ enum NiRFmxNRInt32AttributeValues {
   NIRFMXNR_INT32_TRIGGER_TYPE_SOFTWARE = 3;
   NIRFMXNR_INT32_TXP_AVERAGING_ENABLED_FALSE = 0;
   NIRFMXNR_INT32_TXP_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum NiRFmxNRStringAttributeValuesMapped {
+  NIRFMXNR_STRING_MAPPED_UNSPECIFIED = 0;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI0 = 1;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI1 = 2;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0 = 3;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG1 = 4;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG2 = 5;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG3 = 6;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG4 = 7;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG5 = 8;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG6 = 9;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG7 = 10;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
 }
 
 message ACPCfgAveragingRequest {
@@ -1404,7 +1441,7 @@ message ACPCfgNoiseCompensationEnabledResponse {
 message ACPCfgNumberOfENDCOffsetsRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 number_of_endc_offsets = 3;
+  int32 number_of_en_dc_offsets = 3;
 }
 
 message ACPCfgNumberOfENDCOffsetsResponse {
@@ -1945,13 +1982,16 @@ message CHPValidateNoiseCalibrationDataResponse {
 message CfgDigitalEdgeTriggerRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  string digital_edge_source = 3;
-  oneof digital_edge_enum {
-    DigitalEdgeTriggerEdge digital_edge = 4;
-    int32 digital_edge_raw = 5;
+  oneof digital_edge_source_enum {
+    DigitalEdgeTriggerSource digital_edge_source_mapped = 3;
+    string digital_edge_source_raw = 4;
   }
-  double trigger_delay = 6;
-  int32 enable_trigger = 7;
+  oneof digital_edge_enum {
+    DigitalEdgeTriggerEdge digital_edge = 5;
+    int32 digital_edge_raw = 6;
+  }
+  double trigger_delay = 7;
+  int32 enable_trigger = 8;
 }
 
 message CfgDigitalEdgeTriggerResponse {
@@ -2082,9 +2122,9 @@ message CfgSoftwareEdgeTriggerResponse {
 message CfggNodeBCategoryRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  oneof g_node_b_category_enum {
-    GNodeBCategory g_node_b_category = 3;
-    int32 g_node_b_category_raw = 4;
+  oneof gnodeb_category_enum {
+    GNodeBCategory gnodeb_category = 3;
+    int32 gnodeb_category_raw = 4;
   }
 }
 
@@ -2575,7 +2615,7 @@ message ModAccFetchCompositeEVMRequest {
 
 message ModAccFetchCompositeEVMResponse {
   int32 status = 1;
-  double composite_rmsevm_mean = 2;
+  double composite_rms_evm_mean = 2;
   double composite_peak_evm_maximum = 3;
 }
 
@@ -2641,7 +2681,7 @@ message ModAccFetchPBCHDMRSConstellationTraceRequest {
 
 message ModAccFetchPBCHDMRSConstellationTraceResponse {
   int32 status = 1;
-  repeated nidevice_grpc.NIComplexNumberF32 pbchdmrs_constellation = 2;
+  repeated nidevice_grpc.NIComplexNumberF32 pbch_dmrs_constellation = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2655,7 +2695,7 @@ message ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float pbchdmrsrmsevm_per_subcarrier_mean = 4;
+  repeated float pbch_dmrs_rms_evm_per_subcarrier_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2669,7 +2709,7 @@ message ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float pbchdmrsrmsevm_per_symbol_mean = 4;
+  repeated float pbch_dmrs_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2695,7 +2735,7 @@ message ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float pbch_data_rmsevm_per_subcarrier_mean = 4;
+  repeated float pbch_data_rms_evm_per_subcarrier_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2709,7 +2749,7 @@ message ModAccFetchPBCHDataRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float pbch_data_rmsevm_per_symbol_mean = 4;
+  repeated float pbch_data_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2781,7 +2821,7 @@ message ModAccFetchPDSCHDMRSConstellationTraceRequest {
 
 message ModAccFetchPDSCHDMRSConstellationTraceResponse {
   int32 status = 1;
-  repeated nidevice_grpc.NIComplexNumberF32 pdschdmrs_constellation = 2;
+  repeated nidevice_grpc.NIComplexNumberF32 pdsch_dmrs_constellation = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2817,7 +2857,7 @@ message ModAccFetchPDSCHPTRSConstellationTraceRequest {
 
 message ModAccFetchPDSCHPTRSConstellationTraceResponse {
   int32 status = 1;
-  repeated nidevice_grpc.NIComplexNumberF32 pdschptrs_constellation = 2;
+  repeated nidevice_grpc.NIComplexNumberF32 pdsch_ptrs_constellation = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2855,7 +2895,7 @@ message ModAccFetchPSSRMSEVMPerSubcarrierMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float pssrmsevm_per_subcarrier_mean = 4;
+  repeated float pss_rms_evm_per_subcarrier_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2869,7 +2909,7 @@ message ModAccFetchPSSRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float pssrmsevm_per_symbol_mean = 4;
+  repeated float pss_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2881,7 +2921,7 @@ message ModAccFetchPUSCHDMRSConstellationTraceRequest {
 
 message ModAccFetchPUSCHDMRSConstellationTraceResponse {
   int32 status = 1;
-  repeated nidevice_grpc.NIComplexNumberF32 puschdmrs_constellation = 2;
+  repeated nidevice_grpc.NIComplexNumberF32 pusch_dmrs_constellation = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2917,7 +2957,7 @@ message ModAccFetchPUSCHPTRSConstellationTraceRequest {
 
 message ModAccFetchPUSCHPTRSConstellationTraceResponse {
   int32 status = 1;
-  repeated nidevice_grpc.NIComplexNumberF32 puschptrs_constellation = 2;
+  repeated nidevice_grpc.NIComplexNumberF32 pusch_ptrs_constellation = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2973,7 +3013,7 @@ message ModAccFetchRMSEVMHighPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float rmsevm_high_per_symbol_mean = 4;
+  repeated float rms_evm_high_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2987,7 +3027,7 @@ message ModAccFetchRMSEVMLowPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float rmsevm_low_per_symbol_mean = 4;
+  repeated float rms_evm_low_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3001,7 +3041,7 @@ message ModAccFetchRMSEVMPerSlotMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float rmsevm_per_slot_mean = 4;
+  repeated float rms_evm_per_slot_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3015,7 +3055,7 @@ message ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float rmsevm_per_subcarrier_mean = 4;
+  repeated float rms_evm_per_subcarrier_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3029,7 +3069,7 @@ message ModAccFetchRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float rmsevm_per_symbol_mean = 4;
+  repeated float rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3055,7 +3095,7 @@ message ModAccFetchSSSRMSEVMPerSubcarrierMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float sssrmsevm_per_subcarrier_mean = 4;
+  repeated float sss_rms_evm_per_subcarrier_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3069,7 +3109,7 @@ message ModAccFetchSSSRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float sssrmsevm_per_symbol_mean = 4;
+  repeated float sss_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3909,7 +3949,10 @@ message SetAttributeStringRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   NiRFmxNRAttribute attribute_id = 3;
-  string attr_val = 4;
+  oneof attr_val_enum {
+    NiRFmxNRStringAttributeValuesMapped attr_val_mapped = 4;
+    string attr_val_raw = 5;
+  }
 }
 
 message SetAttributeStringResponse {

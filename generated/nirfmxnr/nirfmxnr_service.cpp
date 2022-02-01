@@ -181,8 +181,8 @@ namespace nirfmxnr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 number_of_endc_offsets = request->number_of_endc_offsets();
-      auto status = library_->ACPCfgNumberOfENDCOffsets(instrument, selector_string, number_of_endc_offsets);
+      int32 number_of_en_dc_offsets = request->number_of_en_dc_offsets();
+      auto status = library_->ACPCfgNumberOfENDCOffsets(instrument, selector_string, number_of_en_dc_offsets);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1801,7 +1801,26 @@ namespace nirfmxnr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      char* digital_edge_source = (char*)request->digital_edge_source().c_str();
+      char* digital_edge_source;
+      switch (request->digital_edge_source_enum_case()) {
+        case nirfmxnr_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceMapped: {
+          auto digital_edge_source_imap_it = digitaledgetriggersource_input_map_.find(request->digital_edge_source_mapped());
+          if (digital_edge_source_imap_it == digitaledgetriggersource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge_source_mapped was not specified or out of range.");
+          }
+          digital_edge_source = const_cast<char*>((digital_edge_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxnr_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceRaw: {
+          digital_edge_source = const_cast<char*>(request->digital_edge_source_raw().c_str());
+          break;
+        }
+        case nirfmxnr_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::DIGITAL_EDGE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge_source was not specified or out of range");
+          break;
+        }
+      }
+
       int32 digital_edge;
       switch (request->digital_edge_enum_case()) {
         case nirfmxnr_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdge: {
@@ -2136,23 +2155,23 @@ namespace nirfmxnr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 g_node_b_category;
-      switch (request->g_node_b_category_enum_case()) {
-        case nirfmxnr_grpc::CfggNodeBCategoryRequest::GNodeBCategoryEnumCase::kGNodeBCategory: {
-          g_node_b_category = static_cast<int32>(request->g_node_b_category());
+      int32 gnodeb_category;
+      switch (request->gnodeb_category_enum_case()) {
+        case nirfmxnr_grpc::CfggNodeBCategoryRequest::GnodebCategoryEnumCase::kGnodebCategory: {
+          gnodeb_category = static_cast<int32>(request->gnodeb_category());
           break;
         }
-        case nirfmxnr_grpc::CfggNodeBCategoryRequest::GNodeBCategoryEnumCase::kGNodeBCategoryRaw: {
-          g_node_b_category = static_cast<int32>(request->g_node_b_category_raw());
+        case nirfmxnr_grpc::CfggNodeBCategoryRequest::GnodebCategoryEnumCase::kGnodebCategoryRaw: {
+          gnodeb_category = static_cast<int32>(request->gnodeb_category_raw());
           break;
         }
-        case nirfmxnr_grpc::CfggNodeBCategoryRequest::GNodeBCategoryEnumCase::G_NODE_B_CATEGORY_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for g_node_b_category was not specified or out of range");
+        case nirfmxnr_grpc::CfggNodeBCategoryRequest::GnodebCategoryEnumCase::GNODEB_CATEGORY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for gnodeb_category was not specified or out of range");
           break;
         }
       }
 
-      auto status = library_->CfggNodeBCategory(instrument, selector_string, g_node_b_category);
+      auto status = library_->CfggNodeBCategory(instrument, selector_string, gnodeb_category);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3515,12 +3534,12 @@ namespace nirfmxnr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 composite_rmsevm_mean {};
+      float64 composite_rms_evm_mean {};
       float64 composite_peak_evm_maximum {};
-      auto status = library_->ModAccFetchCompositeEVM(instrument, selector_string, timeout, &composite_rmsevm_mean, &composite_peak_evm_maximum);
+      auto status = library_->ModAccFetchCompositeEVM(instrument, selector_string, timeout, &composite_rms_evm_mean, &composite_peak_evm_maximum);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_composite_rmsevm_mean(composite_rmsevm_mean);
+        response->set_composite_rms_evm_mean(composite_rms_evm_mean);
         response->set_composite_peak_evm_maximum(composite_peak_evm_maximum);
       }
       return ::grpc::Status::OK;
@@ -3709,21 +3728,21 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        std::vector<NIComplexSingle> pbchdmrs_constellation(actual_array_size, NIComplexSingle());
+        std::vector<NIComplexSingle> pbch_dmrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPBCHDMRSConstellationTrace(instrument, selector_string, timeout, pbchdmrs_constellation.data(), array_size, &actual_array_size);
+        status = library_->ModAccFetchPBCHDMRSConstellationTrace(instrument, selector_string, timeout, pbch_dmrs_constellation.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status_ok(status)) {
-          convert_to_grpc(pbchdmrs_constellation, response->mutable_pbchdmrs_constellation());
+          convert_to_grpc(pbch_dmrs_constellation, response->mutable_pbch_dmrs_constellation());
           {
             auto shrunk_size = actual_array_size;
-            auto current_size = response->mutable_pbchdmrs_constellation()->size();
+            auto current_size = response->mutable_pbch_dmrs_constellation()->size();
             if (shrunk_size != current_size) {
-              response->mutable_pbchdmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+              response->mutable_pbch_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
           response->set_actual_array_size(actual_array_size);
@@ -3757,10 +3776,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_pbchdmrsrmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
-        float32* pbchdmrsrmsevm_per_subcarrier_mean = response->mutable_pbchdmrsrmsevm_per_subcarrier_mean()->mutable_data();
+        response->mutable_pbch_dmrs_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* pbch_dmrs_rms_evm_per_subcarrier_mean = response->mutable_pbch_dmrs_rms_evm_per_subcarrier_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, pbchdmrsrmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, pbch_dmrs_rms_evm_per_subcarrier_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3769,7 +3788,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_pbchdmrsrmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->mutable_pbch_dmrs_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3801,10 +3820,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_pbchdmrsrmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* pbchdmrsrmsevm_per_symbol_mean = response->mutable_pbchdmrsrmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_pbch_dmrs_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* pbch_dmrs_rms_evm_per_symbol_mean = response->mutable_pbch_dmrs_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, pbchdmrsrmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, pbch_dmrs_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3813,7 +3832,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_pbchdmrsrmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_pbch_dmrs_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3891,10 +3910,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_pbch_data_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
-        float32* pbch_data_rmsevm_per_subcarrier_mean = response->mutable_pbch_data_rmsevm_per_subcarrier_mean()->mutable_data();
+        response->mutable_pbch_data_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* pbch_data_rms_evm_per_subcarrier_mean = response->mutable_pbch_data_rms_evm_per_subcarrier_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, pbch_data_rmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, pbch_data_rms_evm_per_subcarrier_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3903,7 +3922,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_pbch_data_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->mutable_pbch_data_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3935,10 +3954,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_pbch_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* pbch_data_rmsevm_per_symbol_mean = response->mutable_pbch_data_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_pbch_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* pbch_data_rms_evm_per_symbol_mean = response->mutable_pbch_data_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPBCHDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, pbch_data_rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchPBCHDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, pbch_data_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -3947,7 +3966,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_pbch_data_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_pbch_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4207,21 +4226,21 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        std::vector<NIComplexSingle> pdschdmrs_constellation(actual_array_size, NIComplexSingle());
+        std::vector<NIComplexSingle> pdsch_dmrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPDSCHDMRSConstellationTrace(instrument, selector_string, timeout, pdschdmrs_constellation.data(), array_size, &actual_array_size);
+        status = library_->ModAccFetchPDSCHDMRSConstellationTrace(instrument, selector_string, timeout, pdsch_dmrs_constellation.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status_ok(status)) {
-          convert_to_grpc(pdschdmrs_constellation, response->mutable_pdschdmrs_constellation());
+          convert_to_grpc(pdsch_dmrs_constellation, response->mutable_pdsch_dmrs_constellation());
           {
             auto shrunk_size = actual_array_size;
-            auto current_size = response->mutable_pdschdmrs_constellation()->size();
+            auto current_size = response->mutable_pdsch_dmrs_constellation()->size();
             if (shrunk_size != current_size) {
-              response->mutable_pdschdmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+              response->mutable_pdsch_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
           response->set_actual_array_size(actual_array_size);
@@ -4347,21 +4366,21 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        std::vector<NIComplexSingle> pdschptrs_constellation(actual_array_size, NIComplexSingle());
+        std::vector<NIComplexSingle> pdsch_ptrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPDSCHPTRSConstellationTrace(instrument, selector_string, timeout, pdschptrs_constellation.data(), array_size, &actual_array_size);
+        status = library_->ModAccFetchPDSCHPTRSConstellationTrace(instrument, selector_string, timeout, pdsch_ptrs_constellation.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status_ok(status)) {
-          convert_to_grpc(pdschptrs_constellation, response->mutable_pdschptrs_constellation());
+          convert_to_grpc(pdsch_ptrs_constellation, response->mutable_pdsch_ptrs_constellation());
           {
             auto shrunk_size = actual_array_size;
-            auto current_size = response->mutable_pdschptrs_constellation()->size();
+            auto current_size = response->mutable_pdsch_ptrs_constellation()->size();
             if (shrunk_size != current_size) {
-              response->mutable_pdschptrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+              response->mutable_pdsch_ptrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
           response->set_actual_array_size(actual_array_size);
@@ -4487,10 +4506,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_pssrmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
-        float32* pssrmsevm_per_subcarrier_mean = response->mutable_pssrmsevm_per_subcarrier_mean()->mutable_data();
+        response->mutable_pss_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* pss_rms_evm_per_subcarrier_mean = response->mutable_pss_rms_evm_per_subcarrier_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPSSRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, pssrmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchPSSRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, pss_rms_evm_per_subcarrier_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -4499,7 +4518,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_pssrmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->mutable_pss_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4531,10 +4550,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_pssrmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* pssrmsevm_per_symbol_mean = response->mutable_pssrmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_pss_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* pss_rms_evm_per_symbol_mean = response->mutable_pss_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPSSRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, pssrmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchPSSRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, pss_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -4543,7 +4562,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_pssrmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_pss_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4573,21 +4592,21 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        std::vector<NIComplexSingle> puschdmrs_constellation(actual_array_size, NIComplexSingle());
+        std::vector<NIComplexSingle> pusch_dmrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPUSCHDMRSConstellationTrace(instrument, selector_string, timeout, puschdmrs_constellation.data(), array_size, &actual_array_size);
+        status = library_->ModAccFetchPUSCHDMRSConstellationTrace(instrument, selector_string, timeout, pusch_dmrs_constellation.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status_ok(status)) {
-          convert_to_grpc(puschdmrs_constellation, response->mutable_puschdmrs_constellation());
+          convert_to_grpc(pusch_dmrs_constellation, response->mutable_pusch_dmrs_constellation());
           {
             auto shrunk_size = actual_array_size;
-            auto current_size = response->mutable_puschdmrs_constellation()->size();
+            auto current_size = response->mutable_pusch_dmrs_constellation()->size();
             if (shrunk_size != current_size) {
-              response->mutable_puschdmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+              response->mutable_pusch_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
           response->set_actual_array_size(actual_array_size);
@@ -4713,21 +4732,21 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        std::vector<NIComplexSingle> puschptrs_constellation(actual_array_size, NIComplexSingle());
+        std::vector<NIComplexSingle> pusch_ptrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchPUSCHPTRSConstellationTrace(instrument, selector_string, timeout, puschptrs_constellation.data(), array_size, &actual_array_size);
+        status = library_->ModAccFetchPUSCHPTRSConstellationTrace(instrument, selector_string, timeout, pusch_ptrs_constellation.data(), array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status_ok(status)) {
-          convert_to_grpc(puschptrs_constellation, response->mutable_puschptrs_constellation());
+          convert_to_grpc(pusch_ptrs_constellation, response->mutable_pusch_ptrs_constellation());
           {
             auto shrunk_size = actual_array_size;
-            auto current_size = response->mutable_puschptrs_constellation()->size();
+            auto current_size = response->mutable_pusch_ptrs_constellation()->size();
             if (shrunk_size != current_size) {
-              response->mutable_puschptrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+              response->mutable_pusch_ptrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
           }        
           response->set_actual_array_size(actual_array_size);
@@ -4893,10 +4912,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_rmsevm_high_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* rmsevm_high_per_symbol_mean = response->mutable_rmsevm_high_per_symbol_mean()->mutable_data();
+        response->mutable_rms_evm_high_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* rms_evm_high_per_symbol_mean = response->mutable_rms_evm_high_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchRMSEVMHighPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, rmsevm_high_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchRMSEVMHighPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, rms_evm_high_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -4905,7 +4924,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_rmsevm_high_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_rms_evm_high_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4937,10 +4956,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_rmsevm_low_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* rmsevm_low_per_symbol_mean = response->mutable_rmsevm_low_per_symbol_mean()->mutable_data();
+        response->mutable_rms_evm_low_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* rms_evm_low_per_symbol_mean = response->mutable_rms_evm_low_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchRMSEVMLowPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, rmsevm_low_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchRMSEVMLowPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, rms_evm_low_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -4949,7 +4968,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_rmsevm_low_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_rms_evm_low_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4981,10 +5000,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_rmsevm_per_slot_mean()->Resize(actual_array_size, 0);
-        float32* rmsevm_per_slot_mean = response->mutable_rmsevm_per_slot_mean()->mutable_data();
+        response->mutable_rms_evm_per_slot_mean()->Resize(actual_array_size, 0);
+        float32* rms_evm_per_slot_mean = response->mutable_rms_evm_per_slot_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchRMSEVMPerSlotMeanTrace(instrument, selector_string, timeout, &x0, &dx, rmsevm_per_slot_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchRMSEVMPerSlotMeanTrace(instrument, selector_string, timeout, &x0, &dx, rms_evm_per_slot_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -4993,7 +5012,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_rmsevm_per_slot_mean()->Resize(actual_array_size, 0);
+          response->mutable_rms_evm_per_slot_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5025,10 +5044,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
-        float32* rmsevm_per_subcarrier_mean = response->mutable_rmsevm_per_subcarrier_mean()->mutable_data();
+        response->mutable_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* rms_evm_per_subcarrier_mean = response->mutable_rms_evm_per_subcarrier_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, rmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, rms_evm_per_subcarrier_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5037,7 +5056,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_rmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->mutable_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5069,10 +5088,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* rmsevm_per_symbol_mean = response->mutable_rmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* rms_evm_per_symbol_mean = response->mutable_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, rmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5081,7 +5100,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_rmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5159,10 +5178,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_sssrmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
-        float32* sssrmsevm_per_subcarrier_mean = response->mutable_sssrmsevm_per_subcarrier_mean()->mutable_data();
+        response->mutable_sss_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+        float32* sss_rms_evm_per_subcarrier_mean = response->mutable_sss_rms_evm_per_subcarrier_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchSSSRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, sssrmsevm_per_subcarrier_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchSSSRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, sss_rms_evm_per_subcarrier_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5171,7 +5190,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_sssrmsevm_per_subcarrier_mean()->Resize(actual_array_size, 0);
+          response->mutable_sss_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5203,10 +5222,10 @@ namespace nirfmxnr_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_sssrmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
-        float32* sssrmsevm_per_symbol_mean = response->mutable_sssrmsevm_per_symbol_mean()->mutable_data();
+        response->mutable_sss_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
+        float32* sss_rms_evm_per_symbol_mean = response->mutable_sss_rms_evm_per_symbol_mean()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchSSSRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, sssrmsevm_per_symbol_mean, array_size, &actual_array_size);
+        status = library_->ModAccFetchSSSRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, sss_rms_evm_per_symbol_mean, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5215,7 +5234,7 @@ namespace nirfmxnr_grpc {
         if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
-          response->mutable_sssrmsevm_per_symbol_mean()->Resize(actual_array_size, 0);
+          response->mutable_sss_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -7470,7 +7489,26 @@ namespace nirfmxnr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      char* attr_val = (char*)request->attr_val().c_str();
+      char* attr_val;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxnr_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
+          auto attr_val_imap_it = nirfmxnrstringattributevaluesmapped_input_map_.find(request->attr_val_mapped());
+          if (attr_val_imap_it == nirfmxnrstringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val_mapped was not specified or out of range.");
+          }
+          attr_val = const_cast<char*>((attr_val_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxnr_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValRaw: {
+          attr_val = const_cast<char*>(request->attr_val_raw().c_str());
+          break;
+        }
+        case nirfmxnr_grpc::SetAttributeStringRequest::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;
