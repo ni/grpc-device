@@ -48,12 +48,12 @@ enums = {
     'AcquisitionStatus': {
         'values': [
             {
-                'name': 'NISCOPE_VAL_ACQ_IN_PROGRESS',
-                'value': 0
-            },
-            {
                 'name': 'NISCOPE_VAL_ACQ_COMPLETE',
                 'value': 1
+            },
+            {
+                'name': 'NISCOPE_VAL_ACQ_IN_PROGRESS',
+                'value': 0
             },
             {
                 'name': 'NISCOPE_VAL_ACQ_STATUS_UNKNOWN',
@@ -343,16 +343,16 @@ enums = {
     'AttributeRetrievalModes': {
         'values': [
             {
-                'name': 'NISCOPE_VAL_ATTRIBUTE_RETRIEVAL_MODE_COERCED',
-                'value': 0
-            },
-            {
                 'name': 'NISCOPE_VAL_ATTRIBUTE_RETRIEVAL_MODE_DESIRED',
                 'value': 1
             },
             {
                 'name': 'NISCOPE_VAL_ATTRIBUTE_RETRIEVAL_MODE_DEFAULT',
                 'value': 2
+            },
+            {
+                'name': 'NISCOPE_VAL_ATTRIBUTE_RETRIEVAL_MODE_COERCED',
+                'value': 0
             }
         ]
     },
@@ -442,12 +442,12 @@ enums = {
     'CalibrationTypes': {
         'values': [
             {
-                'name': 'NISCOPE_VAL_CAL_EXTERNAL',
-                'value': 0
-            },
-            {
                 'name': 'NISCOPE_VAL_CAL_SELF',
                 'value': 1
+            },
+            {
+                'name': 'NISCOPE_VAL_CAL_EXTERNAL',
+                'value': 0
             },
             {
                 'name': 'NISCOPE_VAL_CAL_MANUFACTURE',
@@ -457,10 +457,6 @@ enums = {
     },
     'ClearableMeasurement': {
         'values': [
-            {
-                'name': 'NISCOPE_VAL_RISE_TIME',
-                'value': 0
-            },
             {
                 'name': 'NISCOPE_VAL_ALL_MEASUREMENTS',
                 'value': 10000
@@ -496,6 +492,10 @@ enums = {
             {
                 'name': 'NISCOPE_VAL_AVERAGE_PERIOD',
                 'value': 1015
+            },
+            {
+                'name': 'NISCOPE_VAL_RISE_TIME',
+                'value': 0
             },
             {
                 'name': 'NISCOPE_VAL_FALL_TIME',
@@ -1274,12 +1274,12 @@ enums = {
     'HorzConfigModes': {
         'values': [
             {
-                'name': 'NISCOPE_VAL_USE_IVI_SAMPLE_RATE',
-                'value': 0
-            },
-            {
                 'name': 'NISCOPE_VAL_AMBIGUOUS_USE_CASE',
                 'value': -1
+            },
+            {
+                'name': 'NISCOPE_VAL_USE_IVI_SAMPLE_RATE',
+                'value': 0
             },
             {
                 'name': 'NISCOPE_VAL_USE_DAQMX_SAMPLE_RATE',
@@ -1981,6 +1981,13 @@ enums = {
     'ScalarMeasurement': {
         'values': [
             {
+                'documentation': {
+                    'description': 'None'
+                },
+                'name': 'NISCOPE_VAL_NO_MEASUREMENT',
+                'value': 4000
+            },
+            {
                 'name': 'NISCOPE_VAL_RISE_TIME',
                 'value': 0
             },
@@ -2135,14 +2142,7 @@ enums = {
             {
                 'name': 'NISCOPE_VAL_PHASE_DELAY',
                 'value': 1018
-            },
-            {
-                'documentation': {
-                    'description': 'None'
-                },
-                'name': 'NISCOPE_VAL_NO_MEASUREMENT',
-                'value': 4000
-            },
+            }
         ]
     },
     'SessionState': {
