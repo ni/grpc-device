@@ -1822,6 +1822,64 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptViSessionArray_CallsAcceptViSession
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
+// Test for two-dimension mechanism
+TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithCorrectSize_CallsUseATwoDimensionParameter)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
+  ViInt32 array[] = {1, 2, 2, 3, 3, 3};
+  ViInt32 array_lengths[] = {1, 2, 3};
+  ViInt32 array_size = 3;
+  // two-dimension call
+  EXPECT_CALL(library, UseATwoDimensionParameter(kTestViSession, _, _, array_size))
+      .WillOnce(Return(kDriverSuccess));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::UseATwoDimensionParameterRequest request;
+  request.mutable_vi()->set_id(session_id);
+  for (int arrayval : array) {
+    request.add_array(arrayval);
+  }
+  for (int length : array_lengths) {
+    request.add_array_lengths(length);
+  }
+  nifake_grpc::UseATwoDimensionParameterResponse response;
+  ::grpc::Status status = service.UseATwoDimensionParameter(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+// Test for two-dimension mechanism failure
+TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithIncorrectSize_FailsUseATwoDimensionParameter)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  std::uint32_t session_id = create_session(library, service, kTestViSession);
+  ViInt32 array[] = {1, 2, 2, 3, 3, 3};
+  ViInt32 array_lengths[] = {2, 5, 6};
+
+  ::grpc::ServerContext context;
+  nifake_grpc::UseATwoDimensionParameterRequest request;
+  request.mutable_vi()->set_id(session_id);
+  for (int arrayval : array) {
+    request.add_array(arrayval);
+  }
+  for (int length : array_lengths) {
+    request.add_array_lengths(length);
+  }
+  nifake_grpc::UseATwoDimensionParameterResponse response;
+  ::grpc::Status status = service.UseATwoDimensionParameter(&context, &request, &response);
+
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(::grpc::INVALID_ARGUMENT, status.error_code());
+}
+
 // Test for ivi-dance-with-a-twist mechanism
 TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArray_CallsGetAnIviDanceWithATwistArray)
 {
