@@ -241,11 +241,11 @@ TEST_F(NiRFmxWLANDriverApiTests, SemFromExample_FetchData_DataLooksReasonable)
 TEST_F(NiRFmxWLANDriverApiTests, SEMCustomMaskFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_OFFSETS = 3;
-  std::vector<float64> offsetStartFrequency {9e06, 11e06, 20e06};
-  std::vector<float64> offsetStopFrequency {11e06, 20e06, 40e06};
-  std::vector<int> offsetSideband {RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH};
-  std::vector<float64> relativeLimitStart {0.0, -20.0, -28.0};
-  std::vector<float64> relativeLimitStop {-20.0, -28.0, -40.0};
+  std::vector<float64> offset_start_frequency {9e06, 11e06, 20e06};
+  std::vector<float64> offset_stop_frequency {11e06, 20e06, 40e06};
+  std::vector<int> offset_sideband {RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH};
+  std::vector<float64> relative_limit_start {0.0, -20.0, -28.0};
+  std::vector<float64> relative_limit_stop {-20.0, -28.0, -40.0};
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.412e9));
@@ -259,8 +259,8 @@ TEST_F(NiRFmxWLANDriverApiTests, SEMCustomMaskFromExample_FetchData_DataLooksRea
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::sem_cfg_sweep_time(stub(), session, "", SEM_SWEEP_TIME_AUTO_TRUE, 1.0e-3));
   EXPECT_SUCCESS(session, client::sem_cfg_number_of_offsets(stub(), session, "", NUMBER_OF_OFFSETS));
-  EXPECT_SUCCESS(session, client::sem_cfg_offset_frequency_array(stub(), session, "", offsetStartFrequency, offsetStopFrequency, offsetSideband));
-  EXPECT_SUCCESS(session, client::sem_cfg_offset_relative_limit_array(stub(), session, "", relativeLimitStart, relativeLimitStop));
+  EXPECT_SUCCESS(session, client::sem_cfg_offset_frequency_array(stub(), session, "", offset_start_frequency, offset_stop_frequency, offset_sideband));
+  EXPECT_SUCCESS(session, client::sem_cfg_offset_relative_limit_array(stub(), session, "", relative_limit_start, relative_limit_stop));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   int32 array_size = 0;
