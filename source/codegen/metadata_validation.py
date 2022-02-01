@@ -148,6 +148,7 @@ ENUM_SCHEMA = Schema(
             Optional("documentation"): DOCUMENTATION_SCHEMA,
         }],
         Optional("generate-mappings"): bool,
+        Optional("enum-value-prefix"): str,
     }
 )
 
