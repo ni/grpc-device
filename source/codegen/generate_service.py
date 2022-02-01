@@ -24,6 +24,8 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
 def mutate_metadata(metadata: dict):
     config = metadata["config"]
 
+    metadata_mutation.move_zero_enums_to_front(metadata["enums"])
+
     attribute_expander = metadata_mutation.AttributeAccessorExpander(metadata)
     for function_name in metadata["functions"]:
         function = metadata["functions"][function_name]

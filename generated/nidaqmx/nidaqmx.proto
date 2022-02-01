@@ -3067,8 +3067,6 @@ enum GpsSignalType1 {
 }
 
 enum GroupBy {
-  option allow_alias = true;
-  GROUP_BY_UNSPECIFIED = 0;
   GROUP_BY_GROUP_BY_CHANNEL = 0;
   GROUP_BY_GROUP_BY_SCAN_NUMBER = 1;
 }
@@ -3083,8 +3081,6 @@ enum InputTermCfgWithDefault {
 }
 
 enum InvertPolarity {
-  option allow_alias = true;
-  INVERT_POLARITY_UNSPECIFIED = 0;
   INVERT_POLARITY_DO_NOT_INVERT_POLARITY = 0;
   INVERT_POLARITY_INVERT_POLARITY = 1;
 }
@@ -3117,8 +3113,6 @@ enum Level1 {
 }
 
 enum LineGrouping {
-  option allow_alias = true;
-  LINE_GROUPING_UNSPECIFIED = 0;
   LINE_GROUPING_CHAN_PER_LINE = 0;
   LINE_GROUPING_CHAN_FOR_ALL_LINES = 1;
 }
@@ -3152,8 +3146,6 @@ enum Polarity2 {
 }
 
 enum PowerUpChannelType {
-  option allow_alias = true;
-  POWER_UP_CHANNEL_TYPE_UNSPECIFIED = 0;
   POWER_UP_CHANNEL_TYPE_CHANNEL_VOLTAGE = 0;
   POWER_UP_CHANNEL_TYPE_CHANNEL_CURRENT = 1;
   POWER_UP_CHANNEL_TYPE_CHANNEL_HIGH_IMPEDANCE = 2;
@@ -3284,8 +3276,6 @@ enum TEDSUnits {
 }
 
 enum TaskControlAction {
-  option allow_alias = true;
-  TASK_CONTROL_ACTION_UNSPECIFIED = 0;
   TASK_CONTROL_ACTION_TASK_START = 0;
   TASK_CONTROL_ACTION_TASK_STOP = 1;
   TASK_CONTROL_ACTION_TASK_VERIFY = 2;
@@ -3427,8 +3417,6 @@ enum WatchdogCOExpirState {
 }
 
 enum WatchdogControlAction {
-  option allow_alias = true;
-  WATCHDOG_CONTROL_ACTION_UNSPECIFIED = 0;
   WATCHDOG_CONTROL_ACTION_RESET_TIMER = 0;
   WATCHDOG_CONTROL_ACTION_CLEAR_EXPIRATION = 1;
 }
