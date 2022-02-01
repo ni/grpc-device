@@ -589,6 +589,39 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'UseATwoDimensionParameter': {
+        'parameters': [
+            {
+                'name': 'vi',
+                'direction': 'in',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'array',
+                'size': {
+                    'mechanism': 'two-dimension',
+                    'value': 'arrayLengths'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arrayLengths',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'ViInt32'
+            },
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAnIviDanceWithATwistArray': {
         'parameters': [
             {

@@ -36,6 +36,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]);
   ViStatus GetBitfieldAsEnumArray(ViInt64* flags);
   ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]);
+  ViStatus UseATwoDimensionParameter(ViSession vi, ViInt32 array[], ViInt32 arrayLengths[], ViInt32 arraySize);
   ViStatus GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
   ViStatus GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize);
   ViStatus GetAnIviDanceWithATwistArrayWithInputArray(ViInt32 dataIn[], ViInt32 arraySizeIn, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize);
@@ -117,6 +118,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetAStringOfFixedMaximumSizePtr = decltype(&niFake_GetAStringOfFixedMaximumSize);
   using GetBitfieldAsEnumArrayPtr = decltype(&niFake_GetBitfieldAsEnumArray);
   using GetAnIviDanceStringPtr = decltype(&niFake_GetAnIviDanceString);
+  using UseATwoDimensionParameterPtr = decltype(&niFake_UseATwoDimensionParameter);
   using GetAnIviDanceWithATwistArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistArray);
   using GetAnIviDanceWithATwistArrayOfCustomTypePtr = decltype(&niFake_GetAnIviDanceWithATwistArrayOfCustomType);
   using GetAnIviDanceWithATwistArrayWithInputArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistArrayWithInputArray);
@@ -198,6 +200,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetAStringOfFixedMaximumSizePtr GetAStringOfFixedMaximumSize;
     GetBitfieldAsEnumArrayPtr GetBitfieldAsEnumArray;
     GetAnIviDanceStringPtr GetAnIviDanceString;
+    UseATwoDimensionParameterPtr UseATwoDimensionParameter;
     GetAnIviDanceWithATwistArrayPtr GetAnIviDanceWithATwistArray;
     GetAnIviDanceWithATwistArrayOfCustomTypePtr GetAnIviDanceWithATwistArrayOfCustomType;
     GetAnIviDanceWithATwistArrayWithInputArrayPtr GetAnIviDanceWithATwistArrayWithInputArray;
