@@ -285,3 +285,13 @@ def add_enum(enum_name, enum_values, enums, enum_value_prefix, is_mapped=False):
         'values': values
     }
     enums.update({enum_name: new_enum})
+
+
+def move_zero_enums_to_front(enums: dict) -> None:
+    for enum in enums.values():
+        values = enum["values"]
+        try:
+            i, _ = next((i, v) for i, v in enumerate(values) if v["value"] == 0)
+            values.insert(0, values.pop(i))
+        except StopIteration:
+            pass
