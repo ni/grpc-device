@@ -197,7 +197,10 @@ def is_unsupported_size_mechanism(parameter: dict) -> bool:
 #                     elements filled in to the array as long as that is smaller than the passed-in value. (if it is
 #                     larger, the underlying call will return an error)
 #                     Should only be used for output arrays.
-# - two-dimension: The array is two dimensional
+# - two-dimension: The array being operated on is two dimensional in nature and the size specified in the 'value' member
+#                   is an array that specifies the size of each array in the two dimensional array. The user will still
+#                   need to pass in the array of sizes and some validation is done to ensure the sum of the size array
+#                   matches the size of the two dimensional array.
 # - custom-code: The array's size is determined by the C++ code in the 'value' member.
 
 

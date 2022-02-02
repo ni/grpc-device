@@ -111,7 +111,7 @@ namespace nirfmxwlan_grpc {
       auto total_length = std::accumulate(request->iq_sizes().cbegin(), request->iq_sizes().cend(), 0);
 
       if (total_length != request->iq_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of iq did not match the exected size from iq_sizes");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array iq does not match the exected size from the sum of iq_sizes");
       }
 
       auto iq_sizes = const_cast<int32*>(reinterpret_cast<const int32*>(request->iq_sizes().data()));
@@ -156,7 +156,7 @@ namespace nirfmxwlan_grpc {
       auto total_length = std::accumulate(request->spectrum_sizes().cbegin(), request->spectrum_sizes().cend(), 0);
 
       if (total_length != request->spectrum_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of spectrum did not match the exected size from spectrum_sizes");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array spectrum does not match the exected size from the sum of spectrum_sizes");
       }
 
       auto spectrum_sizes = const_cast<int32*>(reinterpret_cast<const int32*>(request->spectrum_sizes().data()));
@@ -3072,7 +3072,7 @@ namespace nirfmxwlan_grpc {
       auto total_length = std::accumulate(request->reference_waveform_sizes().cbegin(), request->reference_waveform_sizes().cend(), 0);
 
       if (total_length != request->reference_waveform_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of reference_waveform did not match the exected size from reference_waveform_sizes");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array reference_waveform does not match the exected size from the sum of reference_waveform_sizes");
       }
 
       auto reference_waveform_sizes = const_cast<int32*>(reinterpret_cast<const int32*>(request->reference_waveform_sizes().data()));

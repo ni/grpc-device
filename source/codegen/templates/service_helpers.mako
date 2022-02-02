@@ -500,7 +500,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       auto total_length = std::accumulate(request->${size_field_name}().cbegin(), request->${size_field_name}().cend(), 0);
 
       if (total_length != request->${parameter_name}_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of ${parameter_name} did not match the exected size from ${size_field_name}");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array ${parameter_name} does not match the exected size from the sum of ${size_field_name}");
       }
 </%def>
 
