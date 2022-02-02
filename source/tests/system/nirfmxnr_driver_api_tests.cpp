@@ -172,8 +172,8 @@ TEST_F(NiRFmxNRDriverApiTests, AcpContiguousMultiCarrierFromExample_FetchData_Da
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
   if (autoLevel)
   {
@@ -338,8 +338,8 @@ TEST_F(NiRFmxNRDriverApiTests, ChpContiguousMultiCarrierFromExample_FetchData_Da
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_CHP, true));
   EXPECT_SUCCESS(session, client::chp_cfg_sweep_time(stub(), session, "", CHP_SWEEP_TIME_AUTO_TRUE, 1.0e-3));
@@ -426,8 +426,8 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
   strcpy_s(carrierString, sizeof("carrier::all"), "carrier::all");
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
@@ -459,36 +459,36 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    compositeRMSEVMMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-    compositePeakEVMMaximum[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
-    compositePeakEVMSlotIndex[i] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
-    compositePeakEVMSymbolIndex[i] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
-    compositePeakEVMSubcarrierIndex[i] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
-    componentCarrierFrequencyErrorMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
-    componentCarrierIQOriginOffsetMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
-    componentCarrierIQGainImbalanceMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
-    componentCarrierQuadratureErrorMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
+    compositeRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+    compositePeakEVMMaximum[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
+    compositePeakEVMSlotIndex[i] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
+    compositePeakEVMSymbolIndex[i] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
+    compositePeakEVMSubcarrierIndex[i] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
+    componentCarrierFrequencyErrorMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
+    componentCarrierIQOriginOffsetMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
+    componentCarrierIQGainImbalanceMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
+    componentCarrierQuadratureErrorMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
     switch (downlinkTestModel)
     {
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_1:
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_2:
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_3:
-        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
+        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
         break;
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM2:
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_1:
-        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN);
+        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN);
         break;
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM2_A:
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_1_A:
-        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_256QAM_RMS_EVM_MEAN);
+        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_256QAM_RMS_EVM_MEAN);
         break;
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_2:
-        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_16QAM_RMS_EVM_MEAN);
+        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_16QAM_RMS_EVM_MEAN);
         break;
     }
-    mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrierString, 10.000000);
-    mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrierString, 10.000000);
+    mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
+    mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
   }
 
   EXPECT_EQ(0.0, compositeRMSEVMMean[0]);
@@ -527,11 +527,8 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
 
 TEST_F(NiRFmxNRDriverApiTests, DLModAccNonContiguousMultiCarrierFromExample_FetchData_DataLooksReasonable)
 {
-  const auto MAX_SELECTOR_STRING = 256;
   const auto NUMBER_OF_SUBBLOCKS = 2;
   const auto NUMBER_OF_COMPONENT_CARRIERS = 2;
-  char subblockString[MAX_SELECTOR_STRING];
-  char carrierString[MAX_SELECTOR_STRING];
   std::vector<float64> centerFrequency { 3.5e9, 200.0e3 };
   std::vector<int> subblockFrequencyDefinition { RFMXNR_VAL_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE, RFMXNR_VAL_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE };
   std::vector<int> componentCarrierSpacingType { RFMXNR_VAL_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL, RFMXNR_VAL_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL };
@@ -551,25 +548,25 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccNonContiguousMultiCarrierFromExample_Fetc
   {
     auto subblock_string_response = client::build_subblock_string(stub(), "", i);
     EXPECT_SUCCESS(session, subblock_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_CENTER_FREQUENCY, centerFrequency[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_SUBBLOCK_FREQUENCY_DEFINITION, subblockFrequencyDefinition[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_CHANNEL_RASTER, channelRaster[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_SPACING_TYPE, componentCarrierSpacingType[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_AT_CENTER_FREQUENCY, componentCarrierAtCenterFrequency[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_NUMBER_OF_COMPONENT_CARRIERS, NUMBER_OF_COMPONENT_CARRIERS));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CENTER_FREQUENCY, centerFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_SUBBLOCK_FREQUENCY_DEFINITION, subblockFrequencyDefinition[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CHANNEL_RASTER, channelRaster[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_SPACING_TYPE, componentCarrierSpacingType[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_AT_CENTER_FREQUENCY, componentCarrierAtCenterFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_NUMBER_OF_COMPONENT_CARRIERS, NUMBER_OF_COMPONENT_CARRIERS));
     for (int j = 0; j < NUMBER_OF_COMPONENT_CARRIERS; j++)
     {
-      auto carrier_string_response = client::build_carrier_string(stub(), subblockString, j);
+      auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), j);
       EXPECT_SUCCESS(session, carrier_string_response);
-      EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i][j]));
-      EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i][j]));
+      EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i][j]));
+      EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i][j]));
     }
-    auto carrier_string_response = client::build_carrier_string(stub(), subblockString, -1);
+    auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), -1);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_DOWNLINK_TEST_MODEL, NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_1));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME, NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME_FDD));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_DOWNLINK_TEST_MODEL, NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_1));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME, NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME_FDD));
   }
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MOD_ACC_SYNCHRONIZATION_MODE_SLOT));
@@ -597,38 +594,38 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccNonContiguousMultiCarrierFromExample_Fetc
     EXPECT_SUCCESS(session, subblock_string_response);
     for (int j = 0; j < NUMBER_OF_COMPONENT_CARRIERS; j++)
     {
-      auto carrier_string_response = client::build_carrier_string(stub(), subblockString, j);
+      auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), j);
       EXPECT_SUCCESS(session, carrier_string_response);
-      compositeRMSEVMMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-      compositePeakEVMMaximum[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
-      compositePeakEVMSlotIndex[i][j] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
-      compositePeakEVMSymbolIndex[i][j] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
-      compositePeakEVMSubcarrierIndex[i][j] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
-      componentCarrierFrequencyErrorMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
-      componentCarrierIQOriginOffsetMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
-      componentCarrierIQGainImbalanceMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
-      componentCarrierQuadratureErrorMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
+      compositeRMSEVMMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+      compositePeakEVMMaximum[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
+      compositePeakEVMSlotIndex[i][j] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
+      compositePeakEVMSymbolIndex[i][j] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
+      compositePeakEVMSubcarrierIndex[i][j] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
+      componentCarrierFrequencyErrorMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
+      componentCarrierIQOriginOffsetMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
+      componentCarrierIQGainImbalanceMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
+      componentCarrierQuadratureErrorMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
       switch (downlinkTestModel)
       {
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_1:
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_2:
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_3:
-        PDSCHRMSEVMMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
+        PDSCHRMSEVMMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
         break;
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM2:
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_1:
-        PDSCHRMSEVMMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN);
+        PDSCHRMSEVMMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN);
         break;
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM2_A:
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_1_A:
-        PDSCHRMSEVMMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_256QAM_RMS_EVM_MEAN);
+        PDSCHRMSEVMMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_256QAM_RMS_EVM_MEAN);
         break;
       case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_2:
-        PDSCHRMSEVMMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_16QAM_RMS_EVM_MEAN);
+        PDSCHRMSEVMMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_16QAM_RMS_EVM_MEAN);
         break;
       }
-      mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrierString, 10.000000);
-      mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrierString, 10.000000);
+      mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
+      mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
     }
   }
 
@@ -798,9 +795,7 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccSingleCarrierFromExample_FetchData_DataLo
 
 TEST_F(NiRFmxNRDriverApiTests, DLModAccUserDefinedChannelsFromExample_FetchData_DataLooksReasonable)
 {
-  const auto MAX_SELECTOR_STRING = 256;
   const auto NUMBER_OF_RESOURCE_BLOCK_CLUSTERS = 1;
-  char PDSCHClusterString[MAX_SELECTOR_STRING];
   std::vector<int> PDSCHResourceBlockOffset { 0 };
   std::vector<int> PDSCHNumberOfResourceBlocks { -1 };
   auto session = init_session(stub(), PXI_5663E);
@@ -834,8 +829,8 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccUserDefinedChannelsFromExample_FetchData_
   {
     auto pdsch_cluster_string_response = client::build_pdsch_cluster_string(stub(), pdsch_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, pdsch_cluster_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PDSCHClusterString, NIRFMXNR_ATTRIBUTE_PDSCH_RESOURCE_BLOCK_OFFSET, PDSCHResourceBlockOffset[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PDSCHClusterString, NIRFMXNR_ATTRIBUTE_PDSCH_NUMBER_OF_RESOURCE_BLOCKS, PDSCHNumberOfResourceBlocks[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pdsch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PDSCH_RESOURCE_BLOCK_OFFSET, PDSCHResourceBlockOffset[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pdsch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PDSCH_NUMBER_OF_RESOURCE_BLOCKS, PDSCHNumberOfResourceBlocks[i]));
   }
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_PDSCH_DMRS_POWER_MODE, NIRFMXNR_INT32_PDSCH_DMRS_POWER_MODE_CDM_GROUPS));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_PDSCH_DMRS_POWER, 0.0));
@@ -962,10 +957,10 @@ TEST_F(NiRFmxNRDriverApiTests, DLPVTContiguousMultiCarrierFromExample_FetchData_
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_RATED_TRP, ratedTRP[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_RATED_EIRP, ratedEIRP[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_RATED_TRP, ratedTRP[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_RATED_EIRP, ratedEIRP[i]));
   }
   strcpy_s(carrierString, sizeof("carrier::all"), "carrier::all");
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
@@ -990,18 +985,18 @@ TEST_F(NiRFmxNRDriverApiTests, DLPVTContiguousMultiCarrierFromExample_FetchData_
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    measurementStatus[i] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_PVT_RESULTS_MEASUREMENT_STATUS);
-    PVTResultsPkWindowedOFFPwr[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER);
-    PVTResultsPkWindowedOFFPwrMargin[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER_MARGIN);
-    PVTResultsPkWindowedOFFPwrTime[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER_TIME);
-    absoluteONPower[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_PVT_RESULTS_ABSOLUTE_ON_POWER);
+    measurementStatus[i] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PVT_RESULTS_MEASUREMENT_STATUS);
+    PVTResultsPkWindowedOFFPwr[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER);
+    PVTResultsPkWindowedOFFPwrMargin[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER_MARGIN);
+    PVTResultsPkWindowedOFFPwrTime[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER_TIME);
+    absoluteONPower[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PVT_RESULTS_ABSOLUTE_ON_POWER);
   }
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++)
   {
     auto carrier_string_response = client::build_carrier_string(stub(), "", i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    pvt_fetch_signal_power_trace_response = client::pvt_fetch_signal_power_trace(stub(), session, carrierString, 10.0);
-    pvt_fetch_windowed_signal_power_trace_response = client::pvt_fetch_windowed_signal_power_trace(stub(), session, carrierString, 10.0);
+    pvt_fetch_signal_power_trace_response = client::pvt_fetch_signal_power_trace(stub(), session, carrier_string_response.selector_string_out(), 10.0);
+    pvt_fetch_windowed_signal_power_trace_response = client::pvt_fetch_windowed_signal_power_trace(stub(), session, carrier_string_response.selector_string_out(), 10.0);
   }
 
   EXPECT_EQ(0, measurementStatus[0]);
@@ -1276,8 +1271,8 @@ TEST_F(NiRFmxNRDriverApiTests, ObwContiguousMultiCarrierFromExample_FetchData_Da
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OBW, true));
   EXPECT_SUCCESS(session, client::obw_cfg_sweep_time(stub(), session, "", OBW_SWEEP_TIME_AUTO_TRUE, 1.0e-3));
@@ -1380,8 +1375,8 @@ TEST_F(NiRFmxNRDriverApiTests, SemContiguousMultiCarrierFromExample_FetchData_Da
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SEM, true));
   EXPECT_SUCCESS(session, client::sem_cfg_number_of_offsets(stub(), session, "", NUMBER_OF_OFFSETS));
@@ -1588,8 +1583,8 @@ TEST_F(NiRFmxNRDriverApiTests, TxpContiguousMultiCarrierFromExample_FetchData_Da
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
   strcpy_s(carrierString, sizeof("carrier::all"), "carrier::all");
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
@@ -1656,7 +1651,6 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
   const auto NUMBER_OF_COMPONENT_CARRIERS = 2;
   const auto NUMBER_OF_RESOURCE_BLOCK_CLUSTERS = 1;
   char carrierString[MAX_SELECTOR_STRING];
-  char PUSCHClusterString[MAX_SELECTOR_STRING];
   std::vector<float64> componentCarrierBandwidth { 100e6, 100e6 };
   std::vector<float64> componentCarrierFrequency { -49.98e6, 50.01e6 };
   std::vector<int> cellID { 0, 1 };
@@ -1681,9 +1675,9 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_CELL_ID, cellID[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CELL_ID, cellID[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
   strcpy_s(carrierString, sizeof("carrier::all"), "carrier::all");
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_TRANSFORM_PRECODING_ENABLED, NIRFMXNR_INT32_PUSCH_TRANSFORM_PRECODING_ENABLED_FALSE));
@@ -1696,8 +1690,8 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
   {
     auto pusch_cluster_string_response = client::build_pusch_cluster_string(stub(), carrierString, i);
     EXPECT_SUCCESS(session, pusch_cluster_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PUSCHClusterString, NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, PUSCHResourceBlockOffset[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PUSCHClusterString, NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, PUSCHNumberOfResourceBlocks[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, PUSCHResourceBlockOffset[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, PUSCHNumberOfResourceBlocks[i]));
   }
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER_MODE, NIRFMXNR_INT32_PUSCH_DMRS_POWER_MODE_CDM_GROUPS));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER, 0.0));
@@ -1734,30 +1728,30 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    compositeRMSEVMMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-    compositePeakEVMMaximum[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
-    compositePeakEVMSlotIndex[i] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
-    compositePeakEVMSymbolIndex[i] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
-    compositePeakEVMSubcarrierIndex[i] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
-    componentCarrierFrequencyErrorMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
-    componentCarrierIQOriginOffsetMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
-    componentCarrierIQGainImbalanceMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
-    componentCarrierQuadratureErrorMean[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
-    inBandEmissionMargin[i] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
+    compositeRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+    compositePeakEVMMaximum[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
+    compositePeakEVMSlotIndex[i] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
+    compositePeakEVMSymbolIndex[i] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
+    compositePeakEVMSubcarrierIndex[i] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
+    componentCarrierFrequencyErrorMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
+    componentCarrierIQOriginOffsetMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
+    componentCarrierIQGainImbalanceMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
+    componentCarrierQuadratureErrorMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
+    inBandEmissionMargin[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
   }
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++)
   {
     auto carrier_string_response = client::build_carrier_string(stub(), "", i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    mod_acc_fetch_pusch_data_constellation_trace_response = client::mod_acc_fetch_pusch_data_constellation_trace(stub(), session, carrierString, 10.0);
-    mod_acc_fetch_puschdmrs_constellation_trace_response = client::mod_acc_fetch_puschdmrs_constellation_trace(stub(), session, carrierString, 10.0);
+    mod_acc_fetch_pusch_data_constellation_trace_response = client::mod_acc_fetch_pusch_data_constellation_trace(stub(), session, carrier_string_response.selector_string_out(), 10.0);
+    mod_acc_fetch_puschdmrs_constellation_trace_response = client::mod_acc_fetch_puschdmrs_constellation_trace(stub(), session, carrier_string_response.selector_string_out(), 10.0);
   }
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++)
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrierString, 10.0);
-    mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrierString, 10.0);
+    mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.0);
+    mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.0);
   }
   mod_acc_fetch_spectral_flatness_trace_response = client::mod_acc_fetch_spectral_flatness_trace(stub(), session, "", 10.0);
 
@@ -1815,11 +1809,8 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
 
 TEST_F(NiRFmxNRDriverApiTests, ULModAccNonContiguousMultiCarrierFromExample_FetchData_DataLooksReasonable)
 {
-  const auto MAX_SELECTOR_STRING = 256;
   const auto NUMBER_OF_SUBBLOCKS = 2;
   const auto NUMBER_OF_COMPONENT_CARRIERS = 2;
-  char subblockString[MAX_SELECTOR_STRING];
-  char carrierString[MAX_SELECTOR_STRING];
   std::vector<float64> centerFrequency { 3.5e9, 200.0e3 };
   std::vector<int> subblockFrequencyDefinition { RFMXNR_VAL_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE, RFMXNR_VAL_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE };
   std::vector<int> band { 78, 78 };
@@ -1843,35 +1834,35 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccNonContiguousMultiCarrierFromExample_Fetc
   {
     auto subblock_string_response = client::build_subblock_string(stub(), "", i);
     EXPECT_SUCCESS(session, subblock_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_CENTER_FREQUENCY, centerFrequency[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_SUBBLOCK_FREQUENCY_DEFINITION, subblockFrequencyDefinition[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_BAND, band[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_SPACING_TYPE, componentCarrierSpacingType[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_AT_CENTER_FREQUENCY, componentCarrierAtCenterFrequency[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_CHANNEL_RASTER, channelRaster[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblockString, NIRFMXNR_ATTRIBUTE_NUMBER_OF_COMPONENT_CARRIERS, NUMBER_OF_COMPONENT_CARRIERS));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CENTER_FREQUENCY, centerFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_SUBBLOCK_FREQUENCY_DEFINITION, subblockFrequencyDefinition[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_BAND, band[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_SPACING_TYPE, componentCarrierSpacingType[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_AT_CENTER_FREQUENCY, componentCarrierAtCenterFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CHANNEL_RASTER, channelRaster[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_NUMBER_OF_COMPONENT_CARRIERS, NUMBER_OF_COMPONENT_CARRIERS));
     for (int j = 0; j < NUMBER_OF_COMPONENT_CARRIERS; j++)
     {
-      auto carrier_string_response = client::build_carrier_string(stub(), subblockString, j);
+      auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), j);
       EXPECT_SUCCESS(session, carrier_string_response);
-      EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i][j]));
-      EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i][j]));
-      EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_CELL_ID, cellID[i][j]));
+      EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i][j]));
+      EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i][j]));
+      EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CELL_ID, cellID[i][j]));
     }
-    auto carrier_string_response = client::build_carrier_string(stub(), subblockString, -1);
+    auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), -1);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_TRANSFORM_PRECODING_ENABLED, NIRFMXNR_INT32_PUSCH_TRANSFORM_PRECODING_ENABLED_FALSE));
-    EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_SLOT_ALLOCATION, std::string("0-Last")));
-    EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_SYMBOL_ALLOCATION, std::string("0-Last")));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER_MODE, NIRFMXNR_INT32_PUSCH_DMRS_POWER_MODE_CDM_GROUPS));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER, 0.0));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_CONFIGURATION_TYPE, NIRFMXNR_INT32_PUSCH_DMRS_CONFIGURATION_TYPE_TYPE1));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_MAPPING_TYPE, NIRFMXNR_INT32_PUSCH_MAPPING_TYPE_A));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_TYPE_A_POSITION, 2));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_DURATION, NIRFMXNR_INT32_PUSCH_DMRS_DURATION_SINGLE_SYMBOL));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_ADDITIONAL_POSITIONS, 0));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_TRANSFORM_PRECODING_ENABLED, NIRFMXNR_INT32_PUSCH_TRANSFORM_PRECODING_ENABLED_FALSE));
+    EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_SLOT_ALLOCATION, std::string("0-Last")));
+    EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_SYMBOL_ALLOCATION, std::string("0-Last")));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER_MODE, NIRFMXNR_INT32_PUSCH_DMRS_POWER_MODE_CDM_GROUPS));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER, 0.0));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_CONFIGURATION_TYPE, NIRFMXNR_INT32_PUSCH_DMRS_CONFIGURATION_TYPE_TYPE1));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_MAPPING_TYPE, NIRFMXNR_INT32_PUSCH_MAPPING_TYPE_A));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_TYPE_A_POSITION, 2));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_DURATION, NIRFMXNR_INT32_PUSCH_DMRS_DURATION_SINGLE_SYMBOL));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_ADDITIONAL_POSITIONS, 0));
   }
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MOD_ACC_SYNCHRONIZATION_MODE_SLOT));
@@ -1898,20 +1889,20 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccNonContiguousMultiCarrierFromExample_Fetc
     EXPECT_SUCCESS(session, subblock_string_response);
     for (int j = 0; j < NUMBER_OF_COMPONENT_CARRIERS; j++)
     {
-      auto carrier_string_response = client::build_carrier_string(stub(), subblockString, j);
+      auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), j);
       EXPECT_SUCCESS(session, carrier_string_response);
-      compositeRMSEVMMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-      compositePeakEVMMaximum[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
-      compositePeakEVMSlotIndex[i][j] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
-      compositePeakEVMSymbolIndex[i][j] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
-      compositePeakEVMSubcarrierIndex[i][j] = GET_ATTR_I32(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
-      componentCarrierFrequencyErrorMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
-      componentCarrierIQOriginOffsetMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
-      componentCarrierIQGainImbalanceMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
-      componentCarrierQuadratureErrorMean[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
-      inBandEmissionMargin[i][j] = GET_ATTR_F64(session, carrierString, NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
-      mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrierString, 10.000000);
-      mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrierString, 10.000000);
+      compositeRMSEVMMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+      compositePeakEVMMaximum[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
+      compositePeakEVMSlotIndex[i][j] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
+      compositePeakEVMSymbolIndex[i][j] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
+      compositePeakEVMSubcarrierIndex[i][j] = GET_ATTR_I32(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
+      componentCarrierFrequencyErrorMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
+      componentCarrierIQOriginOffsetMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
+      componentCarrierIQGainImbalanceMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
+      componentCarrierQuadratureErrorMean[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
+      inBandEmissionMargin[i][j] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
+      mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
+      mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
     }
   }
 
@@ -1971,9 +1962,7 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccNonContiguousMultiCarrierFromExample_Fetc
 
 TEST_F(NiRFmxNRDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataLooksReasonable)
 {
-  const auto MAX_SELECTOR_STRING = 256;
   const auto NUMBER_OF_RESOURCE_BLOCK_CLUSTERS = 1;
-  char PUSCHClusterString[MAX_SELECTOR_STRING];
   std::vector<int> PUSCHResourceBlockOffset { 0 };
   std::vector<int> PUSCHNumberOfResourceBlocks { -1 };
   auto session = init_session(stub(), PXI_5663E);
@@ -2006,8 +1995,8 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataLo
   {
     auto pusch_cluster_string_response = client::build_pusch_cluster_string(stub(), pusch_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, pusch_cluster_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PUSCHClusterString, NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, PUSCHResourceBlockOffset[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PUSCHClusterString, NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, PUSCHNumberOfResourceBlocks[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, PUSCHResourceBlockOffset[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, PUSCHNumberOfResourceBlocks[i]));
   }
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER_MODE, NIRFMXNR_INT32_PUSCH_DMRS_POWER_MODE_CDM_GROUPS));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER, 0.0));
@@ -2109,7 +2098,6 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTContiguousMultiCarrierFromExample_FetchData_
   const auto NUMBER_OF_COMPONENT_CARRIERS = 2;
   const auto NUMBER_OF_RESOURCE_BLOCK_CLUSTERS = 1;
   char carrierString[MAX_SELECTOR_STRING];
-  char PUSCHClusterString[MAX_SELECTOR_STRING];
   std::vector<float64> componentCarrierBandwidth { 100e6, 100e6 };
   std::vector<float64> componentCarrierFrequency { -49.98e6, 50.01e6 };
   std::vector<int> cellID { 0, 1 };
@@ -2131,9 +2119,9 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTContiguousMultiCarrierFromExample_FetchData_
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_CELL_ID, cellID[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, componentCarrierBandwidth[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CELL_ID, cellID[i]));
   }
   strcpy_s(carrierString, sizeof("carrier::all"), "carrier::all");
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_TRANSFORM_PRECODING_ENABLED, NIRFMXNR_INT32_PUSCH_TRANSFORM_PRECODING_ENABLED_FALSE));
@@ -2146,8 +2134,8 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTContiguousMultiCarrierFromExample_FetchData_
   {
     auto pusch_cluster_string_response = client::build_pusch_cluster_string(stub(), carrierString, i);
     EXPECT_SUCCESS(session, pusch_cluster_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PUSCHClusterString, NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, PUSCHResourceBlockOffset[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PUSCHClusterString, NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, PUSCHNumberOfResourceBlocks[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, PUSCHResourceBlockOffset[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, PUSCHNumberOfResourceBlocks[i]));
   }
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER_MODE, NIRFMXNR_INT32_PUSCH_DMRS_POWER_MODE_CDM_GROUPS));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER, 0.0));
@@ -2169,7 +2157,7 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTContiguousMultiCarrierFromExample_FetchData_
   {
     auto carrier_string_response = client::build_carrier_string(stub(), "", i);
     EXPECT_SUCCESS(session, carrier_string_response);
-    pvt_fetch_signal_power_trace_response = client::pvt_fetch_signal_power_trace(stub(), session, carrierString, 10.0);
+    pvt_fetch_signal_power_trace_response = client::pvt_fetch_signal_power_trace(stub(), session, carrier_string_response.selector_string_out(), 10.0);
   }
 
   EXPECT_SUCCESS(session, pvt_fetch_measurement_array_response);
@@ -2201,9 +2189,7 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTContiguousMultiCarrierFromExample_FetchData_
 
 TEST_F(NiRFmxNRDriverApiTests, ULPVTSingleCarrierFromExample_FetchData_DataLooksReasonable)
 {
-  const auto MAX_SELECTOR_STRING = 256;
   const auto NUMBER_OF_RESOURCE_BLOCK_CLUSTERS = 1;
-  char PUSCHClusterString[MAX_SELECTOR_STRING];
   std::vector<int> PUSCHResourceBlockOffset { 0 };
   std::vector<int> PUSCHNumberOfResourceBlocks { -1 };
   auto session = init_session(stub(), PXI_5663E);
@@ -2234,8 +2220,8 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTSingleCarrierFromExample_FetchData_DataLooks
   {
     auto pusch_cluster_string_response = client::build_pusch_cluster_string(stub(), pusch_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, pusch_cluster_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PUSCHClusterString, NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, PUSCHResourceBlockOffset[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, PUSCHClusterString, NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, PUSCHNumberOfResourceBlocks[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, PUSCHResourceBlockOffset[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, PUSCHNumberOfResourceBlocks[i]));
   }
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER_MODE, NIRFMXNR_INT32_PUSCH_DMRS_POWER_MODE_CDM_GROUPS));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER, 0.0));
