@@ -190,19 +190,15 @@ TEST_F(NiRFmxNRDriverApiTests, AcpContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::acp_cfg_averaging(stub(), session, "", ACP_AVERAGING_ENABLED_FALSE, 10, ACP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32 arraySize = 0;
-  ACPFetchOffsetMeasurementArrayResponse acp_fetch_offset_measurement_array_response;
-  ACPFetchTotalAggregatedPowerResponse acp_fetch_total_aggregated_power_response;
   ACPFetchRelativePowersTraceResponse acp_fetch_relative_powers_trace_response;
-  ACPFetchSpectrumResponse acp_fetch_spectrum_response;
-  acp_fetch_offset_measurement_array_response = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0);
-  arraySize = acp_fetch_offset_measurement_array_response.lower_relative_power_size();
-  acp_fetch_total_aggregated_power_response = client::acp_fetch_total_aggregated_power(stub(), session, "", 10.0);
+  const auto acp_fetch_offset_measurement_array_response = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0);
+  int32 arraySize = acp_fetch_offset_measurement_array_response.lower_relative_power_size();
+  const auto acp_fetch_total_aggregated_power_response = client::acp_fetch_total_aggregated_power(stub(), session, "", 10.0);
   for (int i = 0; i < arraySize; i++)
   {
     acp_fetch_relative_powers_trace_response = client::acp_fetch_relative_powers_trace(stub(), session, "", 10.0, i);
   }
-  acp_fetch_spectrum_response = client::acp_fetch_spectrum(stub(), session, "", 10.0);
+  const auto acp_fetch_spectrum_response = client::acp_fetch_spectrum(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, acp_fetch_offset_measurement_array_response);
   EXPECT_EQ(999, acp_fetch_offset_measurement_array_response.lower_relative_power_size());
@@ -268,19 +264,15 @@ TEST_F(NiRFmxNRDriverApiTests, ACPSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::acp_cfg_averaging(stub(), session, "", ACP_AVERAGING_ENABLED_FALSE, 10, ACP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32 arraySize = 0;
-  ACPFetchOffsetMeasurementArrayResponse acp_fetch_offset_measurement_array_response;
-  ACPFetchComponentCarrierMeasurementResponse acp_fetch_component_carrier_measurement_response;
   ACPFetchRelativePowersTraceResponse acp_fetch_relative_powers_trace_response;
-  ACPFetchSpectrumResponse acp_fetch_spectrum_response;
-  acp_fetch_offset_measurement_array_response = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0);
-  arraySize = acp_fetch_offset_measurement_array_response.lower_relative_power_size();
-  acp_fetch_component_carrier_measurement_response = client::acp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
+  const auto acp_fetch_offset_measurement_array_response = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0);
+  int32 arraySize = acp_fetch_offset_measurement_array_response.lower_relative_power_size();
+  const auto acp_fetch_component_carrier_measurement_response = client::acp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
   for (int i = 0; i < arraySize; i++)
   {
     acp_fetch_relative_powers_trace_response = client::acp_fetch_relative_powers_trace(stub(), session, "", 10.0, i);
   }
-  acp_fetch_spectrum_response = client::acp_fetch_spectrum(stub(), session, "", 10.0);
+  const auto acp_fetch_spectrum_response = client::acp_fetch_spectrum(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, acp_fetch_offset_measurement_array_response);
   EXPECT_EQ(999, acp_fetch_offset_measurement_array_response.lower_relative_power_size());
@@ -346,12 +338,9 @@ TEST_F(NiRFmxNRDriverApiTests, ChpContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::chp_cfg_averaging(stub(), session, "", CHP_AVERAGING_ENABLED_FALSE, 10, CHP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  CHPFetchComponentCarrierMeasurementArrayResponse chp_fetch_component_carrier_measurement_array_response;
-  CHPFetchTotalAggregatedPowerResponse chp_fetch_total_aggregated_power_response;
-  CHPFetchSpectrumResponse chp_fetch_spectrum_response;
-  chp_fetch_component_carrier_measurement_array_response = client::chp_fetch_component_carrier_measurement_array(stub(), session, "", 10.0);
-  chp_fetch_total_aggregated_power_response = client::chp_fetch_total_aggregated_power(stub(), session, "", 10.0);
-  chp_fetch_spectrum_response = client::chp_fetch_spectrum(stub(), session, "", 10.0);
+  const auto chp_fetch_component_carrier_measurement_array_response = client::chp_fetch_component_carrier_measurement_array(stub(), session, "", 10.0);
+  const auto chp_fetch_total_aggregated_power_response = client::chp_fetch_total_aggregated_power(stub(), session, "", 10.0);
+  const auto chp_fetch_spectrum_response = client::chp_fetch_spectrum(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, chp_fetch_component_carrier_measurement_array_response);
   EXPECT_EQ(999, chp_fetch_component_carrier_measurement_array_response.absolute_power_size());
@@ -386,10 +375,8 @@ TEST_F(NiRFmxNRDriverApiTests, ChpSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::chp_cfg_averaging(stub(), session, "", CHP_AVERAGING_ENABLED_FALSE, 10, CHP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  CHPFetchComponentCarrierMeasurementResponse chp_fetch_component_carrier_measurement_response;
-  CHPFetchSpectrumResponse chp_fetch_spectrum_response;
-  chp_fetch_component_carrier_measurement_response = client::chp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
-  chp_fetch_spectrum_response = client::chp_fetch_spectrum(stub(), session, "", 10.0);
+  const auto chp_fetch_component_carrier_measurement_response = client::chp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
+  const auto chp_fetch_spectrum_response = client::chp_fetch_spectrum(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, chp_fetch_component_carrier_measurement_response);
   EXPECT_EQ(0.0, chp_fetch_component_carrier_measurement_response.absolute_power());
@@ -706,31 +693,20 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccSingleCarrierFromExample_FetchData_DataLo
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   int32 downlinkTestModel = RFMXNR_VAL_DOWNLINK_TEST_MODEL_TM1_1;
-  float64 compositeRMSEVMMean = 0.0;
-  float64 compositePeakEVMMaximum = 0.0;
-  int32 compositePeakEVMSlotIndex = 0;
-  int32 compositePeakEVMSymbolIndex = 0;
-  int32 compositePeakEVMSubcarrierIndex = 0;
   float64 PDSCHRMSEVMMean = 0.0;
-  float64 componentCarrierFrequencyErrorMean = 0.0;
-  float64 componentCarrierIQOriginOffsetMean = 0.0;
-  float64 componentCarrierIQGainImbalanceMean = 0.0;
-  float64 componentCarrierQuadratureErrorMean = 0.0;
   ModAccFetchPDSCHQPSKConstellationTraceResponse mod_acc_fetch_pdschqpsk_constellation_trace_response;
   ModAccFetchPDSCH64QAMConstellationTraceResponse mod_acc_fetch_pdsch64q_am_constellation_trace_response;
   ModAccFetchPDSCH256QAMConstellationTraceResponse mod_acc_fetch_pdsch256q_am_constellation_trace_response;
   ModAccFetchPDSCH16QAMConstellationTraceResponse mod_acc_fetch_pdsch16q_am_constellation_trace_response;
-  ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response;
-  ModAccFetchRMSEVMPerSymbolMeanTraceResponse mod_acc_fetch_rmsevm_per_symbol_mean_trace_response;
-  compositeRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-  compositePeakEVMMaximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
-  compositePeakEVMSlotIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
-  compositePeakEVMSymbolIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
-  compositePeakEVMSubcarrierIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
-  componentCarrierFrequencyErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
-  componentCarrierIQOriginOffsetMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
-  componentCarrierIQGainImbalanceMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
-  componentCarrierQuadratureErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
+  float64 compositeRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+  float64 compositePeakEVMMaximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
+  int32 compositePeakEVMSlotIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
+  int32 compositePeakEVMSymbolIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
+  int32 compositePeakEVMSubcarrierIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
+  float64 componentCarrierFrequencyErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
+  float64 componentCarrierIQOriginOffsetMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
+  float64 componentCarrierIQGainImbalanceMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
+  float64 componentCarrierQuadratureErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
   switch (downlinkTestModel)
   {
     case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_1:
@@ -754,8 +730,8 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccSingleCarrierFromExample_FetchData_DataLo
       mod_acc_fetch_pdsch16q_am_constellation_trace_response = client::mod_acc_fetch_pdsch16q_am_constellation_trace(stub(), session, "", 10.000000);
       break;
   }
-  mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.000000);
-  mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, "", 10.000000);
+  const auto mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.000000);
+  const auto mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, "", 10.000000);
 
   EXPECT_EQ(0.0, compositeRMSEVMMean);
   EXPECT_EQ(0.0, compositePeakEVMMaximum);
@@ -852,44 +828,25 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccUserDefinedChannelsFromExample_FetchData_
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  float64 compositeRMSEVMMean = 0.0;
-  float64 compositePeakEVMMaximum = 0.0;
-  int32 compositePeakEVMSlotIndex = 0;
-  int32 compositePeakEVMSymbolIndex = 0;
-  int32 compositePeakEVMSubcarrierIndex = 0;
-  float64 PDSCHQPSKRMSEVMMean = 0.0;
-  float64 PDSCH16QAMRMSEVMMean = 0.0;
-  float64 PDSCH64QAMRMSEVMMean = 0.0;
-  float64 PDSCH256QAMRMSEVMMean = 0.0;
-  float64 componentCarrierFrequencyErrorMean = 0.0;
-  float64 componentCarrierIQOriginOffsetMean = 0.0;
-  float64 componentCarrierIQGainImbalanceMean = 0.0;
-  float64 componentCarrierQuadratureErrorMean = 0.0;
-  ModAccFetchPDSCHQPSKConstellationTraceResponse mod_acc_fetch_pdschqpsk_constellation_trace_response;
-  ModAccFetchPDSCH16QAMConstellationTraceResponse mod_acc_fetch_pdsch16q_am_constellation_trace_response;
-  ModAccFetchPDSCH64QAMConstellationTraceResponse mod_acc_fetch_pdsch64q_am_constellation_trace_response;
-  ModAccFetchPDSCH256QAMConstellationTraceResponse mod_acc_fetch_pdsch256q_am_constellation_trace_response;
-  ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response;
-  ModAccFetchRMSEVMPerSymbolMeanTraceResponse mod_acc_fetch_rmsevm_per_symbol_mean_trace_response;
-  compositeRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-  compositePeakEVMMaximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
-  compositePeakEVMSlotIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
-  compositePeakEVMSymbolIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
-  compositePeakEVMSubcarrierIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
-  componentCarrierFrequencyErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
-  componentCarrierIQOriginOffsetMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
-  componentCarrierIQGainImbalanceMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
-  componentCarrierQuadratureErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
-  PDSCHQPSKRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
-  PDSCH16QAMRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_16QAM_RMS_EVM_MEAN);
-  PDSCH64QAMRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN);
-  PDSCH256QAMRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_256QAM_RMS_EVM_MEAN);
-  mod_acc_fetch_pdschqpsk_constellation_trace_response = client::mod_acc_fetch_pdschqpsk_constellation_trace(stub(), session, "", 10.000000);
-  mod_acc_fetch_pdsch16q_am_constellation_trace_response = client::mod_acc_fetch_pdsch16q_am_constellation_trace(stub(), session, "", 10.000000);
-  mod_acc_fetch_pdsch64q_am_constellation_trace_response = client::mod_acc_fetch_pdsch64q_am_constellation_trace(stub(), session, "", 10.000000);
-  mod_acc_fetch_pdsch256q_am_constellation_trace_response = client::mod_acc_fetch_pdsch256q_am_constellation_trace(stub(), session, "", 10.000000);
-  mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.000000);
-  mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, "", 10.000000);
+  float64 compositeRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+  float64 compositePeakEVMMaximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
+  int32 compositePeakEVMSlotIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
+  int32 compositePeakEVMSymbolIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
+  int32 compositePeakEVMSubcarrierIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
+  float64 componentCarrierFrequencyErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
+  float64 componentCarrierIQOriginOffsetMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
+  float64 componentCarrierIQGainImbalanceMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
+  float64 componentCarrierQuadratureErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
+  float64 PDSCHQPSKRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
+  float64 PDSCH16QAMRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_16QAM_RMS_EVM_MEAN);
+  float64 PDSCH64QAMRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN);
+  float64 PDSCH256QAMRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_256QAM_RMS_EVM_MEAN);
+  const auto mod_acc_fetch_pdschqpsk_constellation_trace_response = client::mod_acc_fetch_pdschqpsk_constellation_trace(stub(), session, "", 10.000000);
+  const auto mod_acc_fetch_pdsch16q_am_constellation_trace_response = client::mod_acc_fetch_pdsch16q_am_constellation_trace(stub(), session, "", 10.000000);
+  const auto mod_acc_fetch_pdsch64q_am_constellation_trace_response = client::mod_acc_fetch_pdsch64q_am_constellation_trace(stub(), session, "", 10.000000);
+  const auto mod_acc_fetch_pdsch256q_am_constellation_trace_response = client::mod_acc_fetch_pdsch256q_am_constellation_trace(stub(), session, "", 10.000000);
+  const auto mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.000000);
+  const auto mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, "", 10.000000);
 
   EXPECT_EQ(0.0, compositeRMSEVMMean);
   EXPECT_EQ(0.0, compositePeakEVMMaximum);
@@ -1050,20 +1007,13 @@ TEST_F(NiRFmxNRDriverApiTests, DLPVTSingleCarrierFromExample_FetchData_DataLooks
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_PVT_MEASUREMENT_INTERVAL, 0.01));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32 measurementStatus = RFMXNR_VAL_PVT_MEASUREMENT_STATUS_FAIL;
-  float64 PVTResultsPkWindowedOFFPwr = 0.0;
-  float64 PVTResultsPkWindowedOFFPwrMargin = 0.0;
-  float64 PVTResultsPkWindowedOFFPwrTime = 0.0;
-  float64 absoluteONPower = 0.0;
-  PVTFetchSignalPowerTraceResponse pvt_fetch_signal_power_trace_response;
-  PVTFetchWindowedSignalPowerTraceResponse pvt_fetch_windowed_signal_power_trace_response;
-  measurementStatus = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_MEASUREMENT_STATUS);
-  PVTResultsPkWindowedOFFPwr = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER);
-  PVTResultsPkWindowedOFFPwrMargin = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER_MARGIN);
-  PVTResultsPkWindowedOFFPwrTime = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER_TIME);
-  absoluteONPower = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_ABSOLUTE_ON_POWER);
-  pvt_fetch_signal_power_trace_response = client::pvt_fetch_signal_power_trace(stub(), session, "", 10.0);
-  pvt_fetch_windowed_signal_power_trace_response = client::pvt_fetch_windowed_signal_power_trace(stub(), session, "", 10.0);
+  int32 measurementStatus = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_MEASUREMENT_STATUS);
+  float64 PVTResultsPkWindowedOFFPwr = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER);
+  float64 PVTResultsPkWindowedOFFPwrMargin = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER_MARGIN);
+  float64 PVTResultsPkWindowedOFFPwrTime = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_PEAK_WINDOWED_OFF_POWER_TIME);
+  float64 absoluteONPower = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_PVT_RESULTS_ABSOLUTE_ON_POWER);
+  const auto pvt_fetch_signal_power_trace_response = client::pvt_fetch_signal_power_trace(stub(), session, "", 10.0);
+  const auto pvt_fetch_windowed_signal_power_trace_response = client::pvt_fetch_windowed_signal_power_trace(stub(), session, "", 10.0);
 
   EXPECT_EQ(0, measurementStatus);
   EXPECT_EQ(0.0, PVTResultsPkWindowedOFFPwr);
@@ -1146,32 +1096,19 @@ TEST_F(NiRFmxNRDriverApiTests, ModAccAcpChpObwSemTxpCompositeSingleCarrierFromEx
   }
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  float64 compositeRMSEVMMean = 0.0;
-  float64 compositePeakEVMMaximum = 0.0;
-  float64 componentCarrierFrequencyErrorMean = 0.0;
-  float64 componentCarrierIQOriginOffsetMean = 0.0;
-  ACPFetchOffsetMeasurementArrayResponse acp_fetch_offset_measurement_array_response;
-  ACPFetchComponentCarrierMeasurementResponse acp_fetch_component_carrier_measurement_response;
-  CHPFetchComponentCarrierMeasurementResponse chp_fetch_component_carrier_measurement_response;
-  OBWFetchMeasurementResponse obw_fetch_measurement_response;
-  SEMFetchLowerOffsetMarginArrayResponse sem_fetch_lower_offset_margin_array_response;
-  SEMFetchUpperOffsetMarginArrayResponse sem_fetch_upper_offset_margin_array_response;
-  SEMFetchComponentCarrierMeasurementResponse sem_fetch_component_carrier_measurement_response;
-  SEMFetchMeasurementStatusResponse sem_fetch_measurement_status_response;
-  TXPFetchMeasurementResponse txp_fetch_measurement_response;
-  compositeRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-  compositePeakEVMMaximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
-  componentCarrierFrequencyErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
-  componentCarrierIQOriginOffsetMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
-  acp_fetch_offset_measurement_array_response = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0);
-  acp_fetch_component_carrier_measurement_response = client::acp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
-  chp_fetch_component_carrier_measurement_response = client::chp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
-  obw_fetch_measurement_response = client::obw_fetch_measurement(stub(), session, "", 10.0);
-  sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
-  sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
-  sem_fetch_component_carrier_measurement_response = client::sem_fetch_component_carrier_measurement(stub(), session, "", 10.0);
-  sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
-  txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
+  float64 compositeRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+  float64 compositePeakEVMMaximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
+  float64 componentCarrierFrequencyErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
+  float64 componentCarrierIQOriginOffsetMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
+  const auto acp_fetch_offset_measurement_array_response = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0);
+  const auto acp_fetch_component_carrier_measurement_response = client::acp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
+  const auto chp_fetch_component_carrier_measurement_response = client::chp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
+  const auto obw_fetch_measurement_response = client::obw_fetch_measurement(stub(), session, "", 10.0);
+  const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
+  const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
+  const auto sem_fetch_component_carrier_measurement_response = client::sem_fetch_component_carrier_measurement(stub(), session, "", 10.0);
+  const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
+  const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
 
   EXPECT_EQ(0.0, compositeRMSEVMMean);
   EXPECT_EQ(0.0, compositePeakEVMMaximum);
@@ -1281,10 +1218,8 @@ TEST_F(NiRFmxNRDriverApiTests, ObwContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::obw_cfg_averaging(stub(), session, "", OBW_AVERAGING_ENABLED_FALSE, 10, OBW_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  OBWFetchMeasurementResponse obw_fetch_measurement_response;
-  OBWFetchSpectrumResponse obw_fetch_spectrum_response;
-  obw_fetch_measurement_response = client::obw_fetch_measurement(stub(), session, "", 10.0);
-  obw_fetch_spectrum_response = client::obw_fetch_spectrum(stub(), session, "", 10.0);
+  const auto obw_fetch_measurement_response = client::obw_fetch_measurement(stub(), session, "", 10.0);
+  const auto obw_fetch_spectrum_response = client::obw_fetch_spectrum(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, obw_fetch_measurement_response);
   EXPECT_EQ(0.0, obw_fetch_measurement_response.occupied_bandwidth());
@@ -1317,10 +1252,8 @@ TEST_F(NiRFmxNRDriverApiTests, ObwSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::obw_cfg_averaging(stub(), session, "", OBW_AVERAGING_ENABLED_FALSE, 10, OBW_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  OBWFetchSpectrumResponse obw_fetch_spectrum_response;
-  OBWFetchMeasurementResponse obw_fetch_measurement_response;
-  obw_fetch_spectrum_response = client::obw_fetch_spectrum(stub(), session, "", 10.0);
-  obw_fetch_measurement_response = client::obw_fetch_measurement(stub(), session, "", 10.0);
+  const auto obw_fetch_spectrum_response = client::obw_fetch_spectrum(stub(), session, "", 10.0);
+  const auto obw_fetch_measurement_response = client::obw_fetch_measurement(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, obw_fetch_spectrum_response);
   EXPECT_EQ(0.0, obw_fetch_spectrum_response.x0());
@@ -1402,18 +1335,12 @@ TEST_F(NiRFmxNRDriverApiTests, SemContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32 arraySize = 0;
-  SEMFetchUpperOffsetMarginArrayResponse sem_fetch_upper_offset_margin_array_response;
-  SEMFetchLowerOffsetMarginArrayResponse sem_fetch_lower_offset_margin_array_response;
-  SEMFetchTotalAggregatedPowerResponse sem_fetch_total_aggregated_power_response;
-  SEMFetchMeasurementStatusResponse sem_fetch_measurement_status_response;
-  SEMFetchSpectrumResponse sem_fetch_spectrum_response;
-  sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
-  arraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
-  sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
-  sem_fetch_total_aggregated_power_response = client::sem_fetch_total_aggregated_power(stub(), session, "", 10.0);
-  sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
-  sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.0);
+  const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
+  int32 arraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
+  const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
+  const auto sem_fetch_total_aggregated_power_response = client::sem_fetch_total_aggregated_power(stub(), session, "", 10.0);
+  const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
+  const auto sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, sem_fetch_upper_offset_margin_array_response);
   EXPECT_EQ(999, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
@@ -1496,18 +1423,12 @@ TEST_F(NiRFmxNRDriverApiTests, SemSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32 arraySize = 0;
-  SEMFetchUpperOffsetMarginArrayResponse sem_fetch_upper_offset_margin_array_response;
-  SEMFetchLowerOffsetMarginArrayResponse sem_fetch_lower_offset_margin_array_response;
-  SEMFetchComponentCarrierMeasurementResponse sem_fetch_component_carrier_measurement_response;
-  SEMFetchMeasurementStatusResponse sem_fetch_measurement_status_response;
-  SEMFetchSpectrumResponse sem_fetch_spectrum_response;
-  sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
-  arraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
-  sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
-  sem_fetch_component_carrier_measurement_response = client::sem_fetch_component_carrier_measurement(stub(), session, "", 10.0);
-  sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
-  sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.0);
+  const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
+  int32 arraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
+  const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
+  const auto sem_fetch_component_carrier_measurement_response = client::sem_fetch_component_carrier_measurement(stub(), session, "", 10.0);
+  const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
+  const auto sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, sem_fetch_upper_offset_margin_array_response);
   EXPECT_EQ(999, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
@@ -1595,10 +1516,8 @@ TEST_F(NiRFmxNRDriverApiTests, TxpContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_TXP_AVERAGING_COUNT, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  TXPFetchMeasurementResponse txp_fetch_measurement_response;
-  TXPFetchPowerTraceResponse txp_fetch_power_trace_response;
-  txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
-  txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, "", 10.0);
+  const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
+  const auto txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, txp_fetch_measurement_response);
   EXPECT_EQ(0.0, txp_fetch_measurement_response.average_power_mean());
@@ -1629,10 +1548,8 @@ TEST_F(NiRFmxNRDriverApiTests, TxpSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_TXP_AVERAGING_COUNT, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  TXPFetchMeasurementResponse txp_fetch_measurement_response;
-  TXPFetchPowerTraceResponse txp_fetch_power_trace_response;
-  txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
-  txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, "", 10.0);
+  const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
+  const auto txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, txp_fetch_measurement_response);
   EXPECT_EQ(0.0, txp_fetch_measurement_response.average_power_mean());
@@ -1723,7 +1640,6 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
   ModAccFetchPUSCHDMRSConstellationTraceResponse mod_acc_fetch_puschdmrs_constellation_trace_response;
   ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response;
   ModAccFetchRMSEVMPerSymbolMeanTraceResponse mod_acc_fetch_rmsevm_per_symbol_mean_trace_response;
-  ModAccFetchSpectralFlatnessTraceResponse mod_acc_fetch_spectral_flatness_trace_response;
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++)
   {
     auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
@@ -1753,7 +1669,7 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
     mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.0);
     mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.0);
   }
-  mod_acc_fetch_spectral_flatness_trace_response = client::mod_acc_fetch_spectral_flatness_trace(stub(), session, "", 10.0);
+  const auto mod_acc_fetch_spectral_flatness_trace_response = client::mod_acc_fetch_spectral_flatness_trace(stub(), session, "", 10.0);
 
   EXPECT_EQ(0.0, compositeRMSEVMMean[0]);
   EXPECT_EQ(0.0, compositeRMSEVMMean[1]);
@@ -2014,36 +1930,21 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataLo
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  float64 compositeRMSEVMMean = 0.0;
-  float64 compositePeakEVMMaximum = 0.0;
-  int32 compositePeakEVMSlotIndex = 0;
-  int32 compositePeakEVMSymbolIndex = 0;
-  int32 compositePeakEVMSubcarrierIndex = 0;
-  float64 componentCarrierFrequencyErrorMean = 0.0;
-  float64 componentCarrierIQOriginOffsetMean = 0.0;
-  float64 componentCarrierIQGainImbalanceMean = 0.0;
-  float64 componentCarrierQuadratureErrorMean = 0.0;
-  float64 inBandEmissionMargin = 0.0;
-  ModAccFetchPUSCHDataConstellationTraceResponse mod_acc_fetch_pusch_data_constellation_trace_response;
-  ModAccFetchPUSCHDMRSConstellationTraceResponse mod_acc_fetch_puschdmrs_constellation_trace_response;
-  ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response;
-  ModAccFetchRMSEVMPerSymbolMeanTraceResponse mod_acc_fetch_rmsevm_per_symbol_mean_trace_response;
-  ModAccFetchSpectralFlatnessTraceResponse mod_acc_fetch_spectral_flatness_trace_response;
-  compositeRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-  compositePeakEVMMaximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
-  compositePeakEVMSlotIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
-  compositePeakEVMSymbolIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
-  compositePeakEVMSubcarrierIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
-  componentCarrierFrequencyErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
-  componentCarrierIQOriginOffsetMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
-  componentCarrierIQGainImbalanceMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
-  componentCarrierQuadratureErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
-  inBandEmissionMargin = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
-  mod_acc_fetch_pusch_data_constellation_trace_response = client::mod_acc_fetch_pusch_data_constellation_trace(stub(), session, "", 10.0);
-  mod_acc_fetch_puschdmrs_constellation_trace_response = client::mod_acc_fetch_puschdmrs_constellation_trace(stub(), session, "", 10.0);
-  mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.0);
-  mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, "", 10.0);
-  mod_acc_fetch_spectral_flatness_trace_response = client::mod_acc_fetch_spectral_flatness_trace(stub(), session, "", 10.0);
+  float64 compositeRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+  float64 compositePeakEVMMaximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
+  int32 compositePeakEVMSlotIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SLOT_INDEX);
+  int32 compositePeakEVMSymbolIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SYMBOL_INDEX);
+  int32 compositePeakEVMSubcarrierIndex = GET_ATTR_I32(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_SUBCARRIER_INDEX);
+  float64 componentCarrierFrequencyErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN);
+  float64 componentCarrierIQOriginOffsetMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
+  float64 componentCarrierIQGainImbalanceMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
+  float64 componentCarrierQuadratureErrorMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
+  float64 inBandEmissionMargin = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
+  const auto mod_acc_fetch_pusch_data_constellation_trace_response = client::mod_acc_fetch_pusch_data_constellation_trace(stub(), session, "", 10.0);
+  const auto mod_acc_fetch_puschdmrs_constellation_trace_response = client::mod_acc_fetch_puschdmrs_constellation_trace(stub(), session, "", 10.0);
+  const auto mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.0);
+  const auto mod_acc_fetch_rmsevm_per_symbol_mean_trace_response = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, "", 10.0);
+  const auto mod_acc_fetch_spectral_flatness_trace_response = client::mod_acc_fetch_spectral_flatness_trace(stub(), session, "", 10.0);
 
   EXPECT_EQ(0.0, compositeRMSEVMMean);
   EXPECT_EQ(0.0, compositePeakEVMMaximum);
@@ -2150,9 +2051,8 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTContiguousMultiCarrierFromExample_FetchData_
   EXPECT_SUCCESS(session, client::pvt_cfg_averaging(stub(), session, "", PVT_AVERAGING_ENABLED_FALSE, 10, PVT_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  PVTFetchMeasurementArrayResponse pvt_fetch_measurement_array_response;
   PVTFetchSignalPowerTraceResponse pvt_fetch_signal_power_trace_response;
-  pvt_fetch_measurement_array_response = client::pvt_fetch_measurement_array(stub(), session, "", 10.0);
+  const auto pvt_fetch_measurement_array_response = client::pvt_fetch_measurement_array(stub(), session, "", 10.0);
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++)
   {
     auto carrier_string_response = client::build_carrier_string(stub(), "", i);
@@ -2236,10 +2136,8 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTSingleCarrierFromExample_FetchData_DataLooks
   EXPECT_SUCCESS(session, client::pvt_cfg_averaging(stub(), session, "", PVT_AVERAGING_ENABLED_FALSE, 10, PVT_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  PVTFetchMeasurementResponse pvt_fetch_measurement_response;
-  PVTFetchSignalPowerTraceResponse pvt_fetch_signal_power_trace_response;
-  pvt_fetch_measurement_response = client::pvt_fetch_measurement(stub(), session, "", 10.0);
-  pvt_fetch_signal_power_trace_response = client::pvt_fetch_signal_power_trace(stub(), session, "", 10.0);
+  const auto pvt_fetch_measurement_response = client::pvt_fetch_measurement(stub(), session, "", 10.0);
+  const auto pvt_fetch_signal_power_trace_response = client::pvt_fetch_signal_power_trace(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, pvt_fetch_measurement_response);
   EXPECT_EQ(0, pvt_fetch_measurement_response.measurement_status());
