@@ -8,10 +8,10 @@
 
 #include <sstream>
 #include <fstream>
-#include <numeric>
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <numeric>
 #include <server/converters.h>
 
 namespace nifake_grpc {

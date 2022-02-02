@@ -478,6 +478,9 @@ def has_ivi_dance_param(parameters):
 def is_two_dimension_array_param(parameter):
     return get_size_mechanism(parameter) == 'two-dimension'
 
+def has_two_dimension_array_param(parameters):
+    return any(is_two_dimension_array_param(p) for p in parameters)
+
 def has_repeated_varargs_parameter(parameters):
     return any(is_repeated_varargs_parameter(p) for p in parameters)
 
