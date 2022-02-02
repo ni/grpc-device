@@ -18,11 +18,18 @@ namespace system {
 namespace {
 
 const auto PXI_5663E = "5663E";
+const int kPreambleSyncPacketStartDetectionFailedWarning = 686280;
 
 template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
 {
   EXPECT_EQ(0, response.status());
+}
+
+template <typename TResponse>
+void EXPECT_WARNING(const TResponse& response, const int expected_warning_id)
+{
+  EXPECT_EQ(expected_warning_id, response.status());
 }
 
 class NiRFmxBTDriverApiTests : public Test {
@@ -171,6 +178,36 @@ TEST_F(NiRFmxBTDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
   EXPECT_GT(fetched_spectrum.dx(), 0.0);
   EXPECT_THAT(fetched_spectrum.spectrum(), Each(Ne(0.0)));
   EXPECT_GT(fetched_spectrum.actual_array_size(), 0);
+}
+
+TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
+{
+  auto session = init_session(stub(), PXI_5663E);
+  EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
+  EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.402000e9));
+  EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.0));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQPowerEdgeTriggerSlope::IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TriggerMinimumQuietTimeMode::TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 100e-6, IQPowerEdgeTriggerLevelType::IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, Boolean::BOOLEAN_TRUE));
+  EXPECT_SUCCESS(session, client::cfg_packet_type(stub(), session, "", PacketType::PACKET_TYPE_DH1));
+  EXPECT_SUCCESS(session, client::cfg_data_rate(stub(), session, "", 1000000));
+  EXPECT_SUCCESS(session, client::cfg_payload_length(stub(), session, "", PayloadLengthMode::PAYLOAD_LENGTH_MODE_AUTO, 10));
+  EXPECT_SUCCESS(session, client::cfg_le_direction_finding(stub(), session, "", DirectionFindingMode::DIRECTION_FINDING_MODE_DISABLED, 160e-6, 1e-6));
+  EXPECT_SUCCESS(session, client::auto_level(stub(), session, "", 10e-3));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TXP, Boolean::BOOLEAN_TRUE));
+  EXPECT_SUCCESS(session, client::txp_cfg_burst_synchronization_type(stub(), session, "", TxpBurstSynchronizationType::TXP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE));
+  EXPECT_SUCCESS(session, client::txp_cfg_averaging(stub(), session, "", TxpAveragingEnabled::TXP_AVERAGING_ENABLED_FALSE, 10));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+
+  auto fetched_powers_response = client::txp_fetch_powers(stub(), session, "", 10.0);
+  EXPECT_WARNING(fetched_powers_response, kPreambleSyncPacketStartDetectionFailedWarning);
+  auto fetched_edr_powers_response = client::txp_fetch_edr_powers(stub(), session, "", 10.0);
+  EXPECT_WARNING(fetched_edr_powers_response, kPreambleSyncPacketStartDetectionFailedWarning);
+  auto fetched_lecte_reference_period_powers_response = client::txp_fetch_lecte_reference_period_powers(stub(), session, "", 10.0);
+  EXPECT_WARNING(fetched_lecte_reference_period_powers_response, kPreambleSyncPacketStartDetectionFailedWarning);
+
+  EXPECT_GT(fetched_powers_response.average_power_mean(), 0.0);
+  EXPECT_GT(fetched_powers_response.average_power_maximum(), 0.0);
+  EXPECT_GT(fetched_powers_response.average_power_minimum(), 0.0);
+  EXPECT_GT(fetched_powers_response.peak_to_average_power_ratio_maximum(), 0.0);
 }
 
 }  // namespace
