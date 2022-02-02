@@ -80,6 +80,29 @@ analyze_n_waveforms_iq(const StubPtr& stub, const nidevice_grpc::Session& instru
   return response;
 }
 
+AnalyzeNWaveformsSpectrumResponse
+analyze_n_waveforms_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& spectrum, const std::vector<pb::int32>& spectrum_lengths, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeNWaveformsSpectrumRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  copy_array(x0, request.mutable_x0());
+  copy_array(dx, request.mutable_dx());
+  copy_array(spectrum, request.mutable_spectrum());
+  copy_array(spectrum_lengths, request.mutable_spectrum_lengths());
+  request.set_reset(reset);
+
+  auto response = AnalyzeNWaveformsSpectrumResponse{};
+
+  raise_if_error(
+      stub->AnalyzeNWaveformsSpectrum(&context, request, &response));
+
+  return response;
+}
+
 AnalyzeSpectrum1WaveformResponse
 analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset, const pb::int64& reserved)
 {
@@ -1796,6 +1819,27 @@ ofdm_mod_acc_cfg_measurement_mode(const StubPtr& stub, const nidevice_grpc::Sess
 
   raise_if_error(
       stub->OFDMModAccCfgMeasurementMode(&context, request, &response));
+
+  return response;
+}
+
+OFDMModAccCfgNReferenceWaveformsResponse
+ofdm_mod_acc_cfg_n_reference_waveforms(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& reference_waveform, const std::vector<pb::int32>& reference_waveform_lengths)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccCfgNReferenceWaveformsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(x0, request.mutable_x0());
+  copy_array(dx, request.mutable_dx());
+  copy_array(reference_waveform, request.mutable_reference_waveform());
+  copy_array(reference_waveform_lengths, request.mutable_reference_waveform_lengths());
+
+  auto response = OFDMModAccCfgNReferenceWaveformsResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccCfgNReferenceWaveforms(&context, request, &response));
 
   return response;
 }

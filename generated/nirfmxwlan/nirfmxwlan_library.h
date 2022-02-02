@@ -21,6 +21,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]);
   int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved);
   int32 AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset);
+  int32 AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset);
   int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved);
   int32 AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout);
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval);
@@ -108,6 +109,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   int32 OFDMModAccCfgFrequencyErrorEstimationMethod(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 frequencyErrorEstimationMethod);
   int32 OFDMModAccCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementOffset, int32 maximumMeasurementLength);
   int32 OFDMModAccCfgMeasurementMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMode);
+  int32 OFDMModAccCfgNReferenceWaveforms(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0[], float64 dx[], NIComplexSingle referenceWaveform[], int32 referenceWaveformSize[], int32 arraySize);
   int32 OFDMModAccCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled);
   int32 OFDMModAccCfgOptimizeDynamicRangeForEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 optimizeDynamicRangeForEVMEnabled, double optimizeDynamicRangeForEVMMargin);
   int32 OFDMModAccCfgPhaseTrackingEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 phaseTrackingEnabled);
@@ -251,6 +253,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   using AbortMeasurementsPtr = decltype(&RFmxWLAN_AbortMeasurements);
   using AnalyzeIQ1WaveformPtr = decltype(&RFmxWLAN_AnalyzeIQ1Waveform);
   using AnalyzeNWaveformsIQPtr = decltype(&RFmxWLAN_AnalyzeNWaveformsIQ);
+  using AnalyzeNWaveformsSpectrumPtr = decltype(&RFmxWLAN_AnalyzeNWaveformsSpectrum);
   using AnalyzeSpectrum1WaveformPtr = decltype(&RFmxWLAN_AnalyzeSpectrum1Waveform);
   using AutoDetectSignalPtr = decltype(&RFmxWLAN_AutoDetectSignal);
   using AutoLevelPtr = decltype(&RFmxWLAN_AutoLevel);
@@ -338,6 +341,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   using OFDMModAccCfgFrequencyErrorEstimationMethodPtr = decltype(&RFmxWLAN_OFDMModAccCfgFrequencyErrorEstimationMethod);
   using OFDMModAccCfgMeasurementLengthPtr = decltype(&RFmxWLAN_OFDMModAccCfgMeasurementLength);
   using OFDMModAccCfgMeasurementModePtr = decltype(&RFmxWLAN_OFDMModAccCfgMeasurementMode);
+  using OFDMModAccCfgNReferenceWaveformsPtr = decltype(&RFmxWLAN_OFDMModAccCfgNReferenceWaveforms);
   using OFDMModAccCfgNoiseCompensationEnabledPtr = decltype(&RFmxWLAN_OFDMModAccCfgNoiseCompensationEnabled);
   using OFDMModAccCfgOptimizeDynamicRangeForEVMPtr = decltype(&RFmxWLAN_OFDMModAccCfgOptimizeDynamicRangeForEVM);
   using OFDMModAccCfgPhaseTrackingEnabledPtr = decltype(&RFmxWLAN_OFDMModAccCfgPhaseTrackingEnabled);
@@ -481,6 +485,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
     AbortMeasurementsPtr AbortMeasurements;
     AnalyzeIQ1WaveformPtr AnalyzeIQ1Waveform;
     AnalyzeNWaveformsIQPtr AnalyzeNWaveformsIQ;
+    AnalyzeNWaveformsSpectrumPtr AnalyzeNWaveformsSpectrum;
     AnalyzeSpectrum1WaveformPtr AnalyzeSpectrum1Waveform;
     AutoDetectSignalPtr AutoDetectSignal;
     AutoLevelPtr AutoLevel;
@@ -568,6 +573,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
     OFDMModAccCfgFrequencyErrorEstimationMethodPtr OFDMModAccCfgFrequencyErrorEstimationMethod;
     OFDMModAccCfgMeasurementLengthPtr OFDMModAccCfgMeasurementLength;
     OFDMModAccCfgMeasurementModePtr OFDMModAccCfgMeasurementMode;
+    OFDMModAccCfgNReferenceWaveformsPtr OFDMModAccCfgNReferenceWaveforms;
     OFDMModAccCfgNoiseCompensationEnabledPtr OFDMModAccCfgNoiseCompensationEnabled;
     OFDMModAccCfgOptimizeDynamicRangeForEVMPtr OFDMModAccCfgOptimizeDynamicRangeForEVM;
     OFDMModAccCfgPhaseTrackingEnabledPtr OFDMModAccCfgPhaseTrackingEnabled;

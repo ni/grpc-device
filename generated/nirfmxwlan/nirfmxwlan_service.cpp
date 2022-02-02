@@ -140,6 +140,51 @@ namespace nirfmxwlan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::AnalyzeNWaveformsSpectrum(::grpc::ServerContext* context, const AnalyzeNWaveformsSpectrumRequest* request, AnalyzeNWaveformsSpectrumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* result_name = (char*)request->result_name().c_str();
+      auto x0 = const_cast<float64*>(request->x0().data());
+      auto dx = const_cast<float64*>(request->dx().data());
+      auto spectrum = const_cast<float32*>(request->spectrum().data());
+      auto total_length = std::accumulate(request->spectrum_lengths().cbegin(), request->spectrum_lengths().cend(), 0);
+
+      if (total_length != request->spectrum_size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of spectrum did not match the exected size from spectrum_lengths");
+      }
+
+      auto spectrum_lengths = const_cast<int32*>(reinterpret_cast<const int32*>(request->spectrum_lengths().data()));
+      auto array_size_determine_from_sizes = std::array<int, 3>
+      {
+        request->x0_size(),
+        request->dx_size(),
+        request->spectrum_lengths_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [x0, dx, spectrumSize] do not match");
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      int32 reset = request->reset();
+      auto status = library_->AnalyzeNWaveformsSpectrum(instrument, selector_string, result_name, x0, dx, spectrum, spectrum_lengths, array_size, reset);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANService::AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3002,6 +3047,49 @@ namespace nirfmxwlan_grpc {
       }
 
       auto status = library_->OFDMModAccCfgMeasurementMode(instrument, selector_string, measurement_mode);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccCfgNReferenceWaveforms(::grpc::ServerContext* context, const OFDMModAccCfgNReferenceWaveformsRequest* request, OFDMModAccCfgNReferenceWaveformsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto x0 = const_cast<float64*>(request->x0().data());
+      auto dx = const_cast<float64*>(request->dx().data());
+      auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
+      auto total_length = std::accumulate(request->reference_waveform_lengths().cbegin(), request->reference_waveform_lengths().cend(), 0);
+
+      if (total_length != request->reference_waveform_size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of reference_waveform did not match the exected size from reference_waveform_lengths");
+      }
+
+      auto reference_waveform_lengths = const_cast<int32*>(reinterpret_cast<const int32*>(request->reference_waveform_lengths().data()));
+      auto array_size_determine_from_sizes = std::array<int, 3>
+      {
+        request->x0_size(),
+        request->dx_size(),
+        request->reference_waveform_lengths_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [x0, dx, referenceWaveformSize] do not match");
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->OFDMModAccCfgNReferenceWaveforms(instrument, selector_string, x0, dx, reference_waveform.data(), reference_waveform_lengths, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
