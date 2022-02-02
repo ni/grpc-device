@@ -285,3 +285,18 @@ def add_enum(enum_name, enum_values, enums, enum_value_prefix, is_mapped=False):
         'values': values
     }
     enums.update({enum_name: new_enum})
+
+
+def move_zero_enums_to_front(enums: dict) -> None:
+    """
+    protobuf requires that the first enum value be zero. For enums missing a zero value,
+    we will add an UNSPECIFIED enum value to the front (this is the best practice). But if 
+    there already is a zero enum, make sure that pre-existing zero value is at the front.
+    """
+    for enum in enums.values():
+        values = enum["values"]
+        try:
+            i, _ = next((i, v) for i, v in enumerate(values) if v["value"] == 0)
+            values.insert(0, values.pop(i))
+        except StopIteration:
+            pass

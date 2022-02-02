@@ -25,8 +25,6 @@ enum NiRFmxLTEAttribute {
 }
 
 enum Boolean {
-  option allow_alias = true;
-  BOOLEAN_UNSPECIFIED = 0;
   BOOLEAN_FALSE = 0;
   BOOLEAN_TRUE = 1;
 }

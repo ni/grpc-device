@@ -269,8 +269,8 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithOneArgument_SucceedsAn
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
-  nifake_grpc::Turtle turtleUnspecified = nifake_grpc::Turtle::TURTLE_UNSPECIFIED;
-  EXPECT_CALL(library, InitWithVarArgs(Pointee(*resource_name), _, StrEq("SomeStringArg"), nifake_grpc::Turtle::TURTLE_DONATELLO, nullptr, turtleUnspecified, nullptr, turtleUnspecified, nullptr, turtleUnspecified))
+  nifake_grpc::Turtle defaultTurtle = nifake_grpc::Turtle::TURTLE_LEONARDO;
+  EXPECT_CALL(library, InitWithVarArgs(Pointee(*resource_name), _, StrEq("SomeStringArg"), nifake_grpc::Turtle::TURTLE_DONATELLO, nullptr, defaultTurtle, nullptr, defaultTurtle, nullptr, defaultTurtle))
       .WillOnce(DoAll(SetArgPointee<1>(kTestViSession), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -298,8 +298,8 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithThreeArguments_Succeed
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
-  nifake_grpc::Turtle turtleUnspecified = nifake_grpc::Turtle::TURTLE_UNSPECIFIED;
-  EXPECT_CALL(library, InitWithVarArgs(Pointee(*resource_name), _, StrEq("SomeStringArg"), nifake_grpc::Turtle::TURTLE_DONATELLO, StrEq("SomeStringArg2"), nifake_grpc::Turtle::TURTLE_MICHELANGELO, StrEq("SomeStringArg3"), nifake_grpc::Turtle::TURTLE_RAPHAEL, nullptr, turtleUnspecified))
+  nifake_grpc::Turtle defaultTurtle = nifake_grpc::Turtle::TURTLE_LEONARDO;
+  EXPECT_CALL(library, InitWithVarArgs(Pointee(*resource_name), _, StrEq("SomeStringArg"), nifake_grpc::Turtle::TURTLE_DONATELLO, StrEq("SomeStringArg2"), nifake_grpc::Turtle::TURTLE_MICHELANGELO, StrEq("SomeStringArg3"), nifake_grpc::Turtle::TURTLE_RAPHAEL, nullptr, defaultTurtle))
       .WillOnce(DoAll(SetArgPointee<1>(kTestViSession), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
@@ -333,7 +333,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithNoArguments_FailsAndDo
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
-  nifake_grpc::Turtle turtleUnspecified = nifake_grpc::Turtle::TURTLE_UNSPECIFIED;
+  nifake_grpc::Turtle defaultTurtle = nifake_grpc::Turtle::TURTLE_LEONARDO;
   EXPECT_CALL(library, InitWithVarArgs)
       .Times(0);
 
@@ -357,7 +357,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithFourArguments_FailsAnd
   nifake_grpc::NiFakeService service(&library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
-  nifake_grpc::Turtle turtleUnspecified = nifake_grpc::Turtle::TURTLE_UNSPECIFIED;
+  nifake_grpc::Turtle defaultTurtle = nifake_grpc::Turtle::TURTLE_LEONARDO;
   EXPECT_CALL(library, InitWithVarArgs)
       .Times(0);
 

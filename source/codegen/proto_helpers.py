@@ -1,11 +1,31 @@
 from typing import List
 import common_helpers
 
-def should_allow_alias(enum):
-  if enum.get("generate-mappings", False):
-    return False
-  enum_values = [e["value"] for e in enum["values"]]
-  return (0 in enum_values) or (len(enum_values) != len(set(enum_values)))
+
+def _is_attribute_values(enum_name):
+  return enum_name.endswith("AttributeValues") 
+
+
+def _should_add_unspecified_enum_value(enum_name, enum_values_metadata):
+  """
+  Returns True if an UNSPECIFIED zero-value enum should be added to enum_values_metadata.
+
+  UNSPECIFIED zero-values are a best practice in protobuf. BUT they're not helpful if there
+  is some other zero-value. In that case they introduce an unnecessary alias and don't serve
+  their purpose of ensuring a neutral default value.
+
+  AttributeValues are aggregate enums that maybe have multiple zero value enums that may not
+  be at the front of the list (also a requirement for protobuf). They always get an UNSPECIFIED
+  value.
+  """
+  return _is_attribute_values(enum_name) or 0 not in (v["value"] for v in enum_values_metadata)
+
+
+def should_allow_alias(enum_values_metadata):
+  # if enum.get("generate-mappings", False):
+  #   return False
+  enum_values = [e["value"] for e in enum_values_metadata]
+  return len(enum_values) != len(set(enum_values))
 
 
 def generate_parameter_field_number(parameter, used_indexes, field_name_suffix=""):
@@ -24,19 +44,24 @@ def get_enum_definitions(enums_to_define, enums):
   enum_definitions = {}
   for enum_name in (e for e in enums if e in enums_to_define):
     enum = enums[enum_name]
-    allow_alias = should_allow_alias(enum)
     enum_value_prefix = common_helpers.get_enum_value_prefix(enum_name, enum)
     if enum.get("generate-mappings", False):
       values = [{"name": f"{enum_value_prefix}_{value['name']}", "value": index + 1} for index, value in enumerate(enum["values"])]
     else:
       values = [{"name": f"{enum_value_prefix}_{value['name']}", "value": value["value"]} for value in enum["values"]]
+
+    if _should_add_unspecified_enum_value(enum_name, values):
+      unspecified_value_name = f"{enum_value_prefix}_MAPPED_UNSPECIFIED" if enum_name.endswith("AttributeValuesMapped") else f"{enum_value_prefix}_UNSPECIFIED"
+      values.insert(0, {"name": unspecified_value_name, "value": 0})
+
+    allow_alias = should_allow_alias(values)
     enum_definition = {
       "allow_alias": allow_alias,
       "values": values
     }
-    unspecified_value_name = f"{enum_value_prefix}_MAPPED_UNSPECIFIED" if enum_name.endswith("AttributeValuesMapped") else f"{enum_value_prefix}_UNSPECIFIED"
-    values.insert(0, {"name": unspecified_value_name, "value": 0})
+
     enum_definitions.update({enum_name: enum_definition})
+  
   return enum_definitions
 
 
