@@ -91,7 +91,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_name': 'number_of_en_dc_offsets',
                 'name': 'numberOfENDCOffsets',
                 'type': 'int32'
             }

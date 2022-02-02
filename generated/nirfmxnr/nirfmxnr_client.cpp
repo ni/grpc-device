@@ -102,14 +102,14 @@ acp_cfg_noise_compensation_enabled(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 ACPCfgNumberOfENDCOffsetsResponse
-acp_cfg_number_of_endc_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& number_of_en_dc_offsets)
+acp_cfg_number_of_endc_offsets(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& number_of_endc_offsets)
 {
   ::grpc::ClientContext context;
 
   auto request = ACPCfgNumberOfENDCOffsetsRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_number_of_en_dc_offsets(number_of_en_dc_offsets);
+  request.set_number_of_endc_offsets(number_of_endc_offsets);
 
   auto response = ACPCfgNumberOfENDCOffsetsResponse{};
 

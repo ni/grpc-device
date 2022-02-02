@@ -1441,7 +1441,7 @@ message ACPCfgNoiseCompensationEnabledResponse {
 message ACPCfgNumberOfENDCOffsetsRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 number_of_en_dc_offsets = 3;
+  int32 number_of_endc_offsets = 3;
 }
 
 message ACPCfgNumberOfENDCOffsetsResponse {

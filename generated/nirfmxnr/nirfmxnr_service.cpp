@@ -181,8 +181,8 @@ namespace nirfmxnr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      int32 number_of_en_dc_offsets = request->number_of_en_dc_offsets();
-      auto status = library_->ACPCfgNumberOfENDCOffsets(instrument, selector_string, number_of_en_dc_offsets);
+      int32 number_of_endc_offsets = request->number_of_endc_offsets();
+      auto status = library_->ACPCfgNumberOfENDCOffsets(instrument, selector_string, number_of_endc_offsets);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
