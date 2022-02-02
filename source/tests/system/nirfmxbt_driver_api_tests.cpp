@@ -197,6 +197,7 @@ TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::txp_cfg_averaging(stub(), session, "", TxpAveragingEnabled::TXP_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
+  // We expect these actions to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
   const auto fetched_powers_response = client::txp_fetch_powers(stub(), session, "", 10.0);
   EXPECT_WARNING(fetched_powers_response, kPreambleSyncPacketStartDetectionFailedWarning);
   const auto fetched_edr_powers_response = client::txp_fetch_edr_powers(stub(), session, "", 10.0);
