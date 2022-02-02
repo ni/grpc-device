@@ -430,16 +430,16 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   int32 downlinkTestModel = RFMXNR_VAL_DOWNLINK_TEST_MODEL_TM1_1;
-  std::vector<float64> compositeRMSEVMMean { 0.0 };
-  std::vector<float64> compositePeakEVMMaximum { 0.0 };
-  std::vector<int> compositePeakEVMSlotIndex { 0 };
-  std::vector<int> compositePeakEVMSymbolIndex { 0 };
-  std::vector<int> compositePeakEVMSubcarrierIndex { 0 };
-  std::vector<float64> PDSCHRMSEVMMean { 0.0 };
-  std::vector<float64> componentCarrierFrequencyErrorMean { 0.0 };
-  std::vector<float64> componentCarrierIQOriginOffsetMean { 0.0 };
-  std::vector<float64> componentCarrierIQGainImbalanceMean { 0.0 };
-  std::vector<float64> componentCarrierQuadratureErrorMean { 0.0 };
+  std::vector<float64> compositeRMSEVMMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> compositePeakEVMMaximum(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<int> compositePeakEVMSlotIndex(NUMBER_OF_COMPONENT_CARRIERS, 0);
+  std::vector<int> compositePeakEVMSymbolIndex(NUMBER_OF_COMPONENT_CARRIERS, 0);
+  std::vector<int> compositePeakEVMSubcarrierIndex(NUMBER_OF_COMPONENT_CARRIERS, 0);
+  std::vector<float64> PDSCHRMSEVMMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> componentCarrierFrequencyErrorMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> componentCarrierIQOriginOffsetMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> componentCarrierIQGainImbalanceMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> componentCarrierQuadratureErrorMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
   ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response;
   ModAccFetchRMSEVMPerSymbolMeanTraceResponse mod_acc_fetch_rmsevm_per_symbol_mean_trace_response;
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++)
@@ -772,7 +772,7 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccSingleCarrierFromExample_FetchData_DataLo
 TEST_F(NiRFmxNRDriverApiTests, DLModAccUserDefinedChannelsFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_RESOURCE_BLOCK_CLUSTERS = 1;
-  std::vector<int> PDSCHResourceBlockOffset { 0 };
+  std::vector<int> PDSCHResourceBlockOffset(NUMBER_OF_RESOURCE_BLOCK_CLUSTERS, 0);
   std::vector<int> PDSCHNumberOfResourceBlocks { -1 };
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
@@ -932,10 +932,10 @@ TEST_F(NiRFmxNRDriverApiTests, DLPVTContiguousMultiCarrierFromExample_FetchData_
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   std::vector<int> measurementStatus { RFMXNR_VAL_PVT_MEASUREMENT_STATUS_FAIL };
-  std::vector<float64> PVTResultsPkWindowedOFFPwr { 0.0 };
-  std::vector<float64> PVTResultsPkWindowedOFFPwrMargin { 0.0 };
-  std::vector<float64> PVTResultsPkWindowedOFFPwrTime { 0.0 };
-  std::vector<float64> absoluteONPower { 0.0 };
+  std::vector<float64> PVTResultsPkWindowedOFFPwr(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> PVTResultsPkWindowedOFFPwrMargin(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> PVTResultsPkWindowedOFFPwrTime(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> absoluteONPower(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
   PVTFetchSignalPowerTraceResponse pvt_fetch_signal_power_trace_response;
   PVTFetchWindowedSignalPowerTraceResponse pvt_fetch_windowed_signal_power_trace_response;
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++)
@@ -1571,7 +1571,7 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
   std::vector<float64> componentCarrierBandwidth { 100e6, 100e6 };
   std::vector<float64> componentCarrierFrequency { -49.98e6, 50.01e6 };
   std::vector<int> cellID { 0, 1 };
-  std::vector<int> PUSCHResourceBlockOffset { 0 };
+  std::vector<int> PUSCHResourceBlockOffset(NUMBER_OF_RESOURCE_BLOCK_CLUSTERS, 0);
   std::vector<int> PUSCHNumberOfResourceBlocks { -1 };
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
@@ -1626,16 +1626,16 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  std::vector<float64> compositeRMSEVMMean { 0.0 };
-  std::vector<float64> compositePeakEVMMaximum { 0.0 };
-  std::vector<int> compositePeakEVMSlotIndex { 0 };
-  std::vector<int> compositePeakEVMSymbolIndex { 0 };
-  std::vector<int> compositePeakEVMSubcarrierIndex { 0 };
-  std::vector<float64> componentCarrierFrequencyErrorMean { 0.0 };
-  std::vector<float64> componentCarrierIQOriginOffsetMean { 0.0 };
-  std::vector<float64> componentCarrierIQGainImbalanceMean { 0.0 };
-  std::vector<float64> componentCarrierQuadratureErrorMean { 0.0 };
-  std::vector<float64> inBandEmissionMargin { 0.0 };
+  std::vector<float64> compositeRMSEVMMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> compositePeakEVMMaximum(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<int> compositePeakEVMSlotIndex(NUMBER_OF_COMPONENT_CARRIERS, 0);
+  std::vector<int> compositePeakEVMSymbolIndex(NUMBER_OF_COMPONENT_CARRIERS, 0);
+  std::vector<int> compositePeakEVMSubcarrierIndex(NUMBER_OF_COMPONENT_CARRIERS, 0);
+  std::vector<float64> componentCarrierFrequencyErrorMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> componentCarrierIQOriginOffsetMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> componentCarrierIQGainImbalanceMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> componentCarrierQuadratureErrorMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> inBandEmissionMargin(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
   ModAccFetchPUSCHDataConstellationTraceResponse mod_acc_fetch_pusch_data_constellation_trace_response;
   ModAccFetchPUSCHDMRSConstellationTraceResponse mod_acc_fetch_puschdmrs_constellation_trace_response;
   ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response;
@@ -1879,7 +1879,7 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccNonContiguousMultiCarrierFromExample_Fetc
 TEST_F(NiRFmxNRDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_RESOURCE_BLOCK_CLUSTERS = 1;
-  std::vector<int> PUSCHResourceBlockOffset { 0 };
+  std::vector<int> PUSCHResourceBlockOffset(NUMBER_OF_RESOURCE_BLOCK_CLUSTERS, 0);
   std::vector<int> PUSCHNumberOfResourceBlocks { -1 };
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
@@ -2002,7 +2002,7 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTContiguousMultiCarrierFromExample_FetchData_
   std::vector<float64> componentCarrierBandwidth { 100e6, 100e6 };
   std::vector<float64> componentCarrierFrequency { -49.98e6, 50.01e6 };
   std::vector<int> cellID { 0, 1 };
-  std::vector<int> PUSCHResourceBlockOffset { 0 };
+  std::vector<int> PUSCHResourceBlockOffset(NUMBER_OF_RESOURCE_BLOCK_CLUSTERS, 0);
   std::vector<int> PUSCHNumberOfResourceBlocks { -1 };
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
@@ -2090,7 +2090,7 @@ TEST_F(NiRFmxNRDriverApiTests, ULPVTContiguousMultiCarrierFromExample_FetchData_
 TEST_F(NiRFmxNRDriverApiTests, ULPVTSingleCarrierFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_RESOURCE_BLOCK_CLUSTERS = 1;
-  std::vector<int> PUSCHResourceBlockOffset { 0 };
+  std::vector<int> PUSCHResourceBlockOffset(NUMBER_OF_RESOURCE_BLOCK_CLUSTERS, 0);
   std::vector<int> PUSCHNumberOfResourceBlocks { -1 };
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
