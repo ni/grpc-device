@@ -597,49 +597,49 @@ enum DigitalEdgeTriggerEdge {
 }
 
 enum DsssModAccAcquisitionLengthMode {
-  DSSS_MOD_ACC_ACQUISITION_LENGTH_MODE_MANUAL = 0;
-  DSSS_MOD_ACC_ACQUISITION_LENGTH_MODE_AUTO = 1;
+  DSSS_MODACC_ACQUISITION_LENGTH_MODE_MANUAL = 0;
+  DSSS_MODACC_ACQUISITION_LENGTH_MODE_AUTO = 1;
 }
 
 enum DsssModAccAveragingEnabled {
-  DSSS_MOD_ACC_AVERAGING_ENABLED_FALSE = 0;
-  DSSS_MOD_ACC_AVERAGING_ENABLED_TRUE = 1;
+  DSSS_MODACC_AVERAGING_ENABLED_FALSE = 0;
+  DSSS_MODACC_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum DsssModAccDataModulationFormat {
-  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSS1_MBPS = 0;
-  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_DSSS2_MBPS = 1;
-  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_CCK5_5_MBPS = 2;
-  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_CCK11_MBPS = 3;
-  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_PBCC5_5_MBPS = 4;
-  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_PBCC11_MBPS = 5;
-  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_PBCC22_MBPS = 6;
-  DSSS_MOD_ACC_DATA_MODULATION_FORMAT_PBCC33_MBPS = 7;
+  DSSS_MODACC_DATA_MODULATION_FORMAT_DSSS1_MBPS = 0;
+  DSSS_MODACC_DATA_MODULATION_FORMAT_DSSS2_MBPS = 1;
+  DSSS_MODACC_DATA_MODULATION_FORMAT_CCK5_5_MBPS = 2;
+  DSSS_MODACC_DATA_MODULATION_FORMAT_CCK11_MBPS = 3;
+  DSSS_MODACC_DATA_MODULATION_FORMAT_PBCC5_5_MBPS = 4;
+  DSSS_MODACC_DATA_MODULATION_FORMAT_PBCC11_MBPS = 5;
+  DSSS_MODACC_DATA_MODULATION_FORMAT_PBCC22_MBPS = 6;
+  DSSS_MODACC_DATA_MODULATION_FORMAT_PBCC33_MBPS = 7;
 }
 
 enum DsssModAccEvmUnit {
-  DSSS_MOD_ACC_EVM_UNIT_PERCENTAGE = 0;
-  DSSS_MOD_ACC_EVM_UNIT_DB = 1;
+  DSSS_MODACC_EVM_UNIT_PERCENTAGE = 0;
+  DSSS_MODACC_EVM_UNIT_DB = 1;
 }
 
 enum DsssModAccPayloadHeaderCrcStatus {
-  DSSS_MOD_ACC_PAYLOAD_HEADER_CRC_STATUS_DSSSMODACC_HEADER_CRC_STATUS_FAIL = 0;
-  DSSS_MOD_ACC_PAYLOAD_HEADER_CRC_STATUS_DSSSMODACC_HEADER_CRC_STATUS_PASS = 1;
+  DSSS_MODACC_PAYLOAD_HEADER_CRC_STATUS_DSSSMODACC_HEADER_CRC_STATUS_FAIL = 0;
+  DSSS_MODACC_PAYLOAD_HEADER_CRC_STATUS_DSSSMODACC_HEADER_CRC_STATUS_PASS = 1;
 }
 
 enum DsssModAccPowerMeasurementEnabled {
-  DSSS_MOD_ACC_POWER_MEASUREMENT_ENABLED_FALSE = 0;
-  DSSS_MOD_ACC_POWER_MEASUREMENT_ENABLED_TRUE = 1;
+  DSSS_MODACC_POWER_MEASUREMENT_ENABLED_FALSE = 0;
+  DSSS_MODACC_POWER_MEASUREMENT_ENABLED_TRUE = 1;
 }
 
 enum DsssModAccPreambleType {
-  DSSS_MOD_ACC_PREAMBLE_TYPE_LONG = 0;
-  DSSS_MOD_ACC_PREAMBLE_TYPE_SHORT = 1;
+  DSSS_MODACC_PREAMBLE_TYPE_LONG = 0;
+  DSSS_MODACC_PREAMBLE_TYPE_SHORT = 1;
 }
 
 enum DsssModAccPsduCrcStaus {
-  DSSS_MOD_ACC_PSDU_CRC_STAUS_DSSSMODACC_PSDU_CRC_STATUS_FAIL = 0;
-  DSSS_MOD_ACC_PSDU_CRC_STAUS_DSSSMODACC_PSDU_CRC_STATUS_PASS = 1;
+  DSSS_MODACC_PSDU_CRC_STAUS_DSSSMODACC_PSDU_CRC_STATUS_FAIL = 0;
+  DSSS_MODACC_PSDU_CRC_STAUS_DSSSMODACC_PSDU_CRC_STATUS_PASS = 1;
 }
 
 enum FrequencyReferenceSource {
@@ -688,94 +688,94 @@ enum OfdmLtfSize {
 }
 
 enum OfdmModAccAcquisitionLengthMode {
-  OFDM_MOD_ACC_ACQUISITION_LENGTH_MODE_MANUAL = 0;
-  OFDM_MOD_ACC_ACQUISITION_LENGTH_MODE_AUTO = 1;
+  OFDM_MODACC_ACQUISITION_LENGTH_MODE_MANUAL = 0;
+  OFDM_MODACC_ACQUISITION_LENGTH_MODE_AUTO = 1;
 }
 
 enum OfdmModAccAmplitudeTrackingEnabled {
-  OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_FALSE = 0;
-  OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_TRUE = 1;
+  OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED_FALSE = 0;
+  OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED_TRUE = 1;
 }
 
 enum OfdmModAccAveragingEnabled {
-  OFDM_MOD_ACC_AVERAGING_ENABLED_FALSE = 0;
-  OFDM_MOD_ACC_AVERAGING_ENABLED_TRUE = 1;
+  OFDM_MODACC_AVERAGING_ENABLED_FALSE = 0;
+  OFDM_MODACC_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum OfdmModAccCalibrationDataValid {
-  OFDM_MOD_ACC_CALIBRATION_DATA_VALID_FALSE = 0;
-  OFDM_MOD_ACC_CALIBRATION_DATA_VALID_TRUE = 1;
+  OFDM_MODACC_CALIBRATION_DATA_VALID_FALSE = 0;
+  OFDM_MODACC_CALIBRATION_DATA_VALID_TRUE = 1;
 }
 
 enum OfdmModAccChannelEstimationType {
-  OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_REFERENCE = 0;
-  OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_REFERENCE_AND_DATA = 1;
+  OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE = 0;
+  OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE_AND_DATA = 1;
 }
 
 enum OfdmModAccCommonClockSourceEnabled {
-  OFDM_MOD_ACC_COMMON_CLOCK_SOURCE_ENABLED_FALSE = 0;
-  OFDM_MOD_ACC_COMMON_CLOCK_SOURCE_ENABLED_TRUE = 1;
+  OFDM_MODACC_COMMON_CLOCK_SOURCE_ENABLED_FALSE = 0;
+  OFDM_MODACC_COMMON_CLOCK_SOURCE_ENABLED_TRUE = 1;
 }
 
 enum OfdmModAccEvmUnit {
-  OFDM_MOD_ACC_EVM_UNIT_PERCENTAGE = 0;
-  OFDM_MOD_ACC_EVM_UNIT_DB = 1;
+  OFDM_MODACC_EVM_UNIT_PERCENTAGE = 0;
+  OFDM_MODACC_EVM_UNIT_DB = 1;
 }
 
 enum OfdmModAccFrequencyErrorEstimationMethod {
-  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_DISABLED = 0;
-  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_INITIAL_PREAMBLE = 1;
-  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE = 2;
-  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS = 3;
-  OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_PILOTS_AND_DATA = 4;
+  OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_DISABLED = 0;
+  OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_INITIAL_PREAMBLE = 1;
+  OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE = 2;
+  OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS = 3;
+  OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_PILOTS_AND_DATA = 4;
 }
 
 enum OfdmModAccLSigParityCheckStatus {
-  OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_FAIL = 0;
-  OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_NOT_APPLICABLE = -1;
-  OFDM_MOD_ACC_L_SIG_PARITY_CHECK_STATUS_PASS = 1;
+  OFDM_MODACC_LSIG_PARITY_CHECK_STATUS_FAIL = 0;
+  OFDM_MODACC_LSIG_PARITY_CHECK_STATUS_NOT_APPLICABLE = -1;
+  OFDM_MODACC_LSIG_PARITY_CHECK_STATUS_PASS = 1;
 }
 
 enum OfdmModAccMeasurementMode {
-  OFDM_MOD_ACC_MEASUREMENT_MODE_MEASURE = 0;
-  OFDM_MOD_ACC_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR = 1;
+  OFDM_MODACC_MEASUREMENT_MODE_MEASURE = 0;
+  OFDM_MODACC_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR = 1;
 }
 
 enum OfdmModAccNoiseCompensationEnabled {
-  OFDM_MOD_ACC_NOISE_COMPENSATION_ENABLED_FALSE = 0;
-  OFDM_MOD_ACC_NOISE_COMPENSATION_ENABLED_TRUE = 1;
+  OFDM_MODACC_NOISE_COMPENSATION_ENABLED_FALSE = 0;
+  OFDM_MODACC_NOISE_COMPENSATION_ENABLED_TRUE = 1;
 }
 
 enum OfdmModAccOptimizeDynamicRangeForEvmEnabled {
-  OFDM_MOD_ACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_FALSE = 0;
-  OFDM_MOD_ACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_TRUE = 1;
+  OFDM_MODACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_FALSE = 0;
+  OFDM_MODACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED_TRUE = 1;
 }
 
 enum OfdmModAccPhaseTrackingEnabled {
-  OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_FALSE = 0;
-  OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_TRUE = 1;
+  OFDM_MODACC_PHASE_TRACKING_ENABLED_FALSE = 0;
+  OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE = 1;
 }
 
 enum OfdmModAccPsduCrcStatus {
-  OFDM_MOD_ACC_PSDU_CRC_STATUS_FAIL = 0;
-  OFDM_MOD_ACC_PSDU_CRC_STATUS_PASS = 1;
+  OFDM_MODACC_PSDU_CRC_STATUS_FAIL = 0;
+  OFDM_MODACC_PSDU_CRC_STATUS_PASS = 1;
 }
 
 enum OfdmModAccSigBCrcStatus {
-  OFDM_MOD_ACC_SIG_B_CRC_STATUS_FAIL = 0;
-  OFDM_MOD_ACC_SIG_B_CRC_STATUS_NOT_APPLICABLE = -1;
-  OFDM_MOD_ACC_SIG_B_CRC_STATUS_PASS = 1;
+  OFDM_MODACC_SIGB_CRC_STATUS_FAIL = 0;
+  OFDM_MODACC_SIGB_CRC_STATUS_NOT_APPLICABLE = -1;
+  OFDM_MODACC_SIGB_CRC_STATUS_PASS = 1;
 }
 
 enum OfdmModAccSigCrcStatus {
-  OFDM_MOD_ACC_SIG_CRC_STATUS_FAIL = 0;
-  OFDM_MOD_ACC_SIG_CRC_STATUS_NOT_APPLICABLE = -1;
-  OFDM_MOD_ACC_SIG_CRC_STATUS_PASS = 1;
+  OFDM_MODACC_SIG_CRC_STATUS_FAIL = 0;
+  OFDM_MODACC_SIG_CRC_STATUS_NOT_APPLICABLE = -1;
+  OFDM_MODACC_SIG_CRC_STATUS_PASS = 1;
 }
 
 enum OfdmModAccSymbolClockErrorCorrectionEnabled {
-  OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_FALSE = 0;
-  OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE = 1;
+  OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_FALSE = 0;
+  OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE = 1;
 }
 
 enum OfdmPpduType {
@@ -1143,7 +1143,7 @@ message AnalyzeNWaveformsIQRequest {
   repeated double x0 = 4;
   repeated double dx = 5;
   repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
-  repeated int32 iq_lengths = 7;
+  repeated int32 iq_sizes = 7;
   int32 reset = 8;
 }
 
@@ -1158,7 +1158,7 @@ message AnalyzeNWaveformsSpectrumRequest {
   repeated double x0 = 4;
   repeated double dx = 5;
   repeated float spectrum = 6;
-  repeated int32 spectrum_lengths = 7;
+  repeated int32 spectrum_sizes = 7;
   int32 reset = 8;
 }
 
@@ -1675,7 +1675,7 @@ message DSSSModAccFetchEVMRequest {
 
 message DSSSModAccFetchEVMResponse {
   int32 status = 1;
-  double rmsevm_mean = 2;
+  double rms_evm_mean = 2;
   double peak_evm80211_2016_maximum = 3;
   double peak_evm80211_2007_maximum = 4;
   double peak_evm80211_1999_maximum = 5;
@@ -1727,8 +1727,8 @@ message DSSSModAccFetchPPDUInformationResponse {
   int32 locked_clocks_bit = 7;
   DsssModAccPayloadHeaderCrcStatus header_crc_status = 8;
   int32 header_crc_status_raw = 9;
-  DsssModAccPsduCrcStaus psducrc_status = 10;
-  int32 psducrc_status_raw = 11;
+  DsssModAccPsduCrcStaus psdu_crc_status = 10;
+  int32 psdu_crc_status_raw = 11;
 }
 
 message DSSSModAccFetchPeakPowersRequest {
@@ -2204,7 +2204,7 @@ message OFDMModAccCfgNReferenceWaveformsRequest {
   repeated double x0 = 3;
   repeated double dx = 4;
   repeated nidevice_grpc.NIComplexNumberF32 reference_waveform = 5;
-  repeated int32 reference_waveform_lengths = 6;
+  repeated int32 reference_waveform_sizes = 6;
 }
 
 message OFDMModAccCfgNReferenceWaveformsResponse {
@@ -2282,7 +2282,7 @@ message OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float chain_data_rmsevm_per_symbol_mean = 4;
+  repeated float chain_data_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2296,7 +2296,7 @@ message OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float chain_pilot_rmsevm_per_symbol_mean = 4;
+  repeated float chain_pilot_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2308,9 +2308,9 @@ message OFDMModAccFetchChainRMSEVMRequest {
 
 message OFDMModAccFetchChainRMSEVMResponse {
   int32 status = 1;
-  double chain_rmsevm_mean = 2;
-  double chain_data_rmsevm_mean = 3;
-  double chain_pilot_rmsevm_mean = 4;
+  double chain_rms_evm_mean = 2;
+  double chain_data_rms_evm_mean = 3;
+  double chain_pilot_rms_evm_mean = 4;
 }
 
 message OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceRequest {
@@ -2323,7 +2323,7 @@ message OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float chain_rmsevm_per_subcarrier_mean = 4;
+  repeated float chain_rms_evm_per_subcarrier_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2337,7 +2337,7 @@ message OFDMModAccFetchChainRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float chain_rmsevm_per_symbol_mean = 4;
+  repeated float chain_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -2379,9 +2379,9 @@ message OFDMModAccFetchCompositeRMSEVMRequest {
 
 message OFDMModAccFetchCompositeRMSEVMResponse {
   int32 status = 1;
-  double composite_rmsevm_mean = 2;
-  double composite_data_rmsevm_mean = 3;
-  double composite_pilot_rmsevm_mean = 4;
+  double composite_rms_evm_mean = 2;
+  double composite_data_rms_evm_mean = 3;
+  double composite_pilot_rms_evm_mean = 4;
 }
 
 message OFDMModAccFetchCrossPowerRequest {
@@ -2450,7 +2450,7 @@ message OFDMModAccFetchDecodedEHTSIGBitsTraceRequest {
 
 message OFDMModAccFetchDecodedEHTSIGBitsTraceResponse {
   int32 status = 1;
-  repeated int32 decoded_ehtsig_bits = 2;
+  repeated int32 decoded_eht_sig_bits = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2672,7 +2672,7 @@ message OFDMModAccFetchNumberOfHESIGBSymbolsRequest {
 
 message OFDMModAccFetchNumberOfHESIGBSymbolsResponse {
   int32 status = 1;
-  int32 number_of_hesigb_symbols = 2;
+  int32 number_of_he_sigb_symbols = 2;
 }
 
 message OFDMModAccFetchNumberOfSpaceTimeStreamsRequest {
@@ -2783,8 +2783,8 @@ message OFDMModAccFetchPSDUCRCStatusRequest {
 
 message OFDMModAccFetchPSDUCRCStatusResponse {
   int32 status = 1;
-  OfdmModAccPsduCrcStatus psducrc_status = 2;
-  int32 psducrc_status_raw = 3;
+  OfdmModAccPsduCrcStatus psdu_crc_status = 2;
+  int32 psdu_crc_status_raw = 3;
 }
 
 message OFDMModAccFetchPilotConstellationTraceRequest {
@@ -2823,9 +2823,9 @@ message OFDMModAccFetchPreambleAveragePowers80211axResponse {
   int32 status = 1;
   double rlsig_average_power_mean = 2;
   double hesiga_average_power_mean = 3;
-  double hesigb_average_power_mean = 4;
+  double he_sigb_average_power_mean = 4;
   double hestf_average_power_mean = 5;
-  double heltf_average_power_mean = 6;
+  double he_ltf_average_power_mean = 6;
 }
 
 message OFDMModAccFetchPreambleAveragePowers80211nRequest {
@@ -2893,9 +2893,9 @@ message OFDMModAccFetchPreamblePeakPowers80211axResponse {
   int32 status = 1;
   double rlsig_peak_power_maximum = 2;
   double hesiga_peak_power_maximum = 3;
-  double hesigb_peak_power_maximum = 4;
+  double he_sigb_peak_power_maximum = 4;
   double hestf_peak_power_maximum = 5;
-  double heltf_peak_power_maximum = 6;
+  double he_ltf_peak_power_maximum = 6;
 }
 
 message OFDMModAccFetchPreamblePeakPowers80211nRequest {
@@ -2945,8 +2945,8 @@ message OFDMModAccFetchSIGBCRCStatusRequest {
 
 message OFDMModAccFetchSIGBCRCStatusResponse {
   int32 status = 1;
-  OfdmModAccSigBCrcStatus sigbcrc_status = 2;
-  int32 sigbcrc_status_raw = 3;
+  OfdmModAccSigBCrcStatus sigb_crc_status = 2;
+  int32 sigb_crc_status_raw = 3;
 }
 
 message OFDMModAccFetchSIGCRCStatusRequest {
@@ -2957,8 +2957,8 @@ message OFDMModAccFetchSIGCRCStatusRequest {
 
 message OFDMModAccFetchSIGCRCStatusResponse {
   int32 status = 1;
-  OfdmModAccSigCrcStatus sigcrc_status = 2;
-  int32 sigcrc_status_raw = 3;
+  OfdmModAccSigCrcStatus sig_crc_status = 2;
+  int32 sig_crc_status_raw = 3;
 }
 
 message OFDMModAccFetchSpectralFlatnessRequest {
@@ -2999,7 +2999,7 @@ message OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float stream_data_rmsevm_per_symbol_mean = 4;
+  repeated float stream_data_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3013,7 +3013,7 @@ message OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float stream_pilot_rmsevm_per_symbol_mean = 4;
+  repeated float stream_pilot_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3025,9 +3025,9 @@ message OFDMModAccFetchStreamRMSEVMRequest {
 
 message OFDMModAccFetchStreamRMSEVMResponse {
   int32 status = 1;
-  double stream_rmsevm_mean = 2;
-  double stream_data_rmsevm_mean = 3;
-  double stream_pilot_rmsevm_mean = 4;
+  double stream_rms_evm_mean = 2;
+  double stream_data_rms_evm_mean = 3;
+  double stream_pilot_rms_evm_mean = 4;
 }
 
 message OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceRequest {
@@ -3040,7 +3040,7 @@ message OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float stream_rmsevm_per_subcarrier_mean = 4;
+  repeated float stream_rms_evm_per_subcarrier_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3054,7 +3054,7 @@ message OFDMModAccFetchStreamRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float stream_rmsevm_per_symbol_mean = 4;
+  repeated float stream_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3213,7 +3213,7 @@ message OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float user_stream_data_rmsevm_per_symbol_mean = 4;
+  repeated float user_stream_data_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3227,7 +3227,7 @@ message OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float user_stream_pilot_rmsevm_per_symbol_mean = 4;
+  repeated float user_stream_pilot_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3239,9 +3239,9 @@ message OFDMModAccFetchUserStreamRMSEVMRequest {
 
 message OFDMModAccFetchUserStreamRMSEVMResponse {
   int32 status = 1;
-  double user_stream_rmsevm_mean = 2;
-  double user_stream_data_rmsevm_mean = 3;
-  double user_stream_pilot_rmsevm_mean = 4;
+  double user_stream_rms_evm_mean = 2;
+  double user_stream_data_rms_evm_mean = 3;
+  double user_stream_pilot_rms_evm_mean = 4;
 }
 
 message OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceRequest {
@@ -3254,7 +3254,7 @@ message OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float user_stream_rmsevm_per_subcarrier_mean = 4;
+  repeated float user_stream_rms_evm_per_subcarrier_mean = 4;
   int32 actual_array_size = 5;
 }
 
@@ -3268,7 +3268,7 @@ message OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTraceResponse {
   int32 status = 1;
   double x0 = 2;
   double dx = 3;
-  repeated float user_stream_rmsevm_per_symbol_mean = 4;
+  repeated float user_stream_rms_evm_per_symbol_mean = 4;
   int32 actual_array_size = 5;
 }
 
