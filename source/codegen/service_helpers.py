@@ -325,6 +325,12 @@ def get_async_functions(functions):
         if common_helpers.has_streaming_response(data)
     }
 
+def get_functions_with_two_dimension_param(functions):
+    return {
+        name: data
+        for name, data in functions.items()
+        if common_helpers.has_two_dimension_array_param(data['parameters'])
+    }
 
 def get_callback_method_parameters(function_data):
     parameters = function_data['parameters']

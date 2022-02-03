@@ -45,6 +45,8 @@ public:
   
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
   ::grpc::Status AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response) override;
+  ::grpc::Status AnalyzeNWaveformsIQ(::grpc::ServerContext* context, const AnalyzeNWaveformsIQRequest* request, AnalyzeNWaveformsIQResponse* response) override;
+  ::grpc::Status AnalyzeNWaveformsSpectrum(::grpc::ServerContext* context, const AnalyzeNWaveformsSpectrumRequest* request, AnalyzeNWaveformsSpectrumResponse* response) override;
   ::grpc::Status AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response) override;
   ::grpc::Status AutoDetectSignal(::grpc::ServerContext* context, const AutoDetectSignalRequest* request, AutoDetectSignalResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
@@ -132,6 +134,7 @@ public:
   ::grpc::Status OFDMModAccCfgFrequencyErrorEstimationMethod(::grpc::ServerContext* context, const OFDMModAccCfgFrequencyErrorEstimationMethodRequest* request, OFDMModAccCfgFrequencyErrorEstimationMethodResponse* response) override;
   ::grpc::Status OFDMModAccCfgMeasurementLength(::grpc::ServerContext* context, const OFDMModAccCfgMeasurementLengthRequest* request, OFDMModAccCfgMeasurementLengthResponse* response) override;
   ::grpc::Status OFDMModAccCfgMeasurementMode(::grpc::ServerContext* context, const OFDMModAccCfgMeasurementModeRequest* request, OFDMModAccCfgMeasurementModeResponse* response) override;
+  ::grpc::Status OFDMModAccCfgNReferenceWaveforms(::grpc::ServerContext* context, const OFDMModAccCfgNReferenceWaveformsRequest* request, OFDMModAccCfgNReferenceWaveformsResponse* response) override;
   ::grpc::Status OFDMModAccCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const OFDMModAccCfgNoiseCompensationEnabledRequest* request, OFDMModAccCfgNoiseCompensationEnabledResponse* response) override;
   ::grpc::Status OFDMModAccCfgOptimizeDynamicRangeForEVM(::grpc::ServerContext* context, const OFDMModAccCfgOptimizeDynamicRangeForEVMRequest* request, OFDMModAccCfgOptimizeDynamicRangeForEVMResponse* response) override;
   ::grpc::Status OFDMModAccCfgPhaseTrackingEnabled(::grpc::ServerContext* context, const OFDMModAccCfgPhaseTrackingEnabledRequest* request, OFDMModAccCfgPhaseTrackingEnabledResponse* response) override;

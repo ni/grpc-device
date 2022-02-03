@@ -19,6 +19,8 @@ import "session.proto";
 service NiRFmxWLAN {
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeNWaveformsIQ(AnalyzeNWaveformsIQRequest) returns (AnalyzeNWaveformsIQResponse);
+  rpc AnalyzeNWaveformsSpectrum(AnalyzeNWaveformsSpectrumRequest) returns (AnalyzeNWaveformsSpectrumResponse);
   rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
   rpc AutoDetectSignal(AutoDetectSignalRequest) returns (AutoDetectSignalResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
@@ -106,6 +108,7 @@ service NiRFmxWLAN {
   rpc OFDMModAccCfgFrequencyErrorEstimationMethod(OFDMModAccCfgFrequencyErrorEstimationMethodRequest) returns (OFDMModAccCfgFrequencyErrorEstimationMethodResponse);
   rpc OFDMModAccCfgMeasurementLength(OFDMModAccCfgMeasurementLengthRequest) returns (OFDMModAccCfgMeasurementLengthResponse);
   rpc OFDMModAccCfgMeasurementMode(OFDMModAccCfgMeasurementModeRequest) returns (OFDMModAccCfgMeasurementModeResponse);
+  rpc OFDMModAccCfgNReferenceWaveforms(OFDMModAccCfgNReferenceWaveformsRequest) returns (OFDMModAccCfgNReferenceWaveformsResponse);
   rpc OFDMModAccCfgNoiseCompensationEnabled(OFDMModAccCfgNoiseCompensationEnabledRequest) returns (OFDMModAccCfgNoiseCompensationEnabledResponse);
   rpc OFDMModAccCfgOptimizeDynamicRangeForEVM(OFDMModAccCfgOptimizeDynamicRangeForEVMRequest) returns (OFDMModAccCfgOptimizeDynamicRangeForEVMResponse);
   rpc OFDMModAccCfgPhaseTrackingEnabled(OFDMModAccCfgPhaseTrackingEnabledRequest) returns (OFDMModAccCfgPhaseTrackingEnabledResponse);
@@ -1130,6 +1133,36 @@ message AnalyzeIQ1WaveformRequest {
 }
 
 message AnalyzeIQ1WaveformResponse {
+  int32 status = 1;
+}
+
+message AnalyzeNWaveformsIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  repeated double x0 = 4;
+  repeated double dx = 5;
+  repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
+  repeated int32 iq_sizes = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeNWaveformsIQResponse {
+  int32 status = 1;
+}
+
+message AnalyzeNWaveformsSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  repeated double x0 = 4;
+  repeated double dx = 5;
+  repeated float spectrum = 6;
+  repeated int32 spectrum_sizes = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeNWaveformsSpectrumResponse {
   int32 status = 1;
 }
 
@@ -2162,6 +2195,19 @@ message OFDMModAccCfgMeasurementModeRequest {
 }
 
 message OFDMModAccCfgMeasurementModeResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgNReferenceWaveformsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double x0 = 3;
+  repeated double dx = 4;
+  repeated nidevice_grpc.NIComplexNumberF32 reference_waveform = 5;
+  repeated int32 reference_waveform_sizes = 6;
+}
+
+message OFDMModAccCfgNReferenceWaveformsResponse {
   int32 status = 1;
 }
 

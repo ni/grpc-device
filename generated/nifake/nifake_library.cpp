@@ -39,6 +39,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAStringOfFixedMaximumSize = reinterpret_cast<GetAStringOfFixedMaximumSizePtr>(shared_library_.get_function_pointer("niFake_GetAStringOfFixedMaximumSize"));
   function_pointers_.GetBitfieldAsEnumArray = reinterpret_cast<GetBitfieldAsEnumArrayPtr>(shared_library_.get_function_pointer("niFake_GetBitfieldAsEnumArray"));
   function_pointers_.GetAnIviDanceString = reinterpret_cast<GetAnIviDanceStringPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceString"));
+  function_pointers_.UseATwoDimensionParameter = reinterpret_cast<UseATwoDimensionParameterPtr>(shared_library_.get_function_pointer("niFake_UseATwoDimensionParameter"));
   function_pointers_.GetAnIviDanceWithATwistArray = reinterpret_cast<GetAnIviDanceWithATwistArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArray"));
   function_pointers_.GetAnIviDanceWithATwistArrayOfCustomType = reinterpret_cast<GetAnIviDanceWithATwistArrayOfCustomTypePtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArrayOfCustomType"));
   function_pointers_.GetAnIviDanceWithATwistArrayWithInputArray = reinterpret_cast<GetAnIviDanceWithATwistArrayWithInputArrayPtr>(shared_library_.get_function_pointer("niFake_GetAnIviDanceWithATwistArrayWithInputArray"));
@@ -326,6 +327,18 @@ ViStatus NiFakeLibrary::GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, Vi
   return niFake_GetAnIviDanceString(vi, bufferSize, aString);
 #else
   return function_pointers_.GetAnIviDanceString(vi, bufferSize, aString);
+#endif
+}
+
+ViStatus NiFakeLibrary::UseATwoDimensionParameter(ViSession vi, ViInt32 array[], ViInt32 arrayLengths[], ViInt32 arraySize)
+{
+  if (!function_pointers_.UseATwoDimensionParameter) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_UseATwoDimensionParameter.");
+  }
+#if defined(_MSC_VER)
+  return niFake_UseATwoDimensionParameter(vi, array, arrayLengths, arraySize);
+#else
+  return function_pointers_.UseATwoDimensionParameter(vi, array, arrayLengths, arraySize);
 #endif
 }
 

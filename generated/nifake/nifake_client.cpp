@@ -321,6 +321,24 @@ get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+UseATwoDimensionParameterResponse
+use_a_two_dimension_parameter(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& array, const std::vector<pb::int32>& array_lengths)
+{
+  ::grpc::ClientContext context;
+
+  auto request = UseATwoDimensionParameterRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  copy_array(array, request.mutable_array());
+  copy_array(array_lengths, request.mutable_array_lengths());
+
+  auto response = UseATwoDimensionParameterResponse{};
+
+  raise_if_error(
+      stub->UseATwoDimensionParameter(&context, request, &response));
+
+  return response;
+}
+
 GetAnIviDanceWithATwistArrayResponse
 get_an_ivi_dance_with_a_twist_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& a_string)
 {

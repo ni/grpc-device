@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include <numeric>
 #include <server/converters.h>
 
 namespace nifake_grpc {
@@ -497,6 +498,34 @@ namespace nifake_grpc {
         }
         return ::grpc::Status::OK;
       }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::UseATwoDimensionParameter(::grpc::ServerContext* context, const UseATwoDimensionParameterRequest* request, UseATwoDimensionParameterResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->array().data()));
+      auto total_length = std::accumulate(request->array_lengths().cbegin(), request->array_lengths().cend(), 0);
+
+      if (total_length != request->array_size()) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array array does not match the exected size from the sum of array_lengths");
+      }
+
+      auto array_lengths = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->array_lengths().data()));
+      ViInt32 array_size = static_cast<ViInt32>(request->array_lengths().size());
+      auto status = library_->UseATwoDimensionParameter(vi, array, array_lengths, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

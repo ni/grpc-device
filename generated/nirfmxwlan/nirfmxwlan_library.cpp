@@ -23,6 +23,8 @@ NiRFmxWLANLibrary::NiRFmxWLANLibrary() : shared_library_(kLibraryName)
   }
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_.get_function_pointer("RFmxWLAN_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_.get_function_pointer("RFmxWLAN_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeNWaveformsIQ = reinterpret_cast<AnalyzeNWaveformsIQPtr>(shared_library_.get_function_pointer("RFmxWLAN_AnalyzeNWaveformsIQ"));
+  function_pointers_.AnalyzeNWaveformsSpectrum = reinterpret_cast<AnalyzeNWaveformsSpectrumPtr>(shared_library_.get_function_pointer("RFmxWLAN_AnalyzeNWaveformsSpectrum"));
   function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_.get_function_pointer("RFmxWLAN_AnalyzeSpectrum1Waveform"));
   function_pointers_.AutoDetectSignal = reinterpret_cast<AutoDetectSignalPtr>(shared_library_.get_function_pointer("RFmxWLAN_AutoDetectSignal"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxWLAN_AutoLevel"));
@@ -110,6 +112,7 @@ NiRFmxWLANLibrary::NiRFmxWLANLibrary() : shared_library_(kLibraryName)
   function_pointers_.OFDMModAccCfgFrequencyErrorEstimationMethod = reinterpret_cast<OFDMModAccCfgFrequencyErrorEstimationMethodPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccCfgFrequencyErrorEstimationMethod"));
   function_pointers_.OFDMModAccCfgMeasurementLength = reinterpret_cast<OFDMModAccCfgMeasurementLengthPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccCfgMeasurementLength"));
   function_pointers_.OFDMModAccCfgMeasurementMode = reinterpret_cast<OFDMModAccCfgMeasurementModePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccCfgMeasurementMode"));
+  function_pointers_.OFDMModAccCfgNReferenceWaveforms = reinterpret_cast<OFDMModAccCfgNReferenceWaveformsPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccCfgNReferenceWaveforms"));
   function_pointers_.OFDMModAccCfgNoiseCompensationEnabled = reinterpret_cast<OFDMModAccCfgNoiseCompensationEnabledPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccCfgNoiseCompensationEnabled"));
   function_pointers_.OFDMModAccCfgOptimizeDynamicRangeForEVM = reinterpret_cast<OFDMModAccCfgOptimizeDynamicRangeForEVMPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccCfgOptimizeDynamicRangeForEVM"));
   function_pointers_.OFDMModAccCfgPhaseTrackingEnabled = reinterpret_cast<OFDMModAccCfgPhaseTrackingEnabledPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccCfgPhaseTrackingEnabled"));
@@ -282,6 +285,30 @@ int32 NiRFmxWLANLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, 
   return RFmxWLAN_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 #else
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+#endif
+}
+
+int32 NiRFmxWLANLibrary::AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset)
+{
+  if (!function_pointers_.AnalyzeNWaveformsIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeNWaveformsIQ.");
+  }
+#if defined(_MSC_VER)
+  return RFmxWLAN_AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqSize, arraySize, reset);
+#else
+  return function_pointers_.AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqSize, arraySize, reset);
+#endif
+}
+
+int32 NiRFmxWLANLibrary::AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset)
+{
+  if (!function_pointers_.AnalyzeNWaveformsSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeNWaveformsSpectrum.");
+  }
+#if defined(_MSC_VER)
+  return RFmxWLAN_AnalyzeNWaveformsSpectrum(instrumentHandle, selectorString, resultName, x0, dx, spectrum, spectrumSize, arraySize, reset);
+#else
+  return function_pointers_.AnalyzeNWaveformsSpectrum(instrumentHandle, selectorString, resultName, x0, dx, spectrum, spectrumSize, arraySize, reset);
 #endif
 }
 
@@ -1326,6 +1353,18 @@ int32 NiRFmxWLANLibrary::OFDMModAccCfgMeasurementMode(niRFmxInstrHandle instrume
   return RFmxWLAN_OFDMModAccCfgMeasurementMode(instrumentHandle, selectorString, measurementMode);
 #else
   return function_pointers_.OFDMModAccCfgMeasurementMode(instrumentHandle, selectorString, measurementMode);
+#endif
+}
+
+int32 NiRFmxWLANLibrary::OFDMModAccCfgNReferenceWaveforms(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0[], float64 dx[], NIComplexSingle referenceWaveform[], int32 referenceWaveformSize[], int32 arraySize)
+{
+  if (!function_pointers_.OFDMModAccCfgNReferenceWaveforms) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccCfgNReferenceWaveforms.");
+  }
+#if defined(_MSC_VER)
+  return RFmxWLAN_OFDMModAccCfgNReferenceWaveforms(instrumentHandle, selectorString, x0, dx, referenceWaveform, referenceWaveformSize, arraySize);
+#else
+  return function_pointers_.OFDMModAccCfgNReferenceWaveforms(instrumentHandle, selectorString, x0, dx, referenceWaveform, referenceWaveformSize, arraySize);
 #endif
 }
 

@@ -19,6 +19,8 @@ class NiRFmxWLANMockLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface
  public:
   MOCK_METHOD(int32, AbortMeasurements, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
   MOCK_METHOD(int32, AnalyzeIQ1Waveform, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved), (override));
+  MOCK_METHOD(int32, AnalyzeNWaveformsIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset), (override));
+  MOCK_METHOD(int32, AnalyzeNWaveformsSpectrum, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset), (override));
   MOCK_METHOD(int32, AnalyzeSpectrum1Waveform, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved), (override));
   MOCK_METHOD(int32, AutoDetectSignal, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout), (override));
   MOCK_METHOD(int32, AutoLevel, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval), (override));
@@ -106,6 +108,7 @@ class NiRFmxWLANMockLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface
   MOCK_METHOD(int32, OFDMModAccCfgFrequencyErrorEstimationMethod, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 frequencyErrorEstimationMethod), (override));
   MOCK_METHOD(int32, OFDMModAccCfgMeasurementLength, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementOffset, int32 maximumMeasurementLength), (override));
   MOCK_METHOD(int32, OFDMModAccCfgMeasurementMode, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMode), (override));
+  MOCK_METHOD(int32, OFDMModAccCfgNReferenceWaveforms, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0[], float64 dx[], NIComplexSingle referenceWaveform[], int32 referenceWaveformSize[], int32 arraySize), (override));
   MOCK_METHOD(int32, OFDMModAccCfgNoiseCompensationEnabled, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled), (override));
   MOCK_METHOD(int32, OFDMModAccCfgOptimizeDynamicRangeForEVM, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 optimizeDynamicRangeForEVMEnabled, double optimizeDynamicRangeForEVMMargin), (override));
   MOCK_METHOD(int32, OFDMModAccCfgPhaseTrackingEnabled, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 phaseTrackingEnabled), (override));
