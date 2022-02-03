@@ -488,7 +488,7 @@ class ResourceTuplePrinter {
 using ResourcePair = std::tuple<std::string, std::string>;
 
 template <typename T>
-inline std::vector<T> vector_concat(const std::vector<T>& first, const std::vector<T> second)
+inline std::vector<T> vector_concat(const std::vector<T>& first, const std::vector<T>& second)
 {
   auto result = std::vector<T>(first);
   result.insert(result.end(), second.cbegin(), second.cend());
@@ -554,6 +554,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, InitializeThreeIdenticalResourcesAsSeparateSe
   const auto session3 = init_session(stub(), PXI_5663, "specan1,specan2");
   EXPECT_NE(session1.id(), session2.id());
   EXPECT_NE(session1.id(), session3.id());
+  EXPECT_NE(session2.id(), session3.id());
   EXPECT_VALID_DRIVER_SESSION(session1);
   EXPECT_VALID_DRIVER_SESSION(session2);
   EXPECT_VALID_DRIVER_SESSION(session3);
