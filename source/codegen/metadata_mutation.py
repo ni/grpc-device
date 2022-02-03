@@ -65,7 +65,7 @@ def mark_coerced_narrow_numeric_parameters(parameters: dict) -> None:
 
 
 def mark_non_proto_params(parameters):
-    """Mark the parameters that shouldn't be included in the proto request message. 
+    """Mark the parameters that shouldn't be included in the proto request message.
        Their values should be derived from other sources in the service handlers."""
     for param in parameters:
         mechanism = common_helpers.get_size_mechanism(param)
@@ -120,8 +120,9 @@ def remove_leading_group_name(enum_value_name, group_name):
     return common_helpers.strip_prefix(enum_value_name, f"{group_name.upper()}_")
 
 
-def add_leading_enum_name(enum_value_name, enum_name):
-    return f"{common_helpers.pascal_to_snake(enum_name).upper()}_" + enum_value_name
+def add_leading_enum_name(enum_value_name, enum_name, enum):
+    enum_value_prefix = enum.get("enum-value-prefix", common_helpers.pascal_to_snake(enum_name).upper())
+    return f"{enum_value_prefix}_{enum_value_name}"
 
 
 def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
@@ -136,7 +137,7 @@ def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
                 # Remove the leading group name (if any) because it will be redundant in the aggregate enum.
                 value_name = remove_leading_group_name(value["name"], group_name)
                 # Add a leading enum to differentiate sub-enums within the aggregate values enum.
-                value_name = add_leading_enum_name(value_name, enum_name)
+                value_name = add_leading_enum_name(value_name, enum_name, enum)
                 if is_mapped_enum:
                     mapped_values[value_name] = value["value"]
                 else:
@@ -148,14 +149,14 @@ def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
         mapped_enum_name = get_attribute_values_enum_name(group_name, type_name, is_mapped=True)
         add_enum(unmapped_enum_name, unmapped_values, enums, enum_value_prefix)
         add_enum(mapped_enum_name, mapped_values, enums, enum_value_prefix, is_mapped=True)
-    
+
 
 AttributeReferencingParameter = namedtuple("AttributeReferencingParameter", ["attribute_group", "parameter"])
 
 class AttributeAccessorExpander:
     """
     Wraps an _attribute_type_map of:
-    
+
     group -> type -> attributes
 
     and implements the metadata_mutations to add_attribute_values_enums, expand_attribute_function_value_param,
@@ -195,7 +196,7 @@ class AttributeAccessorExpander:
 
     def patch_attribute_enum_type(self, function_name, func):
         """
-        If a driver splits attribute enums by type, 
+        If a driver splits attribute enums by type,
         then the referencing functions need to be updated to match:
         ScaleAttributes -> ScaleAttributesInt32, ScaleAttributesDouble, etc.
         """
@@ -233,8 +234,8 @@ class AttributeAccessorExpander:
         if attribute_reference:
             expand_attribute_function_value_param(
                 func,
-                self._enums, 
-                self._attribute_type_map[attribute_reference.attribute_group], 
+                self._enums,
+                self._attribute_type_map[attribute_reference.attribute_group],
                 attribute_reference.attribute_group)
 
 
@@ -271,7 +272,7 @@ def get_attribute_function_value_param(function):
     return next((param for param in function["parameters"] if param["name"] in {"value", "attributeValue", "attrVal"}), None)
 
 def get_attribute_values_enum_name(group_name, type, is_mapped=False):
-    enum_name_suffix = "Mapped" if is_mapped else "" 
+    enum_name_suffix = "Mapped" if is_mapped else ""
     shortened_type_name = get_short_enum_type_name(type)
     return group_name + shortened_type_name + "AttributeValues" + enum_name_suffix
 
@@ -290,7 +291,7 @@ def add_enum(enum_name, enum_values, enums, enum_value_prefix, is_mapped=False):
 def move_zero_enums_to_front(enums: dict) -> None:
     """
     protobuf requires that the first enum value be zero. For enums missing a zero value,
-    we will add an UNSPECIFIED enum value to the front (this is the best practice). But if 
+    we will add an UNSPECIFIED enum value to the front (this is the best practice). But if
     there already is a zero enum, make sure that pre-existing zero value is at the front.
     """
     for enum in enums.values():
