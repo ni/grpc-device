@@ -432,11 +432,8 @@ TEST_F(NiRFmxWLANDriverApiTests, DSSSModAccFromExample_FetchData_DataLooksReason
   EXPECT_EQ(1, dsss_mod_acc_fetch_evm_per_chip_mean_trace_response.dx());
   EXPECT_EQ(0, dsss_mod_acc_fetch_evm_per_chip_mean_trace_response.evm_per_chip_mean_size());
   EXPECT_EQ(0, dsss_mod_acc_fetch_evm_per_chip_mean_trace_response.evm_per_chip_mean().size());
-  // EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_per_chip_mean_trace_response.evm_per_chip_mean(0)); TODO: Figure out if there's supposed to be values here.
   EXPECT_WARNING(dsss_mod_acc_fetch_constellation_trace_response, EVM_CHIPS_MUST_BE_300_WARNING);
   EXPECT_EQ(0, dsss_mod_acc_fetch_constellation_trace_response.actual_array_size());
-  // EXPECT_EQ(0.0, dsss_mod_acc_fetch_constellation_trace_response.constellation(0).real()); TODO: Figure out if there's supposed to be values here.
-  // EXPECT_EQ(0.0, dsss_mod_acc_fetch_constellation_trace_response.constellation(0).imaginary()); TODO: Figure out if there's supposed to be values here.
 }
 
 // Disabled because it's getting the error during initiate of 
@@ -560,7 +557,6 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReason
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_guard_interval_type_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_guard_interval_type_response.guard_interval_type());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_lsig_parity_check_status_response);
-  // EXPECT_EQ(0, ofdm_mod_acc_fetch_lsig_parity_check_status_response.lsig_parity_check_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigcrc_status_response);
   EXPECT_EQ(-1, ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigbcrc_status_response);
