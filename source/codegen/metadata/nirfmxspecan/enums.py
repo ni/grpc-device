@@ -1698,6 +1698,7 @@ enums = {
         ]
     },
     'IMIFOutputPowerOffsetAuto': {
+        'enum-value-prefix': 'IM_IF_OUTPUT_POWER_OFFSET_AUTO',
         'values': [
             {
                 'name': 'FALSE',

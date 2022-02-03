@@ -978,14 +978,21 @@ chp_validate_noise_calibration_data(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 CfgDigitalEdgeTriggerResponse
-cfg_digital_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& digital_edge_source, const simple_variant<DigitalEdgeTriggerEdge, pb::int32>& digital_edge, const double& trigger_delay, const pb::int32& enable_trigger)
+cfg_digital_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<DigitalEdgeTriggerSource, std::string>& digital_edge_source, const simple_variant<DigitalEdgeTriggerEdge, pb::int32>& digital_edge, const double& trigger_delay, const pb::int32& enable_trigger)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgDigitalEdgeTriggerRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_digital_edge_source(digital_edge_source);
+  const auto digital_edge_source_ptr = digital_edge_source.get_if<DigitalEdgeTriggerSource>();
+  const auto digital_edge_source_raw_ptr = digital_edge_source.get_if<std::string>();
+  if (digital_edge_source_ptr) {
+    request.set_digital_edge_source_mapped(*digital_edge_source_ptr);
+  }
+  else if (digital_edge_source_raw_ptr) {
+    request.set_digital_edge_source_raw(*digital_edge_source_raw_ptr);
+  }
   const auto digital_edge_ptr = digital_edge.get_if<DigitalEdgeTriggerEdge>();
   const auto digital_edge_raw_ptr = digital_edge.get_if<pb::int32>();
   if (digital_edge_ptr) {
@@ -1223,20 +1230,20 @@ cfg_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& ins
 }
 
 CfggNodeBCategoryResponse
-cfgg_node_b_category(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<GNodeBCategory, pb::int32>& g_node_b_category)
+cfgg_node_b_category(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<GNodeBCategory, pb::int32>& gnodeb_category)
 {
   ::grpc::ClientContext context;
 
   auto request = CfggNodeBCategoryRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  const auto g_node_b_category_ptr = g_node_b_category.get_if<GNodeBCategory>();
-  const auto g_node_b_category_raw_ptr = g_node_b_category.get_if<pb::int32>();
-  if (g_node_b_category_ptr) {
-    request.set_g_node_b_category(*g_node_b_category_ptr);
+  const auto gnodeb_category_ptr = gnodeb_category.get_if<GNodeBCategory>();
+  const auto gnodeb_category_raw_ptr = gnodeb_category.get_if<pb::int32>();
+  if (gnodeb_category_ptr) {
+    request.set_gnodeb_category(*gnodeb_category_ptr);
   }
-  else if (g_node_b_category_raw_ptr) {
-    request.set_g_node_b_category_raw(*g_node_b_category_raw_ptr);
+  else if (gnodeb_category_raw_ptr) {
+    request.set_gnodeb_category_raw(*gnodeb_category_raw_ptr);
   }
 
   auto response = CfggNodeBCategoryResponse{};
@@ -4046,7 +4053,7 @@ set_attribute_ni_complex_single_array(const StubPtr& stub, const nidevice_grpc::
 }
 
 SetAttributeStringResponse
-set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const pb::string& attr_val)
+set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const NiRFmxNRAttribute& attribute_id, const simple_variant<NiRFmxNRStringAttributeValuesMapped, std::string>& attr_val)
 {
   ::grpc::ClientContext context;
 
@@ -4054,7 +4061,14 @@ set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_attribute_id(attribute_id);
-  request.set_attr_val(attr_val);
+  const auto attr_val_ptr = attr_val.get_if<NiRFmxNRStringAttributeValuesMapped>();
+  const auto attr_val_raw_ptr = attr_val.get_if<std::string>();
+  if (attr_val_ptr) {
+    request.set_attr_val_mapped(*attr_val_ptr);
+  }
+  else if (attr_val_raw_ptr) {
+    request.set_attr_val_raw(*attr_val_raw_ptr);
+  }
 
   auto response = SetAttributeStringResponse{};
 

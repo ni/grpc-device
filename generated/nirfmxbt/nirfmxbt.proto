@@ -351,14 +351,14 @@ enum MechanicalAttenuationAuto {
 }
 
 enum ModAccAveragingEnabled {
-  MOD_ACC_AVERAGING_ENABLED_FALSE = 0;
-  MOD_ACC_AVERAGING_ENABLED_TRUE = 1;
+  MODACC_AVERAGING_ENABLED_FALSE = 0;
+  MODACC_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum ModAccBurstSynchronizationType {
-  MOD_ACC_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
-  MOD_ACC_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
-  MOD_ACC_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
+  MODACC_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  MODACC_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  MODACC_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
 }
 
 enum PacketType {
@@ -1413,7 +1413,7 @@ message ModAccFetchDEVMRequest {
 
 message ModAccFetchDEVMResponse {
   int32 status = 1;
-  double peak_rmsdevm_maximum = 2;
+  double peak_rms_devm_maximum = 2;
   double peak_devm_maximum = 3;
   double ninetynine_percent_devm = 4;
 }
@@ -1617,7 +1617,7 @@ message ModAccFetchRMSDEVMTraceRequest {
 
 message ModAccFetchRMSDEVMTraceResponse {
   int32 status = 1;
-  repeated float rmsdevm = 2;
+  repeated float rms_devm = 2;
   int32 actual_array_size = 3;
 }
 

@@ -2569,13 +2569,13 @@ namespace nirfmxbt_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 peak_rmsdevm_maximum {};
+      float64 peak_rms_devm_maximum {};
       float64 peak_devm_maximum {};
       float64 ninetynine_percent_devm {};
-      auto status = library_->ModAccFetchDEVM(instrument, selector_string, timeout, &peak_rmsdevm_maximum, &peak_devm_maximum, &ninetynine_percent_devm);
+      auto status = library_->ModAccFetchDEVM(instrument, selector_string, timeout, &peak_rms_devm_maximum, &peak_devm_maximum, &ninetynine_percent_devm);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_peak_rmsdevm_maximum(peak_rmsdevm_maximum);
+        response->set_peak_rms_devm_maximum(peak_rms_devm_maximum);
         response->set_peak_devm_maximum(peak_devm_maximum);
         response->set_ninetynine_percent_devm(ninetynine_percent_devm);
       }
@@ -3149,17 +3149,17 @@ namespace nirfmxbt_grpc {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
-        response->mutable_rmsdevm()->Resize(actual_array_size, 0);
-        float32* rmsdevm = response->mutable_rmsdevm()->mutable_data();
+        response->mutable_rms_devm()->Resize(actual_array_size, 0);
+        float32* rms_devm = response->mutable_rms_devm()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->ModAccFetchRMSDEVMTrace(instrument, selector_string, timeout, rmsdevm, array_size, &actual_array_size);
+        status = library_->ModAccFetchRMSDEVMTrace(instrument, selector_string, timeout, rms_devm, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status_ok(status)) {
-          response->mutable_rmsdevm()->Resize(actual_array_size, 0);
+          response->mutable_rms_devm()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
