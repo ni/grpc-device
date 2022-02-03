@@ -178,10 +178,10 @@ TEST_F(NiRFmxWLANDriverApiTests, DSSSModAccFromExample_FetchData_DataLooksReason
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_B));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_DSSSMODACC, true));
   EXPECT_SUCCESS(session, client::dsss_mod_acc_cfg_measurement_length(stub(), session, "", 0, 1000));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_PULSE_SHAPING_FILTER_TYPE, NIRFMXWLAN_INT32_DSSS_MOD_ACC_PULSE_SHAPING_FILTER_TYPE_RECTANGULAR));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_PULSE_SHAPING_FILTER_TYPE, NIRFMXWLAN_INT32_DSSS_MODACC_PULSE_SHAPING_FILTER_TYPE_RECTANGULAR));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_DSSSMODACC_PULSE_SHAPING_FILTER_PARAMETER, 0.50));
-  EXPECT_SUCCESS(session, client::dsss_mod_acc_cfg_evm_unit(stub(), session, "", DSSS_MOD_ACC_EVM_UNIT_PERCENTAGE));
-  EXPECT_SUCCESS(session, client::dsss_mod_acc_cfg_averaging(stub(), session, "", DSSS_MOD_ACC_AVERAGING_ENABLED_FALSE, 10));
+  EXPECT_SUCCESS(session, client::dsss_mod_acc_cfg_evm_unit(stub(), session, "", DSSS_MODACC_EVM_UNIT_PERCENTAGE));
+  EXPECT_SUCCESS(session, client::dsss_mod_acc_cfg_averaging(stub(), session, "", DSSS_MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   const auto dsss_mod_acc_fetch_evm_response = client::dsss_mod_acc_fetch_evm(stub(), session, "", 10.0);
@@ -191,7 +191,7 @@ TEST_F(NiRFmxWLANDriverApiTests, DSSSModAccFromExample_FetchData_DataLooksReason
   const auto dsss_mod_acc_fetch_constellation_trace_response = client::dsss_mod_acc_fetch_constellation_trace(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, dsss_mod_acc_fetch_evm_response);
-  EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_response.rmsevm_mean());
+  EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_response.rms_evm_mean());
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_response.peak_evm80211_2016_maximum());
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_response.peak_evm80211_2007_maximum());
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_response.peak_evm80211_1999_maximum());
@@ -204,7 +204,7 @@ TEST_F(NiRFmxWLANDriverApiTests, DSSSModAccFromExample_FetchData_DataLooksReason
   EXPECT_EQ(0, dsss_mod_acc_fetch_ppdu_information_response.preamble_type());
   EXPECT_EQ(0, dsss_mod_acc_fetch_ppdu_information_response.locked_clocks_bit());
   EXPECT_EQ(0, dsss_mod_acc_fetch_ppdu_information_response.header_crc_status());
-  EXPECT_EQ(0, dsss_mod_acc_fetch_ppdu_information_response.psducrc_status());
+  EXPECT_EQ(0, dsss_mod_acc_fetch_ppdu_information_response.psdu_crc_status());
   EXPECT_SUCCESS(session, dsss_mod_acc_fetch_iq_impairments_response);
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_iq_impairments_response.iq_origin_offset_mean());
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_iq_impairments_response.iq_gain_imbalance_mean());
@@ -298,12 +298,12 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReason
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e06));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OFDMMODACC, true));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_TRUE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MOD_ACC_AVERAGING_ENABLED_FALSE, 10));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
@@ -322,9 +322,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReason
   const auto ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response = client::ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rmsevm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_numberof_symbols_used_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_frequency_error_mean_response);
@@ -346,9 +346,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReason
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_lsig_parity_check_status_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_lsig_parity_check_status_response.lsig_parity_check_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigcrc_status_response);
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sigcrc_status());
+  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigbcrc_status_response);
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigbcrc_status_response.sigbcrc_status());
+  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigbcrc_status_response.sigb_crc_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_pilot_constellation_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).real());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).imaginary());
@@ -358,9 +358,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReason
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rms_evm_per_subcarrier_mean(0));
 }
 
 // NOTE: disabled due to "scanf_s" in example's source code
@@ -412,13 +412,13 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e06));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OFDMMODACC, true));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_TRUE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MOD_ACC_AVERAGING_ENABLED_FALSE, 10));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_MATRIX_POWER_ENABLED, NIRFMXWLAN_INT32_OFDM_MOD_ACC_CHANNEL_MATRIX_POWER_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MODACC_AVERAGING_ENABLED_FALSE, 10));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_MATRIX_POWER_ENABLED, NIRFMXWLAN_INT32_OFDM_MODACC_CHANNEL_MATRIX_POWER_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   int32* MCSIndexArray = NULL;
@@ -509,9 +509,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   }
 
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rmsevm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_numberof_symbols_used_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_ppdu_type_response);
@@ -521,9 +521,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_lsig_parity_check_status_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_lsig_parity_check_status_response.lsig_parity_check_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigcrc_status_response);
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sigcrc_status());
+  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigbcrc_status_response);
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigbcrc_status_response.sigbcrc_status());
+  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigbcrc_status_response.sigb_crc_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_number_of_users_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_number_of_users_response.number_of_users());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_mcs_index_response);
@@ -543,15 +543,15 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_symbol_clock_error_mean_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_symbol_clock_error_mean_response.symbol_clock_error_mean());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_stream_rmsevm_response);
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_data_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_pilot_rmsevm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_data_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_pilot_rms_evm_mean());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rms_evm_per_subcarrier_mean(0));
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_pilot_constellation_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).real());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).imaginary());
@@ -593,13 +593,13 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccSpeedOptimizedFromExample_FetchData_D
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDM_LTF_SIZE, NIRFMXWLAN_INT32_OFDM_LTF_SIZE_4_X));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OFDMMODACC, true));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_TRUE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MOD_ACC_AVERAGING_ENABLED_FALSE, 10));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_BURST_START_DETECTION_ENABLED, NIRFMXWLAN_INT32_OFDM_MOD_ACC_BURST_START_DETECTION_ENABLED_FALSE));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED, NIRFMXWLAN_INT32_OFDM_MOD_ACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MODACC_AVERAGING_ENABLED_FALSE, 10));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_BURST_START_DETECTION_ENABLED, NIRFMXWLAN_INT32_OFDM_MODACC_BURST_START_DETECTION_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED, NIRFMXWLAN_INT32_OFDM_MODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
@@ -608,9 +608,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccSpeedOptimizedFromExample_FetchData_D
   const auto ofdm_mod_acc_fetch_symbol_clock_error_mean_response = client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rmsevm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_numberof_symbols_used_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_frequency_error_mean_response);
@@ -639,8 +639,8 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTriggerBasedPPDUFromExample_FetchData
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDM_PE_DISAMBIGUITY, 0));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OFDMMODACC, true));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE, NIRFMXWLAN_INT32_OFDM_MOD_ACC_UNUSED_TONE_ERROR_MASK_REFERENCE_LIMIT1));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MOD_ACC_AVERAGING_ENABLED_FALSE, 10));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE, NIRFMXWLAN_INT32_OFDM_MODACC_UNUSED_TONE_ERROR_MASK_REFERENCE_LIMIT1));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
@@ -655,9 +655,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTriggerBasedPPDUFromExample_FetchData
   const auto ofdm_mod_acc_fetch_unused_tone_error_mean_trace_response = client::ofdm_mod_acc_fetch_unused_tone_error_mean_trace(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rmsevm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_unused_tone_error_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_unused_tone_error_response.unused_tone_error_margin());
   EXPECT_EQ(0, ofdm_mod_acc_fetch_unused_tone_error_response.unused_tone_error_margin_ru_index());
@@ -702,7 +702,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_Dat
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e6));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_TXP|MEASUREMENT_TYPES_OFDMMODACC, true));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MOD_ACC_AVERAGING_ENABLED_FALSE, 10));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::txp_cfg_averaging(stub(), session, "", TXP_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::txp_cfg_maximum_measurement_interval(stub(), session, "", 1e-3));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -711,9 +711,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_Dat
   const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rmsevm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
   EXPECT_SUCCESS(session, txp_fetch_measurement_response);
   EXPECT_EQ(0.0, txp_fetch_measurement_response.average_power_mean());
   EXPECT_EQ(0.0, txp_fetch_measurement_response.peak_power_maximum());
@@ -733,12 +733,12 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccWithEVMBasedAutoLevelFromExample_Fetc
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e06));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OFDMMODACC, true));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MOD_ACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MOD_ACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MOD_ACC_PHASE_TRACKING_ENABLED_TRUE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MOD_ACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MOD_ACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
-  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MOD_ACC_AVERAGING_ENABLED_FALSE, 10));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_auto_level(stub(), session, "", 10.0));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
@@ -758,9 +758,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccWithEVMBasedAutoLevelFromExample_Fetc
   const auto ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response = client::ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rmsevm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rmsevm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_numberof_symbols_used_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_frequency_error_mean_response);
@@ -782,9 +782,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccWithEVMBasedAutoLevelFromExample_Fetc
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_lsig_parity_check_status_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_lsig_parity_check_status_response.lsig_parity_check_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigcrc_status_response);
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sigcrc_status());
+  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigbcrc_status_response);
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigbcrc_status_response.sigbcrc_status());
+  EXPECT_EQ(0, ofdm_mod_acc_fetch_sigbcrc_status_response.sigb_crc_status());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_pilot_constellation_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).real());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).imaginary());
@@ -794,9 +794,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccWithEVMBasedAutoLevelFromExample_Fetc
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rms_evm_per_subcarrier_mean(0));
 }
 
 TEST_F(NiRFmxWLANDriverApiTests, SemFromExample_FetchData_DataLooksReasonable)
