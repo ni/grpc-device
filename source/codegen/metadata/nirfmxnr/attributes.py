@@ -22,6 +22,7 @@ attributes = {
     },
     9437189: {
         'access': 'read-write',
+        'enum': 'DigitalEdgeTriggerSource',
         'name': 'DIGITAL_EDGE_TRIGGER_SOURCE',
         'type': 'char[]'
     },
@@ -72,6 +73,12 @@ attributes = {
     9437200: {
         'access': 'read-write',
         'name': 'NUMBER_OF_SUBBLOCKS',
+        'type': 'int32'
+    },
+    9437201: {
+        'access': 'read-write',
+        'enum': 'SubblockFrequencyDefinition',
+        'name': 'SUBBLOCK_FREQUENCY_DEFINITION',
         'type': 'int32'
     },
     9437202: {

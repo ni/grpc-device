@@ -217,6 +217,7 @@ enums = {
         ]
     },
     'ModAccAveragingEnabled': {
+        'enum-value-prefix': 'MODACC_AVERAGING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -229,6 +230,7 @@ enums = {
         ]
     },
     'ModAccBurstSynchronizationType': {
+        'enum-value-prefix': 'MODACC_BURST_SYNCHRONIZATION_TYPE',
         'values': [
             {
                 'name': 'NONE',
@@ -245,6 +247,7 @@ enums = {
         ]
     },
     'ModAccIQOriginOffsetCorrectionEnabled': {
+        'enum-value-prefix': 'MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -417,6 +420,7 @@ enums = {
         ]
     },
     'TwentydBBandwidthAveragingEnabled': {
+        'enum-value-prefix': 'TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',

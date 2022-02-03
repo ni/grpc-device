@@ -1590,6 +1590,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'DigitalEdgeTriggerSource',
                 'name': 'digitalEdgeSource',
                 'type': 'char[]'
             },
@@ -1888,6 +1889,7 @@ functions = {
             {
                 'direction': 'in',
                 'enum': 'GNodeBCategory',
+                'grpc_name': 'gnodeb_category',
                 'name': 'gNodeBCategory',
                 'type': 'int32'
             }
@@ -3123,6 +3125,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'composite_rms_evm_mean',
                 'name': 'compositeRMSEVMMean',
                 'type': 'float64'
             },
@@ -3343,6 +3346,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pbch_dmrs_constellation',
                 'name': 'pbchdmrsConstellation',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3394,6 +3398,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pbch_dmrs_rms_evm_per_subcarrier_mean',
                 'name': 'pbchdmrsrmsevmPerSubcarrierMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3445,6 +3450,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pbch_dmrs_rms_evm_per_symbol_mean',
                 'name': 'pbchdmrsrmsevmPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3537,6 +3543,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pbch_data_rms_evm_per_subcarrier_mean',
                 'name': 'pbchDataRMSEVMPerSubcarrierMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3588,6 +3595,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pbch_data_rms_evm_per_symbol_mean',
                 'name': 'pbchDataRMSEVMPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3834,6 +3842,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pdsch_dmrs_constellation',
                 'name': 'pdschdmrsConstellation',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3957,6 +3966,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pdsch_ptrs_constellation',
                 'name': 'pdschptrsConstellation',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4090,6 +4100,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pss_rms_evm_per_subcarrier_mean',
                 'name': 'pssrmsevmPerSubcarrierMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4141,6 +4152,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pss_rms_evm_per_symbol_mean',
                 'name': 'pssrmsevmPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4182,6 +4194,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pusch_dmrs_constellation',
                 'name': 'puschdmrsConstellation',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4305,6 +4318,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pusch_ptrs_constellation',
                 'name': 'puschptrsConstellation',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4509,6 +4523,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'rms_evm_high_per_symbol_mean',
                 'name': 'rmsevmHighPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4560,6 +4575,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'rms_evm_low_per_symbol_mean',
                 'name': 'rmsevmLowPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4611,6 +4627,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'rms_evm_per_slot_mean',
                 'name': 'rmsevmPerSlotMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4662,6 +4679,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'rms_evm_per_subcarrier_mean',
                 'name': 'rmsevmPerSubcarrierMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4713,6 +4731,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'rms_evm_per_symbol_mean',
                 'name': 'rmsevmPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4805,6 +4824,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'sss_rms_evm_per_subcarrier_mean',
                 'name': 'sssrmsevmPerSubcarrierMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4856,6 +4876,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'sss_rms_evm_per_symbol_mean',
                 'name': 'sssrmsevmPerSymbolMean',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
