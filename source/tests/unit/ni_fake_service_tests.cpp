@@ -44,6 +44,7 @@ using ::testing::DoAll;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Pointee;
 using ::testing::Return;
@@ -1822,7 +1823,17 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptViSessionArray_CallsAcceptViSession
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-// Test for two-dimension mechanism
+MATCHER_P2(MatchesArray, array, array_size, "")
+{
+  for (int i = 0; i < array_size; i++) {
+    if (arg[i] != array[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+// Test for two-dimension mechanism to ensure we validate size correctly
 TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithCorrectSize_CallsUseATwoDimensionParameter)
 {
   nidevice_grpc::SessionRepository session_repository;
@@ -1834,7 +1845,8 @@ TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithCorrectSize_CallsUseAT
   ViInt32 array_lengths[] = {1, 2, 3};
   ViInt32 array_size = 3;
   // two-dimension call
-  EXPECT_CALL(library, UseATwoDimensionParameter(kTestViSession, _, _, array_size))
+  EXPECT_CALL(library, UseATwoDimensionParameter(kTestViSession, MatchesArray(array, 6), _, array_size))
+      .With(Args<2, 3>(ElementsAreArray(array_lengths)))
       .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
@@ -1853,7 +1865,7 @@ TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithCorrectSize_CallsUseAT
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-// Test for two-dimension mechanism failure
+// Test for two-dimension mechanism failure when the sum of array sizes of the two dimensional array don't match the actual size
 TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithIncorrectSize_FailsUseATwoDimensionParameter)
 {
   nidevice_grpc::SessionRepository session_repository;
@@ -1863,6 +1875,9 @@ TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithIncorrectSize_FailsUse
   std::uint32_t session_id = create_session(library, service, kTestViSession);
   ViInt32 array[] = {1, 2, 2, 3, 3, 3};
   ViInt32 array_lengths[] = {2, 5, 6};
+
+  EXPECT_CALL(library, UseATwoDimensionParameter(kTestViSession, _, _, _))
+      .Times(0);
 
   ::grpc::ServerContext context;
   nifake_grpc::UseATwoDimensionParameterRequest request;
@@ -1878,6 +1893,7 @@ TEST(NiFakeServiceTests, NiFakeService_UseTwoDimensionWithIncorrectSize_FailsUse
 
   EXPECT_FALSE(status.ok());
   EXPECT_EQ(::grpc::INVALID_ARGUMENT, status.error_code());
+  EXPECT_THAT(status.error_message(), HasSubstr("The total size of the two-dimensional array"));
 }
 
 // Test for ivi-dance-with-a-twist mechanism
