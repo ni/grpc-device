@@ -421,10 +421,10 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME, NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME_FDD));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_DOWNLINK_TEST_MODEL, NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_1));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MOD_ACC_SYNCHRONIZATION_MODE_SLOT));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MOD_ACC_AVERAGING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MODACC_SYNCHRONIZATION_MODE_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MODACC_AVERAGING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_COUNT, 10));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MOD_ACC_MEASUREMENT_LENGTH_UNIT_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET, 0.0));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -501,15 +501,15 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean(0));
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean(0));
 }
 
 TEST_F(NiRFmxNRDriverApiTests, DLModAccNonContiguousMultiCarrierFromExample_FetchData_DataLooksReasonable)
@@ -556,8 +556,8 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccNonContiguousMultiCarrierFromExample_Fetc
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME, NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME_FDD));
   }
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MOD_ACC_SYNCHRONIZATION_MODE_SLOT));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MOD_ACC_MEASUREMENT_LENGTH_UNIT_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MODACC_SYNCHRONIZATION_MODE_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET, 0.0));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -659,15 +659,15 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccNonContiguousMultiCarrierFromExample_Fetc
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean(0));
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean(0));
 }
 
 TEST_F(NiRFmxNRDriverApiTests, DLModAccSingleCarrierFromExample_FetchData_DataLooksReasonable)
@@ -684,10 +684,10 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccSingleCarrierFromExample_FetchData_DataLo
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_DOWNLINK_TEST_MODEL, NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_1));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME, NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_DUPLEX_SCHEME_FDD));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MOD_ACC_SYNCHRONIZATION_MODE_SLOT));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MOD_ACC_AVERAGING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MODACC_SYNCHRONIZATION_MODE_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MODACC_AVERAGING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_COUNT, 10));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MOD_ACC_MEASUREMENT_LENGTH_UNIT_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET, 0.0));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -758,15 +758,15 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccSingleCarrierFromExample_FetchData_DataLo
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean(0));
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean(0));
 }
 
 TEST_F(NiRFmxNRDriverApiTests, DLModAccUserDefinedChannelsFromExample_FetchData_DataLooksReasonable)
@@ -820,10 +820,10 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccUserDefinedChannelsFromExample_FetchData_
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_SSB_SUBCARRIER_OFFSET, 0));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_SSB_PATTERN, NIRFMXNR_INT32_SSB_PATTERN_B_3_GHZ_TO_6_GHZ));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MOD_ACC_SYNCHRONIZATION_MODE_SLOT));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MOD_ACC_AVERAGING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MODACC_SYNCHRONIZATION_MODE_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MODACC_AVERAGING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_COUNT, 10));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MOD_ACC_MEASUREMENT_LENGTH_UNIT_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET, 0.0));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -876,15 +876,15 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccUserDefinedChannelsFromExample_FetchData_
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean(0));
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean(0));
 }
 
 TEST_F(NiRFmxNRDriverApiTests, DLPVTContiguousMultiCarrierFromExample_FetchData_DataLooksReasonable)
@@ -1070,7 +1070,7 @@ TEST_F(NiRFmxNRDriverApiTests, ModAccAcpChpObwSemTxpCompositeSingleCarrierFromEx
   EXPECT_SUCCESS(session, client::chp_cfg_sweep_time(stub(), session, "", CHP_SWEEP_TIME_AUTO_TRUE, 1.0e-3));
   EXPECT_SUCCESS(session, client::obw_cfg_sweep_time(stub(), session, "", OBW_SWEEP_TIME_AUTO_TRUE, 1.0e-3));
   EXPECT_SUCCESS(session, client::sem_cfg_sweep_time(stub(), session, "", SEM_SWEEP_TIME_AUTO_TRUE, 1.0e-3));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MOD_ACC_AVERAGING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MODACC_AVERAGING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_COUNT, 10));
   EXPECT_SUCCESS(session, client::acp_cfg_averaging(stub(), session, "", ACP_AVERAGING_ENABLED_FALSE, 10, ACP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::chp_cfg_averaging(stub(), session, "", CHP_AVERAGING_ENABLED_FALSE, 10, CHP_AVERAGING_TYPE_RMS));
@@ -1078,7 +1078,7 @@ TEST_F(NiRFmxNRDriverApiTests, ModAccAcpChpObwSemTxpCompositeSingleCarrierFromEx
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_TXP_AVERAGING_ENABLED, NIRFMXNR_INT32_TXP_AVERAGING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_TXP_AVERAGING_COUNT, 10));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MOD_ACC_MEASUREMENT_LENGTH_UNIT_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET, 0.0));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_TXP_MEASUREMENT_OFFSET, 0.0));
@@ -1618,10 +1618,10 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_DURATION, NIRFMXNR_INT32_PUSCH_DMRS_DURATION_SINGLE_SYMBOL));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_ADDITIONAL_POSITIONS, 0));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MOD_ACC_SYNCHRONIZATION_MODE_SLOT));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MOD_ACC_AVERAGING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MODACC_SYNCHRONIZATION_MODE_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MODACC_AVERAGING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_COUNT, 10));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MOD_ACC_MEASUREMENT_LENGTH_UNIT_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET, 0.0));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -1695,20 +1695,20 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_EQ(0.0, mod_acc_fetch_pusch_data_constellation_trace_response.pusch_data_constellation(0).real());
   EXPECT_EQ(0.0, mod_acc_fetch_pusch_data_constellation_trace_response.pusch_data_constellation(0).imaginary());
   EXPECT_SUCCESS(session, mod_acc_fetch_puschdmrs_constellation_trace_response);
-  EXPECT_EQ(0.0, mod_acc_fetch_puschdmrs_constellation_trace_response.puschdmrs_constellation(0).real());
-  EXPECT_EQ(0.0, mod_acc_fetch_puschdmrs_constellation_trace_response.puschdmrs_constellation(0).imaginary());
+  EXPECT_EQ(0.0, mod_acc_fetch_puschdmrs_constellation_trace_response.pusch_dmrs_constellation(0).real());
+  EXPECT_EQ(0.0, mod_acc_fetch_puschdmrs_constellation_trace_response.pusch_dmrs_constellation(0).imaginary());
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean(0));
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean(0));
   EXPECT_SUCCESS(session, mod_acc_fetch_spectral_flatness_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_spectral_flatness_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_spectral_flatness_trace_response.dx());
@@ -1781,8 +1781,8 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccNonContiguousMultiCarrierFromExample_Fetc
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_ADDITIONAL_POSITIONS, 0));
   }
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MOD_ACC_SYNCHRONIZATION_MODE_SLOT));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MOD_ACC_MEASUREMENT_LENGTH_UNIT_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MODACC_SYNCHRONIZATION_MODE_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET, 0.0));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -1865,15 +1865,15 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccNonContiguousMultiCarrierFromExample_Fetc
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean(0));
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean(0));
 }
 
 TEST_F(NiRFmxNRDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataLooksReasonable)
@@ -1922,10 +1922,10 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataLo
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_DURATION, NIRFMXNR_INT32_PUSCH_DMRS_DURATION_SINGLE_SYMBOL));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_ADDITIONAL_POSITIONS, 0));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_MODACC, true));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MOD_ACC_SYNCHRONIZATION_MODE_SLOT));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MOD_ACC_AVERAGING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE, NIRFMXNR_INT32_MODACC_SYNCHRONIZATION_MODE_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_ENABLED, NIRFMXNR_INT32_MODACC_AVERAGING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_AVERAGING_COUNT, 10));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MOD_ACC_MEASUREMENT_LENGTH_UNIT_SLOT));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH_UNIT, NIRFMXNR_INT32_MODACC_MEASUREMENT_LENGTH_UNIT_SLOT));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET, 0.0));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -1960,20 +1960,20 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataLo
   EXPECT_EQ(0.0, mod_acc_fetch_pusch_data_constellation_trace_response.pusch_data_constellation(0).real());
   EXPECT_EQ(0.0, mod_acc_fetch_pusch_data_constellation_trace_response.pusch_data_constellation(0).imaginary());
   EXPECT_SUCCESS(session, mod_acc_fetch_puschdmrs_constellation_trace_response);
-  EXPECT_EQ(0.0, mod_acc_fetch_puschdmrs_constellation_trace_response.puschdmrs_constellation(0).real());
-  EXPECT_EQ(0.0, mod_acc_fetch_puschdmrs_constellation_trace_response.puschdmrs_constellation(0).imaginary());
+  EXPECT_EQ(0.0, mod_acc_fetch_puschdmrs_constellation_trace_response.pusch_dmrs_constellation(0).real());
+  EXPECT_EQ(0.0, mod_acc_fetch_puschdmrs_constellation_trace_response.pusch_dmrs_constellation(0).imaginary());
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rmsevm_per_subcarrier_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response.rms_evm_per_subcarrier_mean(0));
   EXPECT_SUCCESS(session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.dx());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean_size());
-  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean().size());
-  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rmsevm_per_symbol_mean(0));
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean_size());
+  EXPECT_EQ(999, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean().size());
+  EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response.rms_evm_per_symbol_mean(0));
   EXPECT_SUCCESS(session, mod_acc_fetch_spectral_flatness_trace_response);
   EXPECT_EQ(0.0, mod_acc_fetch_spectral_flatness_trace_response.x0());
   EXPECT_EQ(0.0, mod_acc_fetch_spectral_flatness_trace_response.dx());
