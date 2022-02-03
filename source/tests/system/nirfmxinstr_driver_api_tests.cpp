@@ -320,10 +320,10 @@ TEST_F(NiRFmxInstrDriverApiTests, CallCheckMethods_SucceedsWithReasonableRespons
   const auto list_exists_response = EXPECT_SUCCESS(session, client::check_if_list_exists(stub(), session, "NOTALIST"));
   const auto self_cal_response = EXPECT_SUCCESS(session, client::is_self_calibrate_valid(stub(), session, ""));
 
-  EXPECT_EQ(status_response.acquisition_done(), Boolean::BOOLEAN_TRUE);
-  EXPECT_EQ(list_exists_response.list_exists(), Boolean::BOOLEAN_FALSE);
+  EXPECT_EQ(status_response.acquisition_done(), true);
+  EXPECT_EQ(list_exists_response.list_exists(), false);
   EXPECT_EQ(list_exists_response.personality(), Personality::PERSONALITY_NONE);
-  EXPECT_EQ(self_cal_response.self_calibrate_valid(), Boolean::BOOLEAN_TRUE);
+  EXPECT_EQ(self_cal_response.self_calibrate_valid(), true);
   EXPECT_THAT(self_cal_response.valid_steps_array(), ElementsAreArray(std::vector<SelfCalStep>{SelfCalStep::SELF_CAL_STEP_DIGITIZER_SELF_CAL}));
 }
 

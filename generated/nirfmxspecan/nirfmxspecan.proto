@@ -1247,11 +1247,6 @@ enum AmpmThresholdType {
   AMPM_THRESHOLD_TYPE_ABSOLUTE = 1;
 }
 
-enum Boolean {
-  BOOLEAN_FALSE = 0;
-  BOOLEAN_TRUE = 1;
-}
-
 enum CcdfRbwFilterType {
   CCDF_RBW_FILTER_TYPE_UNSPECIFIED = 0;
   CCDF_RBW_FILTER_TYPE_GAUSSIAN = 1;
@@ -4078,7 +4073,7 @@ message CheckMeasurementStatusRequest {
 
 message CheckMeasurementStatusResponse {
   int32 status = 1;
-  int32 is_done = 2;
+  bool is_done = 2;
 }
 
 message ClearAllNamedResultsRequest {
@@ -4120,10 +4115,7 @@ message CloneSignalConfigurationResponse {
 
 message CloseRequest {
   nidevice_grpc.Session instrument = 1;
-  oneof force_destroy_enum {
-    Boolean force_destroy = 2;
-    int32 force_destroy_raw = 3;
-  }
+  bool force_destroy = 2;
 }
 
 message CloseResponse {

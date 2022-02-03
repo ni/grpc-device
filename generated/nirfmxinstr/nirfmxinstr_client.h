@@ -39,7 +39,7 @@ CfgSParameterExternalAttenuationTypeResponse cfg_s_parameter_external_attenuatio
 CheckAcquisitionStatusResponse check_acquisition_status(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 CheckIfListExistsResponse check_if_list_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& list_name);
 CheckIfSignalConfigurationExistsResponse check_if_signal_configuration_exists(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name);
-CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<Boolean, pb::int32>& force_destroy);
+CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool& force_destroy);
 DeleteAllExternalAttenuationTablesResponse delete_all_external_attenuation_tables(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 DeleteExternalAttenuationTableResponse delete_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name);
 DisableCalibrationPlaneResponse disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);

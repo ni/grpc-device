@@ -436,7 +436,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'Boolean',
+                'grpc_type': 'bool',
                 'name': 'acquisitionDone',
                 'type': 'int32'
             }
@@ -458,7 +458,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'Boolean',
+                'grpc_type': 'bool',
                 'name': 'listExists',
                 'type': 'int32'
             },
@@ -486,7 +486,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'Boolean',
+                'grpc_type': 'bool',
                 'name': 'signalConfigurationExists',
                 'type': 'int32'
             },
@@ -509,7 +509,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Boolean',
+                'grpc_type': 'bool',
                 'name': 'forceDestroy',
                 'type': 'int32'
             }
@@ -1742,7 +1742,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'Boolean',
+                'grpc_type': 'bool',
                 'name': 'selfCalibrateValid',
                 'type': 'int32'
             },
