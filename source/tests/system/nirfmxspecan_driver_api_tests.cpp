@@ -481,6 +481,10 @@ class ResourceTuplePrinter {
       param_value.replace(pos, 1, "_");
     }
 
+    if (param_value.empty()) {
+      param_value = "NONAME";
+    }
+
     return param_value;
   }
 };
