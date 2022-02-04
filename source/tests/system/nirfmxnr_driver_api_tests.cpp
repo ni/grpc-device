@@ -206,12 +206,12 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
   EXPECT_LT(0.0, fetch_subblock_responses[1].integration_bandwidth());
   EXPECT_LT(0.0, fetch_subblock_responses[1].frequency());
   EXPECT_GT(0.0, fetch_measurement_responses[0].lower_relative_power());
-  EXPECT_GT(0.0, (fetch_measurement_responses[0].upper_relative_power()));
+  EXPECT_GT(0.0, fetch_measurement_responses[0].upper_relative_power());
   EXPECT_GT(0.0, fetch_measurement_responses[0].lower_absolute_power());
-  EXPECT_GT(0.0, (fetch_measurement_responses[0].upper_absolute_power()));
-  EXPECT_GT(0.0, (fetch_measurement_responses[1].lower_relative_power()));
+  EXPECT_GT(0.0, fetch_measurement_responses[0].upper_absolute_power());
+  EXPECT_GT(0.0, fetch_measurement_responses[1].lower_relative_power());
   EXPECT_GT(0.0, fetch_measurement_responses[1].upper_relative_power());
-  EXPECT_GT(0.0, (fetch_measurement_responses[1].lower_absolute_power()));
+  EXPECT_GT(0.0, fetch_measurement_responses[1].lower_absolute_power());
   EXPECT_GT(0.0, fetch_measurement_responses[1].upper_absolute_power());
 }
 
@@ -352,13 +352,12 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH, 1));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32 downlinkTestModel = RFMXNR_VAL_DOWNLINK_TEST_MODEL_TM1_1;
   std::vector<float64> compositeRMSEVMMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
   std::vector<float64> compositePeakEVMMaximum(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
   std::vector<int> compositePeakEVMSlotIndex(NUMBER_OF_COMPONENT_CARRIERS, 0);
   std::vector<int> compositePeakEVMSymbolIndex(NUMBER_OF_COMPONENT_CARRIERS, 0);
   std::vector<int> compositePeakEVMSubcarrierIndex(NUMBER_OF_COMPONENT_CARRIERS, 0);
-  std::vector<float64> PDSCHRMSEVMMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
+  std::vector<float64> pdschRMSEVMMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
   std::vector<float64> componentCarrierFrequencyErrorMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
   std::vector<float64> componentCarrierIQOriginOffsetMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
   std::vector<float64> componentCarrierIQGainImbalanceMean(NUMBER_OF_COMPONENT_CARRIERS, 0.0);
@@ -387,25 +386,7 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
     componentCarrierIQOriginOffsetMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN);
     componentCarrierIQGainImbalanceMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN);
     componentCarrierQuadratureErrorMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
-    switch (downlinkTestModel)
-    {
-      case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_1:
-      case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM1_2:
-      case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_3:
-        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
-        break;
-      case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM2:
-      case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_1:
-        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN);
-        break;
-      case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM2_A:
-      case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_1_A:
-        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_256QAM_RMS_EVM_MEAN);
-        break;
-      case NIRFMXNR_INT32_DOWNLINK_TEST_MODEL_TM3_2:
-        PDSCHRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_16QAM_RMS_EVM_MEAN);
-        break;
-    }
+    pdschRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
     mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i] = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
     EXPECT_ERROR(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i]);
     mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i] = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
@@ -430,8 +411,8 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_TRUE(isnan(componentCarrierIQGainImbalanceMean[1]));
   EXPECT_TRUE(isnan(componentCarrierQuadratureErrorMean[0]));
   EXPECT_TRUE(isnan(componentCarrierQuadratureErrorMean[1]));
-  EXPECT_TRUE(isnan(PDSCHRMSEVMMean[0]));
-  EXPECT_TRUE(isnan(PDSCHRMSEVMMean[1]));
+  EXPECT_TRUE(isnan(pdschRMSEVMMean[0]));
+  EXPECT_TRUE(isnan(pdschRMSEVMMean[1]));
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[0].x0());
   EXPECT_EQ(0.0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[0].dx());
   EXPECT_EQ(0, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[0].rms_evm_per_subcarrier_mean_size());
