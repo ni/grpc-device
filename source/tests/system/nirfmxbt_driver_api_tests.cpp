@@ -157,8 +157,8 @@ TEST_F(NiRFmxBTDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
   const auto absolute_power_trace = client::acp_fetch_absolute_power_trace(stub(), session, "", 10.0);
   EXPECT_SUCCESS(session, absolute_power_trace);
   const auto fetched_spectrum = client::acp_fetch_spectrum(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, fetched_spectrum);
 
+  EXPECT_SUCCESS(session, fetched_spectrum);
   EXPECT_GT(reference_channel_power.reference_channel_power(), 0.0);
   EXPECT_THAT(measurement_response.lower_absolute_power(), Each(Ne(0.0)));
   EXPECT_THAT(measurement_response.upper_absolute_power(), Each(Ne(0.0)));
@@ -214,27 +214,16 @@ TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
 TEST_F(NiRFmxBTDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 {
   auto session = init_session(stub(), kPxi5663e);
-  EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
-  EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.402000e9));
-  EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.0));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQPowerEdgeTriggerSlope::IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TriggerMinimumQuietTimeMode::TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 100e-6, IQPowerEdgeTriggerLevelType::IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, Boolean::BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::cfg_packet_type(stub(), session, "", PacketType::PACKET_TYPE_DH1));
-  EXPECT_SUCCESS(session, client::cfg_data_rate(stub(), session, "", 1000000));
-  EXPECT_SUCCESS(session, client::cfg_payload_length(stub(), session, "", PayloadLengthMode::PAYLOAD_LENGTH_MODE_AUTO, 10));
-  EXPECT_SUCCESS(session, client::cfg_le_direction_finding(stub(), session, "", DirectionFindingMode::DIRECTION_FINDING_MODE_DISABLED, 160e-6, 1e-6));
-  EXPECT_SUCCESS(session, client::auto_level(stub(), session, "", 10e-3));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TXP, Boolean::BOOLEAN_TRUE));
-  EXPECT_SUCCESS(session, client::txp_cfg_burst_synchronization_type(stub(), session, "", TxpBurstSynchronizationType::TXP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE));
-  EXPECT_SUCCESS(session, client::txp_cfg_averaging(stub(), session, "", TxpAveragingEnabled::TXP_AVERAGING_ENABLED_FALSE, 10));
-  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
   EXPECT_SUCCESS(
       session,
-      client::set_attribute_i32(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_ACP_AVERAGING_ENABLED, NiRFmxBTInt32AttributeValues::NIRFMXBT_INT32_ACP_AVERAGING_ENABLED_TRUE));
+      client::set_attribute_i32(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, NiRFmxBTInt32AttributeValues::NIRFMXBT_INT32_TXP_AVERAGING_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  auto get_response = client::get_attribute_i32(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_ACP_AVERAGING_ENABLED);
+  auto get_response = client::get_attribute_i32(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED);
 
   EXPECT_SUCCESS(session, get_response);
-  EXPECT_EQ(NiRFmxBTInt32AttributeValues::NIRFMXBT_INT32_ACP_AVERAGING_ENABLED_TRUE, get_response.attr_val());
+  EXPECT_EQ(NiRFmxBTInt32AttributeValues::NIRFMXBT_INT32_TXP_AVERAGING_ENABLED_TRUE, get_response.attr_val());
 }
 
 }  // namespace
