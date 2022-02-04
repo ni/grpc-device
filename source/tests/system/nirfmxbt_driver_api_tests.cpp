@@ -157,8 +157,8 @@ TEST_F(NiRFmxBTDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
   const auto absolute_power_trace = client::acp_fetch_absolute_power_trace(stub(), session, "", 10.0);
   EXPECT_SUCCESS(session, absolute_power_trace);
   const auto fetched_spectrum = client::acp_fetch_spectrum(stub(), session, "", 10.0);
-
   EXPECT_SUCCESS(session, fetched_spectrum);
+
   EXPECT_GT(reference_channel_power.reference_channel_power(), 0.0);
   EXPECT_THAT(measurement_response.lower_absolute_power(), Each(Ne(0.0)));
   EXPECT_THAT(measurement_response.upper_absolute_power(), Each(Ne(0.0)));
