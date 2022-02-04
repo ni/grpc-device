@@ -674,6 +674,10 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
     ofdm_mod_acc_fetch_mcs_index_response = client::ofdm_mod_acc_fetch_mcs_index(stub(), session, user_string_response.selector_string_out(), 10.0);
     ofdm_mod_acc_fetch_number_of_space_time_streams_response = client::ofdm_mod_acc_fetch_number_of_space_time_streams(stub(), session, user_string_response.selector_string_out(), 10.0);
     spaceTimeStreamOffsetArray[i] = get_attr_i32(session, user_string_response.selector_string_out(), NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET);
+    if (MCSIndexArray == NULL || numberOfSpaceTimeStreamsArray == NULL)
+    {
+      FAIL() << "Could not allocate array";
+    }
     if ((spaceTimeStreamOffsetArray[i] + numberOfSpaceTimeStreamsArray[i]) > numberOfStreamResults)
     {
       numberOfStreamResults = spaceTimeStreamOffsetArray[i] + numberOfSpaceTimeStreamsArray[i];
