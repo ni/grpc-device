@@ -27,18 +27,6 @@ enums = {
             }
         ]
     },
-    'Boolean': {
-        'values': [
-            {
-                'name': 'TRUE',
-                'value': 1
-            },
-            {
-                'name': 'FALSE',
-                'value': 0
-            }
-        ]
-    },
     'ChannelCoupling': {
         'values': [
             {

@@ -211,11 +211,6 @@ enum NiRFmxInstrAttribute {
   NIRFMXINSTR_ATTRIBUTE_THERMAL_CORRECTION_TEMPERATURE_RESOLUTION = 120;
 }
 
-enum Boolean {
-  BOOLEAN_FALSE = 0;
-  BOOLEAN_TRUE = 1;
-}
-
 enum ExportSignalSource {
   EXPORT_SIGNAL_SOURCE_START_TRIGGER = 0;
   EXPORT_SIGNAL_SOURCE_REFERENCE_TRIGGER = 1;
@@ -559,8 +554,7 @@ message CheckAcquisitionStatusRequest {
 
 message CheckAcquisitionStatusResponse {
   int32 status = 1;
-  Boolean acquisition_done = 2;
-  int32 acquisition_done_raw = 3;
+  bool acquisition_done = 2;
 }
 
 message CheckIfListExistsRequest {
@@ -570,10 +564,9 @@ message CheckIfListExistsRequest {
 
 message CheckIfListExistsResponse {
   int32 status = 1;
-  Boolean list_exists = 2;
-  int32 list_exists_raw = 3;
-  Personality personality = 4;
-  int32 personality_raw = 5;
+  bool list_exists = 2;
+  Personality personality = 3;
+  int32 personality_raw = 4;
 }
 
 message CheckIfSignalConfigurationExistsRequest {
@@ -583,18 +576,14 @@ message CheckIfSignalConfigurationExistsRequest {
 
 message CheckIfSignalConfigurationExistsResponse {
   int32 status = 1;
-  Boolean signal_configuration_exists = 2;
-  int32 signal_configuration_exists_raw = 3;
-  Personality personality = 4;
-  int32 personality_raw = 5;
+  bool signal_configuration_exists = 2;
+  Personality personality = 3;
+  int32 personality_raw = 4;
 }
 
 message CloseRequest {
   nidevice_grpc.Session instrument = 1;
-  oneof force_destroy_enum {
-    Boolean force_destroy = 2;
-    int32 force_destroy_raw = 3;
-  }
+  bool force_destroy = 2;
 }
 
 message CloseResponse {
@@ -1046,10 +1035,9 @@ message IsSelfCalibrateValidRequest {
 
 message IsSelfCalibrateValidResponse {
   int32 status = 1;
-  Boolean self_calibrate_valid = 2;
-  int32 self_calibrate_valid_raw = 3;
-  repeated SelfCalStep valid_steps_array = 4;
-  int32 valid_steps_raw = 5;
+  bool self_calibrate_valid = 2;
+  repeated SelfCalStep valid_steps_array = 3;
+  int32 valid_steps_raw = 4;
 }
 
 message LoadAllConfigurationsRequest {

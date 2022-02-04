@@ -572,8 +572,7 @@ namespace nirfmxinstr_grpc {
       auto status = library_->CheckAcquisitionStatus(instrument, &acquisition_done);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_acquisition_done(static_cast<nirfmxinstr_grpc::Boolean>(acquisition_done));
-        response->set_acquisition_done_raw(acquisition_done);
+        response->set_acquisition_done(acquisition_done);
       }
       return ::grpc::Status::OK;
     }
@@ -598,8 +597,7 @@ namespace nirfmxinstr_grpc {
       auto status = library_->CheckIfListExists(instrument, list_name, &list_exists, &personality);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_list_exists(static_cast<nirfmxinstr_grpc::Boolean>(list_exists));
-        response->set_list_exists_raw(list_exists);
+        response->set_list_exists(list_exists);
         response->set_personality(static_cast<nirfmxinstr_grpc::Personality>(personality));
         response->set_personality_raw(personality);
       }
@@ -626,8 +624,7 @@ namespace nirfmxinstr_grpc {
       auto status = library_->CheckIfSignalConfigurationExists(instrument, signal_name, &signal_configuration_exists, &personality);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_signal_configuration_exists(static_cast<nirfmxinstr_grpc::Boolean>(signal_configuration_exists));
-        response->set_signal_configuration_exists_raw(signal_configuration_exists);
+        response->set_signal_configuration_exists(signal_configuration_exists);
         response->set_personality(static_cast<nirfmxinstr_grpc::Personality>(personality));
         response->set_personality_raw(personality);
       }
@@ -648,22 +645,7 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      int32 force_destroy;
-      switch (request->force_destroy_enum_case()) {
-        case nirfmxinstr_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroy: {
-          force_destroy = static_cast<int32>(request->force_destroy());
-          break;
-        }
-        case nirfmxinstr_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroyRaw: {
-          force_destroy = static_cast<int32>(request->force_destroy_raw());
-          break;
-        }
-        case nirfmxinstr_grpc::CloseRequest::ForceDestroyEnumCase::FORCE_DESTROY_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for force_destroy was not specified or out of range");
-          break;
-        }
-      }
-
+      int32 force_destroy = request->force_destroy();
       session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       response->set_status(status);
@@ -2014,8 +1996,7 @@ namespace nirfmxinstr_grpc {
       auto status = library_->IsSelfCalibrateValid(instrument, selector_string, &self_calibrate_valid, &valid_steps);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_self_calibrate_valid(static_cast<nirfmxinstr_grpc::Boolean>(self_calibrate_valid));
-        response->set_self_calibrate_valid_raw(self_calibrate_valid);
+        response->set_self_calibrate_valid(self_calibrate_valid);
         if (valid_steps & 0x20)
           response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_AMPLITUDE_ACCURACY);
         if (valid_steps & 0x200)

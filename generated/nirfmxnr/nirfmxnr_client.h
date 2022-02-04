@@ -86,7 +86,7 @@ ClearAllNamedResultsResponse clear_all_named_results(const StubPtr& stub, const 
 ClearNamedResultResponse clear_named_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 ClearNoiseCalibrationDatabaseResponse clear_noise_calibration_database(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 CloneSignalConfigurationResponse clone_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& old_signal_name, const pb::string& new_signal_name);
-CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<Boolean, pb::int32>& force_destroy);
+CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool& force_destroy);
 CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 CreateListResponse create_list(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& list_name);
 CreateListStepResponse create_list_step(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
