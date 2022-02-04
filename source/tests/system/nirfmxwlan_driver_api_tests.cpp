@@ -83,7 +83,7 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model, c
 
 InitializeResponse init(const client::StubPtr& stub, const std::string& model)
 {
-   return init(stub, model, "FakeDevice");
+  return init(stub, model, "FakeDevice");
 }
 
 nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
@@ -139,7 +139,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_Dat
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 5.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_TRUE));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_AG));
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e6));
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_TXP|MEASUREMENT_TYPES_OFDMMODACC, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_TXP | MEASUREMENT_TYPES_OFDMMODACC, true));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::txp_cfg_averaging(stub(), session, "", TXP_AVERAGING_ENABLED_FALSE, 10));
@@ -150,7 +150,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_Dat
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
   const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
   EXPECT_WARNING(txp_fetch_measurement_response, RISING_EDGE_DETECTION_FAILED_WARNING);
-  
+
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
@@ -195,7 +195,7 @@ TEST_F(NiRFmxWLANDriverApiTests, SemFromExample_FetchData_DataLooksReasonable)
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin().size());
   EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin(0));
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_frequency_size());
-  EXPECT_EQ( 4, sem_fetch_lower_offset_margin_array_response.margin_frequency().size());
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_frequency().size());
   EXPECT_LT(0.0, sem_fetch_lower_offset_margin_array_response.margin_frequency(0));
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_absolute_power_size());
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_absolute_power().size());
@@ -233,11 +233,11 @@ TEST_F(NiRFmxWLANDriverApiTests, SemFromExample_FetchData_DataLooksReasonable)
 TEST_F(NiRFmxWLANDriverApiTests, SEMCustomMaskFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_OFFSETS = 3;
-  std::vector<float64> offsetStartFrequency {9e06, 11e06, 20e06};
-  std::vector<float64> offsetStopFrequency {11e06, 20e06, 40e06};
-  std::vector<int> offsetSideband {RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH};
-  std::vector<float64> relativeLimitStart {0.0, -20.0, -28.0};
-  std::vector<float64> relativeLimitStop {-20.0, -28.0, -40.0};
+  std::vector<float64> offsetStartFrequency{9e06, 11e06, 20e06};
+  std::vector<float64> offsetStopFrequency{11e06, 20e06, 40e06};
+  std::vector<int> offsetSideband{RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH};
+  std::vector<float64> relativeLimitStart{0.0, -20.0, -28.0};
+  std::vector<float64> relativeLimitStop{-20.0, -28.0, -40.0};
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.412e9));
@@ -327,7 +327,7 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPFromExample_FetchData_DataLooksReasonable)
 
   const auto txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, "", 10.0);
   const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
-  
+
   EXPECT_WARNING(txp_fetch_power_trace_response, RISING_EDGE_DETECTION_FAILED_WARNING);
   EXPECT_GT(0.0, txp_fetch_power_trace_response.x0());
   EXPECT_LT(0.0, txp_fetch_power_trace_response.dx());
@@ -337,6 +337,44 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPFromExample_FetchData_DataLooksReasonable)
   EXPECT_WARNING(txp_fetch_measurement_response, RISING_EDGE_DETECTION_FAILED_WARNING);
   EXPECT_LT(0.0, txp_fetch_measurement_response.average_power_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.peak_power_maximum());
+}
+
+TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonable)
+{
+  const auto num_frequency_segments = 1;
+  const auto num_receive_chains = 2;
+  double centerFrequency[2] = {5.18e9, 5.26e9};
+  std::vector<float64> IQx0{0, 0};
+  std::vector<float64> IQdx{0, 0};
+  std::vector<int> IQSize{0, 0};
+  std::vector<nidevice_grpc::NIComplexNumberF32> IQ;
+
+  auto session = init_session(stub(), PXI_5663E);
+  EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", num_frequency_segments, num_receive_chains));
+  for (int i = 0; i < num_frequency_segments; i++) {
+    const auto build_segment_string_response = client::build_segment_string(stub(), "", i);
+    EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, build_segment_string_response.selector_string_out(), centerFrequency[i]));
+  }
+  EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
+  EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e6));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OFDMMODACC, true));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
+
+  //READ TDMS File
+
+  //Analyze Waveforms
+  EXPECT_SUCCESS(session, client::analyze_n_waveforms_iq(stub(), session, "", "", IQx0, IQdx, IQ, IQSize, true));
+
+  //Fetch Results and check they are reasonable
+  const auto fetch_composite_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
+  EXPECT_LT(0.0, fetch_composite_response.composite_rms_evm_mean());
+  EXPECT_LT(0.0, fetch_composite_response.composite_data_rms_evm_mean());
+  EXPECT_LT(0.0, fetch_composite_response.composite_pilot_rms_evm_mean());
 }
 
 }  // namespace
