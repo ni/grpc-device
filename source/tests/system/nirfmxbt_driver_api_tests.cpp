@@ -268,6 +268,38 @@ TEST_F(NiRFmxBTDriverApiTests, SetAttributeComplex_ExpectedError)
       client::set_attribute_ni_complex_double_array(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_ACP_RESULTS_REFERENCE_CHANNEL_POWER, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
 }
 
+// Note: there aren't any i8 attributes in attributes.py, but this at least exercises the code.
+TEST_F(NiRFmxBTDriverApiTests, SetAttributeInt8_ExpectedError)
+{
+  const auto session = init_session(stub(), kPxi5663e);
+
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_i8(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_u8(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_i8_array(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, -1, 0}));
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_u8_array(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, 1, 0}));
+}
+
+// Note: there aren't any i16 attributes in attributes.py, but this at least exercises the code.
+TEST_F(NiRFmxBTDriverApiTests, SetAttributeInt16_ExpectedError)
+{
+  const auto session = init_session(stub(), kPxi5663e);
+
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_i16(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, -400));
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_u16(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, 400));
+}
+
 TEST_F(NiRFmxBTDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 {
   auto session = init_session(stub(), kPxi5663e);
