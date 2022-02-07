@@ -4,6 +4,7 @@
 #include "niRFmxWLAN.h"
 #include "nirfmxwlan/nirfmxwlan_client.h"
 #include "nirfsa/nirfsa_client.h"
+#include "waveform_helpers.h"
 
 using namespace ::testing;
 using namespace nirfmxwlan_grpc;
@@ -366,6 +367,15 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
 
   //READ TDMS File
+  auto waveforms = load_test_waveforms_data<float, nidevice_grpc::NIComplexNumberF32>("WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json", 2);
+  for (int i = 0; i < 2; i++) {
+    auto waveform = waveforms[i];
+    auto data = waveform.data;
+    IQx0[i] = waveform.t0;
+    IQdx[i] = waveform.dt;
+    IQSize[i] = static_cast<int>(data.size());
+    IQ.insert(IQ.end(), data.begin(), data.end());
+  }
 
   //Analyze Waveforms
   EXPECT_SUCCESS(session, client::analyze_n_waveforms_iq(stub(), session, "", "", IQx0, IQdx, IQ, IQSize, true));
