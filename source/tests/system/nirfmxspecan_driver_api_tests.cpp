@@ -447,12 +447,12 @@ TEST_F(NiRFmxSpecAnDriverApiTests, BuildSpurString_ReturnsSpurString)
 
 void close_session(const client::StubPtr& stub, const nidevice_grpc::Session& session)
 {
-  ni::tests::system::EXPECT_SUCCESS(client::close(stub, session, Boolean::BOOLEAN_FALSE));
+  ni::tests::system::EXPECT_SUCCESS(client::close(stub, session, false));
 }
 
 void force_close_session(const client::StubPtr& stub, const nidevice_grpc::Session& session)
 {
-  ni::tests::system::EXPECT_SUCCESS(client::close(stub, session, Boolean::BOOLEAN_TRUE));
+  ni::tests::system::EXPECT_SUCCESS(client::close(stub, session, true));
 }
 
 class NiRFmxSpecAnDriverApiResourceInitTests : public NiRFmxSpecAnDriverApiTests,
