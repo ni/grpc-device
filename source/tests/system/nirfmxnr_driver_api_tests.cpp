@@ -152,7 +152,7 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
   EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.0));
   EXPECT_SUCCESS(session, client::cfg_rf_attenuation(stub(), session, "", RF_ATTENUATION_AUTO_TRUE, 10.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, BOOLEAN_FALSE));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_LINK_DIRECTION, NIRFMXNR_INT32_LINK_DIRECTION_UPLINK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_NUMBER_OF_SUBBLOCKS, NUMBER_OF_SUBBLOCKS));
   for (int i = 0; i < NUMBER_OF_SUBBLOCKS; i++)
@@ -179,7 +179,7 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
   }
   auto auto_level_response = client::auto_level(stub(), session, "", 10.0e-3);
   EXPECT_ERROR(IVI_ERROR_INVALID_VALUE, IVI_ERROR_INVALID_VALUE_STR, session, auto_level_response);
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_ACP, BOOLEAN_TRUE));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_ACP, true));
   EXPECT_SUCCESS(session, client::acp_cfg_measurement_method(stub(), session, "", ACP_MEASUREMENT_METHOD_NORMAL));
   EXPECT_SUCCESS(session, client::acp_cfg_noise_compensation_enabled(stub(), session, "", ACP_NOISE_COMPENSATION_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::acp_cfg_sweep_time(stub(), session, "", ACP_SWEEP_TIME_AUTO_TRUE, 0.001));
@@ -223,7 +223,7 @@ TEST_F(NiRFmxNRDriverApiTests, ACPSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 3.5e9));
   EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.0));
   EXPECT_SUCCESS(session, client::cfg_rf_attenuation(stub(), session, "", RF_ATTENUATION_AUTO_TRUE, 10.0));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 8.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_FALSE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 8.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, false));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_LINK_DIRECTION, NIRFMXNR_INT32_LINK_DIRECTION_UPLINK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
@@ -287,7 +287,7 @@ TEST_F(NiRFmxNRDriverApiTests, ChpSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 3.5e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 8.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_FALSE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 8.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, false));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_LINK_DIRECTION, NIRFMXNR_INT32_LINK_DIRECTION_UPLINK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
@@ -323,7 +323,7 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 3.5e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, BOOLEAN_FALSE));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_LINK_DIRECTION, NIRFMXNR_INT32_LINK_DIRECTION_DOWNLINK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_CHANNEL_RASTER, 15e3));
@@ -439,7 +439,7 @@ TEST_F(NiRFmxNRDriverApiTests, ObwSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 3.5e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 8.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_FALSE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 8.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, false));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_LINK_DIRECTION, NIRFMXNR_INT32_LINK_DIRECTION_UPLINK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
@@ -491,7 +491,7 @@ TEST_F(NiRFmxNRDriverApiTests, SemContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 3.5e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, BOOLEAN_FALSE));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_LINK_DIRECTION, NIRFMXNR_INT32_LINK_DIRECTION_UPLINK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_CHANNEL_RASTER, 15e3));
@@ -594,7 +594,7 @@ TEST_F(NiRFmxNRDriverApiTests, SemSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 3.5e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 8.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, BOOLEAN_FALSE));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 8.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, false));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_LINK_DIRECTION, NIRFMXNR_INT32_LINK_DIRECTION_UPLINK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
@@ -683,7 +683,7 @@ TEST_F(NiRFmxNRDriverApiTests, TxpContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 3.5e9, 0.0, 0.0));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, BOOLEAN_FALSE));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, false));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_LINK_DIRECTION, NIRFMXNR_INT32_LINK_DIRECTION_UPLINK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_CHANNEL_RASTER, 15e3));
