@@ -7,6 +7,7 @@
 #include "nirfmxbt/nirfmxbt_service.h"
 #include "nirfsa/nirfsa_client.h"
 
+namespace pb = google::protobuf;
 using namespace ::testing;
 using namespace nirfmxbt_grpc;
 namespace client = nirfmxbt_grpc::experimental::client;
@@ -24,6 +25,12 @@ template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
 {
   EXPECT_EQ(0, response.status());
+}
+
+template <typename TResponse>
+void EXPECT_RFMX_ERROR(pb::int32 expected_error, const TResponse& response)
+{
+  EXPECT_EQ(expected_error, response.status());
 }
 
 template <typename TResponse>
@@ -72,6 +79,14 @@ class NiRFmxBTDriverApiTests : public Test {
     return TService::NewStub(device_server_->InProcessChannel());
   }
 
+  template <typename TResponse>
+  void EXPECT_RFMX_ERROR(pb::int32 expected_error, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
+  {
+    ni::tests::system::EXPECT_RFMX_ERROR(expected_error, response);
+    const auto error = client::get_error(stub(), session);
+    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));
+  }
+
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiRFmxBT::Stub> stub_;
@@ -105,6 +120,38 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::stri
 nirfsa_grpc::InitWithOptionsResponse init_rfsa(const nirfsa_client::StubPtr& stub, const std::string& resource_name)
 {
   return nirfsa_client::init_with_options(stub, resource_name, false, false, "Simulate=1, DriverSetup=Model:5663E");
+}
+
+template <typename TFloat, typename TComplex>
+TComplex complex(TFloat real, TFloat imaginary)
+{
+  auto c = TComplex{};
+  c.set_real(real);
+  c.set_imaginary(imaginary);
+  return c;
+}
+
+template <typename TFloat, typename TComplex>
+std::vector<TComplex> complex_array(
+    std::vector<TFloat> reals,
+    std::vector<TFloat> imaginaries)
+{
+  auto c = std::vector<TComplex>{};
+  c.reserve(reals.size());
+  std::transform(
+      reals.begin(),
+      reals.end(),
+      imaginaries.begin(),
+      std::back_inserter(c),
+      [](TFloat real, TFloat imaginary) { return complex<TFloat, TComplex>(real, imaginary); });
+  return c;
+}
+
+std::vector<nidevice_grpc::NIComplexNumber> complex_number_array(
+    std::vector<double> reals,
+    std::vector<double> imaginaries)
+{
+  return complex_array<double, nidevice_grpc::NIComplexNumber>(reals, imaginaries);
 }
 
 TEST_F(NiRFmxBTDriverApiTests, Init_Close_Succeeds)
@@ -209,6 +256,16 @@ TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
   EXPECT_GT(fetched_powers_response.average_power_maximum(), 0.0);
   EXPECT_GT(fetched_powers_response.average_power_minimum(), 0.0);
   EXPECT_GT(fetched_powers_response.peak_to_average_power_ratio_maximum(), 0.0);
+}
+
+// Note: there aren't any complex attributes in attributes.py, but this at least exercises the code.
+TEST_F(NiRFmxBTDriverApiTests, SetAttributeComplex_ExpectedError)
+{
+  const auto session = init_session(stub(), kPxi5663e);
+
+  EXPECT_RFMX_ERROR(
+      -380231, "This attribute is read-only and cannot be written", session,
+      client::set_attribute_ni_complex_double_array(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_ACP_RESULTS_REFERENCE_CHANNEL_POWER, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
 }
 
 TEST_F(NiRFmxBTDriverApiTests, SetAndGetAttributeInt32_Succeeds)
