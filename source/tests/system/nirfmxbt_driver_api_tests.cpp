@@ -211,6 +211,21 @@ TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
   EXPECT_GT(fetched_powers_response.peak_to_average_power_ratio_maximum(), 0.0);
 }
 
+TEST_F(NiRFmxBTDriverApiTests, SetAndGetAttributeInt32_Succeeds)
+{
+  auto session = init_session(stub(), kPxi5663e);
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TXP, true));
+  EXPECT_SUCCESS(
+      session,
+      client::set_attribute_i32(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, NiRFmxBTInt32AttributeValues::NIRFMXBT_INT32_TXP_AVERAGING_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+
+  auto get_response = client::get_attribute_i32(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED);
+
+  EXPECT_SUCCESS(session, get_response);
+  EXPECT_EQ(NiRFmxBTInt32AttributeValues::NIRFMXBT_INT32_TXP_AVERAGING_ENABLED_TRUE, get_response.attr_val());
+}
+
 }  // namespace
 }  // namespace system
 }  // namespace tests
