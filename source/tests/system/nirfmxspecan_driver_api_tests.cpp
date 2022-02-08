@@ -464,6 +464,21 @@ TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchData_RecordIsDele
       client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
 }
 
+TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchDataFetchAllAvailable_DataIsFetched)
+{
+  constexpr auto INVALID_RECORD = -379451;
+  constexpr auto FETCH_ALL_AVAILABLE = -1;
+  constexpr auto EXPECTED_RECORD_COUNT = 50000;
+  const auto session = init_session(stub(), PXI_5663);
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_IQ, true));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+
+  const auto fetch_response = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, FETCH_ALL_AVAILABLE));
+
+  EXPECT_THAT(fetch_response.data(), Not(IsEmpty()));
+  EXPECT_EQ(EXPECTED_RECORD_COUNT, fetch_response.data().size());
+}
+
 TEST_F(NiRFmxSpecAnDriverApiTests, DisableDeleteRecordOnFetch_IQFetchData_RecordIsStillAvailable)
 {
   const auto session = init_session(stub(), PXI_5663);
