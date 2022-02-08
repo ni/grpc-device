@@ -5,6 +5,7 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxwlan/nirfmxwlan_client.h"
 #include "nirfsa/nirfsa_client.h"
+#include "waveform_helpers.h"
 
 #ifdef WIN32
   #define strncpy strncpy_s
@@ -143,6 +144,15 @@ nidevice_grpc::Session init_instr_session(const instr_client::StubPtr& stub, con
 nirfsa_grpc::InitWithOptionsResponse init_rfsa(const nirfsa_client::StubPtr& stub, const std::string& resource_name)
 {
   return nirfsa_client::init_with_options(stub, resource_name, false, false, "Simulate=1, DriverSetup=Model:5663E");
+}
+
+nidevice_grpc::Session init_analysis_session(const client::StubPtr& stub)
+{
+  auto options = std::string("Analysisonly = 1; MaxNumWfms:8");
+  auto response = client::initialize(stub, "", options);
+  auto session = response.instrument();
+  EXPECT_SUCCESS(response);
+  return session;
 }
 
 TEST_F(NiRFmxWLANDriverApiTests, Init_Close_Succeeds)
@@ -890,6 +900,7 @@ TEST_F(NiRFmxWLANDriverApiTests, DISABLED_OFDMModAccWithEVMBasedAutoLevelFromExa
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
+
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDM_MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_auto_level(stub(), session, "", 10.0));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -1150,6 +1161,53 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
   EXPECT_EQ(25250, txp_fetch_power_trace_response.power_size());
   EXPECT_EQ(25250, txp_fetch_power_trace_response.power().size());
   EXPECT_LT(0.0, txp_fetch_power_trace_response.power(0));
+}
+
+TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonable)
+{
+  const auto num_frequency_segments = 1;
+  const auto num_receive_chains = 2;
+  double centerFrequency[num_receive_chains] = {5.18e9, 5.26e9};
+  std::vector<float64> iq_x0{0, 0};
+  std::vector<float64> iq_dx{0, 0};
+  std::vector<int> iq_sizes{0, 0};
+  std::vector<nidevice_grpc::NIComplexNumberF32> iq;
+
+  auto session = init_analysis_session(stub());
+  EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", num_frequency_segments, num_receive_chains));
+  for (int i = 0; i < num_frequency_segments; i++) {
+    const auto build_segment_string_response = client::build_segment_string(stub(), "", i);
+    EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, build_segment_string_response.selector_string_out(), centerFrequency[i]));
+  }
+  EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
+  EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e6));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OFDMMODACC, true));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_frequency_error_estimation_method(stub(), session, "", OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_amplitude_tracking_enabled(stub(), session, "", OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED_FALSE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
+  // READ TDMS File
+  auto waveforms = load_test_multiple_waveforms_data<float, nidevice_grpc::NIComplexNumberF32>("WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json", 2);
+  // Concatenate waveform data, two dimension array passed as one dimension array with size array determining where one starts and one stops.
+  for (int i = 0; i < num_receive_chains; i++) {
+    auto waveform = waveforms[i];
+    auto data = waveform.data;
+    iq_x0[i] = waveform.t0;
+    iq_dx[i] = waveform.dt;
+    iq_sizes[i] = static_cast<int>(data.size());
+    iq.insert(iq.end(), data.begin(), data.end());
+  }
+
+  // Analyze Waveforms
+  EXPECT_SUCCESS(session, client::analyze_n_waveforms_iq(stub(), session, "", "", iq_x0, iq_dx, iq, iq_sizes, true));
+
+  // Fetch Results and check they are reasonable
+  const auto fetch_composite_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
+  EXPECT_GT(0.0, fetch_composite_response.composite_rms_evm_mean());
+  EXPECT_GT(0.0, fetch_composite_response.composite_data_rms_evm_mean());
+  EXPECT_GT(0.0, fetch_composite_response.composite_pilot_rms_evm_mean());
 }
 
 }  // namespace
