@@ -81,8 +81,9 @@ std::vector<TestIQData<TFloat>> load_test_multiple_iq_data(const std::string& fi
   auto iq_data = std::vector<TestIQData<TFloat>>{};
   std::ifstream input_stream(file_name);
   auto json = nlohmann::json::parse(input_stream);
-  for (int i = 0; i < count; i++) {
-    auto waveform_json = json.at(i);
+  for (int i = 1; i <= count; i++) {
+    auto key = "waveform" + std::to_string(i);
+    auto waveform_json = json.at(key);
     auto data = fetch_iq_data<TFloat>(waveform_json);
     iq_data.push_back(data);
   }
@@ -90,7 +91,7 @@ std::vector<TestIQData<TFloat>> load_test_multiple_iq_data(const std::string& fi
 }
 
 template <typename TFloat, typename TComplex>
-std::vector<TestWaveform<TComplex>> load_test_waveforms_data(const std::string& file_name, const int count)
+std::vector<TestWaveform<TComplex>> load_test_multiple_waveforms_data(const std::string& file_name, const int count)
 {
   auto waveforms = std::vector<TestWaveform<TComplex>>{};
   const auto iq_data = load_test_multiple_iq_data<TFloat>(file_name, count);

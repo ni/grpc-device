@@ -105,6 +105,15 @@ nirfsa_grpc::InitWithOptionsResponse init_rfsa(const nirfsa_client::StubPtr& stu
   return nirfsa_client::init_with_options(stub, resource_name, false, false, "Simulate=1, DriverSetup=Model:5663E");
 }
 
+nidevice_grpc::Session init_analysis_session(const client::StubPtr& stub)
+{
+  auto options = std::string("Analysisonly = 1; MaxNumWfms:8");
+  auto response = client::initialize(stub, "", options);
+  auto session = response.instrument();
+  EXPECT_SUCCESS(response);
+  return session;
+}
+
 TEST_F(NiRFmxWLANDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
@@ -350,7 +359,7 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
   std::vector<int> IQSize{0, 0};
   std::vector<nidevice_grpc::NIComplexNumberF32> IQ;
 
-  auto session = init_session(stub(), PXI_5663E);
+  auto session = init_analysis_session(stub());
   EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", num_frequency_segments, num_receive_chains));
   for (int i = 0; i < num_frequency_segments; i++) {
     const auto build_segment_string_response = client::build_segment_string(stub(), "", i);
@@ -367,7 +376,8 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
 
   //READ TDMS File
-  auto waveforms = load_test_waveforms_data<float, nidevice_grpc::NIComplexNumberF32>("WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json", 2);
+  auto waveforms = load_test_multiple_waveforms_data<float, nidevice_grpc::NIComplexNumberF32>("WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json", 2);
+
   for (int i = 0; i < 2; i++) {
     auto waveform = waveforms[i];
     auto data = waveform.data;
@@ -382,9 +392,9 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
 
   //Fetch Results and check they are reasonable
   const auto fetch_composite_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
-  EXPECT_LT(0.0, fetch_composite_response.composite_rms_evm_mean());
-  EXPECT_LT(0.0, fetch_composite_response.composite_data_rms_evm_mean());
-  EXPECT_LT(0.0, fetch_composite_response.composite_pilot_rms_evm_mean());
+  EXPECT_GT(0.0, fetch_composite_response.composite_rms_evm_mean());
+  EXPECT_GT(0.0, fetch_composite_response.composite_data_rms_evm_mean());
+  EXPECT_GT(0.0, fetch_composite_response.composite_pilot_rms_evm_mean());
 }
 
 }  // namespace
