@@ -372,10 +372,10 @@ TEST_F(NiRFmxInstrDriverApiTests, TimestampFromValuesRoundTrip_SucceedsWithOrigi
 
 TEST_F(NiRFmxInstrDriverApiTests, BuildPortString_SucceedsWithExpectedValue)
 {
-  const auto build_port_string_response = client::build_port_string(stub(), "", 0, "RFSA1", 0);
+  constexpr auto EXPECTED_PORT_STRING = "port::RFSA1/0";
+  const auto build_port_string_response = client::build_port_string(stub(), "", "", "RFSA1", 0);
 
   ni::tests::system::EXPECT_SUCCESS(build_port_string_response);
-  constexpr auto EXPECTED_PORT_STRING = "";
   EXPECT_EQ(EXPECTED_PORT_STRING, build_port_string_response.selector_string_out());
 }
 

@@ -82,7 +82,7 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
         response->set_status(status);
         return ::grpc::Status::OK;
       }
-      int32 selector_string_out_length = status;
+      int32 selector_string_out_length = status + std::to_string(channel_number).length();  // AB#12345: RFmx Instr BuildPortString2 Bug.
 
       std::string selector_string_out;
       if (selector_string_out_length > 0) {
