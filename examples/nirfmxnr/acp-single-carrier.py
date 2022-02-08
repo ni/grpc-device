@@ -69,11 +69,14 @@ instr = None
 def raise_if_error(response):
     if response.status != 0:
         error_response = client.GetError(
-            nirfmxnr_types.GetErrorRequest(
+            nirfmxwlan_types.GetErrorRequest(
                 instrument=instr,
             )
         )
-        raise RuntimeError(f"Error: {error_response.error_description or response.status}")
+        if response.status < 0:
+            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
+        else:
+            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
 
     return response
 
