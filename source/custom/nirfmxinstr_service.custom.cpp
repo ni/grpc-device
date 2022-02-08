@@ -62,4 +62,47 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
 }
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+::grpc::Status NiRFmxInstrService::BuildPortString(::grpc::ServerContext* context, const BuildPortStringRequest* request, BuildPortStringResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    char* selector_string = (char*)request->selector_string().c_str();
+    char* port_name = (char*)request->port_name().c_str();
+    char* device_name = (char*)request->device_name().c_str();
+    int32 channel_number = request->channel_number();
+
+    while (true) {
+      auto status = library_->BuildPortString(selector_string, port_name, device_name, channel_number, 0, nullptr);
+      if (status < 0) {
+        response->set_status(status);
+        return ::grpc::Status::OK;
+      }
+      int32 selector_string_out_length = status;
+
+      std::string selector_string_out;
+      if (selector_string_out_length > 0) {
+        selector_string_out.resize(selector_string_out_length - 1);
+      }
+      status = library_->BuildPortString(selector_string, port_name, device_name, channel_number, selector_string_out_length, (char*)selector_string_out.data());
+      if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+        // buffer is now too small, try again
+        continue;
+      }
+      response->set_status(status);
+      if (status == 0) {
+        response->set_selector_string_out(selector_string_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+      }
+      return ::grpc::Status::OK;
+    }
+  }
+  catch (nidevice_grpc::LibraryLoadException& ex) {
+    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  }
+}
 }  // namespace nirfmxinstr_grpc

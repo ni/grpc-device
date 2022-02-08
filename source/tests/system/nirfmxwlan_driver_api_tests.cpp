@@ -599,19 +599,19 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
     // TODO AB#1830349: Fix build_port_string parameter invalid issue.
-    // auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
-    // EXPECT_SUCCESS(session, port_string_response);
-    // strncpy(selectedPortsString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    // selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
-    // port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
-    // EXPECT_SUCCESS(session, port_string_response);
-    // strncpy(portString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    // portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
-    std::string port_string = "port::" + std::string(resourceNames[i]) + "/0";
-    strncpy(selectedPortsString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
+    EXPECT_SUCCESS(session, port_string_response);
+    strncpy(selectedPortsString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
     selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
-    strncpy(portString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
+    EXPECT_SUCCESS(session, port_string_response);
+    strncpy(portString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
     portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    // std::string port_string = "port::" + std::string(resourceNames[i]) + "/0";
+    // strncpy(selectedPortsString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    // selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    // strncpy(portString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    // portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
     EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, portString[i], referenceLevelArray[i]));
     EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, portString[i], externalAttenuationArray[i]));
   }
@@ -978,19 +978,19 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
     // TODO AB#1830349: Fix build_port_string parameter invalid issue.
-    // auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
-    // EXPECT_SUCCESS(session, port_string_response);
-    // strncpy(selectedPortsString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    // selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
-    // port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
-    // EXPECT_SUCCESS(session, port_string_response);
-    // strncpy(portString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    // portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
-    std::string port_string = "port::" + std::string(resourceNames[i]) + "/0";
-    strncpy(selectedPortsString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
+    EXPECT_SUCCESS(session, port_string_response);
+    strncpy(selectedPortsString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
     selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
-    strncpy(portString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
+    EXPECT_SUCCESS(session, port_string_response);
+    strncpy(portString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
     portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    // std::string port_string = "port::" + std::string(resourceNames[i]) + "/0";
+    // strncpy(selectedPortsString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    // selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    // strncpy(portString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    // portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
     EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, portString[i], referenceLevelArray[i]));
     EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, portString[i], externalAttenuationArray[i]));
   }
@@ -1101,19 +1101,19 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
     // TODO AB#1830349: Fix build_port_string parameter invalid issue.
-    // auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
-    // EXPECT_SUCCESS(session, port_string_response);
-    // strncpy(selectedPortsString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    // selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
-    // port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
-    // EXPECT_SUCCESS(session, port_string_response);
-    // strncpy(portString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    // portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
-    std::string port_string = "port::" + std::string(resourceNames[i]) + "/0";
-    strncpy(selectedPortsString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
+    EXPECT_SUCCESS(session, port_string_response);
+    strncpy(selectedPortsString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
     selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
-    strncpy(portString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
+    EXPECT_SUCCESS(session, port_string_response);
+    strncpy(portString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
     portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    // std::string port_string = "port::" + std::string(resourceNames[i]) + "/0";
+    // strncpy(selectedPortsString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    // selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    // strncpy(portString[i], port_string.c_str(), MAX_SELECTOR_STRING_LENGTH);
+    // portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
   }
   GetCommaSeparatedStringFromArray((char*)selectedPortsString, NUMBER_OF_DEVICES, MAX_SELECTOR_STRING_LENGTH, selectedPortsStringCommaSeparated);
   EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selectedPortsStringCommaSeparated));
