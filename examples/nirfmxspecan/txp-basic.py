@@ -7,6 +7,27 @@
 # 6. Configure TXP Averaging
 # 7. Read TXP Measurement Results
 # 8. Close the RFmx Session
+#
+# The gRPC API is built from the C API. RFmx SpecAn documentation is installed with the driver at:
+# C:\Program Files (x86)\National Instruments\RFmx\SpecAn\Documentation\specancvi.chm
+#
+# Getting Started:
+#
+# To run this example, install "RFmx SpecAn" on the server machine.
+# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-specan.html
+#
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+#
+# Refer to the NI-RFmxSpecAn gRPC Wiki for the latest C Function Reference:
+# Link: https://github.com/ni/grpc-device/wiki/NI-RFmxSpecAn-C-Function-Reference
+#
+# Running from command line:
+#
+# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
+#   > python txp-basic.py <server_address> <port_number> <physical_channel_name>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+
 
 import sys
 
@@ -16,10 +37,10 @@ import nirfmxspecan_pb2_grpc as grpc_nirfmxspecan
 
 server_address = "localhost"
 server_port = "31763"
-session_name = "NI-RFSASession"
+session_name = "RFmxSpecAnSession"
 
 # Resource name and options for a simulated 5663 client.
-resource = "SimulatedRFSA"
+resource = "SimulatedDevice"
 options = "Simulate=1,DriverSetup=Model:5663"
 
 # Read in cmd args
@@ -36,9 +57,6 @@ channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_nirfmxspecan.NiRFmxSpecAnStub(channel)
 instr = None
 
-# Maximum size of an error message
-MAX_ERROR_DESCRIPTION = 4096
-
 
 # Raise an exception if an error was returned
 def raise_if_error(response):
@@ -54,91 +72,78 @@ def raise_if_error(response):
 
 
 try:
-    selected_ports = ""
-    center_frequency = 1e9  # Hz
-    reference_level = 0.00  # dBm
-    external_attenuation = 0.00  # dB
-
-    timeout = 10.0  # seconds
-
-    meas_interval = 1e-3  # seconds
-
-    # rbw Filter
-    rbw = 100e3
-    rbw_filter_type = nirfmxspecan_types.TXP_RBW_FILTER_TYPE_GAUSSIAN
-    rrc_alpha = 0.1
-
-    # Averaging
-    averaging_enabled = nirfmxspecan_types.TXP_AVERAGING_ENABLED_FALSE
-    averaging_count = 10
-    averaging_type = nirfmxspecan_types.TXP_AVERAGING_TYPE_RMS
-
-    # Variables to store measurement data
-    average_mean_power = 0.0
-    peak_to_average_ratio = 0.0
-    maximum_power = 0.0
-    minimum_power = 0.0
-
-    # Create a new RFmx Session
-    initialize_response = client.Initialize(
-        nirfmxspecan_types.InitializeRequest(
-            session_name=session_name, resource_name=resource, option_string=""
+    initialize_response = raise_if_error(
+        client.Initialize(
+            nirfmxspecan_types.InitializeRequest(
+                session_name=session_name, resource_name="RFSA", option_string=""
+            )
         )
     )
     instr = initialize_response.instrument
 
-    # Configure TXP parameters
-    client.SetAttributeString(
-        nirfmxspecan_types.SetAttributeStringRequest(
-            instrument=instr,
-            selector_string="",
-            attribute_id=nirfmxspecan_types.NIRFMXSPECAN_ATTRIBUTE_SELECTED_PORTS,
-            attr_val_raw=selected_ports,
+    raise_if_error(
+        client.SetAttributeString(
+            nirfmxspecan_types.SetAttributeStringRequest(
+                instrument=instr,
+                selector_string="",
+                attribute_id=nirfmxspecan_types.NIRFMXSPECAN_ATTRIBUTE_SELECTED_PORTS,
+                attr_val_raw="",
+            )
         )
     )
-    client.CfgRF(
-        nirfmxspecan_types.CfgRFRequest(
-            instrument=instr,
-            selector_string="",
-            center_frequency=center_frequency,
-            reference_level=reference_level,
-            external_attenuation=external_attenuation,
+    raise_if_error(
+        client.CfgRF(
+            nirfmxspecan_types.CfgRFRequest(
+                instrument=None,
+                selector_string="",
+                center_frequency=1e9,
+                reference_level=0.00,
+                external_attenuation=0.00,
+            )
         )
     )
-    client.TXPCfgMeasurementInterval(
-        nirfmxspecan_types.TXPCfgMeasurementIntervalRequest(
-            instrument=instr, selector_string="", measurement_interval=meas_interval
+    raise_if_error(
+        client.TXPCfgMeasurementInterval(
+            nirfmxspecan_types.TXPCfgMeasurementIntervalRequest(
+                instrument=None, selector_string="", measurement_interval=1e-3
+            )
         )
     )
-    client.TXPCfgRBWFilter(
-        nirfmxspecan_types.TXPCfgRBWFilterRequest(
-            instrument=instr,
-            selector_string="",
-            rbw=rbw,
-            rbw_filter_type=rbw_filter_type,
-            rrc_alpha=rrc_alpha,
+    raise_if_error(
+        client.TXPCfgRBWFilter(
+            nirfmxspecan_types.TXPCfgRBWFilterRequest(
+                instrument=None,
+                selector_string="",
+                rbw=100e3,
+                rbw_filter_type=nirfmxspecan_types.TXP_RBW_FILTER_TYPE_GAUSSIAN,
+                rrc_alpha=0.1,
+            )
         )
     )
-    client.TXPCfgAveraging(
-        nirfmxspecan_types.TXPCfgAveragingRequest(
-            instrument=instr,
-            selector_string="",
-            averaging_enabled=averaging_enabled,
-            averaging_count=averaging_count,
-            averaging_type=averaging_type,
+    raise_if_error(
+        client.TXPCfgAveraging(
+            nirfmxspecan_types.TXPCfgAveragingRequest(
+                instrument=None,
+                selector_string="",
+                averaging_enabled=nirfmxspecan_types.TXP_AVERAGING_ENABLED_FALSE,
+                averaging_count=10,
+                averaging_type=nirfmxspecan_types.TXP_AVERAGING_TYPE_RMS,
+            )
         )
     )
 
-    # Fetch measurement data
-    txp_read_response = client.TXPRead(
-        nirfmxspecan_types.TXPReadRequest(instrument=instr, selector_string="", timeout=timeout)
+    ### Fetch measurement data ###
+
+    txp_read_response = raise_if_error(
+        client.TXPRead(
+            nirfmxspecan_types.TXPReadRequest(instrument=None, selector_string="", timeout=10.0)
+        )
     )
     minimum_power = txp_read_response.minimum_power
     maximum_power = txp_read_response.maximum_power
     peak_to_average_ratio = txp_read_response.peak_to_average_ratio
     average_mean_power = txp_read_response.average_mean_power
 
-    # Display results
     print(f"Average Mean Power(dBm)    {average_mean_power}\n")
     print(f"Peak to Average Ratio(dB)  {peak_to_average_ratio}\n")
     print(f"Maximum Power(dBm)         {maximum_power}\n")
