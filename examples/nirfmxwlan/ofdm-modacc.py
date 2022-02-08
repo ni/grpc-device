@@ -151,7 +151,7 @@ try:
     raise_if_error(
         client.CfgChannelBandwidth(
             nirfmxwlan_types.CfgChannelBandwidthRequest(
-                instrument=instr, selector_string="", channel_bandwidth=20e06
+                instrument=instr, selector_string="", channel_bandwidth=20e6
             )
         )
     )
@@ -337,7 +337,7 @@ try:
             )
         )
     )
-    sigcrc_status = ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status
+    sig_crc_status = ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status
     ofdm_mod_acc_fetch_sigbcrc_status_response = raise_if_error(
         client.OFDMModAccFetchSIGBCRCStatus(
             nirfmxwlan_types.OFDMModAccFetchSIGBCRCStatusRequest(
@@ -345,7 +345,7 @@ try:
             )
         )
     )
-    sigbcrc_status = ofdm_mod_acc_fetch_sigbcrc_status_response.sigb_crc_status
+    sigb_crc_status = ofdm_mod_acc_fetch_sigbcrc_status_response.sigb_crc_status
 
     ofdm_mod_acc_fetch_pilot_constellation_trace_response = raise_if_error(
         client.OFDMModAccFetchPilotConstellationTrace(
@@ -394,44 +394,47 @@ try:
     print(f"I/Q Quadrature Error Mean (deg)         : {iq_quadrature_error_mean}")
     print(f"I/Q Timing Skew Mean (s)                : {iq_timing_skew_mean}")
     print("\n------------------PPDU Info------------------")
-    if ppdu_type == 0:
+    if ppdu_type == nirfmxwlan_types.OFDM_PPDU_TYPE_NON_HT:
         print("PPDU Type                               : Non-HT")
-    elif ppdu_type == 1:
+    elif ppdu_type == nirfmxwlan_types.OFDM_PPDU_TYPE_MIXED:
         print("PPDU Type                               : Mixed")
-    elif ppdu_type == 2:
+    elif ppdu_type == nirfmxwlan_types.OFDM_PPDU_TYPE_GREENFIELD:
         print("PPDU Type                               : GreenField")
-    elif ppdu_type == 3:
+    elif ppdu_type == nirfmxwlan_types.OFDM_PPDU_TYPE_SU:
         print("PPDU Type                               : SU")
-    elif ppdu_type == 4:
+    elif ppdu_type == nirfmxwlan_types.OFDM_PPDU_TYPE_MU:
         print("PPDU Type                               : MU")
-    elif ppdu_type == 5:
+    elif ppdu_type == nirfmxwlan_types.OFDM_PPDU_TYPE_EXTENDED_RANGE_SU:
         print("PPDU Type                               : Extended Range SU")
-    elif ppdu_type == 6:
+    elif ppdu_type == nirfmxwlan_types.OFDM_PPDU_TYPE_TRIGGER_BASED:
         print("PPDU Type                               : Trigger-Based")
     print(f"MCS Index                               : {mcs_index}")
-    if guard_interval_type == 0:
+    if guard_interval_type == nirfmxwlan_types.OFDM_GUARD_INTERVAL_TYPE_1_4:
         print("Guard Interval Type                     : 1/4")
-    elif guard_interval_type == 1:
+    elif guard_interval_type == nirfmxwlan_types.OFDM_GUARD_INTERVAL_TYPE_1_8:
         print("Guard Interval Type                     : 1/8")
-    elif guard_interval_type == 2:
+    elif guard_interval_type == nirfmxwlan_types.OFDM_GUARD_INTERVAL_TYPE_1_16:
         print("Guard Interval Type                     : 1/16")
-    if lsig_parity_check_status == -1:
+    if (
+        lsig_parity_check_status
+        == nirfmxwlan_types.OFDM_MODACC_LSIG_PARITY_CHECK_STATUS_NOT_APPLICABLE
+    ):
         print("L-SIG Parity Check Status               : Not Applicable")
-    elif lsig_parity_check_status == 0:
+    elif lsig_parity_check_status == nirfmxwlan_types.OFDM_MODACC_LSIG_PARITY_CHECK_STATUS_FAIL:
         print("L-SIG Parity Check Status               : Fail")
-    elif lsig_parity_check_status == 1:
+    elif lsig_parity_check_status == nirfmxwlan_types.OFDM_MODACC_LSIG_PARITY_CHECK_STATUS_PASS:
         print("L-SIG Parity Check Status               : Pass")
-    if sigcrc_status == -1:
+    if sig_crc_status == nirfmxwlan_types.OFDM_MODACC_SIG_CRC_STATUS_NOT_APPLICABLE:
         print("SIG CRC Status                          : Not Applicable")
-    elif sigcrc_status == 0:
+    elif sig_crc_status == nirfmxwlan_types.OFDM_MODACC_SIG_CRC_STATUS_FAIL:
         print("SIG CRC Status                          : Fail")
-    elif sigcrc_status == 1:
+    elif sig_crc_status == nirfmxwlan_types.OFDM_MODACC_SIG_CRC_STATUS_PASS:
         print("SIG CRC Status                          : Pass")
-    if sigbcrc_status == -1:
+    if sigb_crc_status == nirfmxwlan_types.OFDM_MODACC_SIGB_CRC_STATUS_NOT_APPLICABLE:
         print("SIG-B CRC Status                        : Not Applicable")
-    elif sigbcrc_status == 0:
+    elif sigb_crc_status == nirfmxwlan_types.OFDM_MODACC_SIGB_CRC_STATUS_FAIL:
         print("SIG-B CRC Status                        : Fail")
-    elif sigbcrc_status == 1:
+    elif sigb_crc_status == nirfmxwlan_types.OFDM_MODACC_SIGB_CRC_STATUS_PASS:
         print("SIG-B CRC Status                        : Pass")
 finally:
     if instr:
