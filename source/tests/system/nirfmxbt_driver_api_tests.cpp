@@ -133,8 +133,8 @@ TComplex complex(TFloat real, TFloat imaginary)
 
 template <typename TFloat, typename TComplex>
 std::vector<TComplex> complex_array(
-    std::vector<TFloat> reals,
-    std::vector<TFloat> imaginaries)
+    const std::vector<TFloat> reals,
+    const std::vector<TFloat> imaginaries)
 {
   auto c = std::vector<TComplex>{};
   c.reserve(reals.size());
@@ -148,8 +148,8 @@ std::vector<TComplex> complex_array(
 }
 
 std::vector<nidevice_grpc::NIComplexNumber> complex_number_array(
-    std::vector<double> reals,
-    std::vector<double> imaginaries)
+    const std::vector<double> reals,
+    const std::vector<double> imaginaries)
 {
   return complex_array<double, nidevice_grpc::NIComplexNumber>(reals, imaginaries);
 }
@@ -258,7 +258,7 @@ TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
   EXPECT_GT(fetched_powers_response.peak_to_average_power_ratio_maximum(), 0.0);
 }
 
-// Note: there aren't any complex attributes in attributes.py, but this at least exercises the code.
+// TODO -- AB#1835516: Add system-level test using an API function that uses complex data types.
 TEST_F(NiRFmxBTDriverApiTests, SetAttributeComplex_ExpectedError)
 {
   const auto session = init_session(stub(), kPxi5663e);
