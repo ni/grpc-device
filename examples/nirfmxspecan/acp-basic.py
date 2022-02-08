@@ -93,7 +93,7 @@ try:
     initialize_response = raise_if_error(
         client.Initialize(
             nirfmxspecan_types.InitializeRequest(
-                session_name=session_name, resource_name="RFSA", option_string=""
+                session_name=session_name, resource_name=resource, option_string=""
             )
         )
     )
@@ -143,7 +143,7 @@ try:
             )
         )
         auto_set_reference_level = auto_level_response.reference_level
-        print(f"Reference level                         : {auto_set_reference_level}\n")
+        print(f"Reference level                         : {auto_set_reference_level}")
     else:
         raise_if_error(
             client.CfgReferenceLevel(
@@ -305,18 +305,18 @@ try:
     dx = acp_fetch_spectrum_response.dx
     spectrum = acp_fetch_spectrum_response.spectrum
 
-    print("Carrier Measurements: \n")
-    print(f"Absolute Power (dBm or dBm/Hz)          : {absolute_power}\n")
-    print("---------------------------------------------------\n")
+    print("Carrier Measurements:")
+    print(f"Absolute Power (dBm or dBm/Hz)          : {absolute_power}")
+    print("---------------------------------------------------")
 
-    print("Offset Channel Measurements: \n")
+    print("Offset Channel Measurements: ")
     for i in range(NUMBER_OF_OFFSETS):
-        print(f"Offset  :  {i}\n")
-        print(f"Lower Relative Power (dB)               : {lower_relative_power[i]}\n")
-        print(f"Upper Relative Power (dB)               : {upper_relative_power[i]}\n")
-        print(f"Lower Absolute Power (dBm or dBm/Hz)    : {lower_absolute_power[i]}\n")
-        print(f"Upper Absolute Power (dBm or dBm/Hz)    : {upper_absolute_power[i]}\n")
-        print("-------------------------------------------------\n")
+        print(f"Offset  :  {i}")
+        print(f"Lower Relative Power (dB)               : {lower_relative_power[i]}")
+        print(f"Upper Relative Power (dB)               : {upper_relative_power[i]}")
+        print(f"Lower Absolute Power (dBm or dBm/Hz)    : {lower_absolute_power[i]}")
+        print(f"Upper Absolute Power (dBm or dBm/Hz)    : {upper_absolute_power[i]}")
+        print("-------------------------------------------------")
 finally:
     if instr:
         client.Close(nirfmxspecan_types.CloseRequest(instrument=instr, force_destroy=False))

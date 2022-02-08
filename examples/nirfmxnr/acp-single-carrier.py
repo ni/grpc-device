@@ -84,7 +84,7 @@ try:
     initialize_response = raise_if_error(
         client.Initialize(
             nirfmxnr_types.InitializeRequest(
-                session_name=session_name, resource_name="RFSA", option_string=""
+                session_name=session_name, resource_name=resource, option_string=""
             )
         )
     )
@@ -198,7 +198,7 @@ try:
             )
         )
         reference_level = auto_level_response.reference_level
-        print(f"Reference level (dBm)        : {reference_level}\n")
+        print(f"Reference level (dBm)        : {reference_level}")
     else:
         raise_if_error(
             client.CfgReferenceLevel(
@@ -310,16 +310,16 @@ try:
     dx = acp_fetch_spectrum_response.dx
     spectrum = acp_fetch_spectrum_response.spectrum
 
-    print(f"\nCarrier Absolute Power (dBm or dBm/Hz) : {absolute_power}\n")
+    print(f"\nCarrier Absolute Power (dBm or dBm/Hz) : {absolute_power}")
 
-    print("\n-----------Offset Channel Measurements----------- \n\n")
+    print("\n-----------Offset Channel Measurements----------- \n")
     for i in range(arraySize):
-        print(f"Offset  {i}\n")
-        print(f"Lower Relative Power (dB)              : {lower_relative_power[i]}\n")
-        print(f"Upper Relative Power (dB)              : {upper_relative_power[i]}\n")
-        print(f"Lower Absolute Power (dBm or dBm/Hz)   : {lower_absolute_power[i]}\n")
-        print(f"Upper Absolute Power (dBm or dBm/Hz)   : {upper_absolute_power[i]}\n")
-        print("-------------------------------------------------\n\n")
+        print(f"Offset  {i}")
+        print(f"Lower Relative Power (dB)              : {lower_relative_power[i]}")
+        print(f"Upper Relative Power (dB)              : {upper_relative_power[i]}")
+        print(f"Lower Absolute Power (dBm or dBm/Hz)   : {lower_absolute_power[i]}")
+        print(f"Upper Absolute Power (dBm or dBm/Hz)   : {upper_absolute_power[i]}")
+        print("-------------------------------------------------\n")
 finally:
     if instr:
         client.Close(nirfmxnr_types.CloseRequest(instrument=instr, force_destroy=False))

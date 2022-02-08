@@ -78,7 +78,7 @@ try:
     initialize_response = raise_if_error(
         client.Initialize(
             nirfmxnr_types.InitializeRequest(
-                session_name=session_name, resource_name="RFSA", option_string=""
+                session_name=session_name, resource_name=resource, option_string=""
             )
         )
     )
@@ -250,9 +250,9 @@ try:
     dx = txp_fetch_power_trace_response.dx
     power = txp_fetch_power_trace_response.power
 
-    print("\n------------Measurement------------\n\n")
-    print(f"Average Power Mean (dBm) : {avearge_power_mean}\n")
-    print(f"Peak Power Maximum (dBm) : {peak_power_maximum}\n")
+    print("\n------------Measurement------------\n")
+    print(f"Average Power Mean (dBm) : {avearge_power_mean}")
+    print(f"Peak Power Maximum (dBm) : {peak_power_maximum}")
 finally:
     if instr:
         client.Close(nirfmxnr_types.CloseRequest(instrument=instr, force_destroy=False))

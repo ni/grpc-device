@@ -75,7 +75,7 @@ try:
     initialize_response = raise_if_error(
         client.Initialize(
             nirfmxspecan_types.InitializeRequest(
-                session_name=session_name, resource_name="RFSA", option_string=""
+                session_name=session_name, resource_name=resource, option_string=""
             )
         )
     )
@@ -144,10 +144,10 @@ try:
     peak_to_average_ratio = txp_read_response.peak_to_average_ratio
     average_mean_power = txp_read_response.average_mean_power
 
-    print(f"Average Mean Power(dBm)    {average_mean_power}\n")
-    print(f"Peak to Average Ratio(dB)  {peak_to_average_ratio}\n")
-    print(f"Maximum Power(dBm)         {maximum_power}\n")
-    print(f"Minimum Power(dBm)         {minimum_power}\n")
+    print(f"Average Mean Power(dBm)    {average_mean_power}")
+    print(f"Peak to Average Ratio(dB)  {peak_to_average_ratio}")
+    print(f"Maximum Power(dBm)         {maximum_power}")
+    print(f"Minimum Power(dBm)         {minimum_power}")
 finally:
     if instr:
         client.Close(nirfmxspecan_types.CloseRequest(instrument=instr, force_destroy=False))
