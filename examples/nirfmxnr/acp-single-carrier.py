@@ -73,7 +73,7 @@ def raise_if_error(response):
                 instrument=instr,
             )
         )
-        raise Exception(f"Error: {error_response.error_description}")
+        raise RuntimeError(f"Error: {error_response.error_description or response.status}")
 
     return response
 
@@ -84,7 +84,7 @@ try:
     initialize_response = raise_if_error(
         client.Initialize(
             nirfmxnr_types.InitializeRequest(
-                session_name=session_name, resource_name=resource, option_string=""
+                session_name=session_name, resource_name=resource, option_string=options
             )
         )
     )
@@ -92,7 +92,7 @@ try:
     raise_if_error(
         client.CfgFrequencyReference(
             nirfmxnr_types.CfgFrequencyReferenceRequest(
-                instrument=None,
+                instrument=instr,
                 channel_name="",
                 frequency_reference_source_mapped=nirfmxnr_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
                 frequency_reference_frequency=10.0e6,
@@ -112,21 +112,21 @@ try:
     raise_if_error(
         client.CfgFrequency(
             nirfmxnr_types.CfgFrequencyRequest(
-                instrument=None, selector_string="", center_frequency=3.5e9
+                instrument=instr, selector_string="", center_frequency=3.5e9
             )
         )
     )
     raise_if_error(
         client.CfgExternalAttenuation(
             nirfmxnr_types.CfgExternalAttenuationRequest(
-                instrument=None, selector_string="", external_attenuation=0.0
+                instrument=instr, selector_string="", external_attenuation=0.0
             )
         )
     )
     raise_if_error(
         client.CfgRFAttenuation(
             nirfmxnr_types.CfgRFAttenuationRequest(
-                instrument=None,
+                instrument=instr,
                 channel_name="",
                 rf_attenuation_auto=nirfmxnr_types.RF_ATTENUATION_AUTO_TRUE,
                 rf_attenuation_value=10.0,
@@ -136,7 +136,7 @@ try:
     raise_if_error(
         client.CfgIQPowerEdgeTrigger(
             nirfmxnr_types.CfgIQPowerEdgeTriggerRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 iq_power_edge_source="0",
                 iq_power_edge_slope=nirfmxnr_types.IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE,
@@ -175,7 +175,7 @@ try:
                 instrument=instr,
                 selector_string="",
                 attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH,
-                attr_val=100e6,
+                attr_val=20e6,
             )
         )
     )
@@ -193,7 +193,7 @@ try:
         auto_level_response = raise_if_error(
             client.AutoLevel(
                 nirfmxnr_types.AutoLevelRequest(
-                    instrument=None, selector_string="", measurement_interval=10.0e-3
+                    instrument=instr, selector_string="", measurement_interval=10.0e-3
                 )
             )
         )
@@ -203,14 +203,14 @@ try:
         raise_if_error(
             client.CfgReferenceLevel(
                 nirfmxnr_types.CfgReferenceLevelRequest(
-                    instrument=None, selector_string="", reference_level=0.0
+                    instrument=instr, selector_string="", reference_level=0.0
                 )
             )
         )
     raise_if_error(
         client.SelectMeasurements(
             nirfmxnr_types.SelectMeasurementsRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 measurements=nirfmxnr_types.MEASUREMENT_TYPES_ACP,
                 enable_all_traces=True,
@@ -220,7 +220,7 @@ try:
     raise_if_error(
         client.ACPCfgMeasurementMethod(
             nirfmxnr_types.ACPCfgMeasurementMethodRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 measurement_method=nirfmxnr_types.ACP_MEASUREMENT_METHOD_NORMAL,
             )
@@ -229,7 +229,7 @@ try:
     raise_if_error(
         client.ACPCfgNoiseCompensationEnabled(
             nirfmxnr_types.ACPCfgNoiseCompensationEnabledRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 noise_compensation_enabled=nirfmxnr_types.ACP_NOISE_COMPENSATION_ENABLED_FALSE,
             )
@@ -238,7 +238,7 @@ try:
     raise_if_error(
         client.ACPCfgSweepTime(
             nirfmxnr_types.ACPCfgSweepTimeRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 sweep_time_auto=nirfmxnr_types.ACP_SWEEP_TIME_AUTO_TRUE,
                 sweep_time_interval=1.0e-3,
@@ -248,7 +248,7 @@ try:
     raise_if_error(
         client.ACPCfgAveraging(
             nirfmxnr_types.ACPCfgAveragingRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 averaging_enabled=nirfmxnr_types.ACP_AVERAGING_ENABLED_FALSE,
                 averaging_count=10,
@@ -258,7 +258,7 @@ try:
     )
     raise_if_error(
         client.Initiate(
-            nirfmxnr_types.InitiateRequest(instrument=None, selector_string="", result_name="")
+            nirfmxnr_types.InitiateRequest(instrument=instr, selector_string="", result_name="")
         )
     )
 
@@ -267,7 +267,7 @@ try:
     acp_fetch_offset_measurement_array_response = raise_if_error(
         client.ACPFetchOffsetMeasurementArray(
             nirfmxnr_types.ACPFetchOffsetMeasurementArrayRequest(
-                instrument=None, selector_string="", timeout=10.0
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
@@ -280,7 +280,7 @@ try:
     acp_fetch_component_carrier_measurement_response = raise_if_error(
         client.ACPFetchComponentCarrierMeasurement(
             nirfmxnr_types.ACPFetchComponentCarrierMeasurementRequest(
-                instrument=None, selector_string="", timeout=10.0
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
@@ -291,7 +291,7 @@ try:
         acp_fetch_relative_powers_trace_response = raise_if_error(
             client.ACPFetchRelativePowersTrace(
                 nirfmxnr_types.ACPFetchRelativePowersTraceRequest(
-                    instrument=None, selector_string="", timeout=10.0, trace_index=i
+                    instrument=instr, selector_string="", timeout=10.0, trace_index=i
                 )
             )
         )
@@ -302,7 +302,7 @@ try:
     acp_fetch_spectrum_response = raise_if_error(
         client.ACPFetchSpectrum(
             nirfmxnr_types.ACPFetchSpectrumRequest(
-                instrument=None, selector_string="", timeout=10.0
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )

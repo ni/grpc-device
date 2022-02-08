@@ -75,7 +75,7 @@ def raise_if_error(response):
                 instrument=instr,
             )
         )
-        raise Exception(f"Error: {error_response.error_description}")
+        raise RuntimeError(f"Error: {error_response.error_description or response.status}")
 
     return response
 

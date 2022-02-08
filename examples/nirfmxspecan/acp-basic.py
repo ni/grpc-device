@@ -1,21 +1,13 @@
 # Steps:
 # 1. Open a new RFmx session
 # 2. Configure Selected Ports
-# 3. Configure Frequency Reference
-# 4. Configure the basic signal properties  (Center Frequency, Reference Level and External Attenuation)
-# 5. Configure RF Attenuation
-# 6. Select ACP measurement and enable the traces
-# 7. Configure ACP Measurement Method, Power Units and Averaging Parameters
-# 8. Configure ACP rbw filter
-# 9. Configure ACP Sweep Time
-# 10. Configure ACP Noise Compensation
-# 11. Configure ACP Carrier Channel Settings (Integration BW, RRC Filter)
-# 12. Configure ACP Number of Offset Channels
-# 13. Configure ACP Offset Channel Settings (Offset Frequencies, Integration BW, RRC Filter)
-# Use "offset:all" selector string to set a parameter for all the Offset Channels
-# 14. Initiate Measurement
-# 15. Fetch ACP Measurements and Traces
-# 16. Close the RFmx Session
+# 3. Configure the basic signal properties  (Center Frequency, Reference Level and External Attenuation)
+# 4. Configure ACP Averaging Parameters
+# 5. Configure ACP Integration BW, Number of Offset Channels and Channel Spacing
+# This function configures a Carrier Channel with Offset Channels as specified by the Number of Offsets
+# 6. Read ACP Measurement Results
+# This function returns Absolute Power for the Carrier Channel and Relative Powers for two Offset Channels
+# 7. Close the RFmx Session
 #
 # The gRPC API is built from the C API. RFmx SpecAn documentation is installed with the driver at:
 # C:\Program Files (x86)\National Instruments\RFmx\SpecAn\Documentation\specancvi.chm
@@ -67,8 +59,6 @@ client = grpc_nirfmxspecan.NiRFmxSpecAnStub(channel)
 instr = None
 
 
-NUMBER_OF_OFFSETS = 2
-
 # Raise an exception if an error was returned
 def raise_if_error(response):
     if response.status != 0:
@@ -77,38 +67,21 @@ def raise_if_error(response):
                 instrument=instr,
             )
         )
-        raise Exception(f"Error: {error_response.error_description}")
+        raise RuntimeError(f"Error: {error_response.error_description or response.status}")
 
     return response
 
 
 try:
-    auto_level = True
-
-    # Variables to store the results
-    x0 = 0.0
-    dx = 0.0
-    spectrum = None
-
     initialize_response = raise_if_error(
         client.Initialize(
             nirfmxspecan_types.InitializeRequest(
-                session_name=session_name, resource_name=resource, option_string=""
+                session_name=session_name, resource_name=resource, option_string=options
             )
         )
     )
     instr = initialize_response.instrument
 
-    raise_if_error(
-        client.CfgFrequencyReference(
-            nirfmxspecan_types.CfgFrequencyReferenceRequest(
-                instrument=None,
-                channel_name="",
-                frequency_reference_source_mapped=nirfmxspecan_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
-                frequency_reference_frequency=10.0e6,
-            )
-        )
-    )
     raise_if_error(
         client.SetAttributeString(
             nirfmxspecan_types.SetAttributeStringRequest(
@@ -120,61 +93,20 @@ try:
         )
     )
     raise_if_error(
-        client.CfgFrequency(
-            nirfmxspecan_types.CfgFrequencyRequest(
-                instrument=None, selector_string="", center_frequency=1e9
-            )
-        )
-    )
-    raise_if_error(
-        client.CfgExternalAttenuation(
-            nirfmxspecan_types.CfgExternalAttenuationRequest(
-                instrument=None, selector_string="", external_attenuation=0.00
-            )
-        )
-    )
-
-    if auto_level:
-        auto_level_response = raise_if_error(
-            client.AutoLevel(
-                nirfmxspecan_types.AutoLevelRequest(
-                    instrument=None, selector_string="", bandwidth=1e6, measurement_interval=10e-3
-                )
-            )
-        )
-        auto_set_reference_level = auto_level_response.reference_level
-        print(f"Reference level                         : {auto_set_reference_level}")
-    else:
-        raise_if_error(
-            client.CfgReferenceLevel(
-                nirfmxspecan_types.CfgReferenceLevelRequest(
-                    instrument=None, selector_string="", reference_level=0.00
-                )
-            )
-        )
-    raise_if_error(
-        client.SelectMeasurements(
-            nirfmxspecan_types.SelectMeasurementsRequest(
-                instrument=None,
+        client.CfgRF(
+            nirfmxspecan_types.CfgRFRequest(
+                instrument=instr,
                 selector_string="",
-                measurements=nirfmxspecan_types.MEASUREMENT_TYPES_ACP,
-                enable_all_traces=True,
-            )
-        )
-    )
-    raise_if_error(
-        client.ACPCfgPowerUnits(
-            nirfmxspecan_types.ACPCfgPowerUnitsRequest(
-                instrument=None,
-                selector_string="",
-                power_units=nirfmxspecan_types.ACP_POWER_UNITS_DBM,
+                center_frequency=1e9,
+                reference_level=0.00,
+                external_attenuation=0.00,
             )
         )
     )
     raise_if_error(
         client.ACPCfgAveraging(
             nirfmxspecan_types.ACPCfgAveragingRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 averaging_enabled=nirfmxspecan_types.ACP_AVERAGING_ENABLED_FALSE,
                 averaging_count=10,
@@ -183,140 +115,35 @@ try:
         )
     )
     raise_if_error(
-        client.ACPCfgRBWFilter(
-            nirfmxspecan_types.ACPCfgRBWFilterRequest(
-                instrument=None,
+        client.ACPCfgCarrierAndOffsets(
+            nirfmxspecan_types.ACPCfgCarrierAndOffsetsRequest(
+                instrument=instr,
                 selector_string="",
-                rbw_auto=nirfmxspecan_types.ACP_RBW_AUTO_BANDWIDTH_TRUE,
-                rbw=10.0e3,
-                rbw_filter_type=nirfmxspecan_types.ACP_RBW_FILTER_TYPE_GAUSSIAN,
+                integration_bandwidth=1.0e6,
+                number_of_offsets=2,
+                channel_spacing=1.0e6,
             )
-        )
-    )
-    raise_if_error(
-        client.ACPCfgSweepTime(
-            nirfmxspecan_types.ACPCfgSweepTimeRequest(
-                instrument=None,
-                selector_string="",
-                sweep_time_auto=nirfmxspecan_types.ACP_SWEEP_TIME_AUTO_TRUE,
-                sweep_time_interval=1.00e-3,
-            )
-        )
-    )
-    raise_if_error(
-        client.ACPCfgNoiseCompensationEnabled(
-            nirfmxspecan_types.ACPCfgNoiseCompensationEnabledRequest(
-                instrument=None,
-                selector_string="",
-                noise_compensation_enabled=nirfmxspecan_types.ACP_NOISE_COMPENSATION_ENABLED_FALSE,
-            )
-        )
-    )
-    raise_if_error(
-        client.ACPCfgCarrierIntegrationBandwidth(
-            nirfmxspecan_types.ACPCfgCarrierIntegrationBandwidthRequest(
-                instrument=None, selector_string="", integration_bandwidth=1.0e6
-            )
-        )
-    )
-    raise_if_error(
-        client.ACPCfgCarrierRRCFilter(
-            nirfmxspecan_types.ACPCfgCarrierRRCFilterRequest(
-                instrument=None,
-                selector_string="",
-                rrc_filter_enabled=nirfmxspecan_types.ACP_CARRIER_RRC_FILTER_ENABLED_FALSE,
-                rrc_alpha=0.220,
-            )
-        )
-    )
-    raise_if_error(
-        client.ACPCfgNumberOfOffsets(
-            nirfmxspecan_types.ACPCfgNumberOfOffsetsRequest(
-                instrument=None, selector_string="", number_of_offsets=NUMBER_OF_OFFSETS
-            )
-        )
-    )
-    raise_if_error(
-        client.ACPCfgOffsetArray(
-            nirfmxspecan_types.ACPCfgOffsetArrayRequest(
-                instrument=None,
-                selector_string="",
-                offset_frequency=[1.0e6, 2.0e6],
-                offset_sideband=None,
-                offset_enabled=None,
-            )
-        )
-    )
-    raise_if_error(
-        client.ACPCfgOffsetIntegrationBandwidth(
-            nirfmxspecan_types.ACPCfgOffsetIntegrationBandwidthRequest(
-                instrument=None, selector_string="offset::all", integration_bandwidth=1.0e6
-            )
-        )
-    )
-    raise_if_error(
-        client.ACPCfgOffsetRRCFilter(
-            nirfmxspecan_types.ACPCfgOffsetRRCFilterRequest(
-                instrument=None,
-                selector_string="offset::all",
-                rrc_filter_enabled=nirfmxspecan_types.ACP_OFFSET_RRC_FILTER_ENABLED_FALSE,
-                rrc_alpha=0.220,
-            )
-        )
-    )
-    raise_if_error(
-        client.Initiate(
-            nirfmxspecan_types.InitiateRequest(instrument=None, selector_string="", result_name="")
         )
     )
 
-    ### Retrieve results ###
+    ### Read ACP measurements ###
 
-    acp_fetch_offset_measurement_array_response = raise_if_error(
-        client.ACPFetchOffsetMeasurementArray(
-            nirfmxspecan_types.ACPFetchOffsetMeasurementArrayRequest(
-                instrument=None, selector_string="", timeout=10.0
-            )
+    acp_read_response = raise_if_error(
+        client.ACPRead(
+            nirfmxspecan_types.ACPReadRequest(instrument=instr, selector_string="", timeout=10)
         )
     )
-    lower_relative_power = acp_fetch_offset_measurement_array_response.lower_relative_power
-    upper_relative_power = acp_fetch_offset_measurement_array_response.upper_relative_power
-    lower_absolute_power = acp_fetch_offset_measurement_array_response.lower_absolute_power
-    upper_absolute_power = acp_fetch_offset_measurement_array_response.upper_absolute_power
+    off_ch1_upper_relative_power = acp_read_response.offset_ch1_upper_relative_power
+    off_ch1_lower_relative_power = acp_read_response.offset_ch1_lower_relative_power
+    off_ch0_upper_relative_power = acp_read_response.offset_ch0_upper_relative_power
+    off_ch0_lower_relative_power = acp_read_response.offset_ch0_lower_relative_power
+    carrier_abs_power = acp_read_response.carrier_absolute_power
 
-    acp_fetch_carrier_measurement_response = raise_if_error(
-        client.ACPFetchCarrierMeasurement(
-            nirfmxspecan_types.ACPFetchCarrierMeasurementRequest(
-                instrument=None, selector_string="", timeout=10.0
-            )
-        )
-    )
-    absolute_power = acp_fetch_carrier_measurement_response.absolute_power
-    x0 = 0.0
-    dx = 0.0
-    acp_fetch_spectrum_response = raise_if_error(
-        client.ACPFetchSpectrum(
-            nirfmxspecan_types.ACPFetchSpectrumRequest(
-                instrument=None, selector_string="", timeout=10.0
-            )
-        )
-    )
-    x0 = acp_fetch_spectrum_response.x0
-    dx = acp_fetch_spectrum_response.dx
-    spectrum = acp_fetch_spectrum_response.spectrum
-
-    print("Carrier Measurements:")
-    print(f"Absolute Power (dBm or dBm/Hz)          : {absolute_power}")
-    print("---------------------------------------------------")
-
-    print("Offset Channel Measurements: ")
-    for i in range(NUMBER_OF_OFFSETS):
-        print(f"Offset  :  {i}")
-        print(f"Lower Relative Power (dB)               : {lower_relative_power[i]}")
-        print(f"Upper Relative Power (dB)               : {upper_relative_power[i]}")
-        print(f"Lower Absolute Power (dBm or dBm/Hz)    : {lower_absolute_power[i]}")
-        print(f"Upper Absolute Power (dBm or dBm/Hz)    : {upper_absolute_power[i]}")
-        print("-------------------------------------------------")
+    print(f"Carrier Absolute Power (dBm or dBm/Hz)  {carrier_abs_power}")
+    print(f"Offset ch0 Lower Relative Power (dB)    {off_ch0_lower_relative_power}")
+    print(f"Offset ch0 Upper Relative Power(dB)     {off_ch0_upper_relative_power}")
+    print(f"Offset ch1 Lower Relative Power(dB)     {off_ch1_lower_relative_power}")
+    print(f"Offset ch1 Upper Relative Power(dB)     {off_ch1_upper_relative_power}")
 finally:
     if instr:
         client.Close(nirfmxspecan_types.CloseRequest(instrument=instr, force_destroy=False))

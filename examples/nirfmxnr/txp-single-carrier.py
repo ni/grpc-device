@@ -69,7 +69,7 @@ def raise_if_error(response):
                 instrument=instr,
             )
         )
-        raise Exception(f"Error: {error_response.error_description}")
+        raise RuntimeError(f"Error: {error_response.error_description or response.status}")
 
     return response
 
@@ -78,7 +78,7 @@ try:
     initialize_response = raise_if_error(
         client.Initialize(
             nirfmxnr_types.InitializeRequest(
-                session_name=session_name, resource_name=resource, option_string=""
+                session_name=session_name, resource_name=resource, option_string=options
             )
         )
     )
@@ -86,7 +86,7 @@ try:
     raise_if_error(
         client.CfgFrequencyReference(
             nirfmxnr_types.CfgFrequencyReferenceRequest(
-                instrument=None,
+                instrument=instr,
                 channel_name="",
                 frequency_reference_source_mapped=nirfmxnr_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
                 frequency_reference_frequency=10e6,
@@ -106,7 +106,7 @@ try:
     raise_if_error(
         client.CfgRF(
             nirfmxnr_types.CfgRFRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 center_frequency=3.5e9,
                 reference_level=0.0,
@@ -117,7 +117,7 @@ try:
     raise_if_error(
         client.CfgDigitalEdgeTrigger(
             nirfmxnr_types.CfgDigitalEdgeTriggerRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 digital_edge_source_mapped=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0,
                 digital_edge=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE,
@@ -153,7 +153,7 @@ try:
                 instrument=instr,
                 selector_string="",
                 attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH,
-                attr_val=100e6,
+                attr_val=20e6,
             )
         )
     )
@@ -171,7 +171,7 @@ try:
     raise_if_error(
         client.SelectMeasurements(
             nirfmxnr_types.SelectMeasurementsRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 measurements=nirfmxnr_types.MEASUREMENT_TYPES_TXP,
                 enable_all_traces=True,
@@ -223,7 +223,7 @@ try:
 
     raise_if_error(
         client.Initiate(
-            nirfmxnr_types.InitiateRequest(instrument=None, selector_string="", result_name="")
+            nirfmxnr_types.InitiateRequest(instrument=instr, selector_string="", result_name="")
         )
     )
 
@@ -232,7 +232,7 @@ try:
     txp_fetch_measurement_response = raise_if_error(
         client.TXPFetchMeasurement(
             nirfmxnr_types.TXPFetchMeasurementRequest(
-                instrument=None, selector_string="", timeout=10.0
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
@@ -242,7 +242,7 @@ try:
     txp_fetch_power_trace_response = raise_if_error(
         client.TXPFetchPowerTrace(
             nirfmxnr_types.TXPFetchPowerTraceRequest(
-                instrument=None, selector_string="", timeout=10.0
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )

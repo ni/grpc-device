@@ -66,7 +66,7 @@ def raise_if_error(response):
                 instrument=instr,
             )
         )
-        raise Exception(f"Error: {error_response.error_description}")
+        raise RuntimeError(f"Error: {error_response.error_description or response.status}")
 
     return response
 
@@ -75,7 +75,7 @@ try:
     initialize_response = raise_if_error(
         client.Initialize(
             nirfmxspecan_types.InitializeRequest(
-                session_name=session_name, resource_name=resource, option_string=""
+                session_name=session_name, resource_name=resource, option_string=options
             )
         )
     )
@@ -94,7 +94,7 @@ try:
     raise_if_error(
         client.CfgRF(
             nirfmxspecan_types.CfgRFRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 center_frequency=1e9,
                 reference_level=0.00,
@@ -105,14 +105,14 @@ try:
     raise_if_error(
         client.TXPCfgMeasurementInterval(
             nirfmxspecan_types.TXPCfgMeasurementIntervalRequest(
-                instrument=None, selector_string="", measurement_interval=1e-3
+                instrument=instr, selector_string="", measurement_interval=1e-3
             )
         )
     )
     raise_if_error(
         client.TXPCfgRBWFilter(
             nirfmxspecan_types.TXPCfgRBWFilterRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 rbw=100e3,
                 rbw_filter_type=nirfmxspecan_types.TXP_RBW_FILTER_TYPE_GAUSSIAN,
@@ -123,7 +123,7 @@ try:
     raise_if_error(
         client.TXPCfgAveraging(
             nirfmxspecan_types.TXPCfgAveragingRequest(
-                instrument=None,
+                instrument=instr,
                 selector_string="",
                 averaging_enabled=nirfmxspecan_types.TXP_AVERAGING_ENABLED_FALSE,
                 averaging_count=10,
@@ -136,7 +136,7 @@ try:
 
     txp_read_response = raise_if_error(
         client.TXPRead(
-            nirfmxspecan_types.TXPReadRequest(instrument=None, selector_string="", timeout=10.0)
+            nirfmxspecan_types.TXPReadRequest(instrument=instr, selector_string="", timeout=10.0)
         )
     )
     minimum_power = txp_read_response.minimum_power
