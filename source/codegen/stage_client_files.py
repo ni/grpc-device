@@ -15,7 +15,7 @@ class _ArtifactReadiness():
   """
   _module_to_readiness = Dict[str, str]
 
-  def __init__(self, metadata_dir: Path):
+  def __init__(self, metadata_dir: Path, include_prerelease: bool):
     modules = [
       load_metadata(p)
       for p in metadata_dir.iterdir()
@@ -26,6 +26,8 @@ class _ArtifactReadiness():
       d["config"]["module_name"]: get_driver_readiness(d["config"])
       for d in modules
     }
+
+    self.include_prerelease = include_prerelease
 
   def is_release_ready(self, module_path: Path) -> bool:
     """
@@ -52,7 +54,7 @@ class _ArtifactReadiness():
     return (
       d 
       for d in directory.iterdir()
-      if d.is_dir() and self.is_release_ready(d)
+      if d.is_dir() and (self.is_release_ready(d) or self.include_prerelease)
     )
   
 
@@ -100,8 +102,10 @@ def _get_release_example_directories(
   return readiness.get_release_ready_subdirs(artifact_locations.examples)
 
 
-def stage_client_files(artifact_locations: ArtifactLocations, output_path: Path):
-  readiness = _ArtifactReadiness(artifact_locations.metadata_dir)
+def stage_client_files(output_path: Path, include_prerelease: bool):
+  repo_root = Path(__file__).parent.parent.parent
+  artifact_locations = ArtifactLocations(repo_root)
+  readiness = _ArtifactReadiness(artifact_locations.metadata_dir, include_prerelease)
 
   proto_path = output_path / "proto"
   proto_path.mkdir(parents=True)
@@ -129,12 +133,17 @@ if __name__ == "__main__":
         "--output", 
         "-o", 
         help="The path to the top-level directory to stage the client files. Must be empty or non-existent.")
-    
+
+    parser.add_argument(
+        "--include-prerelease", 
+        action="store_true",
+        help="Include pre-release artifacts.")
+
+
     args = parser.parse_args()
-    repo_root = Path(__file__).parent.parent.parent
 
     if args.output:
-      stage_client_files(ArtifactLocations(repo_root), Path(args.output))
+      stage_client_files(Path(args.output), args.include_prerelease)
     else:
       print("""
 ***No --output directory specified.***
@@ -142,7 +151,7 @@ Performing Dry Run.
         """)
       with TemporaryDirectory() as tempdir:
         tempdirpath = Path(tempdir)
-        stage_client_files(ArtifactLocations(repo_root), tempdirpath)
+        stage_client_files(tempdirpath, args.include_prerelease)
         created_files = (f for f in tempdirpath.glob("**/*") if not f.is_dir())
         for out_file in created_files:
           print(out_file.relative_to(tempdirpath))
