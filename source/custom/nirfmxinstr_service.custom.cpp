@@ -97,7 +97,7 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
         continue;
       }
       response->set_status(status);
-      if (status == 0) {
+      if (status >= 0) {
         response->set_selector_string_out(selector_string_out);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
       }
