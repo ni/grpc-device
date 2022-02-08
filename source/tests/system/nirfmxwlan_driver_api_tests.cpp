@@ -266,11 +266,11 @@ TEST_F(NiRFmxWLANDriverApiTests, SemFromExample_FetchData_DataLooksReasonable)
 TEST_F(NiRFmxWLANDriverApiTests, SEMCustomMaskFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_OFFSETS = 3;
-  std::vector<float64> offsetStartFrequency{9e06, 11e06, 20e06};
-  std::vector<float64> offsetStopFrequency{11e06, 20e06, 40e06};
-  std::vector<int> offsetSideband{RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH};
-  std::vector<float64> relativeLimitStart{0.0, -20.0, -28.0};
-  std::vector<float64> relativeLimitStop{-20.0, -28.0, -40.0};
+  std::vector<float64> offset_start_frequency{9e06, 11e06, 20e06};
+  std::vector<float64> offset_stop_frequency{11e06, 20e06, 40e06};
+  std::vector<int> offset_sideband{RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH};
+  std::vector<float64> relative_limit_start{0.0, -20.0, -28.0};
+  std::vector<float64> relative_limit_stop{-20.0, -28.0, -40.0};
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.412e9));
@@ -284,15 +284,15 @@ TEST_F(NiRFmxWLANDriverApiTests, SEMCustomMaskFromExample_FetchData_DataLooksRea
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::sem_cfg_sweep_time(stub(), session, "", SEM_SWEEP_TIME_AUTO_TRUE, 1.0e-3));
   EXPECT_SUCCESS(session, client::sem_cfg_number_of_offsets(stub(), session, "", NUMBER_OF_OFFSETS));
-  EXPECT_SUCCESS(session, client::sem_cfg_offset_frequency_array(stub(), session, "", offsetStartFrequency, offsetStopFrequency, offsetSideband));
-  EXPECT_SUCCESS(session, client::sem_cfg_offset_relative_limit_array(stub(), session, "", relativeLimitStart, relativeLimitStop));
+  EXPECT_SUCCESS(session, client::sem_cfg_offset_frequency_array(stub(), session, "", offset_start_frequency, offset_stop_frequency, offset_sideband));
+  EXPECT_SUCCESS(session, client::sem_cfg_offset_relative_limit_array(stub(), session, "", relative_limit_start, relative_limit_stop));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
   const auto sem_fetch_carrier_measurement_response = client::sem_fetch_carrier_measurement(stub(), session, "", 10.0);
   const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
   const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
-  int32 arraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
+  int32 array_size = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
   const auto sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.0);
 
   EXPECT_SUCCESS(session, sem_fetch_measurement_status_response);
@@ -374,9 +374,9 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPFromExample_FetchData_DataLooksReasonable)
 
 TEST_F(NiRFmxWLANDriverApiTests, DSSSModAccFromExample_FetchData_DataLooksReasonable)
 {
-  char* resourceName = "RFSA";
+  char* resource_name = "RFSA";
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  auto session = init_instr_session(instr_stub, resourceName);
+  auto session = init_instr_session(instr_stub, resource_name);
   EXPECT_SUCCESS(session, instr_client::cfg_frequency_reference(instr_stub, session, "", nirfmxinstr_grpc::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.412e9));
   EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, "", 0.0));
@@ -430,9 +430,9 @@ TEST_F(NiRFmxWLANDriverApiTests, DSSSModAccFromExample_FetchData_DataLooksReason
 // "-1074135024: \nIVI: (Hex 0xBFFA0010) Invalid value for parameter or property.\n\nProperty: IQ Rate\nRequested Value:  80.0e6\nValue Must Be Less Than or Equal to:  75.0e6\nDevice: Simulated_NI_PXIe_5601_Device_31\n\nStatus Code: -200077"
 TEST_F(NiRFmxWLANDriverApiTests, DISABLED_DSSSPowerRampFromExample_FetchData_DataLooksReasonable)
 {
-  char* resourceName = "RFSA";
+  char* resource_name = "RFSA";
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  auto session = init_instr_session(instr_stub, resourceName);
+  auto session = init_instr_session(instr_stub, resource_name);
   EXPECT_SUCCESS(session, instr_client::cfg_frequency_reference(instr_stub, session, "", nirfmxinstr_grpc::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.412e9));
   EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, "", 0.0));
@@ -489,9 +489,9 @@ TEST_F(NiRFmxWLANDriverApiTests, DISABLED_DSSSPowerRampFromExample_FetchData_Dat
 
 TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReasonable)
 {
-  char* resourceName = "RFSA";
+  char* resource_name = "RFSA";
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  auto session = init_instr_session(instr_stub, resourceName);
+  auto session = init_instr_session(instr_stub, resource_name);
   EXPECT_SUCCESS(session, instr_client::cfg_frequency_reference(instr_stub, session, "", nirfmxinstr_grpc::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.412e9));
   EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, "", 0.0));
@@ -569,36 +569,36 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   const auto NUMBER_OF_DEVICES = 2;
   const auto NUMBER_OF_FREQUENCY_SEGMENTS = 1;
   const auto NUMBER_OF_RECEIVE_CHAINS = 2;
-  std::vector<std::string> resourceNames = {"RFSA1", "RFSA2"};
-  std::string commaSeparatedResourceName = get_comma_seperated_string(resourceNames);
-  std::vector<std::string> selectedPorts = {"", ""};
-  std::vector<float64> centerFrequencyArray{5.180000e9, 5.260000e9};
-  std::vector<std::string> portString = {"", ""};
-  std::vector<std::string> selectedPortsStrings = {"", ""};
-  std::string selectedPortsStringCommaSeparated;
-  std::vector<float64> referenceLevelArray{0.0, 0.0};
-  std::vector<float64> externalAttenuationArray{0.0, 0.0};
+  std::vector<std::string> resource_names = {"RFSA1", "RFSA2"};
+  std::string comma_separated_resource_name = get_comma_seperated_string(resource_names);
+  std::vector<std::string> selected_ports = {"", ""};
+  std::vector<float64> center_frequency_array{5.180000e9, 5.260000e9};
+  std::vector<std::string> port_string = {"", ""};
+  std::vector<std::string> selected_ports_strings = {"", ""};
+  std::string selected_ports_string_comma_separated;
+  std::vector<float64> reference_level_array{0.0, 0.0};
+  std::vector<float64> external_attenuation_array{0.0, 0.0};
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  auto session = init_session(stub(), PXI_5663E, commaSeparatedResourceName);
+  auto session = init_session(stub(), PXI_5663E, comma_separated_resource_name);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", NUMBER_OF_FREQUENCY_SEGMENTS, NUMBER_OF_RECEIVE_CHAINS));
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
     auto segment_string_response = client::build_segment_string(stub(), "", i);
     EXPECT_SUCCESS(session, segment_string_response);
-    EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), centerFrequencyArray[i]));
+    EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), center_frequency_array[i]));
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
+    auto port_string_response = instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    selectedPortsStrings[i] = port_string_response.selector_string_out();
-    port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
+    selected_ports_strings[i] = port_string_response.selector_string_out();
+    port_string_response = instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    portString[i] = port_string_response.selector_string_out();
-    EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, portString[i], referenceLevelArray[i]));
-    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, portString[i], externalAttenuationArray[i]));
+    port_string[i] = port_string_response.selector_string_out();
+    EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, port_string[i], reference_level_array[i]));
+    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string[i], external_attenuation_array[i]));
   }
-  selectedPortsStringCommaSeparated = get_comma_seperated_string(selectedPortsStrings);
-  EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selectedPortsStringCommaSeparated));
+  selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_strings);
+  EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selected_ports_string_comma_separated));
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 5e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e06));
@@ -613,14 +613,14 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_MATRIX_POWER_ENABLED, NIRFMXWLAN_INT32_OFDM_MODACC_CHANNEL_MATRIX_POWER_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32* MCSIndexArray = NULL;
-  int32 MCSIndexArrayLength = 0;
-  int32* numberOfSpaceTimeStreamsArray = NULL;
-  int32 numberOfSpaceTimeStreamsArrayLength = 0;
-  int32* spaceTimeStreamOffsetArray = NULL;
-  int32 numberOfStreamResults = INT_MIN;
-  int32 PPDUType = NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_MU;
-  int32 numberOfUsers = 0;
+  int32* mcs_index_array = NULL;
+  int32 mcs_index_array_length = 0;
+  int32* number_of_space_time_streams_array = NULL;
+  int32 number_of_space_time_streams_array_length = 0;
+  int32* space_time_stream_offset_array = NULL;
+  int32 number_of_stream_results = INT_MIN;
+  int32 ppdu_type = NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_MU;
+  int32 number_of_users = 0;
   OFDMModAccFetchNumberOfUsersResponse ofdm_mod_acc_fetch_number_of_users_response;
   OFDMModAccFetchMCSIndexResponse ofdm_mod_acc_fetch_mcs_index_response;
   OFDMModAccFetchNumberOfSpaceTimeStreamsResponse ofdm_mod_acc_fetch_number_of_space_time_streams_response;
@@ -640,22 +640,22 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   const auto ofdm_mod_acc_fetch_sigcrc_status_response = client::ofdm_mod_acc_fetch_sigcrc_status(stub(), session, "", 10.0);
   const auto ofdm_mod_acc_fetch_sigbcrc_status_response = client::ofdm_mod_acc_fetch_sigbcrc_status(stub(), session, "", 10.0);
   ofdm_mod_acc_fetch_number_of_users_response = client::ofdm_mod_acc_fetch_number_of_users(stub(), session, "", 10.0);
-  MCSIndexArrayLength = numberOfUsers;
-  MCSIndexArray = (int32*)malloc(MCSIndexArrayLength * sizeof(int32));
-  numberOfSpaceTimeStreamsArrayLength = numberOfUsers;
-  numberOfSpaceTimeStreamsArray = (int32*)malloc(numberOfSpaceTimeStreamsArrayLength * sizeof(int32));
-  spaceTimeStreamOffsetArray = (int32*)malloc(numberOfUsers * sizeof(int32));
-  for (int i = 0; i < numberOfUsers; i++) {
+  mcs_index_array_length = number_of_users;
+  mcs_index_array = (int32*)malloc(mcs_index_array_length * sizeof(int32));
+  number_of_space_time_streams_array_length = number_of_users;
+  number_of_space_time_streams_array = (int32*)malloc(number_of_space_time_streams_array_length * sizeof(int32));
+  space_time_stream_offset_array = (int32*)malloc(number_of_users * sizeof(int32));
+  for (int i = 0; i < number_of_users; i++) {
     auto user_string_response = client::build_user_string(stub(), "", i);
     EXPECT_SUCCESS(session, user_string_response);
     ofdm_mod_acc_fetch_mcs_index_response = client::ofdm_mod_acc_fetch_mcs_index(stub(), session, user_string_response.selector_string_out(), 10.0);
     ofdm_mod_acc_fetch_number_of_space_time_streams_response = client::ofdm_mod_acc_fetch_number_of_space_time_streams(stub(), session, user_string_response.selector_string_out(), 10.0);
-    spaceTimeStreamOffsetArray[i] = get_attr_i32(session, user_string_response.selector_string_out(), NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET);
-    if (MCSIndexArray == NULL || numberOfSpaceTimeStreamsArray == NULL) {
+    space_time_stream_offset_array[i] = get_attr_i32(session, user_string_response.selector_string_out(), NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET);
+    if (mcs_index_array == NULL || number_of_space_time_streams_array == NULL) {
       FAIL() << "Could not allocate array";
     }
-    if ((spaceTimeStreamOffsetArray[i] + numberOfSpaceTimeStreamsArray[i]) > numberOfStreamResults) {
-      numberOfStreamResults = spaceTimeStreamOffsetArray[i] + numberOfSpaceTimeStreamsArray[i];
+    if ((space_time_stream_offset_array[i] + number_of_space_time_streams_array[i]) > number_of_stream_results) {
+      number_of_stream_results = space_time_stream_offset_array[i] + number_of_space_time_streams_array[i];
     }
   }
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; i++) {
@@ -663,7 +663,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
     EXPECT_SUCCESS(session, segment_string_response);
     ofdm_mod_acc_fetch_frequency_error_mean_response = client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0);
     ofdm_mod_acc_fetch_symbol_clock_error_mean_response = client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0);
-    for (int j = 0; j < numberOfStreamResults; j++) {
+    for (int j = 0; j < number_of_stream_results; j++) {
       auto stream_string_response = client::build_stream_string(stub(), segment_string_response.selector_string_out(), j);
       EXPECT_SUCCESS(session, stream_string_response);
       ofdm_mod_acc_fetch_stream_rmsevm_response = client::ofdm_mod_acc_fetch_stream_rmsevm(stub(), session, stream_string_response.selector_string_out(), 10.0);
@@ -699,8 +699,8 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_mcs_index_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_mcs_index_response.mcs_index());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_number_of_space_time_streams_response);
-  for (int i = 0; i < numberOfUsers; i++) {
-    EXPECT_EQ(0, spaceTimeStreamOffsetArray[i]);
+  for (int i = 0; i < number_of_users; i++) {
+    EXPECT_EQ(0, space_time_stream_offset_array[i]);
   }
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_mcs_index_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_mcs_index_response.mcs_index());
@@ -739,9 +739,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
 
 TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccSpeedOptimizedFromExample_FetchData_DataLooksReasonable)
 {
-  char* resourceName = "RFSA";
+  char* resource_name = "RFSA";
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  auto session = init_instr_session(instr_stub, resourceName);
+  auto session = init_instr_session(instr_stub, resource_name);
   EXPECT_SUCCESS(session, instr_client::cfg_frequency_reference(instr_stub, session, "", nirfmxinstr_grpc::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.412e9));
   EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, "", 0.0));
@@ -785,9 +785,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccSpeedOptimizedFromExample_FetchData_D
 
 TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTriggerBasedPPDUFromExample_FetchData_DataLooksReasonable)
 {
-  char* resourceName = "RFSA";
+  char* resource_name = "RFSA";
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  auto session = init_instr_session(instr_stub, resourceName);
+  auto session = init_instr_session(instr_stub, resource_name);
   EXPECT_SUCCESS(session, instr_client::cfg_frequency_reference(instr_stub, session, "", nirfmxinstr_grpc::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.412e9));
   EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, "", 0.0));
@@ -855,9 +855,9 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTriggerBasedPPDUFromExample_FetchData
 // Failing on ofdm_mod_acc_auto_level call with "-685094: The configured reference level is too high, The reference level should accurately represent the peak power in the signal."
 TEST_F(NiRFmxWLANDriverApiTests, DISABLED_OFDMModAccWithEVMBasedAutoLevelFromExample_FetchData_DataLooksReasonable)
 {
-  char* resourceName = "RFSA";
+  char* resource_name = "RFSA";
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  auto session = init_instr_session(instr_stub, resourceName);
+  auto session = init_instr_session(instr_stub, resource_name);
   EXPECT_SUCCESS(session, instr_client::cfg_frequency_reference(instr_stub, session, "", nirfmxinstr_grpc::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.412e9));
   EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, "", 0.0));
@@ -938,36 +938,36 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   const auto NUMBER_OF_DEVICES = 2;
   const auto NUMBER_OF_FREQUENCY_SEGMENTS = 1;
   const auto NUMBER_OF_RECEIVE_CHAINS = 2;
-  std::vector<std::string> resourceNames = {"RFSA1", "RFSA2"};
-  std::string commaSeparatedResourceName = get_comma_seperated_string(resourceNames);
-  std::vector<std::string> selectedPorts = {"", ""};
-  std::vector<float64> centerFrequencyArray{5.180000e9, 5.260000e9};
-  std::vector<float64> referenceLevelArray{0.0, 0.0};
-  std::vector<float64> externalAttenuationArray{0.0, 0.0};
-  std::vector<std::string> portString = {"", ""};
-  std::vector<std::string> selectedPortsString{"", ""};
-  std::string selectedPortsStringCommaSeparated;
+  std::vector<std::string> resource_names = {"RFSA1", "RFSA2"};
+  std::string comma_separated_resource_name = get_comma_seperated_string(resource_names);
+  std::vector<std::string> selected_ports = {"", ""};
+  std::vector<float64> center_frequency_array{5.180000e9, 5.260000e9};
+  std::vector<float64> reference_level_array{0.0, 0.0};
+  std::vector<float64> external_attenuation_array{0.0, 0.0};
+  std::vector<std::string> port_string = {"", ""};
+  std::vector<std::string> selected_ports_string{"", ""};
+  std::string selected_ports_string_comma_separated;
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  auto session = init_session(stub(), PXI_5663E, commaSeparatedResourceName);
+  auto session = init_session(stub(), PXI_5663E, comma_separated_resource_name);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", NUMBER_OF_FREQUENCY_SEGMENTS, NUMBER_OF_RECEIVE_CHAINS));
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
     auto segment_string_response = client::build_segment_string(stub(), "", i);
     EXPECT_SUCCESS(session, segment_string_response);
-    EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), centerFrequencyArray[i]));
+    EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), center_frequency_array[i]));
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
+    auto port_string_response = instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    selectedPortsString[i] = port_string_response.selector_string_out();
-    port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
+    selected_ports_string[i] = port_string_response.selector_string_out();
+    port_string_response = instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    portString[i] = port_string_response.selector_string_out();
-    EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, portString[i], referenceLevelArray[i]));
-    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, portString[i], externalAttenuationArray[i]));
+    port_string[i] = port_string_response.selector_string_out();
+    EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, port_string[i], reference_level_array[i]));
+    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string[i], external_attenuation_array[i]));
   }
-  selectedPortsStringCommaSeparated = get_comma_seperated_string(selectedPortsString);
-  EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selectedPortsStringCommaSeparated));
+  selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_string);
+  EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selected_ports_string_comma_separated));
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 5.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e6));
@@ -978,7 +978,7 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   EXPECT_SUCCESS(session, client::sem_cfg_span(stub(), session, "", SEM_SPAN_AUTO_TRUE, 66.0e6));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32 arraySize = 0;
+  int32 array_size = 0;
   SEMFetchCarrierMeasurementResponse sem_fetch_carrier_measurement_response;
   SEMFetchLowerOffsetMarginArrayResponse sem_fetch_lower_offset_margin_array_response;
   SEMFetchUpperOffsetMarginArrayResponse sem_fetch_upper_offset_margin_array_response;
@@ -993,7 +993,7 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
       sem_fetch_carrier_measurement_response = client::sem_fetch_carrier_measurement(stub(), session, chain_string_response.selector_string_out(), 10.0);
       sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0);
       sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0);
-      arraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
+      array_size = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
       sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, chain_string_response.selector_string_out(), 10.0);
     }
   }
@@ -1051,39 +1051,39 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
   const auto NUMBER_OF_DEVICES = 2;
   const auto NUMBER_OF_FREQUENCY_SEGMENTS = 1;
   const auto NUMBER_OF_RECEIVE_CHAINS = 2;
-  std::vector<std::string> resourceNames = {"RFSA1", "RFSA2"};
-  std::string commaSeparatedResourceName = get_comma_seperated_string(resourceNames);
-  std::vector<std::string> selectedPorts = {"", ""};
-  std::vector<float64> centerFrequencyArray{5.180000e9, 5.260000e9};
-  std::vector<std::string> portString = {"", ""};
-  std::vector<std::string> selectedPortsString = {"", ""};
-  std::string selectedPortsStringCommaSeparated;
-  std::vector<float64> referenceLevelArray{0.0, 0.0};
-  std::vector<float64> externalAttenuationArray{0.0, 0.0};
+  std::vector<std::string> resource_names = {"RFSA1", "RFSA2"};
+  std::string comma_separated_resource_name = get_comma_seperated_string(resource_names);
+  std::vector<std::string> selected_ports = {"", ""};
+  std::vector<float64> center_frequency_array{5.180000e9, 5.260000e9};
+  std::vector<std::string> port_string = {"", ""};
+  std::vector<std::string> selected_ports_string = {"", ""};
+  std::string selected_ports_string_comma_separated;
+  std::vector<float64> reference_level_array{0.0, 0.0};
+  std::vector<float64> external_attenuation_array{0.0, 0.0};
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
-  auto session = init_session(stub(), PXI_5663E, commaSeparatedResourceName);
+  auto session = init_session(stub(), PXI_5663E, comma_separated_resource_name);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", NUMBER_OF_FREQUENCY_SEGMENTS, NUMBER_OF_RECEIVE_CHAINS));
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
     auto segment_string_response = client::build_segment_string(stub(), "", i);
     EXPECT_SUCCESS(session, segment_string_response);
-    EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), centerFrequencyArray[i]));
+    EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), center_frequency_array[i]));
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
+    auto port_string_response = instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    selectedPortsString[i] = port_string_response.selector_string_out();
-    port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
+    selected_ports_string[i] = port_string_response.selector_string_out();
+    port_string_response = instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    portString[i] = port_string_response.selector_string_out();
+    port_string[i] = port_string_response.selector_string_out();
   }
-  selectedPortsStringCommaSeparated = get_comma_seperated_string(selectedPortsString);
-  EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selectedPortsStringCommaSeparated));
+  selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_string);
+  EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selected_ports_string_comma_separated));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e6));
   EXPECT_SUCCESS(session, client::auto_level(stub(), session, "", 10e-3));
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, portString[i], externalAttenuationArray[i]));
+    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string[i], external_attenuation_array[i]));
   }
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 5.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_TXP, true));
