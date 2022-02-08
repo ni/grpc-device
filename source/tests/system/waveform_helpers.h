@@ -36,8 +36,8 @@ TComplex complex(TFloat real, TFloat imaginary)
 
 template <typename TFloat, typename TComplex>
 std::vector<TComplex> complex_array(
-    std::vector<TFloat> reals,
-    std::vector<TFloat> imaginaries)
+    const std::vector<TFloat>& reals,
+    const std::vector<TFloat>& imaginaries)
 {
   auto c = std::vector<TComplex>{};
   c.reserve(reals.size());
@@ -51,7 +51,7 @@ std::vector<TComplex> complex_array(
 }
 
 template <typename TFloat>
-TestIQData<TFloat> fetch_iq_data(nlohmann::json json)
+TestIQData<TFloat> load_iq_data_from_json(nlohmann::json json)
 {
   auto t0 = json.find("t0")->get<double>();
   auto dt = json.find("dt")->get<double>();
@@ -65,7 +65,7 @@ TestIQData<TFloat> load_test_iq_data(const std::string& file_name)
 {
   std::ifstream input_stream(file_name);
   auto json = nlohmann::json::parse(input_stream);
-  return fetch_iq_data<TFloat>(json);
+  return load_iq_data_from_json<TFloat>(json);
 }
 
 template <typename TFloat, typename TComplex>
@@ -84,7 +84,7 @@ std::vector<TestIQData<TFloat>> load_test_multiple_iq_data(const std::string& fi
   for (int i = 1; i <= count; i++) {
     auto key = "waveform" + std::to_string(i);
     auto waveform_json = json.at(key);
-    auto data = fetch_iq_data<TFloat>(waveform_json);
+    auto data = load_iq_data_from_json<TFloat>(waveform_json);
     iq_data.push_back(data);
   }
   return iq_data;

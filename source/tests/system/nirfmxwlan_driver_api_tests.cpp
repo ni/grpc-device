@@ -1167,11 +1167,11 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
 {
   const auto num_frequency_segments = 1;
   const auto num_receive_chains = 2;
-  double centerFrequency[2] = {5.18e9, 5.26e9};
-  std::vector<float64> IQx0{0, 0};
-  std::vector<float64> IQdx{0, 0};
-  std::vector<int> IQSize{0, 0};
-  std::vector<nidevice_grpc::NIComplexNumberF32> IQ;
+  double centerFrequency[num_receive_chains] = {5.18e9, 5.26e9};
+  std::vector<float64> iq_x0{0, 0};
+  std::vector<float64> iq_dx{0, 0};
+  std::vector<int> iq_sizes{0, 0};
+  std::vector<nidevice_grpc::NIComplexNumberF32> iq;
 
   auto session = init_analysis_session(stub());
   EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", num_frequency_segments, num_receive_chains));
@@ -1188,21 +1188,20 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
-
   //READ TDMS File
   auto waveforms = load_test_multiple_waveforms_data<float, nidevice_grpc::NIComplexNumberF32>("WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json", 2);
-
-  for (int i = 0; i < 2; i++) {
+  //Concatinate waveform data, two dimension array passed as one dimension array with size array determining where one starts and one stops.
+  for (int i = 0; i < num_receive_chains; i++) {
     auto waveform = waveforms[i];
     auto data = waveform.data;
-    IQx0[i] = waveform.t0;
-    IQdx[i] = waveform.dt;
-    IQSize[i] = static_cast<int>(data.size());
-    IQ.insert(IQ.end(), data.begin(), data.end());
+    iq_x0[i] = waveform.t0;
+    iq_dx[i] = waveform.dt;
+    iq_sizes[i] = static_cast<int>(data.size());
+    iq.insert(iq.end(), data.begin(), data.end());
   }
 
   //Analyze Waveforms
-  EXPECT_SUCCESS(session, client::analyze_n_waveforms_iq(stub(), session, "", "", IQx0, IQdx, IQ, IQSize, true));
+  EXPECT_SUCCESS(session, client::analyze_n_waveforms_iq(stub(), session, "", "", iq_x0, iq_dx, iq, iq_sizes, true));
 
   //Fetch Results and check they are reasonable
   const auto fetch_composite_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
