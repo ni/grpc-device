@@ -6,10 +6,6 @@
 #include "nirfmxwlan/nirfmxwlan_client.h"
 #include "nirfsa/nirfsa_client.h"
 
-#ifdef WIN32
-  #define strncpy strncpy_s
-#endif
-
 using namespace ::testing;
 using namespace nirfmxwlan_grpc;
 namespace client = nirfmxwlan_grpc::experimental::client;
@@ -90,21 +86,18 @@ class NiRFmxWLANDriverApiTests : public Test {
   std::unique_ptr<NiRFmxWLAN::Stub> stub_;
 };
 
-void GetCommaSeparatedStringFromArray(char* array_of_names, int num_of_names, int name_length, char* comma_seperated_name)
+void GetCommaSeparatedStringFromArray(const std::vector<std::string>& array_of_names, std::string& comma_seperated_name)
 {
   int name_index = 0;
   int comma_index = 0;
-  while (name_index < num_of_names) {
-    int char_index;
-    for (char_index = 0; char_index < name_length; ++char_index) {
-      if (*(array_of_names + name_index * name_length + char_index) == '\0') break;
-      comma_seperated_name[comma_index++] = *(array_of_names + name_index * name_length + char_index);
-    }
-    if (++name_index != num_of_names) {
-      comma_seperated_name[comma_index++] = ',';
+  std::stringstream output;
+  while (name_index < array_of_names.size()) {
+    output << array_of_names[name_index];
+    if (++name_index != array_of_names.size()) {
+      output << ',';
     }
   }
-  comma_seperated_name[comma_index] = '\0';
+  comma_seperated_name = output.str();
 }
 
 InitializeResponse init(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
@@ -575,17 +568,16 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReason
 TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_DEVICES = 2;
-  const auto MAX_SELECTOR_STRING_LENGTH = 256;
   const auto NUMBER_OF_FREQUENCY_SEGMENTS = 1;
   const auto NUMBER_OF_RECEIVE_CHAINS = 2;
-  char resourceNames[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH] = {"RFSA1", "RFSA2"};
-  char commaSeparatedResourceName[MAX_SELECTOR_STRING_LENGTH * 2 + 1];
-  GetCommaSeparatedStringFromArray((char*)resourceNames, NUMBER_OF_DEVICES, MAX_SELECTOR_STRING_LENGTH, commaSeparatedResourceName);
-  char selectedPorts[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH] = {"", ""};
+  std::vector<std::string> resourceNames = {"RFSA1", "RFSA2"};
+  std::string commaSeparatedResourceName;
+  GetCommaSeparatedStringFromArray(resourceNames, commaSeparatedResourceName);
+  std::vector<std::string> selectedPorts = {"", ""};
   std::vector<float64> centerFrequencyArray{5.180000e9, 5.260000e9};
-  char portString[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH];
-  char selectedPortsString[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH];
-  char selectedPortsStringCommaSeparated[MAX_SELECTOR_STRING_LENGTH * 2 + 1];
+  std::vector<std::string> portString = {"", ""};
+  std::vector<std::string> selectedPortsStrings = {"", ""};
+  std::string selectedPortsStringCommaSeparated;
   std::vector<float64> referenceLevelArray{0.0, 0.0};
   std::vector<float64> externalAttenuationArray{0.0, 0.0};
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
@@ -600,16 +592,14 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
     auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    strncpy(selectedPortsString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    selectedPortsStrings[i] = port_string_response.selector_string_out();
     port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    strncpy(portString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    portString[i] = port_string_response.selector_string_out();
     EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, portString[i], referenceLevelArray[i]));
     EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, portString[i], externalAttenuationArray[i]));
   }
-  GetCommaSeparatedStringFromArray((char*)selectedPortsString, NUMBER_OF_DEVICES, MAX_SELECTOR_STRING_LENGTH, selectedPortsStringCommaSeparated);
+  GetCommaSeparatedStringFromArray(selectedPortsStrings, selectedPortsStringCommaSeparated);
   EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selectedPortsStringCommaSeparated));
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 5e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
@@ -948,19 +938,18 @@ TEST_F(NiRFmxWLANDriverApiTests, DISABLED_OFDMModAccWithEVMBasedAutoLevelFromExa
 TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_DEVICES = 2;
-  const auto MAX_SELECTOR_STRING_LENGTH = 256;
   const auto NUMBER_OF_FREQUENCY_SEGMENTS = 1;
   const auto NUMBER_OF_RECEIVE_CHAINS = 2;
-  char resourceNames[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH] = {"RFSA1", "RFSA2"};
-  char commaSeparatedResourceName[MAX_SELECTOR_STRING_LENGTH * 2 + 1];
-  GetCommaSeparatedStringFromArray((char*)resourceNames, NUMBER_OF_DEVICES, MAX_SELECTOR_STRING_LENGTH, commaSeparatedResourceName);
-  char selectedPorts[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH] = {"", ""};
+  std::vector<std::string> resourceNames = {"RFSA1", "RFSA2"};
+  std::string commaSeparatedResourceName;
+  GetCommaSeparatedStringFromArray(resourceNames, commaSeparatedResourceName);
+  std::vector<std::string> selectedPorts = {"", ""};
   std::vector<float64> centerFrequencyArray{5.180000e9, 5.260000e9};
   std::vector<float64> referenceLevelArray{0.0, 0.0};
   std::vector<float64> externalAttenuationArray{0.0, 0.0};
-  char portString[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH];
-  char selectedPortsString[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH];
-  char selectedPortsStringCommaSeparated[MAX_SELECTOR_STRING_LENGTH * 2 + 1];
+  std::vector<std::string> portString = {"", ""};
+  std::vector<std::string> selectedPortsString{"", ""};
+  std::string selectedPortsStringCommaSeparated;
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
   auto session = init_session(stub(), PXI_5663E, commaSeparatedResourceName);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
@@ -973,16 +962,14 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
     auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    strncpy(selectedPortsString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    selectedPortsString[i] = port_string_response.selector_string_out();
     port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    strncpy(portString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    portString[i] = port_string_response.selector_string_out();
     EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, portString[i], referenceLevelArray[i]));
     EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, portString[i], externalAttenuationArray[i]));
   }
-  GetCommaSeparatedStringFromArray((char*)selectedPortsString, NUMBER_OF_DEVICES, MAX_SELECTOR_STRING_LENGTH, selectedPortsStringCommaSeparated);
+  GetCommaSeparatedStringFromArray(selectedPortsString, selectedPortsStringCommaSeparated);
   EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selectedPortsStringCommaSeparated));
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 5.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
@@ -1065,17 +1052,16 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
 TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_DEVICES = 2;
-  const auto MAX_SELECTOR_STRING_LENGTH = 256;
   const auto NUMBER_OF_FREQUENCY_SEGMENTS = 1;
   const auto NUMBER_OF_RECEIVE_CHAINS = 2;
-  char resourceNames[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH] = {"RFSA1", "RFSA2"};
-  char commaSeparatedResourceName[MAX_SELECTOR_STRING_LENGTH * 2 + 1];
-  GetCommaSeparatedStringFromArray((char*)resourceNames, NUMBER_OF_DEVICES, MAX_SELECTOR_STRING_LENGTH, commaSeparatedResourceName);
-  char selectedPorts[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH] = {"", ""};
+  std::vector<std::string> resourceNames = {"RFSA1", "RFSA2"};
+  std::string commaSeparatedResourceName;
+  GetCommaSeparatedStringFromArray(resourceNames, commaSeparatedResourceName);
+  std::vector<std::string> selectedPorts = {"", ""};
   std::vector<float64> centerFrequencyArray{5.180000e9, 5.260000e9};
-  char portString[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH];
-  char selectedPortsString[NUMBER_OF_DEVICES][MAX_SELECTOR_STRING_LENGTH];
-  char selectedPortsStringCommaSeparated[MAX_SELECTOR_STRING_LENGTH * 2 + 1];
+  std::vector<std::string> portString = {"", ""};
+  std::vector<std::string> selectedPortsString = {"", ""};
+  std::string selectedPortsStringCommaSeparated;
   std::vector<float64> referenceLevelArray{0.0, 0.0};
   std::vector<float64> externalAttenuationArray{0.0, 0.0};
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
@@ -1090,14 +1076,12 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
     auto port_string_response = instr_client::build_port_string(instr_stub, "", selectedPorts[i], resourceNames[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    strncpy(selectedPortsString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    selectedPortsString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    selectedPortsString[i] = port_string_response.selector_string_out();
     port_string_response = instr_client::build_port_string(instr_stub, "", "", resourceNames[i], 0);
     EXPECT_SUCCESS(session, port_string_response);
-    strncpy(portString[i], port_string_response.selector_string_out().c_str(), MAX_SELECTOR_STRING_LENGTH);
-    portString[i][MAX_SELECTOR_STRING_LENGTH - 1] = '\0';
+    portString[i] = port_string_response.selector_string_out();
   }
-  GetCommaSeparatedStringFromArray((char*)selectedPortsString, NUMBER_OF_DEVICES, MAX_SELECTOR_STRING_LENGTH, selectedPortsStringCommaSeparated);
+  GetCommaSeparatedStringFromArray(selectedPortsString, selectedPortsStringCommaSeparated);
   EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selectedPortsStringCommaSeparated));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e6));
