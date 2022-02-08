@@ -46,7 +46,7 @@ class NiRFmxBTSessionTest : public ::testing::Test {
     return status;
   }
 
-  ::grpc::Status call_close(nidevice_grpc::Session session, nirfmxbt_grpc::Boolean force_destroy, rfmxbt::CloseResponse* response)
+  ::grpc::Status call_close(nidevice_grpc::Session session, bool force_destroy, rfmxbt::CloseResponse* response)
   {
     ::grpc::ClientContext context;
     rfmxbt::CloseRequest request;
@@ -101,7 +101,7 @@ TEST_F(NiRFmxBTSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   ::grpc::ClientContext context;
   rfmxbt::CloseRequest close_request;
   close_request.mutable_instrument()->set_id(session.id());
-  close_request.set_force_destroy(nirfmxbt_grpc::Boolean::BOOLEAN_FALSE);
+  close_request.set_force_destroy(false);
   rfmxbt::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -123,8 +123,8 @@ TEST_F(NiRFmxBTSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_Clo
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
   rfmxbt::CloseResponse close_response_one, close_response_two;
-  status_one = call_close(session_one, nirfmxbt_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
-  status_two = call_close(session_two, nirfmxbt_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
+  status_one = call_close(session_one, false, &close_response_one);
+  status_two = call_close(session_two, false, &close_response_two);
 
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());
@@ -146,8 +146,8 @@ TEST_F(NiRFmxBTSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_C
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
   rfmxbt::CloseResponse close_response_one, close_response_two;
-  status_one = call_close(session_one, nirfmxbt_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
-  status_two = call_close(session_two, nirfmxbt_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
+  status_one = call_close(session_one, false, &close_response_one);
+  status_two = call_close(session_two, false, &close_response_two);
 
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());
@@ -165,7 +165,7 @@ TEST_F(NiRFmxBTSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionErr
   ::grpc::ClientContext context;
   rfmxbt::CloseRequest request;
   request.mutable_instrument()->set_id(session.id());
-  request.set_force_destroy(nirfmxbt_grpc::Boolean::BOOLEAN_FALSE);
+  request.set_force_destroy(false);
   rfmxbt::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 

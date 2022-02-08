@@ -297,11 +297,6 @@ enum AcpResultsMeasurementStatus {
   ACP_RESULTS_MEASUREMENT_STATUS_PASS = 1;
 }
 
-enum Boolean {
-  BOOLEAN_FALSE = 0;
-  BOOLEAN_TRUE = 1;
-}
-
 enum DigitalEdgeTriggerEdge {
   DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE = 0;
   DIGITAL_EDGE_TRIGGER_EDGE_FALLING_EDGE = 1;
@@ -340,7 +335,7 @@ enum MeasurementTypes {
   MEASUREMENT_TYPES_UNSPECIFIED = 0;
   MEASUREMENT_TYPES_TXP = 1;
   MEASUREMENT_TYPES_MODACC = 2;
-  MEASUREMENT_TYPES_20_DB_BANDWIDTH = 4;
+  MEASUREMENT_TYPES_20DB_BANDWIDTH = 4;
   MEASUREMENT_TYPES_FREQUENCY_RANGE = 8;
   MEASUREMENT_TYPES_ACP = 16;
 }
@@ -399,7 +394,9 @@ enum RFAttenuationAuto {
 }
 
 enum Standard {
-  STANDARD_BR_EDR = 0;
+  option allow_alias = true;
+  STANDARD_BR = 0;
+  STANDARD_EDR = 0;
   STANDARD_LE = 1;
 }
 
@@ -941,7 +938,7 @@ message CheckMeasurementStatusRequest {
 
 message CheckMeasurementStatusResponse {
   int32 status = 1;
-  int32 is_done = 2;
+  bool is_done = 2;
 }
 
 message ClearAllNamedResultsRequest {
@@ -974,10 +971,7 @@ message CloneSignalConfigurationResponse {
 
 message CloseRequest {
   nidevice_grpc.Session instrument = 1;
-  oneof force_destroy_enum {
-    Boolean force_destroy = 2;
-    int32 force_destroy_raw = 3;
-  }
+  bool force_destroy = 2;
 }
 
 message CloseResponse {
