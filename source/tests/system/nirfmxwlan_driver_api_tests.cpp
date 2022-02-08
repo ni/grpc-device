@@ -1188,9 +1188,9 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_phase_tracking_enabled(stub(), session, "", OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_symbol_clock_error_correction_enabled(stub(), session, "", OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_channel_estimation_type(stub(), session, "", OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE));
-  //READ TDMS File
+  // READ TDMS File
   auto waveforms = load_test_multiple_waveforms_data<float, nidevice_grpc::NIComplexNumberF32>("WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json", 2);
-  //Concatinate waveform data, two dimension array passed as one dimension array with size array determining where one starts and one stops.
+  // Concatenate waveform data, two dimension array passed as one dimension array with size array determining where one starts and one stops.
   for (int i = 0; i < num_receive_chains; i++) {
     auto waveform = waveforms[i];
     auto data = waveform.data;
@@ -1200,10 +1200,10 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
     iq.insert(iq.end(), data.begin(), data.end());
   }
 
-  //Analyze Waveforms
+  // Analyze Waveforms
   EXPECT_SUCCESS(session, client::analyze_n_waveforms_iq(stub(), session, "", "", iq_x0, iq_dx, iq, iq_sizes, true));
 
-  //Fetch Results and check they are reasonable
+  // Fetch Results and check they are reasonable
   const auto fetch_composite_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
   EXPECT_GT(0.0, fetch_composite_response.composite_rms_evm_mean());
   EXPECT_GT(0.0, fetch_composite_response.composite_data_rms_evm_mean());
