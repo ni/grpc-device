@@ -65,6 +65,9 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// BuildPortString is custom implemented to account for a bug in the buffer size returned from the ivi-dance call to BuildPortString2.
+// We adjust the resulting size from the ivi-dance call to account for the channel_number input.
+// See AB#12345 for details about the RFmx Instr Bug.
 ::grpc::Status NiRFmxInstrService::BuildPortString(::grpc::ServerContext* context, const BuildPortStringRequest* request, BuildPortStringResponse* response)
 {
   if (context->IsCancelled()) {
