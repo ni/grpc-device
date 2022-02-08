@@ -248,7 +248,7 @@ enum Personality {
   PERSONALITY_NONE = 0;
   PERSONALITY_ALL = 2147483647;
   PERSONALITY_BT = 1024;
-  PERSONALITY_CDMA2_K = 32;
+  PERSONALITY_CDMA2K = 32;
   PERSONALITY_DEMOD = 2;
   PERSONALITY_EVDO = 128;
   PERSONALITY_GSM = 8;
@@ -1054,7 +1054,7 @@ message LoadSParameterExternalAttenuationTableFromS2PFileRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string table_name = 3;
-  string s2_p_file_path = 4;
+  string s2p_file_path = 4;
   oneof s_parameter_orientation_enum {
     SParameterOrientation s_parameter_orientation = 5;
     int32 s_parameter_orientation_raw = 6;
@@ -1391,7 +1391,7 @@ message SetAttributeU8ArrayResponse {
 }
 
 message TimestampFromValuesRequest {
-  int64 seconds_since1970 = 1;
+  int64 seconds_since_1970 = 1;
   double fractional_seconds = 2;
 }
 
@@ -1406,7 +1406,7 @@ message ValuesFromTimestampRequest {
 
 message ValuesFromTimestampResponse {
   int32 status = 1;
-  int64 seconds_since1970 = 2;
+  int64 seconds_since_1970 = 2;
   double fractional_seconds = 3;
 }
 

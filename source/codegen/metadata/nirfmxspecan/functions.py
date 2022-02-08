@@ -4477,6 +4477,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'pre_cfr_papr',
                 'name': 'preCFRPAPR',
                 'type': 'float64'
             }
@@ -7587,6 +7588,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'dut_s_parameters_frequency',
                 'name': 'dutsParametersFrequency',
                 'size': {
                     'mechanism': 'len',

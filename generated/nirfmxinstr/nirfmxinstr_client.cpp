@@ -1122,7 +1122,7 @@ load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 LoadSParameterExternalAttenuationTableFromS2PFileResponse
-load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::string& s2_p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
+load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
 {
   ::grpc::ClientContext context;
 
@@ -1130,7 +1130,7 @@ load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, c
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_table_name(table_name);
-  request.set_s2_p_file_path(s2_p_file_path);
+  request.set_s2p_file_path(s2p_file_path);
   const auto s_parameter_orientation_ptr = s_parameter_orientation.get_if<SParameterOrientation>();
   const auto s_parameter_orientation_raw_ptr = s_parameter_orientation.get_if<pb::int32>();
   if (s_parameter_orientation_ptr) {
@@ -1730,12 +1730,12 @@ set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 TimestampFromValuesResponse
-timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since1970, const double& fractional_seconds)
+timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since_1970, const double& fractional_seconds)
 {
   ::grpc::ClientContext context;
 
   auto request = TimestampFromValuesRequest{};
-  request.set_seconds_since1970(seconds_since1970);
+  request.set_seconds_since_1970(seconds_since_1970);
   request.set_fractional_seconds(fractional_seconds);
 
   auto response = TimestampFromValuesResponse{};

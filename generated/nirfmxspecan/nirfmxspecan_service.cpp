@@ -4858,11 +4858,11 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 pre_cfrpapr {};
-      auto status = library_->DPDFetchApplyDPDPreCFRPAPR(instrument, selector_string, timeout, &pre_cfrpapr);
+      float64 pre_cfr_papr {};
+      auto status = library_->DPDFetchApplyDPDPreCFRPAPR(instrument, selector_string, timeout, &pre_cfr_papr);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_pre_cfrpapr(pre_cfrpapr);
+        response->set_pre_cfr_papr(pre_cfr_papr);
       }
       return ::grpc::Status::OK;
     }
@@ -8116,14 +8116,14 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      auto duts_parameters_frequency = const_cast<float64*>(request->duts_parameters_frequency().data());
+      auto dut_s_parameters_frequency = const_cast<float64*>(request->dut_s_parameters_frequency().data());
       auto duts21 = const_cast<float64*>(request->duts21().data());
       auto duts12 = const_cast<float64*>(request->duts12().data());
       auto duts11 = const_cast<float64*>(request->duts11().data());
       auto duts22 = const_cast<float64*>(request->duts22().data());
       auto array_size_determine_from_sizes = std::array<int, 5>
       {
-        request->duts_parameters_frequency_size(),
+        request->dut_s_parameters_frequency_size(),
         request->duts21_size(),
         request->duts12_size(),
         request->duts11_size(),
@@ -8136,7 +8136,7 @@ namespace nirfmxspecan_grpc {
       }
       auto array_size = array_size_size_calculation.size;
 
-      auto status = library_->NFCfgColdSourceDUTSParameters(instrument, selector_string, duts_parameters_frequency, duts21, duts12, duts11, duts22, array_size);
+      auto status = library_->NFCfgColdSourceDUTSParameters(instrument, selector_string, dut_s_parameters_frequency, duts21, duts12, duts11, duts22, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

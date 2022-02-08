@@ -1,16 +1,4 @@
 enums = {
-    'Boolean': {
-        'values': [
-            {
-                'name': 'FALSE',
-                'value': 0
-            },
-            {
-                'name': 'TRUE',
-                'value': 1
-            }
-        ]
-    },
     'DigitalEdgeTriggerEdge': {
         'values': [
             {
@@ -92,35 +80,35 @@ enums = {
         'enum-value-prefix': 'DSSS_MODACC_DATA_MODULATION_FORMAT',
         'values': [
             {
-                'name': 'DSSS1_MBPS',
+                'name': 'DSSS1MBPS',
                 'value': 0
             },
             {
-                'name': 'DSSS2_MBPS',
+                'name': 'DSSS2MBPS',
                 'value': 1
             },
             {
-                'name': 'CCK5_5_MBPS',
+                'name': 'CCK5_5MBPS',
                 'value': 2
             },
             {
-                'name': 'CCK11_MBPS',
+                'name': 'CCK11MBPS',
                 'value': 3
             },
             {
-                'name': 'PBCC5_5_MBPS',
+                'name': 'PBCC5_5MBPS',
                 'value': 4
             },
             {
-                'name': 'PBCC11_MBPS',
+                'name': 'PBCC11MBPS',
                 'value': 5
             },
             {
-                'name': 'PBCC22_MBPS',
+                'name': 'PBCC22MBPS',
                 'value': 6
             },
             {
-                'name': 'PBCC33_MBPS',
+                'name': 'PBCC33MBPS',
                 'value': 7
             }
         ]
@@ -435,11 +423,11 @@ enums = {
     'OfdmFrequencyBand': {
         'values': [
             {
-                'name': '2_4_GHZ',
+                'name': '2_4GHZ',
                 'value': 0
             },
             {
-                'name': '5_GHZ',
+                'name': '5GHZ',
                 'value': 1
             }
         ]
@@ -479,15 +467,15 @@ enums = {
                 'value': -1
             },
             {
-                'name': '4_X',
+                'name': '4X',
                 'value': 0
             },
             {
-                'name': '2_X',
+                'name': '2X',
                 'value': 1
             },
             {
-                'name': '1_X',
+                'name': '1X',
                 'value': 2
             }
         ]

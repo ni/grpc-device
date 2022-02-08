@@ -80,7 +80,7 @@ InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr
 InitializeFromNIRFSASessionArrayResponse initialize_from_nirfsa_session_array(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& nirfsa_sessions);
 IsSelfCalibrateValidResponse is_self_calibrate_valid(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 LoadAllConfigurationsResponse load_all_configurations(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path, const pb::int32& load_rf_instr_configuration);
-LoadSParameterExternalAttenuationTableFromS2PFileResponse load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::string& s2_p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation);
+LoadSParameterExternalAttenuationTableFromS2PFileResponse load_s_parameter_external_attenuation_table_from_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name, const pb::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation);
 ResetAttributeResponse reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
 ResetDriverResponse reset_driver(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 ResetEntireSessionResponse reset_entire_session(const StubPtr& stub, const nidevice_grpc::Session& instrument);
@@ -111,7 +111,7 @@ SetAttributeU32ArrayResponse set_attribute_u32_array(const StubPtr& stub, const 
 SetAttributeU64ArrayResponse set_attribute_u64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const std::vector<pb::uint64>& attr_val);
 SetAttributeU8Response set_attribute_u8(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::uint32& attr_val);
 SetAttributeU8ArrayResponse set_attribute_u8_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id, const pb::string& attr_val);
-TimestampFromValuesResponse timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since1970, const double& fractional_seconds);
+TimestampFromValuesResponse timestamp_from_values(const StubPtr& stub, const pb::int64& seconds_since_1970, const double& fractional_seconds);
 ValuesFromTimestampResponse values_from_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& timestamp);
 WaitForAcquisitionCompleteResponse wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout);
 
