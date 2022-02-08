@@ -1911,6 +1911,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'isDone',
                 'type': 'int32'
             }
@@ -1996,7 +1997,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Boolean',
+                'grpc_type': 'bool',
                 'name': 'forceDestroy',
                 'type': 'int32'
             }

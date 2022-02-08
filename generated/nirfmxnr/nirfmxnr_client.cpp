@@ -1341,20 +1341,13 @@ clone_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<Boolean, pb::int32>& force_destroy)
+close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool& force_destroy)
 {
   ::grpc::ClientContext context;
 
   auto request = CloseRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
-  const auto force_destroy_ptr = force_destroy.get_if<Boolean>();
-  const auto force_destroy_raw_ptr = force_destroy.get_if<pb::int32>();
-  if (force_destroy_ptr) {
-    request.set_force_destroy(*force_destroy_ptr);
-  }
-  else if (force_destroy_raw_ptr) {
-    request.set_force_destroy_raw(*force_destroy_raw_ptr);
-  }
+  request.set_force_destroy(force_destroy);
 
   auto response = CloseResponse{};
 

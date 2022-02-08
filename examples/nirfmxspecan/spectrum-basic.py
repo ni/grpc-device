@@ -148,4 +148,4 @@ try:
 finally:
     if instr:
         client.Close(nirfmxspecan_types.CloseRequest(
-            instrument=instr, force_destroy=nirfmxspecan_types.BOOLEAN_FALSE))
+            instrument=instr, force_destroy=False))

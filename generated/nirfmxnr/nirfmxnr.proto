@@ -733,11 +733,6 @@ enum AcpSweepTimeAuto {
   ACP_SWEEP_TIME_AUTO_TRUE = 1;
 }
 
-enum Boolean {
-  BOOLEAN_FALSE = 0;
-  BOOLEAN_TRUE = 1;
-}
-
 enum ChpAveragingEnabled {
   CHP_AVERAGING_ENABLED_FALSE = 0;
   CHP_AVERAGING_ENABLED_TRUE = 1;
@@ -2139,7 +2134,7 @@ message CheckMeasurementStatusRequest {
 
 message CheckMeasurementStatusResponse {
   int32 status = 1;
-  int32 is_done = 2;
+  bool is_done = 2;
 }
 
 message ClearAllNamedResultsRequest {
@@ -2181,10 +2176,7 @@ message CloneSignalConfigurationResponse {
 
 message CloseRequest {
   nidevice_grpc.Session instrument = 1;
-  oneof force_destroy_enum {
-    Boolean force_destroy = 2;
-    int32 force_destroy_raw = 3;
-  }
+  bool force_destroy = 2;
 }
 
 message CloseResponse {

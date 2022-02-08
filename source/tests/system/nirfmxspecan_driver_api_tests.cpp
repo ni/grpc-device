@@ -5,12 +5,14 @@
 #include <tuple>
 
 #include "device_server.h"
+#include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
 #include "nirfmxspecan/nirfmxspecan_service.h"
 #include "waveform_helpers.h"
 
 using namespace nirfmxspecan_grpc;
 namespace client = nirfmxspecan_grpc::experimental::client;
+namespace instr_client = nirfmxinstr_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
 
@@ -19,14 +21,15 @@ namespace tests {
 namespace system {
 namespace {
 
-const auto PXI_5663 = "5663";
-
-const int krfmxSpecAnDriverApiSuccess = 0;
+constexpr auto PXI_5663 = "5663";
+constexpr auto INVALID_DRIVER_SESSION = -380598;
+constexpr auto DEVICE_IN_USE = -380489;
+constexpr auto SUCCESS = 0;
 
 template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
 {
-  EXPECT_EQ(krfmxSpecAnDriverApiSuccess, response.status());
+  EXPECT_EQ(SUCCESS, response.status());
 }
 
 template <typename TResponse>
@@ -50,6 +53,12 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
     device_server_->ResetServer();
   }
 
+  template <typename TService>
+  std::unique_ptr<typename TService::Stub> create_stub()
+  {
+    return TService::NewStub(device_server_->InProcessChannel());
+  }
+
   std::unique_ptr<NiRFmxSpecAn::Stub>& stub()
   {
     return nirfmxspecan_stub_;
@@ -61,11 +70,17 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
     EXPECT_EQ("", std::string(response.error_description().c_str()));
   }
 
+  bool is_driver_session_valid(const instr_client::StubPtr& stub, const nidevice_grpc::Session& session)
+  {
+    auto response = instr_client::get_attribute_string(stub, session, "", nirfmxinstr_grpc::NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_INSTRUMENT_MODEL);
+    return response.status() != INVALID_DRIVER_SESSION;
+  }
+
   template <typename TResponse>
   void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
   {
     ni::tests::system::EXPECT_SUCCESS(response);
-    if (response.status() != krfmxSpecAnDriverApiSuccess) {
+    if (response.status() != SUCCESS) {
       auto error_message_response = client::get_error_string(stub(), session, response.status());
       EXPECT_EQ("", error_message_response.error_description());
     }
@@ -84,6 +99,12 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiRFmxSpecAn::Stub> nirfmxspecan_stub_;
 };
+
+#define EXPECT_VALID_DRIVER_SESSION(session) \
+  EXPECT_TRUE(is_driver_session_valid(create_stub<nirfmxinstr_grpc::NiRFmxInstr>(), session));
+
+#define EXPECT_INVALID_DRIVER_SESSION(session) \
+  EXPECT_FALSE(is_driver_session_valid(create_stub<nirfmxinstr_grpc::NiRFmxInstr>(), session));
 
 InitializeResponse init(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
 {
@@ -361,6 +382,205 @@ TEST_F(NiRFmxSpecAnDriverApiTests, BuildSpurString_ReturnsSpurString)
   EXPECT_EQ(spur_string_response.selector_string_out(), "spur0");
 
   EXPECT_SUCCESS(session, spur_string_response);
+}
+
+void close_session(const client::StubPtr& stub, const nidevice_grpc::Session& session)
+{
+  ni::tests::system::EXPECT_SUCCESS(client::close(stub, session, false));
+}
+
+void force_close_session(const client::StubPtr& stub, const nidevice_grpc::Session& session)
+{
+  ni::tests::system::EXPECT_SUCCESS(client::close(stub, session, true));
+}
+
+class NiRFmxSpecAnDriverApiResourceInitTests : public NiRFmxSpecAnDriverApiTests,
+                                               public ::testing::WithParamInterface<std::tuple<std::string, std::string>> {
+};
+
+// Implements a function object that can be used as the name generator
+// for parameterized test suites instantiated from NiRFmxSpecAnDriverApiResourceInitTests.
+class ResourceTuplePrinter {
+ public:
+  using ParamType = NiRFmxSpecAnDriverApiResourceInitTests::ParamType;
+  std::string operator()(const TestParamInfo<ParamType>& info)
+  {
+    return sanitize_param<0>(info.param) + "__" + sanitize_param<1>(info.param);
+  }
+
+ private:
+  // The parameterized test string can only have alphanumeric characters
+  // and "_". Replace ","" with "_".
+  template <size_t I>
+  static std::string sanitize_param(const ParamType& param)
+  {
+    auto param_value = std::get<I>(param);
+    auto pos = std::size_t{};
+    while ((pos = param_value.find(",", pos)) != std::string::npos) {
+      param_value.replace(pos, 1, "_");
+    }
+
+    if (param_value.empty()) {
+      param_value = "NONAME";
+    }
+
+    return param_value;
+  }
+};
+
+using ResourcePair = std::tuple<std::string, std::string>;
+
+template <typename T>
+inline std::vector<T> vector_concat(const std::vector<T>& first, const std::vector<T>& second)
+{
+  auto result = std::vector<T>(first);
+  result.insert(result.end(), second.cbegin(), second.cend());
+  return result;
+}
+
+// These will initialize as separate driver resource handles.
+const auto INDEPENDENT_RESOURCES = std::vector<ResourcePair>{
+    {"specan1", "specan2"},
+    {"specan1,specan2", "specan3,specan4"},
+    {"", ""},
+    {"specan1", ""},
+};
+
+// These will initialize as the same driver resource handle, the second
+// session will increment that resource's ref count.
+const auto DUPLICATE_RESOURCES = std::vector<ResourcePair>{
+    {"specan1", "specan1"},
+    {"specan1,specan2", "specan2,specan1"},
+    {"specan1,specan2", "specan1,specan2"},
+    {"specan1,specan2,specan3", "specan3,specan1,specan2"},
+};
+
+// All of these are valid to initialize as separate grpc-device sessions at the same time.
+// Internally, they may or may not be separate driver handles, but they will each have their
+// own ref count.
+const auto COMPATIBLE_RESOURCES = vector_concat(INDEPENDENT_RESOURCES, DUPLICATE_RESOURCES);
+
+// These are conflicting because the second set overlaps the first set but IS NOT IDENTICAL.
+const auto CONFLICTING_RESOURCES = std::vector<ResourcePair>{
+    {"specan1", "specan1,specan2"},
+    {"specan1,specan2", "specan1"},
+    {"specan1,specan2", "specan1,specan2,specan3"},
+};
+
+using NiRFmxSpecAnDriverApiCompatibleResourceInitTests = NiRFmxSpecAnDriverApiResourceInitTests;
+INSTANTIATE_TEST_SUITE_P(
+    CompatibleResourceInitTestCases,
+    NiRFmxSpecAnDriverApiCompatibleResourceInitTests,
+    ValuesIn(COMPATIBLE_RESOURCES),
+    ResourceTuplePrinter{});
+
+TEST_P(NiRFmxSpecAnDriverApiCompatibleResourceInitTests, InitializeTwoCompatibleResourcesAsSeparateSessions_CloseEachSession_EachIsClosedIndependently)
+{
+  const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
+  const auto session2 = init_session(stub(), PXI_5663, std::get<1>(GetParam()));
+  EXPECT_NE(session1.id(), session2.id());
+  EXPECT_VALID_DRIVER_SESSION(session1);
+  EXPECT_VALID_DRIVER_SESSION(session2);
+
+  close_session(stub(), session1);
+  EXPECT_INVALID_DRIVER_SESSION(session1);
+  EXPECT_VALID_DRIVER_SESSION(session2);
+  close_session(stub(), session2);
+  EXPECT_INVALID_DRIVER_SESSION(session2);
+}
+
+// Same as NiRFmxSpecAnDriverApiSuccessfulResourceInitTests, but with 3 sessions instead of the standard 2.
+TEST_F(NiRFmxSpecAnDriverApiTests, InitializeThreeIdenticalResourcesAsSeparateSessions_CloseEachSession_EachIsClosedIndependently)
+{
+  const auto session1 = init_session(stub(), PXI_5663, "specan1,specan2");
+  const auto session2 = init_session(stub(), PXI_5663, "specan2,specan1");
+  const auto session3 = init_session(stub(), PXI_5663, "specan1,specan2");
+  EXPECT_NE(session1.id(), session2.id());
+  EXPECT_NE(session1.id(), session3.id());
+  EXPECT_NE(session2.id(), session3.id());
+  EXPECT_VALID_DRIVER_SESSION(session1);
+  EXPECT_VALID_DRIVER_SESSION(session2);
+  EXPECT_VALID_DRIVER_SESSION(session3);
+
+  close_session(stub(), session1);
+  EXPECT_INVALID_DRIVER_SESSION(session1);
+  EXPECT_VALID_DRIVER_SESSION(session2);
+  EXPECT_VALID_DRIVER_SESSION(session3);
+  close_session(stub(), session2);
+  EXPECT_INVALID_DRIVER_SESSION(session2);
+  EXPECT_VALID_DRIVER_SESSION(session3);
+  close_session(stub(), session3);
+  EXPECT_INVALID_DRIVER_SESSION(session3);
+}
+
+using NiRFmxSpecAnDriverApiIndependentResourceInitTests = NiRFmxSpecAnDriverApiResourceInitTests;
+INSTANTIATE_TEST_SUITE_P(
+    IndependentResourceInitTestCases,
+    NiRFmxSpecAnDriverApiIndependentResourceInitTests,
+    ValuesIn(INDEPENDENT_RESOURCES),
+    ResourceTuplePrinter{});
+
+TEST_P(NiRFmxSpecAnDriverApiIndependentResourceInitTests, InitializeTwoSessionsWithDifferentResources_ForceCloseOne_OtherIsStillValid)
+{
+  const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
+  const auto session2 = init_session(stub(), PXI_5663, std::get<1>(GetParam()));
+  EXPECT_NE(session1.id(), session2.id());
+  EXPECT_VALID_DRIVER_SESSION(session1);
+  EXPECT_VALID_DRIVER_SESSION(session2);
+
+  force_close_session(stub(), session1);
+
+  EXPECT_INVALID_DRIVER_SESSION(session1);
+  EXPECT_VALID_DRIVER_SESSION(session2);
+}
+
+using NiRFmxSpecAnDriverApiSameUnderlyingResourceInitTests = NiRFmxSpecAnDriverApiResourceInitTests;
+INSTANTIATE_TEST_SUITE_P(
+    SameUnderlyingResourceInitTestCases,
+    NiRFmxSpecAnDriverApiSameUnderlyingResourceInitTests,
+    ValuesIn(DUPLICATE_RESOURCES),
+    ResourceTuplePrinter{});
+
+TEST_P(NiRFmxSpecAnDriverApiSameUnderlyingResourceInitTests, InitializeTwoSessionsWithSameUnderlyingResource_ForceCloseOne_BothAreInvalid)
+{
+  const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
+  const auto session2 = init_session(stub(), PXI_5663, std::get<1>(GetParam()));
+  EXPECT_NE(session1.id(), session2.id());
+  EXPECT_VALID_DRIVER_SESSION(session1);
+  EXPECT_VALID_DRIVER_SESSION(session2);
+
+  force_close_session(stub(), session1);
+
+  EXPECT_INVALID_DRIVER_SESSION(session1);
+  EXPECT_INVALID_DRIVER_SESSION(session2);
+}
+
+using NiRFmxSpecAnDriverApiConflictingResourceInitTests = NiRFmxSpecAnDriverApiResourceInitTests;
+INSTANTIATE_TEST_SUITE_P(
+    ConflictingTestCases,
+    NiRFmxSpecAnDriverApiConflictingResourceInitTests,
+    ValuesIn(CONFLICTING_RESOURCES),
+    ResourceTuplePrinter{});
+
+TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeResource_InitializeConflictingResourceSet_FailsWithDeviceInUseError)
+{
+  const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
+  EXPECT_VALID_DRIVER_SESSION(session1);
+
+  const auto second_init_response = init(stub(), PXI_5663, std::get<1>(GetParam()));
+
+  ni::tests::system::EXPECT_RFMX_ERROR(DEVICE_IN_USE, second_init_response);
+}
+
+TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeAndCloseResource_InitializeResourceThatWouldHaveConflicted_Succeeds)
+{
+  const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
+  EXPECT_VALID_DRIVER_SESSION(session1);
+  close_session(stub(), session1);
+
+  const auto second_init_response = init(stub(), PXI_5663, std::get<1>(GetParam()));
+
+  EXPECT_SUCCESS(second_init_response.instrument(), second_init_response);
 }
 
 }  // namespace
