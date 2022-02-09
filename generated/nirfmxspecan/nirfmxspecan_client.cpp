@@ -4892,7 +4892,7 @@ nf_cfg_calibration_loss(const StubPtr& stub, const nidevice_grpc::Session& instr
 }
 
 NFCfgColdSourceDUTSParametersResponse
-nf_cfg_cold_source_duts_parameters(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& dut_s_parameters_frequency, const std::vector<double>& duts21, const std::vector<double>& duts12, const std::vector<double>& duts11, const std::vector<double>& duts22)
+nf_cfg_cold_source_duts_parameters(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const std::vector<double>& dut_s_parameters_frequency, const std::vector<double>& dut_s21, const std::vector<double>& dut_s12, const std::vector<double>& dut_s11, const std::vector<double>& dut_s22)
 {
   ::grpc::ClientContext context;
 
@@ -4900,10 +4900,10 @@ nf_cfg_cold_source_duts_parameters(const StubPtr& stub, const nidevice_grpc::Ses
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   copy_array(dut_s_parameters_frequency, request.mutable_dut_s_parameters_frequency());
-  copy_array(duts21, request.mutable_duts21());
-  copy_array(duts12, request.mutable_duts12());
-  copy_array(duts11, request.mutable_duts11());
-  copy_array(duts22, request.mutable_duts22());
+  copy_array(dut_s21, request.mutable_dut_s21());
+  copy_array(dut_s12, request.mutable_dut_s12());
+  copy_array(dut_s11, request.mutable_dut_s11());
+  copy_array(dut_s22, request.mutable_dut_s22());
 
   auto response = NFCfgColdSourceDUTSParametersResponse{};
 

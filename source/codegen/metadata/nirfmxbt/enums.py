@@ -55,18 +55,6 @@ enums = {
             }
         ]
     },
-    'Boolean': {
-        'values': [
-            {
-                'name': 'FALSE',
-                'value': 0
-            },
-            {
-                'name': 'TRUE',
-                'value': 1
-            }
-        ]
-    },
     'DigitalEdgeTriggerEdge': {
         'values': [
             {
@@ -191,7 +179,7 @@ enums = {
                 'value': 2
             },
             {
-                'name': '20_DB_BANDWIDTH',
+                'name': '20DB_BANDWIDTH',
                 'value': 4
             },
             {
@@ -378,7 +366,11 @@ enums = {
     'Standard': {
         'values': [
             {
-                'name': 'BR_EDR',
+                'name': 'BR',
+                'value': 0
+            },
+            {
+                'name': 'EDR',
                 'value': 0
             },
             {

@@ -60,7 +60,7 @@ CheckMeasurementStatusResponse check_measurement_status(const StubPtr& stub, con
 ClearAllNamedResultsResponse clear_all_named_results(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 ClearNamedResultResponse clear_named_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 CloneSignalConfigurationResponse clone_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& old_signal_name, const pb::string& new_signal_name);
-CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<Boolean, pb::int32>& force_destroy);
+CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool& force_destroy);
 CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 CreateSignalConfigurationResponse create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name);
 DeleteSignalConfigurationResponse delete_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name);

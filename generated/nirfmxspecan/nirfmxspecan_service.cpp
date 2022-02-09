@@ -8117,17 +8117,17 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto dut_s_parameters_frequency = const_cast<float64*>(request->dut_s_parameters_frequency().data());
-      auto duts21 = const_cast<float64*>(request->duts21().data());
-      auto duts12 = const_cast<float64*>(request->duts12().data());
-      auto duts11 = const_cast<float64*>(request->duts11().data());
-      auto duts22 = const_cast<float64*>(request->duts22().data());
+      auto dut_s21 = const_cast<float64*>(request->dut_s21().data());
+      auto dut_s12 = const_cast<float64*>(request->dut_s12().data());
+      auto dut_s11 = const_cast<float64*>(request->dut_s11().data());
+      auto dut_s22 = const_cast<float64*>(request->dut_s22().data());
       auto array_size_determine_from_sizes = std::array<int, 5>
       {
         request->dut_s_parameters_frequency_size(),
-        request->duts21_size(),
-        request->duts12_size(),
-        request->duts11_size(),
-        request->duts22_size()
+        request->dut_s21_size(),
+        request->dut_s12_size(),
+        request->dut_s11_size(),
+        request->dut_s22_size()
       };
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
@@ -8136,7 +8136,7 @@ namespace nirfmxspecan_grpc {
       }
       auto array_size = array_size_size_calculation.size;
 
-      auto status = library_->NFCfgColdSourceDUTSParameters(instrument, selector_string, dut_s_parameters_frequency, duts21, duts12, duts11, duts22, array_size);
+      auto status = library_->NFCfgColdSourceDUTSParameters(instrument, selector_string, dut_s_parameters_frequency, dut_s21, dut_s12, dut_s11, dut_s22, array_size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

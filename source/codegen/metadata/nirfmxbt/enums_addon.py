@@ -3,3 +3,7 @@
 
 enums_override_metadata = {
 }
+
+enums_validation_suppressions = {
+    "Standard": ["ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES"]
+}

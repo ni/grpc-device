@@ -4712,17 +4712,17 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 vhtsiga_average_power_mean {};
-      float64 vhtstf_average_power_mean {};
-      float64 vhtltf_average_power_mean {};
-      float64 vhtsigb_average_power_mean {};
-      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ac(instrument, selector_string, timeout, &vhtsiga_average_power_mean, &vhtstf_average_power_mean, &vhtltf_average_power_mean, &vhtsigb_average_power_mean);
+      float64 vht_siga_average_power_mean {};
+      float64 vht_stf_average_power_mean {};
+      float64 vht_ltf_average_power_mean {};
+      float64 vht_sigb_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ac(instrument, selector_string, timeout, &vht_siga_average_power_mean, &vht_stf_average_power_mean, &vht_ltf_average_power_mean, &vht_sigb_average_power_mean);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_vhtsiga_average_power_mean(vhtsiga_average_power_mean);
-        response->set_vhtstf_average_power_mean(vhtstf_average_power_mean);
-        response->set_vhtltf_average_power_mean(vhtltf_average_power_mean);
-        response->set_vhtsigb_average_power_mean(vhtsigb_average_power_mean);
+        response->set_vht_siga_average_power_mean(vht_siga_average_power_mean);
+        response->set_vht_stf_average_power_mean(vht_stf_average_power_mean);
+        response->set_vht_ltf_average_power_mean(vht_ltf_average_power_mean);
+        response->set_vht_sigb_average_power_mean(vht_sigb_average_power_mean);
       }
       return ::grpc::Status::OK;
     }
@@ -4743,18 +4743,18 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 rlsig_average_power_mean {};
-      float64 hesiga_average_power_mean {};
+      float64 rl_sig_average_power_mean {};
+      float64 he_siga_average_power_mean {};
       float64 he_sigb_average_power_mean {};
-      float64 hestf_average_power_mean {};
+      float64 he_stf_average_power_mean {};
       float64 he_ltf_average_power_mean {};
-      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ax(instrument, selector_string, timeout, &rlsig_average_power_mean, &hesiga_average_power_mean, &he_sigb_average_power_mean, &hestf_average_power_mean, &he_ltf_average_power_mean);
+      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ax(instrument, selector_string, timeout, &rl_sig_average_power_mean, &he_siga_average_power_mean, &he_sigb_average_power_mean, &he_stf_average_power_mean, &he_ltf_average_power_mean);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_rlsig_average_power_mean(rlsig_average_power_mean);
-        response->set_hesiga_average_power_mean(hesiga_average_power_mean);
+        response->set_rl_sig_average_power_mean(rl_sig_average_power_mean);
+        response->set_he_siga_average_power_mean(he_siga_average_power_mean);
         response->set_he_sigb_average_power_mean(he_sigb_average_power_mean);
-        response->set_hestf_average_power_mean(hestf_average_power_mean);
+        response->set_he_stf_average_power_mean(he_stf_average_power_mean);
         response->set_he_ltf_average_power_mean(he_ltf_average_power_mean);
       }
       return ::grpc::Status::OK;
@@ -4776,17 +4776,17 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 htsig_average_power_mean {};
-      float64 htstf_average_power_mean {};
-      float64 htdltf_average_power_mean {};
-      float64 hteltf_average_power_mean {};
-      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211n(instrument, selector_string, timeout, &htsig_average_power_mean, &htstf_average_power_mean, &htdltf_average_power_mean, &hteltf_average_power_mean);
+      float64 ht_sig_average_power_mean {};
+      float64 ht_stf_average_power_mean {};
+      float64 htd_ltf_average_power_mean {};
+      float64 hte_ltf_average_power_mean {};
+      auto status = library_->OFDMModAccFetchPreambleAveragePowers80211n(instrument, selector_string, timeout, &ht_sig_average_power_mean, &ht_stf_average_power_mean, &htd_ltf_average_power_mean, &hte_ltf_average_power_mean);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_htsig_average_power_mean(htsig_average_power_mean);
-        response->set_htstf_average_power_mean(htstf_average_power_mean);
-        response->set_htdltf_average_power_mean(htdltf_average_power_mean);
-        response->set_hteltf_average_power_mean(hteltf_average_power_mean);
+        response->set_ht_sig_average_power_mean(ht_sig_average_power_mean);
+        response->set_ht_stf_average_power_mean(ht_stf_average_power_mean);
+        response->set_htd_ltf_average_power_mean(htd_ltf_average_power_mean);
+        response->set_hte_ltf_average_power_mean(hte_ltf_average_power_mean);
       }
       return ::grpc::Status::OK;
     }
@@ -4880,17 +4880,17 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 vhtsiga_peak_power_maximum {};
-      float64 vhtstf_peak_power_maximum {};
-      float64 vhtltf_peak_power_maximum {};
-      float64 vhtsigb_peak_power_maximum {};
-      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ac(instrument, selector_string, timeout, &vhtsiga_peak_power_maximum, &vhtstf_peak_power_maximum, &vhtltf_peak_power_maximum, &vhtsigb_peak_power_maximum);
+      float64 vht_siga_peak_power_maximum {};
+      float64 vht_stf_peak_power_maximum {};
+      float64 vht_ltf_peak_power_maximum {};
+      float64 vht_sigb_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ac(instrument, selector_string, timeout, &vht_siga_peak_power_maximum, &vht_stf_peak_power_maximum, &vht_ltf_peak_power_maximum, &vht_sigb_peak_power_maximum);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_vhtsiga_peak_power_maximum(vhtsiga_peak_power_maximum);
-        response->set_vhtstf_peak_power_maximum(vhtstf_peak_power_maximum);
-        response->set_vhtltf_peak_power_maximum(vhtltf_peak_power_maximum);
-        response->set_vhtsigb_peak_power_maximum(vhtsigb_peak_power_maximum);
+        response->set_vht_siga_peak_power_maximum(vht_siga_peak_power_maximum);
+        response->set_vht_stf_peak_power_maximum(vht_stf_peak_power_maximum);
+        response->set_vht_ltf_peak_power_maximum(vht_ltf_peak_power_maximum);
+        response->set_vht_sigb_peak_power_maximum(vht_sigb_peak_power_maximum);
       }
       return ::grpc::Status::OK;
     }
@@ -4911,18 +4911,18 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 rlsig_peak_power_maximum {};
-      float64 hesiga_peak_power_maximum {};
+      float64 rl_sig_peak_power_maximum {};
+      float64 he_siga_peak_power_maximum {};
       float64 he_sigb_peak_power_maximum {};
-      float64 hestf_peak_power_maximum {};
+      float64 he_stf_peak_power_maximum {};
       float64 he_ltf_peak_power_maximum {};
-      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ax(instrument, selector_string, timeout, &rlsig_peak_power_maximum, &hesiga_peak_power_maximum, &he_sigb_peak_power_maximum, &hestf_peak_power_maximum, &he_ltf_peak_power_maximum);
+      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ax(instrument, selector_string, timeout, &rl_sig_peak_power_maximum, &he_siga_peak_power_maximum, &he_sigb_peak_power_maximum, &he_stf_peak_power_maximum, &he_ltf_peak_power_maximum);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_rlsig_peak_power_maximum(rlsig_peak_power_maximum);
-        response->set_hesiga_peak_power_maximum(hesiga_peak_power_maximum);
+        response->set_rl_sig_peak_power_maximum(rl_sig_peak_power_maximum);
+        response->set_he_siga_peak_power_maximum(he_siga_peak_power_maximum);
         response->set_he_sigb_peak_power_maximum(he_sigb_peak_power_maximum);
-        response->set_hestf_peak_power_maximum(hestf_peak_power_maximum);
+        response->set_he_stf_peak_power_maximum(he_stf_peak_power_maximum);
         response->set_he_ltf_peak_power_maximum(he_ltf_peak_power_maximum);
       }
       return ::grpc::Status::OK;
@@ -4944,17 +4944,17 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 htsig_peak_power_maximum {};
-      float64 htstf_peak_power_maximum {};
-      float64 htdltf_peak_power_maximum {};
-      float64 hteltf_peak_power_maximum {};
-      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211n(instrument, selector_string, timeout, &htsig_peak_power_maximum, &htstf_peak_power_maximum, &htdltf_peak_power_maximum, &hteltf_peak_power_maximum);
+      float64 ht_sig_peak_power_maximum {};
+      float64 ht_stf_peak_power_maximum {};
+      float64 htd_ltf_peak_power_maximum {};
+      float64 hte_ltf_peak_power_maximum {};
+      auto status = library_->OFDMModAccFetchPreamblePeakPowers80211n(instrument, selector_string, timeout, &ht_sig_peak_power_maximum, &ht_stf_peak_power_maximum, &htd_ltf_peak_power_maximum, &hte_ltf_peak_power_maximum);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_htsig_peak_power_maximum(htsig_peak_power_maximum);
-        response->set_htstf_peak_power_maximum(htstf_peak_power_maximum);
-        response->set_htdltf_peak_power_maximum(htdltf_peak_power_maximum);
-        response->set_hteltf_peak_power_maximum(hteltf_peak_power_maximum);
+        response->set_ht_sig_peak_power_maximum(ht_sig_peak_power_maximum);
+        response->set_ht_stf_peak_power_maximum(ht_stf_peak_power_maximum);
+        response->set_htd_ltf_peak_power_maximum(htd_ltf_peak_power_maximum);
+        response->set_hte_ltf_peak_power_maximum(hte_ltf_peak_power_maximum);
       }
       return ::grpc::Status::OK;
     }
