@@ -112,6 +112,7 @@ functions = {
     },
     'BuildPortString': {
         'cname': 'RFmxInstr_BuildPortString2',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
