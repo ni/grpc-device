@@ -71,11 +71,14 @@ def format_frequency(f):
 def raise_if_error(response):
     if response.status != 0:
         error_response = client.GetError(
-            nirfmxspecan_types.GetErrorRequest(
+            nirfmxwlan_types.GetErrorRequest(
                 instrument=instr,
             )
         )
-        raise Exception(f"Error: {error_response.error_description}")
+        if response.status < 0:
+            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
+        else:
+            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
 
     return response
 

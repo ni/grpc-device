@@ -1,9 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <fstream>
-#include <iostream>
-#include <nlohmann/json.hpp>
 #include <thread>
 #include <tuple>
 
@@ -11,6 +8,7 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
 #include "nirfmxspecan/nirfmxspecan_service.h"
+#include "waveform_helpers.h"
 
 using namespace nirfmxspecan_grpc;
 namespace client = nirfmxspecan_grpc::experimental::client;
@@ -127,46 +125,6 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::stri
   return init_session(stub, model, "FakeDevice");
 }
 
-template <typename TFloat, typename TComplex>
-TComplex complex(TFloat real, TFloat imaginary)
-{
-  auto c = TComplex{};
-  c.set_real(real);
-  c.set_imaginary(imaginary);
-  return c;
-}
-
-template <typename TComplex>
-struct TestWaveform {
-  double t0;
-  double dt;
-  std::vector<TComplex> data;
-};
-
-template <typename TFloat>
-struct TestIQData {
-  double t0;
-  double dt;
-  std::vector<TFloat> I;
-  std::vector<TFloat> Q;
-};
-
-template <typename TFloat, typename TComplex>
-std::vector<TComplex> complex_array(
-    std::vector<TFloat> reals,
-    std::vector<TFloat> imaginaries)
-{
-  auto c = std::vector<TComplex>{};
-  c.reserve(reals.size());
-  std::transform(
-      reals.begin(),
-      reals.end(),
-      imaginaries.begin(),
-      std::back_inserter(c),
-      [](TFloat real, TFloat imaginary) { return complex<TFloat, TComplex>(real, imaginary); });
-  return c;
-}
-
 std::vector<nidevice_grpc::NIComplexNumberF32> complex_f32_array(
     std::vector<float> reals,
     std::vector<float> imaginaries)
@@ -179,25 +137,6 @@ std::vector<nidevice_grpc::NIComplexNumber> complex_number_array(
     std::vector<double> imaginaries)
 {
   return complex_array<double, nidevice_grpc::NIComplexNumber>(reals, imaginaries);
-}
-
-template <typename TFloat>
-TestIQData<TFloat> load_test_iq_data(const std::string& file_name)
-{
-  std::ifstream input_stream(file_name);
-  auto json = nlohmann::json::parse(input_stream);
-  auto t0 = json.find("t0")->get<double>();
-  auto dt = json.find("dt")->get<double>();
-  auto reals = json.find("reals")->get<std::vector<TFloat>>();
-  auto imaginaries = json.find("imaginaries")->get<std::vector<TFloat>>();
-  return {t0, dt, reals, imaginaries};
-}
-
-template <typename TFloat, typename TComplex>
-TestWaveform<TComplex> load_test_waveform_data(const std::string& file_name)
-{
-  const auto iq_data = load_test_iq_data<TFloat>(file_name);
-  return {iq_data.t0, iq_data.dt, complex_array<TFloat, TComplex>(iq_data.I, iq_data.Q)};
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, SpectrumBasicFromExample_DataLooksReasonable)
