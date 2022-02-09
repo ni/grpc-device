@@ -395,6 +395,59 @@ TEST_F(NiRFmxSpecAnDriverApiTests, BuildIntermodString_ReturnsIntermodString)
   EXPECT_EQ(intermod_string_response.selector_string_out(), "channel/intermod10");
 }
 
+TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchData_RecordIsDeleted)
+{
+  constexpr auto INVALID_RECORD = -379451;
+  const auto session = init_session(stub(), PXI_5663);
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_IQ, true));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+
+  const auto fetch_response = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
+  EXPECT_THAT(fetch_response.data(), Not(IsEmpty()));
+
+  EXPECT_RFMX_ERROR(
+      INVALID_RECORD,
+      "The requested record number is invalid. The desired record was already fetched and deleted.",
+      session,
+      client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
+}
+
+TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchDataFetchAllAvailable_DataIsFetched)
+{
+  constexpr auto INVALID_RECORD = -379451;
+  constexpr auto FETCH_ALL_AVAILABLE = -1;
+  constexpr auto EXPECTED_RECORD_COUNT = 50000;
+  const auto session = init_session(stub(), PXI_5663);
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_IQ, true));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+
+  const auto fetch_response = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, FETCH_ALL_AVAILABLE));
+
+  EXPECT_THAT(fetch_response.data(), Not(IsEmpty()));
+  EXPECT_EQ(EXPECTED_RECORD_COUNT, fetch_response.data().size());
+}
+
+TEST_F(NiRFmxSpecAnDriverApiTests, DisableDeleteRecordOnFetch_IQFetchData_RecordIsStillAvailable)
+{
+  const auto session = init_session(stub(), PXI_5663);
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_IQ, true));
+  EXPECT_SUCCESS(
+      session,
+      client::set_attribute_i32(
+          stub(),
+          session,
+          "",
+          NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_IQ_DELETE_RECORD_ON_FETCH,
+          NiRFmxSpecAnInt32AttributeValues::NIRFMXSPECAN_INT32_IQ_DELETE_RECORD_ON_FETCH_FALSE));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+
+  const auto fetch_response = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
+  EXPECT_THAT(fetch_response.data(), Not(IsEmpty()));
+  const auto fetch_response_2 = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
+
+  EXPECT_THAT(fetch_response_2.data(), Not(IsEmpty()));
+}
+
 void close_session(const client::StubPtr& stub, const nidevice_grpc::Session& session)
 {
   ni::tests::system::EXPECT_SUCCESS(client::close(stub, session, false));
