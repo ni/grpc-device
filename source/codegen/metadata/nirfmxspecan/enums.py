@@ -322,7 +322,7 @@ enums = {
     'AcpRbwFilterBandwidthDefinition': {
         'values': [
             {
-                'name': '3_DB',
+                'name': '3DB',
                 'value': 0
             },
             {
@@ -822,7 +822,7 @@ enums = {
     'ChpRbwFilterBandwidthDefinition': {
         'values': [
             {
-                'name': '3_DB',
+                'name': '3DB',
                 'value': 0
             },
             {
@@ -2187,6 +2187,7 @@ enums = {
         ]
     },
     'NFYFactorMode': {
+        'enum-value-prefix': 'NF_Y_FACTOR_MODE',
         'values': [
             {
                 'name': 'MEASURE',
@@ -2199,6 +2200,7 @@ enums = {
         ]
     },
     'NFYFactorNoiseSourceLossCompensationEnabled': {
+        'enum-value-prefix': 'NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -2321,7 +2323,7 @@ enums = {
     'ObwRbwFilterBandwidthDefinition': {
         'values': [
             {
-                'name': '3_DB',
+                'name': '3DB',
                 'value': 0
             },
             {
@@ -2629,7 +2631,7 @@ enums = {
     'SemCarrierRbwFilterBandwidthDefinition': {
         'values': [
             {
-                'name': '3_DB',
+                'name': '3DB',
                 'value': 0
             },
             {
@@ -2805,7 +2807,7 @@ enums = {
     'SemOffsetRbwFilterBandwidthDefinition': {
         'values': [
             {
-                'name': '3_DB',
+                'name': '3DB',
                 'value': 0
             },
             {
@@ -3169,11 +3171,11 @@ enums = {
     'SpectrumRbwFilterBandwidthDefinition': {
         'values': [
             {
-                'name': '3_DB',
+                'name': '3DB',
                 'value': 0
             },
             {
-                'name': '6_DB',
+                'name': '6DB',
                 'value': 1
             },
             {
@@ -3421,7 +3423,7 @@ enums = {
     'SpurRbwFilterBandwidthDefinition': {
         'values': [
             {
-                'name': '3_DB',
+                'name': '3DB',
                 'value': 0
             },
             {

@@ -210,49 +210,6 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxInstrService::BuildPortString(::grpc::ServerContext* context, const BuildPortStringRequest* request, BuildPortStringResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* port_name = (char*)request->port_name().c_str();
-      char* device_name = (char*)request->device_name().c_str();
-      int32 channel_number = request->channel_number();
-
-      while (true) {
-        auto status = library_->BuildPortString(selector_string, port_name, device_name, channel_number, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        int32 selector_string_out_length = status;
-      
-        std::string selector_string_out;
-        if (selector_string_out_length > 0) {
-            selector_string_out.resize(selector_string_out_length - 1);
-        }
-        status = library_->BuildPortString(selector_string, port_name, device_name, channel_number, selector_string_out_length, (char*)selector_string_out.data());
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_selector_string_out(selector_string_out);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
-        }
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::CfgExternalAttenuationInterpolationLinear(::grpc::ServerContext* context, const CfgExternalAttenuationInterpolationLinearRequest* request, CfgExternalAttenuationInterpolationLinearResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2059,7 +2016,7 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
-      char* s2_p_file_path = (char*)request->s2_p_file_path().c_str();
+      char* s2p_file_path = (char*)request->s2p_file_path().c_str();
       int32 s_parameter_orientation;
       switch (request->s_parameter_orientation_enum_case()) {
         case nirfmxinstr_grpc::LoadSParameterExternalAttenuationTableFromS2PFileRequest::SParameterOrientationEnumCase::kSParameterOrientation: {
@@ -2076,7 +2033,7 @@ namespace nirfmxinstr_grpc {
         }
       }
 
-      auto status = library_->LoadSParameterExternalAttenuationTableFromS2PFile(instrument, selector_string, table_name, s2_p_file_path, s_parameter_orientation);
+      auto status = library_->LoadSParameterExternalAttenuationTableFromS2PFile(instrument, selector_string, table_name, s2p_file_path, s_parameter_orientation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2874,10 +2831,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      int64 seconds_since1970 = request->seconds_since1970();
+      int64 seconds_since_1970 = request->seconds_since_1970();
       float64 fractional_seconds = request->fractional_seconds();
       CVIAbsoluteTime timestamp {};
-      auto status = library_->TimestampFromValues(seconds_since1970, fractional_seconds, &timestamp);
+      auto status = library_->TimestampFromValues(seconds_since_1970, fractional_seconds, &timestamp);
       response->set_status(status);
       if (status_ok(status)) {
         convert_to_grpc(timestamp, response->mutable_timestamp());
@@ -2898,12 +2855,12 @@ namespace nirfmxinstr_grpc {
     }
     try {
       auto timestamp = convert_from_grpc<CVIAbsoluteTime>(request->timestamp());
-      int64 seconds_since1970 {};
+      int64 seconds_since_1970 {};
       float64 fractional_seconds {};
-      auto status = library_->ValuesFromTimestamp(timestamp, &seconds_since1970, &fractional_seconds);
+      auto status = library_->ValuesFromTimestamp(timestamp, &seconds_since_1970, &fractional_seconds);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_seconds_since1970(seconds_since1970);
+        response->set_seconds_since_1970(seconds_since_1970);
         response->set_fractional_seconds(fractional_seconds);
       }
       return ::grpc::Status::OK;

@@ -907,6 +907,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'isDone',
                 'type': 'int32'
             }
@@ -976,7 +977,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Boolean',
+                'grpc_type': 'bool',
                 'name': 'forceDestroy',
                 'type': 'int32'
             }
@@ -1440,16 +1441,19 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'peak_evm_80211_2016_maximum',
                 'name': 'peakEVM80211_2016Maximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'peak_evm_80211_2007_maximum',
                 'name': 'peakEVM80211_2007Maximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'peak_evm_80211_1999_maximum',
                 'name': 'peakEVM80211_1999Maximum',
                 'type': 'float64'
             },
@@ -3918,6 +3922,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'frequency_error_ccdf_10_percent',
                 'name': 'frequencyErrorCCDF10Percent',
                 'type': 'float64'
             }

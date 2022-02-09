@@ -366,8 +366,17 @@ TEST_F(NiRFmxInstrDriverApiTests, TimestampFromValuesRoundTrip_SucceedsWithOrigi
 
   ni::tests::system::EXPECT_SUCCESS(timestamp_response);
   ni::tests::system::EXPECT_SUCCESS(values_response);
-  EXPECT_EQ(UNIX_TIMESTAMP, values_response.seconds_since1970());
+  EXPECT_EQ(UNIX_TIMESTAMP, values_response.seconds_since_1970());
   EXPECT_NEAR(FRACTIONAL_SECONDS, values_response.fractional_seconds(), .001);
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, BuildPortString_SucceedsWithExpectedValue)
+{
+  constexpr auto EXPECTED_PORT_STRING = "port::RFSA1/10";
+  const auto build_port_string_response = client::build_port_string(stub(), "", "", "RFSA1", 10);
+
+  ni::tests::system::EXPECT_SUCCESS(build_port_string_response);
+  EXPECT_EQ(EXPECTED_PORT_STRING, build_port_string_response.selector_string_out());
 }
 
 }  // namespace

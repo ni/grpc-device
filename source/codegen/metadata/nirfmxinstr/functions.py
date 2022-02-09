@@ -112,6 +112,7 @@ functions = {
     },
     'BuildPortString': {
         'cname': 'RFmxInstr_BuildPortString2',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1796,6 +1797,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 's2p_file_path',
                 'name': 's2PFilePath',
                 'type': 'char[]'
             },
@@ -2620,6 +2622,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
+                'grpc_name': 'seconds_since_1970',
                 'name': 'secondsSince1970',
                 'type': 'int64'
             },
@@ -2645,6 +2648,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'seconds_since_1970',
                 'name': 'secondsSince1970',
                 'type': 'int64'
             },
