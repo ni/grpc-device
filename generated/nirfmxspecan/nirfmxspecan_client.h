@@ -85,7 +85,7 @@ AnalyzeSpectrum1WaveformResponse analyze_spectrum1_waveform(const StubPtr& stub,
 AutoLevelResponse auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& bandwidth, const double& measurement_interval);
 BuildCarrierStringResponse build_carrier_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& carrier_number);
 BuildHarmonicStringResponse build_harmonic_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& harmonic_number);
-BuildIntermodStringResponse build_intermod_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& intermod_number, const pb::int32& selector_string_out_length, const pb::string& selector_string_out);
+BuildIntermodStringResponse build_intermod_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& intermod_number);
 BuildListStepStringResponse build_list_step_string(const StubPtr& stub, const pb::string& list_name, const pb::string& result_name, const pb::int32& step_number);
 BuildListStringResponse build_list_string(const StubPtr& stub, const pb::string& list_name, const pb::string& result_name);
 BuildMarkerStringResponse build_marker_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& marker_number);

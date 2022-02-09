@@ -161,7 +161,7 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASession_SelfTest_Succeeds)
   EXPECT_SUCCESS(session, rfsa_response);
 
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
-  ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_response.ni_rfsa_session()));
+  ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_response.nirfsa_session()));
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayAnonymous_SelfTest_Succeeds)

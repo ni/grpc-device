@@ -3525,12 +3525,11 @@ message BuildHarmonicStringResponse {
 message BuildIntermodStringRequest {
   string selector_string = 1;
   int32 intermod_number = 2;
-  int32 selector_string_out_length = 3;
-  string selector_string_out = 4;
 }
 
 message BuildIntermodStringResponse {
   int32 status = 1;
+  string selector_string_out = 2;
 }
 
 message BuildListStepStringRequest {

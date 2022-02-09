@@ -1378,15 +1378,13 @@ build_harmonic_string(const StubPtr& stub, const pb::string& selector_string, co
 }
 
 BuildIntermodStringResponse
-build_intermod_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& intermod_number, const pb::int32& selector_string_out_length, const pb::string& selector_string_out)
+build_intermod_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& intermod_number)
 {
   ::grpc::ClientContext context;
 
   auto request = BuildIntermodStringRequest{};
   request.set_selector_string(selector_string);
   request.set_intermod_number(intermod_number);
-  request.set_selector_string_out_length(selector_string_out_length);
-  request.set_selector_string_out(selector_string_out);
 
   auto response = BuildIntermodStringResponse{};
 

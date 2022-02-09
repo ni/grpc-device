@@ -1675,16 +1675,16 @@ namespace nirfmxinstr_grpc {
 
       auto initiating_session_id = session_repository_->access_session_id(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto init_lambda = [&] () {
-        ViSession ni_rfsa_session;
-        int status = library_->GetNIRFSASession(instrument, &ni_rfsa_session);
-        return std::make_tuple(status, ni_rfsa_session);
+        ViSession nirfsa_session;
+        int status = library_->GetNIRFSASession(instrument, &nirfsa_session);
+        return std::make_tuple(status, nirfsa_session);
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
       int status = vi_session_resource_repository_->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_ni_rfsa_session()->set_id(session_id);
+        response->mutable_nirfsa_session()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }

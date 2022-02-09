@@ -381,9 +381,18 @@ TEST_F(NiRFmxSpecAnDriverApiTests, BuildSpurString_ReturnsSpurString)
 {
   auto session = init_session(stub(), PXI_5663);
   const auto spur_string_response = client::build_spur_string(stub(), "", 0);
-  EXPECT_EQ(spur_string_response.selector_string_out(), "spur0");
 
+  EXPECT_EQ(spur_string_response.selector_string_out(), "spur0");
   EXPECT_SUCCESS(session, spur_string_response);
+}
+
+TEST_F(NiRFmxSpecAnDriverApiTests, BuildIntermodString_ReturnsIntermodString)
+{
+  auto session = init_session(stub(), PXI_5663);
+
+  const auto intermod_string_response = EXPECT_SUCCESS(session, client::build_intermod_string(stub(), "channel", 10));
+
+  EXPECT_EQ(intermod_string_response.selector_string_out(), "channel/intermod10");
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchData_RecordIsDeleted)
