@@ -2545,11 +2545,13 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'df1_avg_maximum',
                 'name': 'df1avgMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'df1_avg_minimum',
                 'name': 'df1avgMinimum',
                 'type': 'float64'
             }
@@ -2627,11 +2629,13 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'df2_avg_minimum',
                 'name': 'df2avgMinimum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'percentage_of_symbols_above_df2_max_threshold',
                 'name': 'percentageOfSymbolsAboveDf2maxThreshold',
                 'type': 'float64'
             }
@@ -3828,16 +3832,19 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'edr_gfsk_average_power_mean',
                 'name': 'edrgfskAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'edr_dpsk_average_power_mean',
                 'name': 'edrdpskAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'edr_dpsk_gfsk_average_power_ratio_mean',
                 'name': 'edr_DPSK_GFSKAveragePowerRatioMean',
                 'type': 'float64'
             }

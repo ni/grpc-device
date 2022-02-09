@@ -1468,8 +1468,8 @@ message ModAccFetchDf1Request {
 
 message ModAccFetchDf1Response {
   int32 status = 1;
-  double df1avg_maximum = 2;
-  double df1avg_minimum = 3;
+  double df1_avg_maximum = 2;
+  double df1_avg_minimum = 3;
 }
 
 message ModAccFetchDf1maxTraceRequest {
@@ -1493,8 +1493,8 @@ message ModAccFetchDf2Request {
 
 message ModAccFetchDf2Response {
   int32 status = 1;
-  double df2avg_minimum = 2;
-  double percentage_of_symbols_above_df2max_threshold = 3;
+  double df2_avg_minimum = 2;
+  double percentage_of_symbols_above_df2_max_threshold = 3;
 }
 
 message ModAccFetchDf2maxTraceRequest {
@@ -1914,9 +1914,9 @@ message TXPFetchEDRPowersRequest {
 
 message TXPFetchEDRPowersResponse {
   int32 status = 1;
-  double edrgfsk_average_power_mean = 2;
-  double edrdpsk_average_power_mean = 3;
-  double edr_d_psk_g_fsk_average_power_ratio_mean = 4;
+  double edr_gfsk_average_power_mean = 2;
+  double edr_dpsk_average_power_mean = 3;
+  double edr_dpsk_gfsk_average_power_ratio_mean = 4;
 }
 
 message TXPFetchLECTEReferencePeriodPowersRequest {

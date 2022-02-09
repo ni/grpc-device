@@ -2799,10 +2799,10 @@ message OFDMModAccFetchPreambleAveragePowers80211acRequest {
 
 message OFDMModAccFetchPreambleAveragePowers80211acResponse {
   int32 status = 1;
-  double vhtsiga_average_power_mean = 2;
-  double vhtstf_average_power_mean = 3;
-  double vhtltf_average_power_mean = 4;
-  double vhtsigb_average_power_mean = 5;
+  double vht_siga_average_power_mean = 2;
+  double vht_stf_average_power_mean = 3;
+  double vht_ltf_average_power_mean = 4;
+  double vht_sigb_average_power_mean = 5;
 }
 
 message OFDMModAccFetchPreambleAveragePowers80211axRequest {
@@ -2813,10 +2813,10 @@ message OFDMModAccFetchPreambleAveragePowers80211axRequest {
 
 message OFDMModAccFetchPreambleAveragePowers80211axResponse {
   int32 status = 1;
-  double rlsig_average_power_mean = 2;
-  double hesiga_average_power_mean = 3;
+  double rl_sig_average_power_mean = 2;
+  double he_siga_average_power_mean = 3;
   double he_sigb_average_power_mean = 4;
-  double hestf_average_power_mean = 5;
+  double he_stf_average_power_mean = 5;
   double he_ltf_average_power_mean = 6;
 }
 
@@ -2828,10 +2828,10 @@ message OFDMModAccFetchPreambleAveragePowers80211nRequest {
 
 message OFDMModAccFetchPreambleAveragePowers80211nResponse {
   int32 status = 1;
-  double htsig_average_power_mean = 2;
-  double htstf_average_power_mean = 3;
-  double htdltf_average_power_mean = 4;
-  double hteltf_average_power_mean = 5;
+  double ht_sig_average_power_mean = 2;
+  double ht_stf_average_power_mean = 3;
+  double htd_ltf_average_power_mean = 4;
+  double hte_ltf_average_power_mean = 5;
 }
 
 message OFDMModAccFetchPreambleAveragePowersCommonRequest {
@@ -2869,10 +2869,10 @@ message OFDMModAccFetchPreamblePeakPowers80211acRequest {
 
 message OFDMModAccFetchPreamblePeakPowers80211acResponse {
   int32 status = 1;
-  double vhtsiga_peak_power_maximum = 2;
-  double vhtstf_peak_power_maximum = 3;
-  double vhtltf_peak_power_maximum = 4;
-  double vhtsigb_peak_power_maximum = 5;
+  double vht_siga_peak_power_maximum = 2;
+  double vht_stf_peak_power_maximum = 3;
+  double vht_ltf_peak_power_maximum = 4;
+  double vht_sigb_peak_power_maximum = 5;
 }
 
 message OFDMModAccFetchPreamblePeakPowers80211axRequest {
@@ -2883,10 +2883,10 @@ message OFDMModAccFetchPreamblePeakPowers80211axRequest {
 
 message OFDMModAccFetchPreamblePeakPowers80211axResponse {
   int32 status = 1;
-  double rlsig_peak_power_maximum = 2;
-  double hesiga_peak_power_maximum = 3;
+  double rl_sig_peak_power_maximum = 2;
+  double he_siga_peak_power_maximum = 3;
   double he_sigb_peak_power_maximum = 4;
-  double hestf_peak_power_maximum = 5;
+  double he_stf_peak_power_maximum = 5;
   double he_ltf_peak_power_maximum = 6;
 }
 
@@ -2898,10 +2898,10 @@ message OFDMModAccFetchPreamblePeakPowers80211nRequest {
 
 message OFDMModAccFetchPreamblePeakPowers80211nResponse {
   int32 status = 1;
-  double htsig_peak_power_maximum = 2;
-  double htstf_peak_power_maximum = 3;
-  double htdltf_peak_power_maximum = 4;
-  double hteltf_peak_power_maximum = 5;
+  double ht_sig_peak_power_maximum = 2;
+  double ht_stf_peak_power_maximum = 3;
+  double htd_ltf_peak_power_maximum = 4;
+  double hte_ltf_peak_power_maximum = 5;
 }
 
 message OFDMModAccFetchPreamblePeakPowersCommonRequest {

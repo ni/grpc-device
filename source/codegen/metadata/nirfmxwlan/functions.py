@@ -4613,21 +4613,25 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'vht_siga_average_power_mean',
                 'name': 'vhtsigaAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'vht_stf_average_power_mean',
                 'name': 'vhtstfAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'vht_ltf_average_power_mean',
                 'name': 'vhtltfAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'vht_sigb_average_power_mean',
                 'name': 'vhtsigbAveragePowerMean',
                 'type': 'float64'
             }
@@ -4655,11 +4659,13 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'rl_sig_average_power_mean',
                 'name': 'rlsigAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'he_siga_average_power_mean',
                 'name': 'hesigaAveragePowerMean',
                 'type': 'float64'
             },
@@ -4671,6 +4677,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'he_stf_average_power_mean',
                 'name': 'hestfAveragePowerMean',
                 'type': 'float64'
             },
@@ -4704,21 +4711,25 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'ht_sig_average_power_mean',
                 'name': 'htsigAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'ht_stf_average_power_mean',
                 'name': 'htstfAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'htd_ltf_average_power_mean',
                 'name': 'htdltfAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'hte_ltf_average_power_mean',
                 'name': 'hteltfAveragePowerMean',
                 'type': 'float64'
             }
@@ -4833,21 +4844,25 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'vht_siga_peak_power_maximum',
                 'name': 'vhtsigaPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'vht_stf_peak_power_maximum',
                 'name': 'vhtstfPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'vht_ltf_peak_power_maximum',
                 'name': 'vhtltfPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'vht_sigb_peak_power_maximum',
                 'name': 'vhtsigbPeakPowerMaximum',
                 'type': 'float64'
             }
@@ -4875,11 +4890,13 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'rl_sig_peak_power_maximum',
                 'name': 'rlsigPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'he_siga_peak_power_maximum',
                 'name': 'hesigaPeakPowerMaximum',
                 'type': 'float64'
             },
@@ -4891,6 +4908,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'he_stf_peak_power_maximum',
                 'name': 'hestfPeakPowerMaximum',
                 'type': 'float64'
             },
@@ -4924,21 +4942,25 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'ht_sig_peak_power_maximum',
                 'name': 'htsigPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'ht_stf_peak_power_maximum',
                 'name': 'htstfPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'htd_ltf_peak_power_maximum',
                 'name': 'htdltfPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'hte_ltf_peak_power_maximum',
                 'name': 'hteltfPeakPowerMaximum',
                 'type': 'float64'
             }

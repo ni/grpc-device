@@ -7598,6 +7598,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'dut_s21',
                 'name': 'duts21',
                 'size': {
                     'mechanism': 'len',
@@ -7607,6 +7608,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'dut_s12',
                 'name': 'duts12',
                 'size': {
                     'mechanism': 'len',
@@ -7616,6 +7618,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'dut_s11',
                 'name': 'duts11',
                 'size': {
                     'mechanism': 'len',
@@ -7625,6 +7628,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'dut_s22',
                 'name': 'duts22',
                 'size': {
                     'mechanism': 'len',

@@ -5635,10 +5635,10 @@ message NFCfgColdSourceDUTSParametersRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   repeated double dut_s_parameters_frequency = 3;
-  repeated double duts21 = 4;
-  repeated double duts12 = 5;
-  repeated double duts11 = 6;
-  repeated double duts22 = 7;
+  repeated double dut_s21 = 4;
+  repeated double dut_s12 = 5;
+  repeated double dut_s11 = 6;
+  repeated double dut_s22 = 7;
 }
 
 message NFCfgColdSourceDUTSParametersResponse {
