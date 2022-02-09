@@ -729,15 +729,15 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSpeedOptimizedFromExample_FetchData_DataL
 {
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
   const auto NUMBER_OF_RESOURCE_BLOCK_CLUSTERS = 1;
-  std::vector<int> PUSCHResourceBlockOffset(NUMBER_OF_RESOURCE_BLOCK_CLUSTERS, 0);
-  std::vector<int> PUSCHNumberOfResourceBlocks{-1};
+  std::vector<int> pusch_resource_block_offset(NUMBER_OF_RESOURCE_BLOCK_CLUSTERS, 0);
+  std::vector<int> pusch_number_of_resource_blocks{-1};
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 3.5e9, 0.0, 0.0));
   EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, true));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
-  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 50e6));  // Adjusted from 100e6 because it complained IQ Rate was too high.
+  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_CELL_ID, 0));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_BAND, 78));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
@@ -760,8 +760,8 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSpeedOptimizedFromExample_FetchData_DataL
   for (int i = 0; i < NUMBER_OF_RESOURCE_BLOCK_CLUSTERS; i++) {
     auto pusch_cluster_string_response = client::build_pusch_cluster_string(stub(), pusch_string_response.selector_string_out(), i);
     EXPECT_SUCCESS(session, pusch_cluster_string_response);
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, PUSCHResourceBlockOffset[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, PUSCHNumberOfResourceBlocks[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, pusch_resource_block_offset[i]));
+    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, pusch_number_of_resource_blocks[i]));
   }
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER_MODE, NIRFMXNR_INT32_PUSCH_DMRS_POWER_MODE_CDM_GROUPS));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_DMRS_POWER, 0.0));
@@ -784,16 +784,16 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSpeedOptimizedFromExample_FetchData_DataL
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_PHASE_TRACKING_ENABLED, NIRFMXNR_INT32_MODACC_PHASE_TRACKING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_TIMING_TRACKING_ENABLED, NIRFMXNR_INT32_MODACC_TIMING_TRACKING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED, NIRFMXNR_INT32_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED_FALSE));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE, NIRFMXNR_INT32_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_ACQUIRED_WAVEFORM));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE, NIRFMXNR_INT32_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_REFERENCE_WAVEFORM));
 
   // READ TDMS File
-  auto waveforms = load_test_multiple_waveforms_data<float, nidevice_grpc::NIComplexNumberF32>("WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json", 2);
-  EXPECT_SUCCESS(session, client::mod_acc_cfg_reference_waveform(stub(), session, "", waveforms[1].t0, waveforms[1].dt, waveforms[1].data));
+  auto waveform = load_test_waveform_data<float, nidevice_grpc::NIComplexNumberF32>("LTE20MHz Waveform (Two Subframes).json");
+  EXPECT_SUCCESS(session, client::mod_acc_cfg_reference_waveform(stub(), session, "", waveform.t0, waveform.dt, waveform.data));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
-  float64 compositeRMSEVMMean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-  float64 inBandEmissionMargin = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
-  EXPECT_NEAR(67.9375, compositeRMSEVMMean, .0001);
-  EXPECT_TRUE(isnan(inBandEmissionMargin));
+  float64 composite_rms_evm_mean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+  float64 in_band_emission_margin = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
+  EXPECT_NEAR(1382.871, composite_rms_evm_mean, .001);
+  EXPECT_TRUE(isnan(in_band_emission_margin));
 }
 
 }  // namespace
