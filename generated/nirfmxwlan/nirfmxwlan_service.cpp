@@ -1068,22 +1068,7 @@ namespace nirfmxwlan_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      int32 force_destroy;
-      switch (request->force_destroy_enum_case()) {
-        case nirfmxwlan_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroy: {
-          force_destroy = static_cast<int32>(request->force_destroy());
-          break;
-        }
-        case nirfmxwlan_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroyRaw: {
-          force_destroy = static_cast<int32>(request->force_destroy_raw());
-          break;
-        }
-        case nirfmxwlan_grpc::CloseRequest::ForceDestroyEnumCase::FORCE_DESTROY_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for force_destroy was not specified or out of range");
-          break;
-        }
-      }
-
+      int32 force_destroy = request->force_destroy();
       session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       response->set_status(status);
@@ -1570,19 +1555,19 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 rms_evm_mean {};
-      float64 peak_evm80211_2016_maximum {};
-      float64 peak_evm80211_2007_maximum {};
-      float64 peak_evm80211_1999_maximum {};
+      float64 peak_evm_80211_2016_maximum {};
+      float64 peak_evm_80211_2007_maximum {};
+      float64 peak_evm_80211_1999_maximum {};
       float64 frequency_error_mean {};
       float64 chip_clock_error_mean {};
       int32 number_of_chips_used {};
-      auto status = library_->DSSSModAccFetchEVM(instrument, selector_string, timeout, &rms_evm_mean, &peak_evm80211_2016_maximum, &peak_evm80211_2007_maximum, &peak_evm80211_1999_maximum, &frequency_error_mean, &chip_clock_error_mean, &number_of_chips_used);
+      auto status = library_->DSSSModAccFetchEVM(instrument, selector_string, timeout, &rms_evm_mean, &peak_evm_80211_2016_maximum, &peak_evm_80211_2007_maximum, &peak_evm_80211_1999_maximum, &frequency_error_mean, &chip_clock_error_mean, &number_of_chips_used);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_rms_evm_mean(rms_evm_mean);
-        response->set_peak_evm80211_2016_maximum(peak_evm80211_2016_maximum);
-        response->set_peak_evm80211_2007_maximum(peak_evm80211_2007_maximum);
-        response->set_peak_evm80211_1999_maximum(peak_evm80211_1999_maximum);
+        response->set_peak_evm_80211_2016_maximum(peak_evm_80211_2016_maximum);
+        response->set_peak_evm_80211_2007_maximum(peak_evm_80211_2007_maximum);
+        response->set_peak_evm_80211_1999_maximum(peak_evm_80211_1999_maximum);
         response->set_frequency_error_mean(frequency_error_mean);
         response->set_chip_clock_error_mean(chip_clock_error_mean);
         response->set_number_of_chips_used(number_of_chips_used);
@@ -4086,11 +4071,11 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 frequency_error_ccdf10_percent {};
-      auto status = library_->OFDMModAccFetchFrequencyErrorCCDF10Percent(instrument, selector_string, timeout, &frequency_error_ccdf10_percent);
+      float64 frequency_error_ccdf_10_percent {};
+      auto status = library_->OFDMModAccFetchFrequencyErrorCCDF10Percent(instrument, selector_string, timeout, &frequency_error_ccdf_10_percent);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_frequency_error_ccdf10_percent(frequency_error_ccdf10_percent);
+        response->set_frequency_error_ccdf_10_percent(frequency_error_ccdf_10_percent);
       }
       return ::grpc::Status::OK;
     }

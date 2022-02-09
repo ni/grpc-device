@@ -695,7 +695,7 @@ enums = {
                 'value': 2
             },
             {
-                'name': 'TM2_A',
+                'name': 'TM2A',
                 'value': 3
             },
             {
@@ -703,7 +703,7 @@ enums = {
                 'value': 4
             },
             {
-                'name': 'TM3_1_A',
+                'name': 'TM3_1A',
                 'value': 5
             },
             {
@@ -836,19 +836,19 @@ enums = {
     'GNodeBType': {
         'values': [
             {
-                'name': '1_C',
+                'name': '1C',
                 'value': 0
             },
             {
-                'name': '1_H',
+                'name': '1H',
                 'value': 1
             },
             {
-                'name': '1_O',
+                'name': '1O',
                 'value': 2
             },
             {
-                'name': '2_O',
+                'name': '2O',
                 'value': 3
             }
         ]
@@ -1119,7 +1119,7 @@ enums = {
         'enum-value-prefix': 'MODACC_FFT_WINDOW_TYPE',
         'values': [
             {
-                'name': '3_GPP',
+                'name': '3GPP',
                 'value': 0
             },
             {
@@ -2274,27 +2274,27 @@ enums = {
     'SsbPattern': {
         'values': [
             {
-                'name': 'A_UP_TO_3_GHZ',
+                'name': 'A_UP_TO_3GHZ',
                 'value': 0
             },
             {
-                'name': 'A_3_GHZ_TO_6_GHZ',
+                'name': 'A_3GHZ_TO_6GHZ',
                 'value': 1
             },
             {
-                'name': 'B_UP_TO_3_GHZ',
+                'name': 'B_UP_TO_3GHZ',
                 'value': 2
             },
             {
-                'name': 'B_3_GHZ_TO_6_GHZ',
+                'name': 'B_3GHZ_TO_6GHZ',
                 'value': 3
             },
             {
-                'name': 'C_UP_TO_3_GHZ',
+                'name': 'C_UP_TO_3GHZ',
                 'value': 4
             },
             {
-                'name': 'C_3_GHZ_TO_6_GHZ',
+                'name': 'C_3GHZ_TO_6GHZ',
                 'value': 5
             },
             {

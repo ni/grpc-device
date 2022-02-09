@@ -46,7 +46,7 @@ class NiRFmxWLANSessionTest : public ::testing::Test {
     return status;
   }
 
-  ::grpc::Status call_close(nidevice_grpc::Session session, nirfmxwlan_grpc::Boolean force_destroy, rfmxwlan::CloseResponse* response)
+  ::grpc::Status call_close(nidevice_grpc::Session session, bool force_destroy, rfmxwlan::CloseResponse* response)
   {
     ::grpc::ClientContext context;
     rfmxwlan::CloseRequest request;
@@ -101,7 +101,7 @@ TEST_F(NiRFmxWLANSessionTest, InitializedSession_CloseSession_ClosesDriverSessio
   ::grpc::ClientContext context;
   rfmxwlan::CloseRequest close_request;
   close_request.mutable_instrument()->set_id(session.id());
-  close_request.set_force_destroy(nirfmxwlan_grpc::Boolean::BOOLEAN_FALSE);
+  close_request.set_force_destroy(false);
   rfmxwlan::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -123,8 +123,8 @@ TEST_F(NiRFmxWLANSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_C
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
   rfmxwlan::CloseResponse close_response_one, close_response_two;
-  status_one = call_close(session_one, nirfmxwlan_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
-  status_two = call_close(session_two, nirfmxwlan_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
+  status_one = call_close(session_one, false, &close_response_one);
+  status_two = call_close(session_two, false, &close_response_two);
 
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());
@@ -140,7 +140,7 @@ TEST_F(NiRFmxWLANSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionE
   ::grpc::ClientContext context;
   rfmxwlan::CloseRequest request;
   request.mutable_instrument()->set_id(session.id());
-  request.set_force_destroy(nirfmxwlan_grpc::Boolean::BOOLEAN_FALSE);
+  request.set_force_destroy(false);
   rfmxwlan::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
@@ -162,8 +162,8 @@ TEST_F(NiRFmxWLANSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
   rfmxwlan::CloseResponse close_response_one, close_response_two;
-  status_one = call_close(session_one, nirfmxwlan_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
-  status_two = call_close(session_two, nirfmxwlan_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
+  status_one = call_close(session_one, false, &close_response_one);
+  status_two = call_close(session_two, false, &close_response_two);
 
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());

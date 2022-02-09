@@ -2016,7 +2016,7 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
-      char* s2_p_file_path = (char*)request->s2_p_file_path().c_str();
+      char* s2p_file_path = (char*)request->s2p_file_path().c_str();
       int32 s_parameter_orientation;
       switch (request->s_parameter_orientation_enum_case()) {
         case nirfmxinstr_grpc::LoadSParameterExternalAttenuationTableFromS2PFileRequest::SParameterOrientationEnumCase::kSParameterOrientation: {
@@ -2033,7 +2033,7 @@ namespace nirfmxinstr_grpc {
         }
       }
 
-      auto status = library_->LoadSParameterExternalAttenuationTableFromS2PFile(instrument, selector_string, table_name, s2_p_file_path, s_parameter_orientation);
+      auto status = library_->LoadSParameterExternalAttenuationTableFromS2PFile(instrument, selector_string, table_name, s2p_file_path, s_parameter_orientation);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2831,10 +2831,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      int64 seconds_since1970 = request->seconds_since1970();
+      int64 seconds_since_1970 = request->seconds_since_1970();
       float64 fractional_seconds = request->fractional_seconds();
       CVIAbsoluteTime timestamp {};
-      auto status = library_->TimestampFromValues(seconds_since1970, fractional_seconds, &timestamp);
+      auto status = library_->TimestampFromValues(seconds_since_1970, fractional_seconds, &timestamp);
       response->set_status(status);
       if (status_ok(status)) {
         convert_to_grpc(timestamp, response->mutable_timestamp());
@@ -2855,12 +2855,12 @@ namespace nirfmxinstr_grpc {
     }
     try {
       auto timestamp = convert_from_grpc<CVIAbsoluteTime>(request->timestamp());
-      int64 seconds_since1970 {};
+      int64 seconds_since_1970 {};
       float64 fractional_seconds {};
-      auto status = library_->ValuesFromTimestamp(timestamp, &seconds_since1970, &fractional_seconds);
+      auto status = library_->ValuesFromTimestamp(timestamp, &seconds_since_1970, &fractional_seconds);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_seconds_since1970(seconds_since1970);
+        response->set_seconds_since_1970(seconds_since_1970);
         response->set_fractional_seconds(fractional_seconds);
       }
       return ::grpc::Status::OK;

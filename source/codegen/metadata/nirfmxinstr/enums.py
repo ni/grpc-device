@@ -297,7 +297,7 @@ enums = {
                 'value': 1024
             },
             {
-                'name': 'CDMA2_K',
+                'name': 'CDMA2K',
                 'value': 32
             },
             {

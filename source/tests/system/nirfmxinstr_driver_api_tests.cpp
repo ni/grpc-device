@@ -366,7 +366,7 @@ TEST_F(NiRFmxInstrDriverApiTests, TimestampFromValuesRoundTrip_SucceedsWithOrigi
 
   ni::tests::system::EXPECT_SUCCESS(timestamp_response);
   ni::tests::system::EXPECT_SUCCESS(values_response);
-  EXPECT_EQ(UNIX_TIMESTAMP, values_response.seconds_since1970());
+  EXPECT_EQ(UNIX_TIMESTAMP, values_response.seconds_since_1970());
   EXPECT_NEAR(FRACTIONAL_SECONDS, values_response.fractional_seconds(), .001);
 }
 
