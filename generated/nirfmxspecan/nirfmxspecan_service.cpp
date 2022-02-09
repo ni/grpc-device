@@ -2303,11 +2303,31 @@ namespace nirfmxspecan_grpc {
     try {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 intermod_number = request->intermod_number();
-      int32 selector_string_out_length = request->selector_string_out_length();
-      char* selector_string_out = (char*)request->selector_string_out().c_str();
-      auto status = library_->BuildIntermodString(selector_string, intermod_number, selector_string_out_length, selector_string_out);
-      response->set_status(status);
-      return ::grpc::Status::OK;
+
+      while (true) {
+        auto status = library_->BuildIntermodString(selector_string, intermod_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildIntermodString(selector_string, intermod_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

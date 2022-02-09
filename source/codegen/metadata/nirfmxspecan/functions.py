@@ -2209,8 +2209,12 @@ functions = {
                 'type': 'int32'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
                 'type': 'char[]'
             }
         ],
