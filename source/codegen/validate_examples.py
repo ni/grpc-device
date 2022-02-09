@@ -31,14 +31,12 @@ def validate_examples(driver_glob_expression: str, ip_address: str) -> None:
     stage_client_files(staging_dir, True)
     examples_dir = staging_dir / "examples"
     proto_dir = staging_dir / "proto"
-    driver_example_dirs = list(examples_dir.glob(driver_glob_expression))
-    driver_proto_names = [f"{dir.name}.proto" for dir in driver_example_dirs]
-    proto_files_str = str.join(" ", driver_proto_names + ["session.proto", "nidevice.proto"])
+    proto_files_str = str.join(" ", [file.name for file in proto_dir.glob("*.proto")])
 
     system(
       rf"poetry run python -m grpc_tools.protoc -I{proto_dir} --python_out=. --grpc_python_out=. --mypy_out=. --mypy_grpc_out=. {proto_files_str}"
     )
-    for dir in driver_example_dirs:
+    for dir in examples_dir.glob(driver_glob_expression):
       print()
       print(f"-- Validating: {dir.name} --")
       
