@@ -483,7 +483,14 @@ TEST_F(NiRFmxSpecAnDriverApiTests, DisableDeleteRecordOnFetch_IQFetchData_Record
 {
   const auto session = init_session(stub(), PXI_5663);
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_IQ, true));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_IQ_DELETE_RECORD_ON_FETCH, 0));
+  EXPECT_SUCCESS(
+      session,
+      client::set_attribute_i32(
+          stub(),
+          session,
+          "",
+          NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_IQ_DELETE_RECORD_ON_FETCH,
+          NiRFmxSpecAnInt32AttributeValues::NIRFMXSPECAN_INT32_IQ_DELETE_RECORD_ON_FETCH_FALSE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   const auto fetch_response = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
