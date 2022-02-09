@@ -533,6 +533,82 @@ TEST(ServerConfigurationParserTests, JsonConfigWitIllFormedMaxMessageSize_ParseM
       nidevice_grpc::ServerConfigurationParser::InvalidMaxMessageSizeException);
 }
 
+using Readiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+using ReadinessTestPair = std::tuple<std::string, nidevice_grpc::FeatureToggles::CodeReadiness>;
+class ServerConfigurationParserCodeReadinessTests
+    : public ::testing::TestWithParam<ReadinessTestPair> {
+};
+
+INSTANTIATE_TEST_SUITE_P(
+    CodeReadinessTestCases,
+    ServerConfigurationParserCodeReadinessTests,
+    ::testing::ValuesIn(std::vector<ReadinessTestPair>{
+        {R"({"code_readiness": "release"})", Readiness::kRelease},
+        {R"({})", Readiness::kRelease},
+        {R"({"code_readiness": "NEXTRELEASE"})", Readiness::kNextRelease},
+        {R"({"code_readiness": "NextRelease"})", Readiness::kNextRelease},
+        {R"({"code_readiness": "Prototype"})", Readiness::kPrototype},
+        {R"({"code_readiness": "prototype"})", Readiness::kPrototype},
+        {R"({"code_readiness": "iNcOmPlete"})", Readiness::kIncomplete},
+    }));
+
+TEST_P(ServerConfigurationParserCodeReadinessTests, CodeReadinessConfiguration_ParseCodeReadiness_ReturnsExpectedReadiness)
+{
+  const auto config_json = nlohmann::json::parse(std::get<0>(GetParam()));
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  const auto readiness = server_config_parser.parse_code_readiness();
+
+  EXPECT_EQ(std::get<1>(GetParam()), readiness);
+}
+
+TEST_P(ServerConfigurationParserCodeReadinessTests, CodeReadinessConfiguration_ParseFeatureToggles_FeatureOfCorrespodingReadinessIsEnabled)
+{
+  const auto config_json = nlohmann::json::parse(std::get<0>(GetParam()));
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  const auto feature_toggles = server_config_parser.parse_feature_toggles();
+
+  EXPECT_TRUE(feature_toggles.is_feature_enabled("some_feature", /* feature_readiness = */ std::get<1>(GetParam())));
+}
+
+class ServerConfigurationParserInvalidCodeReadinessTests
+    : public ::testing::TestWithParam<std::string> {
+};
+
+INSTANTIATE_TEST_SUITE_P(
+    InvalidCodeReadinessTestCases,
+    ServerConfigurationParserInvalidCodeReadinessTests,
+    ::testing::ValuesIn(std::vector<std::string>{
+        R"({"code_readiness": 10})",
+        R"({"code_readiness": "notAReadiness"})",
+        R"({"code_readiness": "next_release"})",
+        R"({"code_readiness": {}})"}));
+
+TEST_P(ServerConfigurationParserInvalidCodeReadinessTests, InvalidCodeReadinessConfiguration_ParseCodeReadiness_ThrowsInvalidCodeReadinessException)
+{
+  const auto config_json = nlohmann::json::parse(GetParam());
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  EXPECT_THROW(
+      {
+        const auto feature_toggles = server_config_parser.parse_code_readiness();
+      },
+      nidevice_grpc::ServerConfigurationParser::InvalidCodeReadinessException);
+}
+
+TEST_P(ServerConfigurationParserInvalidCodeReadinessTests, InvalidCodeReadinessConfiguration_ParseFeatureToggles_ThrowsInvalidCodeReadinessException)
+{
+  const auto config_json = nlohmann::json::parse(GetParam());
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  EXPECT_THROW(
+      {
+        const auto feature_toggles = server_config_parser.parse_feature_toggles();
+      },
+      nidevice_grpc::ServerConfigurationParser::InvalidCodeReadinessException);
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

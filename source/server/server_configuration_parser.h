@@ -18,6 +18,7 @@ static const char* kFileNotFoundMessage = "The following certificate file was no
 static const char* kInvalidExePathMessage = "The server was unable to resolve the current executable path.";
 static const char* kInvalidMaxMessageSizeMessage = "The max message size must be an integer.";
 static const char* kInvalidFeatureToggleMessage = "Feature Toggles must be specified as boolean fields in the form \"feature_toggles\": { \"feature1\": true, \"feature2\": false }. \n\n";
+static const char* kInvalidCodeReadinessMessage = "code_readiness must be a string in [Release, NextRelease, Incomplete, Prototype].\n\n";
 static const char* kDefaultAddressPrefix = "[::]:";
 constexpr int UNLIMITED_MAX_MESSAGE_SIZE = -1;
 
@@ -36,6 +37,7 @@ class ServerConfigurationParser {
   std::string parse_root_cert() const;
   int parse_max_message_size() const;
   FeatureToggles parse_feature_toggles() const;
+  FeatureToggles::CodeReadiness parse_code_readiness() const;
 
   struct ConfigFileNotFoundException : public std::runtime_error {
     ConfigFileNotFoundException(const std::string& config_file_path);
@@ -71,6 +73,10 @@ class ServerConfigurationParser {
 
   struct InvalidFeatureToggleException : std::runtime_error {
     InvalidFeatureToggleException(const std::string& type_error_details);
+  };
+
+  struct InvalidCodeReadinessException : std::runtime_error {
+    InvalidCodeReadinessException(const std::string& type_error_details);
   };
 
   struct InvalidMaxMessageSizeException : std::runtime_error {
