@@ -474,7 +474,6 @@ TEST_F(NiRFmxNRDriverApiTests, SemContiguousMultiCarrierFromExample_FetchData_Da
   const auto NUMBER_OF_COMPONENT_CARRIERS = 2;
   const auto NUMBER_OF_OFFSETS = 4;
   char carrierString[MAX_SELECTOR_STRING];
-  int32 linkDirection = RFMXNR_VAL_LINK_DIRECTION_UPLINK;
   std::vector<float64> componentCarrierFrequency{-49.98e6, 50.01e6};
   std::vector<float64> componentCarrierRatedOutputPower{0.0, 0.0};
   std::vector<float64> offsetStartFrequency{15.0e3, 1.5e6, 5.5e6, 40.3e6};
@@ -517,16 +516,7 @@ TEST_F(NiRFmxNRDriverApiTests, SemContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::sem_cfg_offset_limit_fail_mask_array(stub(), session, "", limitFailMask));
   EXPECT_SUCCESS(session, client::sem_cfg_offset_absolute_limit_array(stub(), session, "", absoluteLimitStart, absoluteLimitStop));
   EXPECT_SUCCESS(session, client::sem_cfg_offset_relative_limit_array(stub(), session, "", relativeLimitStart, relativeLimitStop));
-  if (linkDirection == NIRFMXNR_INT32_LINK_DIRECTION_UPLINK) {
-    EXPECT_SUCCESS(session, client::sem_cfg_uplink_mask_type(stub(), session, "", SEM_UPLINK_MASK_TYPE_GENERAL));
-  }
-  else {
-    EXPECT_SUCCESS(session, client::cfgg_node_b_category(stub(), session, "", G_NODE_B_CATEGORY_WIDE_AREA_BASE_STATION_CATEGORY_A));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_BAND, 78));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_SEM_DOWNLINK_MASK_TYPE, NIRFMXNR_INT32_SEM_DOWNLINK_MASK_TYPE_STANDARD));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_SEM_DELTA_F_MAXIMUM, 15.0e6));
-    EXPECT_SUCCESS(session, client::sem_cfg_component_carrier_rated_output_power_array(stub(), session, "", componentCarrierRatedOutputPower));
-  }
+  EXPECT_SUCCESS(session, client::sem_cfg_uplink_mask_type(stub(), session, "", SEM_UPLINK_MASK_TYPE_GENERAL));
   EXPECT_SUCCESS(session, client::sem_cfg_sweep_time(stub(), session, "", SEM_SWEEP_TIME_AUTO_TRUE, 1.0e-3));
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -587,7 +577,6 @@ TEST_F(NiRFmxNRDriverApiTests, SemContiguousMultiCarrierFromExample_FetchData_Da
 
 TEST_F(NiRFmxNRDriverApiTests, SemSingleCarrierFromExample_FetchData_DataLooksReasonable)
 {
-  int32 linkDirection = RFMXNR_VAL_LINK_DIRECTION_UPLINK;
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
@@ -598,16 +587,7 @@ TEST_F(NiRFmxNRDriverApiTests, SemSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SEM, true));
-  if (linkDirection == NIRFMXNR_INT32_LINK_DIRECTION_UPLINK) {
-    EXPECT_SUCCESS(session, client::sem_cfg_uplink_mask_type(stub(), session, "", SEM_UPLINK_MASK_TYPE_GENERAL));
-  }
-  else {
-    EXPECT_SUCCESS(session, client::cfgg_node_b_category(stub(), session, "", G_NODE_B_CATEGORY_WIDE_AREA_BASE_STATION_CATEGORY_A));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_BAND, 78));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_SEM_DOWNLINK_MASK_TYPE, NIRFMXNR_INT32_SEM_DOWNLINK_MASK_TYPE_STANDARD));
-    EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_SEM_DELTA_F_MAXIMUM, 15.0e6));
-    EXPECT_SUCCESS(session, client::sem_cfg_component_carrier_rated_output_power(stub(), session, "", 0.0));
-  }
+  EXPECT_SUCCESS(session, client::sem_cfg_uplink_mask_type(stub(), session, "", SEM_UPLINK_MASK_TYPE_GENERAL));
   EXPECT_SUCCESS(session, client::sem_cfg_sweep_time(stub(), session, "", SEM_SWEEP_TIME_AUTO_TRUE, 1.0e-3));
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
