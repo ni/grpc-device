@@ -244,7 +244,7 @@ TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
   EXPECT_GT(fetched_powers_response.peak_to_average_power_ratio_maximum(), 0.0);
 }
 
-TEST_F(NiRFmxBTDriverApiTests, ExerciseComplexNumberUsageWithModAccFetchConstellationTrace_DataLooksReasonable)
+TEST_F(NiRFmxBTDriverApiTests, ModAccMeasurement_FetchConstellationTrace_ComplexNumberLooksReasonable)
 {
   const auto session = init_session(stub(), kPxi5663e);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
@@ -257,15 +257,7 @@ TEST_F(NiRFmxBTDriverApiTests, ExerciseComplexNumberUsageWithModAccFetchConstell
   EXPECT_SUCCESS(session, client::mod_acc_cfg_averaging(stub(), session, "", ModAccAveragingEnabled::MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  // We expect these actions to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
-  const auto devm_response = client::mod_acc_fetch_devm(stub(), session, "", 10.0);
-  EXPECT_WARNING(devm_response, kPreambleSyncPacketStartDetectionFailedWarning);
-  const auto frequency_error_edr_response = client::mod_acc_fetch_frequency_error_edr(stub(), session, "", 10.0);
-  EXPECT_WARNING(frequency_error_edr_response, kPreambleSyncPacketStartDetectionFailedWarning);
-  const auto devm_per_symbol_trace_response = client::mod_acc_fetch_devm_per_symbol_trace(stub(), session, "", 10.0);
-  EXPECT_WARNING(devm_per_symbol_trace_response, kPreambleSyncPacketStartDetectionFailedWarning);
-  const auto frequency_error_wi_plus_w0_trace_edr_response = client::mod_acc_fetch_frequency_error_wi_plus_w0_trace_edr(stub(), session, "", 10.0);
-  EXPECT_WARNING(frequency_error_wi_plus_w0_trace_edr_response, kPreambleSyncPacketStartDetectionFailedWarning);
+  // We expect this action to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
   const auto constellation_trace_response = client::mod_acc_fetch_constellation_trace(stub(), session, "", 10.0);
   EXPECT_WARNING(constellation_trace_response, kPreambleSyncPacketStartDetectionFailedWarning);
 
