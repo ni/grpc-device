@@ -23,6 +23,7 @@ namespace {
 const auto PXI_5663E = "5663E";
 const int RISING_EDGE_DETECTION_FAILED_WARNING = 379206;
 const int EVM_CHIPS_MUST_BE_300_WARNING = 685353;
+const int INCORRECT_TYPE_ERROR_CODE = -380251;
 
 template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
@@ -37,9 +38,9 @@ void EXPECT_WARNING(const TResponse& response, const int expected_warning_id)
 }
 
 template <typename TResponse>
-void EXPECT_RFMX_ERROR(pb::int32 expected_error, const TResponse& response)
+void EXPECT_ERROR(const TResponse& response, pb::int32 expected_error_id)
 {
-  EXPECT_EQ(expected_error, response.status());
+  EXPECT_EQ(expected_error_id, response.status());
 }
 
 class NiRFmxWLANDriverApiTests : public Test {
@@ -91,9 +92,9 @@ class NiRFmxWLANDriverApiTests : public Test {
   }
 
   template <typename TResponse>
-  void EXPECT_RFMX_ERROR(pb::int32 expected_error, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
+  void EXPECT_RFMX_ERROR(pb::int32 expected_error_id, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
   {
-    ni::tests::system::EXPECT_RFMX_ERROR(expected_error, response);
+    ni::tests::system::EXPECT_ERROR(response, expected_error_id);
     const auto error = client::get_error(stub(), session);
     EXPECT_THAT(error.error_description(), HasSubstr(message_substring));
   }
@@ -1208,7 +1209,7 @@ TEST_F(NiRFmxWLANDriverApiTests, SetAttributeComplex_ExpectedError)
   const auto session = init_session(stub(), PXI_5663E);
 
   EXPECT_RFMX_ERROR(
-      -380251, "Incorrect data type specified", session,
+      INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_ni_complex_double_array(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_REFERENCE_LEVEL, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
 }
 
@@ -1218,16 +1219,16 @@ TEST_F(NiRFmxWLANDriverApiTests, SetAttributeInt8_ExpectedError)
   const auto session = init_session(stub(), PXI_5663E);
 
   EXPECT_RFMX_ERROR(
-      -380251, "Incorrect data type specified", session,
+      INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_i8(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, 1));
   EXPECT_RFMX_ERROR(
-      -380251, "Incorrect data type specified", session,
+      INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_u8(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, 1));
   EXPECT_RFMX_ERROR(
-      -380251, "Incorrect data type specified", session,
+      INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_i8_array(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, {1, 0, -1, 0}));
   EXPECT_RFMX_ERROR(
-      -380251, "Incorrect data type specified", session,
+      INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_u8_array(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, {1, 0, 1, 0}));
 }
 
@@ -1237,10 +1238,10 @@ TEST_F(NiRFmxWLANDriverApiTests, SetAttributeInt16_ExpectedError)
   const auto session = init_session(stub(), PXI_5663E);
 
   EXPECT_RFMX_ERROR(
-      -380251, "Incorrect data type specified", session,
+      INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_i16(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, -400));
   EXPECT_RFMX_ERROR(
-      -380251, "Incorrect data type specified", session,
+      INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_u16(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, 400));
 }
 
