@@ -792,11 +792,11 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSpeedOptimizedFromExample_FetchData_DataL
   auto waveform = load_test_waveform_data<float, nidevice_grpc::NIComplexNumberF32>("NR_FR2_UL_SISO_CC-1_BW-50MHz_SCS-120kHz.json");
   EXPECT_SUCCESS(session, client::mod_acc_cfg_reference_waveform(stub(), session, "", waveform.t0, waveform.dt, waveform.data));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
-  float64 composite_rms_evm_mean_first = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-  float64 in_band_emission_margin_first = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
+  float64 composite_rms_evm_mean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+  float64 in_band_emission_margin = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
 
-  EXPECT_LT(0.0, composite_rms_evm_mean_first);
-  EXPECT_TRUE(isnan(in_band_emission_margin_first));
+  EXPECT_LT(0.0, composite_rms_evm_mean);
+  EXPECT_TRUE(isnan(in_band_emission_margin));
 }
 
 }  // namespace
