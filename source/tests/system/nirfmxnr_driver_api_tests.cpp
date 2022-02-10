@@ -736,11 +736,11 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSpeedOptimizedFromExample_FetchData_DataL
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_SELECTED_PORTS, std::string()));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 3.5e9, 0.0, 0.0));
   EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, true));
-  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
-  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE2));
+  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 50e6));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_CELL_ID, 0));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_BAND, 78));
-  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
+  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 120e3));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_AUTO_RESOURCE_BLOCK_DETECTION_ENABLED, NIRFMXNR_INT32_AUTO_RESOURCE_BLOCK_DETECTION_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_TRANSFORM_PRECODING_ENABLED, NIRFMXNR_INT32_PUSCH_TRANSFORM_PRECODING_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_SLOT_ALLOCATION, std::string("0-Last")));
@@ -787,13 +787,23 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSpeedOptimizedFromExample_FetchData_DataL
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE, NIRFMXNR_INT32_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE_REFERENCE_WAVEFORM));
 
   // READ TDMS File
-  auto waveform = load_test_waveform_data<float, nidevice_grpc::NIComplexNumberF32>("LTE20MHz Waveform (Two Subframes).json");
-  EXPECT_SUCCESS(session, client::mod_acc_cfg_reference_waveform(stub(), session, "", waveform.t0, waveform.dt, waveform.data));
+  auto waveform = load_test_waveform_data<float, nidevice_grpc::NIComplexNumberF32>("NR_FR2_UL_SISO_CC-1_BW-50MHz_SCS-120kHz.json");
+  // Split waveform data in two so it can fit within message limits.
+  std::vector<nidevice_grpc::NIComplexNumberF32> waveform_data_first_half(waveform.data.begin(), waveform.data.begin() + 300000);
+  std::vector<nidevice_grpc::NIComplexNumberF32> waveform_data_second_half(waveform.data.begin() + 300000, waveform.data.begin() + 600000);
+  EXPECT_SUCCESS(session, client::mod_acc_cfg_reference_waveform(stub(), session, "", waveform.t0, waveform.dt, waveform_data_first_half));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
-  float64 composite_rms_evm_mean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-  float64 in_band_emission_margin = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
-  EXPECT_NEAR(1382.871, composite_rms_evm_mean, .001);
-  EXPECT_TRUE(isnan(in_band_emission_margin));
+  float64 composite_rms_evm_mean_first = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+  float64 in_band_emission_margin_first = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
+  EXPECT_SUCCESS(session, client::mod_acc_cfg_reference_waveform(stub(), session, "", waveform.t0, waveform.dt, waveform_data_second_half));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+  float64 composite_rms_evm_mean_second = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
+  float64 in_band_emission_margin_second = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
+
+  EXPECT_NEAR(801.389, composite_rms_evm_mean_first, .001);
+  EXPECT_NEAR(1041.894, composite_rms_evm_mean_second, .001);
+  EXPECT_TRUE(isnan(in_band_emission_margin_first));
+  EXPECT_TRUE(isnan(in_band_emission_margin_second));
 }
 
 }  // namespace
