@@ -793,10 +793,18 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSpeedOptimizedFromExample_FetchData_DataL
   EXPECT_SUCCESS(session, client::mod_acc_cfg_reference_waveform(stub(), session, "", waveform.t0, waveform.dt, waveform.data));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
   float64 composite_rms_evm_mean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
-  float64 in_band_emission_margin = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN);
+  float64 composite_peak_evm_maximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM);
+  float64 pusch_data_rms_evm_mean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_DATA_RMS_EVM_MEAN);
+  float64 pusch_data_peak_evm_maximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_DATA_PEAK_EVM_MAXIMUM);
+  float64 pusch_dmrs_rms_evm_mean = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_DMRS_RMS_EVM_MEAN);
+  float64 pusch_dmrs_peak_evm_maximum = GET_ATTR_F64(session, "", NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PUSCH_DMRS_PEAK_EVM_MAXIMUM);
 
   EXPECT_LT(0.0, composite_rms_evm_mean);
-  EXPECT_TRUE(isnan(in_band_emission_margin));
+  EXPECT_LT(0.0, composite_peak_evm_maximum);
+  EXPECT_LT(0.0, pusch_data_rms_evm_mean);
+  EXPECT_LT(0.0, pusch_data_peak_evm_maximum);
+  EXPECT_LT(0.0, pusch_dmrs_rms_evm_mean);
+  EXPECT_LT(0.0, pusch_dmrs_peak_evm_maximum);
 }
 
 }  // namespace
