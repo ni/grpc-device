@@ -67,6 +67,63 @@ enums = {
             }
         ]
     },
+    'DigitalEdgeTriggerSource': {
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'PFI0',
+                'value': 'PFI0'
+            },
+            {
+                'name': 'PFI1',
+                'value': 'PFI1'
+            },
+            {
+                'name': 'PXI_TRIG0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'PXI_TRIG1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'PXI_TRIG2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'PXI_TRIG3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'PXI_TRIG4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'PXI_TRIG5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'PXI_TRIG6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'PXI_TRIG7',
+                'value': 'PXI_Trig7'
+            },
+            {
+                'name': 'PXI_STAR',
+                'value': 'PXI_STAR'
+            },
+            {
+                'name': 'PXIE_DSTARB',
+                'value': 'PXIe_DStarB'
+            },
+            {
+                'name': 'TIMER_EVENT',
+                'value': 'TimerEvent'
+            }
+        ]
+    },
     'DirectionFindingMode': {
         'values': [
             {

@@ -44,7 +44,7 @@ DeleteAllExternalAttenuationTablesResponse delete_all_external_attenuation_table
 DeleteExternalAttenuationTableResponse delete_external_attenuation_table(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& table_name);
 DisableCalibrationPlaneResponse disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 EnableCalibrationPlaneResponse enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
-ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<ExportSignalSource, pb::int32>& export_signal_source, const pb::string& export_signal_output_terminal);
+ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<ExportSignalSource, pb::int32>& export_signal_source, const simple_variant<OutputTerminal, std::string>& export_signal_output_terminal);
 GetAttributeF32Response get_attribute_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
 GetAttributeF32ArrayResponse get_attribute_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
 GetAttributeF64Response get_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const NiRFmxInstrAttribute& attribute_id);
