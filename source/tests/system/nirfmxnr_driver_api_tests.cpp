@@ -25,6 +25,8 @@ const auto NR_SYNC_FAILURE = 684300;
 const auto NR_SYNC_FAILURE_STR = "Failed to synchronize to the signal";
 const auto IVI_ERROR_INVALID_VALUE = -1074135024;
 const auto IVI_ERROR_INVALID_VALUE_STR = "Invalid value for parameter or property";
+const auto INCORRECT_TYPE_ERROR_CODE = -380251;
+const auto INCORRECT_TYPE_ERROR_STR = "Incorrect data type specified";
 
 template <typename TResponse>
 void EXPECT_RESPONSE_SUCCESS(const TResponse& response)
@@ -721,7 +723,7 @@ TEST_F(NiRFmxNRDriverApiTests, SetAttributeComplex_ExpectedError)
   const auto session = init_session(stub(), PXI_5663E);
 
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      INCORRECT_TYPE_ERROR_CODE, INCORRECT_TYPE_ERROR_STR, session,
       client::set_attribute_ni_complex_double_array(stub(), session, "", NIRFMXNR_ATTRIBUTE_SEM_OFFSET_START_FREQUENCY, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
 }
 
