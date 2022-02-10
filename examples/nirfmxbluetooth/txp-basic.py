@@ -1,0 +1,319 @@
+# Steps:
+# 1. Open a new RFmx Session.
+# 2. Configure Frequency Reference.
+# 3. Configure basic signal properties(Center Frequency and External Attenuation).
+# 4. Configure Trigger Type and Trigger Parameters.
+# 5. Configure Packet Type.
+# 6. Configure Data Rate.
+# 7. Configure Payload Length.
+# 8. Configure Direction Finding.
+# 9. Configure Reference Level.
+# 10. Select TXP measurement and enable Traces.
+# 11. Configure TXP Burst Synchronization Type.
+# 12. Configure Averaging Parameters for TXP measurement.
+# 13. Initiate the Measurement.
+# 14. Fetch TXP Measurements and Trace.
+# 15. Close RFmx Session.
+#
+# The gRPC API is built from the C API. RFmx BT documentation is installed with the driver at:
+# C:\Program Files (x86)\National Instruments\RFmx\BT\Documentation\btcvi.chm
+#
+# Getting Started:
+#
+# To run this example, install "RFmx BT" on the server machine.
+# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-bt.html
+#
+# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
+# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+#
+# Refer to the NI-RFmxBT gRPC Wiki for the latest C Function Reference:
+# Link: https://github.com/ni/grpc-device/wiki/NI-RFmxBT-C-Function-Reference
+#
+# Running from command line:
+#
+# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
+#   > python txp-basic.py <server_address> <port_number> <physical_channel_name>
+# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+
+
+import sys
+
+import grpc
+import nirfmxbt_pb2 as nirfmxbt_types
+import nirfmxbt_pb2_grpc as grpc_nirfmxbt
+
+server_address = "localhost"
+server_port = "31763"
+session_name = "RFmxBTSession"
+
+# Resource name and options for a simulated 5663 client.
+resource = "SimulatedDevice"
+options = "Simulate=1,DriverSetup=Model:5663"
+
+# Read in cmd args
+if len(sys.argv) >= 2:
+    server_address = sys.argv[1]
+if len(sys.argv) >= 3:
+    server_port = sys.argv[2]
+if len(sys.argv) >= 4:
+    resource = sys.argv[3]
+    options = ""
+
+# Create a gRPC channel + client.
+channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+client = grpc_nirfmxbt.NiRFmxBTStub(channel)
+instr = None
+
+
+# Raise an exception if an error was returned
+def raise_if_error(response):
+    if response.status != 0:
+        error_response = client.GetError(
+            nirfmxbt_types.GetErrorRequest(
+                instrument=instr,
+            )
+        )
+        if response.status < 0:
+            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
+        else:
+            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
+
+    return response
+
+
+try:
+    auto_level = True
+
+    initialize_response = raise_if_error(
+        client.Initialize(
+            nirfmxbt_types.InitializeRequest(
+                session_name=session_name, resource_name=resource, option_string=options
+            )
+        )
+    )
+    instr = initialize_response.instrument
+    raise_if_error(
+        client.CfgFrequencyReference(
+            nirfmxbt_types.CfgFrequencyReferenceRequest(
+                instrument=instr,
+                channel_name="",
+                frequency_reference_source_mapped=nirfmxbt_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
+                frequency_reference_frequency=10e6,
+            )
+        )
+    )
+    raise_if_error(
+        client.CfgFrequency(
+            nirfmxbt_types.CfgFrequencyRequest(
+                instrument=instr, selector_string="", center_frequency=2.402000e9
+            )
+        )
+    )
+    raise_if_error(
+        client.CfgExternalAttenuation(
+            nirfmxbt_types.CfgExternalAttenuationRequest(
+                instrument=instr, selector_string="", external_attenuation=0.0
+            )
+        )
+    )
+    raise_if_error(
+        client.CfgIQPowerEdgeTrigger(
+            nirfmxbt_types.CfgIQPowerEdgeTriggerRequest(
+                instrument=instr,
+                selector_string="",
+                iq_power_edge_source="0",
+                iq_power_edge_slope=nirfmxbt_types.IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE,
+                iq_power_edge_level=-20.0,
+                trigger_delay=0.0,
+                trigger_min_quiet_time_mode=nirfmxbt_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
+                trigger_min_quiet_time_duration=100e-6,
+                iq_power_edge_level_type=nirfmxbt_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE,
+                enable_trigger=True,
+            )
+        )
+    )
+    raise_if_error(
+        client.CfgPacketType(
+            nirfmxbt_types.CfgPacketTypeRequest(
+                instrument=instr, selector_string="", packet_type=nirfmxbt_types.PACKET_TYPE_DH1
+            )
+        )
+    )
+    raise_if_error(
+        client.CfgDataRate(
+            nirfmxbt_types.CfgDataRateRequest(
+                instrument=instr, selector_string="", data_rate=1000000
+            )
+        )
+    )
+    raise_if_error(
+        client.CfgPayloadLength(
+            nirfmxbt_types.CfgPayloadLengthRequest(
+                instrument=instr,
+                selector_string="",
+                payload_length_mode=nirfmxbt_types.PAYLOAD_LENGTH_MODE_AUTO,
+                payload_length=10,
+            )
+        )
+    )
+    raise_if_error(
+        client.CfgLEDirectionFinding(
+            nirfmxbt_types.CfgLEDirectionFindingRequest(
+                instrument=instr,
+                selector_string="",
+                direction_finding_mode=nirfmxbt_types.DIRECTION_FINDING_MODE_DISABLED,
+                cte_length=160e-6,
+                cte_slot_duration=1e-6,
+            )
+        )
+    )
+    if auto_level:
+        auto_level_response = raise_if_error(
+            client.AutoLevel(
+                nirfmxbt_types.AutoLevelRequest(
+                    instrument=instr, selector_string="", measurement_interval=10e-3
+                )
+            )
+        )
+        reference_level = auto_level_response.reference_level
+    else:
+        raise_if_error(
+            client.CfgReferenceLevel(
+                nirfmxbt_types.CfgReferenceLevelRequest(
+                    instrument=instr, selector_string="", reference_level=0.0
+                )
+            )
+        )
+    raise_if_error(
+        client.SelectMeasurements(
+            nirfmxbt_types.SelectMeasurementsRequest(
+                instrument=instr,
+                selector_string="",
+                measurements=nirfmxbt_types.MEASUREMENT_TYPES_TXP,
+                enable_all_traces=True,
+            )
+        )
+    )
+    raise_if_error(
+        client.TXPCfgBurstSynchronizationType(
+            nirfmxbt_types.TXPCfgBurstSynchronizationTypeRequest(
+                instrument=instr,
+                selector_string="",
+                burst_synchronization_type=nirfmxbt_types.TXP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE,
+            )
+        )
+    )
+    raise_if_error(
+        client.TXPCfgAveraging(
+            nirfmxbt_types.TXPCfgAveragingRequest(
+                instrument=instr,
+                selector_string="",
+                averaging_enabled=nirfmxbt_types.TXP_AVERAGING_ENABLED_FALSE,
+                averaging_count=10,
+            )
+        )
+    )
+    raise_if_error(
+        client.Initiate(
+            nirfmxbt_types.InitiateRequest(instrument=instr, selector_string="", result_name="")
+        )
+    )
+
+    ### Fetch Results ###
+
+    txp_fetch_powers_response = raise_if_error(
+        client.TXPFetchPowers(
+            nirfmxbt_types.TXPFetchPowersRequest(instrument=instr, selector_string="", timeout=10.0)
+        )
+    )
+    average_power_mean = txp_fetch_powers_response.average_power_mean
+    average_power_maximum = txp_fetch_powers_response.average_power_maximum
+    average_power_minimum = txp_fetch_powers_response.average_power_minimum
+    peak_to_average_power_ratio_maximum = (
+        txp_fetch_powers_response.peak_to_average_power_ratio_maximum
+    )
+    txp_fetch_edr_powers_response = raise_if_error(
+        client.TXPFetchEDRPowers(
+            nirfmxbt_types.TXPFetchEDRPowersRequest(
+                instrument=instr, selector_string="", timeout=10.0
+            )
+        )
+    )
+    edrgfsk_average_power_mean = txp_fetch_edr_powers_response.edr_gfsk_average_power_mean
+    edrdpsk_average_power_mean = txp_fetch_edr_powers_response.edr_dpsk_average_power_mean
+    edR__dpsK__gfsk_average_power_ratio_mean = (
+        txp_fetch_edr_powers_response.edr_dpsk_gfsk_average_power_ratio_mean
+    )
+    txp_fetch_lecte_reference_period_powers_response = raise_if_error(
+        client.TXPFetchLECTEReferencePeriodPowers(
+            nirfmxbt_types.TXPFetchLECTEReferencePeriodPowersRequest(
+                instrument=instr, selector_string="", timeout=10.0
+            )
+        )
+    )
+    reference_period_average_power_mean = (
+        txp_fetch_lecte_reference_period_powers_response.reference_period_average_power_mean
+    )
+    reference_period_peak_absolute_power_deviation_maximum = (
+        txp_fetch_lecte_reference_period_powers_response.reference_period_peak_absolute_power_deviation_maximum
+    )
+
+    txp_fetch_lecte_transmit_slot_powers_array_response = raise_if_error(
+        client.TXPFetchLECTETransmitSlotPowersArray(
+            nirfmxbt_types.TXPFetchLECTETransmitSlotPowersArrayRequest(
+                instrument=instr, selector_string="", timeout=10.0
+            )
+        )
+    )
+    transmit_slot_average_power_mean = (
+        txp_fetch_lecte_transmit_slot_powers_array_response.transmit_slot_average_power_mean
+    )
+    transmit_slot_peak_absolute_power_deviation_maximum = (
+        txp_fetch_lecte_transmit_slot_powers_array_response.transmit_slot_peak_absolute_power_deviation_maximum
+    )
+
+    txp_fetch_power_trace_response = raise_if_error(
+        client.TXPFetchPowerTrace(
+            nirfmxbt_types.TXPFetchPowerTraceRequest(
+                instrument=instr, selector_string="", timeout=10.0
+            )
+        )
+    )
+    x0 = txp_fetch_power_trace_response.x0
+    dx = txp_fetch_power_trace_response.dx
+    power = txp_fetch_power_trace_response.power
+
+    print("------------------Measurement------------------")
+    print(f"Average Power Mean (dBm)                        : {average_power_mean}")
+    print(f"Average Power Maximum (dBm)                     : {average_power_maximum}")
+    print(f"Average Power Minimum (dBm)                     : {average_power_minimum}")
+    print(
+        f"Peak to Average Power Ratio Maximum (dB)        : {peak_to_average_power_ratio_maximum}"
+    )
+    print(f"EDR GFSK Average Power Mean (dBm)               : {edrgfsk_average_power_mean}")
+    print(f"EDR DPSK Average Power Mean (dBm)               : {edrdpsk_average_power_mean}")
+    print(
+        f"EDR DPSK GFSK Average Power Ratio Mean (dB)     : {edR__dpsK__gfsk_average_power_ratio_mean}"
+    )
+
+    print("------------------LE CTE Reference Period Measurement------------------")
+    print(
+        f"Average Power Mean (dBm)                        : {reference_period_average_power_mean}"
+    )
+    print(
+        f"Peak Absolute Power Deviation Maximum (%)       : {reference_period_peak_absolute_power_deviation_maximum}\n"
+    )
+
+    print("------------------LE CTE Transmit Slot Power Measurement------------------")
+    if len(transmit_slot_average_power_mean) == 0:
+        print("No data")
+    for i in range(len(transmit_slot_average_power_mean)):
+        print(
+            f"Average Power Mean (dBm)[{i}]                   : {transmit_slot_average_power_mean[i]}\n"
+        )
+        print(
+            f"Peak Absolute Power Deviation Maximum (%)[{i}]  : {transmit_slot_peak_absolute_power_deviation_maximum[i]}\n"
+        )
+finally:
+    if instr:
+        client.Close(nirfmxbt_types.CloseRequest(instrument=instr, force_destroy=False))
