@@ -22,6 +22,7 @@ attributes = {
     },
     10485765: {
         'access': 'read-write',
+        'enum': 'DigitalEdgeTriggerSource',
         'name': 'DIGITAL_EDGE_TRIGGER_SOURCE',
         'type': 'char[]'
     },

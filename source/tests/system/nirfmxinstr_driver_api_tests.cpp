@@ -379,6 +379,40 @@ TEST_F(NiRFmxInstrDriverApiTests, BuildPortString_SucceedsWithExpectedValue)
   EXPECT_EQ(EXPECTED_PORT_STRING, build_port_string_response.selector_string_out());
 }
 
+TEST_F(NiRFmxInstrDriverApiTests, ExportSignal_Succeeds)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+  auto response = client::export_signal(stub(), session, ExportSignalSource::EXPORT_SIGNAL_SOURCE_ADVANCE_TRIGGER, OutputTerminal::OUTPUT_TERMINAL_PFI0);
+
+  EXPECT_SUCCESS(session, response);
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, SetReadyForStartEventOutputTerminal_Succeeds)
+{
+  const auto session = init_session(stub(), PXI_5663);
+  auto response = client::set_attribute_string(
+      stub(),
+      session,
+      "",
+      NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_READY_FOR_START_EVENT_OUTPUT_TERMINAL,
+      NiRFmxInstrStringAttributeValuesMapped::NIRFMXINSTR_STRING_OUTPUT_TERMINAL_PXI_TRIG0);
+
+  EXPECT_SUCCESS(session, response);
+}
+
+TEST_F(NiRFmxInstrDriverApiTests, SetRStartTriggerDigitalEdgeSource_Succeeds)
+{
+  const auto session = init_session(stub(), PXI_5663);
+  auto response = client::set_attribute_string(
+      stub(),
+      session,
+      "",
+      NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_START_TRIGGER_DIGITAL_EDGE_SOURCE,
+      NiRFmxInstrStringAttributeValuesMapped::NIRFMXINSTR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT);
+
+  EXPECT_SUCCESS(session, response);
+}
+
 }  // namespace
 }  // namespace system
 }  // namespace tests

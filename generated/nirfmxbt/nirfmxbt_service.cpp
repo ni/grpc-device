@@ -3624,7 +3624,26 @@ namespace nirfmxbt_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
-      char* attr_val = (char*)request->attr_val().c_str();
+      char* attr_val;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxbt_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
+          auto attr_val_imap_it = nirfmxbtstringattributevaluesmapped_input_map_.find(request->attr_val_mapped());
+          if (attr_val_imap_it == nirfmxbtstringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val_mapped was not specified or out of range.");
+          }
+          attr_val = const_cast<char*>((attr_val_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxbt_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValRaw: {
+          attr_val = const_cast<char*>(request->attr_val_raw().c_str());
+          break;
+        }
+        case nirfmxbt_grpc::SetAttributeStringRequest::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
       response->set_status(status);
       return ::grpc::Status::OK;

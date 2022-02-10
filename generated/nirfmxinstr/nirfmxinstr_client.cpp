@@ -454,7 +454,7 @@ enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<ExportSignalSource, pb::int32>& export_signal_source, const pb::string& export_signal_output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const simple_variant<ExportSignalSource, pb::int32>& export_signal_source, const simple_variant<OutputTerminal, std::string>& export_signal_output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -468,7 +468,14 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, con
   else if (export_signal_source_raw_ptr) {
     request.set_export_signal_source_raw(*export_signal_source_raw_ptr);
   }
-  request.set_export_signal_output_terminal(export_signal_output_terminal);
+  const auto export_signal_output_terminal_ptr = export_signal_output_terminal.get_if<OutputTerminal>();
+  const auto export_signal_output_terminal_raw_ptr = export_signal_output_terminal.get_if<std::string>();
+  if (export_signal_output_terminal_ptr) {
+    request.set_export_signal_output_terminal_mapped(*export_signal_output_terminal_ptr);
+  }
+  else if (export_signal_output_terminal_raw_ptr) {
+    request.set_export_signal_output_terminal_raw(*export_signal_output_terminal_raw_ptr);
+  }
 
   auto response = ExportSignalResponse{};
 

@@ -168,7 +168,7 @@ attributes = {
     },
     35: {
         'access': 'read-write',
-        'enum': 'TriggerExportOutputTerminal',
+        'enum': 'OutputTerminal',
         'name': 'TRIGGER_EXPORT_OUTPUT_TERMINAL',
         'type': 'char[]'
     },
@@ -385,6 +385,7 @@ attributes = {
     },
     99: {
         'access': 'read-write',
+        'enum': 'DigitalEdgeTriggerSource',
         'name': 'START_TRIGGER_DIGITAL_EDGE_SOURCE',
         'type': 'char[]'
     },
@@ -396,6 +397,7 @@ attributes = {
     },
     101: {
         'access': 'read-write',
+        'enum': 'OutputTerminal',
         'name': 'START_TRIGGER_EXPORT_OUTPUT_TERMINAL',
         'type': 'char[]'
     },
@@ -412,11 +414,13 @@ attributes = {
     },
     104: {
         'access': 'read-write',
+        'enum': 'DigitalEdgeTriggerSource',
         'name': 'ADVANCE_TRIGGER_DIGITAL_EDGE_SOURCE',
         'type': 'char[]'
     },
     105: {
         'access': 'read-write',
+        'enum': 'OutputTerminal',
         'name': 'ADVANCE_TRIGGER_EXPORT_OUTPUT_TERMINAL',
         'type': 'char[]'
     },
@@ -427,6 +431,7 @@ attributes = {
     },
     107: {
         'access': 'read-write',
+        'enum': 'OutputTerminal',
         'name': 'READY_FOR_START_EVENT_OUTPUT_TERMINAL',
         'type': 'char[]'
     },
@@ -437,6 +442,7 @@ attributes = {
     },
     109: {
         'access': 'read-write',
+        'enum': 'OutputTerminal',
         'name': 'READY_FOR_ADVANCE_EVENT_OUTPUT_TERMINAL',
         'type': 'char[]'
     },
@@ -447,6 +453,7 @@ attributes = {
     },
     111: {
         'access': 'read-write',
+        'enum': 'OutputTerminal',
         'name': 'READY_FOR_REFERENCE_EVENT_OUTPUT_TERMINAL',
         'type': 'char[]'
     },
@@ -457,6 +464,7 @@ attributes = {
     },
     113: {
         'access': 'read-write',
+        'enum': 'OutputTerminal',
         'name': 'END_OF_RECORD_EVENT_OUTPUT_TERMINAL',
         'type': 'char[]'
     },
@@ -467,6 +475,7 @@ attributes = {
     },
     115: {
         'access': 'read-write',
+        'enum': 'OutputTerminal',
         'name': 'DONE_EVENT_OUTPUT_TERMINAL',
         'type': 'char[]'
     },

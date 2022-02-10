@@ -602,6 +602,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'OutputTerminal',
                 'name': 'exportSignalOutputTerminal',
                 'type': 'char[]'
             }

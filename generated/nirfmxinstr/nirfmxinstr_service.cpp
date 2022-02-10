@@ -720,7 +720,26 @@ namespace nirfmxinstr_grpc {
         }
       }
 
-      char* export_signal_output_terminal = (char*)request->export_signal_output_terminal().c_str();
+      char* export_signal_output_terminal;
+      switch (request->export_signal_output_terminal_enum_case()) {
+        case nirfmxinstr_grpc::ExportSignalRequest::ExportSignalOutputTerminalEnumCase::kExportSignalOutputTerminalMapped: {
+          auto export_signal_output_terminal_imap_it = outputterminal_input_map_.find(request->export_signal_output_terminal_mapped());
+          if (export_signal_output_terminal_imap_it == outputterminal_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for export_signal_output_terminal_mapped was not specified or out of range.");
+          }
+          export_signal_output_terminal = const_cast<char*>((export_signal_output_terminal_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxinstr_grpc::ExportSignalRequest::ExportSignalOutputTerminalEnumCase::kExportSignalOutputTerminalRaw: {
+          export_signal_output_terminal = const_cast<char*>(request->export_signal_output_terminal_raw().c_str());
+          break;
+        }
+        case nirfmxinstr_grpc::ExportSignalRequest::ExportSignalOutputTerminalEnumCase::EXPORT_SIGNAL_OUTPUT_TERMINAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for export_signal_output_terminal was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ExportSignal(instrument, export_signal_source, export_signal_output_terminal);
       response->set_status(status);
       return ::grpc::Status::OK;
