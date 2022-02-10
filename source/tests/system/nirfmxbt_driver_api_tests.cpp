@@ -6,12 +6,23 @@
 #include "nirfmxbt/nirfmxbt_client.h"
 #include "nirfmxbt/nirfmxbt_service.h"
 #include "nirfsa/nirfsa_client.h"
+#include "waveform_helpers.h"
 
 namespace pb = google::protobuf;
 using namespace ::testing;
 using namespace nirfmxbt_grpc;
 namespace client = nirfmxbt_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
+
+namespace nidevice_grpc {
+// Needs to be in the nirfmxbt_grpc namespace for googletest to find this
+// because of argument-dependent lookup - see
+// https://stackoverflow.com/questions/33371088/how-to-get-a-custom-operator-to-work-with-google-test
+bool operator==(const NIComplexNumberF32& first, const NIComplexNumber& second)
+{
+  return first.real() == second.real() && first.imaginary() == second.imaginary();
+}
+} // namespace nidevice_grpc
 
 namespace ni {
 namespace tests {
@@ -122,36 +133,11 @@ nirfsa_grpc::InitWithOptionsResponse init_rfsa(const nirfsa_client::StubPtr& stu
   return nirfsa_client::init_with_options(stub, resource_name, false, false, "Simulate=1, DriverSetup=Model:5663E");
 }
 
-template <typename TFloat, typename TComplex>
-TComplex complex(TFloat real, TFloat imaginary)
+nidevice_grpc::NIComplexNumber complex_number(
+    const double real,
+    const double imaginary)
 {
-  auto c = TComplex{};
-  c.set_real(real);
-  c.set_imaginary(imaginary);
-  return c;
-}
-
-template <typename TFloat, typename TComplex>
-std::vector<TComplex> complex_array(
-    const std::vector<TFloat> reals,
-    const std::vector<TFloat> imaginaries)
-{
-  auto c = std::vector<TComplex>{};
-  c.reserve(reals.size());
-  std::transform(
-      reals.begin(),
-      reals.end(),
-      imaginaries.begin(),
-      std::back_inserter(c),
-      [](TFloat real, TFloat imaginary) { return complex<TFloat, TComplex>(real, imaginary); });
-  return c;
-}
-
-std::vector<nidevice_grpc::NIComplexNumber> complex_number_array(
-    const std::vector<double> reals,
-    const std::vector<double> imaginaries)
-{
-  return complex_array<double, nidevice_grpc::NIComplexNumber>(reals, imaginaries);
+  return complex<double, nidevice_grpc::NIComplexNumber>(real, imaginary);
 }
 
 TEST_F(NiRFmxBTDriverApiTests, Init_Close_Succeeds)
@@ -258,14 +244,26 @@ TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
   EXPECT_GT(fetched_powers_response.peak_to_average_power_ratio_maximum(), 0.0);
 }
 
-// TODO -- AB#1835516: Add system-level test using an API function that uses complex data types.
-TEST_F(NiRFmxBTDriverApiTests, SetAttributeComplex_ExpectedError)
+TEST_F(NiRFmxBTDriverApiTests, ModAccMeasurement_FetchConstellationTrace_ComplexNumberLooksReasonable)
 {
   const auto session = init_session(stub(), kPxi5663e);
+  EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
+  EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 2.402000e9, 0.0, 0.0));
+  EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQPowerEdgeTriggerSlope::IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TriggerMinimumQuietTimeMode::TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 100e-6, IQPowerEdgeTriggerLevelType::IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
+  EXPECT_SUCCESS(session, client::cfg_packet_type(stub(), session, "", PacketType::PACKET_TYPE_2_DH1));
+  EXPECT_SUCCESS(session, client::cfg_payload_length(stub(), session, "", PayloadLengthMode::PAYLOAD_LENGTH_MODE_AUTO, 10));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_MODACC, true));
+  EXPECT_SUCCESS(session, client::mod_acc_cfg_burst_synchronization_type(stub(), session, "", ModAccBurstSynchronizationType::MODACC_BURST_SYNCHRONIZATION_TYPE_PREAMBLE));
+  EXPECT_SUCCESS(session, client::mod_acc_cfg_averaging(stub(), session, "", ModAccAveragingEnabled::MODACC_AVERAGING_ENABLED_FALSE, 10));
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  EXPECT_RFMX_ERROR(
-      -380231, "This attribute is read-only and cannot be written", session,
-      client::set_attribute_ni_complex_double_array(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_ACP_RESULTS_REFERENCE_CHANNEL_POWER, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
+  // We expect this action to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
+  const auto constellation_trace_response = client::mod_acc_fetch_constellation_trace(stub(), session, "", 10.0);
+  EXPECT_WARNING(constellation_trace_response, kPreambleSyncPacketStartDetectionFailedWarning);
+
+  // We expect the results to be empty since the measurement did not complete successfully.
+  EXPECT_THAT(constellation_trace_response.constellation(), Each(Eq(complex_number(0.0, 0.0))));
+  EXPECT_GT(constellation_trace_response.actual_array_size(), 0);
 }
 
 // Note: there aren't any i8 attributes in attributes.py, but this at least exercises the code.
