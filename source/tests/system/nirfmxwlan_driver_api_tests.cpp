@@ -1,3 +1,4 @@
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "device_server.h"
@@ -7,6 +8,7 @@
 #include "nirfsa/nirfsa_client.h"
 #include "waveform_helpers.h"
 
+namespace pb = google::protobuf;
 using namespace ::testing;
 using namespace nirfmxwlan_grpc;
 namespace client = nirfmxwlan_grpc::experimental::client;
@@ -32,6 +34,12 @@ template <typename TResponse>
 void EXPECT_WARNING(const TResponse& response, const int expected_warning_id)
 {
   EXPECT_EQ(expected_warning_id, response.status());
+}
+
+template <typename TResponse>
+void EXPECT_RFMX_ERROR(pb::int32 expected_error, const TResponse& response)
+{
+  EXPECT_EQ(expected_error, response.status());
 }
 
 class NiRFmxWLANDriverApiTests : public Test {
@@ -80,6 +88,14 @@ class NiRFmxWLANDriverApiTests : public Test {
     auto response = client::get_attribute_i32(stub(), session, selector_string, attribute_id);
     EXPECT_SUCCESS(session, response);
     return response.attr_val();
+  }
+
+  template <typename TResponse>
+  void EXPECT_RFMX_ERROR(pb::int32 expected_error, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
+  {
+    ni::tests::system::EXPECT_RFMX_ERROR(expected_error, response);
+    const auto error = client::get_error(stub(), session);
+    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));
   }
 
  private:
@@ -146,6 +162,20 @@ nidevice_grpc::Session init_analysis_session(const client::StubPtr& stub)
   auto session = response.instrument();
   EXPECT_SUCCESS(response);
   return session;
+}
+
+std::vector<nidevice_grpc::NIComplexNumberF32> complex_f32_array(
+    std::vector<float> reals,
+    std::vector<float> imaginaries)
+{
+  return complex_array<float, nidevice_grpc::NIComplexNumberF32>(reals, imaginaries);
+}
+
+std::vector<nidevice_grpc::NIComplexNumber> complex_number_array(
+    std::vector<double> reals,
+    std::vector<double> imaginaries)
+{
+  return complex_array<double, nidevice_grpc::NIComplexNumber>(reals, imaginaries);
 }
 
 TEST_F(NiRFmxWLANDriverApiTests, Init_Close_Succeeds)
@@ -1170,6 +1200,48 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
   EXPECT_GT(0.0, fetch_composite_response.composite_rms_evm_mean());
   EXPECT_GT(0.0, fetch_composite_response.composite_data_rms_evm_mean());
   EXPECT_GT(0.0, fetch_composite_response.composite_pilot_rms_evm_mean());
+}
+
+// Note: there aren't any complex attributes
+TEST_F(NiRFmxWLANDriverApiTests, SetAttributeComplex_ExpectedError)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_ni_complex_double_array(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_REFERENCE_LEVEL, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
+}
+
+// Note: there aren't any i8 attributes in attributes.py, but this at least exercises the code.
+TEST_F(NiRFmxWLANDriverApiTests, SetAttributeInt8_ExpectedError)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_i8(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, 1));
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_u8(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, 1));
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_i8_array(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, {1, 0, -1, 0}));
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_u8_array(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, {1, 0, 1, 0}));
+}
+
+// Note: there aren't any i16 attributes in attributes.py, but this at least exercises the code.
+TEST_F(NiRFmxWLANDriverApiTests, SetAttributeInt16_ExpectedError)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_i16(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, -400));
+  EXPECT_RFMX_ERROR(
+      -380251, "Incorrect data type specified", session,
+      client::set_attribute_u16(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, 400));
 }
 
 }  // namespace
