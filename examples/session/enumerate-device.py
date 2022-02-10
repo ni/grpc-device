@@ -24,19 +24,24 @@ import session_pb2_grpc as grpc_session
 server_address = "localhost"
 server_port = "31763"
 
-# Helper to print the devices 
-def print_devices(devices) :
+# Helper to print the devices
+def print_devices(devices):
     if not devices:
         print("No devices are connected.")
         return
-    print("\n-----------------------------------------------------------------------------------------------------\n")
+    print(
+        "\n-----------------------------------------------------------------------------------------------------\n"
+    )
     print("  List of devices connected to the server: \n")
-    print("-----------------------------------------------------------------------------------------------------\n")
-    for device in devices :
+    print(
+        "-----------------------------------------------------------------------------------------------------\n"
+    )
+    for device in devices:
         print(f"    {device.name}")
         print(f"        Model: {device.model}")
         print(f"        Vendor: {device.vendor}")
         print(f"        Serial Number: {device.serial_number} \n")
+
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -48,12 +53,12 @@ if len(sys.argv) >= 3:
 channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_session.SessionUtilitiesStub(channel)
 
-try :
+try:
     # EnumerateDevices API gives a list of devices (simulated and physical) connected to the server machine.
     enumerate_devices_response = client.EnumerateDevices(session_types.EnumerateDevicesRequest())
 
     # Display devices connected to the server machine.
-    print_devices(enumerate_devices_response.devices)     
+    print_devices(enumerate_devices_response.devices)
 
 # If EnumerateDevices API throws an exception, print the error message.
 except grpc.RpcError as rpc_error:
@@ -61,5 +66,7 @@ except grpc.RpcError as rpc_error:
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")

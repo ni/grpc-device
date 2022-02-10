@@ -8,150 +8,141 @@ from common_helpers import get_driver_readiness
 from template_helpers import load_metadata
 
 
-class _ArtifactReadiness():
-  """
-  Helper class to determine whether a Path with a module-named artifact directory
-  is release-ready.
-  """
-  _module_to_readiness = Dict[str, str]
-
-  def __init__(self, metadata_dir: Path, include_prerelease: bool):
-    modules = [
-      load_metadata(p)
-      for p in metadata_dir.iterdir()
-      if p.is_dir() and not "fake" in p.name
-    ]
-
-    self._module_to_readiness = {
-      d["config"]["module_name"]: get_driver_readiness(d["config"])
-      for d in modules
-    }
-
-    self.include_prerelease = include_prerelease
-
-  def is_release_ready(self, module_path: Path) -> bool:
+class _ArtifactReadiness:
     """
-    Determine release-readiness by checking the name of the module_path directory
-    against code_readiness for the module_name in config.py.
+    Helper class to determine whether a Path with a module-named artifact directory
+    is release-ready.
     """
-    module_name = module_path.name
-    if "fake" in module_name:
-      return False
 
-    if "session" == module_name:
-      return True
+    _module_to_readiness = Dict[str, str]
 
-    if not module_name in self._module_to_readiness:
-      raise KeyError(f"No module config.py metadata for module_name: {module_path}")
+    def __init__(self, metadata_dir: Path, include_prerelease: bool):
+        modules = [
+            load_metadata(p) for p in metadata_dir.iterdir() if p.is_dir() and not "fake" in p.name
+        ]
 
-    return self._module_to_readiness[module_name] == "Release"
+        self._module_to_readiness = {
+            d["config"]["module_name"]: get_driver_readiness(d["config"]) for d in modules
+        }
+
+        self.include_prerelease = include_prerelease
+
+    def is_release_ready(self, module_path: Path) -> bool:
+        """
+        Determine release-readiness by checking the name of the module_path directory
+        against code_readiness for the module_name in config.py.
+        """
+        module_name = module_path.name
+        if "fake" in module_name:
+            return False
+
+        if "session" == module_name:
+            return True
+
+        if not module_name in self._module_to_readiness:
+            raise KeyError(f"No module config.py metadata for module_name: {module_path}")
+
+        return self._module_to_readiness[module_name] == "Release"
+
+    def get_release_ready_subdirs(self, directory: Path) -> Iterable[Path]:
+        """
+        Return all subdirectories of directory for which is_release_ready is True.
+        """
+        return (
+            d
+            for d in directory.iterdir()
+            if d.is_dir() and (self.is_release_ready(d) or self.include_prerelease)
+        )
 
 
-  def get_release_ready_subdirs(self, directory: Path) -> Iterable[Path]:
-    """
-    Return all subdirectories of directory for which is_release_ready is True.
-    """
-    return (
-      d 
-      for d in directory.iterdir()
-      if d.is_dir() and (self.is_release_ready(d) or self.include_prerelease)
-    )
-  
+class ArtifactLocations:
+    repo_root: Path
 
-class ArtifactLocations():
-  repo_root: Path
+    def __init__(self, repo_root: Path):
+        self.repo_root = repo_root
 
-  def __init__(self, repo_root: Path):
-    self.repo_root = repo_root
+    @property
+    def examples(self) -> Path:
+        return self.repo_root / "examples"
 
-  @property
-  def examples(self) -> Path:
-    return self.repo_root / "examples"
-  
-  @property
-  def generated_files(self) -> Path:
-    return self.repo_root / "generated"
+    @property
+    def generated_files(self) -> Path:
+        return self.repo_root / "generated"
 
-  @property
-  def shared_protos(self) -> Path:
-    return self.repo_root / "source" / "protobuf"
+    @property
+    def shared_protos(self) -> Path:
+        return self.repo_root / "source" / "protobuf"
 
-  @property
-  def metadata_dir(self) -> Path:
-    return self.repo_root / "source" / "codegen" / "metadata"
+    @property
+    def metadata_dir(self) -> Path:
+        return self.repo_root / "source" / "codegen" / "metadata"
 
 
 def _get_release_proto_files(
-  artifact_locations: ArtifactLocations,
-  readiness: _ArtifactReadiness
+    artifact_locations: ArtifactLocations, readiness: _ArtifactReadiness
 ) -> List[Path]:
 
-  release_driver_dirs = readiness.get_release_ready_subdirs(artifact_locations.generated_files)
-  return [
-    proto
-    for d in release_driver_dirs
-    for proto in d.glob("*.proto")
-  ]
+    release_driver_dirs = readiness.get_release_ready_subdirs(artifact_locations.generated_files)
+    return [proto for d in release_driver_dirs for proto in d.glob("*.proto")]
 
 
 def _get_release_example_directories(
-  artifact_locations: ArtifactLocations,
-  readiness: _ArtifactReadiness
+    artifact_locations: ArtifactLocations, readiness: _ArtifactReadiness
 ) -> List[Path]:
 
-  return readiness.get_release_ready_subdirs(artifact_locations.examples)
+    return readiness.get_release_ready_subdirs(artifact_locations.examples)
 
 
 def stage_client_files(output_path: Path, include_prerelease: bool):
-  repo_root = Path(__file__).parent.parent.parent
-  artifact_locations = ArtifactLocations(repo_root)
-  readiness = _ArtifactReadiness(artifact_locations.metadata_dir, include_prerelease)
+    repo_root = Path(__file__).parent.parent.parent
+    artifact_locations = ArtifactLocations(repo_root)
+    readiness = _ArtifactReadiness(artifact_locations.metadata_dir, include_prerelease)
 
-  proto_path = output_path / "proto"
-  proto_path.mkdir(parents=True)
+    proto_path = output_path / "proto"
+    proto_path.mkdir(parents=True)
 
-  for file in artifact_locations.shared_protos.iterdir():
-    copy2(file, proto_path)
+    for file in artifact_locations.shared_protos.iterdir():
+        copy2(file, proto_path)
 
-  for file in _get_release_proto_files(artifact_locations, readiness):
-    copy2(file, proto_path)
+    for file in _get_release_proto_files(artifact_locations, readiness):
+        copy2(file, proto_path)
 
-  examples_path = output_path / "examples"
-  examples_path.mkdir(parents=True)
+    examples_path = output_path / "examples"
+    examples_path.mkdir(parents=True)
 
-  for dir in _get_release_example_directories(artifact_locations, readiness):
-    copytree(dir, examples_path / dir.name)
+    for dir in _get_release_example_directories(artifact_locations, readiness):
+        copytree(dir, examples_path / dir.name)
 
-  copy2(artifact_locations.repo_root / "LICENSE", output_path)
-  copy2(artifact_locations.repo_root / "ThirdPartyNotices.txt", output_path)
+    copy2(artifact_locations.repo_root / "LICENSE", output_path)
+    copy2(artifact_locations.repo_root / "ThirdPartyNotices.txt", output_path)
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(
-        description="Stage client files for NI driver API gRPC services.")
+    parser = ArgumentParser(description="Stage client files for NI driver API gRPC services.")
     parser.add_argument(
-        "--output", 
-        "-o", 
-        help="The path to the top-level directory to stage the client files. Must be empty or non-existent.")
+        "--output",
+        "-o",
+        help="The path to the top-level directory to stage the client files. Must be empty or non-existent.",
+    )
 
     parser.add_argument(
-        "--include-prerelease", 
-        action="store_true",
-        help="Include pre-release artifacts.")
-
+        "--include-prerelease", action="store_true", help="Include pre-release artifacts."
+    )
 
     args = parser.parse_args()
 
     if args.output:
-      stage_client_files(Path(args.output), args.include_prerelease)
+        stage_client_files(Path(args.output), args.include_prerelease)
     else:
-      print("""
+        print(
+            """
 ***No --output directory specified.***
 Performing Dry Run.
-        """)
-      with TemporaryDirectory() as tempdir:
-        tempdirpath = Path(tempdir)
-        stage_client_files(tempdirpath, args.include_prerelease)
-        created_files = (f for f in tempdirpath.glob("**/*") if not f.is_dir())
-        for out_file in created_files:
-          print(out_file.relative_to(tempdirpath))
+        """
+        )
+        with TemporaryDirectory() as tempdir:
+            tempdirpath = Path(tempdir)
+            stage_client_files(tempdirpath, args.include_prerelease)
+            created_files = (f for f in tempdirpath.glob("**/*") if not f.is_dir())
+            for out_file in created_files:
+                print(out_file.relative_to(tempdirpath))

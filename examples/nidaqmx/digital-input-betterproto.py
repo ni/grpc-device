@@ -58,9 +58,7 @@ async def main():
     # Raise an exception if an error was returned
     async def raise_if_error(response):
         if response.status != 0:
-            response = await daq_service.get_error_string(
-                error_code=response.status
-            )
+            response = await daq_service.get_error_string(error_code=response.status)
             raise Exception(f"Error: {response.error_string}")
 
     try:

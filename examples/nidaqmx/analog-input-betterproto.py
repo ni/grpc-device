@@ -24,7 +24,7 @@
 # being used.
 #
 # To run this example without hardware: create a simulated device in NI MAX on the server (Windows only).
-# 
+#
 # Running from command line:
 #
 # Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
@@ -58,9 +58,7 @@ async def main():
     # Raise an exception if an error was returned
     async def raise_if_error(response):
         if response.status != 0:
-            response = await daq_service.get_error_string(
-                error_code=response.status
-            )
+            response = await daq_service.get_error_string(error_code=response.status)
             raise Exception(f"Error: {response.error_string}")
 
     try:
@@ -90,10 +88,10 @@ async def main():
         )
 
         await raise_if_error(await daq_service.start_task(task=task))
-        
+
         response = await daq_service.get_task_attribute_u_int32(
-            task=task,
-            attribute_raw=nidaqmx_grpc.TaskUInt32Attribute.TASK_ATTRIBUTE_NUM_CHANS)
+            task=task, attribute_raw=nidaqmx_grpc.TaskUInt32Attribute.TASK_ATTRIBUTE_NUM_CHANS
+        )
         await raise_if_error(response)
         number_of_channels = response.value
 
@@ -108,7 +106,8 @@ async def main():
 
         print(
             f"Acquired {len(response.read_array)} samples.",
-            f"({response.samps_per_chan_read} samples per channel)")
+            f"({response.samps_per_chan_read} samples per channel)",
+        )
         print(f"First 5 samples: {response.read_array[:5]}")
     except GRPCError as e:
         if e.status.name == "UNIMPLEMENTED":

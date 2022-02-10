@@ -120,7 +120,7 @@ try:
 
     accumulator = 0.0
     for sample in read_response.data:
-        magnitude_squared = sample.real ** 2 + sample.imaginary ** 2
+        magnitude_squared = sample.real**2 + sample.imaginary**2
         # We need to handle this because log(0) returns a range error.
         magnitude_squared = magnitude_squared or 1e-8
         accumulator += 10.0 * math.log10((magnitude_squared / (2.0 * 50.0)) * 1000.0)

@@ -53,30 +53,30 @@ vi = None
 # Raise an exception if an error was returned
 def raise_if_error(response):
     if response.status != 0:
-        response = client.ErrorMessage(
-            nirfsg_types.ErrorMessageRequest(error_code=response.status))
+        response = client.ErrorMessage(nirfsg_types.ErrorMessageRequest(error_code=response.status))
         raise Exception(f"Error: {response.error_string}")
 
 
 try:
     response = client.InitWithOptions(
         nirfsg_types.InitWithOptionsRequest(
-            session_name=session_name, resource_name=resource, option_string=options)
+            session_name=session_name, resource_name=resource, option_string=options
+        )
     )
     raise_if_error(response)
     vi = response.vi
-    raise_if_error(client.ConfigureRF(
-        nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5)
-    ))
+    raise_if_error(
+        client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5))
+    )
     raise_if_error(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
     print("Generating tone...")
     # Wait for two seconds and change frequency
     time.sleep(2)
     print("Changing frequency")
     raise_if_error(client.Abort(nirfsg_types.AbortRequest(vi=vi)))
-    raise_if_error(client.ConfigureRF(
-        nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1.5e9, power_level=-5)
-    ))
+    raise_if_error(
+        client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1.5e9, power_level=-5))
+    )
     raise_if_error(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
     print("Generating tone...")
     time.sleep(2)
@@ -85,10 +85,13 @@ except grpc.RpcError as rpc_error:
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 finally:
     if vi:
         client.ConfigureOutputEnabled(
-            nirfsg_types.ConfigureOutputEnabledRequest(output_enabled=False))
+            nirfsg_types.ConfigureOutputEnabledRequest(output_enabled=False)
+        )
         client.Close(nirfsg_types.CloseRequest(vi=vi))

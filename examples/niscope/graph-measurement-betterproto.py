@@ -58,23 +58,29 @@ if len(sys.argv) == 4:
     resource = sys.argv[3]
     options = ""
 
-#set to false to disable graph and increase speed
-show_plot = True 
+# set to false to disable graph and increase speed
+show_plot = True
 
 # Handle closing of plot window.
 closed = False
+
+
 def on_close(event):
     global closed
     closed = True
 
+
 # Error Reporting
 async def CheckStatus(scope_service, vi, result):
-    if (result.status != 0):
-        error_result = await scope_service.get_error_message(vi = vi, error_code = result.status)
-        raise Exception (error_result.error_message)
+    if result.status != 0:
+        error_result = await scope_service.get_error_message(vi=vi, error_code=result.status)
+        raise Exception(error_result.error_message)
+
 
 # Entry Points
 channel = ()
+
+
 async def OpenGrpcScope(resource_name: str, server_address: str, server_port):
     global channel
     channel = Channel(host=server_address, port=server_port)
@@ -82,11 +88,11 @@ async def OpenGrpcScope(resource_name: str, server_address: str, server_port):
 
     # Initialize the scope
     init_result = await scope_service.init_with_options(
-        session_name = "demoSession",
-        resource_name = resource,
-        id_query = False,
+        session_name="demoSession",
+        resource_name=resource,
+        id_query=False,
         reset_device=False,
-        option_string = options
+        option_string=options,
     )
     vi = init_result.vi
     await CheckStatus(scope_service, vi, init_result)
@@ -104,94 +110,100 @@ async def ConfigureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, v
     # Configure horizontal timing
     config_horizontal_result = await scope_service.configure_horizontal_timing(
         vi=vi,
-        min_sample_rate = 1000000,
-        min_num_pts = 1000,
-        ref_position = 50,
-        num_records = 1,
-        enforce_realtime = True
+        min_sample_rate=1000000,
+        min_num_pts=1000,
+        ref_position=50,
+        num_records=1,
+        enforce_realtime=True,
     )
     await CheckStatus(scope_service, vi, config_horizontal_result)
 
     # Configure Vertical
     config_vertical_result = await scope_service.configure_vertical(
-        vi = vi,
-        channel_list = channels,
-        range = 10.0,
-        offset = 0,
-        coupling_raw = niscope_grpc.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
-        enabled = True,
-        probe_attenuation = 1
+        vi=vi,
+        channel_list=channels,
+        range=10.0,
+        offset=0,
+        coupling_raw=niscope_grpc.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
+        enabled=True,
+        probe_attenuation=1,
     )
     await CheckStatus(scope_service, vi, config_vertical_result)
 
     # Setup and Edge Trigger
     set_trigger_result = await scope_service.set_attribute_vi_int32(
-        vi = vi,
-        attribute_id = niscope_grpc.NiScopeAttribute.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
-        value_raw = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_TRIGGER_TYPE_VAL_EDGE_TRIGGER
+        vi=vi,
+        attribute_id=niscope_grpc.NiScopeAttribute.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
+        value_raw=niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_TRIGGER_TYPE_VAL_EDGE_TRIGGER,
     )
     await CheckStatus(scope_service, vi, set_trigger_result)
 
     configure_trigger_result = await scope_service.configure_trigger_edge(
-        vi = vi,
-        trigger_source = channels,
-        level = 0.00,
-        slope_raw = niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
-        trigger_coupling_raw = niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        holdoff = 0.0,
+        vi=vi,
+        trigger_source=channels,
+        level=0.00,
+        slope_raw=niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
+        trigger_coupling_raw=niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+        holdoff=0.0,
     )
     await CheckStatus(scope_service, vi, configure_trigger_result)
 
     set_units_result = await scope_service.set_attribute_vi_int32(
-        vi = vi,
-        channel_list = channels,
-        attribute_id = niscope_grpc.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-        value_raw = niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
+        vi=vi,
+        channel_list=channels,
+        attribute_id=niscope_grpc.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+        value_raw=niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE,
     )
     await CheckStatus(scope_service, vi, set_units_result)
 
+
 async def MeasureGrpcScope(scope_service: niscope_grpc.NiScopeStub, channel, vi):
     if show_plot:
-        fig = plt.gcf() # Setup a plot to draw the captured waveform
+        fig = plt.gcf()  # Setup a plot to draw the captured waveform
         fig.show()
         fig.canvas.draw()
-        fig.canvas.mpl_connect('close_event', on_close)
+        fig.canvas.mpl_connect("close_event", on_close)
 
     print("\nReading values in loop. CTRL+C to stop.\n")
     try:
         while not closed:
             if show_plot:
-                plt.clf()                    # clear from last iteration
-                plt.axis([0, 100, -6, 6])    # setup axis again
+                plt.clf()  # clear from last iteration
+                plt.axis([0, 100, -6, 6])  # setup axis again
 
             # Read a waveform from the scope
-            read_result = await scope_service.read(vi = vi, channel_list = "0", timeout = 1, num_samples = 10000)
+            read_result = await scope_service.read(
+                vi=vi, channel_list="0", timeout=1, num_samples=10000
+            )
             await CheckStatus(scope_service, vi, read_result)
             values = read_result.waveform[0:10]
             print(values)
 
             # Update the plot with the new waveform
-            if show_plot:    
+            if show_plot:
                 plt.plot(read_result.waveform[0:100])
                 fig.canvas.draw()
                 plt.pause(0.001)
 
             # Fetch the measured average frequency
             fetch_result = await scope_service.fetch_measurement_stats(
-                vi = vi,
-                channel_list = channels,
-                timeout = 1,
-                scalar_meas_function_raw = niscope_grpc.ScalarMeasurement.SCALAR_MEASUREMENT_NISCOPE_VAL_AVERAGE_FREQUENCY
+                vi=vi,
+                channel_list=channels,
+                timeout=1,
+                scalar_meas_function_raw=niscope_grpc.ScalarMeasurement.SCALAR_MEASUREMENT_NISCOPE_VAL_AVERAGE_FREQUENCY,
             )
             await CheckStatus(scope_service, vi, fetch_result)
             print("Average Frequency: " + str("%.2f" % round(fetch_result.result[0], 2)) + " Hz")
             print("")
             time.sleep(0.1)
-            
+
     except KeyboardInterrupt:
         pass
 
+
 grpc_scope = ()
+
+
 async def main():
     try:
         global grpc_scope
@@ -209,6 +221,7 @@ async def main():
         if grpc_scope:
             await CloseGrpcScope(*grpc_scope)
         channel.close()
+
 
 ## Run the main
 loop = asyncio.get_event_loop()

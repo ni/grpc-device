@@ -55,60 +55,73 @@ niswitch_client = grpc_niswitch.NiSwitchStub(channel)
 anyError = False
 
 # Checks for errors. If any, throws an exception to stop the execution.
-def CheckForError (vi, status) :
+def CheckForError(vi, status):
     global anyError
-    if(status != 0 and not anyError):
+    if status != 0 and not anyError:
         anyError = True
-        ThrowOnError (vi, status)
+        ThrowOnError(vi, status)
+
 
 # Converts an error code returned by NI-SWITCH into a user-readable string
-def ThrowOnError (vi, errorCode):
-    error_message_request = niswitch_types.ErrorMessageRequest(
-        vi=vi,
-        error_code = errorCode
-        )
+def ThrowOnError(vi, errorCode):
+    error_message_request = niswitch_types.ErrorMessageRequest(vi=vi, error_code=errorCode)
     error_message_response = niswitch_client.ErrorMessage(error_message_request)
-    raise Exception (error_message_response.error_message)
-try :
+    raise Exception(error_message_response.error_message)
+
+
+try:
     # Open session to NI-SWITCH and set topology.
-    init_with_topology_response = niswitch_client.InitWithTopology(niswitch_types.InitWithTopologyRequest(
-        session_name=session_name,
-        resource_name=resource,
-        topology = topology_string,
-        simulate=simulation,
-        reset_device=False
-        ))
+    init_with_topology_response = niswitch_client.InitWithTopology(
+        niswitch_types.InitWithTopologyRequest(
+            session_name=session_name,
+            resource_name=resource,
+            topology=topology_string,
+            simulate=simulation,
+            reset_device=False,
+        )
+    )
     vi = init_with_topology_response.vi
-    CheckForError(vi,init_with_topology_response.status)
-    print("Topology set to : ",topology_string)
+    CheckForError(vi, init_with_topology_response.status)
+    print("Topology set to : ", topology_string)
 
     # Close the relay. Use values that are valid for the model being used.
-    CheckForError(vi, (niswitch_client.RelayControl(niswitch_types.RelayControlRequest(
-        vi=vi,
-        relay_name = relay_name,
-        relay_action = niswitch_types.RelayAction.RELAY_ACTION_NISWITCH_VAL_CLOSE_RELAY
-        ))).status)   
+    CheckForError(
+        vi,
+        (
+            niswitch_client.RelayControl(
+                niswitch_types.RelayControlRequest(
+                    vi=vi,
+                    relay_name=relay_name,
+                    relay_action=niswitch_types.RelayAction.RELAY_ACTION_NISWITCH_VAL_CLOSE_RELAY,
+                )
+            )
+        ).status,
+    )
     print("Relay closed.")
 
-    #Wait for debounce
-    CheckForError(vi, (niswitch_client.WaitForDebounce(niswitch_types.WaitForDebounceRequest(
-        vi=vi,
-        maximum_time_ms = max_time
-        ))).status)
+    # Wait for debounce
+    CheckForError(
+        vi,
+        (
+            niswitch_client.WaitForDebounce(
+                niswitch_types.WaitForDebounceRequest(vi=vi, maximum_time_ms=max_time)
+            )
+        ).status,
+    )
     print("Wait for debounce to complete.")
 
-# If NI-SWITCH API throws an exception, print the error message  
+# If NI-SWITCH API throws an exception, print the error message
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 
 finally:
-    if('vi' in vars() and vi.id != 0):
+    if "vi" in vars() and vi.id != 0:
         # close the session.
-        CheckForError(vi, (niswitch_client.Close(niswitch_types.CloseRequest(
-            vi = vi
-        ))).status)
+        CheckForError(vi, (niswitch_client.Close(niswitch_types.CloseRequest(vi=vi))).status)
