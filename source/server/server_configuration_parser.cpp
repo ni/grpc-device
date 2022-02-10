@@ -181,6 +181,7 @@ FeatureToggles::CodeReadiness ServerConfigurationParser::parse_code_readiness() 
       const auto READINESS_MAP = ReadinessMap{
           {"release", FeatureToggles::CodeReadiness::kRelease},
           {"nextrelease", FeatureToggles::CodeReadiness::kNextRelease},
+          {"next_release", FeatureToggles::CodeReadiness::kNextRelease},
           {"incomplete", FeatureToggles::CodeReadiness::kIncomplete},
           {"prototype", FeatureToggles::CodeReadiness::kPrototype}};
 

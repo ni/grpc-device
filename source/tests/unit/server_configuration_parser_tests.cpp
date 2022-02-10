@@ -546,6 +546,7 @@ INSTANTIATE_TEST_SUITE_P(
         {R"({"code_readiness": "release"})", Readiness::kRelease},
         {R"({})", Readiness::kRelease},
         {R"({"code_readiness": "NEXTRELEASE"})", Readiness::kNextRelease},
+        {R"({"code_readiness": "next_release"})", Readiness::kNextRelease},
         {R"({"code_readiness": "NextRelease"})", Readiness::kNextRelease},
         {R"({"code_readiness": "Prototype"})", Readiness::kPrototype},
         {R"({"code_readiness": "prototype"})", Readiness::kPrototype},
@@ -582,7 +583,7 @@ INSTANTIATE_TEST_SUITE_P(
     ::testing::ValuesIn(std::vector<std::string>{
         R"({"code_readiness": 10})",
         R"({"code_readiness": "notAReadiness"})",
-        R"({"code_readiness": "next_release"})",
+        R"({"code_readiness": "next-release"})",
         R"({"code_readiness": {}})"}));
 
 TEST_P(ServerConfigurationParserInvalidCodeReadinessTests, InvalidCodeReadinessConfiguration_ParseCodeReadiness_ThrowsInvalidCodeReadinessException)
