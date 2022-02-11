@@ -6,7 +6,7 @@ config = {
     'service_class_prefix': 'NiRFmxBT',
     'java_package': 'com.ni.grpc.nirfmxbt',
     'csharp_namespace': 'NationalInstruments.Grpc.NiRFmxBT',
-    'namespace_component': 'nirfmxbt',
+    'namespace_component': 'nirfmxbluetooth',
     'close_function': 'Close',
     'custom_types': [],
     'additional_headers': {},
@@ -55,7 +55,7 @@ config = {
         }
     },
     'metadata_version': '0.1',
-    'module_name': 'nirfmxbt',
+    'module_name': 'nirfmxbluetooth',
     'session_class_description': 'An NI-RFmxBT instrument handle',
     'session_handle_parameter_name': 'instrumentHandle',
     'windows_only': True,

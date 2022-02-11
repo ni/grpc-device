@@ -3,19 +3,19 @@
 
 #include "device_server.h"
 #include "niRFmxBT.h"
-#include "nirfmxbt/nirfmxbt_client.h"
-#include "nirfmxbt/nirfmxbt_service.h"
+#include "nirfmxbluetooth/nirfmxbluetooth_client.h"
+#include "nirfmxbluetooth/nirfmxbluetooth_service.h"
 #include "nirfsa/nirfsa_client.h"
 #include "waveform_helpers.h"
 
 namespace pb = google::protobuf;
 using namespace ::testing;
-using namespace nirfmxbt_grpc;
-namespace client = nirfmxbt_grpc::experimental::client;
+using namespace nirfmxbluetooth_grpc;
+namespace client = nirfmxbluetooth_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
 
 namespace nidevice_grpc {
-// Needs to be in the nirfmxbt_grpc namespace for googletest to find this
+// Needs to be in the nirfmxbluetooth_grpc namespace for googletest to find this
 // because of argument-dependent lookup - see
 // https://stackoverflow.com/questions/33371088/how-to-get-a-custom-operator-to-work-with-google-test
 bool operator==(const NIComplexNumberF32& first, const NIComplexNumber& second)
@@ -50,16 +50,16 @@ void EXPECT_WARNING(const TResponse& response, const int expected_warning_id)
   EXPECT_EQ(expected_warning_id, response.status());
 }
 
-class NiRFmxBTDriverApiTests : public Test {
+class NiRFmxBluetoothDriverApiTests : public Test {
  protected:
-  NiRFmxBTDriverApiTests()
+  NiRFmxBluetoothDriverApiTests()
       : device_server_(DeviceServerInterface::Singleton()),
         stub_(NiRFmxBT::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
 
-  virtual ~NiRFmxBTDriverApiTests() {}
+  virtual ~NiRFmxBluetoothDriverApiTests() {}
 
   void TearDown() override
   {
@@ -140,7 +140,7 @@ nidevice_grpc::NIComplexNumber complex_number(
   return complex<double, nidevice_grpc::NIComplexNumber>(real, imaginary);
 }
 
-TEST_F(NiRFmxBTDriverApiTests, Init_Close_Succeeds)
+TEST_F(NiRFmxBluetoothDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), kPxi5663e);
   auto session = init_response.instrument();
@@ -151,7 +151,7 @@ TEST_F(NiRFmxBTDriverApiTests, Init_Close_Succeeds)
   ni::tests::system::EXPECT_SUCCESS(close_response);
 }
 
-TEST_F(NiRFmxBTDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
+TEST_F(NiRFmxBluetoothDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
@@ -165,7 +165,7 @@ TEST_F(NiRFmxBTDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
   ni::tests::system::EXPECT_SUCCESS(close_response);
 }
 
-TEST_F(NiRFmxBTDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
+TEST_F(NiRFmxBluetoothDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
 {
   auto session = init_session(stub(), kPxi5663e);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
@@ -213,7 +213,7 @@ TEST_F(NiRFmxBTDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
   EXPECT_GT(fetched_spectrum.actual_array_size(), 0);
 }
 
-TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
+TEST_F(NiRFmxBluetoothDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
 {
   auto session = init_session(stub(), kPxi5663e);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
@@ -244,7 +244,7 @@ TEST_F(NiRFmxBTDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
   EXPECT_GT(fetched_powers_response.peak_to_average_power_ratio_maximum(), 0.0);
 }
 
-TEST_F(NiRFmxBTDriverApiTests, ModAccMeasurement_FetchConstellationTrace_ComplexNumberLooksReasonable)
+TEST_F(NiRFmxBluetoothDriverApiTests, ModAccMeasurement_FetchConstellationTrace_ComplexNumberLooksReasonable)
 {
   const auto session = init_session(stub(), kPxi5663e);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
@@ -267,7 +267,7 @@ TEST_F(NiRFmxBTDriverApiTests, ModAccMeasurement_FetchConstellationTrace_Complex
 }
 
 // Note: there aren't any i8 attributes in attributes.py, but this at least exercises the code.
-TEST_F(NiRFmxBTDriverApiTests, SetAttributeInt8_ExpectedError)
+TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt8_ExpectedError)
 {
   const auto session = init_session(stub(), kPxi5663e);
 
@@ -286,7 +286,7 @@ TEST_F(NiRFmxBTDriverApiTests, SetAttributeInt8_ExpectedError)
 }
 
 // Note: there aren't any i16 attributes in attributes.py, but this at least exercises the code.
-TEST_F(NiRFmxBTDriverApiTests, SetAttributeInt16_ExpectedError)
+TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt16_ExpectedError)
 {
   const auto session = init_session(stub(), kPxi5663e);
 
@@ -298,7 +298,7 @@ TEST_F(NiRFmxBTDriverApiTests, SetAttributeInt16_ExpectedError)
       client::set_attribute_u16(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, 400));
 }
 
-TEST_F(NiRFmxBTDriverApiTests, SetAndGetAttributeInt32_Succeeds)
+TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 {
   auto session = init_session(stub(), kPxi5663e);
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TXP, true));

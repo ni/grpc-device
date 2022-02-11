@@ -17,7 +17,7 @@
 #include "nidmm/nidmm_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
 #if defined(_MSC_VER)
-#include "nirfmxbt/nirfmxbt_service_registrar.h"
+#include "nirfmxbluetooth/nirfmxbluetooth_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
 #include "nirfmxinstr/nirfmxinstr_service_registrar.h"
@@ -88,7 +88,7 @@ std::shared_ptr<void> register_all_services(
       feature_toggles));
 #if defined(_MSC_VER)
   service_vector->push_back(
-    nirfmxbt_grpc::register_service(
+    nirfmxbluetooth_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
       vi_session_repository,

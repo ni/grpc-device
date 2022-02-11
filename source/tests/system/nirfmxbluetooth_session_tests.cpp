@@ -1,14 +1,14 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nirfmxbt/nirfmxbt_service.h"
+#include "nirfmxbluetooth/nirfmxbluetooth_service.h"
 
 namespace ni {
 namespace tests {
 namespace system {
 namespace {
 
-namespace rfmxbt = nirfmxbt_grpc;
+namespace rfmxbluetooth = nirfmxbluetooth_grpc;
 
 const int kInvalidRsrc = -200220;
 const int kInvalidRFmxBTSession = -380598;
@@ -18,26 +18,26 @@ const char* kRFmxBTTestSessionOne = "SessionOneName";
 const char* kRFmxBTTestSessionTwo = "SessionTwoName";
 const char* kRFmxBTTestInvalidRsrc = "";
 
-class NiRFmxBTSessionTest : public ::testing::Test {
+class NiRFmxBluetoothSessionTest : public ::testing::Test {
  protected:
-  NiRFmxBTSessionTest()
+  NiRFmxBluetoothSessionTest()
       : device_server_(DeviceServerInterface::Singleton()),
-        nirfmxbt_stub_(rfmxbt::NiRFmxBT::NewStub(device_server_->InProcessChannel()))
+        nirfmxbluetooth_stub_(rfmxbluetooth::NiRFmxBT::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
 
-  virtual ~NiRFmxBTSessionTest() {}
+  virtual ~NiRFmxBluetoothSessionTest() {}
 
-  std::unique_ptr<rfmxbt::NiRFmxBT::Stub>& GetStub()
+  std::unique_ptr<rfmxbluetooth::NiRFmxBT::Stub>& GetStub()
   {
-    return nirfmxbt_stub_;
+    return nirfmxbluetooth_stub_;
   }
 
-  ::grpc::Status call_initialize(const char* resource_name, const char* option_string, const char* session_name, rfmxbt::InitializeResponse* response)
+  ::grpc::Status call_initialize(const char* resource_name, const char* option_string, const char* session_name, rfmxbluetooth::InitializeResponse* response)
   {
     ::grpc::ClientContext context;
-    rfmxbt::InitializeRequest request;
+    rfmxbluetooth::InitializeRequest request;
     request.set_resource_name(resource_name);
     request.set_option_string(option_string);
     request.set_session_name(session_name);
@@ -46,10 +46,10 @@ class NiRFmxBTSessionTest : public ::testing::Test {
     return status;
   }
 
-  ::grpc::Status call_close(nidevice_grpc::Session session, bool force_destroy, rfmxbt::CloseResponse* response)
+  ::grpc::Status call_close(nidevice_grpc::Session session, bool force_destroy, rfmxbluetooth::CloseResponse* response)
   {
     ::grpc::ClientContext context;
-    rfmxbt::CloseRequest request;
+    rfmxbluetooth::CloseRequest request;
     request.mutable_instrument()->set_id(session.id());
     request.set_force_destroy(force_destroy);
 
@@ -59,12 +59,12 @@ class NiRFmxBTSessionTest : public ::testing::Test {
 
  private:
   DeviceServerInterface* device_server_;
-  std::unique_ptr<rfmxbt::NiRFmxBT::Stub> nirfmxbt_stub_;
+  std::unique_ptr<rfmxbluetooth::NiRFmxBT::Stub> nirfmxbluetooth_stub_;
 };
 
-TEST_F(NiRFmxBTSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
+TEST_F(NiRFmxBluetoothSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
 {
-  rfmxbt::InitializeResponse response;
+  rfmxbluetooth::InitializeResponse response;
   ::grpc::Status status = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &response);
 
   EXPECT_TRUE(status.ok());
@@ -72,9 +72,9 @@ TEST_F(NiRFmxBTSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDri
   EXPECT_NE(0, response.instrument().id());
 }
 
-TEST_F(NiRFmxBTSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
+TEST_F(NiRFmxBluetoothSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
 {
-  rfmxbt::InitializeResponse response;
+  rfmxbluetooth::InitializeResponse response;
   ::grpc::Status status = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, "", &response);
 
   EXPECT_TRUE(status.ok());
@@ -82,9 +82,9 @@ TEST_F(NiRFmxBTSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesD
   EXPECT_NE(0, response.instrument().id());
 }
 
-TEST_F(NiRFmxBTSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
+TEST_F(NiRFmxBluetoothSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 {
-  rfmxbt::InitializeResponse response;
+  rfmxbluetooth::InitializeResponse response;
   ::grpc::Status status = call_initialize(kRFmxBTTestInvalidRsrc, "", "", &response);
 
   EXPECT_TRUE(status.ok());
@@ -92,26 +92,26 @@ TEST_F(NiRFmxBTSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   EXPECT_EQ(0, response.instrument().id());
 }
 
-TEST_F(NiRFmxBTSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
+TEST_F(NiRFmxBluetoothSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
-  rfmxbt::InitializeResponse init_response;
+  rfmxbluetooth::InitializeResponse init_response;
   call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &init_response);
 
   nidevice_grpc::Session session = init_response.instrument();
   ::grpc::ClientContext context;
-  rfmxbt::CloseRequest close_request;
+  rfmxbluetooth::CloseRequest close_request;
   close_request.mutable_instrument()->set_id(session.id());
   close_request.set_force_destroy(false);
-  rfmxbt::CloseResponse close_response;
+  rfmxbluetooth::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, close_response.status());
 }
 
-TEST_F(NiRFmxBTSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_ClosesDriverSessions)
+TEST_F(NiRFmxBluetoothSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_ClosesDriverSessions)
 {
-  rfmxbt::InitializeResponse init_response_one, init_response_two;
+  rfmxbluetooth::InitializeResponse init_response_one, init_response_two;
   ::grpc::Status status_one = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &init_response_one);
   ::grpc::Status status_two = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionTwo, &init_response_two);
   EXPECT_TRUE(status_one.ok());
@@ -122,7 +122,7 @@ TEST_F(NiRFmxBTSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_Clo
 
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
-  rfmxbt::CloseResponse close_response_one, close_response_two;
+  rfmxbluetooth::CloseResponse close_response_one, close_response_two;
   status_one = call_close(session_one, false, &close_response_one);
   status_two = call_close(session_two, false, &close_response_two);
 
@@ -132,9 +132,9 @@ TEST_F(NiRFmxBTSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_Clo
   EXPECT_EQ(0, close_response_two.status());
 }
 
-TEST_F(NiRFmxBTSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_CloseSessionTwice_SecondCloseReturnsInvalidSessionError)
+TEST_F(NiRFmxBluetoothSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_CloseSessionTwice_SecondCloseReturnsInvalidSessionError)
 {
-  rfmxbt::InitializeResponse init_response_one, init_response_two;
+  rfmxbluetooth::InitializeResponse init_response_one, init_response_two;
   ::grpc::Status status_one = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &init_response_one);
   ::grpc::Status status_two = call_initialize(kRFmxBTTestRsrc, kRFmxBTOptionsString, kRFmxBTTestSessionOne, &init_response_two);
   EXPECT_TRUE(status_one.ok());
@@ -145,7 +145,7 @@ TEST_F(NiRFmxBTSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_C
 
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
-  rfmxbt::CloseResponse close_response_one, close_response_two;
+  rfmxbluetooth::CloseResponse close_response_one, close_response_two;
   status_one = call_close(session_one, false, &close_response_one);
   status_two = call_close(session_two, false, &close_response_two);
 
@@ -157,16 +157,16 @@ TEST_F(NiRFmxBTSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_C
   EXPECT_EQ(kInvalidRFmxBTSession, close_response_two.status());
 }
 
-TEST_F(NiRFmxBTSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
+TEST_F(NiRFmxBluetoothSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
   session.set_id(0UL);
 
   ::grpc::ClientContext context;
-  rfmxbt::CloseRequest request;
+  rfmxbluetooth::CloseRequest request;
   request.mutable_instrument()->set_id(session.id());
   request.set_force_destroy(false);
-  rfmxbt::CloseResponse response;
+  rfmxbluetooth::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
