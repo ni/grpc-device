@@ -9,7 +9,7 @@
 # 8. Close the RFmx Session
 #
 # The gRPC API is built from the C API. RFmx SpecAn documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\SpecAn\Documentation\specancvi.chm
+# C:\Program Files (x86)\National Instruments\RFmx\SpecAn\Documentation\rfmxspecancvi.chm
 #
 # Getting Started:
 #
