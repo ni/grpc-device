@@ -1436,7 +1436,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1463,7 +1463,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1505,7 +1505,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1532,7 +1532,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1574,7 +1574,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1602,7 +1602,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1629,7 +1629,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1671,7 +1671,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1698,7 +1698,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1740,7 +1740,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1768,7 +1768,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1811,7 +1811,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1853,7 +1853,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1895,7 +1895,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1931,7 +1931,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1959,7 +1959,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -1986,7 +1986,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2028,7 +2028,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2070,7 +2070,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -2097,7 +2097,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3067,7 +3067,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             }
@@ -3144,7 +3144,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3171,7 +3171,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3207,7 +3207,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3234,7 +3234,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3270,7 +3270,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3298,7 +3298,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3325,7 +3325,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3361,7 +3361,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3388,7 +3388,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3424,7 +3424,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3452,7 +3452,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3489,7 +3489,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3525,7 +3525,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3561,7 +3561,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3588,7 +3588,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3616,7 +3616,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3643,7 +3643,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3679,7 +3679,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3715,7 +3715,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
@@ -3742,7 +3742,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'NiRFmxBTAttribute',
+                'grpc_type': 'NiRFmxBluetoothAttribute',
                 'name': 'attributeID',
                 'type': 'int32'
             },
