@@ -57,6 +57,11 @@ jobs:
     - name: Update Submodules
       run: git submodule update --init --recursive --depth=1
 
+    - name: Validate python style with black
+      run: |
+        pip install black
+        black source/codegen examples --check
+
     - name: Configure
       shell: cmake -P {0}
       run: |
@@ -221,4 +226,3 @@ jobs:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc-device-release-desktop'
         azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-

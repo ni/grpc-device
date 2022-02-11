@@ -47,34 +47,38 @@ task = None
 # Raise an exception if an error was returned
 def RaiseIfError(response):
     if response.status != 0:
-        response = client.GetErrorString(nidaqmx_types.GetErrorStringRequest(
-            error_code=response.status))
+        response = client.GetErrorString(
+            nidaqmx_types.GetErrorStringRequest(error_code=response.status)
+        )
         raise Exception(f"Error: {response.error_string}")
 
 
 try:
-    response = client.CreateTask(
-        nidaqmx_types.CreateTaskRequest(session_name="my task"))
+    response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
     RaiseIfError(response)
     task = response.task
 
-    RaiseIfError(client.CreateCIFreqChan(nidaqmx_types.CreateCIFreqChanRequest(
-        task=task,
-        counter=counter_name,
-        min_val=1.192093,
-        max_val=10000000,
-        units=nidaqmx_types.FREQUENCY_UNITS3_HZ,
-        edge=nidaqmx_types.EDGE1_RISING,
-        meas_method=nidaqmx_types.COUNTER_FREQUENCY_METHOD_LOW_FREQ_1_CTR,
-        meas_time=0.001,
-        divisor=4)))
+    RaiseIfError(
+        client.CreateCIFreqChan(
+            nidaqmx_types.CreateCIFreqChanRequest(
+                task=task,
+                counter=counter_name,
+                min_val=1.192093,
+                max_val=10000000,
+                units=nidaqmx_types.FREQUENCY_UNITS3_HZ,
+                edge=nidaqmx_types.EDGE1_RISING,
+                meas_method=nidaqmx_types.COUNTER_FREQUENCY_METHOD_LOW_FREQ_1_CTR,
+                meas_time=0.001,
+                divisor=4,
+            )
+        )
+    )
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
-    response = client.ReadCounterScalarF64(nidaqmx_types.ReadCounterScalarF64Request(
-        task=task,
-        timeout=10.0
-    ))
+    response = client.ReadCounterScalarF64(
+        nidaqmx_types.ReadCounterScalarF64Request(task=task, timeout=10.0)
+    )
     RaiseIfError(response)
     print(f"Frequency: {response.value} Hz")
 except grpc.RpcError as rpc_error:
@@ -82,8 +86,10 @@ except grpc.RpcError as rpc_error:
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
-    print(f"{error_message}") 
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    print(f"{error_message}")
 finally:
     if task:
         client.StopTask(nidaqmx_types.StopTaskRequest(task=task))

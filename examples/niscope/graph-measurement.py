@@ -44,19 +44,20 @@ channels = "0"
 
 # Checks for errors. If any, throws an exception to stop the execution.
 any_error = False
-def CheckForError (vi, status) :
-    global any_error
-    if(status != 0 and not any_error):
-        any_error = True
-        ThrowOnError (vi, status)
 
-def ThrowOnError (vi, error_code):
-    error_message_request = niscope_types.GetErrorMessageRequest(
-        vi = vi,
-        error_code = error_code
-        )
+
+def CheckForError(vi, status):
+    global any_error
+    if status != 0 and not any_error:
+        any_error = True
+        ThrowOnError(vi, status)
+
+
+def ThrowOnError(vi, error_code):
+    error_message_request = niscope_types.GetErrorMessageRequest(vi=vi, error_code=error_code)
     error_message_response = scope_service.GetErrorMessage(error_message_request)
-    raise Exception (error_message_response.error_message)
+    raise Exception(error_message_response.error_message)
+
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -74,62 +75,71 @@ scope_service = grpc_scope.NiScopeStub(channel)
 
 try:
     # Initialize the scope
-    init_result = scope_service.InitWithOptions(niscope_types.InitWithOptionsRequest(
-        session_name = "demo",
-        resource_name = resource, 
-        id_query = False, 
-        option_string = options
-        ))
+    init_result = scope_service.InitWithOptions(
+        niscope_types.InitWithOptionsRequest(
+            session_name="demo", resource_name=resource, id_query=False, option_string=options
+        )
+    )
     vi = init_result.vi
     CheckForError(vi, init_result.status)
 
     # Configure Vertical
-    vertical_result = scope_service.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
-        vi = vi,
-        channel_list = channels,
-        range = 10.0,
-        offset = 0,
-        coupling = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
-        enabled = True,
-        probe_attenuation = 1
-        ))
+    vertical_result = scope_service.ConfigureVertical(
+        niscope_types.ConfigureVerticalRequest(
+            vi=vi,
+            channel_list=channels,
+            range=10.0,
+            offset=0,
+            coupling=niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
+            enabled=True,
+            probe_attenuation=1,
+        )
+    )
     CheckForError(vi, vertical_result.status)
 
     # Configure Horizontal Timing
-    config_result = scope_service.ConfigureHorizontalTiming(niscope_types.ConfigureHorizontalTimingRequest(
-        vi = vi,
-        min_sample_rate = 1000000,
-        min_num_pts = 1000,
-        ref_position = 50,
-        num_records = 1,
-        enforce_realtime = True
-        ))
+    config_result = scope_service.ConfigureHorizontalTiming(
+        niscope_types.ConfigureHorizontalTimingRequest(
+            vi=vi,
+            min_sample_rate=1000000,
+            min_num_pts=1000,
+            ref_position=50,
+            num_records=1,
+            enforce_realtime=True,
+        )
+    )
     CheckForError(vi, config_result.status)
 
     # Setup an Edge Trigger
-    result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
-        vi = vi,
-        attribute_id = niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
-        value = niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_TRIGGER_TYPE_VAL_EDGE_TRIGGER
-    ))
+    result = scope_service.SetAttributeViInt32(
+        niscope_types.SetAttributeViInt32Request(
+            vi=vi,
+            attribute_id=niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_TRIGGER_TYPE,
+            value=niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_TRIGGER_TYPE_VAL_EDGE_TRIGGER,
+        )
+    )
     CheckForError(vi, result.status)
 
-    conf_trigger_edge_result = scope_service.ConfigureTriggerEdge(niscope_types.ConfigureTriggerEdgeRequest(
-        vi = vi,
-        trigger_source = channels,
-        level = 0.00,
-        slope = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
-        trigger_coupling = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        holdoff = 0.0
-    ))
+    conf_trigger_edge_result = scope_service.ConfigureTriggerEdge(
+        niscope_types.ConfigureTriggerEdgeRequest(
+            vi=vi,
+            trigger_source=channels,
+            level=0.00,
+            slope=niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
+            trigger_coupling=niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+            holdoff=0.0,
+        )
+    )
     CheckForError(vi, conf_trigger_edge_result.status)
 
-    result = scope_service.SetAttributeViInt32(niscope_types.SetAttributeViInt32Request(
-        vi = vi,
-        channel_list = channels,
-        attribute_id = niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-        value = niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE
-    ))
+    result = scope_service.SetAttributeViInt32(
+        niscope_types.SetAttributeViInt32Request(
+            vi=vi,
+            channel_list=channels,
+            attribute_id=niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
+            value=niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE,
+        )
+    )
     CheckForError(vi, result.status)
 
     # Setup a plot to draw the captured waveform
@@ -144,12 +154,11 @@ try:
             plt.clf()
             plt.axis([0, 100, -6, 6])
             # Read a waveform from the scope
-            read_result = scope_service.Read(niscope_types.ReadRequest(
-                vi = vi,
-                channel_list = channels,
-                timeout = 1,
-                num_samples = 10000
-            ))
+            read_result = scope_service.Read(
+                niscope_types.ReadRequest(
+                    vi=vi, channel_list=channels, timeout=1, num_samples=10000
+                )
+            )
             CheckForError(vi, read_result.status)
             values = read_result.waveform[0:10]
             print(values)
@@ -160,12 +169,14 @@ try:
             plt.pause(0.001)
 
             # Fetch the measured average frequency
-            fetch_result = scope_service.FetchMeasurementStats(niscope_types.FetchMeasurementStatsRequest(
-                vi = vi,
-                channel_list = channels,
-                timeout = 1,
-                scalar_meas_function = niscope_types.ScalarMeasurement.SCALAR_MEASUREMENT_NISCOPE_VAL_AVERAGE_FREQUENCY
-            ))
+            fetch_result = scope_service.FetchMeasurementStats(
+                niscope_types.FetchMeasurementStatsRequest(
+                    vi=vi,
+                    channel_list=channels,
+                    timeout=1,
+                    scalar_meas_function=niscope_types.ScalarMeasurement.SCALAR_MEASUREMENT_NISCOPE_VAL_AVERAGE_FREQUENCY,
+                )
+            )
             CheckForError(vi, fetch_result.status)
             print("Average Frequency: " + str("%.2f" % round(fetch_result.result[0], 2)) + " Hz")
             print("")
@@ -179,12 +190,12 @@ except grpc.RpcError as rpc_error:
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 
 finally:
-    if('vi' in vars() and vi.id != 0):
+    if "vi" in vars() and vi.id != 0:
         # close the session.
-        CheckForError(vi, (scope_service.Close(niscope_types.CloseRequest(
-            vi = vi
-        ))).status)
+        CheckForError(vi, (scope_service.Close(niscope_types.CloseRequest(vi=vi))).status)

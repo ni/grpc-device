@@ -47,33 +47,39 @@ task = None
 # Raise an exception if an error was returned
 def RaiseIfError(response):
     if response.status != 0:
-        response = client.GetErrorString(nidaqmx_types.GetErrorStringRequest(
-            error_code=response.status))
+        response = client.GetErrorString(
+            nidaqmx_types.GetErrorStringRequest(error_code=response.status)
+        )
         raise Exception(f"Error: {response.error_string}")
 
 
 try:
-    response = client.CreateTask(
-        nidaqmx_types.CreateTaskRequest(session_name="my task"))
+    response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
     RaiseIfError(response)
     task = response.task
 
-    RaiseIfError(client.CreateDOChan(nidaqmx_types.CreateDOChanRequest(
-        task=task,
-        lines=lines,
-        line_grouping=nidaqmx_types.LINE_GROUPING_CHAN_FOR_ALL_LINES
-    )))
+    RaiseIfError(
+        client.CreateDOChan(
+            nidaqmx_types.CreateDOChanRequest(
+                task=task, lines=lines, line_grouping=nidaqmx_types.LINE_GROUPING_CHAN_FOR_ALL_LINES
+            )
+        )
+    )
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
-    RaiseIfError(client.WriteDigitalU32(nidaqmx_types.WriteDigitalU32Request(
-        task=task,
-        num_samps_per_chan=1,
-        auto_start=True,
-        timeout=10.0,
-        data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
-        write_array=[0xffff]
-    )))
+    RaiseIfError(
+        client.WriteDigitalU32(
+            nidaqmx_types.WriteDigitalU32Request(
+                task=task,
+                num_samps_per_chan=1,
+                auto_start=True,
+                timeout=10.0,
+                data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
+                write_array=[0xFFFF],
+            )
+        )
+    )
 
     print(f"Output was successfully written to {lines}.")
 except grpc.RpcError as rpc_error:
@@ -81,8 +87,10 @@ except grpc.RpcError as rpc_error:
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
-    print(f"{error_message}") 
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    print(f"{error_message}")
 finally:
     if task:
         client.StopTask(nidaqmx_types.StopTaskRequest(task=task))

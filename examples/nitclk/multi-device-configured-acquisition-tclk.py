@@ -67,7 +67,7 @@ if len(sys.argv) >= 3:
     server_port = sys.argv[2]
 if len(sys.argv) >= 4:
     resources = sys.argv[3]
-    resources = resources.split(',')
+    resources = resources.split(",")
     options = ""
 
 # Create the communication channel for the remote host (in this case we are connecting to a local server)
@@ -79,82 +79,92 @@ sessions = []
 
 # Checks for errors. If any, throws an exception to stop the execution.
 any_error = False
-def CheckForError (service, vi, status):
-    global any_error
-    if(status != 0 and not any_error):
-        any_error = True
-        ThrowOnError (service, vi, status)
 
-def ThrowOnError (service, vi, error_code):
-     if service == scope_service:
-            error_message_request = niscope_types.GetErrorMessageRequest(
-                vi = vi,
-                error_code = error_code
-            )
-            error_message_response = scope_service.GetErrorMessage(error_message_request)
-            raise Exception(error_message_response.error_message)
-     else:
-            error_message_request = nitclk_types.GetExtendedErrorInfoRequest()
-            error_message_response = tclk_service.GetExtendedErrorInfo(error_message_request)           
-            raise Exception (error_message_response.error_string)
+
+def CheckForError(service, vi, status):
+    global any_error
+    if status != 0 and not any_error:
+        any_error = True
+        ThrowOnError(service, vi, status)
+
+
+def ThrowOnError(service, vi, error_code):
+    if service == scope_service:
+        error_message_request = niscope_types.GetErrorMessageRequest(vi=vi, error_code=error_code)
+        error_message_response = scope_service.GetErrorMessage(error_message_request)
+        raise Exception(error_message_response.error_message)
+    else:
+        error_message_request = nitclk_types.GetExtendedErrorInfoRequest()
+        error_message_response = tclk_service.GetExtendedErrorInfo(error_message_request)
+        raise Exception(error_message_response.error_string)
+
 
 try:
-    #Initialize the session
-    i=1
+    # Initialize the session
+    i = 1
     for resource in resources:
-        init_result = scope_service.InitWithOptions(niscope_types.InitWithOptionsRequest(
-            session_name = "session" + str(i),
-            resource_name = resource, 
-            id_query = False, 
-            reset_device = False,
-            option_string = options
-            ))
-        i=i+1
+        init_result = scope_service.InitWithOptions(
+            niscope_types.InitWithOptionsRequest(
+                session_name="session" + str(i),
+                resource_name=resource,
+                id_query=False,
+                reset_device=False,
+                option_string=options,
+            )
+        )
+        i = i + 1
         sessions.append(init_result.vi)
-        CheckForError(scope_service, init_result.vi, init_result.status) 
+        CheckForError(scope_service, init_result.vi, init_result.status)
 
     for session in sessions:
         # Configure Acquisition Type
-        acquisition_type_result = scope_service.ConfigureAcquisition(niscope_types.ConfigureAcquisitionRequest(
-            vi = session,
-            acquisition_type = 0 # NISCOPE_VAL_NORMAL
-            ))
+        acquisition_type_result = scope_service.ConfigureAcquisition(
+            niscope_types.ConfigureAcquisitionRequest(
+                vi=session, acquisition_type=0  # NISCOPE_VAL_NORMAL
+            )
+        )
         CheckForError(scope_service, session, acquisition_type_result.status)
 
         # Configure Vertical
-        vertical_result = scope_service.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
-            vi = session,
-            channel_list = channels,
-            range = 10.0,
-            offset = 0.0,
-            coupling = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
-            enabled = True,
-            probe_attenuation = 1.0
-            ))
+        vertical_result = scope_service.ConfigureVertical(
+            niscope_types.ConfigureVerticalRequest(
+                vi=session,
+                channel_list=channels,
+                range=10.0,
+                offset=0.0,
+                coupling=niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
+                enabled=True,
+                probe_attenuation=1.0,
+            )
+        )
         CheckForError(scope_service, session, vertical_result.status)
 
         # Configure Channel Characteristics
-        channel_characteristics_result = scope_service.ConfigureChanCharacteristics(niscope_types.ConfigureChanCharacteristicsRequest(
-            vi = session,
-            channel_list = channels,
-            input_impedance = 1000000.0,
-            max_input_frequency = 0.0
-            ))
+        channel_characteristics_result = scope_service.ConfigureChanCharacteristics(
+            niscope_types.ConfigureChanCharacteristicsRequest(
+                vi=session,
+                channel_list=channels,
+                input_impedance=1000000.0,
+                max_input_frequency=0.0,
+            )
+        )
         CheckForError(scope_service, session, channel_characteristics_result.status)
 
         # Configure Horizontal Timing
-        config_result = scope_service.ConfigureHorizontalTiming(niscope_types.ConfigureHorizontalTimingRequest(
-            vi = session,
-            min_sample_rate = 100000000.0,
-            min_num_pts = 1000,
-            ref_position = 50,
-            num_records = 1,
-            enforce_realtime = True
-            ))
+        config_result = scope_service.ConfigureHorizontalTiming(
+            niscope_types.ConfigureHorizontalTimingRequest(
+                vi=session,
+                min_sample_rate=100000000.0,
+                min_num_pts=1000,
+                ref_position=50,
+                num_records=1,
+                enforce_realtime=True,
+            )
+        )
         CheckForError(scope_service, session, config_result.status)
-    
+
     vi = sessions[0]
-    #// Get the trigger type from the user
+    # // Get the trigger type from the user
     print("Type the trigger type\n")
     print("1 - Edge\n")
     print("2 - Hysteresis\n")
@@ -165,93 +175,103 @@ try:
     triggerHoldoff = 0.0
     triggerDelay = 0.0
 
-    #Assign the default values for the trigger attribute that depends on the trigger type
-    if trigger_type == '1':
-        trigger_edge_result = scope_service.ConfigureTriggerEdge(niscope_types.ConfigureTriggerEdgeRequest(
-        vi = vi,
-        trigger_source = "0",
-        level = 0.0,
-        slope = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
-        trigger_coupling = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        holdoff = 0.0,
-        delay = 0.0
-        ))
+    # Assign the default values for the trigger attribute that depends on the trigger type
+    if trigger_type == "1":
+        trigger_edge_result = scope_service.ConfigureTriggerEdge(
+            niscope_types.ConfigureTriggerEdgeRequest(
+                vi=vi,
+                trigger_source="0",
+                level=0.0,
+                slope=niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
+                trigger_coupling=niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+                holdoff=0.0,
+                delay=0.0,
+            )
+        )
         CheckForError(scope_service, vi, trigger_edge_result.status)
-    elif trigger_type == '2':
-        trigger_hysteresis_result = scope_service.ConfigureTriggerHysteresis(niscope_types.ConfigureTriggerHysteresisRequest(
-        vi = vi,
-        trigger_source = "0",
-        level = 0.0,
-        hysteresis = 0.1,
-        slope = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
-        trigger_coupling = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        holdoff = 0.0,
-        delay = 0.0
-        ))
-        CheckForError(scope_service, vi, trigger_hysteresis_result.status)	
-    elif trigger_type == '3':
-        trigger_digital_result = scope_service.ConfigureTriggerDigital(niscope_types.ConfigureTriggerDigitalRequest(
-        vi = vi,
-        trigger_source = "VAL_PFI_1",
-        slope = niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
-        holdoff = 0.0,
-        delay = 0.0
-        ))
-        CheckForError(scope_service, vi, trigger_digital_result.status)	
-    elif trigger_type == '4':
-        trigger_window_result = scope_service.ConfigureTriggerWindow(niscope_types.ConfigureTriggerWindowRequest(
-        vi = vi,
-        trigger_source = "0",
-        low_level = -0.1,
-        high_level = 0.1,
-        window_mode = niscope_types.TriggerWindowMode.TRIGGER_WINDOW_MODE_NISCOPE_VAL_ENTERING_WINDOW,	
-        trigger_coupling = niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
-        holdoff = 0.0,
-        delay = 0.0
-        ))
+    elif trigger_type == "2":
+        trigger_hysteresis_result = scope_service.ConfigureTriggerHysteresis(
+            niscope_types.ConfigureTriggerHysteresisRequest(
+                vi=vi,
+                trigger_source="0",
+                level=0.0,
+                hysteresis=0.1,
+                slope=niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
+                trigger_coupling=niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+                holdoff=0.0,
+                delay=0.0,
+            )
+        )
+        CheckForError(scope_service, vi, trigger_hysteresis_result.status)
+    elif trigger_type == "3":
+        trigger_digital_result = scope_service.ConfigureTriggerDigital(
+            niscope_types.ConfigureTriggerDigitalRequest(
+                vi=vi,
+                trigger_source="VAL_PFI_1",
+                slope=niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
+                holdoff=0.0,
+                delay=0.0,
+            )
+        )
+        CheckForError(scope_service, vi, trigger_digital_result.status)
+    elif trigger_type == "4":
+        trigger_window_result = scope_service.ConfigureTriggerWindow(
+            niscope_types.ConfigureTriggerWindowRequest(
+                vi=vi,
+                trigger_source="0",
+                low_level=-0.1,
+                high_level=0.1,
+                window_mode=niscope_types.TriggerWindowMode.TRIGGER_WINDOW_MODE_NISCOPE_VAL_ENTERING_WINDOW,
+                trigger_coupling=niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
+                holdoff=0.0,
+                delay=0.0,
+            )
+        )
         CheckForError(scope_service, vi, trigger_window_result.status)
-    elif trigger_type == '5':
-        trigger_immediate_result = scope_service.ConfigureTriggerImmediate(niscope_types.ConfigureTriggerImmediateRequest(
-        vi = vi
-        ))
+    elif trigger_type == "5":
+        trigger_immediate_result = scope_service.ConfigureTriggerImmediate(
+            niscope_types.ConfigureTriggerImmediateRequest(vi=vi)
+        )
         CheckForError(scope_service, vi, trigger_immediate_result.status)
     else:
         raise Exception("Enter a Valid Input")
-        
 
-    if (previous_min_sample_rate != min_sample_rate or previous_max_input_frequency != max_input_frequency or previous_min_record_length != num_records ):
+    if (
+        previous_min_sample_rate != min_sample_rate
+        or previous_max_input_frequency != max_input_frequency
+        or previous_min_record_length != num_records
+    ):
         # Use NI-TClk to configure appropriate parameters, synchronize digitizers, and initiate operation.
-        homogenous_trigger_result = tclk_service.ConfigureForHomogeneousTriggers(nitclk_types.ConfigureForHomogeneousTriggersRequest(
-            sessions = sessions
-        ))
+        homogenous_trigger_result = tclk_service.ConfigureForHomogeneousTriggers(
+            nitclk_types.ConfigureForHomogeneousTriggersRequest(sessions=sessions)
+        )
         CheckForError(tclk_service, vi, homogenous_trigger_result.status)
-        
-        synchronize_result = tclk_service.Synchronize(nitclk_types.SynchronizeRequest(
-            sessions = sessions,
-            min_tclk_period = 0.0	
-        ))
+
+        synchronize_result = tclk_service.Synchronize(
+            nitclk_types.SynchronizeRequest(sessions=sessions, min_tclk_period=0.0)
+        )
         CheckForError(tclk_service, vi, synchronize_result.status)
     previous_trigger_type = trigger_type
     previous_min_sample_rate = min_sample_rate
     previous_max_input_frequency = max_input_frequency
     previous_min_record_length = num_records
 
-    initiate_result = tclk_service.Initiate(nitclk_types.InitiateRequest(
-            sessions = sessions
-    ))
+    initiate_result = tclk_service.Initiate(nitclk_types.InitiateRequest(sessions=sessions))
     CheckForError(tclk_service, vi, initiate_result.status)
 
-# Setup a plot to draw the captured waveform
+    # Setup a plot to draw the captured waveform
     fig = plt.figure("Waveform Graph")
     fig.show()
     fig.canvas.draw()
 
-# Handle closing of plot window.
+    # Handle closing of plot window.
     closed = False
+
     def on_close(event):
         global closed
         closed = True
-    fig.canvas.mpl_connect('close_event', on_close)
+
+    fig.canvas.mpl_connect("close_event", on_close)
     print("\nReading values in loop. CTRL+C to stop.\n")
     try:
         while not closed:
@@ -260,51 +280,48 @@ try:
             plt.axis([0, 500, -6, 6])
             # Fetch a waveform from the scope
             for i in range(len(sessions)):
-                fetch_result = scope_service.Fetch(niscope_types.FetchRequest(
-                    vi = sessions[i],
-                    channel_list = channels,
-                    timeout = 1,
-                    num_samples = 500
-                ))
+                fetch_result = scope_service.Fetch(
+                    niscope_types.FetchRequest(
+                        vi=sessions[i], channel_list=channels, timeout=1, num_samples=500
+                    )
+                )
                 CheckForError(scope_service, session, fetch_result.status)
-                plt.subplot(1, len(sessions), i + 1, label = str(i))
+                plt.subplot(1, len(sessions), i + 1, label=str(i))
                 # Round the array to 2 decimal places and Update the plot with the new waveform
                 data = np.array(fetch_result.waveform[0:500])
                 # Add labels for axes and legends
-                plt.ylabel('Amplitude')
-                plt.xlabel('Samples')
-                plt.plot(np.round(data,2))
-                plt.title(label='$Scope{i}$'.format(i=i))
-            plt.subplots_adjust(wspace=0.5)    
+                plt.ylabel("Amplitude")
+                plt.xlabel("Samples")
+                plt.plot(np.round(data, 2))
+                plt.title(label="$Scope{i}$".format(i=i))
+            plt.subplots_adjust(wspace=0.5)
             plt.pause(0.001)
             time.sleep(0.1)
     except KeyboardInterrupt:
         pass
 
     for i in range(len(sessions)):
-        sample_rate_result = scope_service.SampleRate(niscope_types.SampleRateRequest(
-           vi = session 
-        ))
-        record_length_result = scope_service.ActualRecordLength(niscope_types.ActualRecordLengthRequest(
-            vi = session
-        ))
+        sample_rate_result = scope_service.SampleRate(niscope_types.SampleRateRequest(vi=session))
+        record_length_result = scope_service.ActualRecordLength(
+            niscope_types.ActualRecordLengthRequest(vi=session)
+        )
         print(resources[i])
-        print("Actual Sample Rate = %f"  %sample_rate_result.sample_rate)
-        print("Actual Record Length = %f\n"  %record_length_result.record_length)
+        print("Actual Sample Rate = %f" % sample_rate_result.sample_rate)
+        print("Actual Record Length = %f\n" % record_length_result.record_length)
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 
 finally:
-    if('vi' in vars() and vi.id != 0):
+    if "vi" in vars() and vi.id != 0:
         # close the sessions.
         for session in sessions:
-            close_request_result = scope_service.Close(niscope_types.CloseRequest(
-                vi = session
-            ))
+            close_request_result = scope_service.Close(niscope_types.CloseRequest(vi=session))
             CheckForError(scope_service, session, close_request_result.status)

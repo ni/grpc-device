@@ -54,48 +54,54 @@ vi = None
 # Raise an exception if an error was returned
 def raise_if_error(response):
     if response.status != 0:
-        response = client.ErrorMessage(
-            nirfsg_types.ErrorMessageRequest(error_code=response.status))
+        response = client.ErrorMessage(nirfsg_types.ErrorMessageRequest(error_code=response.status))
         raise Exception(f"Error: {response.error_string}")
 
 
 try:
     response = client.InitWithOptions(
         nirfsg_types.InitWithOptionsRequest(
-            session_name=session_name, resource_name=resource, option_string=options)
+            session_name=session_name, resource_name=resource, option_string=options
+        )
     )
     raise_if_error(response)
     vi = response.vi
-    raise_if_error(client.ConfigureRF(
-        nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5)
-    ))
-    raise_if_error(client.ConfigureGenerationMode(
-        nirfsg_types.ConfigureGenerationModeRequest(
-            vi=vi,
-            generation_mode=nirfsg_types.GENERATION_MODE_CW)
-    ))
-    raise_if_error(client.ConfigureRefClock(
-        nirfsg_types.ConfigureRefClockRequest(
-            vi=vi,
-            ref_clock_source_mapped=nirfsg_types.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
-            ref_clock_rate=10e6
+    raise_if_error(
+        client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5))
+    )
+    raise_if_error(
+        client.ConfigureGenerationMode(
+            nirfsg_types.ConfigureGenerationModeRequest(
+                vi=vi, generation_mode=nirfsg_types.GENERATION_MODE_CW
+            )
         )
-    ))
+    )
+    raise_if_error(
+        client.ConfigureRefClock(
+            nirfsg_types.ConfigureRefClockRequest(
+                vi=vi,
+                ref_clock_source_mapped=nirfsg_types.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
+                ref_clock_rate=10e6,
+            )
+        )
+    )
     print("Generating...")
     raise_if_error(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
     time.sleep(2)
     # Check the generation status
-    raise_if_error(client.CheckGenerationStatus(
-        nirfsg_types.CheckGenerationStatusRequest(vi=vi)))
+    raise_if_error(client.CheckGenerationStatus(nirfsg_types.CheckGenerationStatusRequest(vi=vi)))
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 finally:
     if vi:
         client.ConfigureOutputEnabled(
-            nirfsg_types.ConfigureOutputEnabledRequest(output_enabled=False))
+            nirfsg_types.ConfigureOutputEnabledRequest(output_enabled=False)
+        )
         client.Close(nirfsg_types.CloseRequest(vi=vi))

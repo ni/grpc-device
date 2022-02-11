@@ -52,8 +52,8 @@ async def main():
             async def raise_if_error(response):
                 if response.status:
                     response = await client.GetErrorString(
-                        nidaqmx_types.GetErrorStringRequest(
-                            error_code=response.status))
+                        nidaqmx_types.GetErrorStringRequest(error_code=response.status)
+                    )
                     raise Exception(f"Error: {response.error_string}")
 
             async def raise_if_error_async(awaitable_call):
@@ -61,9 +61,9 @@ async def main():
                 await raise_if_error(response)
                 return response
 
-            create_response: nidaqmx_types.CreateTaskResponse = (
-                await raise_if_error_async(
-                    client.CreateTask(nidaqmx_types.CreateTaskRequest())))
+            create_response: nidaqmx_types.CreateTaskResponse = await raise_if_error_async(
+                client.CreateTask(nidaqmx_types.CreateTaskRequest())
+            )
             task = create_response.task
 
             await raise_if_error_async(
@@ -74,7 +74,10 @@ async def main():
                         min_val=-10.0,
                         max_val=10.0,
                         terminal_config=nidaqmx_types.InputTermCfgWithDefault.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
-                        units=nidaqmx_types.VoltageUnits2.VOLTAGE_UNITS2_VOLTS)))
+                        units=nidaqmx_types.VoltageUnits2.VOLTAGE_UNITS2_VOLTS,
+                    )
+                )
+            )
 
             TOTAL_SAMPLES_PER_CHANNEL = 1000
             SAMPLES_PER_CHANNEL_PER_READ = 100
@@ -85,19 +88,26 @@ async def main():
                         sample_mode=nidaqmx_types.AcquisitionType.ACQUISITION_TYPE_FINITE_SAMPS,
                         samps_per_chan=TOTAL_SAMPLES_PER_CHANNEL,
                         active_edge=nidaqmx_types.Edge1.EDGE1_RISING,
-                        rate=100)))
+                        rate=100,
+                    )
+                )
+            )
 
             every_n_samples_stream = client.RegisterEveryNSamplesEvent(
                 nidaqmx_types.RegisterEveryNSamplesEventRequest(
                     task=task,
                     n_samples=SAMPLES_PER_CHANNEL_PER_READ,
-                    every_n_samples_event_type=nidaqmx_types.EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER))
+                    every_n_samples_event_type=nidaqmx_types.EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER,
+                )
+            )
 
             # Wait for initial_metadata to ensure that the callback is registered before starting the task.
             await every_n_samples_stream.initial_metadata()
 
-            done_event_stream = client.RegisterDoneEvent(nidaqmx_types.RegisterDoneEventRequest(task=task))
-            
+            done_event_stream = client.RegisterDoneEvent(
+                nidaqmx_types.RegisterDoneEventRequest(task=task)
+            )
+
             await done_event_stream.initial_metadata()
 
             await raise_if_error_async(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
@@ -105,26 +115,37 @@ async def main():
             response = await raise_if_error_async(
                 client.GetTaskAttributeUInt32(
                     nidaqmx_types.GetTaskAttributeUInt32Request(
-                        task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS)))
+                        task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS
+                    )
+                )
+            )
 
             number_of_channels = response.value
+
             async def read_data():
                 samps_per_chan_read = 0
 
                 try:
                     async for every_n_samples_response in every_n_samples_stream:
                         await raise_if_error(every_n_samples_response)
-                        read_response: nidaqmx_types.ReadAnalogF64Response = await raise_if_error_async(
-                            client.ReadAnalogF64(
-                                nidaqmx_types.ReadAnalogF64Request(
-                                    task=task,
-                                    num_samps_per_chan=SAMPLES_PER_CHANNEL_PER_READ,
-                                    fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                    array_size_in_samps=number_of_channels * SAMPLES_PER_CHANNEL_PER_READ)))
-                
+                        read_response: nidaqmx_types.ReadAnalogF64Response = (
+                            await raise_if_error_async(
+                                client.ReadAnalogF64(
+                                    nidaqmx_types.ReadAnalogF64Request(
+                                        task=task,
+                                        num_samps_per_chan=SAMPLES_PER_CHANNEL_PER_READ,
+                                        fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
+                                        array_size_in_samps=number_of_channels
+                                        * SAMPLES_PER_CHANNEL_PER_READ,
+                                    )
+                                )
+                            )
+                        )
+
                         print(
                             f"Acquired {len(read_response.read_array)} samples",
-                            f"({read_response.samps_per_chan_read} samples per channel)")
+                            f"({read_response.samps_per_chan_read} samples per channel)",
+                        )
                         print("Read Data:", read_response.read_array[:10])
 
                         # Unregister the event stream when all samples are read.
@@ -153,7 +174,9 @@ async def main():
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 error_message = f"Failed to connect to server on {server_address}:{server_port}"
             elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-                error_message = "The operation is not implemented or is not supported/enabled in this service"
+                error_message = (
+                    "The operation is not implemented or is not supported/enabled in this service"
+                )
             print(f"{error_message}")
         finally:
             if client and task:

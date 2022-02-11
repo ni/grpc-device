@@ -6,11 +6,11 @@ from mako.template import Template, Template
 
 
 def instantiate_mako_template(template_file_name: str) -> Template:
-  current_dir = Path(__file__).parent
-  template_directory = current_dir / "templates"
-  template_file_path = template_directory / template_file_name
-  template_lookup = TemplateLookup(directories = str(template_directory))
-  return Template(filename=str(template_file_path), lookup=template_lookup)
+    current_dir = Path(__file__).parent
+    template_directory = current_dir / "templates"
+    template_file_path = template_directory / template_file_name
+    template_lookup = TemplateLookup(directories=str(template_directory))
+    return Template(filename=str(template_file_path), lookup=template_lookup)
 
 
 def write_if_changed(output_file_path: str, new_contents: str) -> None:

@@ -96,8 +96,11 @@ try:
     raise_if_error(
         client.CfgRF(
             nirfmxspecan_types.CfgRFRequest(
-                instrument=instr, selector_string="",
-                center_frequency=1e9, reference_level=0, external_attenuation=0
+                instrument=instr,
+                selector_string="",
+                center_frequency=1e9,
+                reference_level=0,
+                external_attenuation=0,
             )
         )
     )
@@ -113,10 +116,11 @@ try:
     raise_if_error(
         client.SpectrumCfgRBWFilter(
             nirfmxspecan_types.SpectrumCfgRBWFilterRequest(
-                instrument=instr, selector_string="",
+                instrument=instr,
+                selector_string="",
                 rbw_auto=nirfmxspecan_types.SPECTRUM_RBW_AUTO_BANDWIDTH_TRUE,
                 rbw=100e3,
-                rbw_filter_type=nirfmxspecan_types.SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN
+                rbw_filter_type=nirfmxspecan_types.SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN,
             )
         )
     )
@@ -124,10 +128,11 @@ try:
     raise_if_error(
         client.SpectrumCfgAveraging(
             nirfmxspecan_types.SpectrumCfgAveragingRequest(
-                instrument=instr, selector_string="",
+                instrument=instr,
+                selector_string="",
                 averaging_enabled=nirfmxspecan_types.SPECTRUM_AVERAGING_ENABLED_FALSE,
                 averaging_count=10,
-                averaging_type=nirfmxspecan_types.SPECTRUM_AVERAGING_TYPE_RMS
+                averaging_type=nirfmxspecan_types.SPECTRUM_AVERAGING_TYPE_RMS,
             )
         )
     )
@@ -141,14 +146,16 @@ try:
     )
 
     print(
-        f"min frequency: {format_frequency(read_response.x0)}: {read_response.spectrum[0]:.1f} dBm")
+        f"min frequency: {format_frequency(read_response.x0)}: {read_response.spectrum[0]:.1f} dBm"
+    )
     midpoint_x = floor(read_response.actual_array_size / 2)
     print(
-        f"midpoint frequency: {format_frequency(read_response.x0 + read_response.dx * midpoint_x)}: {read_response.spectrum[midpoint_x]:.1f} dBm")
+        f"midpoint frequency: {format_frequency(read_response.x0 + read_response.dx * midpoint_x)}: {read_response.spectrum[midpoint_x]:.1f} dBm"
+    )
     print(
-        f"max frequency: {format_frequency(read_response.x0 + read_response.dx * (read_response.actual_array_size - 1))}: {read_response.spectrum[-1]:.1f} dBm")
+        f"max frequency: {format_frequency(read_response.x0 + read_response.dx * (read_response.actual_array_size - 1))}: {read_response.spectrum[-1]:.1f} dBm"
+    )
 
 finally:
     if instr:
-        client.Close(nirfmxspecan_types.CloseRequest(
-            instrument=instr, force_destroy=False))
+        client.Close(nirfmxspecan_types.CloseRequest(instrument=instr, force_destroy=False))

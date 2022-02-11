@@ -46,33 +46,42 @@ task = None
 # Raise an exception if an error was returned
 def RaiseIfError(response):
     if response.status != 0:
-        response = client.GetErrorString(nidaqmx_types.GetErrorStringRequest(
-            error_code=response.status))
+        response = client.GetErrorString(
+            nidaqmx_types.GetErrorStringRequest(error_code=response.status)
+        )
         raise Exception(f"Error: {response.error_string}")
 
 
 try:
-    response = client.CreateTask(
-        nidaqmx_types.CreateTaskRequest(session_name="my task"))
+    response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
     RaiseIfError(response)
     task = response.task
 
-    RaiseIfError(client.CreateAOVoltageChan(nidaqmx_types.CreateAOVoltageChanRequest(
-        task=task,
-        physical_channel=physical_channel,
-        min_val=-10.0,
-        max_val=10.0,
-        units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS
-    )))
+    RaiseIfError(
+        client.CreateAOVoltageChan(
+            nidaqmx_types.CreateAOVoltageChanRequest(
+                task=task,
+                physical_channel=physical_channel,
+                min_val=-10.0,
+                max_val=10.0,
+                units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
+            )
+        )
+    )
 
     RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
-    RaiseIfError(client.WriteAnalogF64(nidaqmx_types.WriteAnalogF64Request(
-        task=task,
-        num_samps_per_chan=1,
-        data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
-        write_array=[1.0],
-        timeout=10.0)))
+    RaiseIfError(
+        client.WriteAnalogF64(
+            nidaqmx_types.WriteAnalogF64Request(
+                task=task,
+                num_samps_per_chan=1,
+                data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
+                write_array=[1.0],
+                timeout=10.0,
+            )
+        )
+    )
 
     print(f"Output was successfully written to {physical_channel}.")
 except grpc.RpcError as rpc_error:
@@ -80,8 +89,10 @@ except grpc.RpcError as rpc_error:
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
-    print(f"{error_message}") 
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    print(f"{error_message}")
 finally:
     if task:
         client.StopTask(nidaqmx_types.StopTaskRequest(task=task))

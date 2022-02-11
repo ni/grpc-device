@@ -1,4 +1,4 @@
-# 
+#
 # This example initiates an acquisition and fetches a waveform for each specified channel.
 #
 # The gRPC API is built from the C API.  NI-SCOPE documentation is installed with the driver at:
@@ -41,20 +41,19 @@ channels = "0"
 
 any_error = False
 # Checks for errors. If any, throws an exception to stop the execution.
-def CheckForError (vi, status) :
+def CheckForError(vi, status):
     global any_error
-    if(status != 0 and not any_error):
+    if status != 0 and not any_error:
         any_error = True
-        ThrowOnError (vi, status)
+        ThrowOnError(vi, status)
+
 
 # Converts an error code returned by NI-SCOPE into a user-readable string.
-def ThrowOnError (vi, error_code):
-    error_message_request = niscope_types.GetErrorMessageRequest(
-        vi = vi,
-        error_code = error_code
-        )
+def ThrowOnError(vi, error_code):
+    error_message_request = niscope_types.GetErrorMessageRequest(vi=vi, error_code=error_code)
     error_message_response = client.GetErrorMessage(error_message_request)
-    raise Exception (error_message_response.error_message)
+    raise Exception(error_message_response.error_message)
+
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -69,58 +68,69 @@ if len(sys.argv) >= 4:
 channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_niscope.NiScopeStub(channel)
 
-try :
+try:
     # Open session to NI-SCOPE module with options.
-    init_with_options_response = client.InitWithOptions(niscope_types.InitWithOptionsRequest(
-        resource_name=resource,
-        id_query = False,
-        option_string=options
-        ))
+    init_with_options_response = client.InitWithOptions(
+        niscope_types.InitWithOptionsRequest(
+            resource_name=resource, id_query=False, option_string=options
+        )
+    )
     vi = init_with_options_response.vi
     CheckForError(vi, init_with_options_response.status)
 
     # Configure vertical.
     voltage = 10.0
-    CheckForError(vi, (client.ConfigureVertical(niscope_types.ConfigureVerticalRequest(
-        vi = vi,
-        channel_list = channels,
-        range = voltage,
-        offset = 0.0,
-        coupling = niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_AC,
-        probe_attenuation = 1.0,
-        enabled = True
-        ))).status)
+    CheckForError(
+        vi,
+        (
+            client.ConfigureVertical(
+                niscope_types.ConfigureVerticalRequest(
+                    vi=vi,
+                    channel_list=channels,
+                    range=voltage,
+                    offset=0.0,
+                    coupling=niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_AC,
+                    probe_attenuation=1.0,
+                    enabled=True,
+                )
+            )
+        ).status,
+    )
 
     # Configure horizontal timing.
     samples = 1000
-    CheckForError(vi, (client.ConfigureHorizontalTiming(niscope_types.ConfigureHorizontalTimingRequest(
-        vi = vi,
-        min_sample_rate = 50000000,
-        min_num_pts = samples,
-        ref_position = 50.0,
-        num_records = 1,
-        enforce_realtime = True
-        ))).status)
+    CheckForError(
+        vi,
+        (
+            client.ConfigureHorizontalTiming(
+                niscope_types.ConfigureHorizontalTimingRequest(
+                    vi=vi,
+                    min_sample_rate=50000000,
+                    min_num_pts=samples,
+                    ref_position=50.0,
+                    num_records=1,
+                    enforce_realtime=True,
+                )
+            )
+        ).status,
+    )
 
     # Initiate acquisition.
-    CheckForError(vi, (client.InitiateAcquisition(niscope_types.InitiateAcquisitionRequest(
-        vi = vi
-        ))).status)
+    CheckForError(
+        vi, (client.InitiateAcquisition(niscope_types.InitiateAcquisitionRequest(vi=vi))).status
+    )
 
     # Fetch waveforms.
-    fetch_response = client.Fetch(niscope_types.FetchRequest(
-        vi = vi,
-        channel_list = channels,
-        timeout = 10000,
-        num_samples = samples
-        ))
+    fetch_response = client.Fetch(
+        niscope_types.FetchRequest(vi=vi, channel_list=channels, timeout=10000, num_samples=samples)
+    )
     CheckForError(vi, fetch_response.status)
     waveforms = fetch_response.waveform
 
     # Print waveform results.
     for i in range(len(waveforms)):
-        print(f'Waveform {i} information:')
-        print(f'{waveforms[i]}\n')
+        print(f"Waveform {i} information:")
+        print(f"{waveforms[i]}\n")
 
 # If NI-SCOPE API throws an exception, print the error message.
 except grpc.RpcError as rpc_error:
@@ -128,12 +138,12 @@ except grpc.RpcError as rpc_error:
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {server_address}:{server_port}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
-        error_message = "The operation is not implemented or is not supported/enabled in this service"
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
     print(f"{error_message}")
 
 finally:
-    if('vi' in vars() and vi.id != 0):
+    if "vi" in vars() and vi.id != 0:
         # close the session.
-        CheckForError(vi, (client.Close(niscope_types.CloseRequest(
-            vi = vi
-        ))).status)
+        CheckForError(vi, (client.Close(niscope_types.CloseRequest(vi=vi))).status)

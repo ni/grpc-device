@@ -16,9 +16,7 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
 
     os.makedirs(output_dir, exist_ok=True)
     template = instantiate_mako_template(template_file_name)
-    write_if_changed(
-        output_file_path,
-        template.render(data=metadata))
+    write_if_changed(output_file_path, template.render(data=metadata))
 
 
 def mutate_metadata(metadata: dict):
@@ -34,8 +32,7 @@ def mutate_metadata(metadata: dict):
         metadata_mutation.set_var_args_types(parameters, config)
         metadata_mutation.mark_size_params(parameters)
         metadata_mutation.mark_non_proto_params(parameters)
-        metadata_mutation.mark_mapped_enum_params(
-            parameters, metadata["enums"])
+        metadata_mutation.mark_mapped_enum_params(parameters, metadata["enums"])
         metadata_mutation.populate_grpc_types(parameters, config)
         metadata_mutation.mark_coerced_narrow_numeric_parameters(parameters)
         attribute_expander.expand_attribute_value_params(function)
@@ -53,39 +50,36 @@ def generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
     mutate_metadata(metadata)
     generate_service_file(metadata, "proto.mako", ".proto", gen_dir)
     generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)
-    generate_service_file(metadata, "service.cpp.mako",
-                          "_service.cpp", gen_dir)
-    generate_service_file(
-        metadata,
-        "service_registrar.h.mako",
-        "_service_registrar.h",
-        gen_dir)
-    generate_service_file(
-        metadata,
-        "service_registrar.cpp.mako",
-        "_service_registrar.cpp", 
-        gen_dir)
-    generate_service_file(metadata, "library_interface.h.mako",
-                          "_library_interface.h", gen_dir)
-    generate_service_file(metadata, "library.cpp.mako",
-                          "_library.cpp", gen_dir)
+    generate_service_file(metadata, "service.cpp.mako", "_service.cpp", gen_dir)
+    generate_service_file(metadata, "service_registrar.h.mako", "_service_registrar.h", gen_dir)
+    generate_service_file(metadata, "service_registrar.cpp.mako", "_service_registrar.cpp", gen_dir)
+    generate_service_file(metadata, "library_interface.h.mako", "_library_interface.h", gen_dir)
+    generate_service_file(metadata, "library.cpp.mako", "_library.cpp", gen_dir)
     generate_service_file(metadata, "library.h.mako", "_library.h", gen_dir)
-    generate_service_file(metadata, "mock_library.h.mako",
-                          "_mock_library.h", gen_dir)
+    generate_service_file(metadata, "mock_library.h.mako", "_mock_library.h", gen_dir)
     generate_service_file(metadata, "client.h.mako", "_client.h", gen_dir)
     generate_service_file(metadata, "client.cpp.mako", "_client.cpp", gen_dir)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Generate files for specified NI driver API gRPC service.")
+        description="Generate files for specified NI driver API gRPC service."
+    )
     parser.add_argument(
-        "metadata", help="The path to the directory containing the metadata for the API being generated.")
+        "metadata",
+        help="The path to the directory containing the metadata for the API being generated.",
+    )
     parser.add_argument(
-        "--output", "-o", help="The path to the top-level directory to save the generated files. The API-specific sub-directories will be automatically created.")
+        "--output",
+        "-o",
+        help="The path to the top-level directory to save the generated files. The API-specific sub-directories will be automatically created.",
+    )
     parser.add_argument(
-        "--validate", "-v", dest="validate", action="store_true", help="Just validate the metadata and don't generate any files",
+        "--validate",
+        "-v",
+        dest="validate",
+        action="store_true",
+        help="Just validate the metadata and don't generate any files",
     )
     args = parser.parse_args()
-    generate_all(
-        args.metadata, "." if args.output is None else args.output, args.validate)
+    generate_all(args.metadata, "." if args.output is None else args.output, args.validate)
