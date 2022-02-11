@@ -23,6 +23,7 @@ static const char* kSecurityJsonKey = "security";
 static const char* kCertsFolderName = "certs";
 static const char* kMaxMessageSizeKey = "max_message_size";
 static const char* kFeatureTogglesKey = "feature_toggles";
+static const char* kCodeReadinessKey = "code_readiness";
 #if defined(_MSC_VER)
 static const char* kPathDelimitter = "\\";
 #else
@@ -161,7 +162,42 @@ FeatureToggles ServerConfigurationParser::parse_feature_toggles() const
       throw InvalidFeatureToggleException(ex.what());
     }
   }
-  return FeatureToggles(std::move(map), FeatureToggles::CodeReadiness::kRelease);
+  return FeatureToggles(std::move(map), parse_code_readiness());
+}
+
+FeatureToggles::CodeReadiness ServerConfigurationParser::parse_code_readiness() const
+{
+  auto code_readiness_it = config_file_.find(kCodeReadinessKey);
+  if (code_readiness_it != config_file_.end()) {
+    try {
+      auto readiness_token_value = code_readiness_it->get<std::string>();
+      std::transform(
+          readiness_token_value.begin(),
+          readiness_token_value.end(),
+          readiness_token_value.begin(),
+          [](unsigned char c) { return std::tolower(c); });
+
+      using ReadinessMap = std::unordered_map<std::string, FeatureToggles::CodeReadiness>;
+      const auto READINESS_MAP = ReadinessMap{
+          {"release", FeatureToggles::CodeReadiness::kRelease},
+          {"nextrelease", FeatureToggles::CodeReadiness::kNextRelease},
+          {"next_release", FeatureToggles::CodeReadiness::kNextRelease},
+          {"incomplete", FeatureToggles::CodeReadiness::kIncomplete},
+          {"prototype", FeatureToggles::CodeReadiness::kPrototype}};
+
+      const auto readiness_map_iter = READINESS_MAP.find(readiness_token_value);
+      if (readiness_map_iter != READINESS_MAP.end()) {
+        return readiness_map_iter->second;
+      }
+
+      throw InvalidCodeReadinessException(readiness_token_value);
+    }
+    catch (const nlohmann::json::type_error& ex) {
+      throw InvalidCodeReadinessException(ex.what());
+    }
+  }
+
+  return FeatureToggles::CodeReadiness::kRelease;
 }
 
 std::string ServerConfigurationParser::parse_key_from_security_section(const char* key) const
@@ -239,6 +275,11 @@ ServerConfigurationParser::InvalidExePathException::InvalidExePathException()
 
 ServerConfigurationParser::InvalidFeatureToggleException::InvalidFeatureToggleException(const std::string& type_error_details)
     : std::runtime_error(kInvalidFeatureToggleMessage + type_error_details)
+{
+}
+
+ServerConfigurationParser::InvalidCodeReadinessException::InvalidCodeReadinessException(const std::string& type_error_details)
+    : std::runtime_error(kInvalidCodeReadinessMessage + type_error_details)
 {
 }
 
