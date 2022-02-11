@@ -54,7 +54,7 @@ class NiRFmxBluetoothDriverApiTests : public Test {
  protected:
   NiRFmxBluetoothDriverApiTests()
       : device_server_(DeviceServerInterface::Singleton()),
-        stub_(NiRFmxBT::NewStub(device_server_->InProcessChannel()))
+        stub_(NiRFmxBluetooth::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
@@ -66,7 +66,7 @@ class NiRFmxBluetoothDriverApiTests : public Test {
     device_server_->ResetServer();
   }
 
-  const std::unique_ptr<NiRFmxBT::Stub>& stub() const
+  const std::unique_ptr<NiRFmxBluetooth::Stub>& stub() const
   {
     return stub_;
   }
@@ -100,7 +100,7 @@ class NiRFmxBluetoothDriverApiTests : public Test {
 
  private:
   DeviceServerInterface* device_server_;
-  std::unique_ptr<NiRFmxBT::Stub> stub_;
+  std::unique_ptr<NiRFmxBluetooth::Stub> stub_;
 };
 
 InitializeResponse init(const client::StubPtr& stub, const std::string& model)
@@ -273,16 +273,16 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt8_ExpectedError)
 
   EXPECT_RFMX_ERROR(
       -380251, "Incorrect data type specified", session,
-      client::set_attribute_i8(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
+      client::set_attribute_i8(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
   EXPECT_RFMX_ERROR(
       -380251, "Incorrect data type specified", session,
-      client::set_attribute_u8(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
+      client::set_attribute_u8(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
   EXPECT_RFMX_ERROR(
       -380251, "Incorrect data type specified", session,
-      client::set_attribute_i8_array(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, -1, 0}));
+      client::set_attribute_i8_array(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, -1, 0}));
   EXPECT_RFMX_ERROR(
       -380251, "Incorrect data type specified", session,
-      client::set_attribute_u8_array(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, 1, 0}));
+      client::set_attribute_u8_array(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, 1, 0}));
 }
 
 // Note: there aren't any i16 attributes in attributes.py, but this at least exercises the code.
@@ -292,10 +292,10 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt16_ExpectedError)
 
   EXPECT_RFMX_ERROR(
       -380251, "Incorrect data type specified", session,
-      client::set_attribute_i16(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, -400));
+      client::set_attribute_i16(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, -400));
   EXPECT_RFMX_ERROR(
       -380251, "Incorrect data type specified", session,
-      client::set_attribute_u16(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, 400));
+      client::set_attribute_u16(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 400));
 }
 
 TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
@@ -304,13 +304,13 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TXP, true));
   EXPECT_SUCCESS(
       session,
-      client::set_attribute_i32(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED, NiRFmxBTInt32AttributeValues::NIRFMXBT_INT32_TXP_AVERAGING_ENABLED_TRUE));
+      client::set_attribute_i32(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, NiRFmxBluetoothInt32AttributeValues::NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  auto get_response = client::get_attribute_i32(stub(), session, "", NiRFmxBTAttribute::NIRFMXBT_ATTRIBUTE_TXP_AVERAGING_ENABLED);
+  auto get_response = client::get_attribute_i32(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED);
 
   EXPECT_SUCCESS(session, get_response);
-  EXPECT_EQ(NiRFmxBTInt32AttributeValues::NIRFMXBT_INT32_TXP_AVERAGING_ENABLED_TRUE, get_response.attr_val());
+  EXPECT_EQ(NiRFmxBluetoothInt32AttributeValues::NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_TRUE, get_response.attr_val());
 }
 
 }  // namespace

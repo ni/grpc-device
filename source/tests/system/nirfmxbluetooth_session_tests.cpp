@@ -22,14 +22,14 @@ class NiRFmxBluetoothSessionTest : public ::testing::Test {
  protected:
   NiRFmxBluetoothSessionTest()
       : device_server_(DeviceServerInterface::Singleton()),
-        nirfmxbluetooth_stub_(rfmxbluetooth::NiRFmxBT::NewStub(device_server_->InProcessChannel()))
+        nirfmxbluetooth_stub_(rfmxbluetooth::NiRFmxBluetooth::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
 
   virtual ~NiRFmxBluetoothSessionTest() {}
 
-  std::unique_ptr<rfmxbluetooth::NiRFmxBT::Stub>& GetStub()
+  std::unique_ptr<rfmxbluetooth::NiRFmxBluetooth::Stub>& GetStub()
   {
     return nirfmxbluetooth_stub_;
   }
@@ -59,7 +59,7 @@ class NiRFmxBluetoothSessionTest : public ::testing::Test {
 
  private:
   DeviceServerInterface* device_server_;
-  std::unique_ptr<rfmxbluetooth::NiRFmxBT::Stub> nirfmxbluetooth_stub_;
+  std::unique_ptr<rfmxbluetooth::NiRFmxBluetooth::Stub> nirfmxbluetooth_stub_;
 };
 
 TEST_F(NiRFmxBluetoothSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriverSession)
