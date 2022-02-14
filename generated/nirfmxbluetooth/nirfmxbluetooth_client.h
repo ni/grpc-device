@@ -39,6 +39,7 @@ AutoDetectSignalResponse auto_detect_signal(const StubPtr& stub, const nidevice_
 AutoLevelResponse auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& measurement_interval);
 BuildOffsetStringResponse build_offset_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& offset_number);
 BuildSignalStringResponse build_signal_string(const StubPtr& stub, const pb::string& signal_name, const pb::string& result_name);
+BuildSlotStringResponse build_slot_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& slot_number);
 CfgChannelNumberResponse cfg_channel_number(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& channel_number);
 CfgDataRateResponse cfg_data_rate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& data_rate);
 CfgDigitalEdgeTriggerResponse cfg_digital_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& digital_edge_source, const simple_variant<DigitalEdgeTriggerEdge, pb::int32>& digital_edge, const double& trigger_delay, const pb::int32& enable_trigger);

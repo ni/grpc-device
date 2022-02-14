@@ -625,6 +625,35 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'BuildSlotString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'slotNumber',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CfgChannelNumber': {
         'parameters': [
             {
@@ -2545,13 +2574,11 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'df1_avg_maximum',
                 'name': 'df1avgMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'df1_avg_minimum',
                 'name': 'df1avgMinimum',
                 'type': 'float64'
             }
@@ -2629,13 +2656,11 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'df2_avg_minimum',
                 'name': 'df2avgMinimum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'percentage_of_symbols_above_df2_max_threshold',
                 'name': 'percentageOfSymbolsAboveDf2maxThreshold',
                 'type': 'float64'
             }

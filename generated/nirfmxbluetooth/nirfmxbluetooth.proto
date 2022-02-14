@@ -34,6 +34,7 @@ service NiRFmxBluetooth {
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildOffsetString(BuildOffsetStringRequest) returns (BuildOffsetStringResponse);
   rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
+  rpc BuildSlotString(BuildSlotStringRequest) returns (BuildSlotStringResponse);
   rpc CfgChannelNumber(CfgChannelNumberRequest) returns (CfgChannelNumberResponse);
   rpc CfgDataRate(CfgDataRateRequest) returns (CfgDataRateResponse);
   rpc CfgDigitalEdgeTrigger(CfgDigitalEdgeTriggerRequest) returns (CfgDigitalEdgeTriggerResponse);
@@ -728,6 +729,16 @@ message BuildSignalStringRequest {
 message BuildSignalStringResponse {
   int32 status = 1;
   string selector_string = 2;
+}
+
+message BuildSlotStringRequest {
+  string selector_string = 1;
+  int32 slot_number = 2;
+}
+
+message BuildSlotStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
 }
 
 message CfgChannelNumberRequest {
@@ -1493,8 +1504,8 @@ message ModAccFetchDf1Request {
 
 message ModAccFetchDf1Response {
   int32 status = 1;
-  double df1_avg_maximum = 2;
-  double df1_avg_minimum = 3;
+  double df1avg_maximum = 2;
+  double df1avg_minimum = 3;
 }
 
 message ModAccFetchDf1maxTraceRequest {
@@ -1518,8 +1529,8 @@ message ModAccFetchDf2Request {
 
 message ModAccFetchDf2Response {
   int32 status = 1;
-  double df2_avg_minimum = 2;
-  double percentage_of_symbols_above_df2_max_threshold = 3;
+  double df2avg_minimum = 2;
+  double percentage_of_symbols_above_df2max_threshold = 3;
 }
 
 message ModAccFetchDf2maxTraceRequest {

@@ -38,6 +38,7 @@ NiRFmxBluetoothLibrary::NiRFmxBluetoothLibrary() : shared_library_(kLibraryName)
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_.get_function_pointer("RFmxBT_AutoLevel"));
   function_pointers_.BuildOffsetString = reinterpret_cast<BuildOffsetStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildOffsetString"));
   function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildSignalString"));
+  function_pointers_.BuildSlotString = reinterpret_cast<BuildSlotStringPtr>(shared_library_.get_function_pointer("RFmxBT_BuildSlotString"));
   function_pointers_.CfgChannelNumber = reinterpret_cast<CfgChannelNumberPtr>(shared_library_.get_function_pointer("RFmxBT_CfgChannelNumber"));
   function_pointers_.CfgDataRate = reinterpret_cast<CfgDataRatePtr>(shared_library_.get_function_pointer("RFmxBT_CfgDataRate"));
   function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxBT_CfgDigitalEdgeTrigger"));
@@ -365,6 +366,18 @@ int32 NiRFmxBluetoothLibrary::BuildSignalString(char signalName[], char resultNa
   return RFmxBT_BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
 #else
   return function_pointers_.BuildSignalString(signalName, resultName, selectorStringLength, selectorString);
+#endif
+}
+
+int32 NiRFmxBluetoothLibrary::BuildSlotString(char selectorString[], int32 slotNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildSlotString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_BuildSlotString.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_BuildSlotString(selectorString, slotNumber, selectorStringOutLength, selectorStringOut);
+#else
+  return function_pointers_.BuildSlotString(selectorString, slotNumber, selectorStringOutLength, selectorStringOut);
 #endif
 }
 

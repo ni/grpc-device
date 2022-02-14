@@ -34,6 +34,7 @@ class NiRFmxBluetoothMockLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothL
   MOCK_METHOD(int32, AutoLevel, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel), (override));
   MOCK_METHOD(int32, BuildOffsetString, (char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildSignalString, (char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]), (override));
+  MOCK_METHOD(int32, BuildSlotString, (char selectorString[], int32 slotNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, CfgChannelNumber, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 channelNumber), (override));
   MOCK_METHOD(int32, CfgDataRate, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dataRate), (override));
   MOCK_METHOD(int32, CfgDigitalEdgeTrigger, (niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger), (override));

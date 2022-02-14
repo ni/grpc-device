@@ -347,6 +347,23 @@ build_signal_string(const StubPtr& stub, const pb::string& signal_name, const pb
   return response;
 }
 
+BuildSlotStringResponse
+build_slot_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& slot_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildSlotStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_slot_number(slot_number);
+
+  auto response = BuildSlotStringResponse{};
+
+  raise_if_error(
+      stub->BuildSlotString(&context, request, &response));
+
+  return response;
+}
+
 CfgChannelNumberResponse
 cfg_channel_number(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& channel_number)
 {

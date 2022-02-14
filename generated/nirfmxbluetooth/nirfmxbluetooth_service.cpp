@@ -628,6 +628,47 @@ namespace nirfmxbluetooth_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::BuildSlotString(::grpc::ServerContext* context, const BuildSlotStringRequest* request, BuildSlotStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 slot_number = request->slot_number();
+
+      while (true) {
+        auto status = library_->BuildSlotString(selector_string, slot_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildSlotString(selector_string, slot_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxBluetoothService::CfgChannelNumber(::grpc::ServerContext* context, const CfgChannelNumberRequest* request, CfgChannelNumberResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2725,13 +2766,13 @@ namespace nirfmxbluetooth_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 df1_avg_maximum {};
-      float64 df1_avg_minimum {};
-      auto status = library_->ModAccFetchDf1(instrument, selector_string, timeout, &df1_avg_maximum, &df1_avg_minimum);
+      float64 df1avg_maximum {};
+      float64 df1avg_minimum {};
+      auto status = library_->ModAccFetchDf1(instrument, selector_string, timeout, &df1avg_maximum, &df1avg_minimum);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_df1_avg_maximum(df1_avg_maximum);
-        response->set_df1_avg_minimum(df1_avg_minimum);
+        response->set_df1avg_maximum(df1avg_maximum);
+        response->set_df1avg_minimum(df1avg_minimum);
       }
       return ::grpc::Status::OK;
     }
@@ -2795,13 +2836,13 @@ namespace nirfmxbluetooth_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 df2_avg_minimum {};
-      float64 percentage_of_symbols_above_df2_max_threshold {};
-      auto status = library_->ModAccFetchDf2(instrument, selector_string, timeout, &df2_avg_minimum, &percentage_of_symbols_above_df2_max_threshold);
+      float64 df2avg_minimum {};
+      float64 percentage_of_symbols_above_df2max_threshold {};
+      auto status = library_->ModAccFetchDf2(instrument, selector_string, timeout, &df2avg_minimum, &percentage_of_symbols_above_df2max_threshold);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_df2_avg_minimum(df2_avg_minimum);
-        response->set_percentage_of_symbols_above_df2_max_threshold(percentage_of_symbols_above_df2_max_threshold);
+        response->set_df2avg_minimum(df2avg_minimum);
+        response->set_percentage_of_symbols_above_df2max_threshold(percentage_of_symbols_above_df2max_threshold);
       }
       return ::grpc::Status::OK;
     }
