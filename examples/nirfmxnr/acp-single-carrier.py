@@ -16,7 +16,7 @@
 # 15. Close RFmx Session.
 #
 # The gRPC API is built from the C API. RFmx NR documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\NR\Documentation\nrcvi.chm
+# C:\Program Files (x86)\National Instruments\RFmx\NR\Documentation\rfmxnrcvi.chm
 #
 # Getting Started:
 #
