@@ -142,6 +142,9 @@ class NiRFmxBluetoothMockLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothL
   MOCK_METHOD(int32, TXPFetchLECTETransmitSlotPowersArray, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 transmitSlotAveragePowerMean[], float64 transmitSlotPeakAbsolutePowerDeviationMaximum[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, TXPFetchPowerTrace, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, TXPFetchPowers, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* averagePowerMaximum, float64* averagePowerMinimum, float64* peakToAveragePowerRatioMaximum), (override));
+  MOCK_METHOD(int32, TwentydBBandwidthCfgAveraging, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount), (override));
+  MOCK_METHOD(int32, TwentydBBandwidthFetchMeasurement, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakPower, float64* bandwidth, float64* highFrequency, float64* lowFrequency), (override));
+  MOCK_METHOD(int32, TwentydBBandwidthFetchSpectrum, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, WaitForAcquisitionComplete, (niRFmxInstrHandle instrumentHandle, float64 timeout), (override));
   MOCK_METHOD(int32, WaitForMeasurementComplete, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout), (override));
 };

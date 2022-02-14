@@ -147,6 +147,9 @@ TXPFetchLECTETransmitSlotPowersResponse txp_fetch_lecte_transmit_slot_powers(con
 TXPFetchLECTETransmitSlotPowersArrayResponse txp_fetch_lecte_transmit_slot_powers_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 TXPFetchPowerTraceResponse txp_fetch_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 TXPFetchPowersResponse txp_fetch_powers(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
+TwentydBBandwidthCfgAveragingResponse twentyd_b_bandwidth_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<TwentydBBandwidthAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count);
+TwentydBBandwidthFetchMeasurementResponse twentyd_b_bandwidth_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
+TwentydBBandwidthFetchSpectrumResponse twentyd_b_bandwidth_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 WaitForAcquisitionCompleteResponse wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout);
 WaitForMeasurementCompleteResponse wait_for_measurement_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 

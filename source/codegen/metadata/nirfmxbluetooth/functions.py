@@ -2545,13 +2545,11 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'df1_avg_maximum',
                 'name': 'df1avgMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'df1_avg_minimum',
                 'name': 'df1avgMinimum',
                 'type': 'float64'
             }
@@ -2629,13 +2627,11 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'df2_avg_minimum',
                 'name': 'df2avgMinimum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'percentage_of_symbols_above_df2_max_threshold',
                 'name': 'percentageOfSymbolsAboveDf2maxThreshold',
                 'type': 'float64'
             }
@@ -4052,6 +4048,128 @@ functions = {
                 'direction': 'out',
                 'name': 'peakToAveragePowerRatioMaximum',
                 'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TwentydBBandwidthCfgAveraging': {
+        'cname': 'RFmxBT_20dBBandwidthCfgAveraging',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TwentydBBandwidthAveragingEnabled',
+                'name': 'averagingEnabled',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'averagingCount',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TwentydBBandwidthFetchMeasurement': {
+        'cname': 'RFmxBT_20dBBandwidthFetchMeasurement',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'peakPower',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'bandwidth',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'highFrequency',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'lowFrequency',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TwentydBBandwidthFetchSpectrum': {
+        'cname': 'RFmxBT_20dBBandwidthFetchSpectrum',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'spectrum',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'

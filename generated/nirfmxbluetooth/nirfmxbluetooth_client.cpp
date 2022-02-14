@@ -2457,6 +2457,68 @@ txp_fetch_powers(const StubPtr& stub, const nidevice_grpc::Session& instrument, 
   return response;
 }
 
+TwentydBBandwidthCfgAveragingResponse
+twentyd_b_bandwidth_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<TwentydBBandwidthAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TwentydBBandwidthCfgAveragingRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto averaging_enabled_ptr = averaging_enabled.get_if<TwentydBBandwidthAveragingEnabled>();
+  const auto averaging_enabled_raw_ptr = averaging_enabled.get_if<pb::int32>();
+  if (averaging_enabled_ptr) {
+    request.set_averaging_enabled(*averaging_enabled_ptr);
+  }
+  else if (averaging_enabled_raw_ptr) {
+    request.set_averaging_enabled_raw(*averaging_enabled_raw_ptr);
+  }
+  request.set_averaging_count(averaging_count);
+
+  auto response = TwentydBBandwidthCfgAveragingResponse{};
+
+  raise_if_error(
+      stub->TwentydBBandwidthCfgAveraging(&context, request, &response));
+
+  return response;
+}
+
+TwentydBBandwidthFetchMeasurementResponse
+twentyd_b_bandwidth_fetch_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TwentydBBandwidthFetchMeasurementRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = TwentydBBandwidthFetchMeasurementResponse{};
+
+  raise_if_error(
+      stub->TwentydBBandwidthFetchMeasurement(&context, request, &response));
+
+  return response;
+}
+
+TwentydBBandwidthFetchSpectrumResponse
+twentyd_b_bandwidth_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = TwentydBBandwidthFetchSpectrumRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = TwentydBBandwidthFetchSpectrumResponse{};
+
+  raise_if_error(
+      stub->TwentydBBandwidthFetchSpectrum(&context, request, &response));
+
+  return response;
+}
+
 WaitForAcquisitionCompleteResponse
 wait_for_acquisition_complete(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& timeout)
 {

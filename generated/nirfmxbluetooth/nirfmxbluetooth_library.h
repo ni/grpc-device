@@ -143,6 +143,9 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   int32 TXPFetchLECTETransmitSlotPowersArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 transmitSlotAveragePowerMean[], float64 transmitSlotPeakAbsolutePowerDeviationMaximum[], int32 arraySize, int32* actualArraySize);
   int32 TXPFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 power[], int32 arraySize, int32* actualArraySize);
   int32 TXPFetchPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* averagePowerMean, float64* averagePowerMaximum, float64* averagePowerMinimum, float64* peakToAveragePowerRatioMaximum);
+  int32 TwentydBBandwidthCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount);
+  int32 TwentydBBandwidthFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakPower, float64* bandwidth, float64* highFrequency, float64* lowFrequency);
+  int32 TwentydBBandwidthFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize);
   int32 WaitForAcquisitionComplete(niRFmxInstrHandle instrumentHandle, float64 timeout);
   int32 WaitForMeasurementComplete(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout);
 
@@ -272,6 +275,9 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
   using TXPFetchLECTETransmitSlotPowersArrayPtr = decltype(&RFmxBT_TXPFetchLECTETransmitSlotPowersArray);
   using TXPFetchPowerTracePtr = decltype(&RFmxBT_TXPFetchPowerTrace);
   using TXPFetchPowersPtr = decltype(&RFmxBT_TXPFetchPowers);
+  using TwentydBBandwidthCfgAveragingPtr = decltype(&RFmxBT_20dBBandwidthCfgAveraging);
+  using TwentydBBandwidthFetchMeasurementPtr = decltype(&RFmxBT_20dBBandwidthFetchMeasurement);
+  using TwentydBBandwidthFetchSpectrumPtr = decltype(&RFmxBT_20dBBandwidthFetchSpectrum);
   using WaitForAcquisitionCompletePtr = decltype(&RFmxBT_WaitForAcquisitionComplete);
   using WaitForMeasurementCompletePtr = decltype(&RFmxBT_WaitForMeasurementComplete);
 
@@ -401,6 +407,9 @@ class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibra
     TXPFetchLECTETransmitSlotPowersArrayPtr TXPFetchLECTETransmitSlotPowersArray;
     TXPFetchPowerTracePtr TXPFetchPowerTrace;
     TXPFetchPowersPtr TXPFetchPowers;
+    TwentydBBandwidthCfgAveragingPtr TwentydBBandwidthCfgAveraging;
+    TwentydBBandwidthFetchMeasurementPtr TwentydBBandwidthFetchMeasurement;
+    TwentydBBandwidthFetchSpectrumPtr TwentydBBandwidthFetchSpectrum;
     WaitForAcquisitionCompletePtr WaitForAcquisitionComplete;
     WaitForMeasurementCompletePtr WaitForMeasurementComplete;
   } FunctionLoadStatus;

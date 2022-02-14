@@ -168,6 +168,9 @@ public:
   ::grpc::Status TXPFetchLECTETransmitSlotPowersArray(::grpc::ServerContext* context, const TXPFetchLECTETransmitSlotPowersArrayRequest* request, TXPFetchLECTETransmitSlotPowersArrayResponse* response) override;
   ::grpc::Status TXPFetchPowerTrace(::grpc::ServerContext* context, const TXPFetchPowerTraceRequest* request, TXPFetchPowerTraceResponse* response) override;
   ::grpc::Status TXPFetchPowers(::grpc::ServerContext* context, const TXPFetchPowersRequest* request, TXPFetchPowersResponse* response) override;
+  ::grpc::Status TwentydBBandwidthCfgAveraging(::grpc::ServerContext* context, const TwentydBBandwidthCfgAveragingRequest* request, TwentydBBandwidthCfgAveragingResponse* response) override;
+  ::grpc::Status TwentydBBandwidthFetchMeasurement(::grpc::ServerContext* context, const TwentydBBandwidthFetchMeasurementRequest* request, TwentydBBandwidthFetchMeasurementResponse* response) override;
+  ::grpc::Status TwentydBBandwidthFetchSpectrum(::grpc::ServerContext* context, const TwentydBBandwidthFetchSpectrumRequest* request, TwentydBBandwidthFetchSpectrumResponse* response) override;
   ::grpc::Status WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response) override;
   ::grpc::Status WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response) override;
 private:

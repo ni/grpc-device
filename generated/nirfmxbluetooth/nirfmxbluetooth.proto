@@ -142,6 +142,9 @@ service NiRFmxBluetooth {
   rpc TXPFetchLECTETransmitSlotPowersArray(TXPFetchLECTETransmitSlotPowersArrayRequest) returns (TXPFetchLECTETransmitSlotPowersArrayResponse);
   rpc TXPFetchPowerTrace(TXPFetchPowerTraceRequest) returns (TXPFetchPowerTraceResponse);
   rpc TXPFetchPowers(TXPFetchPowersRequest) returns (TXPFetchPowersResponse);
+  rpc TwentydBBandwidthCfgAveraging(TwentydBBandwidthCfgAveragingRequest) returns (TwentydBBandwidthCfgAveragingResponse);
+  rpc TwentydBBandwidthFetchMeasurement(TwentydBBandwidthFetchMeasurementRequest) returns (TwentydBBandwidthFetchMeasurementResponse);
+  rpc TwentydBBandwidthFetchSpectrum(TwentydBBandwidthFetchSpectrumRequest) returns (TwentydBBandwidthFetchSpectrumResponse);
   rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
   rpc WaitForMeasurementComplete(WaitForMeasurementCompleteRequest) returns (WaitForMeasurementCompleteResponse);
 }
@@ -403,6 +406,11 @@ enum Standard {
 enum TriggerMinimumQuietTimeMode {
   TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
   TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+}
+
+enum TwentydBBandwidthAveragingEnabled {
+  TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_FALSE = 0;
+  TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_TRUE = 1;
 }
 
 enum TxpAveragingEnabled {
@@ -1485,8 +1493,8 @@ message ModAccFetchDf1Request {
 
 message ModAccFetchDf1Response {
   int32 status = 1;
-  double df1_avg_maximum = 2;
-  double df1_avg_minimum = 3;
+  double df1avg_maximum = 2;
+  double df1avg_minimum = 3;
 }
 
 message ModAccFetchDf1maxTraceRequest {
@@ -1510,8 +1518,8 @@ message ModAccFetchDf2Request {
 
 message ModAccFetchDf2Response {
   int32 status = 1;
-  double df2_avg_minimum = 2;
-  double percentage_of_symbols_above_df2_max_threshold = 3;
+  double df2avg_minimum = 2;
+  double percentage_of_symbols_above_df2max_threshold = 3;
 }
 
 message ModAccFetchDf2maxTraceRequest {
@@ -2002,6 +2010,48 @@ message TXPFetchPowersResponse {
   double average_power_maximum = 3;
   double average_power_minimum = 4;
   double peak_to_average_power_ratio_maximum = 5;
+}
+
+message TwentydBBandwidthCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    TwentydBBandwidthAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message TwentydBBandwidthCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message TwentydBBandwidthFetchMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TwentydBBandwidthFetchMeasurementResponse {
+  int32 status = 1;
+  double peak_power = 2;
+  double bandwidth = 3;
+  double high_frequency = 4;
+  double low_frequency = 5;
+}
+
+message TwentydBBandwidthFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TwentydBBandwidthFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  int32 actual_array_size = 5;
 }
 
 message WaitForAcquisitionCompleteRequest {

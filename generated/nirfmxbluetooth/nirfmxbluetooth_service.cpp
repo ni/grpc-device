@@ -2725,13 +2725,13 @@ namespace nirfmxbluetooth_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 df1_avg_maximum {};
-      float64 df1_avg_minimum {};
-      auto status = library_->ModAccFetchDf1(instrument, selector_string, timeout, &df1_avg_maximum, &df1_avg_minimum);
+      float64 df1avg_maximum {};
+      float64 df1avg_minimum {};
+      auto status = library_->ModAccFetchDf1(instrument, selector_string, timeout, &df1avg_maximum, &df1avg_minimum);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_df1_avg_maximum(df1_avg_maximum);
-        response->set_df1_avg_minimum(df1_avg_minimum);
+        response->set_df1avg_maximum(df1avg_maximum);
+        response->set_df1avg_minimum(df1avg_minimum);
       }
       return ::grpc::Status::OK;
     }
@@ -2795,13 +2795,13 @@ namespace nirfmxbluetooth_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 df2_avg_minimum {};
-      float64 percentage_of_symbols_above_df2_max_threshold {};
-      auto status = library_->ModAccFetchDf2(instrument, selector_string, timeout, &df2_avg_minimum, &percentage_of_symbols_above_df2_max_threshold);
+      float64 df2avg_minimum {};
+      float64 percentage_of_symbols_above_df2max_threshold {};
+      auto status = library_->ModAccFetchDf2(instrument, selector_string, timeout, &df2avg_minimum, &percentage_of_symbols_above_df2max_threshold);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_df2_avg_minimum(df2_avg_minimum);
-        response->set_percentage_of_symbols_above_df2_max_threshold(percentage_of_symbols_above_df2_max_threshold);
+        response->set_df2avg_minimum(df2avg_minimum);
+        response->set_percentage_of_symbols_above_df2max_threshold(percentage_of_symbols_above_df2max_threshold);
       }
       return ::grpc::Status::OK;
     }
@@ -4068,6 +4068,118 @@ namespace nirfmxbluetooth_grpc {
         response->set_peak_to_average_power_ratio_maximum(peak_to_average_power_ratio_maximum);
       }
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::TwentydBBandwidthCfgAveraging(::grpc::ServerContext* context, const TwentydBBandwidthCfgAveragingRequest* request, TwentydBBandwidthCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxbluetooth_grpc::TwentydBBandwidthCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxbluetooth_grpc::TwentydBBandwidthCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxbluetooth_grpc::TwentydBBandwidthCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      auto status = library_->TwentydBBandwidthCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::TwentydBBandwidthFetchMeasurement(::grpc::ServerContext* context, const TwentydBBandwidthFetchMeasurementRequest* request, TwentydBBandwidthFetchMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 peak_power {};
+      float64 bandwidth {};
+      float64 high_frequency {};
+      float64 low_frequency {};
+      auto status = library_->TwentydBBandwidthFetchMeasurement(instrument, selector_string, timeout, &peak_power, &bandwidth, &high_frequency, &low_frequency);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_peak_power(peak_power);
+        response->set_bandwidth(bandwidth);
+        response->set_high_frequency(high_frequency);
+        response->set_low_frequency(low_frequency);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::TwentydBBandwidthFetchSpectrum(::grpc::ServerContext* context, const TwentydBBandwidthFetchSpectrumRequest* request, TwentydBBandwidthFetchSpectrumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->TwentydBBandwidthFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_spectrum()->Resize(actual_array_size, 0);
+        float32* spectrum = response->mutable_spectrum()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->TwentydBBandwidthFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_spectrum()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
