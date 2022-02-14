@@ -1610,7 +1610,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'DsssModAccPsduCrcStaus',
+                'enum': 'DsssModAccPsduCrcStatus',
                 'grpc_name': 'psdu_crc_status',
                 'name': 'psducrcStatus',
                 'type': 'int32'
@@ -3635,6 +3635,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'decoded_l_sig_bits',
                 'name': 'decodedLSIGBits',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3717,6 +3718,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'decoded_sig_b_bits',
                 'name': 'decodedSIGBBits',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -3840,6 +3842,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'decoded_u_sig_bits',
                 'name': 'decodedUSIGBits',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
@@ -4202,6 +4205,7 @@ functions = {
             {
                 'direction': 'out',
                 'enum': 'OfdmModAccLSigParityCheckStatus',
+                'grpc_name': 'l_sig_parity_check_status',
                 'name': 'lsigParityCheckStatus',
                 'type': 'int32'
             }
@@ -4281,7 +4285,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'number_of_he_sigb_symbols',
+                'grpc_name': 'number_of_he_sig_b_symbols',
                 'name': 'numberOfHESIGBSymbols',
                 'type': 'int32'
             }
@@ -4613,7 +4617,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'vht_siga_average_power_mean',
+                'grpc_name': 'vht_sig_a_average_power_mean',
                 'name': 'vhtsigaAveragePowerMean',
                 'type': 'float64'
             },
@@ -4631,7 +4635,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'vht_sigb_average_power_mean',
+                'grpc_name': 'vht_sig_b_average_power_mean',
                 'name': 'vhtsigbAveragePowerMean',
                 'type': 'float64'
             }
@@ -4665,13 +4669,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'he_siga_average_power_mean',
+                'grpc_name': 'he_sig_a_average_power_mean',
                 'name': 'hesigaAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'he_sigb_average_power_mean',
+                'grpc_name': 'he_sig_b_average_power_mean',
                 'name': 'hesigbAveragePowerMean',
                 'type': 'float64'
             },
@@ -4723,13 +4727,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'htd_ltf_average_power_mean',
+                'grpc_name': 'ht_dltf_average_power_mean',
                 'name': 'htdltfAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'hte_ltf_average_power_mean',
+                'grpc_name': 'ht_eltf_average_power_mean',
                 'name': 'hteltfAveragePowerMean',
                 'type': 'float64'
             }
@@ -4756,16 +4760,19 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'l_stf_average_power_mean',
                 'name': 'lstfAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'l_ltf_average_power_mean',
                 'name': 'lltfAveragePowerMean',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'l_sig_average_power_mean',
                 'name': 'lsigAveragePowerMean',
                 'type': 'float64'
             }
@@ -4844,7 +4851,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'vht_siga_peak_power_maximum',
+                'grpc_name': 'vht_sig_a_peak_power_maximum',
                 'name': 'vhtsigaPeakPowerMaximum',
                 'type': 'float64'
             },
@@ -4862,7 +4869,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'vht_sigb_peak_power_maximum',
+                'grpc_name': 'vht_sig_b_peak_power_maximum',
                 'name': 'vhtsigbPeakPowerMaximum',
                 'type': 'float64'
             }
@@ -4896,13 +4903,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'he_siga_peak_power_maximum',
+                'grpc_name': 'he_sig_a_peak_power_maximum',
                 'name': 'hesigaPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'he_sigb_peak_power_maximum',
+                'grpc_name': 'he_sig_b_peak_power_maximum',
                 'name': 'hesigbPeakPowerMaximum',
                 'type': 'float64'
             },
@@ -4954,13 +4961,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'htd_ltf_peak_power_maximum',
+                'grpc_name': 'ht_dltf_peak_power_maximum',
                 'name': 'htdltfPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'hte_ltf_peak_power_maximum',
+                'grpc_name': 'ht_eltf_peak_power_maximum',
                 'name': 'hteltfPeakPowerMaximum',
                 'type': 'float64'
             }
@@ -4987,16 +4994,19 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'l_stf_peak_power_maximum',
                 'name': 'lstfPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'l_ltf_peak_power_maximum',
                 'name': 'lltfPeakPowerMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'l_sig_peak_power_maximum',
                 'name': 'lsigPeakPowerMaximum',
                 'type': 'float64'
             }
@@ -5055,7 +5065,7 @@ functions = {
             {
                 'direction': 'out',
                 'enum': 'OfdmModAccSigBCrcStatus',
-                'grpc_name': 'sigb_crc_status',
+                'grpc_name': 'sig_b_crc_status',
                 'name': 'sigbcrcStatus',
                 'type': 'int32'
             }
