@@ -17,7 +17,7 @@
 # 16. Close the RFmx Session.
 #
 # The gRPC API is built from the C API. RFmx WLAN documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\WLAN\Documentation\wlancvi.chm
+# C:\Program Files (x86)\National Instruments\RFmx\WLAN\Documentation\rfmxwlancvi.chm
 #
 # Getting Started:
 #
