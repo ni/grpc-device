@@ -22,7 +22,7 @@ bool operator==(const NIComplexNumberF32& first, const NIComplexNumber& second)
 {
   return first.real() == second.real() && first.imaginary() == second.imaginary();
 }
-} // namespace nidevice_grpc
+}  // namespace nidevice_grpc
 
 namespace ni {
 namespace tests {
@@ -311,6 +311,24 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 
   EXPECT_SUCCESS(session, get_response);
   EXPECT_EQ(NiRFmxBluetoothInt32AttributeValues::NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_TRUE, get_response.attr_val());
+}
+
+TEST_F(NiRFmxBluetoothDriverApiTests, ConfigureTwentydBBandwidth_FetchMeasurements_DataLooksReasonable)
+{
+  auto session = init_session(stub(), kPxi5663e);
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_20DB_BANDWIDTH, true));
+  EXPECT_SUCCESS(session, client::twentyd_b_bandwidth_cfg_averaging(stub(), session, "", TwentydBBandwidthAveragingEnabled::TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_FALSE, 10));
+
+  EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
+  const auto fetch_measurement_response = client::twentyd_b_bandwidth_fetch_measurement(stub(), session, "", 10.0);
+  const auto fetch_spectrum_response = client::twentyd_b_bandwidth_fetch_spectrum(stub(), session, "", 10.0);
+
+  EXPECT_SUCCESS(session, fetch_measurement_response);
+  EXPECT_SUCCESS(session, fetch_spectrum_response);
+  EXPECT_NE(0.0, fetch_measurement_response.low_frequency());
+  EXPECT_NE(0.0, fetch_measurement_response.peak_power());
+  EXPECT_THAT(fetch_spectrum_response.spectrum(), Not(IsEmpty()));
+  EXPECT_THAT(fetch_spectrum_response.spectrum(), Each(Ne(0.0)));
 }
 
 }  // namespace

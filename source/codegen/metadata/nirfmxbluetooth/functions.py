@@ -4056,6 +4056,128 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'TwentydBBandwidthCfgAveraging': {
+        'cname': 'RFmxBT_20dBBandwidthCfgAveraging',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TwentydBBandwidthAveragingEnabled',
+                'name': 'averagingEnabled',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'averagingCount',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TwentydBBandwidthFetchMeasurement': {
+        'cname': 'RFmxBT_20dBBandwidthFetchMeasurement',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'peakPower',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'bandwidth',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'highFrequency',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'lowFrequency',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'TwentydBBandwidthFetchSpectrum': {
+        'cname': 'RFmxBT_20dBBandwidthFetchSpectrum',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'spectrum',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'WaitForAcquisitionComplete': {
         'parameters': [
             {

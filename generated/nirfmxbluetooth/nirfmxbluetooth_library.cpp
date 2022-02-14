@@ -146,6 +146,9 @@ NiRFmxBluetoothLibrary::NiRFmxBluetoothLibrary() : shared_library_(kLibraryName)
   function_pointers_.TXPFetchLECTETransmitSlotPowersArray = reinterpret_cast<TXPFetchLECTETransmitSlotPowersArrayPtr>(shared_library_.get_function_pointer("RFmxBT_TXPFetchLECTETransmitSlotPowersArray"));
   function_pointers_.TXPFetchPowerTrace = reinterpret_cast<TXPFetchPowerTracePtr>(shared_library_.get_function_pointer("RFmxBT_TXPFetchPowerTrace"));
   function_pointers_.TXPFetchPowers = reinterpret_cast<TXPFetchPowersPtr>(shared_library_.get_function_pointer("RFmxBT_TXPFetchPowers"));
+  function_pointers_.TwentydBBandwidthCfgAveraging = reinterpret_cast<TwentydBBandwidthCfgAveragingPtr>(shared_library_.get_function_pointer("RFmxBT_20dBBandwidthCfgAveraging"));
+  function_pointers_.TwentydBBandwidthFetchMeasurement = reinterpret_cast<TwentydBBandwidthFetchMeasurementPtr>(shared_library_.get_function_pointer("RFmxBT_20dBBandwidthFetchMeasurement"));
+  function_pointers_.TwentydBBandwidthFetchSpectrum = reinterpret_cast<TwentydBBandwidthFetchSpectrumPtr>(shared_library_.get_function_pointer("RFmxBT_20dBBandwidthFetchSpectrum"));
   function_pointers_.WaitForAcquisitionComplete = reinterpret_cast<WaitForAcquisitionCompletePtr>(shared_library_.get_function_pointer("RFmxBT_WaitForAcquisitionComplete"));
   function_pointers_.WaitForMeasurementComplete = reinterpret_cast<WaitForMeasurementCompletePtr>(shared_library_.get_function_pointer("RFmxBT_WaitForMeasurementComplete"));
 }
@@ -1658,6 +1661,42 @@ int32 NiRFmxBluetoothLibrary::TXPFetchPowers(niRFmxInstrHandle instrumentHandle,
   return RFmxBT_TXPFetchPowers(instrumentHandle, selectorString, timeout, averagePowerMean, averagePowerMaximum, averagePowerMinimum, peakToAveragePowerRatioMaximum);
 #else
   return function_pointers_.TXPFetchPowers(instrumentHandle, selectorString, timeout, averagePowerMean, averagePowerMaximum, averagePowerMinimum, peakToAveragePowerRatioMaximum);
+#endif
+}
+
+int32 NiRFmxBluetoothLibrary::TwentydBBandwidthCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount)
+{
+  if (!function_pointers_.TwentydBBandwidthCfgAveraging) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_20dBBandwidthCfgAveraging.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_20dBBandwidthCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#else
+  return function_pointers_.TwentydBBandwidthCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount);
+#endif
+}
+
+int32 NiRFmxBluetoothLibrary::TwentydBBandwidthFetchMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* peakPower, float64* bandwidth, float64* highFrequency, float64* lowFrequency)
+{
+  if (!function_pointers_.TwentydBBandwidthFetchMeasurement) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_20dBBandwidthFetchMeasurement.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_20dBBandwidthFetchMeasurement(instrumentHandle, selectorString, timeout, peakPower, bandwidth, highFrequency, lowFrequency);
+#else
+  return function_pointers_.TwentydBBandwidthFetchMeasurement(instrumentHandle, selectorString, timeout, peakPower, bandwidth, highFrequency, lowFrequency);
+#endif
+}
+
+int32 NiRFmxBluetoothLibrary::TwentydBBandwidthFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.TwentydBBandwidthFetchSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_20dBBandwidthFetchSpectrum.");
+  }
+#if defined(_MSC_VER)
+  return RFmxBT_20dBBandwidthFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
+#else
+  return function_pointers_.TwentydBBandwidthFetchSpectrum(instrumentHandle, selectorString, timeout, x0, dx, spectrum, arraySize, actualArraySize);
 #endif
 }
 
