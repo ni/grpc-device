@@ -8,7 +8,7 @@ attributes = {
     3: {
         'access': 'read-write',
         'name': 'FREQUENCY_REFERENCE_FREQUENCY',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     4: {
         'access': 'read-write',
@@ -19,7 +19,7 @@ attributes = {
     5: {
         'access': 'read-write',
         'name': 'RF_ATTENUATION_VALUE',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     6: {
         'access': 'read-write',
@@ -30,7 +30,7 @@ attributes = {
     7: {
         'access': 'read-write',
         'name': 'MECHANICAL_ATTENUATION_VALUE',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     8: {
         'access': 'read-write',
@@ -47,7 +47,7 @@ attributes = {
     10: {
         'access': 'read-write',
         'name': 'FREQUENCY_SETTLING',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     11: {
         'access': 'read-write',
@@ -58,107 +58,107 @@ attributes = {
     12: {
         'access': 'read-write',
         'name': 'DOWNCONVERTER_PRESELECTOR_ENABLED',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     13: {
         'access': 'read-write',
         'name': 'DOWNCONVERTER_CENTER_FREQUENCY',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     14: {
         'access': 'read-write',
         'name': 'PREAMP_ENABLED',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     15: {
         'access': 'read-write',
         'name': 'MIXER_LEVEL_OFFSET',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     16: {
         'access': 'read-write',
         'name': 'MIXER_LEVEL',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     17: {
         'access': 'read-write',
         'name': 'IF_OUTPUT_POWER_LEVEL_OFFSET',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     18: {
         'access': 'read-write',
         'name': 'LO_INJECTION_SIDE',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     19: {
         'access': 'read-write',
         'name': 'PHASE_OFFSET',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     21: {
         'access': 'read-write',
         'name': 'DIGITIZER_DITHER_ENABLED',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     22: {
         'access': 'read-write',
         'name': 'FFT_WIDTH',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     23: {
         'access': 'read-write',
         'name': 'OSP_DELAY_ENABLED',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     24: {
         'access': 'read-write',
         'name': 'DEVICE_TEMPERATURE',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     25: {
         'access': 'read-write',
         'name': 'DIGITIZER_TEMPERATURE',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     26: {
         'access': 'read-write',
         'name': 'LO_TEMPERATURE',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     27: {
         'access': 'read-write',
         'name': 'INSTRUMENT_FIRMWARE_REVISION',
-        'type': 'UNKNOWN'
+        'type': 'char[]'
     },
     28: {
         'access': 'read-write',
         'name': 'INSTRUMENT_MODEL',
-        'type': 'UNKNOWN'
+        'type': 'char[]'
     },
     29: {
         'access': 'read-write',
         'name': 'MODULE_REVISION',
-        'type': 'UNKNOWN'
+        'type': 'char[]'
     },
     30: {
         'access': 'read-write',
         'name': 'SERIAL_NUMBER',
-        'type': 'UNKNOWN'
+        'type': 'char[]'
     },
     31: {
         'access': 'read-write',
         'name': 'PRESELECTOR_PRESENT',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     32: {
         'access': 'read-write',
         'name': 'RF_PREAMP_PRESENT',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     33: {
         'access': 'read-write',
         'name': 'LO_EXPORT_ENABLED',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     34: {
         'access': 'read-write',
@@ -192,32 +192,32 @@ attributes = {
     40: {
         'access': 'read-write',
         'name': 'RECOMMENDED_NUMBER_OF_RECORDS',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     41: {
         'access': 'read-write',
         'name': 'RECOMMENDED_TRIGGER_MINIMUM_QUIET_TIME',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     42: {
         'access': 'read-write',
         'name': 'RECOMMENDED_IQ_ACQUISITION_TIME',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     43: {
         'access': 'read-write',
         'name': 'RECOMMENDED_IQ_MINIMUM_SAMPLE_RATE',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     44: {
         'access': 'read-write',
         'name': 'RECOMMENDED_IQ_PRE_TRIGGER_TIME',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     45: {
         'access': 'read-write',
         'name': 'RECOMMENDED_SPECTRAL_ACQUISITION_SPAN',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     46: {
         'access': 'read-write',
@@ -228,12 +228,12 @@ attributes = {
     47: {
         'access': 'read-write',
         'name': 'RECOMMENDED_SPECTRAL_RESOLUTION_BANDWIDTH',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     48: {
         'access': 'read-write',
         'name': 'IF_FILTER_BANDWIDTH',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     49: {
         'access': 'read-write',
@@ -243,27 +243,27 @@ attributes = {
     50: {
         'access': 'read-write',
         'name': 'SUBSPAN_OVERLAP',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     51: {
         'access': 'read-write',
         'name': 'RECOMMENDED_IQ_MEASUREMENT_BANDWIDTH',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     52: {
         'access': 'read-write',
         'name': 'DOWNCONVERTER_GAIN',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     53: {
         'access': 'read-write',
         'name': 'DOWNCONVERTER_FREQUENCY_OFFSET',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     54: {
         'access': 'read-write',
         'name': 'RF_ATTENUATION_STEP_SIZE',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     55: {
         'access': 'read-write',
@@ -274,17 +274,17 @@ attributes = {
     56: {
         'access': 'read-write',
         'name': 'AMPLITUDE_SETTLING',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     57: {
         'access': 'read-write',
         'name': 'RECOMMENDED_CENTER_FREQUENCY',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     58: {
         'access': 'read-write',
         'name': 'LO2_EXPORT_ENABLED',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     59: {
         'access': 'read-write',
@@ -295,7 +295,7 @@ attributes = {
     60: {
         'access': 'read-write',
         'name': 'LO_FREQUENCY',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     68: {
         'access': 'read-write',
@@ -306,17 +306,17 @@ attributes = {
     70: {
         'access': 'read-write',
         'name': 'COMMON_MODE_LEVEL',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     71: {
         'access': 'read-write',
         'name': 'SMU_RESOURCE_NAME',
-        'type': 'UNKNOWN'
+        'type': 'char[]'
     },
     72: {
         'access': 'read-write',
         'name': 'SMU_CHANNEL',
-        'type': 'UNKNOWN'
+        'type': 'char[]'
     },
     74: {
         'access': 'read-write',
@@ -333,12 +333,12 @@ attributes = {
     78: {
         'access': 'read-write',
         'name': 'LO_IN_POWER',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     79: {
         'access': 'read-write',
         'name': 'LO_OUT_POWER',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     80: {
         'access': 'read-write',
@@ -360,7 +360,7 @@ attributes = {
     92: {
         'access': 'read-write',
         'name': 'INPUT_ISOLATION_ENABLED',
-        'type': 'UNKNOWN'
+        'type': 'int32'
     },
     94: {
         'access': 'read-write',
@@ -370,7 +370,7 @@ attributes = {
     95: {
         'access': 'read-write',
         'name': 'LO_FREQUENCY_STEP_SIZE',
-        'type': 'UNKNOWN'
+        'type': 'float64'
     },
     97: {
         'access': 'read-write',
