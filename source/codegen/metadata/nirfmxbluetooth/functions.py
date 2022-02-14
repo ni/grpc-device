@@ -2545,13 +2545,11 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'df1_avg_maximum',
                 'name': 'df1avgMaximum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'df1_avg_minimum',
                 'name': 'df1avgMinimum',
                 'type': 'float64'
             }
@@ -2629,13 +2627,11 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_name': 'df2_avg_minimum',
                 'name': 'df2avgMinimum',
                 'type': 'float64'
             },
             {
                 'direction': 'out',
-                'grpc_name': 'percentage_of_symbols_above_df2_max_threshold',
                 'name': 'percentageOfSymbolsAboveDf2maxThreshold',
                 'type': 'float64'
             }

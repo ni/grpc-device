@@ -2725,13 +2725,13 @@ namespace nirfmxbluetooth_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 df1_avg_maximum {};
-      float64 df1_avg_minimum {};
-      auto status = library_->ModAccFetchDf1(instrument, selector_string, timeout, &df1_avg_maximum, &df1_avg_minimum);
+      float64 df1avg_maximum {};
+      float64 df1avg_minimum {};
+      auto status = library_->ModAccFetchDf1(instrument, selector_string, timeout, &df1avg_maximum, &df1avg_minimum);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_df1_avg_maximum(df1_avg_maximum);
-        response->set_df1_avg_minimum(df1_avg_minimum);
+        response->set_df1avg_maximum(df1avg_maximum);
+        response->set_df1avg_minimum(df1avg_minimum);
       }
       return ::grpc::Status::OK;
     }
@@ -2795,13 +2795,13 @@ namespace nirfmxbluetooth_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
-      float64 df2_avg_minimum {};
-      float64 percentage_of_symbols_above_df2_max_threshold {};
-      auto status = library_->ModAccFetchDf2(instrument, selector_string, timeout, &df2_avg_minimum, &percentage_of_symbols_above_df2_max_threshold);
+      float64 df2avg_minimum {};
+      float64 percentage_of_symbols_above_df2max_threshold {};
+      auto status = library_->ModAccFetchDf2(instrument, selector_string, timeout, &df2avg_minimum, &percentage_of_symbols_above_df2max_threshold);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_df2_avg_minimum(df2_avg_minimum);
-        response->set_percentage_of_symbols_above_df2_max_threshold(percentage_of_symbols_above_df2_max_threshold);
+        response->set_df2avg_minimum(df2avg_minimum);
+        response->set_percentage_of_symbols_above_df2max_threshold(percentage_of_symbols_above_df2max_threshold);
       }
       return ::grpc::Status::OK;
     }
