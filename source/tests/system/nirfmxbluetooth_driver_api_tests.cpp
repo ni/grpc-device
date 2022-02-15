@@ -316,7 +316,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 TEST_F(NiRFmxBluetoothDriverApiTests, ConfigureTwentydBBandwidth_FetchMeasurements_DataLooksReasonable)
 {
   auto session = init_session(stub(), kPxi5663e);
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_20DB_BANDWIDTH, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TWENTY_DB_BANDWIDTH, true));
   EXPECT_SUCCESS(session, client::twentyd_b_bandwidth_cfg_averaging(stub(), session, "", TwentydBBandwidthAveragingEnabled::TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_FALSE, 10));
 
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
