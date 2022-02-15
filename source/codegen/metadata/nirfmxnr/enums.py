@@ -1584,11 +1584,11 @@ enums = {
     'PdschDmrsConfigurationType': {
         'values': [
             {
-                'name': 'TYPE1',
+                'name': '1',
                 'value': 0
             },
             {
-                'name': 'TYPE2',
+                'name': '2',
                 'value': 1
             }
         ]
@@ -1737,11 +1737,11 @@ enums = {
     'PuschDmrsConfigurationType': {
         'values': [
             {
-                'name': 'TYPE1',
+                'name': '1',
                 'value': 0
             },
             {
-                'name': 'TYPE2',
+                'name': '2',
                 'value': 1
             }
         ]
