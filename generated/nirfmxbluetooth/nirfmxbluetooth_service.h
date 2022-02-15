@@ -60,6 +60,7 @@ public:
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
   ::grpc::Status BuildOffsetString(::grpc::ServerContext* context, const BuildOffsetStringRequest* request, BuildOffsetStringResponse* response) override;
   ::grpc::Status BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response) override;
+  ::grpc::Status BuildSlotString(::grpc::ServerContext* context, const BuildSlotStringRequest* request, BuildSlotStringResponse* response) override;
   ::grpc::Status CfgChannelNumber(::grpc::ServerContext* context, const CfgChannelNumberRequest* request, CfgChannelNumberResponse* response) override;
   ::grpc::Status CfgDataRate(::grpc::ServerContext* context, const CfgDataRateRequest* request, CfgDataRateResponse* response) override;
   ::grpc::Status CfgDigitalEdgeTrigger(::grpc::ServerContext* context, const CfgDigitalEdgeTriggerRequest* request, CfgDigitalEdgeTriggerResponse* response) override;

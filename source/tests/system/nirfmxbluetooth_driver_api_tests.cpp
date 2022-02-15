@@ -331,6 +331,14 @@ TEST_F(NiRFmxBluetoothDriverApiTests, ConfigureTwentydBBandwidth_FetchMeasuremen
   EXPECT_THAT(fetch_spectrum_response.spectrum(), Each(Ne(0.0)));
 }
 
+TEST_F(NiRFmxBluetoothDriverApiTests, BuildSlotString_ReturnsSlotString)
+{
+  const auto slot_string_response = client::build_slot_string(stub(), "", 25);
+
+  EXPECT_EQ(slot_string_response.selector_string_out(), "slot25");
+  ni::tests::system::EXPECT_SUCCESS(slot_string_response);
+}
+
 }  // namespace
 }  // namespace system
 }  // namespace tests

@@ -34,6 +34,7 @@ service NiRFmxBluetooth {
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildOffsetString(BuildOffsetStringRequest) returns (BuildOffsetStringResponse);
   rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
+  rpc BuildSlotString(BuildSlotStringRequest) returns (BuildSlotStringResponse);
   rpc CfgChannelNumber(CfgChannelNumberRequest) returns (CfgChannelNumberResponse);
   rpc CfgDataRate(CfgDataRateRequest) returns (CfgDataRateResponse);
   rpc CfgDigitalEdgeTrigger(CfgDigitalEdgeTriggerRequest) returns (CfgDigitalEdgeTriggerResponse);
@@ -728,6 +729,16 @@ message BuildSignalStringRequest {
 message BuildSignalStringResponse {
   int32 status = 1;
   string selector_string = 2;
+}
+
+message BuildSlotStringRequest {
+  string selector_string = 1;
+  int32 slot_number = 2;
+}
+
+message BuildSlotStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
 }
 
 message CfgChannelNumberRequest {

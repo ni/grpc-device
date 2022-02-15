@@ -32,6 +32,7 @@ class NiRFmxBluetoothLibraryInterface {
   virtual int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) = 0;
   virtual int32 BuildOffsetString(char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]) = 0;
+  virtual int32 BuildSlotString(char selectorString[], int32 slotNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 CfgChannelNumber(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 channelNumber) = 0;
   virtual int32 CfgDataRate(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dataRate) = 0;
   virtual int32 CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger) = 0;
