@@ -611,7 +611,7 @@ def get_params_not_in_ivi_twist(
 
     all_params_in_ivi_set = {p["name"] for ivi_set in ivi_param_sets for p in ivi_set.all_params}
 
-    return (p for p in parameters if p["name"] not in all_params_in_ivi_set)
+    return [p for p in parameters if p["name"] not in all_params_in_ivi_set]
 
 
 def is_init_method(function_data):
@@ -950,3 +950,11 @@ def get_cpp_local_name(param: dict) -> str:
     reserved grpc_name!).
     """
     return param.get("grpc_name", _camel_to_snake(param["cppName"]))
+
+
+def get_grpc_field_names_for_param_names(params: List[dict], names: List[str]) -> List[str]:
+    """
+    Get the grpc field name for the corresponding param in params given a list
+    of names.
+    """
+    return [get_grpc_field_name(get_param_with_name(params, name)) for name in names]

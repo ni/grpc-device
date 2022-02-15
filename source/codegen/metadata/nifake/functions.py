@@ -1987,6 +1987,22 @@ functions = {
             {
                 'direction': 'in',
                 'documentation': {
+                    'description': 'Array 5 of same size.'
+                },
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated FakeCustomStruct',
+                'name': 'values5',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'size'
+                },
+            },
+            {
+                'direction': 'in',
+                'documentation': {
                     'description': 'Size for all arrays'
                 },
                 'name': 'size',

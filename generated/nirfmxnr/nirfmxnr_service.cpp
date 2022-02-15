@@ -6067,7 +6067,7 @@ namespace nirfmxnr_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [absoluteLimitStart, absoluteLimitStop] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [absolute_limit_start, absolute_limit_stop] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -6192,7 +6192,7 @@ namespace nirfmxnr_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offsetStartFrequency, offsetStopFrequency, offsetSideband] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_start_frequency, offset_stop_frequency, offset_sideband] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -6337,7 +6337,7 @@ namespace nirfmxnr_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offsetRBW, offsetRBWFilterType] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_rbw, offset_rbw_filter_type] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -6393,7 +6393,7 @@ namespace nirfmxnr_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [relativeLimitStart, relativeLimitStop] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [relative_limit_start, relative_limit_stop] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 

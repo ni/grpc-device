@@ -657,6 +657,7 @@ message MultipleArraysSameSizeWithOptionalRequest {
   repeated double values2 = 3;
   repeated double values3 = 4;
   repeated double values4 = 5;
+  repeated FakeCustomStruct values5 = 6;
 }
 
 message MultipleArraysSameSizeWithOptionalResponse {

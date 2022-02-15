@@ -706,15 +706,15 @@ ViStatus NiFakeLibrary::MultipleArraysSameSize(ViSession vi, ViReal64 values1[],
 #endif
 }
 
-ViStatus NiFakeLibrary::MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size)
+ViStatus NiFakeLibrary::MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size)
 {
   if (!function_pointers_.MultipleArraysSameSizeWithOptional) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFake_MultipleArraysSameSizeWithOptional.");
   }
 #if defined(_MSC_VER)
-  return niFake_MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, size);
+  return niFake_MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, values5, size);
 #else
-  return function_pointers_.MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, size);
+  return function_pointers_.MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, values5, size);
 #endif
 }
 
