@@ -802,6 +802,7 @@ enums = {
         ]
     },
     'GNodeBCategory': {
+        'enum-value-prefix': 'GNODEB_CATEGORY',
         'values': [
             {
                 'name': 'WIDE_AREA_BASE_STATION_CATEGORY_A',
@@ -834,6 +835,7 @@ enums = {
         ]
     },
     'GNodeBType': {
+        'enum-value-prefix': 'GNODEB_TYPE',
         'values': [
             {
                 'name': '1C',
