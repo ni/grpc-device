@@ -1720,6 +1720,7 @@ enums = {
         ]
     },
     'PiBy2BpskPowerBoostEnabled': {
+        'enum-value-prefix': 'PI_BY_2_BPSK_POWER_BOOST_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
