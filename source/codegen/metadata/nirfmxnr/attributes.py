@@ -598,6 +598,12 @@ attributes = {
         'name': 'GRID_START',
         'type': 'int32'
     },
+    9437335: {
+        'access': 'read-write',
+        'enum': 'PdschPresentInSsbResourceBlock',
+        'name': 'PDSCH_PRESENT_IN_SSB_RESOURCE_BLOCK',
+        'type': 'int32'
+    },
     9437336: {
         'access': 'read-write',
         'name': 'CHANNEL_RASTER',
