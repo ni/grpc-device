@@ -69,7 +69,7 @@ enums = {
         ]
     },
     'DsssModAccAcquisitionLengthMode': {
-        'enum-value-prefix': 'DSSS_MODACC_ACQUISITION_LENGTH_MODE',
+        'enum-value-prefix': 'DSSSMODACC_ACQUISITION_LENGTH_MODE',
         'values': [
             {
                 'name': 'MANUAL',
@@ -82,7 +82,7 @@ enums = {
         ]
     },
     'DsssModAccAveragingEnabled': {
-        'enum-value-prefix': 'DSSS_MODACC_AVERAGING_ENABLED',
+        'enum-value-prefix': 'DSSSMODACC_AVERAGING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -95,7 +95,7 @@ enums = {
         ]
     },
     'DsssModAccBurstStartDetectionEnabled': {
-        'enum-value-prefix': 'DSSS_MODACC_BURST_START_DETECTION_ENABLED',
+        'enum-value-prefix': 'DSSSMODACC_BURST_START_DETECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -108,7 +108,7 @@ enums = {
         ]
     },
     'DsssModAccChipClockErrorCorrectionEnabled': {
-        'enum-value-prefix': 'DSSS_MODACC_CHIP_CLOCK_ERROR_CORRECTION_ENABLED',
+        'enum-value-prefix': 'DSSSMODACC_CHIP_CLOCK_ERROR_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -121,7 +121,7 @@ enums = {
         ]
     },
     'DsssModAccDataDecodingEnabled': {
-        'enum-value-prefix': 'DSSS_MODACC_DATA_DECODING_ENABLED',
+        'enum-value-prefix': 'DSSSMODACC_DATA_DECODING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -134,7 +134,7 @@ enums = {
         ]
     },
     'DsssModAccDataModulationFormat': {
-        'enum-value-prefix': 'DSSS_MODACC_DATA_MODULATION_FORMAT',
+        'enum-value-prefix': 'DSSSMODACC_DATA_MODULATION_FORMAT',
         'values': [
             {
                 'name': 'DSSS1MBPS',
@@ -171,7 +171,7 @@ enums = {
         ]
     },
     'DsssModAccEqualizationEnabled': {
-        'enum-value-prefix': 'DSSS_MODACC_EQUALIZATION_ENABLED',
+        'enum-value-prefix': 'DSSSMODACC_EQUALIZATION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -184,7 +184,7 @@ enums = {
         ]
     },
     'DsssModAccEvmUnit': {
-        'enum-value-prefix': 'DSSS_MODACC_EVM_UNIT',
+        'enum-value-prefix': 'DSSSMODACC_EVM_UNIT',
         'values': [
             {
                 'name': 'PERCENTAGE',
@@ -197,7 +197,7 @@ enums = {
         ]
     },
     'DsssModAccFrequencyErrorCorrectionEnabled': {
-        'enum-value-prefix': 'DSSS_MODACC_FREQUENCY_ERROR_CORRECTION_ENABLED',
+        'enum-value-prefix': 'DSSSMODACC_FREQUENCY_ERROR_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -210,7 +210,7 @@ enums = {
         ]
     },
     'DsssModAccIQOriginOffsetCorrectionEnabled': {
-        'enum-value-prefix': 'DSSS_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED',
+        'enum-value-prefix': 'DSSSMODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -223,20 +223,20 @@ enums = {
         ]
     },
     'DsssModAccPayloadHeaderCrcStatus': {
-        'enum-value-prefix': 'DSSS_MODACC_PAYLOAD_HEADER_CRC_STATUS',
+        'enum-value-prefix': 'DSSSMODACC_PAYLOAD_HEADER_CRC_STATUS',
         'values': [
             {
-                'name': 'DSSSMODACC_HEADER_CRC_STATUS_FAIL',
+                'name': 'FAIL',
                 'value': 0
             },
             {
-                'name': 'DSSSMODACC_HEADER_CRC_STATUS_PASS',
+                'name': 'PASS',
                 'value': 1
             }
         ]
     },
     'DsssModAccPowerMeasurementEnabled': {
-        'enum-value-prefix': 'DSSS_MODACC_POWER_MEASUREMENT_ENABLED',
+        'enum-value-prefix': 'DSSSMODACC_POWER_MEASUREMENT_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -249,7 +249,7 @@ enums = {
         ]
     },
     'DsssModAccPreambleType': {
-        'enum-value-prefix': 'DSSS_MODACC_PREAMBLE_TYPE',
+        'enum-value-prefix': 'DSSSMODACC_PREAMBLE_TYPE',
         'values': [
             {
                 'name': 'LONG',
@@ -261,21 +261,21 @@ enums = {
             }
         ]
     },
-    'DsssModAccPsduCrcStaus': {
-        'enum-value-prefix': 'DSSS_MODACC_PSDU_CRC_STAUS',
+    'DsssModAccPsduCrcStatus': {
+        'enum-value-prefix': 'DSSSMODACC_PSDU_CRC_STATUS',
         'values': [
             {
-                'name': 'DSSSMODACC_PSDU_CRC_STATUS_FAIL',
+                'name': 'FAIL',
                 'value': 0
             },
             {
-                'name': 'DSSSMODACC_PSDU_CRC_STATUS_PASS',
+                'name': 'PASS',
                 'value': 1
             }
         ]
     },
     'DsssModAccPulseShapingFilterType': {
-        'enum-value-prefix': 'DSSS_MODACC_PULSE_SHAPING_FILTER_TYPE',
+        'enum-value-prefix': 'DSSSMODACC_PULSE_SHAPING_FILTER_TYPE',
         'values': [
             {
                 'name': 'RECTANGULAR',
@@ -296,7 +296,7 @@ enums = {
         ]
     },
     'DsssModAccSpectrumInverted': {
-        'enum-value-prefix': 'DSSS_MODACC_SPECTRUM_INVERTED',
+        'enum-value-prefix': 'DSSSMODACC_SPECTRUM_INVERTED',
         'values': [
             {
                 'name': 'FALSE',
@@ -550,7 +550,7 @@ enums = {
         ]
     },
     'OfdmModAccAcquisitionLengthMode': {
-        'enum-value-prefix': 'OFDM_MODACC_ACQUISITION_LENGTH_MODE',
+        'enum-value-prefix': 'OFDMMODACC_ACQUISITION_LENGTH_MODE',
         'values': [
             {
                 'name': 'MANUAL',
@@ -563,7 +563,7 @@ enums = {
         ]
     },
     'OfdmModAccAmplitudeTrackingEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_AMPLITUDE_TRACKING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -576,7 +576,7 @@ enums = {
         ]
     },
     'OfdmModAccAutoLevelAllowOverflow': {
-        'enum-value-prefix': 'OFDM_MODACC_AUTO_LEVEL_ALLOW_OVERFLOW',
+        'enum-value-prefix': 'OFDMMODACC_AUTO_LEVEL_ALLOW_OVERFLOW',
         'values': [
             {
                 'name': 'FALSE',
@@ -589,7 +589,7 @@ enums = {
         ]
     },
     'OfdmModAccAveragingEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_AVERAGING_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_AVERAGING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -602,7 +602,7 @@ enums = {
         ]
     },
     'OfdmModAccAveragingType': {
-        'enum-value-prefix': 'OFDM_MODACC_AVERAGING_TYPE',
+        'enum-value-prefix': 'OFDMMODACC_AVERAGING_TYPE',
         'values': [
             {
                 'name': 'RMS',
@@ -615,7 +615,7 @@ enums = {
         ]
     },
     'OfdmModAccBurstStartDetectionEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_BURST_START_DETECTION_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_BURST_START_DETECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -628,7 +628,7 @@ enums = {
         ]
     },
     'OfdmModAccCalibrationDataValid': {
-        'enum-value-prefix': 'OFDM_MODACC_CALIBRATION_DATA_VALID',
+        'enum-value-prefix': 'OFDMMODACC_CALIBRATION_DATA_VALID',
         'values': [
             {
                 'name': 'FALSE',
@@ -641,7 +641,7 @@ enums = {
         ]
     },
     'OfdmModAccChannelEstimationLLtfEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -654,7 +654,7 @@ enums = {
         ]
     },
     'OfdmModAccChannelEstimationSmoothingEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -667,7 +667,7 @@ enums = {
         ]
     },
     'OfdmModAccChannelEstimationType': {
-        'enum-value-prefix': 'OFDM_MODACC_CHANNEL_ESTIMATION_TYPE',
+        'enum-value-prefix': 'OFDMMODACC_CHANNEL_ESTIMATION_TYPE',
         'values': [
             {
                 'name': 'REFERENCE',
@@ -680,7 +680,7 @@ enums = {
         ]
     },
     'OfdmModAccChannelMatrixPowerEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_CHANNEL_MATRIX_POWER_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_CHANNEL_MATRIX_POWER_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -693,7 +693,7 @@ enums = {
         ]
     },
     'OfdmModAccCommonClockSourceEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_COMMON_CLOCK_SOURCE_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_COMMON_CLOCK_SOURCE_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -706,7 +706,7 @@ enums = {
         ]
     },
     'OfdmModAccDataDecodingEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_DATA_DECODING_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_DATA_DECODING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -719,7 +719,7 @@ enums = {
         ]
     },
     'OfdmModAccDcmEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_DCM_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_DCM_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -732,7 +732,7 @@ enums = {
         ]
     },
     'OfdmModAccEhtSigCrcStatus': {
-        'enum-value-prefix': 'OFDM_MODACC_EHT_SIG_CRC_STATUS',
+        'enum-value-prefix': 'OFDMMODACC_EHT_SIG_CRC_STATUS',
         'values': [
             {
                 'name': 'NOT_APPLICABLE',
@@ -749,7 +749,7 @@ enums = {
         ]
     },
     'OfdmModAccEvmReferenceDataSymbolsMode': {
-        'enum-value-prefix': 'OFDM_MODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE',
+        'enum-value-prefix': 'OFDMMODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE',
         'values': [
             {
                 'name': 'ACQUIRED_WAVEFORM',
@@ -762,7 +762,7 @@ enums = {
         ]
     },
     'OfdmModAccEvmUnit': {
-        'enum-value-prefix': 'OFDM_MODACC_EVM_UNIT',
+        'enum-value-prefix': 'OFDMMODACC_EVM_UNIT',
         'values': [
             {
                 'name': 'PERCENTAGE',
@@ -775,7 +775,7 @@ enums = {
         ]
     },
     'OfdmModAccFecCodingType': {
-        'enum-value-prefix': 'OFDM_MODACC_FEC_CODING_TYPE',
+        'enum-value-prefix': 'OFDMMODACC_FEC_CODING_TYPE',
         'values': [
             {
                 'name': 'BCC',
@@ -788,7 +788,7 @@ enums = {
         ]
     },
     'OfdmModAccFrequencyErrorEstimationMethod': {
-        'enum-value-prefix': 'OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD',
+        'enum-value-prefix': 'OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD',
         'values': [
             {
                 'name': 'DISABLED',
@@ -813,7 +813,7 @@ enums = {
         ]
     },
     'OfdmModAccIQGainImbalanceCorrectionEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_IQ_GAIN_IMBALANCE_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -826,7 +826,7 @@ enums = {
         ]
     },
     'OfdmModAccIQImpairmentsEstimationEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -839,7 +839,7 @@ enums = {
         ]
     },
     'OfdmModAccIQImpairmentsModel': {
-        'enum-value-prefix': 'OFDM_MODACC_IQ_IMPAIRMENTS_MODEL',
+        'enum-value-prefix': 'OFDMMODACC_IQ_IMPAIRMENTS_MODEL',
         'values': [
             {
                 'name': 'TX',
@@ -852,7 +852,7 @@ enums = {
         ]
     },
     'OfdmModAccIQImpairmentsPerSubcarrierEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_IQ_IMPAIRMENTS_PER_SUBCARRIER_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_IQ_IMPAIRMENTS_PER_SUBCARRIER_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -865,7 +865,7 @@ enums = {
         ]
     },
     'OfdmModAccIQQuadratureErrorCorrectionEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_IQ_QUADRATURE_ERROR_CORRECTION_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_IQ_QUADRATURE_ERROR_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -878,7 +878,7 @@ enums = {
         ]
     },
     'OfdmModAccIQTimingSkewCorrectionEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_IQ_TIMING_SKEW_CORRECTION_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_IQ_TIMING_SKEW_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -891,7 +891,7 @@ enums = {
         ]
     },
     'OfdmModAccLSigParityCheckStatus': {
-        'enum-value-prefix': 'OFDM_MODACC_LSIG_PARITY_CHECK_STATUS',
+        'enum-value-prefix': 'OFDMMODACC_L_SIG_PARITY_CHECK_STATUS',
         'values': [
             {
                 'name': 'NOT_APPLICABLE',
@@ -908,7 +908,7 @@ enums = {
         ]
     },
     'OfdmModAccMeasurementMode': {
-        'enum-value-prefix': 'OFDM_MODACC_MEASUREMENT_MODE',
+        'enum-value-prefix': 'OFDMMODACC_MEASUREMENT_MODE',
         'values': [
             {
                 'name': 'MEASURE',
@@ -921,7 +921,7 @@ enums = {
         ]
     },
     'OfdmModAccNoiseCompensationApplied': {
-        'enum-value-prefix': 'OFDM_MODACC_NOISE_COMPENSATION_APPLIED',
+        'enum-value-prefix': 'OFDMMODACC_NOISE_COMPENSATION_APPLIED',
         'values': [
             {
                 'name': 'FALSE',
@@ -934,7 +934,7 @@ enums = {
         ]
     },
     'OfdmModAccNoiseCompensationEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_NOISE_COMPENSATION_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_NOISE_COMPENSATION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -947,7 +947,7 @@ enums = {
         ]
     },
     'OfdmModAccNoiseCompensationInputPowerCheckEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_NOISE_COMPENSATION_INPUT_POWER_CHECK_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_NOISE_COMPENSATION_INPUT_POWER_CHECK_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -960,7 +960,7 @@ enums = {
         ]
     },
     'OfdmModAccOptimizeDynamicRangeForEvmEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_OPTIMIZE_DYNAMIC_RANGE_FOR_EVM_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -973,7 +973,7 @@ enums = {
         ]
     },
     'OfdmModAccPhaseTrackingEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_PHASE_TRACKING_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_PHASE_TRACKING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -986,7 +986,7 @@ enums = {
         ]
     },
     'OfdmModAccPowerMeasurementEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_POWER_MEASUREMENT_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_POWER_MEASUREMENT_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -999,7 +999,7 @@ enums = {
         ]
     },
     'OfdmModAccPsduCrcStatus': {
-        'enum-value-prefix': 'OFDM_MODACC_PSDU_CRC_STATUS',
+        'enum-value-prefix': 'OFDMMODACC_PSDU_CRC_STATUS',
         'values': [
             {
                 'name': 'FAIL',
@@ -1012,7 +1012,7 @@ enums = {
         ]
     },
     'OfdmModAccSigBCrcStatus': {
-        'enum-value-prefix': 'OFDM_MODACC_SIGB_CRC_STATUS',
+        'enum-value-prefix': 'OFDMMODACC_SIG_B_CRC_STATUS',
         'values': [
             {
                 'name': 'NOT_APPLICABLE',
@@ -1029,7 +1029,7 @@ enums = {
         ]
     },
     'OfdmModAccSigCrcStatus': {
-        'enum-value-prefix': 'OFDM_MODACC_SIG_CRC_STATUS',
+        'enum-value-prefix': 'OFDMMODACC_SIG_CRC_STATUS',
         'values': [
             {
                 'name': 'NOT_APPLICABLE',
@@ -1046,7 +1046,7 @@ enums = {
         ]
     },
     'OfdmModAccSpectrumInverted': {
-        'enum-value-prefix': 'OFDM_MODACC_SPECTRUM_INVERTED',
+        'enum-value-prefix': 'OFDMMODACC_SPECTRUM_INVERTED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1059,7 +1059,7 @@ enums = {
         ]
     },
     'OfdmModAccSymbolClockErrorCorrectionEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1072,7 +1072,7 @@ enums = {
         ]
     },
     'OfdmModAccUSigCrcStatus': {
-        'enum-value-prefix': 'OFDM_MODACC_U_SIG_CRC_STATUS',
+        'enum-value-prefix': 'OFDMMODACC_U_SIG_CRC_STATUS',
         'values': [
             {
                 'name': 'NOT_APPLICABLE',
@@ -1089,7 +1089,7 @@ enums = {
         ]
     },
     'OfdmModAccUnusedToneErrorMaskReference': {
-        'enum-value-prefix': 'OFDM_MODACC_UNUSED_TONE_ERROR_MASK_REFERENCE',
+        'enum-value-prefix': 'OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE',
         'values': [
             {
                 'name': 'LIMIT1',
@@ -1102,7 +1102,7 @@ enums = {
         ]
     },
     'OfdmModAccVectorAveragingPhaseAlignmentEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_VECTOR_AVERAGING_PHASE_ALIGNMENT_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_VECTOR_AVERAGING_PHASE_ALIGNMENT_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1115,7 +1115,7 @@ enums = {
         ]
     },
     'OfdmModAccVectorAveragingTimeAlignmentEnabled': {
-        'enum-value-prefix': 'OFDM_MODACC_VECTOR_AVERAGING_TIME_ALIGNMENT_ENABLED',
+        'enum-value-prefix': 'OFDMMODACC_VECTOR_AVERAGING_TIME_ALIGNMENT_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -1240,6 +1240,7 @@ enums = {
         ]
     },
     'PowerRampAveragingEnabled': {
+        'enum-value-prefix': 'POWERRAMP_AVERAGING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
