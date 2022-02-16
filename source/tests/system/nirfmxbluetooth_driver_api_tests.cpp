@@ -54,31 +54,10 @@ class NiRFmxBluetoothDriverApiTests : public Test {
     return stub_;
   }
 
-  void check_error(const nidevice_grpc::Session& session)
-  {
-    auto response = client::get_error(stub(), session);
-    EXPECT_EQ("", std::string(response.error_description().c_str()));
-  }
-
-  template <typename TResponse>
-  void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_SUCCESS(response);
-    check_error(session);
-  }
-
   template <typename TService>
   std::unique_ptr<typename TService::Stub> create_stub()
   {
     return TService::NewStub(device_server_->InProcessChannel());
-  }
-
-  template <typename TResponse>
-  void EXPECT_RFMX_ERROR(pb::int32 expected_error, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_RFMX_ERROR(expected_error, response);
-    const auto error = client::get_error(stub(), session);
-    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));
   }
 
  private:
