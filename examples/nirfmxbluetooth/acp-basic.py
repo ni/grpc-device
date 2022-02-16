@@ -322,7 +322,7 @@ except grpc.RpcError as rpc_error:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
-    print(f"{error_message}")
+    sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
         client.Close(nirfmxbluetooth_types.CloseRequest(instrument=instr, force_destroy=False))
