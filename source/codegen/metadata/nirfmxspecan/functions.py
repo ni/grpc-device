@@ -318,6 +318,9 @@ functions = {
                 'name': 'offsetFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -328,6 +331,9 @@ functions = {
                 'name': 'offsetSideband',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -338,6 +344,9 @@ functions = {
                 'name': 'offsetEnabled',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -469,6 +478,9 @@ functions = {
                 'name': 'offsetPowerReferenceCarrier',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -478,6 +490,9 @@ functions = {
                 'name': 'offsetPowerReferenceSpecific',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -536,6 +551,9 @@ functions = {
                 'name': 'rrcFilterEnabled',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -545,6 +563,9 @@ functions = {
                 'name': 'rrcAlpha',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -3994,6 +4015,9 @@ functions = {
                 'name': 'lutInputPowers',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float32[]'
@@ -4003,6 +4027,9 @@ functions = {
                 'name': 'lutComplexGains',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'NIComplexSingle[]'
@@ -6115,6 +6142,9 @@ functions = {
                 'name': 'harmonicOrder',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -6124,6 +6154,9 @@ functions = {
                 'name': 'harmonicBandwidth',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -6134,6 +6167,9 @@ functions = {
                 'name': 'harmonicEnabled',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -6143,6 +6179,9 @@ functions = {
                 'name': 'harmonicMeasurementInterval',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -6602,6 +6641,9 @@ functions = {
                 'name': 'intermodOrder',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -6611,6 +6653,9 @@ functions = {
                 'name': 'lowerIntermodFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -6620,6 +6665,9 @@ functions = {
                 'name': 'upperIntermodFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -6630,6 +6678,9 @@ functions = {
                 'name': 'intermodSide',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -6640,6 +6691,9 @@ functions = {
                 'name': 'intermodEnabled',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -7551,6 +7605,9 @@ functions = {
                 'name': 'calibrationLossFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7560,6 +7617,9 @@ functions = {
                 'name': 'calibrationLoss',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7596,6 +7656,9 @@ functions = {
                 'name': 'dutsParametersFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7606,6 +7669,9 @@ functions = {
                 'name': 'duts21',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7616,6 +7682,9 @@ functions = {
                 'name': 'duts12',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7626,6 +7695,9 @@ functions = {
                 'name': 'duts11',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7636,6 +7708,9 @@ functions = {
                 'name': 'duts22',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7666,6 +7741,9 @@ functions = {
                 'name': 'terminationVSWR',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7675,6 +7753,9 @@ functions = {
                 'name': 'terminationVSWRFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7738,6 +7819,9 @@ functions = {
                 'name': 'dutInputLossFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7747,6 +7831,9 @@ functions = {
                 'name': 'dutInputLoss',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7788,6 +7875,9 @@ functions = {
                 'name': 'dutOutputLossFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -7797,6 +7887,9 @@ functions = {
                 'name': 'dutOutputLoss',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -8012,6 +8105,9 @@ functions = {
                 'name': 'enrFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -8021,6 +8117,9 @@ functions = {
                 'name': 'enr',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -8067,6 +8166,9 @@ functions = {
                 'name': 'noiseSourceLossFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -8076,6 +8178,9 @@ functions = {
                 'name': 'noiseSourceLoss',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -8911,6 +9016,9 @@ functions = {
                 'name': 'segmentMeasurementOffset',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -8920,6 +9028,9 @@ functions = {
                 'name': 'segmentMeasurementLength',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -9351,6 +9462,9 @@ functions = {
                 'name': 'frequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float32[]'
@@ -9360,6 +9474,9 @@ functions = {
                 'name': 'referencePhaseNoise',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float32[]'
@@ -9396,6 +9513,9 @@ functions = {
                 'name': 'integratedNoiseStartFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -9405,6 +9525,9 @@ functions = {
                 'name': 'integratedNoiseStopFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -9456,6 +9579,9 @@ functions = {
                 'name': 'rangeStartFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -9465,6 +9591,9 @@ functions = {
                 'name': 'rangeStopFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -9474,6 +9603,9 @@ functions = {
                 'name': 'rangeRBWPercentage',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -9483,6 +9615,9 @@ functions = {
                 'name': 'rangeAveragingCount',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -10192,6 +10327,9 @@ functions = {
                 'name': 'absoluteLimitMode',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -10201,6 +10339,9 @@ functions = {
                 'name': 'absoluteLimitStart',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -10210,6 +10351,9 @@ functions = {
                 'name': 'absoluteLimitStop',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -10299,6 +10443,9 @@ functions = {
                 'name': 'offsetStartFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -10308,6 +10455,9 @@ functions = {
                 'name': 'offsetStopFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -10318,6 +10468,9 @@ functions = {
                 'name': 'offsetEnabled',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -10328,6 +10481,9 @@ functions = {
                 'name': 'offsetSideband',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -10436,6 +10592,9 @@ functions = {
                 'name': 'rbwAuto',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -10445,6 +10604,9 @@ functions = {
                 'name': 'rbw',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -10455,6 +10617,9 @@ functions = {
                 'name': 'rbwFilterType',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -10569,6 +10734,9 @@ functions = {
                 'name': 'relativeLimitMode',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -10578,6 +10746,9 @@ functions = {
                 'name': 'relativeLimitStart',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -10587,6 +10758,9 @@ functions = {
                 'name': 'relativeLimitStop',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -12817,6 +12991,9 @@ functions = {
                 'name': 'detectorType',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -12826,6 +13003,9 @@ functions = {
                 'name': 'detectorPoints',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -12888,6 +13068,9 @@ functions = {
                 'name': 'startFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -12897,6 +13080,9 @@ functions = {
                 'name': 'stopFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -12907,6 +13093,9 @@ functions = {
                 'name': 'rangeEnabled',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -13014,6 +13203,9 @@ functions = {
                 'name': 'threshold',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -13023,6 +13215,9 @@ functions = {
                 'name': 'excursion',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -13054,6 +13249,9 @@ functions = {
                 'name': 'rbwAuto',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -13063,6 +13261,9 @@ functions = {
                 'name': 'rbw',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -13073,6 +13274,9 @@ functions = {
                 'name': 'rbwFilterType',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -13215,6 +13419,9 @@ functions = {
                 'name': 'sweepTimeAuto',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -13224,6 +13431,9 @@ functions = {
                 'name': 'sweepTimeInterval',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -13287,6 +13497,9 @@ functions = {
                 'name': 'vbwAuto',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -13296,6 +13509,9 @@ functions = {
                 'name': 'vbw',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -13305,6 +13521,9 @@ functions = {
                 'name': 'vbwToRBWRatio',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'

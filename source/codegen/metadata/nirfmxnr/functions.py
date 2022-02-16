@@ -5747,6 +5747,9 @@ functions = {
                 'name': 'absoluteLimitStart',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -5756,6 +5759,9 @@ functions = {
                 'name': 'absoluteLimitStop',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -5869,6 +5875,9 @@ functions = {
                 'name': 'offsetStartFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -5878,6 +5887,9 @@ functions = {
                 'name': 'offsetStopFrequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -5888,6 +5900,9 @@ functions = {
                 'name': 'offsetSideband',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -5998,6 +6013,9 @@ functions = {
                 'name': 'offsetRBW',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -6008,6 +6026,9 @@ functions = {
                 'name': 'offsetRBWFilterType',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'int32[]'
@@ -6064,6 +6085,9 @@ functions = {
                 'name': 'relativeLimitStart',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'
@@ -6073,6 +6097,9 @@ functions = {
                 'name': 'relativeLimitStop',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'numberOfElements'
                 },
                 'type': 'float64[]'

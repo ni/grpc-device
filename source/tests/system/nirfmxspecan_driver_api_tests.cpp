@@ -59,6 +59,13 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
     return response.status() != INVALID_DRIVER_SESSION;
   }
 
+  void config_dpd_reference_waveform(const nidevice_grpc::Session& session)
+  {
+    EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_DPD, true));
+    auto waveform = load_test_waveform_data<float, nidevice_grpc::NIComplexNumberF32>("LTE20MHz Waveform (Two Subframes).json");
+    EXPECT_SUCCESS(session, client::dpd_cfg_reference_waveform(stub(), session, "", waveform.t0, waveform.dt, waveform.data, false, DpdSignalType::DPD_SIGNAL_TYPE_MODULATED));
+  }
+
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiRFmxSpecAn::Stub> nirfmxspecan_stub_;
@@ -128,6 +135,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1e9, 0.0, 0.0));
   EXPECT_SUCCESS(session, client::acp_cfg_averaging(stub(), session, "", false, 10, AcpAveragingType::ACP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::acp_cfg_carrier_and_offsets(stub(), session, "", 1e6, 2, 1e6));
+  EXPECT_SUCCESS(session, client::acp_cfg_offset_array(stub(), session, "", {1.0e6, 2.0e6}, {}, {}));
 
   const auto read_response = EXPECT_SUCCESS(session, client::acp_read(stub(), session, "", 10.0));
 
@@ -399,6 +407,53 @@ TEST_F(NiRFmxSpecAnDriverApiTests, DisableDeleteRecordOnFetch_IQFetchData_Record
   EXPECT_SUCCESS(session, fetch_response_2);
 
   EXPECT_THAT(fetch_response_2.data(), Not(IsEmpty()));
+}
+
+TEST_F(NiRFmxSpecAnDriverApiTests, ConfigureDPDLookupTableWithNoComplexGains_Initiate_Succeeds)
+{
+  const auto session = init_session(stub(), PXI_5663);
+  config_dpd_reference_waveform(session);
+  EXPECT_SUCCESS(session, client::dpd_cfg_apply_dpd_user_lookup_table(stub(), session, "", {1.23f, 4.56f, 7.89f}, {}));
+
+  const auto initiate_response = client::initiate(stub(), session, "", "");
+
+  EXPECT_SUCCESS(session, initiate_response);
+}
+
+TEST_F(NiRFmxSpecAnDriverApiTests, ConfigureDPDLookupTableWithNoInputPowers_Initiate_Succeeds)
+{
+  const auto session = init_session(stub(), PXI_5663);
+  config_dpd_reference_waveform(session);
+  EXPECT_SUCCESS(
+      session,
+      client::dpd_cfg_apply_dpd_user_lookup_table(
+          stub(),
+          session,
+          "",
+          {},
+          complex_f32_array({0.7f, 0.5f, 0.0f, -0.5f, -0.7f}, {-1.5f, -1.7f, -2.0f, -2.3f, -2.5f})));
+
+  const auto initiate_response = client::initiate(stub(), session, "", "");
+
+  EXPECT_SUCCESS(session, initiate_response);
+}
+
+TEST_F(NiRFmxSpecAnDriverApiTests, ConfigureDPDLookupTableWithBothInputs_Initiate_Succeeds)
+{
+  const auto session = init_session(stub(), PXI_5663);
+  config_dpd_reference_waveform(session);
+  EXPECT_SUCCESS(
+      session,
+      client::dpd_cfg_apply_dpd_user_lookup_table(
+          stub(),
+          session,
+          "",
+          {1.23f, 4.56f, 7.89f},
+          complex_f32_array({0.7f, 0.5f, 0.0f}, {-1.5f, -1.7f, -2.0f})));
+
+  const auto initiate_response = client::initiate(stub(), session, "", "");
+
+  EXPECT_SUCCESS(session, initiate_response);
 }
 
 void close_session(const client::StubPtr& stub, const nidevice_grpc::Session& session)

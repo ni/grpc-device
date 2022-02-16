@@ -6064,10 +6064,15 @@ namespace nirfmxnr_grpc {
         request->absolute_limit_start_size(),
         request->absolute_limit_stop_size()
       };
-      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, true);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [absolute_limit_start, absolute_limit_stop] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (number_of_elements_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        absolute_limit_start = request->absolute_limit_start_size() ? std::move(absolute_limit_start) : nullptr;
+        absolute_limit_stop = request->absolute_limit_stop_size() ? std::move(absolute_limit_stop) : nullptr;
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -6189,10 +6194,16 @@ namespace nirfmxnr_grpc {
         request->offset_stop_frequency_size(),
         request->offset_sideband_size()
       };
-      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, true);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_start_frequency, offset_stop_frequency, offset_sideband] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (number_of_elements_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        offset_start_frequency = request->offset_start_frequency_size() ? std::move(offset_start_frequency) : nullptr;
+        offset_stop_frequency = request->offset_stop_frequency_size() ? std::move(offset_stop_frequency) : nullptr;
+        offset_sideband = request->offset_sideband_size() ? std::move(offset_sideband) : nullptr;
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -6334,10 +6345,15 @@ namespace nirfmxnr_grpc {
         request->offset_rbw_size(),
         request->offset_rbw_filter_type_size()
       };
-      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, true);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_rbw, offset_rbw_filter_type] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (number_of_elements_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        offset_rbw = request->offset_rbw_size() ? std::move(offset_rbw) : nullptr;
+        offset_rbw_filter_type = request->offset_rbw_filter_type_size() ? std::move(offset_rbw_filter_type) : nullptr;
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -6390,10 +6406,15 @@ namespace nirfmxnr_grpc {
         request->relative_limit_start_size(),
         request->relative_limit_stop_size()
       };
-      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, true);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [relative_limit_start, relative_limit_stop] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (number_of_elements_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        relative_limit_start = request->relative_limit_start_size() ? std::move(relative_limit_start) : nullptr;
+        relative_limit_stop = request->relative_limit_stop_size() ? std::move(relative_limit_stop) : nullptr;
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
