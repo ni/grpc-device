@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
+#include "expect_macros.h"
 #include "niRFmxNR.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxnr/nirfmxnr_client.h"
@@ -27,12 +28,6 @@ const auto IVI_ERROR_INVALID_VALUE = -1074135024;
 const auto IVI_ERROR_INVALID_VALUE_STR = "Invalid value for parameter or property";
 const auto INCORRECT_TYPE_ERROR_CODE = -380251;
 const auto INCORRECT_TYPE_ERROR_STR = "Incorrect data type specified";
-
-template <typename TResponse>
-void EXPECT_RESPONSE_SUCCESS(const TResponse& response)
-{
-  EXPECT_EQ(0, response.status());
-}
 
 class NiRFmxNRDriverApiTests : public Test {
  protected:
@@ -65,26 +60,6 @@ class NiRFmxNRDriverApiTests : public Test {
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiRFmxNR::Stub> stub_;
 };
-
-#define CHECK_ERROR(session)                                          \
-  if (1) {                                                            \
-    auto response = client::get_error(stub(), session);               \
-    EXPECT_EQ("", std::string(response.error_description().c_str())); \
-  }
-
-#define EXPECT_SUCCESS(session, response) \
-  if (1) {                                \
-    EXPECT_EQ(0, (response).status());    \
-    CHECK_ERROR(session);                 \
-  }
-
-#define EXPECT_ERROR(expected_error, message_substring, session, response_) \
-  if (1) {                                                                  \
-    auto response = (response_);                                            \
-    EXPECT_EQ(expected_error, response.status());                           \
-    const auto error = client::get_error(stub(), session);                  \
-    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));   \
-  }
 
 #define GET_ATTR_(get_attr_fn, session_, selector_string_, attribute_id_)                \
   ([this](auto& session, auto& selector_string, auto attribute_id) {                     \
@@ -133,21 +108,21 @@ TEST_F(NiRFmxNRDriverApiTests, Init_Close_Succeeds)
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_RESPONSE_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxNRDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
-  ni::tests::system::EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
+  EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
   auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_RESPONSE_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData_DataLooksReasonable)
