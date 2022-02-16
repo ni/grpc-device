@@ -436,6 +436,15 @@ try:
         print("SIG-B CRC Status                        : Fail")
     elif sig_b_crc_status == nirfmxwlan_types.OFDMMODACC_SIG_B_CRC_STATUS_PASS:
         print("SIG-B CRC Status                        : Pass")
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
         client.Close(nirfmxwlan_types.CloseRequest(instrument=instr, force_destroy=False))
