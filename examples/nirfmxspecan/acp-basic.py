@@ -147,6 +147,15 @@ try:
     print(f"Offset ch0 Upper Relative Power(dB)     {off_ch0_upper_relative_power}")
     print(f"Offset ch1 Lower Relative Power(dB)     {off_ch1_lower_relative_power}")
     print(f"Offset ch1 Upper Relative Power(dB)     {off_ch1_upper_relative_power}")
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    print(f"{error_message}")
 finally:
     if instr:
         client.Close(nirfmxspecan_types.CloseRequest(instrument=instr, force_destroy=False))

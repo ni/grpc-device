@@ -320,6 +320,15 @@ try:
         print(
             f"Peak Absolute Power Deviation Maximum (%)[{i}]     : {transmit_slot_peak_absolute_power_deviation_maximum[i]}\n"
         )
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    print(f"{error_message}")
 finally:
     if instr:
         client.Close(nirfmxbluetooth_types.CloseRequest(instrument=instr, force_destroy=False))
