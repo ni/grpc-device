@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
+#include "expect_macros.h"
 #include "niRFmxLTE.h"
 #include "nirfmxlte/nirfmxlte_client.h"
 
@@ -14,12 +15,6 @@ namespace system {
 namespace {
 
 const auto PXI_5663E = "5663E";
-
-template <typename TResponse>
-void EXPECT_SUCCESS(const TResponse& response)
-{
-  EXPECT_EQ(0, response.status());
-}
 
 class NiRFmxLTEDriverApiTests : public Test {
  protected:
@@ -40,12 +35,6 @@ class NiRFmxLTEDriverApiTests : public Test {
   const std::unique_ptr<NiRFmxLTE::Stub>& stub() const
   {
     return stub_;
-  }
-
-  template <typename TResponse>
-  void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_SUCCESS(response);
   }
 
   template <typename TService>
@@ -69,11 +58,11 @@ TEST_F(NiRFmxLTEDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
   auto session = init_response.instrument();
-  EXPECT_SUCCESS(session, init_response);
+  EXPECT_RESPONSE_SUCCESS(init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 }  // namespace

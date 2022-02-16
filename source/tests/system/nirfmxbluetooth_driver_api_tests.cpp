@@ -194,11 +194,11 @@ TEST_F(NiRFmxBluetoothDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
 
   // We expect these actions to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
   const auto fetched_powers_response = client::txp_fetch_powers(stub(), session, "", 10.0);
-  EXPECT_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_powers_response);
+  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_powers_response);
   const auto fetched_edr_powers_response = client::txp_fetch_edr_powers(stub(), session, "", 10.0);
-  EXPECT_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_edr_powers_response);
+  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_edr_powers_response);
   const auto fetched_lecte_reference_period_powers_response = client::txp_fetch_lecte_reference_period_powers(stub(), session, "", 10.0);
-  EXPECT_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_lecte_reference_period_powers_response);
+  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_lecte_reference_period_powers_response);
 
   EXPECT_GT(fetched_powers_response.average_power_mean(), 0.0);
   EXPECT_GT(fetched_powers_response.average_power_maximum(), 0.0);
@@ -221,7 +221,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, ModAccMeasurement_FetchConstellationTrace_
 
   // We expect this action to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
   const auto constellation_trace_response = client::mod_acc_fetch_constellation_trace(stub(), session, "", 10.0);
-  EXPECT_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, constellation_trace_response);
+  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, constellation_trace_response);
 
   // We expect the results to be empty since the measurement did not complete successfully.
   EXPECT_THAT(constellation_trace_response.constellation(), Each(Eq(complex_number(0.0, 0.0))));

@@ -348,7 +348,7 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
     EXPECT_SUCCESS(session, carrier_string_response);
     auto modacc_results_composite_rms_evm_mean_response = client::get_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
     if (i == 0) {
-      EXPECT_ERROR(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, modacc_results_composite_rms_evm_mean_response);
+      EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, modacc_results_composite_rms_evm_mean_response);
     }
     else {
       EXPECT_SUCCESS(session, modacc_results_composite_rms_evm_mean_response);
@@ -364,9 +364,9 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
     componentCarrierQuadratureErrorMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
     pdschRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
     mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i] = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
-    EXPECT_ERROR(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i]);
+    EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i]);
     mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i] = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
-    EXPECT_ERROR(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i]);
+    EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i]);
   }
 
   EXPECT_TRUE(isnan(compositeRMSEVMMean[0]));

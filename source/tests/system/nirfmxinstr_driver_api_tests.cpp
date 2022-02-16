@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
 #include "device_server.h"
+#include "expect_macros.h"
 #include "niRFmxInstr.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
@@ -22,12 +23,6 @@ namespace {
 const auto PXI_5663 = "5663";
 const auto PXI_5663E = "5663E";
 
-template <typename TResponse>
-void EXPECT_SUCCESS(const TResponse& response)
-{
-  EXPECT_EQ(0, response.status());
-}
-
 class NiRFmxInstrDriverApiTests : public Test {
  protected:
   NiRFmxInstrDriverApiTests()
@@ -47,20 +42,6 @@ class NiRFmxInstrDriverApiTests : public Test {
   const std::unique_ptr<NiRFmxInstr::Stub>& stub() const
   {
     return stub_;
-  }
-
-  void check_error(const nidevice_grpc::Session& session)
-  {
-    auto response = client::get_error(stub(), session);
-    EXPECT_EQ("", std::string(response.error_description().c_str()));
-  }
-
-  template <typename TResponse>
-  TResponse EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_SUCCESS(response);
-    check_error(session);
-    return response;
   }
 
   template <typename TService>
@@ -98,7 +79,7 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::stri
 {
   auto response = init(stub, model);
   auto session = response.instrument();
-  EXPECT_SUCCESS(response);
+  EXPECT_RESPONSE_SUCCESS(response);
   return session;
 }
 
@@ -129,13 +110,13 @@ nidevice_grpc::Session init_from_rfsa_session_array(const client::StubPtr& stub,
   auto rfsa_sessions = std::vector<nidevice_grpc::Session>{};
   for (const auto& resource_name : rfsa_resource_names) {
     auto init_rfsa_response = init_rfsa(rfsa_stub, resource_name);
-    ni::tests::system::EXPECT_SUCCESS(init_rfsa_response);
+    EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
     rfsa_sessions.push_back(init_rfsa_response.vi());
   }
 
   auto init_response = client::initialize_from_nirfsa_session_array(stub, rfsa_sessions);
   auto session = init_response.instrument();
-  ni::tests::system::EXPECT_SUCCESS(init_response);
+  EXPECT_RESPONSE_SUCCESS(init_response);
   return session;
 }
 
@@ -148,7 +129,7 @@ TEST_F(NiRFmxInstrDriverApiTests, Init_Close_Succeeds)
   auto close_response = client::close(stub(), session, 0);
 
   // Don't check_error because this can report stale errors from previous tests.
-  ni::tests::system::EXPECT_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASession_SelfTest_Succeeds)
@@ -161,7 +142,7 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASession_SelfTest_Succeeds)
   EXPECT_SUCCESS(session, rfsa_response);
 
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
-  ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_response.nirfsa_session()));
+  EXPECT_RESPONSE_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_response.nirfsa_session()));
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayAnonymous_SelfTest_Succeeds)
@@ -174,7 +155,7 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayAnonymous_SelfTest_Succee
   EXPECT_SUCCESS(session, get_rfsa_response);
 
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
-  ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, get_rfsa_response.nirfsa_sessions()[0]));
+  EXPECT_RESPONSE_SUCCESS(nirfsa_client::self_test(rfsa_stub, get_rfsa_response.nirfsa_sessions()[0]));
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayNamed_SelfTest_Succeeds)
@@ -189,7 +170,7 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayNamed_SelfTest_Succeeds)
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto rfsa_named_session = nidevice_grpc::Session{};
   rfsa_named_session.set_name(RFSA_SESSION_NAME);
-  ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_named_session));
+  EXPECT_RESPONSE_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_named_session));
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayWithTooManyNames_ReturnsBadStatus)
@@ -206,7 +187,7 @@ TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSA_SelfCalibrate_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
-  ni::tests::system::EXPECT_SUCCESS(init_rfsa_response);
+  EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
   auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
@@ -226,11 +207,12 @@ TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSASession
   const auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   const auto session = init_from_rfsa_session_array(stub(), rfsa_stub, {"Sim1", "Sim2"});
 
-  const auto get_rfsa_response = EXPECT_SUCCESS(session, client::get_nirfsa_session_array(stub(), session));
+  const auto get_rfsa_response = client::get_nirfsa_session_array(stub(), session);
+  EXPECT_SUCCESS(session, get_rfsa_response);
 
   EXPECT_EQ(2, get_rfsa_response.nirfsa_sessions_size());
   for (const auto& session : get_rfsa_response.nirfsa_sessions()) {
-    ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, session));
+    EXPECT_RESPONSE_SUCCESS(nirfsa_client::self_test(rfsa_stub, session));
   }
 }
 
@@ -268,7 +250,7 @@ TEST_F(NiRFmxInstrDriverApiTests, InitializeFromTwoRFSASessions_GetNIRFSASession
   for (const auto& session_name : RFSA_SESSION_NAMES) {
     auto session = nidevice_grpc::Session{};
     session.set_name(session_name);
-    ni::tests::system::EXPECT_SUCCESS(nirfsa_client::self_test(rfsa_stub, session));
+    EXPECT_RESPONSE_SUCCESS(nirfsa_client::self_test(rfsa_stub, session));
   }
 }
 
@@ -316,9 +298,12 @@ TEST_F(NiRFmxInstrDriverApiTests, CallCfgMethods_Succeeds)
 TEST_F(NiRFmxInstrDriverApiTests, CallCheckMethods_SucceedsWithReasonableResponseValues)
 {
   const auto session = init_session(stub(), PXI_5663E);
-  const auto status_response = EXPECT_SUCCESS(session, client::check_acquisition_status(stub(), session));
-  const auto list_exists_response = EXPECT_SUCCESS(session, client::check_if_list_exists(stub(), session, "NOTALIST"));
-  const auto self_cal_response = EXPECT_SUCCESS(session, client::is_self_calibrate_valid(stub(), session, ""));
+  const auto status_response = client::check_acquisition_status(stub(), session);
+  EXPECT_SUCCESS(session, status_response);
+  const auto list_exists_response = client::check_if_list_exists(stub(), session, "NOTALIST");
+  EXPECT_SUCCESS(session, list_exists_response);
+  const auto self_cal_response = client::is_self_calibrate_valid(stub(), session, "");
+  EXPECT_SUCCESS(session, self_cal_response);
 
   EXPECT_EQ(status_response.acquisition_done(), true);
   EXPECT_EQ(list_exists_response.list_exists(), false);
@@ -364,8 +349,8 @@ TEST_F(NiRFmxInstrDriverApiTests, TimestampFromValuesRoundTrip_SucceedsWithOrigi
   const auto timestamp_response = client::timestamp_from_values(stub(), UNIX_TIMESTAMP, FRACTIONAL_SECONDS);
   const auto values_response = client::values_from_timestamp(stub(), timestamp_response.timestamp());
 
-  ni::tests::system::EXPECT_SUCCESS(timestamp_response);
-  ni::tests::system::EXPECT_SUCCESS(values_response);
+  EXPECT_RESPONSE_SUCCESS(timestamp_response);
+  EXPECT_RESPONSE_SUCCESS(values_response);
   EXPECT_EQ(UNIX_TIMESTAMP, values_response.seconds_since_1970());
   EXPECT_NEAR(FRACTIONAL_SECONDS, values_response.fractional_seconds(), .001);
 }
@@ -375,7 +360,7 @@ TEST_F(NiRFmxInstrDriverApiTests, BuildPortString_SucceedsWithExpectedValue)
   constexpr auto EXPECTED_PORT_STRING = "port::RFSA1/10";
   const auto build_port_string_response = client::build_port_string(stub(), "", "", "RFSA1", 10);
 
-  ni::tests::system::EXPECT_SUCCESS(build_port_string_response);
+  EXPECT_RESPONSE_SUCCESS(build_port_string_response);
   EXPECT_EQ(EXPECTED_PORT_STRING, build_port_string_response.selector_string_out());
 }
 

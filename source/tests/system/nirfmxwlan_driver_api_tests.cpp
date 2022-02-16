@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
+#include "expect_macros.h"
 #include "niRFmxWLAN.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxwlan/nirfmxwlan_client.h"
@@ -25,24 +26,6 @@ const int RISING_EDGE_DETECTION_FAILED_WARNING = 379206;
 const int EVM_CHIPS_MUST_BE_300_WARNING = 685353;
 const int INCORRECT_TYPE_ERROR_CODE = -380251;
 
-template <typename TResponse>
-void EXPECT_SUCCESS(const TResponse& response)
-{
-  EXPECT_EQ(0, response.status());
-}
-
-template <typename TResponse>
-void EXPECT_WARNING(const TResponse& response, const int expected_warning_id)
-{
-  EXPECT_EQ(expected_warning_id, response.status());
-}
-
-template <typename TResponse>
-void EXPECT_ERROR(const TResponse& response, pb::int32 expected_error_id)
-{
-  EXPECT_EQ(expected_error_id, response.status());
-}
-
 class NiRFmxWLANDriverApiTests : public Test {
  protected:
   NiRFmxWLANDriverApiTests()
@@ -64,19 +47,6 @@ class NiRFmxWLANDriverApiTests : public Test {
     return stub_;
   }
 
-  void check_error(const nidevice_grpc::Session& session)
-  {
-    auto response = client::get_error(stub(), session);
-    EXPECT_EQ("", std::string(response.error_description().c_str()));
-  }
-
-  template <typename TResponse>
-  void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_SUCCESS(response);
-    check_error(session);
-  }
-
   template <typename TService>
   std::unique_ptr<typename TService::Stub> create_stub()
   {
@@ -89,14 +59,6 @@ class NiRFmxWLANDriverApiTests : public Test {
     auto response = client::get_attribute_i32(stub(), session, selector_string, attribute_id);
     EXPECT_SUCCESS(session, response);
     return response.attr_val();
-  }
-
-  template <typename TResponse>
-  void EXPECT_RFMX_ERROR(pb::int32 expected_error_id, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_ERROR(response, expected_error_id);
-    const auto error = client::get_error(stub(), session);
-    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));
   }
 
  private:
@@ -133,7 +95,7 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::stri
 {
   auto response = init(stub, model, resource_name);
   auto session = response.instrument();
-  EXPECT_SUCCESS(response);
+  EXPECT_RESPONSE_SUCCESS(response);
   return session;
 }
 
@@ -147,7 +109,7 @@ nidevice_grpc::Session init_instr_session(const instr_client::StubPtr& stub, con
   auto options = std::string("Simulate=1, DriverSetup=Model:") + PXI_5663E;
   auto response = instr_client::initialize(stub, std::string(resource_name), options);
   auto session = response.instrument();
-  EXPECT_SUCCESS(response);
+  EXPECT_RESPONSE_SUCCESS(response);
   return session;
 }
 
@@ -161,7 +123,7 @@ nidevice_grpc::Session init_analysis_session(const client::StubPtr& stub)
   auto options = std::string("Analysisonly = 1; MaxNumWfms:8");
   auto response = client::initialize(stub, "", options);
   auto session = response.instrument();
-  EXPECT_SUCCESS(response);
+  EXPECT_RESPONSE_SUCCESS(response);
   return session;
 }
 
@@ -187,21 +149,21 @@ TEST_F(NiRFmxWLANDriverApiTests, Init_Close_Succeeds)
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxWLANDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
-  ni::tests::system::EXPECT_SUCCESS(init_rfsa_response);
+  EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
   auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_DataLooksReasonable)
@@ -224,7 +186,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_Dat
   const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
   const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
-  EXPECT_WARNING(txp_fetch_measurement_response, RISING_EDGE_DETECTION_FAILED_WARNING);
+  EXPECT_RESPONSE_WARNING(RISING_EDGE_DETECTION_FAILED_WARNING, txp_fetch_measurement_response);
 
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
@@ -402,13 +364,13 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPFromExample_FetchData_DataLooksReasonable)
   const auto txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, "", 10.0);
   const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
 
-  EXPECT_WARNING(txp_fetch_power_trace_response, RISING_EDGE_DETECTION_FAILED_WARNING);
+  EXPECT_RESPONSE_WARNING(RISING_EDGE_DETECTION_FAILED_WARNING, txp_fetch_power_trace_response);
   EXPECT_GT(0.0, txp_fetch_power_trace_response.x0());
   EXPECT_LT(0.0, txp_fetch_power_trace_response.dx());
   EXPECT_EQ(25250, txp_fetch_power_trace_response.power_size());
   EXPECT_EQ(25250, txp_fetch_power_trace_response.power().size());
   EXPECT_LT(0.0, txp_fetch_power_trace_response.power(0));
-  EXPECT_WARNING(txp_fetch_measurement_response, RISING_EDGE_DETECTION_FAILED_WARNING);
+  EXPECT_RESPONSE_WARNING(RISING_EDGE_DETECTION_FAILED_WARNING, txp_fetch_measurement_response);
   EXPECT_LT(0.0, txp_fetch_measurement_response.average_power_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.peak_power_maximum());
 }
@@ -438,7 +400,7 @@ TEST_F(NiRFmxWLANDriverApiTests, DSSSModAccFromExample_FetchData_DataLooksReason
   const auto dsss_mod_acc_fetch_evm_per_chip_mean_trace_response = client::dsss_mod_acc_fetch_evm_per_chip_mean_trace(stub(), session, "", 10.0);
   const auto dsss_mod_acc_fetch_constellation_trace_response = client::dsss_mod_acc_fetch_constellation_trace(stub(), session, "", 10.0);
 
-  EXPECT_WARNING(dsss_mod_acc_fetch_evm_response, EVM_CHIPS_MUST_BE_300_WARNING);
+  EXPECT_RESPONSE_WARNING(EVM_CHIPS_MUST_BE_300_WARNING, dsss_mod_acc_fetch_evm_response);
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_response.rms_evm_mean());
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_response.peak_evm_80211_2016_maximum());
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_response.peak_evm_80211_2007_maximum());
@@ -446,23 +408,23 @@ TEST_F(NiRFmxWLANDriverApiTests, DSSSModAccFromExample_FetchData_DataLooksReason
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_response.frequency_error_mean());
   EXPECT_NE(0.0, dsss_mod_acc_fetch_evm_response.chip_clock_error_mean());
   EXPECT_EQ(0, dsss_mod_acc_fetch_evm_response.number_of_chips_used());
-  EXPECT_WARNING(dsss_mod_acc_fetch_ppdu_information_response, EVM_CHIPS_MUST_BE_300_WARNING);
+  EXPECT_RESPONSE_WARNING(EVM_CHIPS_MUST_BE_300_WARNING, dsss_mod_acc_fetch_ppdu_information_response);
   EXPECT_EQ(3, dsss_mod_acc_fetch_ppdu_information_response.data_modulation_format());
   EXPECT_EQ(0, dsss_mod_acc_fetch_ppdu_information_response.payload_length());
   EXPECT_EQ(1, dsss_mod_acc_fetch_ppdu_information_response.preamble_type());
   EXPECT_EQ(0, dsss_mod_acc_fetch_ppdu_information_response.locked_clocks_bit());
   EXPECT_EQ(0, dsss_mod_acc_fetch_ppdu_information_response.header_crc_status());
   EXPECT_EQ(0, dsss_mod_acc_fetch_ppdu_information_response.psdu_crc_status());
-  EXPECT_WARNING(dsss_mod_acc_fetch_iq_impairments_response, EVM_CHIPS_MUST_BE_300_WARNING);
+  EXPECT_RESPONSE_WARNING(EVM_CHIPS_MUST_BE_300_WARNING, dsss_mod_acc_fetch_iq_impairments_response);
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_iq_impairments_response.iq_origin_offset_mean());
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_iq_impairments_response.iq_gain_imbalance_mean());
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_iq_impairments_response.iq_quadrature_error_mean());
-  EXPECT_WARNING(dsss_mod_acc_fetch_evm_per_chip_mean_trace_response, EVM_CHIPS_MUST_BE_300_WARNING);
+  EXPECT_RESPONSE_WARNING(EVM_CHIPS_MUST_BE_300_WARNING, dsss_mod_acc_fetch_evm_per_chip_mean_trace_response);
   EXPECT_EQ(0.0, dsss_mod_acc_fetch_evm_per_chip_mean_trace_response.x0());
   EXPECT_EQ(1, dsss_mod_acc_fetch_evm_per_chip_mean_trace_response.dx());
   EXPECT_EQ(0, dsss_mod_acc_fetch_evm_per_chip_mean_trace_response.evm_per_chip_mean_size());
   EXPECT_EQ(0, dsss_mod_acc_fetch_evm_per_chip_mean_trace_response.evm_per_chip_mean().size());
-  EXPECT_WARNING(dsss_mod_acc_fetch_constellation_trace_response, EVM_CHIPS_MUST_BE_300_WARNING);
+  EXPECT_RESPONSE_WARNING(EVM_CHIPS_MUST_BE_300_WARNING, dsss_mod_acc_fetch_constellation_trace_response);
   EXPECT_EQ(0, dsss_mod_acc_fetch_constellation_trace_response.actual_array_size());
 }
 
@@ -580,7 +542,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReason
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_gain_imbalance_mean());
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_quadrature_error_mean());
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.absolute_iq_origin_offset_mean());
-  EXPECT_LT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_timing_skew_mean());
+  EXPECT_NE(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_timing_skew_mean());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_ppdu_type_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_ppdu_type_response.ppdu_type());
   EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_mcs_index_response);
@@ -1145,10 +1107,10 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
     }
   }
 
-  EXPECT_WARNING(txp_fetch_measurement_response, RISING_EDGE_DETECTION_FAILED_WARNING);
+  EXPECT_RESPONSE_WARNING(RISING_EDGE_DETECTION_FAILED_WARNING, txp_fetch_measurement_response);
   EXPECT_LT(0.0, txp_fetch_measurement_response.average_power_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.peak_power_maximum());
-  EXPECT_WARNING(txp_fetch_power_trace_response, RISING_EDGE_DETECTION_FAILED_WARNING);
+  EXPECT_RESPONSE_WARNING(RISING_EDGE_DETECTION_FAILED_WARNING, txp_fetch_power_trace_response);
   EXPECT_GT(0.0, txp_fetch_power_trace_response.x0());
   EXPECT_LT(0.0, txp_fetch_power_trace_response.dx());
   EXPECT_EQ(25250, txp_fetch_power_trace_response.power_size());
@@ -1208,7 +1170,7 @@ TEST_F(NiRFmxWLANDriverApiTests, SetAttributeComplex_ExpectedError)
 {
   const auto session = init_session(stub(), PXI_5663E);
 
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_ni_complex_double_array(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_REFERENCE_LEVEL, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
 }
@@ -1218,16 +1180,16 @@ TEST_F(NiRFmxWLANDriverApiTests, SetAttributeInt8_ExpectedError)
 {
   const auto session = init_session(stub(), PXI_5663E);
 
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_i8(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, 1));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_u8(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, 1));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_i8_array(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, {1, 0, -1, 0}));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_u8_array(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, {1, 0, 1, 0}));
 }
@@ -1237,10 +1199,10 @@ TEST_F(NiRFmxWLANDriverApiTests, SetAttributeInt16_ExpectedError)
 {
   const auto session = init_session(stub(), PXI_5663E);
 
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_i16(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, -400));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       INCORRECT_TYPE_ERROR_CODE, "Incorrect data type specified", session,
       client::set_attribute_u16(stub(), session, "", NiRFmxWLANAttribute::NIRFMXWLAN_ATTRIBUTE_OFDM_DCM_ENABLED, 400));
 }

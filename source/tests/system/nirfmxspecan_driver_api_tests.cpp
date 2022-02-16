@@ -5,6 +5,7 @@
 #include <tuple>
 
 #include "device_server.h"
+#include "expect_macros.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
 #include "nirfmxspecan/nirfmxspecan_service.h"
@@ -25,18 +26,6 @@ constexpr auto PXI_5663 = "5663";
 constexpr auto INVALID_DRIVER_SESSION = -380598;
 constexpr auto DEVICE_IN_USE = -380489;
 constexpr auto SUCCESS = 0;
-
-template <typename TResponse>
-void EXPECT_SUCCESS(const TResponse& response)
-{
-  EXPECT_EQ(SUCCESS, response.status());
-}
-
-template <typename TResponse>
-void EXPECT_RFMX_ERROR(pb::int32 expected_error, const TResponse& response)
-{
-  EXPECT_EQ(expected_error, response.status());
-}
 
 class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
  protected:
@@ -64,37 +53,10 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
     return nirfmxspecan_stub_;
   }
 
-  void check_error(const nidevice_grpc::Session& session)
-  {
-    auto response = client::get_error(stub(), session);
-    EXPECT_EQ("", std::string(response.error_description().c_str()));
-  }
-
   bool is_driver_session_valid(const instr_client::StubPtr& stub, const nidevice_grpc::Session& session)
   {
     auto response = instr_client::get_attribute_string(stub, session, "", nirfmxinstr_grpc::NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_INSTRUMENT_MODEL);
     return response.status() != INVALID_DRIVER_SESSION;
-  }
-
-  template <typename TResponse>
-  TResponse EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_SUCCESS(response);
-    if (response.status() != SUCCESS) {
-      auto error_message_response = client::get_error_string(stub(), session, response.status());
-      EXPECT_EQ("", error_message_response.error_description());
-    }
-    check_error(session);
-
-    return response;
-  }
-
-  template <typename TResponse>
-  void EXPECT_RFMX_ERROR(pb::int32 expected_error, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_RFMX_ERROR(expected_error, response);
-    const auto error = client::get_error(stub(), session);
-    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));
   }
 
  private:
@@ -118,7 +80,7 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::stri
 {
   auto response = init(stub, model, resource_name);
   auto session = response.instrument();
-  EXPECT_SUCCESS(response);
+  EXPECT_RESPONSE_SUCCESS(response);
   return session;
 }
 
@@ -296,7 +258,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_ReturnsSynchronizationNotFo
   EXPECT_SUCCESS(session, client::dpd_cfg_apply_dpd_lookup_table_correction_type(stub(), session, "", DpdApplyDpdLookupTableCorrectionType::DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_AND_PHASE));
 
   const auto apply_response = client::dpd_apply_digital_predistortion(stub(), session, "", waveform.t0, waveform.dt, waveform.data, false, 10.0);
-  EXPECT_RFMX_ERROR(377652, "Synchronization not found", session, apply_response);
+  EXPECT_WARNING(377652, "Synchronization not found", session, apply_response);
   EXPECT_THAT(apply_response.waveform_out(), Not(IsEmpty()));
 }
 
@@ -305,7 +267,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeComplex_ExpectedError)
 {
   const auto session = init_session(stub(), PXI_5663);
 
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380231, "This attribute is read-only and cannot be written", session,
       client::set_attribute_ni_complex_double_array(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_SEM_RESULTS_CARRIER_FREQUENCY, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
 }
@@ -315,16 +277,16 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeInt8_ExpectedError)
 {
   const auto session = init_session(stub(), PXI_5663);
 
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_i8(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, 1));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_u8(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, 1));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_i8_array(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, {1, 0, -1, 0}));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_u8_array(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, {1, 0, 1, 0}));
 }
@@ -334,10 +296,10 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeInt16_ExpectedError)
 {
   const auto session = init_session(stub(), PXI_5663);
 
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_i16(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, -400));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_u16(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, 400));
 }
@@ -390,7 +352,8 @@ TEST_F(NiRFmxSpecAnDriverApiTests, BuildIntermodString_ReturnsIntermodString)
 {
   auto session = init_session(stub(), PXI_5663);
 
-  const auto intermod_string_response = EXPECT_SUCCESS(session, client::build_intermod_string(stub(), "channel", 10));
+  const auto intermod_string_response = client::build_intermod_string(stub(), "channel", 10);
+  EXPECT_SUCCESS(session, intermod_string_response);
 
   EXPECT_EQ(intermod_string_response.selector_string_out(), "channel/intermod10");
 }
@@ -402,10 +365,11 @@ TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchData_RecordIsDele
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_IQ, true));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto fetch_response = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
+  const auto fetch_response = client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000);
+  EXPECT_SUCCESS(session, fetch_response);
   EXPECT_THAT(fetch_response.data(), Not(IsEmpty()));
 
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       INVALID_RECORD,
       "The requested record number is invalid. The desired record was already fetched and deleted.",
       session,
@@ -421,7 +385,8 @@ TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchDataFetchAllAvail
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_IQ, true));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto fetch_response = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, FETCH_ALL_AVAILABLE));
+  const auto fetch_response = client::iq_fetch_data(stub(), session, "", 10.0, 0, FETCH_ALL_AVAILABLE);
+  EXPECT_SUCCESS(session, fetch_response);
 
   EXPECT_THAT(fetch_response.data(), Not(IsEmpty()));
   EXPECT_EQ(EXPECTED_RECORD_COUNT, fetch_response.data().size());
@@ -441,21 +406,23 @@ TEST_F(NiRFmxSpecAnDriverApiTests, DisableDeleteRecordOnFetch_IQFetchData_Record
           NiRFmxSpecAnInt32AttributeValues::NIRFMXSPECAN_INT32_IQ_DELETE_RECORD_ON_FETCH_FALSE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto fetch_response = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
+  const auto fetch_response = client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000);
+  EXPECT_SUCCESS(session, fetch_response);
   EXPECT_THAT(fetch_response.data(), Not(IsEmpty()));
-  const auto fetch_response_2 = EXPECT_SUCCESS(session, client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
+  const auto fetch_response_2 = client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000);
+  EXPECT_SUCCESS(session, fetch_response_2);
 
   EXPECT_THAT(fetch_response_2.data(), Not(IsEmpty()));
 }
 
 void close_session(const client::StubPtr& stub, const nidevice_grpc::Session& session)
 {
-  ni::tests::system::EXPECT_SUCCESS(client::close(stub, session, false));
+  EXPECT_RESPONSE_SUCCESS(client::close(stub, session, false));
 }
 
 void force_close_session(const client::StubPtr& stub, const nidevice_grpc::Session& session)
 {
-  ni::tests::system::EXPECT_SUCCESS(client::close(stub, session, true));
+  EXPECT_RESPONSE_SUCCESS(client::close(stub, session, true));
 }
 
 class NiRFmxSpecAnDriverApiResourceInitTests : public NiRFmxSpecAnDriverApiTests,
@@ -633,7 +600,7 @@ TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeResource_Ini
 
   const auto second_init_response = init(stub(), PXI_5663, std::get<1>(GetParam()));
 
-  ni::tests::system::EXPECT_RFMX_ERROR(DEVICE_IN_USE, second_init_response);
+  EXPECT_RESPONSE_ERROR(DEVICE_IN_USE, second_init_response);
 }
 
 TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeAndCloseResource_InitializeResourceThatWouldHaveConflicted_Succeeds)
