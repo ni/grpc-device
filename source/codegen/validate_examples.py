@@ -40,18 +40,19 @@ def validate_examples(driver_glob_expression: str, ip_address: str, device_name:
         )
         for dir in examples_dir.glob(driver_glob_expression):
             print()
-            print(f"-- Validating: {dir.name} --")
+            print(f"-- Validating: {dir.name}")
 
             print(f" -> Running black line-length 100")
             system(f"poetry run black --check --line-length 100 {dir}")
 
             print(f" -> Running mypy")
-            system(f"poetry run mypy {dir}")
+            system(f"poetry run mypy {dir} --check-untyped-defs")
 
-            for file in dir.glob("*.py"):
-                print(f" -> Running example: {file.name}")
-                PORT = 31763
-                system(rf"poetry run python {file} {ip_address} {PORT} {device_name}")
+            if ip_address:
+                for file in dir.glob("*.py"):
+                    print(f" -> Running example: {file.name}")
+                    PORT = 31763
+                    system(rf"poetry run python {file} {ip_address} {PORT} {device_name}")
 
 
 if __name__ == "__main__":
@@ -62,7 +63,11 @@ if __name__ == "__main__":
         help="Glob expression for scrapigen driver names to validate (i.e., *rfmx*).",
     )
 
-    parser.add_argument("-s", "--server", help="grpc-device server IP address.")
+    parser.add_argument(
+        "-s",
+        "--server",
+        help="grpc-device server IP address. If not specified, skip running examples.",
+    )
 
     parser.add_argument(
         "-d",

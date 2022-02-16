@@ -62,6 +62,12 @@ jobs:
         pip install black
         black source/codegen examples --check
 
+    - name: Validate RFmx and XNET examples
+      run: |
+        pip install mypy
+        python source/codegen/validate_examples.py -p *rfmx*
+        python source/codegen/validate_examples.py -p *xnet*
+
     - name: Configure
       shell: cmake -P {0}
       run: |
