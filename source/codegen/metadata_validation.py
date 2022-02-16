@@ -135,7 +135,11 @@ ATTRIBUTE_SCHEMA = Schema(
     }
 )
 
-SIMPLE_ATTRIBUTE_SCHEMA = Schema({"name": str})
+SIMPLE_ATTRIBUTE_SCHEMA = Schema(
+    {
+        "name": str,
+    },
+)
 
 ENUM_SCHEMA = Schema(
     {

@@ -182,9 +182,7 @@ def get_short_enum_type_name(typename: str) -> str:
     if typename in ["char[]", "const char[]", "char"]:
         return "String"
     stripped_name = common_helpers.strip_prefix(typename, "Vi")
-    return common_helpers.ensure_pascal_case(
-        stripped_name,
-    )
+    return common_helpers.ensure_pascal_case(stripped_name)
 
 
 def remove_leading_group_name(enum_value_name, group_name):
