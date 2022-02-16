@@ -104,7 +104,7 @@ TEST_F(NiRFmxNRDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
   auto session = init_response.instrument();
-  EXPECT_SUCCESS(session, init_response);
+  EXPECT_RESPONSE_SUCCESS(init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
@@ -118,7 +118,7 @@ TEST_F(NiRFmxNRDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
   EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
   auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
   auto session = init_response.instrument();
-  EXPECT_SUCCESS(session, init_response);
+  EXPECT_RESPONSE_SUCCESS(init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
