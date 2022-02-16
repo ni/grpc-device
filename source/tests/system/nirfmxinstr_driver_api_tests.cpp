@@ -2,11 +2,11 @@
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
 #include "device_server.h"
-#include "expect_macros.h"
 #include "niRFmxInstr.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
 #include "nirfsa/nirfsa_client.h"
+#include "rfmx_expect_macros.h"
 
 using namespace ::testing;
 using namespace nirfmxinstr_grpc;

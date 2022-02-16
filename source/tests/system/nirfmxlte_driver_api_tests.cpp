@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "expect_macros.h"
 #include "niRFmxLTE.h"
 #include "nirfmxlte/nirfmxlte_client.h"
+#include "rfmx_expect_macros.h"
 
 using namespace ::testing;
 using namespace nirfmxlte_grpc;

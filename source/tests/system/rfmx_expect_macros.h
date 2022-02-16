@@ -1,5 +1,5 @@
-#ifndef NIDEVICE_GRPC_TESTS_EXPECT_MACROS
-#define NIDEVICE_GRPC_TESTS_EXPECT_MACROS
+#ifndef NIDEVICE_GRPC_TESTS_RFMX_EXPECT_MACROS
+#define NIDEVICE_GRPC_TESTS_RFMX_EXPECT_MACROS
 
 #define CHECK_ERROR(session)                                          \
   if (1) {                                                            \
@@ -44,4 +44,4 @@
     EXPECT_THAT(error.error_description(), HasSubstr(message_substring));      \
   }
 
-#endif  // NIDEVICE_GRPC_TESTS_EXPECT_MACROS
+#endif  // NIDEVICE_GRPC_TESTS_RFMX_EXPECT_MACROS

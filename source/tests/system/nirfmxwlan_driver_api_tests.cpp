@@ -2,11 +2,11 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "expect_macros.h"
 #include "niRFmxWLAN.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxwlan/nirfmxwlan_client.h"
 #include "nirfsa/nirfsa_client.h"
+#include "rfmx_expect_macros.h"
 #include "waveform_helpers.h"
 
 namespace pb = google::protobuf;

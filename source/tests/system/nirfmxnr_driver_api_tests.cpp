@@ -2,11 +2,11 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "expect_macros.h"
 #include "niRFmxNR.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxnr/nirfmxnr_client.h"
 #include "nirfsa/nirfsa_client.h"
+#include "rfmx_expect_macros.h"
 #include "waveform_helpers.h"
 
 using namespace ::testing;
