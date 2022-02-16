@@ -62,7 +62,7 @@ instr = None
 def raise_if_error(response):
     if response.status != 0:
         error_response = client.GetError(
-            nirfmxwlan_types.GetErrorRequest(
+            nirfmxspecan_types.GetErrorRequest(
                 instrument=instr,
             )
         )
