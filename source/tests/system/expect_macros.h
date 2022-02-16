@@ -16,6 +16,11 @@ namespace system {
     EXPECT_EQ(0, (response).status());    \
   }
 
+#define EXPECT_WARNING(expected_warning, response)  \
+  if (1) {                                          \
+    EXPECT_EQ(expected_warning, response.status()); \
+  }
+
 #define EXPECT_SUCCESS(session, response) \
   if (1) {                                \
     EXPECT_RESPONSE_SUCCESS(response)     \
