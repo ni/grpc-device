@@ -19,7 +19,7 @@ def _create_stage_dir(staging_dir):
         chdir(initial_dir)
 
 
-def validate_examples(driver_glob_expression: str, ip_address: str) -> None:
+def validate_examples(driver_glob_expression: str, ip_address: str, device_name: str) -> None:
     staging_dir = Path(__file__).parent.parent.parent / "build" / "validate_examples"
 
     print(f"Validating examples using staging_dir: {staging_dir}")
@@ -50,7 +50,8 @@ def validate_examples(driver_glob_expression: str, ip_address: str) -> None:
 
             for file in dir.glob("*.py"):
                 print(f" -> Running example: {file.name}")
-                system(rf"poetry run python {file} {ip_address}")
+                PORT = 31763
+                system(rf"poetry run python {file} {ip_address} {PORT} {device_name}")
 
 
 if __name__ == "__main__":
@@ -63,6 +64,13 @@ if __name__ == "__main__":
 
     parser.add_argument("-s", "--server", help="grpc-device server IP address.")
 
+    parser.add_argument(
+        "-d",
+        "--device",
+        help="Device alias to run examples. Default: no device passed to example (uses session-level simulation).",
+        default="",
+    )
+
     args = parser.parse_args()
 
-    validate_examples(args.pattern, args.server)
+    validate_examples(args.pattern, args.server, args.device)
