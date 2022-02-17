@@ -1100,7 +1100,7 @@ namespace nifgen_grpc {
       const auto sequence_length_size_calculation = calculate_linked_array_size(sequence_length_determine_from_sizes, false);
 
       if (sequence_length_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveformHandlesArray, loopCountsArray] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveform_handles_array, loop_counts_array] do not match");
       }
       auto sequence_length = sequence_length_size_calculation.size;
 
@@ -1153,7 +1153,7 @@ namespace nifgen_grpc {
       const auto frequency_list_length_size_calculation = calculate_linked_array_size(frequency_list_length_determine_from_sizes, false);
 
       if (frequency_list_length_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequencyArray, durationArray] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency_array, duration_array] do not match");
       }
       auto frequency_list_length = frequency_list_length_size_calculation.size;
 

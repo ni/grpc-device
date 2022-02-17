@@ -62,6 +62,43 @@ inline LinkedArraySize calculate_linked_array_size(const std::array<int, N>& siz
   return LinkedArraySize{consensus_size, MatchState::MATCH_OR_ZERO};
 }
 
+// Wrapper on std::vector that allows assigning or initializing from nullptr.
+// When in an is_null_ state, data() will return nullptr.
+// This class is intended to make it easier to write code that works with both
+// vectors and pointers without complex, special-case codegen.
+template <typename T>
+class nullable_vector {
+ public:
+  nullable_vector(std::vector<T>&& vec) : vec_(std::move(vec)), is_null_(false)
+  {
+  }
+
+  nullable_vector(std::nullptr_t) : vec_(), is_null_(true)
+  {
+  }
+
+  nullable_vector<T>& operator=(std::nullptr_t)
+  {
+    vec_.clear();
+    is_null_ = true;
+    return *this;
+  }
+
+  T* data()
+  {
+    return is_null_ ? nullptr : vec_.data();
+  }
+
+  const T* data() const
+  {
+    return is_null_ ? nullptr : vec_.data();
+  }
+
+ private:
+  bool is_null_;
+  std::vector<T> vec_;
+};
+
 template <typename CType, typename GrpcType>
 void convert_to_grpc(const CType& value, GrpcType* value_out)
 {
@@ -75,7 +112,7 @@ CType convert_from_grpc(const GrpcType& value)
 }
 
 template <typename CType, typename GrpcType>
-inline std::vector<CType> convert_from_grpc(const google::protobuf::RepeatedPtrField<GrpcType>& input)
+inline nullable_vector<CType> convert_from_grpc(const google::protobuf::RepeatedPtrField<GrpcType>& input)
 {
   auto output = std::vector<CType>();
   output.reserve(input.size());
@@ -84,7 +121,7 @@ inline std::vector<CType> convert_from_grpc(const google::protobuf::RepeatedPtrF
       input.end(),
       std::back_inserter(output),
       [&](GrpcType x) { return convert_from_grpc<CType>(x); });
-  return output;
+  return nullable_vector<CType>(std::move(output));
 }
 
 template <typename CType, typename GrpcType>

@@ -309,7 +309,7 @@ namespace nirfmxinstr_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, externalAttenuation] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, external_attenuation] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 

@@ -3123,7 +3123,7 @@ namespace nirfsg_grpc {
       const auto number_of_samples_size_calculation = calculate_linked_array_size(number_of_samples_determine_from_sizes, false);
 
       if (number_of_samples_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [iData, qData] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i_data, q_data] do not match");
       }
       auto number_of_samples = number_of_samples_size_calculation.size;
 
@@ -3226,7 +3226,7 @@ namespace nirfsg_grpc {
       const auto number_of_samples_size_calculation = calculate_linked_array_size(number_of_samples_determine_from_sizes, false);
 
       if (number_of_samples_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [iData, qData] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [i_data, q_data] do not match");
       }
       auto number_of_samples = number_of_samples_size_calculation.size;
 

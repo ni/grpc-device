@@ -86,6 +86,55 @@ TEST(ConvertersTests, ZeroSizesDisallowOptional_Mismatch)
   EXPECT_EQ(MatchState::MISMATCH, calculation.match_state);
 }
 
+TEST(ConvertersTests, NullableVectorInitializedNull_GetData_ReturnsNull)
+{
+  const auto vec = nullable_vector<int32_t>(nullptr);
+
+  const auto data = vec.data();
+
+  EXPECT_EQ(nullptr, data);
+}
+
+TEST(ConvertersTests, NullableVectorInitializedWithData_GetData_ReturnPointerToData)
+{
+  constexpr auto DATA = std::array<int32_t, 4>{1, 2, 3, 4};
+  const auto vec = nullable_vector<int32_t>({DATA.cbegin(), DATA.cend()});
+
+  const auto data = vec.data();
+
+  EXPECT_THAT(std::vector<int32_t>(data, data + DATA.size()), ElementsAreArray(DATA));
+}
+
+TEST(ConvertersTests, NullableVectorInitializedWithData_AssignNull_DataIsNull)
+{
+  auto vec = nullable_vector<int32_t>({1, 2, 3, 4});
+
+  vec = nullptr;
+
+  EXPECT_EQ(nullptr, vec.data());
+}
+
+TEST(ConvertersTests, NullableVectorInitializedWithData_ConditionallyAssignNull_DataIsNull)
+{
+  constexpr auto CONDITION = false;
+  auto vec = nullable_vector<int32_t>({1, 2, 3, 4});
+
+  vec = CONDITION ? std::move(vec) : nullptr;
+
+  EXPECT_EQ(nullptr, vec.data());
+}
+
+TEST(ConvertersTests, NullableVectorInitializedWithData_ConditionallyAssignMovedSelf_DataIsPointerToData)
+{
+  constexpr auto CONDITION = true;
+  constexpr auto DATA = std::array<int32_t, 4>{1, 2, 3, 4};
+  auto vec = nullable_vector<int32_t>({DATA.cbegin(), DATA.cend()});
+
+  vec = CONDITION ? std::move(vec) : nullptr;
+
+  const auto data = vec.data();
+  EXPECT_THAT(std::vector<int32_t>(data, data + DATA.size()), ElementsAreArray(DATA));
+}
 }  // namespace
 }  // namespace unit
 }  // namespace tests

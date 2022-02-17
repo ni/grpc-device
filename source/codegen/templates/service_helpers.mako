@@ -445,7 +445,10 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%def name="initialize_len_input_param(parameter, parameters)">\
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
-  size_sources = parameter["determine_size_from"]
+  size_sources = common_helpers.get_grpc_field_names_for_param_names(
+    parameters, 
+    parameter["determine_size_from"]
+  )
   size_field_name = common_helpers.get_grpc_field_name_from_str(size_sources[-1])
   allow_optional = parameter["linked_params_are_optional"]
   allow_optional_as_cpp_constant = "true" if allow_optional else "false"
@@ -455,11 +458,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       {
 <%block filter="common_helpers.trim_trailing_comma()">\
 % for size_source in size_sources:
-<%
-  current_size_param = common_helpers.get_param_with_name(parameters, size_source)
-  current_size_field_name = common_helpers.get_grpc_field_name(current_size_param)
-%>\
-        request->${current_size_field_name}_size(),
+        request->${size_source}_size(),
 % endfor
 </%block>\
       };
@@ -472,17 +471,14 @@ ${initialize_standard_input_param(function_name, parameter)}
       // NULL out optional params with zero sizes.
       if (${parameter_name}_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
 % for size_source in size_sources:
-<%
-  current_size_field_name = common_helpers.get_grpc_field_name_from_str(size_source)
-%>\
-        ${current_size_field_name} = request->${current_size_field_name}_size() ? ${current_size_field_name} : nullptr;
+        ${size_source} = request->${size_source}_size() ? std::move(${size_source}) : nullptr;
 % endfor
       }
 % endif
       auto ${parameter_name} = ${parameter_name}_size_calculation.size;
 % else:
 <%
-  size_field_name = common_helpers.get_grpc_field_name_from_str(size_sources[-1])
+  size_field_name = size_sources[-1]
 %>\
       ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
 % endif

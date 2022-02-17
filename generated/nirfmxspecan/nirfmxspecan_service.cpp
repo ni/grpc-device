@@ -479,7 +479,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offsetFrequency, offsetSideband, offsetEnabled] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_frequency, offset_sideband, offset_enabled] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -637,7 +637,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offsetPowerReferenceCarrier, offsetPowerReferenceSpecific] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_power_reference_carrier, offset_power_reference_specific] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -716,7 +716,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rrcFilterEnabled, rrcAlpha] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rrc_filter_enabled, rrc_alpha] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -4319,7 +4319,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [lutInputPowers, lutComplexGains] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [lut_input_powers, lut_complex_gains] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -6633,7 +6633,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [harmonicOrder, harmonicBandwidth, harmonicEnabled, harmonicMeasurementInterval] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [harmonic_order, harmonic_bandwidth, harmonic_enabled, harmonic_measurement_interval] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -7130,7 +7130,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [intermodOrder, lowerIntermodFrequency, upperIntermodFrequency, intermodSide, intermodEnabled] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [intermod_order, lower_intermod_frequency, upper_intermod_frequency, intermod_side, intermod_enabled] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -8112,7 +8112,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [calibrationLossFrequency, calibrationLoss] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [calibration_loss_frequency, calibration_loss] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -8152,7 +8152,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [dutsParametersFrequency, duts21, duts12, duts11, duts22] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [dut_s_parameters_frequency, dut_s21, dut_s12, dut_s11, dut_s22] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -8187,7 +8187,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [terminationVSWR, terminationVSWRFrequency] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [termination_vswr, termination_vswr_frequency] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -8274,7 +8274,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [dutInputLossFrequency, dutInputLoss] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [dut_input_loss_frequency, dut_input_loss] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -8325,7 +8325,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [dutOutputLossFrequency, dutOutputLoss] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [dut_output_loss_frequency, dut_output_loss] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -8543,7 +8543,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [enrFrequency, enr] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [enr_frequency, enr] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -8594,7 +8594,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [noiseSourceLossFrequency, noiseSourceLoss] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [noise_source_loss_frequency, noise_source_loss] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -9458,7 +9458,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [segmentMeasurementOffset, segmentMeasurementLength] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [segment_measurement_offset, segment_measurement_length] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -9834,7 +9834,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, referencePhaseNoise] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, reference_phase_noise] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -9884,7 +9884,7 @@ namespace nirfmxspecan_grpc {
       const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [integratedNoiseStartFrequency, integratedNoiseStopFrequency] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [integrated_noise_start_frequency, integrated_noise_stop_frequency] do not match");
       }
       auto array_size = array_size_size_calculation.size;
 
@@ -9943,7 +9943,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rangeStartFrequency, rangeStopFrequency, rangeRBWPercentage, rangeAveragingCount] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [range_start_frequency, range_stop_frequency, range_rbw_percentage, range_averaging_count] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -10724,7 +10724,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [absoluteLimitMode, absoluteLimitStart, absoluteLimitStop] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [absolute_limit_mode, absolute_limit_start, absolute_limit_stop] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -10853,7 +10853,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offsetStartFrequency, offsetStopFrequency, offsetEnabled, offsetSideband] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_start_frequency, offset_stop_frequency, offset_enabled, offset_sideband] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -11030,7 +11030,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rbwAuto, rbw, rbwFilterType] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rbw_auto, rbw, rbw_filter_type] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -11155,7 +11155,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [relativeLimitMode, relativeLimitStart, relativeLimitStop] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [relative_limit_mode, relative_limit_start, relative_limit_stop] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -13215,13 +13215,13 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, true);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [absoluteLimitMode, absoluteLimitStart, absoluteLimitStop] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [absolute_limit_mode, absolute_limit_start, absolute_limit_stop] do not match");
       }
       // NULL out optional params with zero sizes.
       if (number_of_elements_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
-        absolute_limit_mode = request->absolute_limit_mode_size() ? absolute_limit_mode : nullptr;
-        absolute_limit_start = request->absolute_limit_start_size() ? absolute_limit_start : nullptr;
-        absolute_limit_stop = request->absolute_limit_stop_size() ? absolute_limit_stop : nullptr;
+        absolute_limit_mode = request->absolute_limit_mode_size() ? std::move(absolute_limit_mode) : nullptr;
+        absolute_limit_start = request->absolute_limit_start_size() ? std::move(absolute_limit_start) : nullptr;
+        absolute_limit_stop = request->absolute_limit_stop_size() ? std::move(absolute_limit_stop) : nullptr;
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -13300,7 +13300,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [detectorType, detectorPoints] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [detector_type, detector_points] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -13382,7 +13382,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [startFrequency, stopFrequency, rangeEnabled] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [start_frequency, stop_frequency, range_enabled] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -13533,7 +13533,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rbwAuto, rbw, rbwFilterType] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rbw_auto, rbw, rbw_filter_type] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -13708,7 +13708,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [sweepTimeAuto, sweepTimeInterval] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [sweep_time_auto, sweep_time_interval] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -13790,7 +13790,7 @@ namespace nirfmxspecan_grpc {
       const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [vbwAuto, vbw, vbwToRBWRatio] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [vbw_auto, vbw, vbw_to_rbw_ratio] do not match");
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 

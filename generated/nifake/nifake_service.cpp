@@ -1373,7 +1373,7 @@ namespace nifake_grpc {
       const auto input_array_sizes_size_calculation = calculate_linked_array_size(input_array_sizes_determine_from_sizes, false);
 
       if (input_array_sizes_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [inputArrayOfFloats, inputArrayOfIntegers] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [input_array_of_floats, input_array_of_integers] do not match");
       }
       auto input_array_sizes = input_array_sizes_size_calculation.size;
 
@@ -1451,28 +1451,31 @@ namespace nifake_grpc {
       auto values2 = const_cast<ViReal64*>(request->values2().data());
       auto values3 = const_cast<ViReal64*>(request->values3().data());
       auto values4 = const_cast<ViReal64*>(request->values4().data());
-      auto size_determine_from_sizes = std::array<int, 4>
+      auto values5 = convert_from_grpc<CustomStruct>(request->values5());
+      auto size_determine_from_sizes = std::array<int, 5>
       {
         request->values1_size(),
         request->values2_size(),
         request->values3_size(),
-        request->values4_size()
+        request->values4_size(),
+        request->values5_size()
       };
       const auto size_size_calculation = calculate_linked_array_size(size_determine_from_sizes, true);
 
       if (size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [values1, values2, values3, values4] do not match");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [values1, values2, values3, values4, values5] do not match");
       }
       // NULL out optional params with zero sizes.
       if (size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
-        values1 = request->values1_size() ? values1 : nullptr;
-        values2 = request->values2_size() ? values2 : nullptr;
-        values3 = request->values3_size() ? values3 : nullptr;
-        values4 = request->values4_size() ? values4 : nullptr;
+        values1 = request->values1_size() ? std::move(values1) : nullptr;
+        values2 = request->values2_size() ? std::move(values2) : nullptr;
+        values3 = request->values3_size() ? std::move(values3) : nullptr;
+        values4 = request->values4_size() ? std::move(values4) : nullptr;
+        values5 = request->values5_size() ? std::move(values5) : nullptr;
       }
       auto size = size_size_calculation.size;
 
-      auto status = library_->MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, size);
+      auto status = library_->MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, values5.data(), size);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

@@ -326,11 +326,20 @@ def validate_parameter_size(parameter: dict, function_name: str, metadata: dict)
             "ivi-dance-with-a-twist",
             "passed-in",
             "passed-in-by-ptr",
+            "two-dimension",
         ]:
             if not parameter_name_exists(function, size["value"]):
                 raise Exception(
                     f"parameter {parameter['name']} refers to nonexistant parameter {size['value']} in its size value!"
                 )
+        if mechanism == "two-dimension":
+            size_param = common_helpers.get_param_with_name(function["parameters"], size["value"])
+            if common_helpers.has_size_mechanism_tag(size_param, "optional"):
+                # There may be a case where this is valid, but it's more likely as a mistake.
+                raise Exception(
+                    f"parameter {size_param['name']} is optional but used by {parameter['name']} as a two-dimension size param!"
+                )
+
         if mechanism == "ivi-dance-with-a-twist":
             if "value_twist" not in size:
                 raise Exception(

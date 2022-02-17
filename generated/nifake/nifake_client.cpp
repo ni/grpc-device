@@ -831,7 +831,7 @@ multiple_arrays_same_size(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 MultipleArraysSameSizeWithOptionalResponse
-multiple_arrays_same_size_with_optional(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& values1, const std::vector<double>& values2, const std::vector<double>& values3, const std::vector<double>& values4)
+multiple_arrays_same_size_with_optional(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& values1, const std::vector<double>& values2, const std::vector<double>& values3, const std::vector<double>& values4, const std::vector<FakeCustomStruct>& values5)
 {
   ::grpc::ClientContext context;
 
@@ -841,6 +841,7 @@ multiple_arrays_same_size_with_optional(const StubPtr& stub, const nidevice_grpc
   copy_array(values2, request.mutable_values2());
   copy_array(values3, request.mutable_values3());
   copy_array(values4, request.mutable_values4());
+  copy_array(values5, request.mutable_values5());
 
   auto response = MultipleArraysSameSizeWithOptionalResponse{};
 
