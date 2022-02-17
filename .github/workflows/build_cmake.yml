@@ -57,14 +57,15 @@ jobs:
     - name: Update Submodules
       run: git submodule update --init --recursive --depth=1
 
+    - name: Install build dependencies
+      run: python -m pip install -r python_build_requirements.txt
+
     - name: Validate python style with black
       run: |
-        pip install black
         black source/codegen examples --check
 
     - name: Validate RFmx and XNET examples
       run: |
-        pip install mypy
         python source/codegen/validate_examples.py -p *rfmx*
         python source/codegen/validate_examples.py -p *xnet*
 
