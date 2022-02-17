@@ -30,8 +30,9 @@ namespace tests {
 namespace system {
 namespace {
 
-const auto kPxi5663e = "5663E";
-const int kPreambleSyncPacketStartDetectionFailedWarning = 686280;
+constexpr auto PXI_5663E = "5663E";
+constexpr auto PREAMBLE_BURST_SYNC = 686280;  // The Preamble Sync failed to detect start of the packet
+constexpr auto TYPE_MISMATCH_ERROR = -380251;
 
 class NiRFmxBluetoothDriverApiTests : public Test {
  protected:
@@ -104,7 +105,7 @@ nidevice_grpc::NIComplexNumber complex_number(
 
 TEST_F(NiRFmxBluetoothDriverApiTests, Init_Close_Succeeds)
 {
-  auto init_response = init(stub(), kPxi5663e);
+  auto init_response = init(stub(), PXI_5663E);
   auto session = init_response.instrument();
   EXPECT_RESPONSE_SUCCESS(init_response);
 
@@ -129,7 +130,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
 
 TEST_F(NiRFmxBluetoothDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
 {
-  auto session = init_session(stub(), kPxi5663e);
+  auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1e9, 0.0, 0.0));
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQPowerEdgeTriggerSlope::IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TriggerMinimumQuietTimeMode::TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 100e-6, IQPowerEdgeTriggerLevelType::IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
@@ -177,7 +178,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
 
 TEST_F(NiRFmxBluetoothDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
 {
-  auto session = init_session(stub(), kPxi5663e);
+  auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, "", 2.402000e9));
   EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, "", 0.0));
@@ -192,13 +193,13 @@ TEST_F(NiRFmxBluetoothDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::txp_cfg_averaging(stub(), session, "", TxpAveragingEnabled::TXP_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  // We expect these actions to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
+  // We expect these actions to produce PREAMBLE_BURST_SYNC since the test uses simulated hardware.
   const auto fetched_powers_response = client::txp_fetch_powers(stub(), session, "", 10.0);
-  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_powers_response);
+  EXPECT_RESPONSE_WARNING(PREAMBLE_BURST_SYNC, fetched_powers_response);
   const auto fetched_edr_powers_response = client::txp_fetch_edr_powers(stub(), session, "", 10.0);
-  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_edr_powers_response);
+  EXPECT_RESPONSE_WARNING(PREAMBLE_BURST_SYNC, fetched_edr_powers_response);
   const auto fetched_lecte_reference_period_powers_response = client::txp_fetch_lecte_reference_period_powers(stub(), session, "", 10.0);
-  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_lecte_reference_period_powers_response);
+  EXPECT_RESPONSE_WARNING(PREAMBLE_BURST_SYNC, fetched_lecte_reference_period_powers_response);
 
   EXPECT_GT(fetched_powers_response.average_power_mean(), 0.0);
   EXPECT_GT(fetched_powers_response.average_power_maximum(), 0.0);
@@ -208,7 +209,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
 
 TEST_F(NiRFmxBluetoothDriverApiTests, ModAccMeasurement_FetchConstellationTrace_ComplexNumberLooksReasonable)
 {
-  const auto session = init_session(stub(), kPxi5663e);
+  const auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 2.402000e9, 0.0, 0.0));
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQPowerEdgeTriggerSlope::IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE, -20.0, 0.0, TriggerMinimumQuietTimeMode::TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 100e-6, IQPowerEdgeTriggerLevelType::IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
@@ -219,9 +220,9 @@ TEST_F(NiRFmxBluetoothDriverApiTests, ModAccMeasurement_FetchConstellationTrace_
   EXPECT_SUCCESS(session, client::mod_acc_cfg_averaging(stub(), session, "", ModAccAveragingEnabled::MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  // We expect this action to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
+  // We expect this action to produce PREAMBLE_BURST_SYNC since the test uses simulated hardware.
   const auto constellation_trace_response = client::mod_acc_fetch_constellation_trace(stub(), session, "", 10.0);
-  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, constellation_trace_response);
+  EXPECT_RESPONSE_WARNING(PREAMBLE_BURST_SYNC, constellation_trace_response);
 
   // We expect the results to be empty since the measurement did not complete successfully.
   EXPECT_THAT(constellation_trace_response.constellation(), Each(Eq(complex_number(0.0, 0.0))));
@@ -231,38 +232,38 @@ TEST_F(NiRFmxBluetoothDriverApiTests, ModAccMeasurement_FetchConstellationTrace_
 // Note: there aren't any i8 attributes in attributes.py, but this at least exercises the code.
 TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt8_ExpectedError)
 {
-  const auto session = init_session(stub(), kPxi5663e);
+  const auto session = init_session(stub(), PXI_5663E);
 
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_i8(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_u8(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_i8_array(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, -1, 0}));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_u8_array(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, 1, 0}));
 }
 
 // Note: there aren't any i16 attributes in attributes.py, but this at least exercises the code.
 TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt16_ExpectedError)
 {
-  const auto session = init_session(stub(), kPxi5663e);
+  const auto session = init_session(stub(), PXI_5663E);
 
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_i16(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, -400));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_u16(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 400));
 }
 
 TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 {
-  auto session = init_session(stub(), kPxi5663e);
+  auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TXP, true));
   EXPECT_SUCCESS(
       session,
@@ -277,7 +278,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 
 TEST_F(NiRFmxBluetoothDriverApiTests, ConfigureTwentydBBandwidth_FetchMeasurements_DataLooksReasonable)
 {
-  auto session = init_session(stub(), kPxi5663e);
+  auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TWENTY_DB_BANDWIDTH, true));
   EXPECT_SUCCESS(session, client::twentyd_b_bandwidth_cfg_averaging(stub(), session, "", TwentydBBandwidthAveragingEnabled::TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_FALSE, 10));
 

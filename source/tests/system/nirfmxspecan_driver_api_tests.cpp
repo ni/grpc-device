@@ -25,6 +25,9 @@ namespace {
 constexpr auto PXI_5663 = "5663";
 constexpr auto INVALID_DRIVER_SESSION = -380598;
 constexpr auto DEVICE_IN_USE = -380489;
+constexpr auto READ_ONLY_ATTRIBUTE = -380231;
+constexpr auto SYNCHRONIZTION_NOT_FOUND = 377652;
+constexpr auto TYPE_MISMATCH_ERROR = -380251;
 constexpr auto SUCCESS = 0;
 
 class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
@@ -258,7 +261,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_ReturnsSynchronizationNotFo
   EXPECT_SUCCESS(session, client::dpd_cfg_apply_dpd_lookup_table_correction_type(stub(), session, "", DpdApplyDpdLookupTableCorrectionType::DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_AND_PHASE));
 
   const auto apply_response = client::dpd_apply_digital_predistortion(stub(), session, "", waveform.t0, waveform.dt, waveform.data, false, 10.0);
-  EXPECT_WARNING(377652, "Synchronization not found", session, apply_response);
+  EXPECT_WARNING(SYNCHRONIZTION_NOT_FOUND, "Synchronization not found", session, apply_response);
   EXPECT_THAT(apply_response.waveform_out(), Not(IsEmpty()));
 }
 
@@ -268,7 +271,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeComplex_ExpectedError)
   const auto session = init_session(stub(), PXI_5663);
 
   EXPECT_ERROR(
-      -380231, "This attribute is read-only and cannot be written", session,
+      READ_ONLY_ATTRIBUTE, "This attribute is read-only and cannot be written", session,
       client::set_attribute_ni_complex_double_array(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_SEM_RESULTS_CARRIER_FREQUENCY, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
 }
 
@@ -278,16 +281,16 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeInt8_ExpectedError)
   const auto session = init_session(stub(), PXI_5663);
 
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_i8(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, 1));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_u8(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, 1));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_i8_array(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, {1, 0, -1, 0}));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_u8_array(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, {1, 0, 1, 0}));
 }
 
@@ -297,10 +300,10 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeInt16_ExpectedError)
   const auto session = init_session(stub(), PXI_5663);
 
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_i16(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, -400));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
       client::set_attribute_u16(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, 400));
 }
 

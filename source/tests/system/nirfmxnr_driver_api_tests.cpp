@@ -21,13 +21,13 @@ namespace tests {
 namespace system {
 namespace {
 
-const auto PXI_5663E = "5663E";
-const auto NR_SYNC_FAILURE = 684300;
-const auto NR_SYNC_FAILURE_STR = "Failed to synchronize to the signal";
-const auto IVI_ERROR_INVALID_VALUE = -1074135024;
-const auto IVI_ERROR_INVALID_VALUE_STR = "Invalid value for parameter or property";
-const auto INCORRECT_TYPE_ERROR_CODE = -380251;
-const auto INCORRECT_TYPE_ERROR_STR = "Incorrect data type specified";
+constexpr auto PXI_5663E = "5663E";
+constexpr auto NR_SYNC_FAILURE = 684300;
+constexpr auto NR_SYNC_FAILURE_STR = "Failed to synchronize to the signal";
+constexpr auto IVI_ERROR_INVALID_VALUE = -1074135024;
+constexpr auto IVI_ERROR_INVALID_VALUE_STR = "Invalid value for parameter or property";
+constexpr auto INCORRECT_TYPE_ERROR_CODE = -380251;
+constexpr auto INCORRECT_TYPE_ERROR_STR = "Incorrect data type specified";
 
 class NiRFmxNRDriverApiTests : public Test {
  protected:

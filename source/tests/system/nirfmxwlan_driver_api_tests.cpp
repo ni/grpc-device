@@ -21,10 +21,10 @@ namespace tests {
 namespace system {
 namespace {
 
-const auto PXI_5663E = "5663E";
-const int RISING_EDGE_DETECTION_FAILED_WARNING = 379206;
-const int EVM_CHIPS_MUST_BE_300_WARNING = 685353;
-const int INCORRECT_TYPE_ERROR_CODE = -380251;
+constexpr auto PXI_5663E = "5663E";
+constexpr int RISING_EDGE_DETECTION_FAILED_WARNING = 379206;
+constexpr int EVM_CHIPS_MUST_BE_300_WARNING = 685353;
+constexpr int INCORRECT_TYPE_ERROR_CODE = -380251;
 
 class NiRFmxWLANDriverApiTests : public Test {
  protected:
