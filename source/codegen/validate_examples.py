@@ -65,7 +65,7 @@ def validate_examples(driver_glob_expression: str, ip_address: str, device_name:
             _system(f"poetry run black --check --line-length 100 {dir}")
 
             print(f" -> Running mypy")
-            _system(f"poetry run mypy {dir} --check-untyped-defs")
+            _system(f"poetry run mypy {dir} --strict")
 
             if ip_address:
                 for file in dir.glob("*.py"):
