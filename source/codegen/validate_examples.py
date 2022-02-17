@@ -1,9 +1,9 @@
 from argparse import ArgumentParser
 from contextlib import contextmanager
-from sys import exit
 from os import getcwd, chdir, system as _system_core
 from pathlib import Path
 from shutil import rmtree
+from sys import exit
 from typing import NamedTuple
 
 from stage_client_files import stage_client_files
