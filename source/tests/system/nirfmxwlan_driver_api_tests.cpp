@@ -6,7 +6,7 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxwlan/nirfmxwlan_client.h"
 #include "nirfsa/nirfsa_client.h"
-#include "rfmx_expect_macros.h"
+#include "rfmx_macros.h"
 #include "waveform_helpers.h"
 
 namespace pb = google::protobuf;
@@ -51,14 +51,6 @@ class NiRFmxWLANDriverApiTests : public Test {
   std::unique_ptr<typename TService::Stub> create_stub()
   {
     return TService::NewStub(device_server_->InProcessChannel());
-  }
-
-  template <typename TAttr>
-  int32 get_attr_i32(const nidevice_grpc::Session& session, const std::string& selector_string, TAttr attribute_id)
-  {
-    auto response = client::get_attribute_i32(stub(), session, selector_string, attribute_id);
-    EXPECT_SUCCESS(session, response);
-    return response.attr_val();
   }
 
  private:
@@ -521,7 +513,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReason
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_symbol_clock_error_mean_response.symbol_clock_error_mean());
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.relative_iq_origin_offset_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_gain_imbalance_mean());
-  EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_quadrature_error_mean());
+  EXPECT_NE(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_quadrature_error_mean());
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.absolute_iq_origin_offset_mean());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_timing_skew_mean());
   EXPECT_EQ(0, ofdm_mod_acc_fetch_ppdu_type_response.ppdu_type());
@@ -621,7 +613,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
     const auto user_string_response = EXPECT_SUCCESS(session, client::build_user_string(stub(), "", i));
     ofdm_mod_acc_fetch_mcs_index_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_mcs_index(stub(), session, user_string_response.selector_string_out(), 10.0));
     ofdm_mod_acc_fetch_number_of_space_time_streams_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_number_of_space_time_streams(stub(), session, user_string_response.selector_string_out(), 10.0));
-    space_time_stream_offset_array[i] = get_attr_i32(session, user_string_response.selector_string_out(), NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET);
+    space_time_stream_offset_array[i] = GET_ATTR_I32(session, user_string_response.selector_string_out(), NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET);
     if (mcs_index_array == NULL || number_of_space_time_streams_array == NULL) {
       FAIL() << "Could not allocate array";
     }

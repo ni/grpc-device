@@ -3,7 +3,7 @@
 #include "device_server.h"
 #include "niRFmxLTE.h"
 #include "nirfmxlte/nirfmxlte_client.h"
-#include "rfmx_expect_macros.h"
+#include "rfmx_macros.h"
 
 using namespace ::testing;
 using namespace nirfmxlte_grpc;

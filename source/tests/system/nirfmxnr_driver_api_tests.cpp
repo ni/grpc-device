@@ -6,7 +6,7 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxnr/nirfmxnr_client.h"
 #include "nirfsa/nirfsa_client.h"
-#include "rfmx_expect_macros.h"
+#include "rfmx_macros.h"
 #include "waveform_helpers.h"
 
 using namespace ::testing;
@@ -60,19 +60,6 @@ class NiRFmxNRDriverApiTests : public Test {
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiRFmxNR::Stub> stub_;
 };
-
-#define GET_ATTR_(get_attr_fn, session_, selector_string_, attribute_id_)                \
-  ([this](auto& session, auto& selector_string, auto attribute_id) {                     \
-    auto response = client::get_attr_fn(stub(), session, selector_string, attribute_id); \
-    EXPECT_SUCCESS(session, response);                                                   \
-    return response.attr_val();                                                          \
-  })((session_), (selector_string_), (attribute_id_))
-
-#define GET_ATTR_I32(session_, selector_string_, attribute_id_) \
-  GET_ATTR_(get_attribute_i32, session_, selector_string_, attribute_id_)
-
-#define GET_ATTR_F64(session_, selector_string_, attribute_id_) \
-  GET_ATTR_(get_attribute_f64, session_, selector_string_, attribute_id_)
 
 InitializeResponse init(const client::StubPtr& stub, const std::string& model)
 {

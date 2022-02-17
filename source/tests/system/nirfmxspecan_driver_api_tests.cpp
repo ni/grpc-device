@@ -8,7 +8,7 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
 #include "nirfmxspecan/nirfmxspecan_service.h"
-#include "rfmx_expect_macros.h"
+#include "rfmx_macros.h"
 #include "waveform_helpers.h"
 
 using namespace nirfmxspecan_grpc;
@@ -300,10 +300,9 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAndGetAttributeInt32_Succeeds)
   // This is one way to get the driver in a state where we can get attributes
   EXPECT_SUCCESS(session, client::spectrum_read(stub(), session, "", 10.0));
 
-  auto get_response = client::get_attribute_i32(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT);
+  const auto nf_external_preamp_present = GET_ATTR_I32(session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT);
 
-  EXPECT_SUCCESS(session, get_response);
-  EXPECT_EQ(NiRFmxSpecAnInt32AttributeValues::NIRFMXSPECAN_INT32_NF_EXTERNAL_PREAMP_PRESENT_TRUE, get_response.attr_val());
+  EXPECT_EQ(NiRFmxSpecAnInt32AttributeValues::NIRFMXSPECAN_INT32_NF_EXTERNAL_PREAMP_PRESENT_TRUE, nf_external_preamp_present);
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, SetAndGetAttributeString_Succeeds)
@@ -320,10 +319,9 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAndGetAttributeString_Succeeds)
   // This is one way to get the driver in a state where we can get attributes
   EXPECT_SUCCESS(session, client::spectrum_read(stub(), session, "", 10.0));
 
-  auto get_response = client::get_attribute_string(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE);
+  const auto digital_edge_trigger_source = GET_ATTR_STR(session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE);
 
-  EXPECT_SUCCESS(session, get_response);
-  EXPECT_EQ("PFI0", get_response.attr_val());
+  EXPECT_EQ("PFI0", digital_edge_trigger_source);
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, BuildSpurString_ReturnsSpurString)
