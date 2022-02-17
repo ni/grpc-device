@@ -31,8 +31,10 @@ namespace system {
 namespace {
 
 constexpr auto PXI_5663E = "5663E";
-constexpr auto PREAMBLE_BURST_SYNC = 686280;  // The Preamble Sync failed to detect start of the packet
+constexpr auto PREAMBLE_BURST_SYNC_WARNING = 686280;
+constexpr auto PREAMBLE_BURST_SYNC_WARNING_STR = "The Preamble Sync failed to detect start of the packet";
 constexpr auto TYPE_MISMATCH_ERROR = -380251;
+constexpr auto TYPE_MISMATCH_ERROR_STR = "Incorrect data type specified";
 
 class NiRFmxBluetoothDriverApiTests : public Test {
  protected:
@@ -193,13 +195,13 @@ TEST_F(NiRFmxBluetoothDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::txp_cfg_averaging(stub(), session, "", TxpAveragingEnabled::TXP_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  // We expect these actions to produce PREAMBLE_BURST_SYNC since the test uses simulated hardware.
+  // We expect these actions to produce PREAMBLE_BURST_SYNC_WARNING since the test uses simulated hardware.
   const auto fetched_powers_response = client::txp_fetch_powers(stub(), session, "", 10.0);
-  EXPECT_RESPONSE_WARNING(PREAMBLE_BURST_SYNC, fetched_powers_response);
+  EXPECT_WARNING(PREAMBLE_BURST_SYNC_WARNING, PREAMBLE_BURST_SYNC_WARNING_STR, session, fetched_powers_response);
   const auto fetched_edr_powers_response = client::txp_fetch_edr_powers(stub(), session, "", 10.0);
-  EXPECT_RESPONSE_WARNING(PREAMBLE_BURST_SYNC, fetched_edr_powers_response);
+  EXPECT_WARNING(PREAMBLE_BURST_SYNC_WARNING, PREAMBLE_BURST_SYNC_WARNING_STR, session, fetched_edr_powers_response);
   const auto fetched_lecte_reference_period_powers_response = client::txp_fetch_lecte_reference_period_powers(stub(), session, "", 10.0);
-  EXPECT_RESPONSE_WARNING(PREAMBLE_BURST_SYNC, fetched_lecte_reference_period_powers_response);
+  EXPECT_WARNING(PREAMBLE_BURST_SYNC_WARNING, PREAMBLE_BURST_SYNC_WARNING_STR, session, fetched_lecte_reference_period_powers_response);
 
   EXPECT_GT(fetched_powers_response.average_power_mean(), 0.0);
   EXPECT_GT(fetched_powers_response.average_power_maximum(), 0.0);
@@ -220,9 +222,9 @@ TEST_F(NiRFmxBluetoothDriverApiTests, ModAccMeasurement_FetchConstellationTrace_
   EXPECT_SUCCESS(session, client::mod_acc_cfg_averaging(stub(), session, "", ModAccAveragingEnabled::MODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  // We expect this action to produce PREAMBLE_BURST_SYNC since the test uses simulated hardware.
+  // We expect this action to produce PREAMBLE_BURST_SYNC_WARNING since the test uses simulated hardware.
   const auto constellation_trace_response = client::mod_acc_fetch_constellation_trace(stub(), session, "", 10.0);
-  EXPECT_RESPONSE_WARNING(PREAMBLE_BURST_SYNC, constellation_trace_response);
+  EXPECT_WARNING(PREAMBLE_BURST_SYNC_WARNING, PREAMBLE_BURST_SYNC_WARNING_STR, session, constellation_trace_response);
 
   // We expect the results to be empty since the measurement did not complete successfully.
   EXPECT_THAT(constellation_trace_response.constellation(), Each(Eq(complex_number(0.0, 0.0))));
@@ -235,16 +237,16 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt8_ExpectedError)
   const auto session = init_session(stub(), PXI_5663E);
 
   EXPECT_ERROR(
-      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_i8(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
   EXPECT_ERROR(
-      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_u8(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
   EXPECT_ERROR(
-      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_i8_array(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, -1, 0}));
   EXPECT_ERROR(
-      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_u8_array(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, 1, 0}));
 }
 
@@ -254,10 +256,10 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt16_ExpectedError)
   const auto session = init_session(stub(), PXI_5663E);
 
   EXPECT_ERROR(
-      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_i16(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, -400));
   EXPECT_ERROR(
-      TYPE_MISMATCH_ERROR, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_u16(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 400));
 }
 

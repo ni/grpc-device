@@ -22,12 +22,12 @@ namespace system {
 namespace {
 
 constexpr auto PXI_5663E = "5663E";
-constexpr auto NR_SYNC_FAILURE = 684300;
-constexpr auto NR_SYNC_FAILURE_STR = "Failed to synchronize to the signal";
+constexpr auto NR_SYNC_FAILURE_WARNING = 684300;
+constexpr auto NR_SYNC_FAILURE_WARNING_STR = "Failed to synchronize to the signal";
 constexpr auto IVI_ERROR_INVALID_VALUE = -1074135024;
 constexpr auto IVI_ERROR_INVALID_VALUE_STR = "Invalid value for parameter or property";
-constexpr auto INCORRECT_TYPE_ERROR_CODE = -380251;
-constexpr auto INCORRECT_TYPE_ERROR_STR = "Incorrect data type specified";
+constexpr auto TYPE_MISMATCH_ERROR = -380251;
+constexpr auto TYPE_MISMATCH_ERROR_STR = "Incorrect data type specified";
 
 class NiRFmxNRDriverApiTests : public Test {
  protected:
@@ -348,7 +348,7 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
     EXPECT_SUCCESS(session, carrier_string_response);
     auto modacc_results_composite_rms_evm_mean_response = client::get_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
     if (i == 0) {
-      EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, modacc_results_composite_rms_evm_mean_response);
+      EXPECT_WARNING(NR_SYNC_FAILURE_WARNING, NR_SYNC_FAILURE_WARNING_STR, session, modacc_results_composite_rms_evm_mean_response);
     }
     else {
       EXPECT_SUCCESS(session, modacc_results_composite_rms_evm_mean_response);
@@ -364,9 +364,9 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
     componentCarrierQuadratureErrorMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
     pdschRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
     mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i] = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
-    EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i]);
+    EXPECT_WARNING(NR_SYNC_FAILURE_WARNING, NR_SYNC_FAILURE_WARNING_STR, session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i]);
     mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i] = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
-    EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i]);
+    EXPECT_WARNING(NR_SYNC_FAILURE_WARNING, NR_SYNC_FAILURE_WARNING_STR, session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i]);
   }
 
   EXPECT_TRUE(isnan(compositeRMSEVMMean[0]));
@@ -678,7 +678,7 @@ TEST_F(NiRFmxNRDriverApiTests, SetAttributeComplex_ExpectedError)
   const auto session = init_session(stub(), PXI_5663E);
 
   EXPECT_ERROR(
-      INCORRECT_TYPE_ERROR_CODE, INCORRECT_TYPE_ERROR_STR, session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_ni_complex_double_array(stub(), session, "", NIRFMXNR_ATTRIBUTE_SEM_OFFSET_START_FREQUENCY, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
 }
 
