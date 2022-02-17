@@ -6,7 +6,7 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxnr/nirfmxnr_client.h"
 #include "nirfsa/nirfsa_client.h"
-#include "rfmx_expect_macros.h"
+#include "rfmx_macros.h"
 #include "waveform_helpers.h"
 
 using namespace ::testing;

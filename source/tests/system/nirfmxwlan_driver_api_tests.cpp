@@ -6,7 +6,7 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxwlan/nirfmxwlan_client.h"
 #include "nirfsa/nirfsa_client.h"
-#include "rfmx_expect_macros.h"
+#include "rfmx_macros.h"
 #include "waveform_helpers.h"
 
 namespace pb = google::protobuf;

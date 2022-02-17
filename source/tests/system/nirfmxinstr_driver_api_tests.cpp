@@ -6,7 +6,7 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
 #include "nirfsa/nirfsa_client.h"
-#include "rfmx_expect_macros.h"
+#include "rfmx_macros.h"
 
 using namespace ::testing;
 using namespace nirfmxinstr_grpc;
