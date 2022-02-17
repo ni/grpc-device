@@ -103,4 +103,4 @@ if __name__ == "__main__":
         for code, command in _FAILED_COMMANDS:
             print(f"FAILED STEP ({code}): [{command}]")
 
-        exit(_FAILED_COMMANDS[-1].exit_code)
+        exit(1)
