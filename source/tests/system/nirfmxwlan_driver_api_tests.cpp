@@ -184,7 +184,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_Dat
 
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
-  EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
+  EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.average_power_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.peak_power_maximum());
 }
@@ -541,13 +541,8 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   const auto NUMBER_OF_RECEIVE_CHAINS = 2;
   std::vector<std::string> resource_names = {"RFSA1", "RFSA2"};
   std::string comma_separated_resource_name = get_comma_seperated_string(resource_names);
-  std::vector<std::string> selected_ports = {"", ""};
   std::vector<float64> center_frequency_array{5.180000e9, 5.260000e9};
-  std::vector<std::string> port_string = {"", ""};
   std::vector<std::string> selected_ports_strings = {"", ""};
-  std::string selected_ports_string_comma_separated;
-  std::vector<float64> reference_level_array{0.0, 0.0};
-  std::vector<float64> external_attenuation_array{0.0, 0.0};
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
   auto session = init_session(stub(), PXI_5663E, comma_separated_resource_name);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
@@ -557,14 +552,13 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
     EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), center_frequency_array[i]));
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    auto port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0));
+    auto port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0));
     selected_ports_strings[i] = port_string_response.selector_string_out();
     port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0));
-    port_string[i] = port_string_response.selector_string_out();
-    EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, port_string[i], reference_level_array[i]));
-    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string[i], external_attenuation_array[i]));
+    EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, port_string_response.selector_string_out(), 0.0));
+    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string_response.selector_string_out(), 0.0));
   }
-  selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_strings);
+  std::string selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_strings);
   EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selected_ports_string_comma_separated));
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 5e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
@@ -580,25 +574,6 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_CHANNEL_MATRIX_POWER_ENABLED, NIRFMXWLAN_INT32_OFDMMODACC_CHANNEL_MATRIX_POWER_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32* mcs_index_array = NULL;
-  int32 mcs_index_array_length = 0;
-  int32* number_of_space_time_streams_array = NULL;
-  int32 number_of_space_time_streams_array_length = 0;
-  int32* space_time_stream_offset_array = NULL;
-  int32 number_of_stream_results = INT_MIN;
-  int32 ppdu_type = NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_MU;
-  int32 number_of_users = 0;
-  OFDMModAccFetchNumberOfUsersResponse ofdm_mod_acc_fetch_number_of_users_response;
-  OFDMModAccFetchMCSIndexResponse ofdm_mod_acc_fetch_mcs_index_response;
-  OFDMModAccFetchNumberOfSpaceTimeStreamsResponse ofdm_mod_acc_fetch_number_of_space_time_streams_response;
-  OFDMModAccFetchFrequencyErrorMeanResponse ofdm_mod_acc_fetch_frequency_error_mean_response;
-  OFDMModAccFetchSymbolClockErrorMeanResponse ofdm_mod_acc_fetch_symbol_clock_error_mean_response;
-  OFDMModAccFetchStreamRMSEVMResponse ofdm_mod_acc_fetch_stream_rmsevm_response;
-  OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceResponse ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response;
-  OFDMModAccFetchPilotConstellationTraceResponse ofdm_mod_acc_fetch_pilot_constellation_trace_response;
-  OFDMModAccFetchDataConstellationTraceResponse ofdm_mod_acc_fetch_data_constellation_trace_response;
-  OFDMModAccFetchCrossPowerResponse ofdm_mod_acc_fetch_cross_power_response;
-  OFDMModAccFetchIQImpairmentsResponse ofdm_mod_acc_fetch_iq_impairments_response;
   const auto ofdm_mod_acc_fetch_composite_rmsevm_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0));
   const auto ofdm_mod_acc_fetch_numberof_symbols_used_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_numberof_symbols_used(stub(), session, "", 10.0));
   const auto ofdm_mod_acc_fetch_ppdu_type_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_ppdu_type(stub(), session, "", 10.0));
@@ -606,39 +581,46 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   const auto ofdm_mod_acc_fetch_lsig_parity_check_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_lsig_parity_check_status(stub(), session, "", 10.0));
   const auto ofdm_mod_acc_fetch_sigcrc_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_sigcrc_status(stub(), session, "", 10.0));
   const auto ofdm_mod_acc_fetch_sigbcrc_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_sigbcrc_status(stub(), session, "", 10.0));
-  ofdm_mod_acc_fetch_number_of_users_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_number_of_users(stub(), session, "", 10.0));
-  mcs_index_array_length = number_of_users;
-  mcs_index_array = (int32*)malloc(mcs_index_array_length * sizeof(int32));
-  number_of_space_time_streams_array_length = number_of_users;
-  number_of_space_time_streams_array = (int32*)malloc(number_of_space_time_streams_array_length * sizeof(int32));
-  space_time_stream_offset_array = (int32*)malloc(number_of_users * sizeof(int32));
+  const auto ofdm_mod_acc_fetch_number_of_users_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_number_of_users(stub(), session, "", 10.0));
+  const auto number_of_users = ofdm_mod_acc_fetch_number_of_users_response.number_of_users();
+  std::vector<int32> mcs_index_vec(number_of_users);
+  std::vector<int32> number_of_space_time_streams_vec(number_of_users);
+  std::vector<int32> space_time_stream_offset_vec(number_of_users);
+  auto number_of_stream_results = INT_MIN;
   for (int i = 0; i < number_of_users; i++) {
     const auto user_string_response = EXPECT_SUCCESS(session, client::build_user_string(stub(), "", i));
-    ofdm_mod_acc_fetch_mcs_index_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_mcs_index(stub(), session, user_string_response.selector_string_out(), 10.0));
-    ofdm_mod_acc_fetch_number_of_space_time_streams_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_number_of_space_time_streams(stub(), session, user_string_response.selector_string_out(), 10.0));
-    space_time_stream_offset_array[i] = GET_ATTR_I32(session, user_string_response.selector_string_out(), NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET);
-    if (mcs_index_array == NULL || number_of_space_time_streams_array == NULL) {
-      FAIL() << "Could not allocate array";
-    }
-    if ((space_time_stream_offset_array[i] + number_of_space_time_streams_array[i]) > number_of_stream_results) {
-      number_of_stream_results = space_time_stream_offset_array[i] + number_of_space_time_streams_array[i];
+    const auto ofdm_mod_acc_fetch_mcs_index_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_mcs_index(stub(), session, user_string_response.selector_string_out(), 10.0));
+    mcs_index_vec[i] = ofdm_mod_acc_fetch_mcs_index_response.mcs_index();
+    const auto ofdm_mod_acc_fetch_number_of_space_time_streams_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_number_of_space_time_streams(stub(), session, user_string_response.selector_string_out(), 10.0));
+    number_of_space_time_streams_vec[i] = ofdm_mod_acc_fetch_number_of_space_time_streams_response.number_of_space_time_streams();
+    space_time_stream_offset_vec[i] = GET_ATTR_I32(session, user_string_response.selector_string_out(), NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET);
+    if ((space_time_stream_offset_vec[i] + number_of_space_time_streams_vec[i]) > number_of_stream_results) {
+      number_of_stream_results = space_time_stream_offset_vec[i] + number_of_space_time_streams_vec[i];
     }
   }
+  std::vector<OFDMModAccFetchFrequencyErrorMeanResponse> ofdm_mod_acc_fetch_frequency_error_mean_response_vec;
+  std::vector<OFDMModAccFetchSymbolClockErrorMeanResponse> ofdm_mod_acc_fetch_symbol_clock_error_mean_response_vec;
+  std::vector<std::vector<OFDMModAccFetchStreamRMSEVMResponse>> ofdm_mod_acc_fetch_stream_rmsevm_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
+  std::vector<std::vector<OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceResponse>> ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
+  std::vector<std::vector<OFDMModAccFetchPilotConstellationTraceResponse>> ofdm_mod_acc_fetch_pilot_constellation_trace_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
+  std::vector<std::vector<OFDMModAccFetchDataConstellationTraceResponse>> ofdm_mod_acc_fetch_data_constellation_trace_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
+  std::vector<std::vector<OFDMModAccFetchCrossPowerResponse>> ofdm_mod_acc_fetch_cross_power_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
+  std::vector<std::vector<OFDMModAccFetchIQImpairmentsResponse>> ofdm_mod_acc_fetch_iq_impairments_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; i++) {
     const auto segment_string_response = EXPECT_SUCCESS(session, client::build_segment_string(stub(), "", i));
-    ofdm_mod_acc_fetch_frequency_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0));
-    ofdm_mod_acc_fetch_symbol_clock_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0));
+    ofdm_mod_acc_fetch_frequency_error_mean_response_vec.push_back(EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0)));
+    ofdm_mod_acc_fetch_symbol_clock_error_mean_response_vec.push_back(EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0)));
     for (int j = 0; j < number_of_stream_results; j++) {
       const auto stream_string_response = EXPECT_SUCCESS(session, client::build_stream_string(stub(), segment_string_response.selector_string_out(), j));
-      ofdm_mod_acc_fetch_stream_rmsevm_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_stream_rmsevm(stub(), session, stream_string_response.selector_string_out(), 10.0));
-      ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace(stub(), session, stream_string_response.selector_string_out(), 10.0));
-      ofdm_mod_acc_fetch_pilot_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, stream_string_response.selector_string_out(), 10.0));
-      ofdm_mod_acc_fetch_data_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, stream_string_response.selector_string_out(), 10.0));
+      ofdm_mod_acc_fetch_stream_rmsevm_response_vec[i].push_back(EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_stream_rmsevm(stub(), session, stream_string_response.selector_string_out(), 10.0)));
+      ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[i].push_back(EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace(stub(), session, stream_string_response.selector_string_out(), 10.0)));
+      ofdm_mod_acc_fetch_pilot_constellation_trace_response_vec[i].push_back(EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, stream_string_response.selector_string_out(), 10.0)));
+      ofdm_mod_acc_fetch_data_constellation_trace_response_vec[i].push_back(EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, stream_string_response.selector_string_out(), 10.0)));
     }
     for (int j = 0; j < NUMBER_OF_RECEIVE_CHAINS; j++) {
       const auto chain_string_response = EXPECT_SUCCESS(session, client::build_chain_string(stub(), segment_string_response.selector_string_out(), j));
-      ofdm_mod_acc_fetch_cross_power_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_cross_power(stub(), session, chain_string_response.selector_string_out(), 10.0));
-      ofdm_mod_acc_fetch_iq_impairments_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_iq_impairments(stub(), session, chain_string_response.selector_string_out(), 10.0));
+      ofdm_mod_acc_fetch_cross_power_response_vec[i].push_back(EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_cross_power(stub(), session, chain_string_response.selector_string_out(), 10.0)));
+      ofdm_mod_acc_fetch_iq_impairments_response_vec[i].push_back(EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_iq_impairments(stub(), session, chain_string_response.selector_string_out(), 10.0)));
     }
   }
 
@@ -650,34 +632,34 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_EQ(-1, ofdm_mod_acc_fetch_lsig_parity_check_status_response.l_sig_parity_check_status());
   EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status());
   EXPECT_EQ(-1, ofdm_mod_acc_fetch_sigbcrc_status_response.sig_b_crc_status());
-  EXPECT_EQ(1, ofdm_mod_acc_fetch_number_of_users_response.number_of_users());
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_mcs_index_response.mcs_index());
+  EXPECT_EQ(1, number_of_users);
   for (int i = 0; i < number_of_users; i++) {
-    EXPECT_EQ(0, space_time_stream_offset_array[i]);
+    EXPECT_LT(0, mcs_index_vec[i]);
+    EXPECT_EQ(0, space_time_stream_offset_vec[i]);
   }
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_mcs_index_response.mcs_index());
-  EXPECT_GT(0.0, ofdm_mod_acc_fetch_frequency_error_mean_response.frequency_error_mean());
-  EXPECT_GT(0.0, ofdm_mod_acc_fetch_symbol_clock_error_mean_response.symbol_clock_error_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_rms_evm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_data_rms_evm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_pilot_rms_evm_mean());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.x0());
-  EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.dx());
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rms_evm_per_subcarrier_mean_size());
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rms_evm_per_subcarrier_mean().size());
-  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rms_evm_per_subcarrier_mean(0));
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation().size());
-  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).real());
-  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).imaginary());
-  EXPECT_EQ(0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation().size());
-  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).real());
-  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).imaginary());
-  EXPECT_NE(0.0, ofdm_mod_acc_fetch_cross_power_response.cross_power_mean());
-  EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.relative_iq_origin_offset_mean());
-  EXPECT_LT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_gain_imbalance_mean());
-  EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_quadrature_error_mean());
-  EXPECT_NE(0.0, ofdm_mod_acc_fetch_iq_impairments_response.absolute_iq_origin_offset_mean());
-  EXPECT_NE(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_timing_skew_mean());
+  EXPECT_LE(number_of_users, number_of_stream_results);
+  EXPECT_GT(0.0, ofdm_mod_acc_fetch_frequency_error_mean_response_vec[0].frequency_error_mean());
+  EXPECT_GT(0.0, ofdm_mod_acc_fetch_symbol_clock_error_mean_response_vec[0].symbol_clock_error_mean());
+  EXPECT_LT(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response_vec[0][0].stream_rms_evm_mean());
+  EXPECT_LT(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response_vec[0][0].stream_data_rms_evm_mean());
+  EXPECT_LT(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response_vec[0][0].stream_pilot_rms_evm_mean());
+  EXPECT_EQ(-28.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].x0());
+  EXPECT_EQ(1.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].dx());
+  EXPECT_EQ(57, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].stream_rms_evm_per_subcarrier_mean_size());
+  EXPECT_EQ(57, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].stream_rms_evm_per_subcarrier_mean().size());
+  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].stream_rms_evm_per_subcarrier_mean(0));
+  EXPECT_EQ(64, ofdm_mod_acc_fetch_pilot_constellation_trace_response_vec[0][0].pilot_constellation().size());
+  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response_vec[0][0].pilot_constellation(0).real());
+  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response_vec[0][0].pilot_constellation(0).imaginary());
+  EXPECT_EQ(832, ofdm_mod_acc_fetch_data_constellation_trace_response_vec[0][0].data_constellation().size());
+  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response_vec[0][0].data_constellation(0).real());
+  // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response_vec[0][0].data_constellation(0).imaginary());
+  EXPECT_NE(0.0, ofdm_mod_acc_fetch_cross_power_response_vec[0][0].cross_power_mean());
+  EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response_vec[0][0].relative_iq_origin_offset_mean());
+  EXPECT_LT(0.0, ofdm_mod_acc_fetch_iq_impairments_response_vec[0][0].iq_gain_imbalance_mean());
+  EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response_vec[0][0].iq_quadrature_error_mean());
+  EXPECT_NE(0.0, ofdm_mod_acc_fetch_iq_impairments_response_vec[0][0].absolute_iq_origin_offset_mean());
+  EXPECT_NE(0.0, ofdm_mod_acc_fetch_iq_impairments_response_vec[0][0].iq_timing_skew_mean());
 }
 
 TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccSpeedOptimizedFromExample_FetchData_DataLooksReasonable)
@@ -856,13 +838,8 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   const auto NUMBER_OF_RECEIVE_CHAINS = 2;
   std::vector<std::string> resource_names = {"RFSA1", "RFSA2"};
   std::string comma_separated_resource_name = get_comma_seperated_string(resource_names);
-  std::vector<std::string> selected_ports = {"", ""};
   std::vector<float64> center_frequency_array{5.180000e9, 5.260000e9};
-  std::vector<float64> reference_level_array{0.0, 0.0};
-  std::vector<float64> external_attenuation_array{0.0, 0.0};
-  std::vector<std::string> port_string = {"", ""};
   std::vector<std::string> selected_ports_string{"", ""};
-  std::string selected_ports_string_comma_separated;
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
   auto session = init_session(stub(), PXI_5663E, comma_separated_resource_name);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
@@ -872,14 +849,13 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
     EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), center_frequency_array[i]));
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    auto port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0));
+    auto port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0));
     selected_ports_string[i] = port_string_response.selector_string_out();
     port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0));
-    port_string[i] = port_string_response.selector_string_out();
-    EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, port_string[i], reference_level_array[i]));
-    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string[i], external_attenuation_array[i]));
+    EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, port_string_response.selector_string_out(), 0.0));
+    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string_response.selector_string_out(), 0.0));
   }
-  selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_string);
+  std::string selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_string);
   EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selected_ports_string_comma_separated));
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 5.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
@@ -891,65 +867,67 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   EXPECT_SUCCESS(session, client::sem_cfg_span(stub(), session, "", SEM_SPAN_AUTO_TRUE, 66.0e6));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  int32 array_size = 0;
-  SEMFetchCarrierMeasurementResponse sem_fetch_carrier_measurement_response;
-  SEMFetchLowerOffsetMarginArrayResponse sem_fetch_lower_offset_margin_array_response;
-  SEMFetchUpperOffsetMarginArrayResponse sem_fetch_upper_offset_margin_array_response;
-  SEMFetchSpectrumResponse sem_fetch_spectrum_response;
+  std::vector<std::vector<SEMFetchCarrierMeasurementResponse>> sem_fetch_carrier_measurement_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
+  std::vector<std::vector<SEMFetchLowerOffsetMarginArrayResponse>> sem_fetch_lower_offset_margin_array_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
+  std::vector<std::vector<SEMFetchUpperOffsetMarginArrayResponse>> sem_fetch_upper_offset_margin_array_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
+  std::vector<std::vector<SEMFetchSpectrumResponse>> sem_fetch_spectrum_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
   const auto sem_fetch_measurement_status_response = EXPECT_SUCCESS(session, client::sem_fetch_measurement_status(stub(), session, "", 10.0));
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
     const auto segment_string_response = EXPECT_SUCCESS(session, client::build_segment_string(stub(), "", i));
     for (int j = 0; j < NUMBER_OF_RECEIVE_CHAINS; ++j) {
       const auto chain_string_response = EXPECT_SUCCESS(session, client::build_chain_string(stub(), segment_string_response.selector_string_out(), j));
-      sem_fetch_carrier_measurement_response = EXPECT_SUCCESS(session, client::sem_fetch_carrier_measurement(stub(), session, chain_string_response.selector_string_out(), 10.0));
-      sem_fetch_lower_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_lower_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0));
-      sem_fetch_upper_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_upper_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0));
-      array_size = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
-      sem_fetch_spectrum_response = EXPECT_SUCCESS(session, client::sem_fetch_spectrum(stub(), session, chain_string_response.selector_string_out(), 10.0));
+      sem_fetch_carrier_measurement_response_vec[i].push_back(
+          EXPECT_SUCCESS(session, client::sem_fetch_carrier_measurement(stub(), session, chain_string_response.selector_string_out(), 10.0)));
+      sem_fetch_lower_offset_margin_array_response_vec[i].push_back(
+          EXPECT_SUCCESS(session, client::sem_fetch_lower_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0)));
+      sem_fetch_upper_offset_margin_array_response_vec[i].push_back(
+          EXPECT_SUCCESS(session, client::sem_fetch_upper_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0)));
+      sem_fetch_spectrum_response_vec[i].push_back(
+          EXPECT_SUCCESS(session, client::sem_fetch_spectrum(stub(), session, chain_string_response.selector_string_out(), 10.0)));
     }
   }
 
   EXPECT_EQ(1, sem_fetch_measurement_status_response.measurement_status());
-  EXPECT_LT(0.0, sem_fetch_carrier_measurement_response.absolute_power());
-  EXPECT_LT(0.0, sem_fetch_carrier_measurement_response.relative_power());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.measurement_status_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.measurement_status().size());
-  EXPECT_EQ(1, sem_fetch_lower_offset_margin_array_response.measurement_status(0));
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin().size());
-  EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin(0));
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_frequency_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_frequency().size());
-  EXPECT_LT(0.0, sem_fetch_lower_offset_margin_array_response.margin_frequency(0));
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_absolute_power_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_absolute_power().size());
-  EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin_absolute_power(0));
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_relative_power_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_relative_power().size());
-  EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status().size());
-  EXPECT_EQ(1, sem_fetch_upper_offset_margin_array_response.measurement_status(0));
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin().size());
-  EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response.margin(0));
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_frequency_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_frequency().size());
-  EXPECT_LT(0.0, sem_fetch_upper_offset_margin_array_response.margin_frequency(0));
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_absolute_power_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_absolute_power().size());
-  EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response.margin_absolute_power(0));
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_relative_power_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_relative_power().size());
-  EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_LT(0.0, sem_fetch_spectrum_response.x0());
-  EXPECT_LT(0.0, sem_fetch_spectrum_response.dx());
-  EXPECT_EQ(2454, sem_fetch_spectrum_response.spectrum_size());
-  EXPECT_EQ(2454, sem_fetch_spectrum_response.spectrum().size());
-  EXPECT_GT(0.0, sem_fetch_spectrum_response.spectrum(0));
-  EXPECT_EQ(2454, sem_fetch_spectrum_response.composite_mask_size());
-  EXPECT_EQ(2454, sem_fetch_spectrum_response.composite_mask().size());
-  EXPECT_GT(0.0, sem_fetch_spectrum_response.composite_mask(0));
+  EXPECT_LT(0.0, sem_fetch_carrier_measurement_response_vec[0][0].absolute_power());
+  EXPECT_LT(0.0, sem_fetch_carrier_measurement_response_vec[0][0].relative_power());
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].measurement_status_size());
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].measurement_status().size());
+  EXPECT_EQ(1, sem_fetch_lower_offset_margin_array_response_vec[0][0].measurement_status(0));
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_size());
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin().size());
+  EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin(0));
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_frequency_size());
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_frequency().size());
+  EXPECT_LT(0.0, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_frequency(0));
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_absolute_power_size());
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_absolute_power().size());
+  EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_absolute_power(0));
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_relative_power_size());
+  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_relative_power().size());
+  EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response_vec[0][0].margin_relative_power(0));
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].measurement_status_size());
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].measurement_status().size());
+  EXPECT_EQ(1, sem_fetch_upper_offset_margin_array_response_vec[0][0].measurement_status(0));
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_size());
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin().size());
+  EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin(0));
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_frequency_size());
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_frequency().size());
+  EXPECT_LT(0.0, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_frequency(0));
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_absolute_power_size());
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_absolute_power().size());
+  EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_absolute_power(0));
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_relative_power_size());
+  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_relative_power().size());
+  EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response_vec[0][0].margin_relative_power(0));
+  EXPECT_LT(0.0, sem_fetch_spectrum_response_vec[0][0].x0());
+  EXPECT_LT(0.0, sem_fetch_spectrum_response_vec[0][0].dx());
+  EXPECT_EQ(2454, sem_fetch_spectrum_response_vec[0][0].spectrum_size());
+  EXPECT_EQ(2454, sem_fetch_spectrum_response_vec[0][0].spectrum().size());
+  EXPECT_GT(0.0, sem_fetch_spectrum_response_vec[0][0].spectrum(0));
+  EXPECT_EQ(2454, sem_fetch_spectrum_response_vec[0][0].composite_mask_size());
+  EXPECT_EQ(2454, sem_fetch_spectrum_response_vec[0][0].composite_mask().size());
+  EXPECT_GT(0.0, sem_fetch_spectrum_response_vec[0][0].composite_mask(0));
 }
 
 TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonable)
@@ -959,13 +937,9 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
   const auto NUMBER_OF_RECEIVE_CHAINS = 2;
   std::vector<std::string> resource_names = {"RFSA1", "RFSA2"};
   std::string comma_separated_resource_name = get_comma_seperated_string(resource_names);
-  std::vector<std::string> selected_ports = {"", ""};
   std::vector<float64> center_frequency_array{5.180000e9, 5.260000e9};
   std::vector<std::string> port_string = {"", ""};
   std::vector<std::string> selected_ports_string = {"", ""};
-  std::string selected_ports_string_comma_separated;
-  std::vector<float64> reference_level_array{0.0, 0.0};
-  std::vector<float64> external_attenuation_array{0.0, 0.0};
   auto instr_stub = create_stub<nirfmxinstr_grpc::NiRFmxInstr>();
   auto session = init_session(stub(), PXI_5663E, comma_separated_resource_name);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
@@ -975,18 +949,18 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
     EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), center_frequency_array[i]));
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    auto port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0));
+    auto port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0));
     selected_ports_string[i] = port_string_response.selector_string_out();
     port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0));
     port_string[i] = port_string_response.selector_string_out();
   }
-  selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_string);
+  std::string selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_string);
   EXPECT_SUCCESS(session, client::cfg_selected_ports_multiple(stub(), session, "", selected_ports_string_comma_separated));
   EXPECT_SUCCESS(session, client::cfg_standard(stub(), session, "", STANDARD_802_11_N));
   EXPECT_SUCCESS(session, client::cfg_channel_bandwidth(stub(), session, "", 20e6));
   EXPECT_SUCCESS(session, client::auto_level(stub(), session, "", 10e-3));
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string[i], external_attenuation_array[i]));
+    EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string[i], 0.0));
   }
   EXPECT_SUCCESS(session, client::cfg_iq_power_edge_trigger(stub(), session, "", "0", IQ_POWER_EDGE_TRIGGER_SLOPE_RISING, -20.0, 0.0, TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO, 5.0e-6, IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE, true));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_TXP, true));
@@ -994,8 +968,8 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
   EXPECT_SUCCESS(session, client::txp_cfg_averaging(stub(), session, "", TXP_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  TXPFetchMeasurementResponse txp_fetch_measurement_response;
-  TXPFetchPowerTraceResponse txp_fetch_power_trace_response;
+  std::vector<std::vector<TXPFetchMeasurementResponse>> txp_fetch_measurement_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
+  std::vector<std::vector<TXPFetchPowerTraceResponse>> txp_fetch_power_trace_response_vec(NUMBER_OF_FREQUENCY_SEGMENTS);
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
     const auto segment_string_response = EXPECT_SUCCESS(session, client::build_segment_string(stub(), "", i));
     for (int j = 0; j < NUMBER_OF_RECEIVE_CHAINS; ++j) {
@@ -1003,20 +977,24 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
       // returning the text for RISING_EDGE_DETECTION_FAILED_WARNING
       const auto chain_string_response = client::build_chain_string(stub(), segment_string_response.selector_string_out(), j);
       EXPECT_RESPONSE_SUCCESS(chain_string_response);
-      txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, chain_string_response.selector_string_out(), 10.0);
-      EXPECT_WARNING(RISING_EDGE_DETECTION_FAILED_WARNING, RISING_EDGE_DETECTION_FAILED_WARNING_STR, session, txp_fetch_measurement_response);
-      txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, chain_string_response.selector_string_out(), 10.0);
-      EXPECT_WARNING(RISING_EDGE_DETECTION_FAILED_WARNING, RISING_EDGE_DETECTION_FAILED_WARNING_STR, session, txp_fetch_power_trace_response);
+      txp_fetch_measurement_response_vec[i].push_back(
+          EXPECT_WARNING(
+              RISING_EDGE_DETECTION_FAILED_WARNING, RISING_EDGE_DETECTION_FAILED_WARNING_STR, session,
+              client::txp_fetch_measurement(stub(), session, chain_string_response.selector_string_out(), 10.0)));
+      txp_fetch_power_trace_response_vec[i].push_back(
+          EXPECT_WARNING(
+              RISING_EDGE_DETECTION_FAILED_WARNING, RISING_EDGE_DETECTION_FAILED_WARNING_STR, session,
+              client::txp_fetch_power_trace(stub(), session, chain_string_response.selector_string_out(), 10.0)));
     }
   }
 
-  EXPECT_LT(0.0, txp_fetch_measurement_response.average_power_mean());
-  EXPECT_LT(0.0, txp_fetch_measurement_response.peak_power_maximum());
-  EXPECT_GT(0.0, txp_fetch_power_trace_response.x0());
-  EXPECT_LT(0.0, txp_fetch_power_trace_response.dx());
-  EXPECT_EQ(25250, txp_fetch_power_trace_response.power_size());
-  EXPECT_EQ(25250, txp_fetch_power_trace_response.power().size());
-  EXPECT_LT(0.0, txp_fetch_power_trace_response.power(0));
+  EXPECT_LT(0.0, txp_fetch_measurement_response_vec[0][0].average_power_mean());
+  EXPECT_LT(0.0, txp_fetch_measurement_response_vec[0][0].peak_power_maximum());
+  EXPECT_GT(0.0, txp_fetch_power_trace_response_vec[0][0].x0());
+  EXPECT_LT(0.0, txp_fetch_power_trace_response_vec[0][0].dx());
+  EXPECT_EQ(25250, txp_fetch_power_trace_response_vec[0][0].power_size());
+  EXPECT_EQ(25250, txp_fetch_power_trace_response_vec[0][0].power().size());
+  EXPECT_LT(0.0, txp_fetch_power_trace_response_vec[0][0].power(0));
 }
 
 TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonable)
@@ -1024,11 +1002,6 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
   const auto num_frequency_segments = 1;
   const auto num_receive_chains = 2;
   double centerFrequency[num_receive_chains] = {5.18e9, 5.26e9};
-  std::vector<float64> iq_x0{0, 0};
-  std::vector<float64> iq_dx{0, 0};
-  std::vector<int> iq_sizes{0, 0};
-  std::vector<nidevice_grpc::NIComplexNumberF32> iq;
-
   auto session = init_analysis_session(stub());
   EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", num_frequency_segments, num_receive_chains));
   for (int i = 0; i < num_frequency_segments; i++) {
@@ -1047,6 +1020,10 @@ TEST_F(NiRFmxWLANDriverApiTests, AnalyzeNWaveformsIQ_FetchData_DataLooksReasonab
   // READ TDMS File
   auto waveforms = load_test_multiple_waveforms_data<float, nidevice_grpc::NIComplexNumberF32>("WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json", 2);
   // Concatenate waveform data, two dimension array passed as one dimension array with size array determining where one starts and one stops.
+  std::vector<float64> iq_x0{0, 0};
+  std::vector<float64> iq_dx{0, 0};
+  std::vector<int> iq_sizes{0, 0};
+  std::vector<nidevice_grpc::NIComplexNumberF32> iq;
   for (int i = 0; i < num_receive_chains; i++) {
     auto waveform = waveforms[i];
     auto data = waveform.data;
