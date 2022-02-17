@@ -57,23 +57,6 @@ jobs:
     - name: Update Submodules
       run: git submodule update --init --recursive --depth=1
 
-    - name: Install build dependencies
-      run: python -m pip install -r python_build_requirements.txt
-
-    - name: Validate python style with black
-      run: |
-        black source/codegen examples --check
-
-    - name: Install poetry for validate_examples.py
-      uses: abatilo/actions-poetry@v2.0.0
-      with:
-        poetry-version: 1.1.5
-
-    - name: Validate RFmx and XNET examples
-      run: |
-        python source/codegen/validate_examples.py -p *rfmx*
-        python source/codegen/validate_examples.py -p *xnet*
-
     - name: Configure
       shell: cmake -P {0}
       run: |
