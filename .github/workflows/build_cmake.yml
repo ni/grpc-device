@@ -14,7 +14,10 @@ env:
   BUILD_TYPE: Release
 
 jobs:
+  validate_python:
+    uses: ./.github/workflows/validate_python.yml
   build:
+    needs: validate_python
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -53,7 +56,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-
+    
     - name: Update Submodules
       run: git submodule update --init --recursive --depth=1
 

@@ -1,12 +1,7 @@
 name: Validate Python Code
 
 on:
-  push:
-    branches:
-      - main
-      - 'releases/**'
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_call:
   workflow_dispatch:
 
 jobs:
@@ -35,5 +30,5 @@ jobs:
 
     - name: Validate RFmx and XNET examples
       run: |
-        python source/codegen/validate_examples.py -p *rfmx*
-        python source/codegen/validate_examples.py -p *xnet*
+        python source/codegen/validate_examples.py -p "*rfmx*"
+        python source/codegen/validate_examples.py -p "*xnet*"
