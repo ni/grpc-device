@@ -141,8 +141,7 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_LINK_DIRECTION, NIRFMXNR_INT32_LINK_DIRECTION_UPLINK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_NUMBER_OF_SUBBLOCKS, NUMBER_OF_SUBBLOCKS));
   for (int i = 0; i < NUMBER_OF_SUBBLOCKS; i++) {
-    auto subblock_string_response = client::build_subblock_string(stub(), "", i);
-    EXPECT_SUCCESS(session, subblock_string_response);
+    const auto subblock_string_response = EXPECT_SUCCESS(session, client::build_subblock_string(stub(), "", i));
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CENTER_FREQUENCY, centerFrequency[i]));
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_SUBBLOCK_FREQUENCY_DEFINITION, subblockFrequencyDefinition[i]));
@@ -150,12 +149,10 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CHANNEL_RASTER, 15e3));
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_AT_CENTER_FREQUENCY, -1));
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_NUMBER_OF_COMPONENT_CARRIERS, NUMBER_OF_COMPONENT_CARRIERS));
-    auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), -1);
-    EXPECT_SUCCESS(session, carrier_string_response);
+    const auto carrier_string_response = EXPECT_SUCCESS(session, client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), -1));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
     for (int j = 0; j < NUMBER_OF_COMPONENT_CARRIERS; j++) {
-      auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), j);
-      EXPECT_SUCCESS(session, carrier_string_response);
+      const auto carrier_string_response = EXPECT_SUCCESS(session, client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), j));
       EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
       EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i][j]));
     }
@@ -172,12 +169,9 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
   ACPFetchSubblockMeasurementResponse fetch_subblock_responses[NUMBER_OF_SUBBLOCKS];
   ACPFetchOffsetMeasurementResponse fetch_measurement_responses[NUMBER_OF_SUBBLOCKS];
   for (int i = 0; i < NUMBER_OF_SUBBLOCKS; i++) {
-    auto subblock_string_response = client::build_subblock_string(stub(), "", i);
-    EXPECT_SUCCESS(session, subblock_string_response);
-    fetch_subblock_responses[i] = client::acp_fetch_subblock_measurement(stub(), session, subblock_string_response.selector_string_out(), 10.0);
-    EXPECT_SUCCESS(session, fetch_subblock_responses[i]);
-    fetch_measurement_responses[i] = client::acp_fetch_offset_measurement(stub(), session, subblock_string_response.selector_string_out(), 10.0);
-    EXPECT_SUCCESS(session, fetch_measurement_responses[i]);
+    const auto subblock_string_response = EXPECT_SUCCESS(session, client::build_subblock_string(stub(), "", i));
+    fetch_subblock_responses[i] = EXPECT_SUCCESS(session, client::acp_fetch_subblock_measurement(stub(), session, subblock_string_response.selector_string_out(), 10.0));
+    fetch_measurement_responses[i] = EXPECT_SUCCESS(session, client::acp_fetch_offset_measurement(stub(), session, subblock_string_response.selector_string_out(), 10.0));
   }
 
   EXPECT_EQ(0.0, auto_level_response.reference_level());
@@ -210,8 +204,7 @@ TEST_F(NiRFmxNRDriverApiTests, ACPSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
-  auto auto_level_response = client::auto_level(stub(), session, "", 10.0e-3);
-  EXPECT_SUCCESS(session, auto_level_response);
+  auto auto_level_response = EXPECT_SUCCESS(session, client::auto_level(stub(), session, "", 10.0e-3));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_ACP, true));
   EXPECT_SUCCESS(session, client::acp_cfg_measurement_method(stub(), session, "", ACP_MEASUREMENT_METHOD_NORMAL));
   EXPECT_SUCCESS(session, client::acp_cfg_noise_compensation_enabled(stub(), session, "", ACP_NOISE_COMPENSATION_ENABLED_FALSE));
@@ -219,18 +212,15 @@ TEST_F(NiRFmxNRDriverApiTests, ACPSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::acp_cfg_averaging(stub(), session, "", ACP_AVERAGING_ENABLED_FALSE, 10, ACP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto acp_fetch_offset_measurement_array_response = client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, acp_fetch_offset_measurement_array_response);
+  const auto acp_fetch_offset_measurement_array_response = EXPECT_SUCCESS(session, client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0));
   int32 arraySize = acp_fetch_offset_measurement_array_response.lower_relative_power_size();
-  const auto acp_fetch_component_carrier_measurement_response = client::acp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, acp_fetch_component_carrier_measurement_response);
+  const auto acp_fetch_component_carrier_measurement_response = EXPECT_SUCCESS(session, client::acp_fetch_component_carrier_measurement(stub(), session, "", 10.0));
   std::vector<ACPFetchRelativePowersTraceResponse> acp_fetch_relative_powers_trace_responses;
   for (int i = 0; i < arraySize; i++) {
     acp_fetch_relative_powers_trace_responses.push_back(client::acp_fetch_relative_powers_trace(stub(), session, "", 10.0, i));
     EXPECT_SUCCESS(session, acp_fetch_relative_powers_trace_responses.back());
   }
-  const auto acp_fetch_spectrum_response = client::acp_fetch_spectrum(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, acp_fetch_spectrum_response);
+  const auto acp_fetch_spectrum_response = EXPECT_SUCCESS(session, client::acp_fetch_spectrum(stub(), session, "", 10.0));
 
   EXPECT_LT(0.0, auto_level_response.reference_level());
   EXPECT_EQ(3, acp_fetch_offset_measurement_array_response.lower_relative_power_size());
@@ -277,10 +267,8 @@ TEST_F(NiRFmxNRDriverApiTests, ChpSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::chp_cfg_averaging(stub(), session, "", CHP_AVERAGING_ENABLED_FALSE, 10, CHP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto chp_fetch_component_carrier_measurement_response = client::chp_fetch_component_carrier_measurement(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, chp_fetch_component_carrier_measurement_response);
-  const auto chp_fetch_spectrum_response = client::chp_fetch_spectrum(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, chp_fetch_spectrum_response);
+  const auto chp_fetch_component_carrier_measurement_response = EXPECT_SUCCESS(session, client::chp_fetch_component_carrier_measurement(stub(), session, "", 10.0));
+  const auto chp_fetch_spectrum_response = EXPECT_SUCCESS(session, client::chp_fetch_spectrum(stub(), session, "", 10.0));
 
   EXPECT_LT(0.0, chp_fetch_component_carrier_measurement_response.absolute_power());
   EXPECT_EQ(0.0, chp_fetch_component_carrier_measurement_response.relative_power());
@@ -310,11 +298,9 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_SPACING_TYPE, NIRFMXNR_INT32_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_AT_CENTER_FREQUENCY, -1));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_NUMBER_OF_COMPONENT_CARRIERS, NUMBER_OF_COMPONENT_CARRIERS));
-  auto subblock_string_response = client::build_subblock_string(stub(), "", 0);
-  EXPECT_SUCCESS(session, subblock_string_response);
+  const auto subblock_string_response = EXPECT_SUCCESS(session, client::build_subblock_string(stub(), "", 0));
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++) {
-    auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
-    EXPECT_SUCCESS(session, carrier_string_response);
+    const auto carrier_string_response = EXPECT_SUCCESS(session, client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
@@ -344,8 +330,7 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
   ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[2];
   ModAccFetchRMSEVMPerSymbolMeanTraceResponse mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[2];
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++) {
-    auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
-    EXPECT_SUCCESS(session, carrier_string_response);
+    const auto carrier_string_response = EXPECT_SUCCESS(session, client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i));
     auto modacc_results_composite_rms_evm_mean_response = client::get_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
     if (i == 0) {
       EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, modacc_results_composite_rms_evm_mean_response);
@@ -427,10 +412,8 @@ TEST_F(NiRFmxNRDriverApiTests, ObwSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::obw_cfg_averaging(stub(), session, "", OBW_AVERAGING_ENABLED_FALSE, 10, OBW_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto obw_fetch_spectrum_response = client::obw_fetch_spectrum(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, obw_fetch_spectrum_response);
-  const auto obw_fetch_measurement_response = client::obw_fetch_measurement(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, obw_fetch_measurement_response);
+  const auto obw_fetch_spectrum_response = EXPECT_SUCCESS(session, client::obw_fetch_spectrum(stub(), session, "", 10.0));
+  const auto obw_fetch_measurement_response = EXPECT_SUCCESS(session, client::obw_fetch_measurement(stub(), session, "", 10.0));
 
   EXPECT_LT(0.0, obw_fetch_spectrum_response.x0());
   EXPECT_LT(0.0, obw_fetch_spectrum_response.dx());
@@ -475,11 +458,9 @@ TEST_F(NiRFmxNRDriverApiTests, SemContiguousMultiCarrierFromExample_FetchData_Da
   strcpy_s(carrierString, sizeof("carrier::all"), "carrier::all");
   EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrierString, NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING, 30e3));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_NUMBER_OF_COMPONENT_CARRIERS, NUMBER_OF_COMPONENT_CARRIERS));
-  auto subblock_string_response = client::build_subblock_string(stub(), "", 0);
-  EXPECT_SUCCESS(session, subblock_string_response);
+  const auto subblock_string_response = EXPECT_SUCCESS(session, client::build_subblock_string(stub(), "", 0));
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++) {
-    auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
-    EXPECT_SUCCESS(session, carrier_string_response);
+    const auto carrier_string_response = EXPECT_SUCCESS(session, client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
@@ -496,17 +477,12 @@ TEST_F(NiRFmxNRDriverApiTests, SemContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_upper_offset_margin_array_response);
+  const auto sem_fetch_upper_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0));
   int32 arraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
-  const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_lower_offset_margin_array_response);
-  const auto sem_fetch_total_aggregated_power_response = client::sem_fetch_total_aggregated_power(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_total_aggregated_power_response);
-  const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_measurement_status_response);
-  const auto sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_spectrum_response);
+  const auto sem_fetch_lower_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0));
+  const auto sem_fetch_total_aggregated_power_response = EXPECT_SUCCESS(session, client::sem_fetch_total_aggregated_power(stub(), session, "", 10.0));
+  const auto sem_fetch_measurement_status_response = EXPECT_SUCCESS(session, client::sem_fetch_measurement_status(stub(), session, "", 10.0));
+  const auto sem_fetch_spectrum_response = EXPECT_SUCCESS(session, client::sem_fetch_spectrum(stub(), session, "", 10.0));
 
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status().size());
@@ -567,17 +543,12 @@ TEST_F(NiRFmxNRDriverApiTests, SemSingleCarrierFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_upper_offset_margin_array_response);
+  const auto sem_fetch_upper_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0));
   int32 arraySize = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
-  const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_lower_offset_margin_array_response);
-  const auto sem_fetch_component_carrier_measurement_response = client::sem_fetch_component_carrier_measurement(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_component_carrier_measurement_response);
-  const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_measurement_status_response);
-  const auto sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, sem_fetch_spectrum_response);
+  const auto sem_fetch_lower_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0));
+  const auto sem_fetch_component_carrier_measurement_response = EXPECT_SUCCESS(session, client::sem_fetch_component_carrier_measurement(stub(), session, "", 10.0));
+  const auto sem_fetch_measurement_status_response = EXPECT_SUCCESS(session, client::sem_fetch_measurement_status(stub(), session, "", 10.0));
+  const auto sem_fetch_spectrum_response = EXPECT_SUCCESS(session, client::sem_fetch_spectrum(stub(), session, "", 10.0));
 
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status().size());
@@ -641,11 +612,9 @@ TEST_F(NiRFmxNRDriverApiTests, TxpContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_SPACING_TYPE, NIRFMXNR_INT32_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_AT_CENTER_FREQUENCY, -1));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_NUMBER_OF_COMPONENT_CARRIERS, NUMBER_OF_COMPONENT_CARRIERS));
-  auto subblock_string_response = client::build_subblock_string(stub(), "", 0);
-  EXPECT_SUCCESS(session, subblock_string_response);
+  const auto subblock_string_response = EXPECT_SUCCESS(session, client::build_subblock_string(stub(), "", 0));
   for (int i = 0; i < NUMBER_OF_COMPONENT_CARRIERS; i++) {
-    auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i);
-    EXPECT_SUCCESS(session, carrier_string_response);
+    const auto carrier_string_response = EXPECT_SUCCESS(session, client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), i));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH, 20e6));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i]));
   }
@@ -658,10 +627,8 @@ TEST_F(NiRFmxNRDriverApiTests, TxpContiguousMultiCarrierFromExample_FetchData_Da
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_TXP_AVERAGING_COUNT, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, txp_fetch_measurement_response);
-  const auto txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, txp_fetch_power_trace_response);
+  const auto txp_fetch_measurement_response = EXPECT_SUCCESS(session, client::txp_fetch_measurement(stub(), session, "", 10.0));
+  const auto txp_fetch_power_trace_response = EXPECT_SUCCESS(session, client::txp_fetch_power_trace(stub(), session, "", 10.0));
 
   EXPECT_LT(0.0, txp_fetch_measurement_response.average_power_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.peak_power_maximum());
@@ -704,19 +671,13 @@ TEST_F(NiRFmxNRDriverApiTests, ULModAccSpeedOptimizedFromExample_FetchData_DataL
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_SYMBOL_ALLOCATION, std::string("0-Last")));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_MODULATION_TYPE, NIRFMXNR_INT32_PUSCH_MODULATION_TYPE_QPSK));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCK_CLUSTERS, NUMBER_OF_RESOURCE_BLOCK_CLUSTERS));
-  auto subblock_string_response = client::build_subblock_string(stub(), "", 0);
-  EXPECT_SUCCESS(session, subblock_string_response);
-  auto carrier_string_response = client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), 0);
-  EXPECT_SUCCESS(session, carrier_string_response);
-  auto bandwidth_part_string_response = client::build_bandwidth_part_string(stub(), carrier_string_response.selector_string_out(), 0);
-  EXPECT_SUCCESS(session, bandwidth_part_string_response);
-  auto user_string_response = client::build_user_string(stub(), bandwidth_part_string_response.selector_string_out(), 0);
-  EXPECT_SUCCESS(session, user_string_response);
-  auto pusch_string_response = client::build_pusch_string(stub(), user_string_response.selector_string_out(), 0);
-  EXPECT_SUCCESS(session, pusch_string_response);
+  const auto subblock_string_response = EXPECT_SUCCESS(session, client::build_subblock_string(stub(), "", 0));
+  const auto carrier_string_response = EXPECT_SUCCESS(session, client::build_carrier_string(stub(), subblock_string_response.selector_string_out(), 0));
+  const auto bandwidth_part_string_response = EXPECT_SUCCESS(session, client::build_bandwidth_part_string(stub(), carrier_string_response.selector_string_out(), 0));
+  const auto user_string_response = EXPECT_SUCCESS(session, client::build_user_string(stub(), bandwidth_part_string_response.selector_string_out(), 0));
+  const auto pusch_string_response = EXPECT_SUCCESS(session, client::build_pusch_string(stub(), user_string_response.selector_string_out(), 0));
   for (int i = 0; i < NUMBER_OF_RESOURCE_BLOCK_CLUSTERS; i++) {
-    auto pusch_cluster_string_response = client::build_pusch_cluster_string(stub(), pusch_string_response.selector_string_out(), i);
-    EXPECT_SUCCESS(session, pusch_cluster_string_response);
+    const auto pusch_cluster_string_response = EXPECT_SUCCESS(session, client::build_pusch_cluster_string(stub(), pusch_string_response.selector_string_out(), i));
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_RESOURCE_BLOCK_OFFSET, pusch_resource_block_offset[i]));
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, pusch_cluster_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS, pusch_number_of_resource_blocks[i]));
   }

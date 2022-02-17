@@ -111,10 +111,8 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SpectrumBasicFromExample_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::spectrum_cfg_rbw_filter(stub(), session, "", true, 100e3, SpectrumRbwFilterType::SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN));
   EXPECT_SUCCESS(session, client::spectrum_cfg_averaging(stub(), session, "", false, 10, SpectrumAveragingType::SPECTRUM_AVERAGING_TYPE_RMS));
 
-  auto read_response = client::spectrum_read(stub(), session, "", 10.0);
+  auto read_response = EXPECT_SUCCESS(session, client::spectrum_read(stub(), session, "", 10.0));
 
-  EXPECT_SUCCESS(session, read_response);
-  // Make sure the data looks roughly correct
   EXPECT_EQ(1005, read_response.actual_array_size());
   EXPECT_EQ(1005, read_response.spectrum_size());
   EXPECT_EQ(1005, read_response.spectrum().size());
@@ -131,8 +129,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::acp_cfg_averaging(stub(), session, "", false, 10, AcpAveragingType::ACP_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::acp_cfg_carrier_and_offsets(stub(), session, "", 1e6, 2, 1e6));
 
-  const auto read_response = client::acp_read(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, read_response);
+  const auto read_response = EXPECT_SUCCESS(session, client::acp_read(stub(), session, "", 10.0));
 
   EXPECT_GT(read_response.carrier_absolute_power(), 0.0);
   EXPECT_LT(read_response.offset_ch0_lower_relative_power(), 0.0);
@@ -149,8 +146,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, FcntBasicFromExample_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::f_cnt_cfg_averaging(stub(), session, "", false, 10, FcntAveragingType::FCNT_AVERAGING_TYPE_MEAN));
   EXPECT_SUCCESS(session, client::f_cnt_cfg_rbw_filter(stub(), session, "", 100e3, FcntRbwFilterType::FCNT_RBW_FILTER_TYPE_NONE, 0.1));
 
-  const auto read_response = client::f_cnt_read(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, read_response);
+  const auto read_response = EXPECT_SUCCESS(session, client::f_cnt_read(stub(), session, "", 10.0));
 
   EXPECT_GT(read_response.average_relative_frequency(), 0.0);
   EXPECT_GT(read_response.average_absolute_frequency(), read_response.average_relative_frequency());
@@ -168,8 +164,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SpurBasicFromExample_ReturnsMeasurementStatus
   EXPECT_SUCCESS(session, client::spur_cfg_range_absolute_limit_array(stub(), session, "", {}, {-10.0}, {}));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto fetch_response = client::spur_fetch_measurement_status(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, fetch_response);
+  const auto fetch_response = EXPECT_SUCCESS(session, client::spur_fetch_measurement_status(stub(), session, "", 10.0));
   EXPECT_EQ(SpurMeasurementStatus::SPUR_MEASUREMENT_STATUS_FAIL, fetch_response.measurement_status());
 }
 
@@ -187,15 +182,11 @@ TEST_F(NiRFmxSpecAnDriverApiTests, HarmFromExample_NoError)
   EXPECT_SUCCESS(session, client::harm_cfg_averaging(stub(), session, "", false, 10, HarmAveragingType::HARM_AVERAGING_TYPE_RMS));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto fetch_thd_response = client::harm_fetch_thd(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, fetch_thd_response);
-  const auto fetch_measurement_response = client::harm_fetch_harmonic_measurement_array(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, fetch_measurement_response);
+  const auto fetch_thd_response = EXPECT_SUCCESS(session, client::harm_fetch_thd(stub(), session, "", 10.0));
+  const auto fetch_measurement_response = EXPECT_SUCCESS(session, client::harm_fetch_harmonic_measurement_array(stub(), session, "", 10.0));
   for (auto i = 0; i < NUMBER_OF_HARMONICS; ++i) {
-    const auto harmonic_string_response = client::build_harmonic_string(stub(), "", i);
-    EXPECT_SUCCESS(session, harmonic_string_response);
-    const auto power_trace_response = client::harm_fetch_harmonic_power_trace(stub(), session, harmonic_string_response.selector_string_out(), 10.0);
-    EXPECT_SUCCESS(session, power_trace_response);
+    const auto harmonic_string_response = EXPECT_SUCCESS(session, client::build_harmonic_string(stub(), "", i));
+    const auto power_trace_response = EXPECT_SUCCESS(session, client::harm_fetch_harmonic_power_trace(stub(), session, harmonic_string_response.selector_string_out(), 10.0));
   }
 }
 
@@ -228,14 +219,10 @@ TEST_F(NiRFmxSpecAnDriverApiTests, AMPMFromExample_NoError)
   EXPECT_SUCCESS(session, client::auto_level(stub(), session, "", 20e6, 100e-6));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto dut_char_response = client::ampm_fetch_dut_characteristics(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, dut_char_response);
-  const auto error_response = client::ampm_fetch_error(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, error_response);
-  const auto curve_fit_response = client::ampm_fetch_curve_fit_residual(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, curve_fit_response);
-  const auto am_to_am_response = client::ampm_fetch_am_to_am_trace(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, am_to_am_response);
+  const auto dut_char_response = EXPECT_SUCCESS(session, client::ampm_fetch_dut_characteristics(stub(), session, "", 10.0));
+  const auto error_response = EXPECT_SUCCESS(session, client::ampm_fetch_error(stub(), session, "", 10.0));
+  const auto curve_fit_response = EXPECT_SUCCESS(session, client::ampm_fetch_curve_fit_residual(stub(), session, "", 10.0));
+  const auto am_to_am_response = EXPECT_SUCCESS(session, client::ampm_fetch_am_to_am_trace(stub(), session, "", 10.0));
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_ReturnsSynchronizationNotFoundWarningWithData)
@@ -342,10 +329,9 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAndGetAttributeString_Succeeds)
 TEST_F(NiRFmxSpecAnDriverApiTests, BuildSpurString_ReturnsSpurString)
 {
   auto session = init_session(stub(), PXI_5663);
-  const auto spur_string_response = client::build_spur_string(stub(), "", 0);
+  const auto spur_string_response = EXPECT_SUCCESS(session, client::build_spur_string(stub(), "", 0));
 
   EXPECT_EQ(spur_string_response.selector_string_out(), "spur0");
-  EXPECT_SUCCESS(session, spur_string_response);
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, BuildIntermodString_ReturnsIntermodString)
