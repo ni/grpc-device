@@ -183,8 +183,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_Dat
   EXPECT_SUCCESS(session, client::txp_cfg_maximum_measurement_interval(stub(), session, "", 1e-3));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
+  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0));
   const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
   EXPECT_RESPONSE_WARNING(RISING_EDGE_DETECTION_FAILED_WARNING, txp_fetch_measurement_response);
 
@@ -212,18 +211,15 @@ TEST_F(NiRFmxWLANDriverApiTests, SemFromExample_FetchData_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::sem_cfg_span(stub(), session, "", SEM_SPAN_AUTO_TRUE, 66.0e6));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
-  const auto sem_fetch_carrier_measurement_response = client::sem_fetch_carrier_measurement(stub(), session, "", 10.0);
-  const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
-  const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
-  const auto sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.0);
+  const auto sem_fetch_measurement_status_response = EXPECT_SUCCESS(session, client::sem_fetch_measurement_status(stub(), session, "", 10.0));
+  const auto sem_fetch_carrier_measurement_response = EXPECT_SUCCESS(session, client::sem_fetch_carrier_measurement(stub(), session, "", 10.0));
+  const auto sem_fetch_lower_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0));
+  const auto sem_fetch_upper_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0));
+  const auto sem_fetch_spectrum_response = EXPECT_SUCCESS(session, client::sem_fetch_spectrum(stub(), session, "", 10.0));
 
-  EXPECT_SUCCESS(session, sem_fetch_measurement_status_response);
   EXPECT_EQ(1, sem_fetch_measurement_status_response.measurement_status());
-  EXPECT_SUCCESS(session, sem_fetch_carrier_measurement_response);
   EXPECT_LT(0.0, sem_fetch_carrier_measurement_response.absolute_power());
   EXPECT_LT(0.0, sem_fetch_carrier_measurement_response.relative_power());
-  EXPECT_SUCCESS(session, sem_fetch_lower_offset_margin_array_response);
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.measurement_status_size());
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.measurement_status().size());
   EXPECT_EQ(1, sem_fetch_lower_offset_margin_array_response.measurement_status(0));
@@ -239,7 +235,6 @@ TEST_F(NiRFmxWLANDriverApiTests, SemFromExample_FetchData_DataLooksReasonable)
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_relative_power_size());
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_relative_power().size());
   EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_SUCCESS(session, sem_fetch_upper_offset_margin_array_response);
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status().size());
   EXPECT_EQ(1, sem_fetch_upper_offset_margin_array_response.measurement_status(0));
@@ -255,7 +250,6 @@ TEST_F(NiRFmxWLANDriverApiTests, SemFromExample_FetchData_DataLooksReasonable)
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_relative_power_size());
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_relative_power().size());
   EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_SUCCESS(session, sem_fetch_spectrum_response);
   EXPECT_LT(0.0, sem_fetch_spectrum_response.x0());
   EXPECT_LT(0.0, sem_fetch_spectrum_response.dx());
   EXPECT_EQ(2454, sem_fetch_spectrum_response.spectrum_size());
@@ -291,19 +285,16 @@ TEST_F(NiRFmxWLANDriverApiTests, SEMCustomMaskFromExample_FetchData_DataLooksRea
   EXPECT_SUCCESS(session, client::sem_cfg_offset_relative_limit_array(stub(), session, "", relative_limit_start, relative_limit_stop));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
-  const auto sem_fetch_carrier_measurement_response = client::sem_fetch_carrier_measurement(stub(), session, "", 10.0);
-  const auto sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0);
-  const auto sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0);
+  const auto sem_fetch_measurement_status_response = EXPECT_SUCCESS(session, client::sem_fetch_measurement_status(stub(), session, "", 10.0));
+  const auto sem_fetch_carrier_measurement_response = EXPECT_SUCCESS(session, client::sem_fetch_carrier_measurement(stub(), session, "", 10.0));
+  const auto sem_fetch_lower_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_lower_offset_margin_array(stub(), session, "", 10.0));
+  const auto sem_fetch_upper_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0));
   int32 array_size = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
-  const auto sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, "", 10.0);
+  const auto sem_fetch_spectrum_response = EXPECT_SUCCESS(session, client::sem_fetch_spectrum(stub(), session, "", 10.0));
 
-  EXPECT_SUCCESS(session, sem_fetch_measurement_status_response);
   EXPECT_EQ(0, sem_fetch_measurement_status_response.measurement_status());
-  EXPECT_SUCCESS(session, sem_fetch_carrier_measurement_response);
   EXPECT_LT(0.0, sem_fetch_carrier_measurement_response.absolute_power());
   EXPECT_LT(0.0, sem_fetch_carrier_measurement_response.relative_power());
-  EXPECT_SUCCESS(session, sem_fetch_lower_offset_margin_array_response);
   EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.measurement_status_size());
   EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.measurement_status().size());
   EXPECT_EQ(1, sem_fetch_lower_offset_margin_array_response.measurement_status(0));
@@ -319,7 +310,6 @@ TEST_F(NiRFmxWLANDriverApiTests, SEMCustomMaskFromExample_FetchData_DataLooksRea
   EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin_relative_power_size());
   EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin_relative_power().size());
   EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_SUCCESS(session, sem_fetch_upper_offset_margin_array_response);
   EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
   EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.measurement_status().size());
   EXPECT_EQ(1, sem_fetch_upper_offset_margin_array_response.measurement_status(0));
@@ -335,7 +325,6 @@ TEST_F(NiRFmxWLANDriverApiTests, SEMCustomMaskFromExample_FetchData_DataLooksRea
   EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin_relative_power_size());
   EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin_relative_power().size());
   EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_SUCCESS(session, sem_fetch_spectrum_response);
   EXPECT_LT(0.0, sem_fetch_spectrum_response.x0());
   EXPECT_LT(0.0, sem_fetch_spectrum_response.dx());
   EXPECT_EQ(2974, sem_fetch_spectrum_response.spectrum_size());
@@ -449,16 +438,14 @@ TEST_F(NiRFmxWLANDriverApiTests, DISABLED_DSSSPowerRampFromExample_FetchData_Dat
 
   float64 x0 = 0;
   float64 dx = 0;
-  const auto power_ramp_fetch_measurement_response = client::power_ramp_fetch_measurement(stub(), session, "", 10.0);
-  const auto power_ramp_fetch_rise_trace_response = client::power_ramp_fetch_rise_trace(stub(), session, "", 10.0);
+  const auto power_ramp_fetch_measurement_response = EXPECT_SUCCESS(session, client::power_ramp_fetch_measurement(stub(), session, "", 10.0));
+  const auto power_ramp_fetch_rise_trace_response = EXPECT_SUCCESS(session, client::power_ramp_fetch_rise_trace(stub(), session, "", 10.0));
   x0 = 0;
   dx = 0;
-  const auto power_ramp_fetch_fall_trace_response = client::power_ramp_fetch_fall_trace(stub(), session, "", 10.0);
+  const auto power_ramp_fetch_fall_trace_response = EXPECT_SUCCESS(session, client::power_ramp_fetch_fall_trace(stub(), session, "", 10.0));
 
-  EXPECT_SUCCESS(session, power_ramp_fetch_measurement_response);
   EXPECT_EQ(0.0, power_ramp_fetch_measurement_response.rise_time_mean());
   EXPECT_EQ(0.0, power_ramp_fetch_measurement_response.fall_time_mean());
-  EXPECT_SUCCESS(session, power_ramp_fetch_rise_trace_response);
   EXPECT_EQ(0.0, power_ramp_fetch_rise_trace_response.x0());
   EXPECT_EQ(0.0, power_ramp_fetch_rise_trace_response.dx());
   EXPECT_EQ(0, power_ramp_fetch_rise_trace_response.raw_waveform_size());
@@ -473,7 +460,6 @@ TEST_F(NiRFmxWLANDriverApiTests, DISABLED_DSSSPowerRampFromExample_FetchData_Dat
   EXPECT_EQ(999, power_ramp_fetch_rise_trace_response.power_reference_size());
   EXPECT_EQ(999, power_ramp_fetch_rise_trace_response.power_reference().size());
   EXPECT_EQ(0.0, power_ramp_fetch_rise_trace_response.power_reference(0));
-  EXPECT_SUCCESS(session, power_ramp_fetch_fall_trace_response);
   EXPECT_EQ(0.0, power_ramp_fetch_fall_trace_response.x0());
   EXPECT_EQ(0.0, power_ramp_fetch_fall_trace_response.dx());
   EXPECT_EQ(999, power_ramp_fetch_fall_trace_response.raw_waveform_size());
@@ -512,54 +498,40 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccFromExample_FetchData_DataLooksReason
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDMMODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_numberof_symbols_used_response = client::ofdm_mod_acc_fetch_numberof_symbols_used(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_frequency_error_mean_response = client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_symbol_clock_error_mean_response = client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_iq_impairments_response = client::ofdm_mod_acc_fetch_iq_impairments(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_ppdu_type_response = client::ofdm_mod_acc_fetch_ppdu_type(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_mcs_index_response = client::ofdm_mod_acc_fetch_mcs_index(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_guard_interval_type_response = client::ofdm_mod_acc_fetch_guard_interval_type(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_lsig_parity_check_status_response = client::ofdm_mod_acc_fetch_lsig_parity_check_status(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_sigcrc_status_response = client::ofdm_mod_acc_fetch_sigcrc_status(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_sigbcrc_status_response = client::ofdm_mod_acc_fetch_sigbcrc_status(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_pilot_constellation_trace_response = client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_data_constellation_trace_response = client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response = client::ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.0);
+  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_numberof_symbols_used_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_numberof_symbols_used(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_frequency_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_symbol_clock_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_iq_impairments_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_iq_impairments(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_ppdu_type_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_ppdu_type(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_mcs_index_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_mcs_index(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_guard_interval_type_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_guard_interval_type(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_lsig_parity_check_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_lsig_parity_check_status(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_sigcrc_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_sigcrc_status(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_sigbcrc_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_sigbcrc_status(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_pilot_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_data_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.0));
 
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_numberof_symbols_used_response);
   EXPECT_EQ(16, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_frequency_error_mean_response);
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_frequency_error_mean_response.frequency_error_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_symbol_clock_error_mean_response);
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_symbol_clock_error_mean_response.symbol_clock_error_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_iq_impairments_response);
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.relative_iq_origin_offset_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_gain_imbalance_mean());
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_quadrature_error_mean());
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.absolute_iq_origin_offset_mean());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_timing_skew_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_ppdu_type_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_ppdu_type_response.ppdu_type());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_mcs_index_response);
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_guard_interval_type_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_guard_interval_type_response.guard_interval_type());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_lsig_parity_check_status_response);
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigcrc_status_response);
   EXPECT_EQ(-1, ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigbcrc_status_response);
   EXPECT_EQ(-1, ofdm_mod_acc_fetch_sigbcrc_status_response.sig_b_crc_status());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_pilot_constellation_trace_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).real());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).imaginary());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_data_constellation_trace_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).real());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).imaginary());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(-26, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(1, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.dx());
   EXPECT_EQ(53, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rms_evm_per_subcarrier_mean_size());
@@ -586,16 +558,13 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", NUMBER_OF_FREQUENCY_SEGMENTS, NUMBER_OF_RECEIVE_CHAINS));
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
-    auto segment_string_response = client::build_segment_string(stub(), "", i);
-    EXPECT_SUCCESS(session, segment_string_response);
+    const auto segment_string_response = EXPECT_SUCCESS(session, client::build_segment_string(stub(), "", i));
     EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), center_frequency_array[i]));
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    auto port_string_response = instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0);
-    EXPECT_SUCCESS(session, port_string_response);
+    auto port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0));
     selected_ports_strings[i] = port_string_response.selector_string_out();
-    port_string_response = instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0);
-    EXPECT_SUCCESS(session, port_string_response);
+    port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0));
     port_string[i] = port_string_response.selector_string_out();
     EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, port_string[i], reference_level_array[i]));
     EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string[i], external_attenuation_array[i]));
@@ -635,24 +604,23 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   OFDMModAccFetchDataConstellationTraceResponse ofdm_mod_acc_fetch_data_constellation_trace_response;
   OFDMModAccFetchCrossPowerResponse ofdm_mod_acc_fetch_cross_power_response;
   OFDMModAccFetchIQImpairmentsResponse ofdm_mod_acc_fetch_iq_impairments_response;
-  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_numberof_symbols_used_response = client::ofdm_mod_acc_fetch_numberof_symbols_used(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_ppdu_type_response = client::ofdm_mod_acc_fetch_ppdu_type(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_guard_interval_type_response = client::ofdm_mod_acc_fetch_guard_interval_type(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_lsig_parity_check_status_response = client::ofdm_mod_acc_fetch_lsig_parity_check_status(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_sigcrc_status_response = client::ofdm_mod_acc_fetch_sigcrc_status(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_sigbcrc_status_response = client::ofdm_mod_acc_fetch_sigbcrc_status(stub(), session, "", 10.0);
-  ofdm_mod_acc_fetch_number_of_users_response = client::ofdm_mod_acc_fetch_number_of_users(stub(), session, "", 10.0);
+  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_numberof_symbols_used_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_numberof_symbols_used(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_ppdu_type_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_ppdu_type(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_guard_interval_type_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_guard_interval_type(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_lsig_parity_check_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_lsig_parity_check_status(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_sigcrc_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_sigcrc_status(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_sigbcrc_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_sigbcrc_status(stub(), session, "", 10.0));
+  ofdm_mod_acc_fetch_number_of_users_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_number_of_users(stub(), session, "", 10.0));
   mcs_index_array_length = number_of_users;
   mcs_index_array = (int32*)malloc(mcs_index_array_length * sizeof(int32));
   number_of_space_time_streams_array_length = number_of_users;
   number_of_space_time_streams_array = (int32*)malloc(number_of_space_time_streams_array_length * sizeof(int32));
   space_time_stream_offset_array = (int32*)malloc(number_of_users * sizeof(int32));
   for (int i = 0; i < number_of_users; i++) {
-    auto user_string_response = client::build_user_string(stub(), "", i);
-    EXPECT_SUCCESS(session, user_string_response);
-    ofdm_mod_acc_fetch_mcs_index_response = client::ofdm_mod_acc_fetch_mcs_index(stub(), session, user_string_response.selector_string_out(), 10.0);
-    ofdm_mod_acc_fetch_number_of_space_time_streams_response = client::ofdm_mod_acc_fetch_number_of_space_time_streams(stub(), session, user_string_response.selector_string_out(), 10.0);
+    const auto user_string_response = EXPECT_SUCCESS(session, client::build_user_string(stub(), "", i));
+    ofdm_mod_acc_fetch_mcs_index_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_mcs_index(stub(), session, user_string_response.selector_string_out(), 10.0));
+    ofdm_mod_acc_fetch_number_of_space_time_streams_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_number_of_space_time_streams(stub(), session, user_string_response.selector_string_out(), 10.0));
     space_time_stream_offset_array[i] = get_attr_i32(session, user_string_response.selector_string_out(), NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET);
     if (mcs_index_array == NULL || number_of_space_time_streams_array == NULL) {
       FAIL() << "Could not allocate array";
@@ -662,77 +630,54 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
     }
   }
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; i++) {
-    auto segment_string_response = client::build_segment_string(stub(), "", i);
-    EXPECT_SUCCESS(session, segment_string_response);
-    ofdm_mod_acc_fetch_frequency_error_mean_response = client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0);
-    ofdm_mod_acc_fetch_symbol_clock_error_mean_response = client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0);
+    const auto segment_string_response = EXPECT_SUCCESS(session, client::build_segment_string(stub(), "", i));
+    ofdm_mod_acc_fetch_frequency_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0));
+    ofdm_mod_acc_fetch_symbol_clock_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, segment_string_response.selector_string_out(), 10.0));
     for (int j = 0; j < number_of_stream_results; j++) {
-      auto stream_string_response = client::build_stream_string(stub(), segment_string_response.selector_string_out(), j);
-      EXPECT_SUCCESS(session, stream_string_response);
-      ofdm_mod_acc_fetch_stream_rmsevm_response = client::ofdm_mod_acc_fetch_stream_rmsevm(stub(), session, stream_string_response.selector_string_out(), 10.0);
-      ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response = client::ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace(stub(), session, stream_string_response.selector_string_out(), 10.0);
-      ofdm_mod_acc_fetch_pilot_constellation_trace_response = client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, stream_string_response.selector_string_out(), 10.0);
-      ofdm_mod_acc_fetch_data_constellation_trace_response = client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, stream_string_response.selector_string_out(), 10.0);
+      const auto stream_string_response = EXPECT_SUCCESS(session, client::build_stream_string(stub(), segment_string_response.selector_string_out(), j));
+      ofdm_mod_acc_fetch_stream_rmsevm_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_stream_rmsevm(stub(), session, stream_string_response.selector_string_out(), 10.0));
+      ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace(stub(), session, stream_string_response.selector_string_out(), 10.0));
+      ofdm_mod_acc_fetch_pilot_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, stream_string_response.selector_string_out(), 10.0));
+      ofdm_mod_acc_fetch_data_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, stream_string_response.selector_string_out(), 10.0));
     }
     for (int j = 0; j < NUMBER_OF_RECEIVE_CHAINS; j++) {
-      auto chain_string_response = client::build_chain_string(stub(), segment_string_response.selector_string_out(), j);
-      EXPECT_SUCCESS(session, chain_string_response);
-      ofdm_mod_acc_fetch_cross_power_response = client::ofdm_mod_acc_fetch_cross_power(stub(), session, chain_string_response.selector_string_out(), 10.0);
-      ofdm_mod_acc_fetch_iq_impairments_response = client::ofdm_mod_acc_fetch_iq_impairments(stub(), session, chain_string_response.selector_string_out(), 10.0);
+      const auto chain_string_response = EXPECT_SUCCESS(session, client::build_chain_string(stub(), segment_string_response.selector_string_out(), j));
+      ofdm_mod_acc_fetch_cross_power_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_cross_power(stub(), session, chain_string_response.selector_string_out(), 10.0));
+      ofdm_mod_acc_fetch_iq_impairments_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_iq_impairments(stub(), session, chain_string_response.selector_string_out(), 10.0));
     }
   }
 
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_numberof_symbols_used_response);
   EXPECT_EQ(16, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_ppdu_type_response);
   EXPECT_EQ(2, ofdm_mod_acc_fetch_ppdu_type_response.ppdu_type());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_guard_interval_type_response);
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_lsig_parity_check_status_response);
   EXPECT_EQ(-1, ofdm_mod_acc_fetch_lsig_parity_check_status_response.l_sig_parity_check_status());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigcrc_status_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigbcrc_status_response);
   EXPECT_EQ(-1, ofdm_mod_acc_fetch_sigbcrc_status_response.sig_b_crc_status());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_number_of_users_response);
   EXPECT_EQ(1, ofdm_mod_acc_fetch_number_of_users_response.number_of_users());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_mcs_index_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_mcs_index_response.mcs_index());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_number_of_space_time_streams_response);
   for (int i = 0; i < number_of_users; i++) {
     EXPECT_EQ(0, space_time_stream_offset_array[i]);
   }
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_mcs_index_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_mcs_index_response.mcs_index());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_number_of_space_time_streams_response);
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_frequency_error_mean_response);
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_frequency_error_mean_response.frequency_error_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_symbol_clock_error_mean_response);
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_symbol_clock_error_mean_response.symbol_clock_error_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_stream_rmsevm_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_rms_evm_mean());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_data_rms_evm_mean());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response.stream_pilot_rms_evm_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.dx());
   EXPECT_EQ(0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rms_evm_per_subcarrier_mean_size());
   EXPECT_EQ(0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rms_evm_per_subcarrier_mean().size());
   // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response.stream_rms_evm_per_subcarrier_mean(0));
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_pilot_constellation_trace_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation().size());
   // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).real());
   // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).imaginary());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_data_constellation_trace_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation().size());
   // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).real());
   // EXPECT_EQ(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).imaginary());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_cross_power_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_cross_power_response.cross_power_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_iq_impairments_response);
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.relative_iq_origin_offset_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_gain_imbalance_mean());
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_quadrature_error_mean());
@@ -769,20 +714,16 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccSpeedOptimizedFromExample_FetchData_D
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED, NIRFMXWLAN_INT32_OFDMMODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED_FALSE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_numberof_symbols_used_response = client::ofdm_mod_acc_fetch_numberof_symbols_used(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_frequency_error_mean_response = client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_symbol_clock_error_mean_response = client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, "", 10.0);
+  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_numberof_symbols_used_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_numberof_symbols_used(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_frequency_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_symbol_clock_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, "", 10.0));
 
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_numberof_symbols_used_response);
   EXPECT_EQ(16, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_frequency_error_mean_response);
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_frequency_error_mean_response.frequency_error_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_symbol_clock_error_mean_response);
   EXPECT_GT(0.0, ofdm_mod_acc_fetch_symbol_clock_error_mean_response.symbol_clock_error_mean());
 }
 
@@ -810,42 +751,32 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTriggerBasedPPDUFromExample_FetchData
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_averaging(stub(), session, "", OFDMMODACC_AVERAGING_ENABLED_FALSE, 10));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_unused_tone_error_response = client::ofdm_mod_acc_fetch_unused_tone_error(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_unused_tone_error_margin_per_ru_response = client::ofdm_mod_acc_fetch_unused_tone_error_margin_per_ru(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_frequency_error_mean_response = client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_frequency_error_ccdf10_percent_response = client::ofdm_mod_acc_fetch_frequency_error_ccdf10_percent(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_symbol_clock_error_mean_response = client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_ppdu_type_response = client::ofdm_mod_acc_fetch_ppdu_type(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_pilot_constellation_trace_response = client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_data_constellation_trace_response = client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_unused_tone_error_mean_trace_response = client::ofdm_mod_acc_fetch_unused_tone_error_mean_trace(stub(), session, "", 10.0);
+  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_unused_tone_error_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_unused_tone_error(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_unused_tone_error_margin_per_ru_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_unused_tone_error_margin_per_ru(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_frequency_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_frequency_error_ccdf10_percent_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_frequency_error_ccdf10_percent(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_symbol_clock_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_ppdu_type_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_ppdu_type(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_pilot_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_data_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_unused_tone_error_mean_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_unused_tone_error_mean_trace(stub(), session, "", 10.0));
 
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_unused_tone_error_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_unused_tone_error_response.unused_tone_error_margin());
   EXPECT_EQ(-1, ofdm_mod_acc_fetch_unused_tone_error_response.unused_tone_error_margin_ru_index());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_unused_tone_error_margin_per_ru_response);
   EXPECT_EQ(1, ofdm_mod_acc_fetch_unused_tone_error_margin_per_ru_response.unused_tone_error_margin_per_ru_size());
   EXPECT_EQ(1, ofdm_mod_acc_fetch_unused_tone_error_margin_per_ru_response.unused_tone_error_margin_per_ru().size());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_unused_tone_error_margin_per_ru_response.unused_tone_error_margin_per_ru(0));
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_frequency_error_mean_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_frequency_error_mean_response.frequency_error_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_frequency_error_ccdf10_percent_response);
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_symbol_clock_error_mean_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_symbol_clock_error_mean_response.symbol_clock_error_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_ppdu_type_response);
   EXPECT_EQ(3, ofdm_mod_acc_fetch_ppdu_type_response.ppdu_type());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_pilot_constellation_trace_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).real());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).imaginary());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_data_constellation_trace_response);
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).real());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).imaginary());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_unused_tone_error_mean_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_unused_tone_error_mean_trace_response.x0());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_unused_tone_error_mean_trace_response.dx());
   EXPECT_EQ(0, ofdm_mod_acc_fetch_unused_tone_error_mean_trace_response.unused_tone_error_size());
@@ -880,56 +811,42 @@ TEST_F(NiRFmxWLANDriverApiTests, DISABLED_OFDMModAccWithEVMBasedAutoLevelFromExa
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_auto_level(stub(), session, "", 10.0));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_numberof_symbols_used_response = client::ofdm_mod_acc_fetch_numberof_symbols_used(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_frequency_error_mean_response = client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_symbol_clock_error_mean_response = client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_iq_impairments_response = client::ofdm_mod_acc_fetch_iq_impairments(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_ppdu_type_response = client::ofdm_mod_acc_fetch_ppdu_type(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_mcs_index_response = client::ofdm_mod_acc_fetch_mcs_index(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_guard_interval_type_response = client::ofdm_mod_acc_fetch_guard_interval_type(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_lsig_parity_check_status_response = client::ofdm_mod_acc_fetch_lsig_parity_check_status(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_sigcrc_status_response = client::ofdm_mod_acc_fetch_sigcrc_status(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_sigbcrc_status_response = client::ofdm_mod_acc_fetch_sigbcrc_status(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_pilot_constellation_trace_response = client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_data_constellation_trace_response = client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, "", 10.0);
-  const auto ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response = client::ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.0);
+  const auto ofdm_mod_acc_fetch_composite_rmsevm_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_composite_rmsevm(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_numberof_symbols_used_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_numberof_symbols_used(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_frequency_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_frequency_error_mean(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_symbol_clock_error_mean_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_symbol_clock_error_mean(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_iq_impairments_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_iq_impairments(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_ppdu_type_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_ppdu_type(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_mcs_index_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_mcs_index(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_guard_interval_type_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_guard_interval_type(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_lsig_parity_check_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_lsig_parity_check_status(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_sigcrc_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_sigcrc_status(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_sigbcrc_status_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_sigbcrc_status(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_pilot_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_pilot_constellation_trace(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_data_constellation_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_data_constellation_trace(stub(), session, "", 10.0));
+  const auto ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response = EXPECT_SUCCESS(session, client::ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace(stub(), session, "", 10.0));
 
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_composite_rmsevm_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_numberof_symbols_used_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_frequency_error_mean_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_frequency_error_mean_response.frequency_error_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_symbol_clock_error_mean_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_symbol_clock_error_mean_response.symbol_clock_error_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_iq_impairments_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_iq_impairments_response.relative_iq_origin_offset_mean());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_gain_imbalance_mean());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_quadrature_error_mean());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_iq_impairments_response.absolute_iq_origin_offset_mean());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_iq_impairments_response.iq_timing_skew_mean());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_ppdu_type_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_ppdu_type_response.ppdu_type());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_mcs_index_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_mcs_index_response.mcs_index());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_guard_interval_type_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_guard_interval_type_response.guard_interval_type());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_lsig_parity_check_status_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_lsig_parity_check_status_response.l_sig_parity_check_status());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigcrc_status_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_sigbcrc_status_response);
   EXPECT_EQ(0, ofdm_mod_acc_fetch_sigbcrc_status_response.sig_b_crc_status());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_pilot_constellation_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).real());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response.pilot_constellation(0).imaginary());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_data_constellation_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).real());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response.data_constellation(0).imaginary());
-  EXPECT_SUCCESS(session, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response);
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.x0());
   EXPECT_EQ(0.0, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.dx());
   EXPECT_EQ(999, ofdm_mod_acc_fetch_chain_rmsevm_per_subcarrier_mean_trace_response.chain_rms_evm_per_subcarrier_mean_size());
@@ -956,16 +873,13 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", NUMBER_OF_FREQUENCY_SEGMENTS, NUMBER_OF_RECEIVE_CHAINS));
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
-    auto segment_string_response = client::build_segment_string(stub(), "", i);
-    EXPECT_SUCCESS(session, segment_string_response);
+    const auto segment_string_response = EXPECT_SUCCESS(session, client::build_segment_string(stub(), "", i));
     EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), center_frequency_array[i]));
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    auto port_string_response = instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0);
-    EXPECT_SUCCESS(session, port_string_response);
+    auto port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0));
     selected_ports_string[i] = port_string_response.selector_string_out();
-    port_string_response = instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0);
-    EXPECT_SUCCESS(session, port_string_response);
+    port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0));
     port_string[i] = port_string_response.selector_string_out();
     EXPECT_SUCCESS(session, client::cfg_reference_level(stub(), session, port_string[i], reference_level_array[i]));
     EXPECT_SUCCESS(session, client::cfg_external_attenuation(stub(), session, port_string[i], external_attenuation_array[i]));
@@ -987,27 +901,22 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   SEMFetchLowerOffsetMarginArrayResponse sem_fetch_lower_offset_margin_array_response;
   SEMFetchUpperOffsetMarginArrayResponse sem_fetch_upper_offset_margin_array_response;
   SEMFetchSpectrumResponse sem_fetch_spectrum_response;
-  const auto sem_fetch_measurement_status_response = client::sem_fetch_measurement_status(stub(), session, "", 10.0);
+  const auto sem_fetch_measurement_status_response = EXPECT_SUCCESS(session, client::sem_fetch_measurement_status(stub(), session, "", 10.0));
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
-    auto segment_string_response = client::build_segment_string(stub(), "", i);
-    EXPECT_SUCCESS(session, segment_string_response);
+    const auto segment_string_response = EXPECT_SUCCESS(session, client::build_segment_string(stub(), "", i));
     for (int j = 0; j < NUMBER_OF_RECEIVE_CHAINS; ++j) {
-      auto chain_string_response = client::build_chain_string(stub(), segment_string_response.selector_string_out(), j);
-      EXPECT_SUCCESS(session, chain_string_response);
-      sem_fetch_carrier_measurement_response = client::sem_fetch_carrier_measurement(stub(), session, chain_string_response.selector_string_out(), 10.0);
-      sem_fetch_lower_offset_margin_array_response = client::sem_fetch_lower_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0);
-      sem_fetch_upper_offset_margin_array_response = client::sem_fetch_upper_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0);
+      const auto chain_string_response = EXPECT_SUCCESS(session, client::build_chain_string(stub(), segment_string_response.selector_string_out(), j));
+      sem_fetch_carrier_measurement_response = EXPECT_SUCCESS(session, client::sem_fetch_carrier_measurement(stub(), session, chain_string_response.selector_string_out(), 10.0));
+      sem_fetch_lower_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_lower_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0));
+      sem_fetch_upper_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_upper_offset_margin_array(stub(), session, chain_string_response.selector_string_out(), 10.0));
       array_size = sem_fetch_upper_offset_margin_array_response.measurement_status_size();
-      sem_fetch_spectrum_response = client::sem_fetch_spectrum(stub(), session, chain_string_response.selector_string_out(), 10.0);
+      sem_fetch_spectrum_response = EXPECT_SUCCESS(session, client::sem_fetch_spectrum(stub(), session, chain_string_response.selector_string_out(), 10.0));
     }
   }
 
-  EXPECT_SUCCESS(session, sem_fetch_measurement_status_response);
   EXPECT_EQ(1, sem_fetch_measurement_status_response.measurement_status());
-  EXPECT_SUCCESS(session, sem_fetch_carrier_measurement_response);
   EXPECT_LT(0.0, sem_fetch_carrier_measurement_response.absolute_power());
   EXPECT_LT(0.0, sem_fetch_carrier_measurement_response.relative_power());
-  EXPECT_SUCCESS(session, sem_fetch_lower_offset_margin_array_response);
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.measurement_status_size());
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.measurement_status().size());
   EXPECT_EQ(1, sem_fetch_lower_offset_margin_array_response.measurement_status(0));
@@ -1023,7 +932,6 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_relative_power_size());
   EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_relative_power().size());
   EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_SUCCESS(session, sem_fetch_upper_offset_margin_array_response);
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status().size());
   EXPECT_EQ(1, sem_fetch_upper_offset_margin_array_response.measurement_status(0));
@@ -1039,7 +947,6 @@ TEST_F(NiRFmxWLANDriverApiTests, SemMIMOFromExample_FetchData_DataLooksReasonabl
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_relative_power_size());
   EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_relative_power().size());
   EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_SUCCESS(session, sem_fetch_spectrum_response);
   EXPECT_LT(0.0, sem_fetch_spectrum_response.x0());
   EXPECT_LT(0.0, sem_fetch_spectrum_response.dx());
   EXPECT_EQ(2454, sem_fetch_spectrum_response.spectrum_size());
@@ -1069,16 +976,13 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_PXI_CLK, 10e6));
   EXPECT_SUCCESS(session, client::cfg_number_of_frequency_segments_and_receive_chains(stub(), session, "", NUMBER_OF_FREQUENCY_SEGMENTS, NUMBER_OF_RECEIVE_CHAINS));
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
-    auto segment_string_response = client::build_segment_string(stub(), "", i);
-    EXPECT_SUCCESS(session, segment_string_response);
+    const auto segment_string_response = EXPECT_SUCCESS(session, client::build_segment_string(stub(), "", i));
     EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, segment_string_response.selector_string_out(), center_frequency_array[i]));
   }
   for (int i = 0; i < NUMBER_OF_DEVICES; ++i) {
-    auto port_string_response = instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0);
-    EXPECT_SUCCESS(session, port_string_response);
+    auto port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", selected_ports[i], resource_names[i], 0));
     selected_ports_string[i] = port_string_response.selector_string_out();
-    port_string_response = instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0);
-    EXPECT_SUCCESS(session, port_string_response);
+    port_string_response = EXPECT_SUCCESS(session, instr_client::build_port_string(instr_stub, "", "", resource_names[i], 0));
     port_string[i] = port_string_response.selector_string_out();
   }
   selected_ports_string_comma_separated = get_comma_seperated_string(selected_ports_string);
@@ -1098,10 +1002,12 @@ TEST_F(NiRFmxWLANDriverApiTests, TXPMIMOFromExample_FetchData_DataLooksReasonabl
   TXPFetchMeasurementResponse txp_fetch_measurement_response;
   TXPFetchPowerTraceResponse txp_fetch_power_trace_response;
   for (int i = 0; i < NUMBER_OF_FREQUENCY_SEGMENTS; ++i) {
-    auto segment_string_response = client::build_segment_string(stub(), "", i);
-    EXPECT_SUCCESS(session, segment_string_response);
+    const auto segment_string_response = EXPECT_SUCCESS(session, client::build_segment_string(stub(), "", i));
     for (int j = 0; j < NUMBER_OF_RECEIVE_CHAINS; ++j) {
-      auto chain_string_response = client::build_chain_string(stub(), segment_string_response.selector_string_out(), j);
+      // Note: using EXPECT_RESPONSE_SUCCESS here instead of EXPECT_SUCCESS because get_error() is
+      // returning the text for RISING_EDGE_DETECTION_FAILED_WARNING
+      const auto chain_string_response = client::build_chain_string(stub(), segment_string_response.selector_string_out(), j);
+      EXPECT_RESPONSE_SUCCESS(chain_string_response);
       txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, chain_string_response.selector_string_out(), 10.0);
       txp_fetch_power_trace_response = client::txp_fetch_power_trace(stub(), session, chain_string_response.selector_string_out(), 10.0);
     }

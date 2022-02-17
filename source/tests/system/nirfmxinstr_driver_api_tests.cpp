@@ -138,8 +138,7 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASession_SelfTest_Succeeds)
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 
-  const auto rfsa_response = client::get_nirfsa_session(stub(), session);
-  EXPECT_SUCCESS(session, rfsa_response);
+  const auto rfsa_response = EXPECT_SUCCESS(session, client::get_nirfsa_session(stub(), session));
 
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   EXPECT_RESPONSE_SUCCESS(nirfsa_client::self_test(rfsa_stub, rfsa_response.nirfsa_session()));
@@ -151,8 +150,7 @@ TEST_F(NiRFmxInstrDriverApiTests, GetNIRFSASessionArrayAnonymous_SelfTest_Succee
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 
-  const auto get_rfsa_response = client::get_nirfsa_session_array(stub(), session);
-  EXPECT_SUCCESS(session, get_rfsa_response);
+  const auto get_rfsa_response = EXPECT_SUCCESS(session, client::get_nirfsa_session_array(stub(), session));
 
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   EXPECT_RESPONSE_SUCCESS(nirfsa_client::self_test(rfsa_stub, get_rfsa_response.nirfsa_sessions()[0]));
@@ -258,9 +256,8 @@ TEST_F(NiRFmxInstrDriverApiTests, NoActiveList_GetListNames_ReturnsEmptyLists)
 {
   const auto session = init_session(stub(), PXI_5663E);
 
-  const auto response = client::get_list_names(stub(), session, "", 0);
+  const auto response = EXPECT_SUCCESS(session, client::get_list_names(stub(), session, "", 0));
 
-  EXPECT_SUCCESS(session, response);
   EXPECT_THAT(response.list_names(), IsEmpty());
   EXPECT_THAT(response.personality(), IsEmpty());
 }
@@ -323,9 +320,8 @@ TEST_F(NiRFmxInstrDriverApiTests, SpectrumBasicWithRFmxInstr_DataLooksReasonable
   EXPECT_SUCCESS(session, specan_client::spectrum_cfg_rbw_filter(specan_stub, session, "", true, 100e3, nirfmxspecan_grpc::SpectrumRbwFilterType::SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN));
   EXPECT_SUCCESS(session, specan_client::spectrum_cfg_averaging(specan_stub, session, "", false, 10, nirfmxspecan_grpc::SpectrumAveragingType::SPECTRUM_AVERAGING_TYPE_RMS));
 
-  auto read_response = specan_client::spectrum_read(specan_stub, session, "", 10.0);
+  auto read_response = EXPECT_SUCCESS(session, specan_client::spectrum_read(specan_stub, session, "", 10.0));
 
-  EXPECT_SUCCESS(session, read_response);
   constexpr auto EXPECTED_SPECTRUM_SIZE = 1005;
   EXPECT_EQ(EXPECTED_SPECTRUM_SIZE, read_response.spectrum().size());
   constexpr auto MIDPOINT_X = EXPECTED_SPECTRUM_SIZE / 2;

@@ -264,9 +264,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 {
   auto session = init_session(stub(), kPxi5663e);
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TXP, true));
-  EXPECT_SUCCESS(
-      session,
-      client::set_attribute_i32(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, NiRFmxBluetoothInt32AttributeValues::NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_TRUE));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, NiRFmxBluetoothInt32AttributeValues::NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   auto get_response = client::get_attribute_i32(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED);
@@ -282,11 +280,9 @@ TEST_F(NiRFmxBluetoothDriverApiTests, ConfigureTwentydBBandwidth_FetchMeasuremen
   EXPECT_SUCCESS(session, client::twentyd_b_bandwidth_cfg_averaging(stub(), session, "", TwentydBBandwidthAveragingEnabled::TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_FALSE, 10));
 
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
-  const auto fetch_measurement_response = client::twentyd_b_bandwidth_fetch_measurement(stub(), session, "", 10.0);
-  const auto fetch_spectrum_response = client::twentyd_b_bandwidth_fetch_spectrum(stub(), session, "", 10.0);
+  const auto fetch_measurement_response = EXPECT_SUCCESS(session, client::twentyd_b_bandwidth_fetch_measurement(stub(), session, "", 10.0));
+  const auto fetch_spectrum_response = EXPECT_SUCCESS(session, client::twentyd_b_bandwidth_fetch_spectrum(stub(), session, "", 10.0));
 
-  EXPECT_SUCCESS(session, fetch_measurement_response);
-  EXPECT_SUCCESS(session, fetch_spectrum_response);
   EXPECT_NE(0.0, fetch_measurement_response.low_frequency());
   EXPECT_NE(0.0, fetch_measurement_response.peak_power());
   EXPECT_THAT(fetch_spectrum_response.spectrum(), Not(IsEmpty()));
