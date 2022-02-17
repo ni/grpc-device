@@ -303,7 +303,7 @@ try:
     print("------------------ACP------------------")
     print(f"Measurement Status                   : {measurement_status_string}")
     print(f"Reference Channel Power (dBm)        : {reference_channel_power}\n")
-    print("------------------Offset Measuremensts------------------")
+    print("------------------Offset Measurements------------------")
     if len(lower_absolute_power) == 0:
         print("No data")
     for i in range(len(lower_absolute_power)):
