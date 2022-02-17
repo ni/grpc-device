@@ -267,10 +267,9 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, NiRFmxBluetoothInt32AttributeValues::NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_TRUE));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
-  auto get_response = client::get_attribute_i32(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED);
+  const auto txp_averaging_enabled = GET_ATTR_I32(session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED);
 
-  EXPECT_SUCCESS(session, get_response);
-  EXPECT_EQ(NiRFmxBluetoothInt32AttributeValues::NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_TRUE, get_response.attr_val());
+  EXPECT_EQ(NiRFmxBluetoothInt32AttributeValues::NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_TRUE, txp_averaging_enabled);
 }
 
 TEST_F(NiRFmxBluetoothDriverApiTests, ConfigureTwentydBBandwidth_FetchMeasurements_DataLooksReasonable)

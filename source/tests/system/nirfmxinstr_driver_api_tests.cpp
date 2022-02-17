@@ -267,10 +267,9 @@ TEST_F(NiRFmxInstrDriverApiTests, SetAndGetTuningSpeed_ReturnsTuningSpeed)
   const auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED, NiRFmxInstrInt32AttributeValues::NIRFMXINSTR_INT32_TUNING_SPEED_FAST));
   initiate_to_enter_committed_state(session);
-  const auto response = client::get_attribute_i32(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED);
+  const auto tuning_speed = GET_ATTR_I32(session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED);
 
-  EXPECT_SUCCESS(session, response);
-  EXPECT_EQ(response.attr_val(), NiRFmxInstrInt32AttributeValues::NIRFMXINSTR_INT32_TUNING_SPEED_FAST);
+  EXPECT_EQ(tuning_speed, NiRFmxInstrInt32AttributeValues::NIRFMXINSTR_INT32_TUNING_SPEED_FAST);
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, SetAndGetFrequencyReferenceSource_ReturnsFrequencyReferenceSource)
@@ -278,10 +277,9 @@ TEST_F(NiRFmxInstrDriverApiTests, SetAndGetFrequencyReferenceSource_ReturnsFrequ
   const auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::set_attribute_string(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_FREQUENCY_REFERENCE_SOURCE, NiRFmxInstrStringAttributeValuesMapped::NIRFMXINSTR_STRING_FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK));
   initiate_to_enter_committed_state(session);
-  const auto response = client::get_attribute_string(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_FREQUENCY_REFERENCE_SOURCE);
+  const auto frequency_reference_source = GET_ATTR_STR(session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_FREQUENCY_REFERENCE_SOURCE);
 
-  EXPECT_SUCCESS(session, response);
-  EXPECT_EQ(response.attr_val(), "OnboardClock");
+  EXPECT_EQ(frequency_reference_source, "OnboardClock");
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, CallCfgMethods_Succeeds)
@@ -332,10 +330,9 @@ TEST_F(NiRFmxInstrDriverApiTests, SpectrumBasicWithRFmxInstr_DataLooksReasonable
 TEST_F(NiRFmxInstrDriverApiTests, GetModelName_ReturnsModelName)
 {
   const auto session = init_session(stub(), PXI_5663E);
-  const auto response = client::get_attribute_string(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_INSTRUMENT_MODEL);
+  const auto instrument_model = GET_ATTR_STR(session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_INSTRUMENT_MODEL);
 
-  EXPECT_SUCCESS(session, response);
-  EXPECT_EQ(response.attr_val(), "NI PXIe-5663E");
+  EXPECT_EQ(instrument_model, "NI PXIe-5663E");
 }
 
 TEST_F(NiRFmxInstrDriverApiTests, TimestampFromValuesRoundTrip_SucceedsWithOriginalValues)

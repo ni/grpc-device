@@ -49,4 +49,20 @@
     EXPECT_THAT(error.error_description(), HasSubstr(message_substring));      \
   }
 
+#define GET_ATTR_(get_attr_fn, session_, selector_string_, attribute_id_)                \
+  ([this](auto& session, auto& selector_string, auto attribute_id) {                     \
+    auto response = client::get_attr_fn(stub(), session, selector_string, attribute_id); \
+    EXPECT_SUCCESS(session, response);                                                   \
+    return response.attr_val();                                                          \
+  })((session_), (selector_string_), (attribute_id_))
+
+#define GET_ATTR_I32(session_, selector_string_, attribute_id_) \
+  GET_ATTR_(get_attribute_i32, session_, selector_string_, attribute_id_)
+
+#define GET_ATTR_F64(session_, selector_string_, attribute_id_) \
+  GET_ATTR_(get_attribute_f64, session_, selector_string_, attribute_id_)
+
+#define GET_ATTR_STR(session_, selector_string_, attribute_id_) \
+  GET_ATTR_(get_attribute_string, session_, selector_string_, attribute_id_)
+
 #endif  // NIDEVICE_GRPC_TESTS_RFMX_EXPECT_MACROS
