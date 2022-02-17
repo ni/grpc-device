@@ -180,7 +180,7 @@ try:
             nirfmxwlan_types.OFDMModAccCfgFrequencyErrorEstimationMethodRequest(
                 instrument=instr,
                 selector_string="",
-                frequency_error_estimation_method=nirfmxwlan_types.OFDM_MODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS,
+                frequency_error_estimation_method=nirfmxwlan_types.OFDMMODACC_FREQUENCY_ERROR_ESTIMATION_METHOD_PREAMBLE_AND_PILOTS,
             )
         )
     )
@@ -189,7 +189,7 @@ try:
             nirfmxwlan_types.OFDMModAccCfgAmplitudeTrackingEnabledRequest(
                 instrument=instr,
                 selector_string="",
-                amplitude_tracking_enabled=nirfmxwlan_types.OFDM_MODACC_AMPLITUDE_TRACKING_ENABLED_FALSE,
+                amplitude_tracking_enabled=nirfmxwlan_types.OFDMMODACC_AMPLITUDE_TRACKING_ENABLED_FALSE,
             )
         )
     )
@@ -198,7 +198,7 @@ try:
             nirfmxwlan_types.OFDMModAccCfgPhaseTrackingEnabledRequest(
                 instrument=instr,
                 selector_string="",
-                phase_tracking_enabled=nirfmxwlan_types.OFDM_MODACC_PHASE_TRACKING_ENABLED_TRUE,
+                phase_tracking_enabled=nirfmxwlan_types.OFDMMODACC_PHASE_TRACKING_ENABLED_TRUE,
             )
         )
     )
@@ -207,7 +207,7 @@ try:
             nirfmxwlan_types.OFDMModAccCfgSymbolClockErrorCorrectionEnabledRequest(
                 instrument=instr,
                 selector_string="",
-                symbol_clock_error_correction_enabled=nirfmxwlan_types.OFDM_MODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE,
+                symbol_clock_error_correction_enabled=nirfmxwlan_types.OFDMMODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED_TRUE,
             )
         )
     )
@@ -216,7 +216,7 @@ try:
             nirfmxwlan_types.OFDMModAccCfgChannelEstimationTypeRequest(
                 instrument=instr,
                 selector_string="",
-                channel_estimation_type=nirfmxwlan_types.OFDM_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE,
+                channel_estimation_type=nirfmxwlan_types.OFDMMODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE,
             )
         )
     )
@@ -225,7 +225,7 @@ try:
             nirfmxwlan_types.OFDMModAccCfgAveragingRequest(
                 instrument=instr,
                 selector_string="",
-                averaging_enabled=nirfmxwlan_types.OFDM_MODACC_AVERAGING_ENABLED_FALSE,
+                averaging_enabled=nirfmxwlan_types.OFDMMODACC_AVERAGING_ENABLED_FALSE,
                 averaging_count=10,
             )
         )
@@ -320,15 +320,15 @@ try:
         )
     )
     guard_interval_type = ofdm_mod_acc_fetch_guard_interval_type_response.guard_interval_type
-    ofdm_mod_acc_fetch_lsig_parity_check_status_response = raise_if_error(
+    ofdm_mod_acc_fetch_l_sig_parity_check_status_response = raise_if_error(
         client.OFDMModAccFetchLSIGParityCheckStatus(
             nirfmxwlan_types.OFDMModAccFetchLSIGParityCheckStatusRequest(
                 instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
-    lsig_parity_check_status = (
-        ofdm_mod_acc_fetch_lsig_parity_check_status_response.lsig_parity_check_status
+    l_sig_parity_check_status = (
+        ofdm_mod_acc_fetch_l_sig_parity_check_status_response.l_sig_parity_check_status
     )
     ofdm_mod_acc_fetch_sigcrc_status_response = raise_if_error(
         client.OFDMModAccFetchSIGCRCStatus(
@@ -345,7 +345,7 @@ try:
             )
         )
     )
-    sigb_crc_status = ofdm_mod_acc_fetch_sigbcrc_status_response.sigb_crc_status
+    sig_b_crc_status = ofdm_mod_acc_fetch_sigbcrc_status_response.sig_b_crc_status
 
     ofdm_mod_acc_fetch_pilot_constellation_trace_response = raise_if_error(
         client.OFDMModAccFetchPilotConstellationTrace(
@@ -416,26 +416,35 @@ try:
     elif guard_interval_type == nirfmxwlan_types.OFDM_GUARD_INTERVAL_TYPE_1_16:
         print("Guard Interval Type                     : 1/16")
     if (
-        lsig_parity_check_status
-        == nirfmxwlan_types.OFDM_MODACC_LSIG_PARITY_CHECK_STATUS_NOT_APPLICABLE
+        l_sig_parity_check_status
+        == nirfmxwlan_types.OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_NOT_APPLICABLE
     ):
         print("L-SIG Parity Check Status               : Not Applicable")
-    elif lsig_parity_check_status == nirfmxwlan_types.OFDM_MODACC_LSIG_PARITY_CHECK_STATUS_FAIL:
+    elif l_sig_parity_check_status == nirfmxwlan_types.OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_FAIL:
         print("L-SIG Parity Check Status               : Fail")
-    elif lsig_parity_check_status == nirfmxwlan_types.OFDM_MODACC_LSIG_PARITY_CHECK_STATUS_PASS:
+    elif l_sig_parity_check_status == nirfmxwlan_types.OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_PASS:
         print("L-SIG Parity Check Status               : Pass")
-    if sig_crc_status == nirfmxwlan_types.OFDM_MODACC_SIG_CRC_STATUS_NOT_APPLICABLE:
+    if sig_crc_status == nirfmxwlan_types.OFDMMODACC_SIG_CRC_STATUS_NOT_APPLICABLE:
         print("SIG CRC Status                          : Not Applicable")
-    elif sig_crc_status == nirfmxwlan_types.OFDM_MODACC_SIG_CRC_STATUS_FAIL:
+    elif sig_crc_status == nirfmxwlan_types.OFDMMODACC_SIG_CRC_STATUS_FAIL:
         print("SIG CRC Status                          : Fail")
-    elif sig_crc_status == nirfmxwlan_types.OFDM_MODACC_SIG_CRC_STATUS_PASS:
+    elif sig_crc_status == nirfmxwlan_types.OFDMMODACC_SIG_CRC_STATUS_PASS:
         print("SIG CRC Status                          : Pass")
-    if sigb_crc_status == nirfmxwlan_types.OFDM_MODACC_SIGB_CRC_STATUS_NOT_APPLICABLE:
+    if sig_b_crc_status == nirfmxwlan_types.OFDMMODACC_SIG_B_CRC_STATUS_NOT_APPLICABLE:
         print("SIG-B CRC Status                        : Not Applicable")
-    elif sigb_crc_status == nirfmxwlan_types.OFDM_MODACC_SIGB_CRC_STATUS_FAIL:
+    elif sig_b_crc_status == nirfmxwlan_types.OFDMMODACC_SIG_B_CRC_STATUS_FAIL:
         print("SIG-B CRC Status                        : Fail")
-    elif sigb_crc_status == nirfmxwlan_types.OFDM_MODACC_SIGB_CRC_STATUS_PASS:
+    elif sig_b_crc_status == nirfmxwlan_types.OFDMMODACC_SIG_B_CRC_STATUS_PASS:
         print("SIG-B CRC Status                        : Pass")
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
         client.Close(nirfmxwlan_types.CloseRequest(instrument=instr, force_destroy=False))

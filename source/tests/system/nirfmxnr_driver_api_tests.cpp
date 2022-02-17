@@ -6,6 +6,7 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxnr/nirfmxnr_client.h"
 #include "nirfsa/nirfsa_client.h"
+#include "rfmx_expect_macros.h"
 #include "waveform_helpers.h"
 
 using namespace ::testing;
@@ -27,12 +28,6 @@ const auto IVI_ERROR_INVALID_VALUE = -1074135024;
 const auto IVI_ERROR_INVALID_VALUE_STR = "Invalid value for parameter or property";
 const auto INCORRECT_TYPE_ERROR_CODE = -380251;
 const auto INCORRECT_TYPE_ERROR_STR = "Incorrect data type specified";
-
-template <typename TResponse>
-void EXPECT_RESPONSE_SUCCESS(const TResponse& response)
-{
-  EXPECT_EQ(0, response.status());
-}
 
 class NiRFmxNRDriverApiTests : public Test {
  protected:
@@ -65,26 +60,6 @@ class NiRFmxNRDriverApiTests : public Test {
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiRFmxNR::Stub> stub_;
 };
-
-#define CHECK_ERROR(session)                                          \
-  if (1) {                                                            \
-    auto response = client::get_error(stub(), session);               \
-    EXPECT_EQ("", std::string(response.error_description().c_str())); \
-  }
-
-#define EXPECT_SUCCESS(session, response) \
-  if (1) {                                \
-    EXPECT_EQ(0, (response).status());    \
-    CHECK_ERROR(session);                 \
-  }
-
-#define EXPECT_ERROR(expected_error, message_substring, session, response_) \
-  if (1) {                                                                  \
-    auto response = (response_);                                            \
-    EXPECT_EQ(expected_error, response.status());                           \
-    const auto error = client::get_error(stub(), session);                  \
-    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));   \
-  }
 
 #define GET_ATTR_(get_attr_fn, session_, selector_string_, attribute_id_)                \
   ([this](auto& session, auto& selector_string, auto attribute_id) {                     \
@@ -129,25 +104,25 @@ TEST_F(NiRFmxNRDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
   auto session = init_response.instrument();
-  EXPECT_SUCCESS(session, init_response);
+  EXPECT_RESPONSE_SUCCESS(init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_RESPONSE_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxNRDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
-  ni::tests::system::EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
+  EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
   auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
   auto session = init_response.instrument();
-  EXPECT_SUCCESS(session, init_response);
+  EXPECT_RESPONSE_SUCCESS(init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_RESPONSE_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData_DataLooksReasonable)
@@ -373,7 +348,7 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
     EXPECT_SUCCESS(session, carrier_string_response);
     auto modacc_results_composite_rms_evm_mean_response = client::get_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN);
     if (i == 0) {
-      EXPECT_ERROR(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, modacc_results_composite_rms_evm_mean_response);
+      EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, modacc_results_composite_rms_evm_mean_response);
     }
     else {
       EXPECT_SUCCESS(session, modacc_results_composite_rms_evm_mean_response);
@@ -389,9 +364,9 @@ TEST_F(NiRFmxNRDriverApiTests, DLModAccContiguousMultiCarrierFromExample_FetchDa
     componentCarrierQuadratureErrorMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN);
     pdschRMSEVMMean[i] = GET_ATTR_F64(session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_MODACC_RESULTS_PDSCH_QPSK_RMS_EVM_MEAN);
     mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i] = client::mod_acc_fetch_rmsevm_per_subcarrier_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
-    EXPECT_ERROR(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i]);
+    EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_subcarrier_mean_trace_response[i]);
     mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i] = client::mod_acc_fetch_rmsevm_per_symbol_mean_trace(stub(), session, carrier_string_response.selector_string_out(), 10.000000);
-    EXPECT_ERROR(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i]);
+    EXPECT_WARNING(NR_SYNC_FAILURE, NR_SYNC_FAILURE_STR, session, mod_acc_fetch_rmsevm_per_symbol_mean_trace_response[i]);
   }
 
   EXPECT_TRUE(isnan(compositeRMSEVMMean[0]));

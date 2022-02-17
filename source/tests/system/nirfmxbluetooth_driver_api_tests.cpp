@@ -6,6 +6,7 @@
 #include "nirfmxbluetooth/nirfmxbluetooth_client.h"
 #include "nirfmxbluetooth/nirfmxbluetooth_service.h"
 #include "nirfsa/nirfsa_client.h"
+#include "rfmx_expect_macros.h"
 #include "waveform_helpers.h"
 
 namespace pb = google::protobuf;
@@ -32,24 +33,6 @@ namespace {
 const auto kPxi5663e = "5663E";
 const int kPreambleSyncPacketStartDetectionFailedWarning = 686280;
 
-template <typename TResponse>
-void EXPECT_SUCCESS(const TResponse& response)
-{
-  EXPECT_EQ(0, response.status());
-}
-
-template <typename TResponse>
-void EXPECT_RFMX_ERROR(pb::int32 expected_error, const TResponse& response)
-{
-  EXPECT_EQ(expected_error, response.status());
-}
-
-template <typename TResponse>
-void EXPECT_WARNING(const TResponse& response, const int expected_warning_id)
-{
-  EXPECT_EQ(expected_warning_id, response.status());
-}
-
 class NiRFmxBluetoothDriverApiTests : public Test {
  protected:
   NiRFmxBluetoothDriverApiTests()
@@ -71,31 +54,10 @@ class NiRFmxBluetoothDriverApiTests : public Test {
     return stub_;
   }
 
-  void check_error(const nidevice_grpc::Session& session)
-  {
-    auto response = client::get_error(stub(), session);
-    EXPECT_EQ("", std::string(response.error_description().c_str()));
-  }
-
-  template <typename TResponse>
-  void EXPECT_SUCCESS(const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_SUCCESS(response);
-    check_error(session);
-  }
-
   template <typename TService>
   std::unique_ptr<typename TService::Stub> create_stub()
   {
     return TService::NewStub(device_server_->InProcessChannel());
-  }
-
-  template <typename TResponse>
-  void EXPECT_RFMX_ERROR(pb::int32 expected_error, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
-  {
-    ni::tests::system::EXPECT_RFMX_ERROR(expected_error, response);
-    const auto error = client::get_error(stub(), session);
-    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));
   }
 
  private:
@@ -119,7 +81,7 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::stri
 {
   auto response = init(stub, model, resource_name);
   auto session = response.instrument();
-  EXPECT_SUCCESS(response);
+  EXPECT_RESPONSE_SUCCESS(response);
   return session;
 }
 
@@ -144,25 +106,25 @@ TEST_F(NiRFmxBluetoothDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), kPxi5663e);
   auto session = init_response.instrument();
-  EXPECT_SUCCESS(session, init_response);
+  EXPECT_RESPONSE_SUCCESS(init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxBluetoothDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
 {
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
-  ni::tests::system::EXPECT_SUCCESS(init_rfsa_response);
+  EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
   auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
-  ni::tests::system::EXPECT_SUCCESS(close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxBluetoothDriverApiTests, AcpBasicFromExample_DataLooksReasonable)
@@ -232,11 +194,11 @@ TEST_F(NiRFmxBluetoothDriverApiTests, TxpBasicFromExample_DataLooksReasonable)
 
   // We expect these actions to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
   const auto fetched_powers_response = client::txp_fetch_powers(stub(), session, "", 10.0);
-  EXPECT_WARNING(fetched_powers_response, kPreambleSyncPacketStartDetectionFailedWarning);
+  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_powers_response);
   const auto fetched_edr_powers_response = client::txp_fetch_edr_powers(stub(), session, "", 10.0);
-  EXPECT_WARNING(fetched_edr_powers_response, kPreambleSyncPacketStartDetectionFailedWarning);
+  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_edr_powers_response);
   const auto fetched_lecte_reference_period_powers_response = client::txp_fetch_lecte_reference_period_powers(stub(), session, "", 10.0);
-  EXPECT_WARNING(fetched_lecte_reference_period_powers_response, kPreambleSyncPacketStartDetectionFailedWarning);
+  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, fetched_lecte_reference_period_powers_response);
 
   EXPECT_GT(fetched_powers_response.average_power_mean(), 0.0);
   EXPECT_GT(fetched_powers_response.average_power_maximum(), 0.0);
@@ -259,7 +221,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, ModAccMeasurement_FetchConstellationTrace_
 
   // We expect this action to produce kPreambleSyncPacketStartDetectionFailedWarning since the test uses simulated hardware.
   const auto constellation_trace_response = client::mod_acc_fetch_constellation_trace(stub(), session, "", 10.0);
-  EXPECT_WARNING(constellation_trace_response, kPreambleSyncPacketStartDetectionFailedWarning);
+  EXPECT_RESPONSE_WARNING(kPreambleSyncPacketStartDetectionFailedWarning, constellation_trace_response);
 
   // We expect the results to be empty since the measurement did not complete successfully.
   EXPECT_THAT(constellation_trace_response.constellation(), Each(Eq(complex_number(0.0, 0.0))));
@@ -271,16 +233,16 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt8_ExpectedError)
 {
   const auto session = init_session(stub(), kPxi5663e);
 
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_i8(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_u8(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 1));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_i8_array(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, -1, 0}));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_u8_array(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, {1, 0, 1, 0}));
 }
@@ -290,10 +252,10 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAttributeInt16_ExpectedError)
 {
   const auto session = init_session(stub(), kPxi5663e);
 
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_i16(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, -400));
-  EXPECT_RFMX_ERROR(
+  EXPECT_ERROR(
       -380251, "Incorrect data type specified", session,
       client::set_attribute_u16(stub(), session, "", NiRFmxBluetoothAttribute::NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED, 400));
 }
@@ -316,7 +278,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, SetAndGetAttributeInt32_Succeeds)
 TEST_F(NiRFmxBluetoothDriverApiTests, ConfigureTwentydBBandwidth_FetchMeasurements_DataLooksReasonable)
 {
   auto session = init_session(stub(), kPxi5663e);
-  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_20DB_BANDWIDTH, true));
+  EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_TWENTY_DB_BANDWIDTH, true));
   EXPECT_SUCCESS(session, client::twentyd_b_bandwidth_cfg_averaging(stub(), session, "", TwentydBBandwidthAveragingEnabled::TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_FALSE, 10));
 
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -336,7 +298,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, BuildSlotString_ReturnsSlotString)
   const auto slot_string_response = client::build_slot_string(stub(), "", 25);
 
   EXPECT_EQ(slot_string_response.selector_string_out(), "slot25");
-  ni::tests::system::EXPECT_SUCCESS(slot_string_response);
+  EXPECT_RESPONSE_SUCCESS(slot_string_response);
 }
 
 }  // namespace

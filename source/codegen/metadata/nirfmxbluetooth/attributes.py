@@ -254,48 +254,48 @@ attributes = {
     },
     11542528: {
         'access': 'read-write',
-        'name': '20DB_BANDWIDTH_MEASUREMENT_ENABLED',
+        'name': 'TWENTY_DB_BANDWIDTH_MEASUREMENT_ENABLED',
         'type': 'int32'
     },
     11542530: {
         'access': 'read-write',
         'enum': 'TwentydBBandwidthAveragingEnabled',
-        'name': '20DB_BANDWIDTH_AVERAGING_ENABLED',
+        'name': 'TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED',
         'type': 'int32'
     },
     11542531: {
         'access': 'read-write',
-        'name': '20DB_BANDWIDTH_AVERAGING_COUNT',
+        'name': 'TWENTY_DB_BANDWIDTH_AVERAGING_COUNT',
         'type': 'int32'
     },
     11542532: {
         'access': 'read-write',
-        'name': '20DB_BANDWIDTH_ALL_TRACES_ENABLED',
+        'name': 'TWENTY_DB_BANDWIDTH_ALL_TRACES_ENABLED',
         'type': 'int32'
     },
     11542533: {
         'access': 'read-write',
-        'name': '20DB_BANDWIDTH_NUMBER_OF_ANALYSIS_THREADS',
+        'name': 'TWENTY_DB_BANDWIDTH_NUMBER_OF_ANALYSIS_THREADS',
         'type': 'int32'
     },
     11542535: {
         'access': 'read-write',
-        'name': '20DB_BANDWIDTH_RESULTS_PEAK_POWER',
+        'name': 'TWENTY_DB_BANDWIDTH_RESULTS_PEAK_POWER',
         'type': 'float64'
     },
     11542536: {
         'access': 'read-write',
-        'name': '20DB_BANDWIDTH_RESULTS_BANDWIDTH',
+        'name': 'TWENTY_DB_BANDWIDTH_RESULTS_BANDWIDTH',
         'type': 'float64'
     },
     11542537: {
         'access': 'read-write',
-        'name': '20DB_BANDWIDTH_RESULTS_HIGH_FREQUENCY',
+        'name': 'TWENTY_DB_BANDWIDTH_RESULTS_HIGH_FREQUENCY',
         'type': 'float64'
     },
     11542538: {
         'access': 'read-write',
-        'name': '20DB_BANDWIDTH_RESULTS_LOW_FREQUENCY',
+        'name': 'TWENTY_DB_BANDWIDTH_RESULTS_LOW_FREQUENCY',
         'type': 'float64'
     },
     11546624: {

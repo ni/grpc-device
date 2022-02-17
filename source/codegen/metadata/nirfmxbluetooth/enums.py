@@ -236,7 +236,7 @@ enums = {
                 'value': 2
             },
             {
-                'name': '20DB_BANDWIDTH',
+                'name': 'TWENTY_DB_BANDWIDTH',
                 'value': 4
             },
             {

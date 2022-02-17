@@ -62,7 +62,7 @@ instr = None
 def raise_if_error(response):
     if response.status != 0:
         error_response = client.GetError(
-            nirfmxwlan_types.GetErrorRequest(
+            nirfmxspecan_types.GetErrorRequest(
                 instrument=instr,
             )
         )
@@ -151,6 +151,15 @@ try:
     print(f"Peak to Average Ratio(dB)  {peak_to_average_ratio}")
     print(f"Maximum Power(dBm)         {maximum_power}")
     print(f"Minimum Power(dBm)         {minimum_power}")
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
         client.Close(nirfmxspecan_types.CloseRequest(instrument=instr, force_destroy=False))

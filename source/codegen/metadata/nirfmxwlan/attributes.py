@@ -642,7 +642,7 @@ attributes = {
     },
     10498158: {
         'access': 'read-write',
-        'enum': 'DsssModAccPsduCrcStaus',
+        'enum': 'DsssModAccPsduCrcStatus',
         'name': 'DSSSMODACC_RESULTS_PSDU_CRC_STATUS',
         'type': 'int32'
     },

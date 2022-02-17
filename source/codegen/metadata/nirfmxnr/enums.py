@@ -802,6 +802,7 @@ enums = {
         ]
     },
     'GNodeBCategory': {
+        'enum-value-prefix': 'GNODEB_CATEGORY',
         'values': [
             {
                 'name': 'WIDE_AREA_BASE_STATION_CATEGORY_A',
@@ -834,6 +835,7 @@ enums = {
         ]
     },
     'GNodeBType': {
+        'enum-value-prefix': 'GNODEB_TYPE',
         'values': [
             {
                 'name': '1C',
@@ -1720,6 +1722,7 @@ enums = {
         ]
     },
     'PiBy2BpskPowerBoostEnabled': {
+        'enum-value-prefix': 'PI_BY_2_BPSK_POWER_BOOST_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
