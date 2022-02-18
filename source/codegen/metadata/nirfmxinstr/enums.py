@@ -15,14 +15,14 @@ enums = {
             }
         ]
     },
-    'AutomaticSGSASharedLO': {
+    'AutomaticSGSASharedLOEnabled': {
         'values': [
             {
-                'name': 'DISABLED',
+                'name': 'FALSE',
                 'value': 0
             },
             {
-                'name': 'ENABLED',
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -39,14 +39,14 @@ enums = {
             }
         ]
     },
-    'CleanerSpectrum': {
+    'CleanerSpectrumEnabled': {
         'values': [
             {
-                'name': 'DISABLED',
+                'name': 'FALSE',
                 'value': 0
             },
             {
-                'name': 'ENABLED',
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -105,6 +105,30 @@ enums = {
             {
                 'name': 'TIMER_EVENT',
                 'value': 'TimerEvent'
+            }
+        ]
+    },
+    'DigitizerDitherEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'DownconverterPreselectorEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
             }
         ]
     },
@@ -218,6 +242,54 @@ enums = {
             }
         ]
     },
+    'InputIsolationEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'LO2ExportEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'LOExportEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'LOInjectionSide': {
+        'values': [
+            {
+                'name': 'HIGH_SIDE',
+                'value': 0
+            },
+            {
+                'name': 'LOW_SIDE',
+                'value': 1
+            }
+        ]
+    },
     'LOLeakageAvoidanceEnabled': {
         'values': [
             {
@@ -230,14 +302,14 @@ enums = {
             }
         ]
     },
-    'LOPllFractionalMode': {
+    'LOPllFractionalModeEnabled': {
         'values': [
             {
-                'name': 'DISABLED',
+                'name': 'FALSE',
                 'value': 0
             },
             {
-                'name': 'ENABLED',
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -327,6 +399,18 @@ enums = {
             },
             {
                 'name': 'ENABLED',
+                'value': 1
+            }
+        ]
+    },
+    'OspDelayEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -611,11 +695,11 @@ enums = {
     'StartTriggerDigitalEdge': {
         'values': [
             {
-                'name': 'RISING_EDGE',
+                'name': 'RISING',
                 'value': 0
             },
             {
-                'name': 'FALLING_EDGE',
+                'name': 'FALLING',
                 'value': 1
             }
         ]

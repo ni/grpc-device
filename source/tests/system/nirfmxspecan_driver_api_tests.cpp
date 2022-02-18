@@ -196,7 +196,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, AMPMFromExample_NoError)
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
   EXPECT_SUCCESS(
       session,
-      client::cfg_digital_edge_trigger(stub(), session, "", DigitalEdgeTriggerSource::DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DigitalEdgeTriggerEdge::DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, true));
+      client::cfg_digital_edge_trigger(stub(), session, "", DigitalEdgeTriggerSource::DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DigitalEdgeTriggerEdge::DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, true));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1e9, 0.0, 0.0));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_AMPM, true));
   EXPECT_SUCCESS(session, client::dpd_cfg_dut_average_input_power(stub(), session, "", -20.0));
@@ -229,7 +229,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_ReturnsSynchronizationNotFo
 {
   const auto session = init_session(stub(), PXI_5663);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FrequencyReferenceSource::FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
-  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DigitalEdgeTriggerSource::DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DigitalEdgeTriggerEdge::DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE, 0.0, true));
+  EXPECT_SUCCESS(session, client::cfg_digital_edge_trigger(stub(), session, "", DigitalEdgeTriggerSource::DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0, DigitalEdgeTriggerEdge::DIGITAL_EDGE_TRIGGER_EDGE_RISING, 0.0, true));
   EXPECT_SUCCESS(session, client::cfg_rf(stub(), session, "", 1e9, 0.0, 0.0));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_DPD, true));
   auto waveform = load_test_waveform_data<float, nidevice_grpc::NIComplexNumberF32>("LTE20MHz Waveform (Two Subframes).json");

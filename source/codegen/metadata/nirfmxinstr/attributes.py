@@ -57,6 +57,7 @@ attributes = {
     },
     12: {
         'access': 'read-write',
+        'enum': 'DownconverterPreselectorEnabled',
         'name': 'DOWNCONVERTER_PRESELECTOR_ENABLED',
         'type': 'int32'
     },
@@ -87,6 +88,7 @@ attributes = {
     },
     18: {
         'access': 'read-write',
+        'enum': 'LOInjectionSide',
         'name': 'LO_INJECTION_SIDE',
         'type': 'int32'
     },
@@ -97,6 +99,7 @@ attributes = {
     },
     21: {
         'access': 'read-write',
+        'enum': 'DigitizerDitherEnabled',
         'name': 'DIGITIZER_DITHER_ENABLED',
         'type': 'int32'
     },
@@ -107,6 +110,7 @@ attributes = {
     },
     23: {
         'access': 'read-write',
+        'enum': 'OspDelayEnabled',
         'name': 'OSP_DELAY_ENABLED',
         'type': 'int32'
     },
@@ -157,6 +161,7 @@ attributes = {
     },
     33: {
         'access': 'read-write',
+        'enum': 'LOExportEnabled',
         'name': 'LO_EXPORT_ENABLED',
         'type': 'int32'
     },
@@ -179,8 +184,8 @@ attributes = {
     },
     37: {
         'access': 'read-write',
-        'enum': 'CleanerSpectrum',
-        'name': 'CLEANER_SPECTRUM',
+        'enum': 'CleanerSpectrumEnabled',
+        'name': 'CLEANER_SPECTRUM_ENABLED',
         'type': 'int32'
     },
     39: {
@@ -283,6 +288,7 @@ attributes = {
     },
     58: {
         'access': 'read-write',
+        'enum': 'LO2ExportEnabled',
         'name': 'LO2_EXPORT_ENABLED',
         'type': 'int32'
     },
@@ -320,8 +326,8 @@ attributes = {
     },
     74: {
         'access': 'read-write',
-        'enum': 'AutomaticSGSASharedLO',
-        'name': 'AUTOMATIC_SG_SA_SHARED_LO',
+        'enum': 'AutomaticSGSASharedLOEnabled',
+        'name': 'AUTOMATIC_SG_SA_SHARED_LO_ENABLED',
         'type': 'int32'
     },
     77: {
@@ -347,8 +353,8 @@ attributes = {
     },
     90: {
         'access': 'read-write',
-        'enum': 'LOPllFractionalMode',
-        'name': 'LO_PLL_FRACTIONAL_MODE',
+        'enum': 'LOPllFractionalModeEnabled',
+        'name': 'LO_PLL_FRACTIONAL_MODE_ENABLED',
         'type': 'int32'
     },
     91: {
@@ -359,6 +365,7 @@ attributes = {
     },
     92: {
         'access': 'read-write',
+        'enum': 'InputIsolationEnabled',
         'name': 'INPUT_ISOLATION_ENABLED',
         'type': 'int32'
     },

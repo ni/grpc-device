@@ -123,7 +123,7 @@ try:
                 instrument=instr,
                 selector_string="",
                 digital_edge_source_mapped=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0,
-                digital_edge=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING_EDGE,
+                digital_edge=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING,
                 trigger_delay=0.0,
                 enable_trigger=False,
             )
