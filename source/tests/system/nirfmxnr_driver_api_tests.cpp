@@ -24,8 +24,8 @@ namespace {
 constexpr auto PXI_5663E = "5663E";
 constexpr auto NR_SYNC_FAILURE_WARNING = 684300;
 constexpr auto NR_SYNC_FAILURE_WARNING_STR = "Failed to synchronize to the signal";
-constexpr auto IVI_ERROR_INVALID_VALUE = -1074135024;
-constexpr auto IVI_ERROR_INVALID_VALUE_STR = "Invalid value for parameter or property";
+constexpr auto IVI_INVALID_VALUE_ERROR = -1074135024;
+constexpr auto IVI_INVALID_VALUE_ERROR_STR = "Invalid value for parameter or property";
 constexpr auto TYPE_MISMATCH_ERROR = -380251;
 constexpr auto TYPE_MISMATCH_ERROR_STR = "Incorrect data type specified";
 
@@ -161,7 +161,7 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
     }
   }
   auto auto_level_response = client::auto_level(stub(), session, "", 10.0e-3);
-  EXPECT_ERROR(IVI_ERROR_INVALID_VALUE, IVI_ERROR_INVALID_VALUE_STR, session, auto_level_response);
+  EXPECT_ERROR(IVI_INVALID_VALUE_ERROR, IVI_INVALID_VALUE_ERROR_STR, session, auto_level_response);
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_ACP, true));
   EXPECT_SUCCESS(session, client::acp_cfg_measurement_method(stub(), session, "", ACP_MEASUREMENT_METHOD_NORMAL));
   EXPECT_SUCCESS(session, client::acp_cfg_noise_compensation_enabled(stub(), session, "", ACP_NOISE_COMPENSATION_ENABLED_FALSE));
