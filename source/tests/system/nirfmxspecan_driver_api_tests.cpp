@@ -23,9 +23,16 @@ namespace system {
 namespace {
 
 constexpr auto PXI_5663 = "5663";
-constexpr auto INVALID_DRIVER_SESSION = -380598;
-constexpr auto DEVICE_IN_USE = -380489;
-constexpr auto SUCCESS = 0;
+constexpr auto INVALID_SESSION_HANDLE_ERROR = -380598;
+constexpr auto DEVICE_IN_USE_ERROR = -380489;
+constexpr auto IQ_FETCH_DELETED_RECORD_ERROR = -379451;
+constexpr auto IQ_FETCH_DELETED_RECORD_ERROR_STR = "The requested record number is invalid";
+constexpr auto READ_ONLY_ATTRIBUTE_ERROR = -380231;
+constexpr auto READ_ONLY_ATTRIBUTE_ERROR_STR = "This attribute is read-only and cannot be written";
+constexpr auto SYNCHRONIZATION_WARNING = 377652;
+constexpr auto SYNCHRONIZATION_WARNING_STR = "Synchronization not found";
+constexpr auto TYPE_MISMATCH_ERROR = -380251;
+constexpr auto TYPE_MISMATCH_ERROR_STR = "Incorrect data type specified";
 
 class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
  protected:
@@ -56,7 +63,7 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
   bool is_driver_session_valid(const instr_client::StubPtr& stub, const nidevice_grpc::Session& session)
   {
     auto response = instr_client::get_attribute_string(stub, session, "", nirfmxinstr_grpc::NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_INSTRUMENT_MODEL);
-    return response.status() != INVALID_DRIVER_SESSION;
+    return response.status() != INVALID_SESSION_HANDLE_ERROR;
   }
 
  private:
@@ -245,7 +252,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, LutDpdFromExample_ReturnsSynchronizationNotFo
   EXPECT_SUCCESS(session, client::dpd_cfg_apply_dpd_lookup_table_correction_type(stub(), session, "", DpdApplyDpdLookupTableCorrectionType::DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_AND_PHASE));
 
   const auto apply_response = client::dpd_apply_digital_predistortion(stub(), session, "", waveform.t0, waveform.dt, waveform.data, false, 10.0);
-  EXPECT_WARNING(377652, "Synchronization not found", session, apply_response);
+  EXPECT_WARNING(SYNCHRONIZATION_WARNING, SYNCHRONIZATION_WARNING_STR, session, apply_response);
   EXPECT_THAT(apply_response.waveform_out(), Not(IsEmpty()));
 }
 
@@ -255,7 +262,7 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeComplex_ExpectedError)
   const auto session = init_session(stub(), PXI_5663);
 
   EXPECT_ERROR(
-      -380231, "This attribute is read-only and cannot be written", session,
+      READ_ONLY_ATTRIBUTE_ERROR, READ_ONLY_ATTRIBUTE_ERROR_STR, session,
       client::set_attribute_ni_complex_double_array(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_SEM_RESULTS_CARRIER_FREQUENCY, complex_number_array({1.2, 2.2}, {1e6, 1.01e6})));
 }
 
@@ -265,16 +272,16 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeInt8_ExpectedError)
   const auto session = init_session(stub(), PXI_5663);
 
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_i8(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, 1));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_u8(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, 1));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_i8_array(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, {1, 0, -1, 0}));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_u8_array(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, {1, 0, 1, 0}));
 }
 
@@ -284,10 +291,10 @@ TEST_F(NiRFmxSpecAnDriverApiTests, SetAttributeInt16_ExpectedError)
   const auto session = init_session(stub(), PXI_5663);
 
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_i16(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, -400));
   EXPECT_ERROR(
-      -380251, "Incorrect data type specified", session,
+      TYPE_MISMATCH_ERROR, TYPE_MISMATCH_ERROR_STR, session,
       client::set_attribute_u16(stub(), session, "", NiRFmxSpecAnAttribute::NIRFMXSPECAN_ATTRIBUTE_NF_EXTERNAL_PREAMP_PRESENT, 400));
 }
 
@@ -344,7 +351,6 @@ TEST_F(NiRFmxSpecAnDriverApiTests, BuildIntermodString_ReturnsIntermodString)
 
 TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchData_RecordIsDeleted)
 {
-  constexpr auto INVALID_RECORD = -379451;
   const auto session = init_session(stub(), PXI_5663);
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_IQ, true));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
@@ -354,15 +360,12 @@ TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchData_RecordIsDele
   EXPECT_THAT(fetch_response.data(), Not(IsEmpty()));
 
   EXPECT_ERROR(
-      INVALID_RECORD,
-      "The requested record number is invalid. The desired record was already fetched and deleted.",
-      session,
+      IQ_FETCH_DELETED_RECORD_ERROR, IQ_FETCH_DELETED_RECORD_ERROR_STR, session,
       client::iq_fetch_data(stub(), session, "", 10.0, 0, 1000));
 }
 
 TEST_F(NiRFmxSpecAnDriverApiTests, DefaultConfiguration_IQFetchDataFetchAllAvailable_DataIsFetched)
 {
-  constexpr auto INVALID_RECORD = -379451;
   constexpr auto FETCH_ALL_AVAILABLE = -1;
   constexpr auto EXPECTED_RECORD_COUNT = 50000;
   const auto session = init_session(stub(), PXI_5663);
@@ -584,7 +587,7 @@ TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeResource_Ini
 
   const auto second_init_response = init(stub(), PXI_5663, std::get<1>(GetParam()));
 
-  EXPECT_RESPONSE_ERROR(DEVICE_IN_USE, second_init_response);
+  EXPECT_RESPONSE_ERROR(DEVICE_IN_USE_ERROR, second_init_response);
 }
 
 TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeAndCloseResource_InitializeResourceThatWouldHaveConflicted_Succeeds)

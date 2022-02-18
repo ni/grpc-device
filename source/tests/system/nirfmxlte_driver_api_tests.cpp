@@ -14,7 +14,7 @@ namespace tests {
 namespace system {
 namespace {
 
-const auto PXI_5663E = "5663E";
+constexpr auto PXI_5663E = "5663E";
 
 class NiRFmxLTEDriverApiTests : public Test {
  protected:
@@ -58,6 +58,7 @@ TEST_F(NiRFmxLTEDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
   auto session = init_response.instrument();
+  // TODO: use EXPECT_SUCCESS here when LTE has get_error and get_error_string
   EXPECT_RESPONSE_SUCCESS(init_response);
 
   auto close_response = client::close(stub(), session, 0);

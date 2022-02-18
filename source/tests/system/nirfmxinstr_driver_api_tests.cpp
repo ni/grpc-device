@@ -1,5 +1,5 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>  // For EXPECT matchers.
+#include <gtest/gtest.h>
 
 #include "device_server.h"
 #include "niRFmxInstr.h"
@@ -20,8 +20,8 @@ namespace tests {
 namespace system {
 namespace {
 
-const auto PXI_5663 = "5663";
-const auto PXI_5663E = "5663E";
+constexpr auto PXI_5663 = "5663";
+constexpr auto PXI_5663E = "5663E";
 
 class NiRFmxInstrDriverApiTests : public Test {
  protected:
@@ -128,7 +128,8 @@ TEST_F(NiRFmxInstrDriverApiTests, Init_Close_Succeeds)
 
   auto close_response = client::close(stub(), session, 0);
 
-  // Don't check_error because this can report stale errors from previous tests.
+  // Don't use EXPECT_STATUS because that checks the error text, which can report stale errors from
+  // previous tests.
   EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
