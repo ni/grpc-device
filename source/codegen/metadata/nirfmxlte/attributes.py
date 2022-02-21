@@ -243,28 +243,28 @@ attributes = {
     },
     3145778: {
         'access': 'read-write',
-        'name': 'SRS_n_RRC',
+        'name': 'SRS_N_RRC',
         'type': 'int32'
     },
     3145779: {
         'access': 'read-write',
-        'name': 'SRS_n_SRS_CS',
+        'name': 'SRS_N_SRS_CS',
         'type': 'int32'
     },
     3145780: {
         'access': 'read-write',
-        'name': 'SRS_b_HOP',
+        'name': 'SRS_B_HOP',
         'type': 'int32'
     },
     3145781: {
         'access': 'read-write',
-        'name': 'SRS_k_TC',
+        'name': 'SRS_K_TC',
         'type': 'int32'
     },
     3145782: {
         'access': 'read-write',
         'enum': 'SrsMaximumUpPtsEnabled',
-        'name': 'SRS_MAXIMUM_UpPTS_ENABLED',
+        'name': 'SRS_MAXIMUM_UP_PTS_ENABLED',
         'type': 'int32'
     },
     3145783: {
