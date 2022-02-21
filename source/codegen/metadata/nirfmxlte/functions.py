@@ -775,6 +775,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
                 'name': 'reserved',
                 'type': 'int64'
             }
@@ -830,6 +832,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
                 'name': 'reserved',
                 'type': 'int64'
             }
@@ -1706,6 +1710,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
                 'name': 'reserved',
                 'type': 'int32'
             }
@@ -4588,13 +4594,19 @@ functions = {
                 'type': 'float64'
             },
             {
-                'direction': 'out',
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
                 'name': 'reserved1',
+                'pointer': True,
                 'type': 'float64'
             },
             {
-                'direction': 'out',
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
                 'name': 'reserved2',
+                'pointer': True,
                 'type': 'float64'
             }
         ],
@@ -4639,22 +4651,26 @@ functions = {
                 'type': 'float64[]'
             },
             {
-                'direction': 'out',
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
                 'name': 'reserved1',
+                'pointer': True,
                 'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'actualArraySize'
+                    'mechanism': 'len',
+                    'value': 'arraySize'
                 },
                 'type': 'float64[]'
             },
             {
-                'direction': 'out',
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
                 'name': 'reserved2',
+                'pointer': True,
                 'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'actualArraySize'
+                    'mechanism': 'len',
+                    'value': 'arraySize'
                 },
                 'type': 'float64[]'
             },

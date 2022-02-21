@@ -1779,7 +1779,6 @@ message AnalyzeIQ1WaveformRequest {
   double dx = 5;
   repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
   int32 reset = 7;
-  int64 reserved = 8;
 }
 
 message AnalyzeIQ1WaveformResponse {
@@ -1794,7 +1793,6 @@ message AnalyzeSpectrum1WaveformRequest {
   double dx = 5;
   repeated float spectrum = 6;
   int32 reset = 7;
-  int64 reserved = 8;
 }
 
 message AnalyzeSpectrum1WaveformResponse {
@@ -2166,7 +2164,6 @@ message CfgDownlinkAutoChannelDetectionRequest {
     AutoPcfichCfiDetectionEnabled auto_pcfich_cfi_detection_enabled = 7;
     int32 auto_pcfich_cfi_detection_enabled_raw = 8;
   }
-  int32 reserved = 9;
 }
 
 message CfgDownlinkAutoChannelDetectionResponse {
@@ -3329,8 +3326,6 @@ message ModAccFetchDownlinkTransmitPowerResponse {
   int32 status = 1;
   double rs_transmit_power = 2;
   double ofdm_symbol_transmit_power = 3;
-  double reserved1 = 4;
-  double reserved2 = 5;
 }
 
 message ModAccFetchDownlinkTransmitPowerArrayRequest {
@@ -3343,9 +3338,7 @@ message ModAccFetchDownlinkTransmitPowerArrayResponse {
   int32 status = 1;
   repeated double rs_transmit_power = 2;
   repeated double ofdm_symbol_transmit_power = 3;
-  repeated double reserved1 = 4;
-  repeated double reserved2 = 5;
-  int32 actual_array_size = 6;
+  int32 actual_array_size = 4;
 }
 
 message ModAccFetchEVMHighPerSymbolTraceRequest {

@@ -817,7 +817,7 @@ namespace nirfmxlte_grpc {
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
       int32 array_size = static_cast<int32>(request->iq().size());
       int32 reset = request->reset();
-      int64 reserved = request->reserved();
+      auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -844,7 +844,7 @@ namespace nirfmxlte_grpc {
       auto spectrum = const_cast<float32*>(request->spectrum().data());
       int32 array_size = static_cast<int32>(request->spectrum().size());
       int32 reset = request->reset();
-      int64 reserved = request->reserved();
+      auto reserved = 0;
       auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1952,7 +1952,7 @@ namespace nirfmxlte_grpc {
         }
       }
 
-      int32 reserved = request->reserved();
+      auto reserved = 0;
       auto status = library_->CfgDownlinkAutoChannelDetection(instrument, selector_string, auto_pdsch_channel_detection_enabled, auto_control_channel_power_detection_enabled, auto_pcfich_cfi_detection_enabled, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -5087,17 +5087,15 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
+      auto reserved1 = nullptr;
+      auto reserved2 = nullptr;
       float64 rs_transmit_power {};
       float64 ofdm_symbol_transmit_power {};
-      float64 reserved1 {};
-      float64 reserved2 {};
-      auto status = library_->ModAccFetchDownlinkTransmitPower(instrument, selector_string, timeout, &rs_transmit_power, &ofdm_symbol_transmit_power, &reserved1, &reserved2);
+      auto status = library_->ModAccFetchDownlinkTransmitPower(instrument, selector_string, timeout, &rs_transmit_power, &ofdm_symbol_transmit_power, reserved1, reserved2);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_rs_transmit_power(rs_transmit_power);
         response->set_ofdm_symbol_transmit_power(ofdm_symbol_transmit_power);
-        response->set_reserved1(reserved1);
-        response->set_reserved2(reserved2);
       }
       return ::grpc::Status::OK;
     }
@@ -5118,9 +5116,11 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
+      auto reserved1 = nullptr;
+      auto reserved2 = nullptr;
       int32 actual_array_size {};
       while (true) {
-        auto status = library_->ModAccFetchDownlinkTransmitPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->ModAccFetchDownlinkTransmitPowerArray(instrument, selector_string, timeout, nullptr, nullptr, reserved1, reserved2, 0, &actual_array_size);
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -5129,10 +5129,6 @@ namespace nirfmxlte_grpc {
         float64* rs_transmit_power = response->mutable_rs_transmit_power()->mutable_data();
         response->mutable_ofdm_symbol_transmit_power()->Resize(actual_array_size, 0);
         float64* ofdm_symbol_transmit_power = response->mutable_ofdm_symbol_transmit_power()->mutable_data();
-        response->mutable_reserved1()->Resize(actual_array_size, 0);
-        float64* reserved1 = response->mutable_reserved1()->mutable_data();
-        response->mutable_reserved2()->Resize(actual_array_size, 0);
-        float64* reserved2 = response->mutable_reserved2()->mutable_data();
         auto array_size = actual_array_size;
         status = library_->ModAccFetchDownlinkTransmitPowerArray(instrument, selector_string, timeout, rs_transmit_power, ofdm_symbol_transmit_power, reserved1, reserved2, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
@@ -5143,8 +5139,6 @@ namespace nirfmxlte_grpc {
         if (status_ok(status)) {
           response->mutable_rs_transmit_power()->Resize(actual_array_size, 0);
           response->mutable_ofdm_symbol_transmit_power()->Resize(actual_array_size, 0);
-          response->mutable_reserved1()->Resize(actual_array_size, 0);
-          response->mutable_reserved2()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
