@@ -46,7 +46,7 @@ class NiRFmxLTESessionTest : public ::testing::Test {
     return status;
   }
 
-  ::grpc::Status call_close(nidevice_grpc::Session session, nirfmxlte_grpc::Boolean force_destroy, rfmxlte::CloseResponse* response)
+  ::grpc::Status call_close(nidevice_grpc::Session session, bool force_destroy, rfmxlte::CloseResponse* response)
   {
     ::grpc::ClientContext context;
     rfmxlte::CloseRequest request;
@@ -101,7 +101,7 @@ TEST_F(NiRFmxLTESessionTest, InitializedSession_CloseSession_ClosesDriverSession
   ::grpc::ClientContext context;
   rfmxlte::CloseRequest close_request;
   close_request.mutable_instrument()->set_id(session.id());
-  close_request.set_force_destroy(nirfmxlte_grpc::Boolean::BOOLEAN_FALSE);
+  close_request.set_force_destroy(false);
   rfmxlte::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -122,8 +122,8 @@ TEST_F(NiRFmxLTESessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_Cl
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
   rfmxlte::CloseResponse close_response_one, close_response_two;
-  status_one = call_close(session_one, nirfmxlte_grpc::Boolean::BOOLEAN_FALSE, &close_response_one);
-  status_two = call_close(session_two, nirfmxlte_grpc::Boolean::BOOLEAN_FALSE, &close_response_two);
+  status_one = call_close(session_one, false, &close_response_one);
+  status_two = call_close(session_two, false, &close_response_two);
 
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());
@@ -139,7 +139,7 @@ TEST_F(NiRFmxLTESessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionEr
   ::grpc::ClientContext context;
   rfmxlte::CloseRequest request;
   request.mutable_instrument()->set_id(session.id());
-  request.set_force_destroy(nirfmxlte_grpc::Boolean::BOOLEAN_FALSE);
+  request.set_force_destroy(false);
   rfmxlte::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 

@@ -20,12 +20,17 @@ namespace nirfmxlte_grpc {
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
 
+  const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
+
   NiRFmxLTEService::NiRFmxLTEService(
       NiRFmxLTELibraryInterface* library,
       ResourceRepositorySharedPtr session_repository, 
+      ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxLTEFeatureToggles& feature_toggles)
       : library_(library),
       session_repository_(session_repository),
+      vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -42,6 +47,3242 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgAveraging(::grpc::ServerContext* context, const ACPCfgAveragingRequest* request, ACPCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxlte_grpc::ACPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      int32 averaging_type;
+      switch (request->averaging_type_enum_case()) {
+        case nirfmxlte_grpc::ACPCfgAveragingRequest::AveragingTypeEnumCase::kAveragingType: {
+          averaging_type = static_cast<int32>(request->averaging_type());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgAveragingRequest::AveragingTypeEnumCase::kAveragingTypeRaw: {
+          averaging_type = static_cast<int32>(request->averaging_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgAveragingRequest::AveragingTypeEnumCase::AVERAGING_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ACPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgConfigurableNumberOfOffsetsEnabled(::grpc::ServerContext* context, const ACPCfgConfigurableNumberOfOffsetsEnabledRequest* request, ACPCfgConfigurableNumberOfOffsetsEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 configurable_number_of_offsets_enabled;
+      switch (request->configurable_number_of_offsets_enabled_enum_case()) {
+        case nirfmxlte_grpc::ACPCfgConfigurableNumberOfOffsetsEnabledRequest::ConfigurableNumberOfOffsetsEnabledEnumCase::kConfigurableNumberOfOffsetsEnabled: {
+          configurable_number_of_offsets_enabled = static_cast<int32>(request->configurable_number_of_offsets_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgConfigurableNumberOfOffsetsEnabledRequest::ConfigurableNumberOfOffsetsEnabledEnumCase::kConfigurableNumberOfOffsetsEnabledRaw: {
+          configurable_number_of_offsets_enabled = static_cast<int32>(request->configurable_number_of_offsets_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgConfigurableNumberOfOffsetsEnabledRequest::ConfigurableNumberOfOffsetsEnabledEnumCase::CONFIGURABLE_NUMBER_OF_OFFSETS_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for configurable_number_of_offsets_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ACPCfgConfigurableNumberOfOffsetsEnabled(instrument, selector_string, configurable_number_of_offsets_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgMeasurementMethod(::grpc::ServerContext* context, const ACPCfgMeasurementMethodRequest* request, ACPCfgMeasurementMethodResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 measurement_method;
+      switch (request->measurement_method_enum_case()) {
+        case nirfmxlte_grpc::ACPCfgMeasurementMethodRequest::MeasurementMethodEnumCase::kMeasurementMethod: {
+          measurement_method = static_cast<int32>(request->measurement_method());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgMeasurementMethodRequest::MeasurementMethodEnumCase::kMeasurementMethodRaw: {
+          measurement_method = static_cast<int32>(request->measurement_method_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgMeasurementMethodRequest::MeasurementMethodEnumCase::MEASUREMENT_METHOD_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurement_method was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ACPCfgMeasurementMethod(instrument, selector_string, measurement_method);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const ACPCfgNoiseCompensationEnabledRequest* request, ACPCfgNoiseCompensationEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 noise_compensation_enabled;
+      switch (request->noise_compensation_enabled_enum_case()) {
+        case nirfmxlte_grpc::ACPCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabled: {
+          noise_compensation_enabled = static_cast<int32>(request->noise_compensation_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabledRaw: {
+          noise_compensation_enabled = static_cast<int32>(request->noise_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::NOISE_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for noise_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ACPCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgNumberOfEUTRAOffsets(::grpc::ServerContext* context, const ACPCfgNumberOfEUTRAOffsetsRequest* request, ACPCfgNumberOfEUTRAOffsetsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_eutra_offsets = request->number_of_eutra_offsets();
+      auto status = library_->ACPCfgNumberOfEUTRAOffsets(instrument, selector_string, number_of_eutra_offsets);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgNumberOfGSMOffsets(::grpc::ServerContext* context, const ACPCfgNumberOfGSMOffsetsRequest* request, ACPCfgNumberOfGSMOffsetsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_gsm_offsets = request->number_of_gsm_offsets();
+      auto status = library_->ACPCfgNumberOfGSMOffsets(instrument, selector_string, number_of_gsm_offsets);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgNumberOfUTRAOffsets(::grpc::ServerContext* context, const ACPCfgNumberOfUTRAOffsetsRequest* request, ACPCfgNumberOfUTRAOffsetsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_utra_offsets = request->number_of_utra_offsets();
+      auto status = library_->ACPCfgNumberOfUTRAOffsets(instrument, selector_string, number_of_utra_offsets);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgPowerUnits(::grpc::ServerContext* context, const ACPCfgPowerUnitsRequest* request, ACPCfgPowerUnitsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 power_units;
+      switch (request->power_units_enum_case()) {
+        case nirfmxlte_grpc::ACPCfgPowerUnitsRequest::PowerUnitsEnumCase::kPowerUnits: {
+          power_units = static_cast<int32>(request->power_units());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgPowerUnitsRequest::PowerUnitsEnumCase::kPowerUnitsRaw: {
+          power_units = static_cast<int32>(request->power_units_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgPowerUnitsRequest::PowerUnitsEnumCase::POWER_UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for power_units was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ACPCfgPowerUnits(instrument, selector_string, power_units);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgRBWFilter(::grpc::ServerContext* context, const ACPCfgRBWFilterRequest* request, ACPCfgRBWFilterResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxlte_grpc::ACPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 rbw = request->rbw();
+      int32 rbw_filter_type;
+      switch (request->rbw_filter_type_enum_case()) {
+        case nirfmxlte_grpc::ACPCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
+          rbw_filter_type = static_cast<int32>(request->rbw_filter_type());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterTypeRaw: {
+          rbw_filter_type = static_cast<int32>(request->rbw_filter_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgRBWFilterRequest::RbwFilterTypeEnumCase::RBW_FILTER_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_filter_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ACPCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgSweepTime(::grpc::ServerContext* context, const ACPCfgSweepTimeRequest* request, ACPCfgSweepTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxlte_grpc::ACPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ACPCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 sweep_time_interval = request->sweep_time_interval();
+      auto status = library_->ACPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPCfgUTRAAndEUTRAOffsets(::grpc::ServerContext* context, const ACPCfgUTRAAndEUTRAOffsetsRequest* request, ACPCfgUTRAAndEUTRAOffsetsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_utra_offsets = request->number_of_utra_offsets();
+      int32 number_of_eutra_offsets = request->number_of_eutra_offsets();
+      auto status = library_->ACPCfgUTRAAndEUTRAOffsets(instrument, selector_string, number_of_utra_offsets, number_of_eutra_offsets);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPFetchAbsolutePowersTrace(::grpc::ServerContext* context, const ACPFetchAbsolutePowersTraceRequest* request, ACPFetchAbsolutePowersTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 trace_index = request->trace_index();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ACPFetchAbsolutePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_absolute_powers_trace()->Resize(actual_array_size, 0);
+        float32* absolute_powers_trace = response->mutable_absolute_powers_trace()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ACPFetchAbsolutePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, absolute_powers_trace, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_absolute_powers_trace()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPFetchComponentCarrierMeasurement(::grpc::ServerContext* context, const ACPFetchComponentCarrierMeasurementRequest* request, ACPFetchComponentCarrierMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 absolute_power {};
+      float64 relative_power {};
+      auto status = library_->ACPFetchComponentCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &relative_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_absolute_power(absolute_power);
+        response->set_relative_power(relative_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPFetchComponentCarrierMeasurementArray(::grpc::ServerContext* context, const ACPFetchComponentCarrierMeasurementArrayRequest* request, ACPFetchComponentCarrierMeasurementArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ACPFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_absolute_power()->Resize(actual_array_size, 0);
+        float64* absolute_power = response->mutable_absolute_power()->mutable_data();
+        response->mutable_relative_power()->Resize(actual_array_size, 0);
+        float64* relative_power = response->mutable_relative_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ACPFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, absolute_power, relative_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_relative_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPFetchOffsetMeasurement(::grpc::ServerContext* context, const ACPFetchOffsetMeasurementRequest* request, ACPFetchOffsetMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 lower_relative_power {};
+      float64 upper_relative_power {};
+      float64 lower_absolute_power {};
+      float64 upper_absolute_power {};
+      auto status = library_->ACPFetchOffsetMeasurement(instrument, selector_string, timeout, &lower_relative_power, &upper_relative_power, &lower_absolute_power, &upper_absolute_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_lower_relative_power(lower_relative_power);
+        response->set_upper_relative_power(upper_relative_power);
+        response->set_lower_absolute_power(lower_absolute_power);
+        response->set_upper_absolute_power(upper_absolute_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPFetchOffsetMeasurementArray(::grpc::ServerContext* context, const ACPFetchOffsetMeasurementArrayRequest* request, ACPFetchOffsetMeasurementArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ACPFetchOffsetMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_lower_relative_power()->Resize(actual_array_size, 0);
+        float64* lower_relative_power = response->mutable_lower_relative_power()->mutable_data();
+        response->mutable_upper_relative_power()->Resize(actual_array_size, 0);
+        float64* upper_relative_power = response->mutable_upper_relative_power()->mutable_data();
+        response->mutable_lower_absolute_power()->Resize(actual_array_size, 0);
+        float64* lower_absolute_power = response->mutable_lower_absolute_power()->mutable_data();
+        response->mutable_upper_absolute_power()->Resize(actual_array_size, 0);
+        float64* upper_absolute_power = response->mutable_upper_absolute_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ACPFetchOffsetMeasurementArray(instrument, selector_string, timeout, lower_relative_power, upper_relative_power, lower_absolute_power, upper_absolute_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_lower_relative_power()->Resize(actual_array_size, 0);
+          response->mutable_upper_relative_power()->Resize(actual_array_size, 0);
+          response->mutable_lower_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_upper_absolute_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPFetchRelativePowersTrace(::grpc::ServerContext* context, const ACPFetchRelativePowersTraceRequest* request, ACPFetchRelativePowersTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 trace_index = request->trace_index();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ACPFetchRelativePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_relative_powers_trace()->Resize(actual_array_size, 0);
+        float32* relative_powers_trace = response->mutable_relative_powers_trace()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ACPFetchRelativePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, relative_powers_trace, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_relative_powers_trace()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPFetchSpectrum(::grpc::ServerContext* context, const ACPFetchSpectrumRequest* request, ACPFetchSpectrumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ACPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_spectrum()->Resize(actual_array_size, 0);
+        float32* spectrum = response->mutable_spectrum()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ACPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_spectrum()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPFetchSubblockMeasurement(::grpc::ServerContext* context, const ACPFetchSubblockMeasurementRequest* request, ACPFetchSubblockMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 subblock_power {};
+      float64 integration_bandwidth {};
+      float64 frequency {};
+      auto status = library_->ACPFetchSubblockMeasurement(instrument, selector_string, timeout, &subblock_power, &integration_bandwidth, &frequency);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_subblock_power(subblock_power);
+        response->set_integration_bandwidth(integration_bandwidth);
+        response->set_frequency(frequency);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPFetchTotalAggregatedPower(::grpc::ServerContext* context, const ACPFetchTotalAggregatedPowerRequest* request, ACPFetchTotalAggregatedPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 total_aggregated_power {};
+      auto status = library_->ACPFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_total_aggregated_power(total_aggregated_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ACPValidateNoiseCalibrationData(::grpc::ServerContext* context, const ACPValidateNoiseCalibrationDataRequest* request, ACPValidateNoiseCalibrationDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 noise_calibration_data_valid {};
+      auto status = library_->ACPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_noise_calibration_data_valid(static_cast<nirfmxlte_grpc::AcpNoiseCalibrationDataValid>(noise_calibration_data_valid));
+        response->set_noise_calibration_data_valid_raw(noise_calibration_data_valid);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* result_name = (char*)request->result_name().c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
+      int32 array_size = static_cast<int32>(request->iq().size());
+      int32 reset = request->reset();
+      int64 reserved = request->reserved();
+      auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* result_name = (char*)request->result_name().c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto spectrum = const_cast<float32*>(request->spectrum().data());
+      int32 array_size = static_cast<int32>(request->spectrum().size());
+      int32 reset = request->reset();
+      int64 reserved = request->reserved();
+      auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 measurement_interval = request->measurement_interval();
+      float64 reference_level {};
+      auto status = library_->AutoLevel(instrument, selector_string, measurement_interval, &reference_level);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_reference_level(reference_level);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::BuildCarrierString(::grpc::ServerContext* context, const BuildCarrierStringRequest* request, BuildCarrierStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 carrier_number = request->carrier_number();
+
+      while (true) {
+        auto status = library_->BuildCarrierString(selector_string, carrier_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildCarrierString(selector_string, carrier_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::BuildClusterString(::grpc::ServerContext* context, const BuildClusterStringRequest* request, BuildClusterStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 cluster_number = request->cluster_number();
+
+      while (true) {
+        auto status = library_->BuildClusterString(selector_string, cluster_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildClusterString(selector_string, cluster_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::BuildOffsetString(::grpc::ServerContext* context, const BuildOffsetStringRequest* request, BuildOffsetStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 offset_number = request->offset_number();
+
+      while (true) {
+        auto status = library_->BuildOffsetString(selector_string, offset_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildOffsetString(selector_string, offset_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::BuildPDSCHString(::grpc::ServerContext* context, const BuildPDSCHStringRequest* request, BuildPDSCHStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 pdsch_number = request->pdsch_number();
+
+      while (true) {
+        auto status = library_->BuildPDSCHString(selector_string, pdsch_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildPDSCHString(selector_string, pdsch_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* signal_name = (char*)request->signal_name().c_str();
+      char* result_name = (char*)request->result_name().c_str();
+
+      while (true) {
+        auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_length = status;
+      
+        std::string selector_string;
+        if (selector_string_length > 0) {
+            selector_string.resize(selector_string_length - 1);
+        }
+        status = library_->BuildSignalString(signal_name, result_name, selector_string_length, (char*)selector_string.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string(selector_string);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::BuildSubblockString(::grpc::ServerContext* context, const BuildSubblockStringRequest* request, BuildSubblockStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 subblock_number = request->subblock_number();
+
+      while (true) {
+        auto status = library_->BuildSubblockString(selector_string, subblock_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildSubblockString(selector_string, subblock_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::BuildSubframeString(::grpc::ServerContext* context, const BuildSubframeStringRequest* request, BuildSubframeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 subframe_number = request->subframe_number();
+
+      while (true) {
+        auto status = library_->BuildSubframeString(selector_string, subframe_number, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 selector_string_out_length = status;
+      
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildSubframeString(selector_string, subframe_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_selector_string_out(selector_string_out);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPCfgAveraging(::grpc::ServerContext* context, const CHPCfgAveragingRequest* request, CHPCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxlte_grpc::CHPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      int32 averaging_type;
+      switch (request->averaging_type_enum_case()) {
+        case nirfmxlte_grpc::CHPCfgAveragingRequest::AveragingTypeEnumCase::kAveragingType: {
+          averaging_type = static_cast<int32>(request->averaging_type());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgAveragingRequest::AveragingTypeEnumCase::kAveragingTypeRaw: {
+          averaging_type = static_cast<int32>(request->averaging_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgAveragingRequest::AveragingTypeEnumCase::AVERAGING_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CHPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPCfgIntegrationBandwidthType(::grpc::ServerContext* context, const CHPCfgIntegrationBandwidthTypeRequest* request, CHPCfgIntegrationBandwidthTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 integration_bandwidth_type;
+      switch (request->integration_bandwidth_type_enum_case()) {
+        case nirfmxlte_grpc::CHPCfgIntegrationBandwidthTypeRequest::IntegrationBandwidthTypeEnumCase::kIntegrationBandwidthType: {
+          integration_bandwidth_type = static_cast<int32>(request->integration_bandwidth_type());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgIntegrationBandwidthTypeRequest::IntegrationBandwidthTypeEnumCase::kIntegrationBandwidthTypeRaw: {
+          integration_bandwidth_type = static_cast<int32>(request->integration_bandwidth_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgIntegrationBandwidthTypeRequest::IntegrationBandwidthTypeEnumCase::INTEGRATION_BANDWIDTH_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for integration_bandwidth_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CHPCfgIntegrationBandwidthType(instrument, selector_string, integration_bandwidth_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPCfgRBWFilter(::grpc::ServerContext* context, const CHPCfgRBWFilterRequest* request, CHPCfgRBWFilterResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxlte_grpc::CHPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 rbw = request->rbw();
+      int32 rbw_filter_type;
+      switch (request->rbw_filter_type_enum_case()) {
+        case nirfmxlte_grpc::CHPCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
+          rbw_filter_type = static_cast<int32>(request->rbw_filter_type());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterTypeRaw: {
+          rbw_filter_type = static_cast<int32>(request->rbw_filter_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgRBWFilterRequest::RbwFilterTypeEnumCase::RBW_FILTER_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_filter_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CHPCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPCfgSweepTime(::grpc::ServerContext* context, const CHPCfgSweepTimeRequest* request, CHPCfgSweepTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxlte_grpc::CHPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CHPCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 sweep_time_interval = request->sweep_time_interval();
+      auto status = library_->CHPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPFetchComponentCarrierMeasurement(::grpc::ServerContext* context, const CHPFetchComponentCarrierMeasurementRequest* request, CHPFetchComponentCarrierMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 absolute_power {};
+      float64 relative_power {};
+      auto status = library_->CHPFetchComponentCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &relative_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_absolute_power(absolute_power);
+        response->set_relative_power(relative_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPFetchComponentCarrierMeasurementArray(::grpc::ServerContext* context, const CHPFetchComponentCarrierMeasurementArrayRequest* request, CHPFetchComponentCarrierMeasurementArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CHPFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_absolute_power()->Resize(actual_array_size, 0);
+        float64* absolute_power = response->mutable_absolute_power()->mutable_data();
+        response->mutable_relative_power()->Resize(actual_array_size, 0);
+        float64* relative_power = response->mutable_relative_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CHPFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, absolute_power, relative_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_relative_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPFetchSpectrum(::grpc::ServerContext* context, const CHPFetchSpectrumRequest* request, CHPFetchSpectrumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CHPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_spectrum()->Resize(actual_array_size, 0);
+        float32* spectrum = response->mutable_spectrum()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CHPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_spectrum()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPFetchSubblockMeasurement(::grpc::ServerContext* context, const CHPFetchSubblockMeasurementRequest* request, CHPFetchSubblockMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 subblock_power {};
+      float64 integration_bandwidth {};
+      float64 frequency {};
+      auto status = library_->CHPFetchSubblockMeasurement(instrument, selector_string, timeout, &subblock_power, &integration_bandwidth, &frequency);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_subblock_power(subblock_power);
+        response->set_integration_bandwidth(integration_bandwidth);
+        response->set_frequency(frequency);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPFetchTotalAggregatedPower(::grpc::ServerContext* context, const CHPFetchTotalAggregatedPowerRequest* request, CHPFetchTotalAggregatedPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 total_aggregated_power {};
+      auto status = library_->CHPFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_total_aggregated_power(total_aggregated_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CHPValidateNoiseCalibrationData(::grpc::ServerContext* context, const CHPValidateNoiseCalibrationDataRequest* request, CHPValidateNoiseCalibrationDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 noise_calibration_data_valid {};
+      auto status = library_->CHPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_noise_calibration_data_valid(static_cast<nirfmxlte_grpc::ChpNoiseCalibrationDataValid>(noise_calibration_data_valid));
+        response->set_noise_calibration_data_valid_raw(noise_calibration_data_valid);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgAutoDMRSDetectionEnabled(::grpc::ServerContext* context, const CfgAutoDMRSDetectionEnabledRequest* request, CfgAutoDMRSDetectionEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 auto_dmrs_detection_enabled;
+      switch (request->auto_dmrs_detection_enabled_enum_case()) {
+        case nirfmxlte_grpc::CfgAutoDMRSDetectionEnabledRequest::AutoDmrsDetectionEnabledEnumCase::kAutoDmrsDetectionEnabled: {
+          auto_dmrs_detection_enabled = static_cast<int32>(request->auto_dmrs_detection_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CfgAutoDMRSDetectionEnabledRequest::AutoDmrsDetectionEnabledEnumCase::kAutoDmrsDetectionEnabledRaw: {
+          auto_dmrs_detection_enabled = static_cast<int32>(request->auto_dmrs_detection_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgAutoDMRSDetectionEnabledRequest::AutoDmrsDetectionEnabledEnumCase::AUTO_DMRS_DETECTION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_dmrs_detection_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgAutoDMRSDetectionEnabled(instrument, selector_string, auto_dmrs_detection_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgAutoNPUSCHChannelDetectionEnabled(::grpc::ServerContext* context, const CfgAutoNPUSCHChannelDetectionEnabledRequest* request, CfgAutoNPUSCHChannelDetectionEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 auto_npusch_channel_detection_enabled;
+      switch (request->auto_npusch_channel_detection_enabled_enum_case()) {
+        case nirfmxlte_grpc::CfgAutoNPUSCHChannelDetectionEnabledRequest::AutoNpuschChannelDetectionEnabledEnumCase::kAutoNpuschChannelDetectionEnabled: {
+          auto_npusch_channel_detection_enabled = static_cast<int32>(request->auto_npusch_channel_detection_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CfgAutoNPUSCHChannelDetectionEnabledRequest::AutoNpuschChannelDetectionEnabledEnumCase::kAutoNpuschChannelDetectionEnabledRaw: {
+          auto_npusch_channel_detection_enabled = static_cast<int32>(request->auto_npusch_channel_detection_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgAutoNPUSCHChannelDetectionEnabledRequest::AutoNpuschChannelDetectionEnabledEnumCase::AUTO_NPUSCH_CHANNEL_DETECTION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_npusch_channel_detection_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgAutoNPUSCHChannelDetectionEnabled(instrument, selector_string, auto_npusch_channel_detection_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgAutoResourceBlockDetectionEnabled(::grpc::ServerContext* context, const CfgAutoResourceBlockDetectionEnabledRequest* request, CfgAutoResourceBlockDetectionEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 auto_resource_block_detection_enabled;
+      switch (request->auto_resource_block_detection_enabled_enum_case()) {
+        case nirfmxlte_grpc::CfgAutoResourceBlockDetectionEnabledRequest::AutoResourceBlockDetectionEnabledEnumCase::kAutoResourceBlockDetectionEnabled: {
+          auto_resource_block_detection_enabled = static_cast<int32>(request->auto_resource_block_detection_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CfgAutoResourceBlockDetectionEnabledRequest::AutoResourceBlockDetectionEnabledEnumCase::kAutoResourceBlockDetectionEnabledRaw: {
+          auto_resource_block_detection_enabled = static_cast<int32>(request->auto_resource_block_detection_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgAutoResourceBlockDetectionEnabledRequest::AutoResourceBlockDetectionEnabledEnumCase::AUTO_RESOURCE_BLOCK_DETECTION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_resource_block_detection_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgAutoResourceBlockDetectionEnabled(instrument, selector_string, auto_resource_block_detection_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgBand(::grpc::ServerContext* context, const CfgBandRequest* request, CfgBandResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 band = request->band();
+      auto status = library_->CfgBand(instrument, selector_string, band);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgCellSpecificRatio(::grpc::ServerContext* context, const CfgCellSpecificRatioRequest* request, CfgCellSpecificRatioResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 cell_specific_ratio;
+      switch (request->cell_specific_ratio_enum_case()) {
+        case nirfmxlte_grpc::CfgCellSpecificRatioRequest::CellSpecificRatioEnumCase::kCellSpecificRatio: {
+          cell_specific_ratio = static_cast<int32>(request->cell_specific_ratio());
+          break;
+        }
+        case nirfmxlte_grpc::CfgCellSpecificRatioRequest::CellSpecificRatioEnumCase::kCellSpecificRatioRaw: {
+          cell_specific_ratio = static_cast<int32>(request->cell_specific_ratio_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgCellSpecificRatioRequest::CellSpecificRatioEnumCase::CELL_SPECIFIC_RATIO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for cell_specific_ratio was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgCellSpecificRatio(instrument, selector_string, cell_specific_ratio);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgComponentCarrier(::grpc::ServerContext* context, const CfgComponentCarrierRequest* request, CfgComponentCarrierResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 component_carrier_bandwidth = request->component_carrier_bandwidth();
+      float64 component_carrier_frequency = request->component_carrier_frequency();
+      int32 cell_id = request->cell_id();
+      auto status = library_->CfgComponentCarrier(instrument, selector_string, component_carrier_bandwidth, component_carrier_frequency, cell_id);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgComponentCarrierArray(::grpc::ServerContext* context, const CfgComponentCarrierArrayRequest* request, CfgComponentCarrierArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto component_carrier_bandwidth = const_cast<float64*>(request->component_carrier_bandwidth().data());
+      auto component_carrier_frequency = const_cast<float64*>(request->component_carrier_frequency().data());
+      auto cell_id = const_cast<int32*>(reinterpret_cast<const int32*>(request->cell_id().data()));
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->component_carrier_bandwidth_size(),
+        request->component_carrier_frequency_size(),
+        request->cell_id_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [component_carrier_bandwidth, component_carrier_frequency, cell_id] do not match");
+      }
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
+      auto status = library_->CfgComponentCarrierArray(instrument, selector_string, component_carrier_bandwidth, component_carrier_frequency, cell_id, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgComponentCarrierSpacing(::grpc::ServerContext* context, const CfgComponentCarrierSpacingRequest* request, CfgComponentCarrierSpacingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 component_carrier_spacing_type;
+      switch (request->component_carrier_spacing_type_enum_case()) {
+        case nirfmxlte_grpc::CfgComponentCarrierSpacingRequest::ComponentCarrierSpacingTypeEnumCase::kComponentCarrierSpacingType: {
+          component_carrier_spacing_type = static_cast<int32>(request->component_carrier_spacing_type());
+          break;
+        }
+        case nirfmxlte_grpc::CfgComponentCarrierSpacingRequest::ComponentCarrierSpacingTypeEnumCase::kComponentCarrierSpacingTypeRaw: {
+          component_carrier_spacing_type = static_cast<int32>(request->component_carrier_spacing_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgComponentCarrierSpacingRequest::ComponentCarrierSpacingTypeEnumCase::COMPONENT_CARRIER_SPACING_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for component_carrier_spacing_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 component_carrier_at_center_frequency = request->component_carrier_at_center_frequency();
+      auto status = library_->CfgComponentCarrierSpacing(instrument, selector_string, component_carrier_spacing_type, component_carrier_at_center_frequency);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgDigitalEdgeTrigger(::grpc::ServerContext* context, const CfgDigitalEdgeTriggerRequest* request, CfgDigitalEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* digital_edge_source;
+      switch (request->digital_edge_source_enum_case()) {
+        case nirfmxlte_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceMapped: {
+          auto digital_edge_source_imap_it = digitaledgetriggersource_input_map_.find(request->digital_edge_source_mapped());
+          if (digital_edge_source_imap_it == digitaledgetriggersource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge_source_mapped was not specified or out of range.");
+          }
+          digital_edge_source = const_cast<char*>((digital_edge_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceRaw: {
+          digital_edge_source = const_cast<char*>(request->digital_edge_source_raw().c_str());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::DIGITAL_EDGE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge_source was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 digital_edge;
+      switch (request->digital_edge_enum_case()) {
+        case nirfmxlte_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdge: {
+          digital_edge = static_cast<int32>(request->digital_edge());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdgeRaw: {
+          digital_edge = static_cast<int32>(request->digital_edge_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::DIGITAL_EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 trigger_delay = request->trigger_delay();
+      int32 enable_trigger = request->enable_trigger();
+      auto status = library_->CfgDigitalEdgeTrigger(instrument, selector_string, digital_edge_source, digital_edge, trigger_delay, enable_trigger);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgDownlinkAutoCellIDDetectionEnabled(::grpc::ServerContext* context, const CfgDownlinkAutoCellIDDetectionEnabledRequest* request, CfgDownlinkAutoCellIDDetectionEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 auto_cell_id_detection_enabled;
+      switch (request->auto_cell_id_detection_enabled_enum_case()) {
+        case nirfmxlte_grpc::CfgDownlinkAutoCellIDDetectionEnabledRequest::AutoCellIdDetectionEnabledEnumCase::kAutoCellIdDetectionEnabled: {
+          auto_cell_id_detection_enabled = static_cast<int32>(request->auto_cell_id_detection_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkAutoCellIDDetectionEnabledRequest::AutoCellIdDetectionEnabledEnumCase::kAutoCellIdDetectionEnabledRaw: {
+          auto_cell_id_detection_enabled = static_cast<int32>(request->auto_cell_id_detection_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkAutoCellIDDetectionEnabledRequest::AutoCellIdDetectionEnabledEnumCase::AUTO_CELL_ID_DETECTION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_cell_id_detection_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgDownlinkAutoCellIDDetectionEnabled(instrument, selector_string, auto_cell_id_detection_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgDownlinkAutoChannelDetection(::grpc::ServerContext* context, const CfgDownlinkAutoChannelDetectionRequest* request, CfgDownlinkAutoChannelDetectionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 auto_pdsch_channel_detection_enabled;
+      switch (request->auto_pdsch_channel_detection_enabled_enum_case()) {
+        case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoPdschChannelDetectionEnabledEnumCase::kAutoPdschChannelDetectionEnabled: {
+          auto_pdsch_channel_detection_enabled = static_cast<int32>(request->auto_pdsch_channel_detection_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoPdschChannelDetectionEnabledEnumCase::kAutoPdschChannelDetectionEnabledRaw: {
+          auto_pdsch_channel_detection_enabled = static_cast<int32>(request->auto_pdsch_channel_detection_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoPdschChannelDetectionEnabledEnumCase::AUTO_PDSCH_CHANNEL_DETECTION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_pdsch_channel_detection_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 auto_control_channel_power_detection_enabled;
+      switch (request->auto_control_channel_power_detection_enabled_enum_case()) {
+        case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoControlChannelPowerDetectionEnabledEnumCase::kAutoControlChannelPowerDetectionEnabled: {
+          auto_control_channel_power_detection_enabled = static_cast<int32>(request->auto_control_channel_power_detection_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoControlChannelPowerDetectionEnabledEnumCase::kAutoControlChannelPowerDetectionEnabledRaw: {
+          auto_control_channel_power_detection_enabled = static_cast<int32>(request->auto_control_channel_power_detection_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoControlChannelPowerDetectionEnabledEnumCase::AUTO_CONTROL_CHANNEL_POWER_DETECTION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_control_channel_power_detection_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 auto_pcfich_cfi_detection_enabled;
+      switch (request->auto_pcfich_cfi_detection_enabled_enum_case()) {
+        case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoPcfichCfiDetectionEnabledEnumCase::kAutoPcfichCfiDetectionEnabled: {
+          auto_pcfich_cfi_detection_enabled = static_cast<int32>(request->auto_pcfich_cfi_detection_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoPcfichCfiDetectionEnabledEnumCase::kAutoPcfichCfiDetectionEnabledRaw: {
+          auto_pcfich_cfi_detection_enabled = static_cast<int32>(request->auto_pcfich_cfi_detection_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoPcfichCfiDetectionEnabledEnumCase::AUTO_PCFICH_CFI_DETECTION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for auto_pcfich_cfi_detection_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 reserved = request->reserved();
+      auto status = library_->CfgDownlinkAutoChannelDetection(instrument, selector_string, auto_pdsch_channel_detection_enabled, auto_control_channel_power_detection_enabled, auto_pcfich_cfi_detection_enabled, reserved);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgDownlinkChannelConfigurationMode(::grpc::ServerContext* context, const CfgDownlinkChannelConfigurationModeRequest* request, CfgDownlinkChannelConfigurationModeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 channel_configuration_mode;
+      switch (request->channel_configuration_mode_enum_case()) {
+        case nirfmxlte_grpc::CfgDownlinkChannelConfigurationModeRequest::ChannelConfigurationModeEnumCase::kChannelConfigurationMode: {
+          channel_configuration_mode = static_cast<int32>(request->channel_configuration_mode());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkChannelConfigurationModeRequest::ChannelConfigurationModeEnumCase::kChannelConfigurationModeRaw: {
+          channel_configuration_mode = static_cast<int32>(request->channel_configuration_mode_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkChannelConfigurationModeRequest::ChannelConfigurationModeEnumCase::CHANNEL_CONFIGURATION_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for channel_configuration_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgDownlinkChannelConfigurationMode(instrument, selector_string, channel_configuration_mode);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgDownlinkNumberOfSubframes(::grpc::ServerContext* context, const CfgDownlinkNumberOfSubframesRequest* request, CfgDownlinkNumberOfSubframesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_subframes = request->number_of_subframes();
+      auto status = library_->CfgDownlinkNumberOfSubframes(instrument, selector_string, number_of_subframes);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgDownlinkSynchronizationSignal(::grpc::ServerContext* context, const CfgDownlinkSynchronizationSignalRequest* request, CfgDownlinkSynchronizationSignalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 pss_power = request->pss_power();
+      float64 sss_power = request->sss_power();
+      auto status = library_->CfgDownlinkSynchronizationSignal(instrument, selector_string, pss_power, sss_power);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgDownlinkTestModel(::grpc::ServerContext* context, const CfgDownlinkTestModelRequest* request, CfgDownlinkTestModelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 downlink_test_model;
+      switch (request->downlink_test_model_enum_case()) {
+        case nirfmxlte_grpc::CfgDownlinkTestModelRequest::DownlinkTestModelEnumCase::kDownlinkTestModel: {
+          downlink_test_model = static_cast<int32>(request->downlink_test_model());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkTestModelRequest::DownlinkTestModelEnumCase::kDownlinkTestModelRaw: {
+          downlink_test_model = static_cast<int32>(request->downlink_test_model_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDownlinkTestModelRequest::DownlinkTestModelEnumCase::DOWNLINK_TEST_MODEL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for downlink_test_model was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgDownlinkTestModel(instrument, selector_string, downlink_test_model);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgDownlinkTestModelArray(::grpc::ServerContext* context, const CfgDownlinkTestModelArrayRequest* request, CfgDownlinkTestModelArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto downlink_test_model_vector = std::vector<int32>();
+      downlink_test_model_vector.reserve(request->downlink_test_model().size());
+      std::transform(
+        request->downlink_test_model().begin(),
+        request->downlink_test_model().end(),
+        std::back_inserter(downlink_test_model_vector),
+        [](auto x) { return x; });
+      auto downlink_test_model = downlink_test_model_vector.data();
+
+      int32 number_of_elements = static_cast<int32>(request->downlink_test_model().size());
+      auto status = library_->CfgDownlinkTestModelArray(instrument, selector_string, downlink_test_model, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgDuplexScheme(::grpc::ServerContext* context, const CfgDuplexSchemeRequest* request, CfgDuplexSchemeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 duplex_scheme;
+      switch (request->duplex_scheme_enum_case()) {
+        case nirfmxlte_grpc::CfgDuplexSchemeRequest::DuplexSchemeEnumCase::kDuplexScheme: {
+          duplex_scheme = static_cast<int32>(request->duplex_scheme());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDuplexSchemeRequest::DuplexSchemeEnumCase::kDuplexSchemeRaw: {
+          duplex_scheme = static_cast<int32>(request->duplex_scheme_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDuplexSchemeRequest::DuplexSchemeEnumCase::DUPLEX_SCHEME_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for duplex_scheme was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 uplink_downlink_configuration;
+      switch (request->uplink_downlink_configuration_enum_case()) {
+        case nirfmxlte_grpc::CfgDuplexSchemeRequest::UplinkDownlinkConfigurationEnumCase::kUplinkDownlinkConfiguration: {
+          uplink_downlink_configuration = static_cast<int32>(request->uplink_downlink_configuration());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDuplexSchemeRequest::UplinkDownlinkConfigurationEnumCase::kUplinkDownlinkConfigurationRaw: {
+          uplink_downlink_configuration = static_cast<int32>(request->uplink_downlink_configuration_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgDuplexSchemeRequest::UplinkDownlinkConfigurationEnumCase::UPLINK_DOWNLINK_CONFIGURATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for uplink_downlink_configuration was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgDuplexScheme(instrument, selector_string, duplex_scheme, uplink_downlink_configuration);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgEMTCAnalysisEnabled(::grpc::ServerContext* context, const CfgEMTCAnalysisEnabledRequest* request, CfgEMTCAnalysisEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 emtc_analysis_enabled;
+      switch (request->emtc_analysis_enabled_enum_case()) {
+        case nirfmxlte_grpc::CfgEMTCAnalysisEnabledRequest::EmtcAnalysisEnabledEnumCase::kEmtcAnalysisEnabled: {
+          emtc_analysis_enabled = static_cast<int32>(request->emtc_analysis_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CfgEMTCAnalysisEnabledRequest::EmtcAnalysisEnabledEnumCase::kEmtcAnalysisEnabledRaw: {
+          emtc_analysis_enabled = static_cast<int32>(request->emtc_analysis_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgEMTCAnalysisEnabledRequest::EmtcAnalysisEnabledEnumCase::EMTC_ANALYSIS_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for emtc_analysis_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgEMTCAnalysisEnabled(instrument, selector_string, emtc_analysis_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgExternalAttenuation(::grpc::ServerContext* context, const CfgExternalAttenuationRequest* request, CfgExternalAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 external_attenuation = request->external_attenuation();
+      auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgFrequency(::grpc::ServerContext* context, const CfgFrequencyRequest* request, CfgFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 center_frequency = request->center_frequency();
+      auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgFrequencyEARFCN(::grpc::ServerContext* context, const CfgFrequencyEARFCNRequest* request, CfgFrequencyEARFCNResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 link_direction;
+      switch (request->link_direction_enum_case()) {
+        case nirfmxlte_grpc::CfgFrequencyEARFCNRequest::LinkDirectionEnumCase::kLinkDirection: {
+          link_direction = static_cast<int32>(request->link_direction());
+          break;
+        }
+        case nirfmxlte_grpc::CfgFrequencyEARFCNRequest::LinkDirectionEnumCase::kLinkDirectionRaw: {
+          link_direction = static_cast<int32>(request->link_direction_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgFrequencyEARFCNRequest::LinkDirectionEnumCase::LINK_DIRECTION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for link_direction was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 band = request->band();
+      int32 earfcn = request->earfcn();
+      auto status = library_->CfgFrequencyEARFCN(instrument, selector_string, link_direction, band, earfcn);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgFrequencyReference(::grpc::ServerContext* context, const CfgFrequencyReferenceRequest* request, CfgFrequencyReferenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* channel_name = (char*)request->channel_name().c_str();
+      char* frequency_reference_source;
+      switch (request->frequency_reference_source_enum_case()) {
+        case nirfmxlte_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceMapped: {
+          auto frequency_reference_source_imap_it = frequencyreferencesource_input_map_.find(request->frequency_reference_source_mapped());
+          if (frequency_reference_source_imap_it == frequencyreferencesource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source_mapped was not specified or out of range.");
+          }
+          frequency_reference_source = const_cast<char*>((frequency_reference_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxlte_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceRaw: {
+          frequency_reference_source = const_cast<char*>(request->frequency_reference_source_raw().c_str());
+          break;
+        }
+        case nirfmxlte_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::FREQUENCY_REFERENCE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_reference_source was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 frequency_reference_frequency = request->frequency_reference_frequency();
+      auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgIQPowerEdgeTrigger(::grpc::ServerContext* context, const CfgIQPowerEdgeTriggerRequest* request, CfgIQPowerEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* iq_power_edge_source = (char*)request->iq_power_edge_source().c_str();
+      int32 iq_power_edge_slope;
+      switch (request->iq_power_edge_slope_enum_case()) {
+        case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::kIqPowerEdgeSlope: {
+          iq_power_edge_slope = static_cast<int32>(request->iq_power_edge_slope());
+          break;
+        }
+        case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::kIqPowerEdgeSlopeRaw: {
+          iq_power_edge_slope = static_cast<int32>(request->iq_power_edge_slope_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::IQ_POWER_EDGE_SLOPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for iq_power_edge_slope was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 iq_power_edge_level = request->iq_power_edge_level();
+      float64 trigger_delay = request->trigger_delay();
+      int32 trigger_min_quiet_time_mode;
+      switch (request->trigger_min_quiet_time_mode_enum_case()) {
+        case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::TriggerMinQuietTimeModeEnumCase::kTriggerMinQuietTimeMode: {
+          trigger_min_quiet_time_mode = static_cast<int32>(request->trigger_min_quiet_time_mode());
+          break;
+        }
+        case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::TriggerMinQuietTimeModeEnumCase::kTriggerMinQuietTimeModeRaw: {
+          trigger_min_quiet_time_mode = static_cast<int32>(request->trigger_min_quiet_time_mode_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::TriggerMinQuietTimeModeEnumCase::TRIGGER_MIN_QUIET_TIME_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_min_quiet_time_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 trigger_min_quiet_time_duration = request->trigger_min_quiet_time_duration();
+      int32 iq_power_edge_level_type;
+      switch (request->iq_power_edge_level_type_enum_case()) {
+        case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeLevelTypeEnumCase::kIqPowerEdgeLevelType: {
+          iq_power_edge_level_type = static_cast<int32>(request->iq_power_edge_level_type());
+          break;
+        }
+        case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeLevelTypeEnumCase::kIqPowerEdgeLevelTypeRaw: {
+          iq_power_edge_level_type = static_cast<int32>(request->iq_power_edge_level_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeLevelTypeEnumCase::IQ_POWER_EDGE_LEVEL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for iq_power_edge_level_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 enable_trigger = request->enable_trigger();
+      auto status = library_->CfgIQPowerEdgeTrigger(instrument, selector_string, iq_power_edge_source, iq_power_edge_slope, iq_power_edge_level, trigger_delay, trigger_min_quiet_time_mode, trigger_min_quiet_time_duration, iq_power_edge_level_type, enable_trigger);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgLinkDirection(::grpc::ServerContext* context, const CfgLinkDirectionRequest* request, CfgLinkDirectionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 link_direction;
+      switch (request->link_direction_enum_case()) {
+        case nirfmxlte_grpc::CfgLinkDirectionRequest::LinkDirectionEnumCase::kLinkDirection: {
+          link_direction = static_cast<int32>(request->link_direction());
+          break;
+        }
+        case nirfmxlte_grpc::CfgLinkDirectionRequest::LinkDirectionEnumCase::kLinkDirectionRaw: {
+          link_direction = static_cast<int32>(request->link_direction_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgLinkDirectionRequest::LinkDirectionEnumCase::LINK_DIRECTION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for link_direction was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgLinkDirection(instrument, selector_string, link_direction);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgMechanicalAttenuation(::grpc::ServerContext* context, const CfgMechanicalAttenuationRequest* request, CfgMechanicalAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* channel_name = (char*)request->channel_name().c_str();
+      int32 mechanical_attenuation_auto;
+      switch (request->mechanical_attenuation_auto_enum_case()) {
+        case nirfmxlte_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAuto: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto());
+          break;
+        }
+        case nirfmxlte_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAutoRaw: {
+          mechanical_attenuation_auto = static_cast<int32>(request->mechanical_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::MECHANICAL_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mechanical_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
+      auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNBIoTComponentCarrier(::grpc::ServerContext* context, const CfgNBIoTComponentCarrierRequest* request, CfgNBIoTComponentCarrierResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 n_cell_id = request->n_cell_id();
+      int32 uplink_subcarrier_spacing;
+      switch (request->uplink_subcarrier_spacing_enum_case()) {
+        case nirfmxlte_grpc::CfgNBIoTComponentCarrierRequest::UplinkSubcarrierSpacingEnumCase::kUplinkSubcarrierSpacing: {
+          uplink_subcarrier_spacing = static_cast<int32>(request->uplink_subcarrier_spacing());
+          break;
+        }
+        case nirfmxlte_grpc::CfgNBIoTComponentCarrierRequest::UplinkSubcarrierSpacingEnumCase::kUplinkSubcarrierSpacingRaw: {
+          uplink_subcarrier_spacing = static_cast<int32>(request->uplink_subcarrier_spacing_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgNBIoTComponentCarrierRequest::UplinkSubcarrierSpacingEnumCase::UPLINK_SUBCARRIER_SPACING_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for uplink_subcarrier_spacing was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgNBIoTComponentCarrier(instrument, selector_string, n_cell_id, uplink_subcarrier_spacing);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNPUSCHDMRS(::grpc::ServerContext* context, const CfgNPUSCHDMRSRequest* request, CfgNPUSCHDMRSResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 npusch_dmrs_base_sequence_mode;
+      switch (request->npusch_dmrs_base_sequence_mode_enum_case()) {
+        case nirfmxlte_grpc::CfgNPUSCHDMRSRequest::NpuschDmrsBaseSequenceModeEnumCase::kNpuschDmrsBaseSequenceMode: {
+          npusch_dmrs_base_sequence_mode = static_cast<int32>(request->npusch_dmrs_base_sequence_mode());
+          break;
+        }
+        case nirfmxlte_grpc::CfgNPUSCHDMRSRequest::NpuschDmrsBaseSequenceModeEnumCase::kNpuschDmrsBaseSequenceModeRaw: {
+          npusch_dmrs_base_sequence_mode = static_cast<int32>(request->npusch_dmrs_base_sequence_mode_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgNPUSCHDMRSRequest::NpuschDmrsBaseSequenceModeEnumCase::NPUSCH_DMRS_BASE_SEQUENCE_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for npusch_dmrs_base_sequence_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 npusch_dmrs_base_sequence_index = request->npusch_dmrs_base_sequence_index();
+      int32 npusch_dmrs_cyclic_shift = request->npusch_dmrs_cyclic_shift();
+      int32 npusch_dmrs_group_hopping_enabled;
+      switch (request->npusch_dmrs_group_hopping_enabled_enum_case()) {
+        case nirfmxlte_grpc::CfgNPUSCHDMRSRequest::NpuschDmrsGroupHoppingEnabledEnumCase::kNpuschDmrsGroupHoppingEnabled: {
+          npusch_dmrs_group_hopping_enabled = static_cast<int32>(request->npusch_dmrs_group_hopping_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::CfgNPUSCHDMRSRequest::NpuschDmrsGroupHoppingEnabledEnumCase::kNpuschDmrsGroupHoppingEnabledRaw: {
+          npusch_dmrs_group_hopping_enabled = static_cast<int32>(request->npusch_dmrs_group_hopping_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgNPUSCHDMRSRequest::NpuschDmrsGroupHoppingEnabledEnumCase::NPUSCH_DMRS_GROUP_HOPPING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for npusch_dmrs_group_hopping_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 npusch_dmrs_delta_ss = request->npusch_dmrs_delta_ss();
+      auto status = library_->CfgNPUSCHDMRS(instrument, selector_string, npusch_dmrs_base_sequence_mode, npusch_dmrs_base_sequence_index, npusch_dmrs_cyclic_shift, npusch_dmrs_group_hopping_enabled, npusch_dmrs_delta_ss);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNPUSCHFormat(::grpc::ServerContext* context, const CfgNPUSCHFormatRequest* request, CfgNPUSCHFormatResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 format = request->format();
+      auto status = library_->CfgNPUSCHFormat(instrument, selector_string, format);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNPUSCHStartingSlot(::grpc::ServerContext* context, const CfgNPUSCHStartingSlotRequest* request, CfgNPUSCHStartingSlotResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 starting_slot = request->starting_slot();
+      auto status = library_->CfgNPUSCHStartingSlot(instrument, selector_string, starting_slot);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNPUSCHTones(::grpc::ServerContext* context, const CfgNPUSCHTonesRequest* request, CfgNPUSCHTonesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 tone_offset = request->tone_offset();
+      int32 number_of_tones = request->number_of_tones();
+      int32 modulation_type;
+      switch (request->modulation_type_enum_case()) {
+        case nirfmxlte_grpc::CfgNPUSCHTonesRequest::ModulationTypeEnumCase::kModulationType: {
+          modulation_type = static_cast<int32>(request->modulation_type());
+          break;
+        }
+        case nirfmxlte_grpc::CfgNPUSCHTonesRequest::ModulationTypeEnumCase::kModulationTypeRaw: {
+          modulation_type = static_cast<int32>(request->modulation_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgNPUSCHTonesRequest::ModulationTypeEnumCase::MODULATION_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for modulation_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgNPUSCHTones(instrument, selector_string, tone_offset, number_of_tones, modulation_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNumberOfComponentCarriers(::grpc::ServerContext* context, const CfgNumberOfComponentCarriersRequest* request, CfgNumberOfComponentCarriersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_component_carriers = request->number_of_component_carriers();
+      auto status = library_->CfgNumberOfComponentCarriers(instrument, selector_string, number_of_component_carriers);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNumberOfDUTAntennas(::grpc::ServerContext* context, const CfgNumberOfDUTAntennasRequest* request, CfgNumberOfDUTAntennasResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_dut_antennas = request->number_of_dut_antennas();
+      auto status = library_->CfgNumberOfDUTAntennas(instrument, selector_string, number_of_dut_antennas);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNumberOfPDSCHChannels(::grpc::ServerContext* context, const CfgNumberOfPDSCHChannelsRequest* request, CfgNumberOfPDSCHChannelsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_pdsch_channels = request->number_of_pdsch_channels();
+      auto status = library_->CfgNumberOfPDSCHChannels(instrument, selector_string, number_of_pdsch_channels);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNumberOfPUSCHResourceBlockClusters(::grpc::ServerContext* context, const CfgNumberOfPUSCHResourceBlockClustersRequest* request, CfgNumberOfPUSCHResourceBlockClustersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_resource_block_clusters = request->number_of_resource_block_clusters();
+      auto status = library_->CfgNumberOfPUSCHResourceBlockClusters(instrument, selector_string, number_of_resource_block_clusters);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgNumberOfSubblocks(::grpc::ServerContext* context, const CfgNumberOfSubblocksRequest* request, CfgNumberOfSubblocksResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_subblocks = request->number_of_subblocks();
+      auto status = library_->CfgNumberOfSubblocks(instrument, selector_string, number_of_subblocks);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgPBCH(::grpc::ServerContext* context, const CfgPBCHRequest* request, CfgPBCHResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 pbch_power = request->pbch_power();
+      auto status = library_->CfgPBCH(instrument, selector_string, pbch_power);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgPCFICH(::grpc::ServerContext* context, const CfgPCFICHRequest* request, CfgPCFICHResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 cfi = request->cfi();
+      float64 power = request->power();
+      auto status = library_->CfgPCFICH(instrument, selector_string, cfi, power);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgPDCCH(::grpc::ServerContext* context, const CfgPDCCHRequest* request, CfgPDCCHResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 pdcch_power = request->pdcch_power();
+      auto status = library_->CfgPDCCH(instrument, selector_string, pdcch_power);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgPDSCH(::grpc::ServerContext* context, const CfgPDSCHRequest* request, CfgPDSCHResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 cw0_modulation_type;
+      switch (request->cw0_modulation_type_enum_case()) {
+        case nirfmxlte_grpc::CfgPDSCHRequest::Cw0ModulationTypeEnumCase::kCw0ModulationType: {
+          cw0_modulation_type = static_cast<int32>(request->cw0_modulation_type());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPDSCHRequest::Cw0ModulationTypeEnumCase::kCw0ModulationTypeRaw: {
+          cw0_modulation_type = static_cast<int32>(request->cw0_modulation_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPDSCHRequest::Cw0ModulationTypeEnumCase::CW0_MODULATION_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for cw0_modulation_type was not specified or out of range");
+          break;
+        }
+      }
+
+      char* resource_block_allocation = (char*)request->resource_block_allocation().c_str();
+      float64 power = request->power();
+      auto status = library_->CfgPDSCH(instrument, selector_string, cw0_modulation_type, resource_block_allocation, power);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgPHICH(::grpc::ServerContext* context, const CfgPHICHRequest* request, CfgPHICHResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 resource;
+      switch (request->resource_enum_case()) {
+        case nirfmxlte_grpc::CfgPHICHRequest::ResourceEnumCase::kResource: {
+          resource = static_cast<int32>(request->resource());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPHICHRequest::ResourceEnumCase::kResourceRaw: {
+          resource = static_cast<int32>(request->resource_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPHICHRequest::ResourceEnumCase::RESOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for resource was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 duration;
+      switch (request->duration_enum_case()) {
+        case nirfmxlte_grpc::CfgPHICHRequest::DurationEnumCase::kDuration: {
+          duration = static_cast<int32>(request->duration());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPHICHRequest::DurationEnumCase::kDurationRaw: {
+          duration = static_cast<int32>(request->duration_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPHICHRequest::DurationEnumCase::DURATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for duration was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 power = request->power();
+      auto status = library_->CfgPHICH(instrument, selector_string, resource, duration, power);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgPSSCHModulationType(::grpc::ServerContext* context, const CfgPSSCHModulationTypeRequest* request, CfgPSSCHModulationTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 modulation_type = request->modulation_type();
+      auto status = library_->CfgPSSCHModulationType(instrument, selector_string, modulation_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgPSSCHResourceBlocks(::grpc::ServerContext* context, const CfgPSSCHResourceBlocksRequest* request, CfgPSSCHResourceBlocksResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 resource_block_offset = request->resource_block_offset();
+      int32 number_of_resource_blocks = request->number_of_resource_blocks();
+      auto status = library_->CfgPSSCHResourceBlocks(instrument, selector_string, resource_block_offset, number_of_resource_blocks);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgPUSCHModulationType(::grpc::ServerContext* context, const CfgPUSCHModulationTypeRequest* request, CfgPUSCHModulationTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 modulation_type;
+      switch (request->modulation_type_enum_case()) {
+        case nirfmxlte_grpc::CfgPUSCHModulationTypeRequest::ModulationTypeEnumCase::kModulationType: {
+          modulation_type = static_cast<int32>(request->modulation_type());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPUSCHModulationTypeRequest::ModulationTypeEnumCase::kModulationTypeRaw: {
+          modulation_type = static_cast<int32>(request->modulation_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgPUSCHModulationTypeRequest::ModulationTypeEnumCase::MODULATION_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for modulation_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgPUSCHModulationType(instrument, selector_string, modulation_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgPUSCHResourceBlocks(::grpc::ServerContext* context, const CfgPUSCHResourceBlocksRequest* request, CfgPUSCHResourceBlocksResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 resource_block_offset = request->resource_block_offset();
+      int32 number_of_resource_blocks = request->number_of_resource_blocks();
+      auto status = library_->CfgPUSCHResourceBlocks(instrument, selector_string, resource_block_offset, number_of_resource_blocks);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgRF(::grpc::ServerContext* context, const CfgRFRequest* request, CfgRFResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 center_frequency = request->center_frequency();
+      float64 reference_level = request->reference_level();
+      float64 external_attenuation = request->external_attenuation();
+      auto status = library_->CfgRF(instrument, selector_string, center_frequency, reference_level, external_attenuation);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* channel_name = (char*)request->channel_name().c_str();
+      int32 rf_attenuation_auto;
+      switch (request->rf_attenuation_auto_enum_case()) {
+        case nirfmxlte_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAuto: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto());
+          break;
+        }
+        case nirfmxlte_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAutoRaw: {
+          rf_attenuation_auto = static_cast<int32>(request->rf_attenuation_auto_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::RF_ATTENUATION_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rf_attenuation_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 rf_attenuation_value = request->rf_attenuation_value();
+      auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgReferenceLevel(::grpc::ServerContext* context, const CfgReferenceLevelRequest* request, CfgReferenceLevelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 reference_level = request->reference_level();
+      auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgSoftwareEdgeTrigger(::grpc::ServerContext* context, const CfgSoftwareEdgeTriggerRequest* request, CfgSoftwareEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 trigger_delay = request->trigger_delay();
+      int32 enable_trigger = request->enable_trigger();
+      auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgSubblockFrequencyDefinition(::grpc::ServerContext* context, const CfgSubblockFrequencyDefinitionRequest* request, CfgSubblockFrequencyDefinitionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 subblock_frequency_definition = request->subblock_frequency_definition();
+      auto status = library_->CfgSubblockFrequencyDefinition(instrument, selector_string, subblock_frequency_definition);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgTransmitAntennaToAnalyze(::grpc::ServerContext* context, const CfgTransmitAntennaToAnalyzeRequest* request, CfgTransmitAntennaToAnalyzeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 transmit_antenna_to_analyze = request->transmit_antenna_to_analyze();
+      auto status = library_->CfgTransmitAntennaToAnalyze(instrument, selector_string, transmit_antenna_to_analyze);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CfgeNodeBCategory(::grpc::ServerContext* context, const CfgeNodeBCategoryRequest* request, CfgeNodeBCategoryResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 enodeb_category;
+      switch (request->enodeb_category_enum_case()) {
+        case nirfmxlte_grpc::CfgeNodeBCategoryRequest::EnodebCategoryEnumCase::kEnodebCategory: {
+          enodeb_category = static_cast<int32>(request->enodeb_category());
+          break;
+        }
+        case nirfmxlte_grpc::CfgeNodeBCategoryRequest::EnodebCategoryEnumCase::kEnodebCategoryRaw: {
+          enodeb_category = static_cast<int32>(request->enodeb_category_raw());
+          break;
+        }
+        case nirfmxlte_grpc::CfgeNodeBCategoryRequest::EnodebCategoryEnumCase::ENODEB_CATEGORY_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for enodeb_category was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgeNodeBCategory(instrument, selector_string, enodeb_category);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CheckMeasurementStatus(::grpc::ServerContext* context, const CheckMeasurementStatusRequest* request, CheckMeasurementStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 is_done {};
+      auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_is_done(is_done);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ClearAllNamedResults(::grpc::ServerContext* context, const ClearAllNamedResultsRequest* request, ClearAllNamedResultsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->ClearAllNamedResults(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ClearNamedResult(::grpc::ServerContext* context, const ClearNamedResultRequest* request, ClearNamedResultResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->ClearNamedResult(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ClearNoiseCalibrationDatabase(::grpc::ServerContext* context, const ClearNoiseCalibrationDatabaseRequest* request, ClearNoiseCalibrationDatabaseResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->ClearNoiseCalibrationDatabase(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CloneSignalConfiguration(::grpc::ServerContext* context, const CloneSignalConfigurationRequest* request, CloneSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* old_signal_name = (char*)request->old_signal_name().c_str();
+      char* new_signal_name = (char*)request->new_signal_name().c_str();
+      auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
@@ -50,26 +3291,928 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      int32 force_destroy;
-      switch (request->force_destroy_enum_case()) {
-        case nirfmxlte_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroy: {
-          force_destroy = static_cast<int32>(request->force_destroy());
-          break;
-        }
-        case nirfmxlte_grpc::CloseRequest::ForceDestroyEnumCase::kForceDestroyRaw: {
-          force_destroy = static_cast<int32>(request->force_destroy_raw());
-          break;
-        }
-        case nirfmxlte_grpc::CloseRequest::ForceDestroyEnumCase::FORCE_DESTROY_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for force_destroy was not specified or out of range");
-          break;
-        }
-      }
-
+      int32 force_destroy = request->force_destroy();
       session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       response->set_status(status);
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->Commit(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* signal_name = (char*)request->signal_name().c_str();
+      auto status = library_->CreateSignalConfiguration(instrument, signal_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::DeleteSignalConfiguration(::grpc::ServerContext* context, const DeleteSignalConfigurationRequest* request, DeleteSignalConfigurationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* signal_name = (char*)request->signal_name().c_str();
+      auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::DisableTrigger(::grpc::ServerContext* context, const DisableTriggerRequest* request, DisableTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->DisableTrigger(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAllNamedResultNames(::grpc::ServerContext* context, const GetAllNamedResultNamesRequest* request, GetAllNamedResultNamesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 actual_result_names_size {};
+      int32 default_result_exists {};
+      while (true) {
+        auto status = library_->GetAllNamedResultNames(instrument, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string result_names;
+        if (actual_result_names_size > 0) {
+            result_names.resize(actual_result_names_size - 1);
+        }
+        auto result_names_buffer_size = actual_result_names_size;
+        status = library_->GetAllNamedResultNames(instrument, selector_string, (char*)result_names.data(), result_names_buffer_size, &actual_result_names_size, &default_result_exists);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_result_names(result_names);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
+          response->set_actual_result_names_size(actual_result_names_size);
+          response->set_default_result_exists(default_result_exists);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      float32 attr_val {};
+      auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        float32* attr_val = response->mutable_attr_val()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      float64 attr_val {};
+      auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeF64Array(::grpc::ServerContext* context, const GetAttributeF64ArrayRequest* request, GetAttributeF64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        float64* attr_val = response->mutable_attr_val()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeI16(::grpc::ServerContext* context, const GetAttributeI16Request* request, GetAttributeI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int16 attr_val {};
+      auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeI32(::grpc::ServerContext* context, const GetAttributeI32Request* request, GetAttributeI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 attr_val {};
+      auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        auto checked_convert_attr_val = [](auto raw_value) {
+          bool raw_value_is_valid = nirfmxlte_grpc::NiRFmxLTEInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nirfmxlte_grpc::NiRFmxLTEInt32AttributeValues>(valid_enum_value);
+        };
+        response->set_attr_val(checked_convert_attr_val(attr_val));
+        response->set_attr_val_raw(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeI32Array(::grpc::ServerContext* context, const GetAttributeI32ArrayRequest* request, GetAttributeI32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
+        int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          auto checked_convert_attr_val = [](auto raw_value) {
+            bool raw_value_is_valid = nirfmxlte_grpc::NiRFmxLTEInt32AttributeValues_IsValid(raw_value);
+            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+            return static_cast<nirfmxlte_grpc::NiRFmxLTEInt32AttributeValues>(valid_enum_value);
+          };
+          response->mutable_attr_val()->Clear();
+          response->mutable_attr_val()->Reserve(actual_array_size);
+          std::transform(
+            response->attr_val_raw().begin(),
+            response->attr_val_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+            [&](auto x) { 
+                return checked_convert_attr_val(x);
+            });
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeI64(::grpc::ServerContext* context, const GetAttributeI64Request* request, GetAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attr_val {};
+      auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeI64Array(::grpc::ServerContext* context, const GetAttributeI64ArrayRequest* request, GetAttributeI64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeI8(::grpc::ServerContext* context, const GetAttributeI8Request* request, GetAttributeI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int8 attr_val {};
+      auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeI8Array(::grpc::ServerContext* context, const GetAttributeI8ArrayRequest* request, GetAttributeI8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<int8> attr_val(actual_array_size);
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Clear();
+          response->mutable_attr_val()->Reserve(actual_array_size);
+          std::transform(
+            attr_val.begin(),
+            attr_val.begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+            [&](auto x) { 
+                return x;
+            });
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const GetAttributeNIComplexDoubleArrayRequest* request, GetAttributeNIComplexDoubleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(attr_val, response->mutable_attr_val());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_attr_val()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const GetAttributeNIComplexSingleArrayRequest* request, GetAttributeNIComplexSingleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(attr_val, response->mutable_attr_val());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_attr_val()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeString(::grpc::ServerContext* context, const GetAttributeStringRequest* request, GetAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+
+      while (true) {
+        auto status = library_->GetAttributeString(instrument, selector_string, attribute_id, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 array_size = status;
+      
+        std::string attr_val;
+        if (array_size > 0) {
+            attr_val.resize(array_size - 1);
+        }
+        status = library_->GetAttributeString(instrument, selector_string, attribute_id, array_size, (char*)attr_val.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_attr_val(attr_val);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeU16(::grpc::ServerContext* context, const GetAttributeU16Request* request, GetAttributeU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt16 attr_val {};
+      auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeU32(::grpc::ServerContext* context, const GetAttributeU32Request* request, GetAttributeU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt32 attr_val {};
+      auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeU32Array(::grpc::ServerContext* context, const GetAttributeU32ArrayRequest* request, GetAttributeU32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeU64Array(::grpc::ServerContext* context, const GetAttributeU64ArrayRequest* request, GetAttributeU64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_attr_val()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeU8(::grpc::ServerContext* context, const GetAttributeU8Request* request, GetAttributeU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8 attr_val {};
+      auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attr_val(attr_val);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetAttributeU8Array(::grpc::ServerContext* context, const GetAttributeU8ArrayRequest* request, GetAttributeU8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::string attr_val(actual_array_size, '\0');
+        auto array_size = actual_array_size;
+        status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_attr_val(attr_val);
+          response->mutable_attr_val()->resize(actual_array_size);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+
+      while (true) {
+        auto status = library_->GetError(instrument, nullptr, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 error_description_buffer_size = status;
+      
+        int32 error_code {};
+        std::string error_description;
+        if (error_description_buffer_size > 0) {
+            error_description.resize(error_description_buffer_size - 1);
+        }
+        status = library_->GetError(instrument, &error_code, error_description_buffer_size, (char*)error_description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_error_code(error_code);
+          response->set_error_description(error_description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      int32 error_code = request->error_code();
+
+      while (true) {
+        auto status = library_->GetErrorString(instrument, error_code, 0, nullptr);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        int32 error_description_buffer_size = status;
+      
+        std::string error_description;
+        if (error_description_buffer_size > 0) {
+            error_description.resize(error_description_buffer_size - 1);
+        }
+        status = library_->GetErrorString(instrument, error_code, error_description_buffer_size, (char*)error_description.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_description_buffer_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_error_description(error_description);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        }
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -101,6 +4244,5819 @@ namespace nirfmxlte_grpc {
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto nirfsa_session_grpc_session = request->nirfsa_session();
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.id(), nirfsa_session_grpc_session.name());
+
+      auto init_lambda = [&] () {
+        niRFmxInstrHandle instrument;
+        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        return std::make_tuple(status, instrument);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXLTE_VAL_FALSE); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->mutable_instrument()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      char* result_name = (char*)request->result_name().c_str();
+      auto status = library_->Initiate(instrument, selector_string, result_name);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccCfgAveraging(::grpc::ServerContext* context, const ModAccCfgAveragingRequest* request, ModAccCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxlte_grpc::ModAccCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      auto status = library_->ModAccCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccCfgCommonClockSourceEnabled(::grpc::ServerContext* context, const ModAccCfgCommonClockSourceEnabledRequest* request, ModAccCfgCommonClockSourceEnabledResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 common_clock_source_enabled;
+      switch (request->common_clock_source_enabled_enum_case()) {
+        case nirfmxlte_grpc::ModAccCfgCommonClockSourceEnabledRequest::CommonClockSourceEnabledEnumCase::kCommonClockSourceEnabled: {
+          common_clock_source_enabled = static_cast<int32>(request->common_clock_source_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgCommonClockSourceEnabledRequest::CommonClockSourceEnabledEnumCase::kCommonClockSourceEnabledRaw: {
+          common_clock_source_enabled = static_cast<int32>(request->common_clock_source_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgCommonClockSourceEnabledRequest::CommonClockSourceEnabledEnumCase::COMMON_CLOCK_SOURCE_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for common_clock_source_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ModAccCfgCommonClockSourceEnabled(instrument, selector_string, common_clock_source_enabled);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccCfgEVMUnit(::grpc::ServerContext* context, const ModAccCfgEVMUnitRequest* request, ModAccCfgEVMUnitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 evm_unit;
+      switch (request->evm_unit_enum_case()) {
+        case nirfmxlte_grpc::ModAccCfgEVMUnitRequest::EvmUnitEnumCase::kEvmUnit: {
+          evm_unit = static_cast<int32>(request->evm_unit());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgEVMUnitRequest::EvmUnitEnumCase::kEvmUnitRaw: {
+          evm_unit = static_cast<int32>(request->evm_unit_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgEVMUnitRequest::EvmUnitEnumCase::EVM_UNIT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for evm_unit was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ModAccCfgEVMUnit(instrument, selector_string, evm_unit);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccCfgFFTWindowOffset(::grpc::ServerContext* context, const ModAccCfgFFTWindowOffsetRequest* request, ModAccCfgFFTWindowOffsetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 fft_window_offset = request->fft_window_offset();
+      auto status = library_->ModAccCfgFFTWindowOffset(instrument, selector_string, fft_window_offset);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccCfgFFTWindowPosition(::grpc::ServerContext* context, const ModAccCfgFFTWindowPositionRequest* request, ModAccCfgFFTWindowPositionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 fft_window_type;
+      switch (request->fft_window_type_enum_case()) {
+        case nirfmxlte_grpc::ModAccCfgFFTWindowPositionRequest::FftWindowTypeEnumCase::kFftWindowType: {
+          fft_window_type = static_cast<int32>(request->fft_window_type());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgFFTWindowPositionRequest::FftWindowTypeEnumCase::kFftWindowTypeRaw: {
+          fft_window_type = static_cast<int32>(request->fft_window_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgFFTWindowPositionRequest::FftWindowTypeEnumCase::FFT_WINDOW_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for fft_window_type was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 fft_window_offset = request->fft_window_offset();
+      float64 fft_window_length = request->fft_window_length();
+      auto status = library_->ModAccCfgFFTWindowPosition(instrument, selector_string, fft_window_type, fft_window_offset, fft_window_length);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccCfgInBandEmissionMaskType(::grpc::ServerContext* context, const ModAccCfgInBandEmissionMaskTypeRequest* request, ModAccCfgInBandEmissionMaskTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 in_band_emission_mask_type;
+      switch (request->in_band_emission_mask_type_enum_case()) {
+        case nirfmxlte_grpc::ModAccCfgInBandEmissionMaskTypeRequest::InBandEmissionMaskTypeEnumCase::kInBandEmissionMaskType: {
+          in_band_emission_mask_type = static_cast<int32>(request->in_band_emission_mask_type());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgInBandEmissionMaskTypeRequest::InBandEmissionMaskTypeEnumCase::kInBandEmissionMaskTypeRaw: {
+          in_band_emission_mask_type = static_cast<int32>(request->in_band_emission_mask_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgInBandEmissionMaskTypeRequest::InBandEmissionMaskTypeEnumCase::IN_BAND_EMISSION_MASK_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for in_band_emission_mask_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ModAccCfgInBandEmissionMaskType(instrument, selector_string, in_band_emission_mask_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccCfgSynchronizationModeAndInterval(::grpc::ServerContext* context, const ModAccCfgSynchronizationModeAndIntervalRequest* request, ModAccCfgSynchronizationModeAndIntervalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 synchronization_mode;
+      switch (request->synchronization_mode_enum_case()) {
+        case nirfmxlte_grpc::ModAccCfgSynchronizationModeAndIntervalRequest::SynchronizationModeEnumCase::kSynchronizationMode: {
+          synchronization_mode = static_cast<int32>(request->synchronization_mode());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgSynchronizationModeAndIntervalRequest::SynchronizationModeEnumCase::kSynchronizationModeRaw: {
+          synchronization_mode = static_cast<int32>(request->synchronization_mode_raw());
+          break;
+        }
+        case nirfmxlte_grpc::ModAccCfgSynchronizationModeAndIntervalRequest::SynchronizationModeEnumCase::SYNCHRONIZATION_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for synchronization_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 measurement_offset = request->measurement_offset();
+      int32 measurement_length = request->measurement_length();
+      auto status = library_->ModAccCfgSynchronizationModeAndInterval(instrument, selector_string, synchronization_mode, measurement_offset, measurement_length);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchCSRSConstellation(::grpc::ServerContext* context, const ModAccFetchCSRSConstellationRequest* request, ModAccFetchCSRSConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchCSRSConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> csrs_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchCSRSConstellation(instrument, selector_string, timeout, csrs_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(csrs_constellation, response->mutable_csrs_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_csrs_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_csrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchCSRSEVM(::grpc::ServerContext* context, const ModAccFetchCSRSEVMRequest* request, ModAccFetchCSRSEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_rms_csrs_evm {};
+      auto status = library_->ModAccFetchCSRSEVM(instrument, selector_string, timeout, &mean_rms_csrs_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_rms_csrs_evm(mean_rms_csrs_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchCSRSEVMArray(::grpc::ServerContext* context, const ModAccFetchCSRSEVMArrayRequest* request, ModAccFetchCSRSEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchCSRSEVMArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_csrs_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_csrs_evm = response->mutable_mean_rms_csrs_evm()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchCSRSEVMArray(instrument, selector_string, timeout, mean_rms_csrs_evm, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_rms_csrs_evm()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchCompositeEVM(::grpc::ServerContext* context, const ModAccFetchCompositeEVMRequest* request, ModAccFetchCompositeEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_rms_composite_evm {};
+      float64 maximum_peak_composite_evm {};
+      float64 mean_frequency_error {};
+      int32 peak_composite_evm_symbol_index {};
+      int32 peak_composite_evm_subcarrier_index {};
+      int32 peak_composite_evm_slot_index {};
+      auto status = library_->ModAccFetchCompositeEVM(instrument, selector_string, timeout, &mean_rms_composite_evm, &maximum_peak_composite_evm, &mean_frequency_error, &peak_composite_evm_symbol_index, &peak_composite_evm_subcarrier_index, &peak_composite_evm_slot_index);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_rms_composite_evm(mean_rms_composite_evm);
+        response->set_maximum_peak_composite_evm(maximum_peak_composite_evm);
+        response->set_mean_frequency_error(mean_frequency_error);
+        response->set_peak_composite_evm_symbol_index(peak_composite_evm_symbol_index);
+        response->set_peak_composite_evm_subcarrier_index(peak_composite_evm_subcarrier_index);
+        response->set_peak_composite_evm_slot_index(peak_composite_evm_slot_index);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchCompositeEVMArray(::grpc::ServerContext* context, const ModAccFetchCompositeEVMArrayRequest* request, ModAccFetchCompositeEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchCompositeEVMArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_composite_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_composite_evm = response->mutable_mean_rms_composite_evm()->mutable_data();
+        response->mutable_maximum_peak_composite_evm()->Resize(actual_array_size, 0);
+        float64* maximum_peak_composite_evm = response->mutable_maximum_peak_composite_evm()->mutable_data();
+        response->mutable_mean_frequency_error()->Resize(actual_array_size, 0);
+        float64* mean_frequency_error = response->mutable_mean_frequency_error()->mutable_data();
+        response->mutable_peak_composite_evm_symbol_index()->Resize(actual_array_size, 0);
+        int32* peak_composite_evm_symbol_index = reinterpret_cast<int32*>(response->mutable_peak_composite_evm_symbol_index()->mutable_data());
+        response->mutable_peak_composite_evm_subcarrier_index()->Resize(actual_array_size, 0);
+        int32* peak_composite_evm_subcarrier_index = reinterpret_cast<int32*>(response->mutable_peak_composite_evm_subcarrier_index()->mutable_data());
+        response->mutable_peak_composite_evm_slot_index()->Resize(actual_array_size, 0);
+        int32* peak_composite_evm_slot_index = reinterpret_cast<int32*>(response->mutable_peak_composite_evm_slot_index()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchCompositeEVMArray(instrument, selector_string, timeout, mean_rms_composite_evm, maximum_peak_composite_evm, mean_frequency_error, peak_composite_evm_symbol_index, peak_composite_evm_subcarrier_index, peak_composite_evm_slot_index, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_rms_composite_evm()->Resize(actual_array_size, 0);
+          response->mutable_maximum_peak_composite_evm()->Resize(actual_array_size, 0);
+          response->mutable_mean_frequency_error()->Resize(actual_array_size, 0);
+          response->mutable_peak_composite_evm_symbol_index()->Resize(actual_array_size, 0);
+          response->mutable_peak_composite_evm_subcarrier_index()->Resize(actual_array_size, 0);
+          response->mutable_peak_composite_evm_slot_index()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchCompositeMagnitudeAndPhaseError(::grpc::ServerContext* context, const ModAccFetchCompositeMagnitudeAndPhaseErrorRequest* request, ModAccFetchCompositeMagnitudeAndPhaseErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_rms_composite_magnitude_error {};
+      float64 max_peak_composite_magnitude_error {};
+      float64 mean_rms_composite_phase_error {};
+      float64 max_peak_composite_phase_error {};
+      auto status = library_->ModAccFetchCompositeMagnitudeAndPhaseError(instrument, selector_string, timeout, &mean_rms_composite_magnitude_error, &max_peak_composite_magnitude_error, &mean_rms_composite_phase_error, &max_peak_composite_phase_error);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_rms_composite_magnitude_error(mean_rms_composite_magnitude_error);
+        response->set_max_peak_composite_magnitude_error(max_peak_composite_magnitude_error);
+        response->set_mean_rms_composite_phase_error(mean_rms_composite_phase_error);
+        response->set_max_peak_composite_phase_error(max_peak_composite_phase_error);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchCompositeMagnitudeAndPhaseErrorArray(::grpc::ServerContext* context, const ModAccFetchCompositeMagnitudeAndPhaseErrorArrayRequest* request, ModAccFetchCompositeMagnitudeAndPhaseErrorArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchCompositeMagnitudeAndPhaseErrorArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_composite_magnitude_error()->Resize(actual_array_size, 0);
+        float64* mean_rms_composite_magnitude_error = response->mutable_mean_rms_composite_magnitude_error()->mutable_data();
+        response->mutable_maximum_peak_composite_magnitude_error()->Resize(actual_array_size, 0);
+        float64* maximum_peak_composite_magnitude_error = response->mutable_maximum_peak_composite_magnitude_error()->mutable_data();
+        response->mutable_mean_rms_composite_phase_error()->Resize(actual_array_size, 0);
+        float64* mean_rms_composite_phase_error = response->mutable_mean_rms_composite_phase_error()->mutable_data();
+        response->mutable_maximum_peak_composite_phase_error()->Resize(actual_array_size, 0);
+        float64* maximum_peak_composite_phase_error = response->mutable_maximum_peak_composite_phase_error()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchCompositeMagnitudeAndPhaseErrorArray(instrument, selector_string, timeout, mean_rms_composite_magnitude_error, maximum_peak_composite_magnitude_error, mean_rms_composite_phase_error, maximum_peak_composite_phase_error, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_rms_composite_magnitude_error()->Resize(actual_array_size, 0);
+          response->mutable_maximum_peak_composite_magnitude_error()->Resize(actual_array_size, 0);
+          response->mutable_mean_rms_composite_phase_error()->Resize(actual_array_size, 0);
+          response->mutable_maximum_peak_composite_phase_error()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkDetectedCellID(::grpc::ServerContext* context, const ModAccFetchDownlinkDetectedCellIDRequest* request, ModAccFetchDownlinkDetectedCellIDResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 detected_cell_id {};
+      auto status = library_->ModAccFetchDownlinkDetectedCellID(instrument, selector_string, timeout, &detected_cell_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_detected_cell_id(detected_cell_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkDetectedCellIDArray(::grpc::ServerContext* context, const ModAccFetchDownlinkDetectedCellIDArrayRequest* request, ModAccFetchDownlinkDetectedCellIDArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkDetectedCellIDArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_detected_cell_id()->Resize(actual_array_size, 0);
+        int32* detected_cell_id = reinterpret_cast<int32*>(response->mutable_detected_cell_id()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkDetectedCellIDArray(instrument, selector_string, timeout, detected_cell_id, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_detected_cell_id()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPBCHConstellation(::grpc::ServerContext* context, const ModAccFetchDownlinkPBCHConstellationRequest* request, ModAccFetchDownlinkPBCHConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkPBCHConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> pbch_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkPBCHConstellation(instrument, selector_string, timeout, pbch_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(pbch_constellation, response->mutable_pbch_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_pbch_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_pbch_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPCFICHConstellation(::grpc::ServerContext* context, const ModAccFetchDownlinkPCFICHConstellationRequest* request, ModAccFetchDownlinkPCFICHConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkPCFICHConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> pcfich_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkPCFICHConstellation(instrument, selector_string, timeout, pcfich_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(pcfich_constellation, response->mutable_pcfich_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_pcfich_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_pcfich_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPDCCHConstellation(::grpc::ServerContext* context, const ModAccFetchDownlinkPDCCHConstellationRequest* request, ModAccFetchDownlinkPDCCHConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkPDCCHConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> pdcch_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkPDCCHConstellation(instrument, selector_string, timeout, pdcch_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(pdcch_constellation, response->mutable_pdcch_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_pdcch_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_pdcch_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPHICHConstellation(::grpc::ServerContext* context, const ModAccFetchDownlinkPHICHConstellationRequest* request, ModAccFetchDownlinkPHICHConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkPHICHConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> phich_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkPHICHConstellation(instrument, selector_string, timeout, phich_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(phich_constellation, response->mutable_phich_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_phich_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_phich_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkTransmitPower(::grpc::ServerContext* context, const ModAccFetchDownlinkTransmitPowerRequest* request, ModAccFetchDownlinkTransmitPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 rs_transmit_power {};
+      float64 ofdm_symbol_transmit_power {};
+      float64 reserved1 {};
+      float64 reserved2 {};
+      auto status = library_->ModAccFetchDownlinkTransmitPower(instrument, selector_string, timeout, &rs_transmit_power, &ofdm_symbol_transmit_power, &reserved1, &reserved2);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_rs_transmit_power(rs_transmit_power);
+        response->set_ofdm_symbol_transmit_power(ofdm_symbol_transmit_power);
+        response->set_reserved1(reserved1);
+        response->set_reserved2(reserved2);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkTransmitPowerArray(::grpc::ServerContext* context, const ModAccFetchDownlinkTransmitPowerArrayRequest* request, ModAccFetchDownlinkTransmitPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkTransmitPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_rs_transmit_power()->Resize(actual_array_size, 0);
+        float64* rs_transmit_power = response->mutable_rs_transmit_power()->mutable_data();
+        response->mutable_ofdm_symbol_transmit_power()->Resize(actual_array_size, 0);
+        float64* ofdm_symbol_transmit_power = response->mutable_ofdm_symbol_transmit_power()->mutable_data();
+        response->mutable_reserved1()->Resize(actual_array_size, 0);
+        float64* reserved1 = response->mutable_reserved1()->mutable_data();
+        response->mutable_reserved2()->Resize(actual_array_size, 0);
+        float64* reserved2 = response->mutable_reserved2()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkTransmitPowerArray(instrument, selector_string, timeout, rs_transmit_power, ofdm_symbol_transmit_power, reserved1, reserved2, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_rs_transmit_power()->Resize(actual_array_size, 0);
+          response->mutable_ofdm_symbol_transmit_power()->Resize(actual_array_size, 0);
+          response->mutable_reserved1()->Resize(actual_array_size, 0);
+          response->mutable_reserved2()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchEVMHighPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchEVMHighPerSymbolTraceRequest* request, ModAccFetchEVMHighPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchEVMHighPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_evm_high_per_symbol()->Resize(actual_array_size, 0);
+        float32* evm_high_per_symbol = response->mutable_evm_high_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchEVMHighPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, evm_high_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_evm_high_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchEVMLowPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchEVMLowPerSymbolTraceRequest* request, ModAccFetchEVMLowPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchEVMLowPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_evm_low_per_symbol()->Resize(actual_array_size, 0);
+        float32* evm_low_per_symbol = response->mutable_evm_low_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchEVMLowPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, evm_low_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_evm_low_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchEVMPerSlotTrace(::grpc::ServerContext* context, const ModAccFetchEVMPerSlotTraceRequest* request, ModAccFetchEVMPerSlotTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchEVMPerSlotTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_rms_evm_per_slot()->Resize(actual_array_size, 0);
+        float32* rms_evm_per_slot = response->mutable_rms_evm_per_slot()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchEVMPerSlotTrace(instrument, selector_string, timeout, &x0, &dx, rms_evm_per_slot, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_rms_evm_per_slot()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchEVMPerSubcarrierTrace(::grpc::ServerContext* context, const ModAccFetchEVMPerSubcarrierTraceRequest* request, ModAccFetchEVMPerSubcarrierTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchEVMPerSubcarrierTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_evm_per_subcarrier()->Resize(actual_array_size, 0);
+        float32* mean_rms_evm_per_subcarrier = response->mutable_mean_rms_evm_per_subcarrier()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchEVMPerSubcarrierTrace(instrument, selector_string, timeout, &x0, &dx, mean_rms_evm_per_subcarrier, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_mean_rms_evm_per_subcarrier()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchEVMPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchEVMPerSymbolTraceRequest* request, ModAccFetchEVMPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchEVMPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_rms_evm_per_symbol()->Resize(actual_array_size, 0);
+        float32* rms_evm_per_symbol = response->mutable_rms_evm_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchEVMPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, rms_evm_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_rms_evm_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchIQImpairments(::grpc::ServerContext* context, const ModAccFetchIQImpairmentsRequest* request, ModAccFetchIQImpairmentsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_iq_origin_offset {};
+      float64 mean_iq_gain_imbalance {};
+      float64 mean_iq_quadrature_error {};
+      auto status = library_->ModAccFetchIQImpairments(instrument, selector_string, timeout, &mean_iq_origin_offset, &mean_iq_gain_imbalance, &mean_iq_quadrature_error);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_iq_origin_offset(mean_iq_origin_offset);
+        response->set_mean_iq_gain_imbalance(mean_iq_gain_imbalance);
+        response->set_mean_iq_quadrature_error(mean_iq_quadrature_error);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchIQImpairmentsArray(::grpc::ServerContext* context, const ModAccFetchIQImpairmentsArrayRequest* request, ModAccFetchIQImpairmentsArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchIQImpairmentsArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_iq_origin_offset()->Resize(actual_array_size, 0);
+        float64* mean_iq_origin_offset = response->mutable_mean_iq_origin_offset()->mutable_data();
+        response->mutable_mean_iq_gain_imbalance()->Resize(actual_array_size, 0);
+        float64* mean_iq_gain_imbalance = response->mutable_mean_iq_gain_imbalance()->mutable_data();
+        response->mutable_mean_iq_quadrature_error()->Resize(actual_array_size, 0);
+        float64* mean_iq_quadrature_error = response->mutable_mean_iq_quadrature_error()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchIQImpairmentsArray(instrument, selector_string, timeout, mean_iq_origin_offset, mean_iq_gain_imbalance, mean_iq_quadrature_error, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_iq_origin_offset()->Resize(actual_array_size, 0);
+          response->mutable_mean_iq_gain_imbalance()->Resize(actual_array_size, 0);
+          response->mutable_mean_iq_quadrature_error()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchInBandEmissionMargin(::grpc::ServerContext* context, const ModAccFetchInBandEmissionMarginRequest* request, ModAccFetchInBandEmissionMarginResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 in_band_emission_margin {};
+      auto status = library_->ModAccFetchInBandEmissionMargin(instrument, selector_string, timeout, &in_band_emission_margin);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_in_band_emission_margin(in_band_emission_margin);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchInBandEmissionMarginArray(::grpc::ServerContext* context, const ModAccFetchInBandEmissionMarginArrayRequest* request, ModAccFetchInBandEmissionMarginArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchInBandEmissionMarginArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_in_band_emission_margin()->Resize(actual_array_size, 0);
+        float64* in_band_emission_margin = response->mutable_in_band_emission_margin()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchInBandEmissionMarginArray(instrument, selector_string, timeout, in_band_emission_margin, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_in_band_emission_margin()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchInBandEmissionTrace(::grpc::ServerContext* context, const ModAccFetchInBandEmissionTraceRequest* request, ModAccFetchInBandEmissionTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchInBandEmissionTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_in_band_emission()->Resize(actual_array_size, 0);
+        float32* in_band_emission = response->mutable_in_band_emission()->mutable_data();
+        response->mutable_in_band_emission_mask()->Resize(actual_array_size, 0);
+        float32* in_band_emission_mask = response->mutable_in_band_emission_mask()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchInBandEmissionTrace(instrument, selector_string, timeout, &x0, &dx, in_band_emission, in_band_emission_mask, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_in_band_emission()->Resize(actual_array_size, 0);
+          response->mutable_in_band_emission_mask()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchMaximumEVMPerSlotTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMPerSlotTraceRequest* request, ModAccFetchMaximumEVMPerSlotTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchMaximumEVMPerSlotTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_maximum_evm_per_slot()->Resize(actual_array_size, 0);
+        float32* maximum_evm_per_slot = response->mutable_maximum_evm_per_slot()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchMaximumEVMPerSlotTrace(instrument, selector_string, timeout, &x0, &dx, maximum_evm_per_slot, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_maximum_evm_per_slot()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchMaximumEVMPerSubcarrierTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMPerSubcarrierTraceRequest* request, ModAccFetchMaximumEVMPerSubcarrierTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchMaximumEVMPerSubcarrierTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_maximum_evm_per_subcarrier()->Resize(actual_array_size, 0);
+        float32* maximum_evm_per_subcarrier = response->mutable_maximum_evm_per_subcarrier()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchMaximumEVMPerSubcarrierTrace(instrument, selector_string, timeout, &x0, &dx, maximum_evm_per_subcarrier, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_maximum_evm_per_subcarrier()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchMaximumEVMPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchMaximumEVMPerSymbolTraceRequest* request, ModAccFetchMaximumEVMPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchMaximumEVMPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_maximum_evm_per_symbol()->Resize(actual_array_size, 0);
+        float32* maximum_evm_per_symbol = response->mutable_maximum_evm_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchMaximumEVMPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, maximum_evm_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_maximum_evm_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchMaximumMagnitudeErrorPerSymbolTraceRequest* request, ModAccFetchMaximumMagnitudeErrorPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_maximum_magnitude_error_per_symbol()->Resize(actual_array_size, 0);
+        float32* maximum_magnitude_error_per_symbol = response->mutable_maximum_magnitude_error_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, maximum_magnitude_error_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_maximum_magnitude_error_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchMaximumPhaseErrorPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchMaximumPhaseErrorPerSymbolTraceRequest* request, ModAccFetchMaximumPhaseErrorPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchMaximumPhaseErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_maximum_phase_error_per_symbol()->Resize(actual_array_size, 0);
+        float32* maximum_phase_error_per_symbol = response->mutable_maximum_phase_error_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchMaximumPhaseErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, maximum_phase_error_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_maximum_phase_error_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchNPUSCHConstellationTrace(::grpc::ServerContext* context, const ModAccFetchNPUSCHConstellationTraceRequest* request, ModAccFetchNPUSCHConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 data_constellation_actual_array_size {};
+      int32 dmrs_constellation_actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchNPUSCHConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &data_constellation_actual_array_size, nullptr, 0, &dmrs_constellation_actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> data_constellation(data_constellation_actual_array_size, NIComplexSingle());
+        std::vector<NIComplexSingle> dmrs_constellation(dmrs_constellation_actual_array_size, NIComplexSingle());
+        auto data_constellation_array_size = data_constellation_actual_array_size;
+        auto dmrs_constellation_array_size = dmrs_constellation_actual_array_size;
+        status = library_->ModAccFetchNPUSCHConstellationTrace(instrument, selector_string, timeout, data_constellation.data(), data_constellation_array_size, &data_constellation_actual_array_size, dmrs_constellation.data(), dmrs_constellation_array_size, &dmrs_constellation_actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(data_constellation, response->mutable_data_constellation());
+          {
+            auto shrunk_size = data_constellation_actual_array_size;
+            auto current_size = response->mutable_data_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_data_constellation_actual_array_size(data_constellation_actual_array_size);
+          convert_to_grpc(dmrs_constellation, response->mutable_dmrs_constellation());
+          {
+            auto shrunk_size = dmrs_constellation_actual_array_size;
+            auto current_size = response->mutable_dmrs_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchNPUSCHDMRSEVM(::grpc::ServerContext* context, const ModAccFetchNPUSCHDMRSEVMRequest* request, ModAccFetchNPUSCHDMRSEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 npusch_mean_rms_dmrs_evm {};
+      float64 npusch_maximum_peak_dmrs_evm {};
+      auto status = library_->ModAccFetchNPUSCHDMRSEVM(instrument, selector_string, timeout, &npusch_mean_rms_dmrs_evm, &npusch_maximum_peak_dmrs_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_npusch_mean_rms_dmrs_evm(npusch_mean_rms_dmrs_evm);
+        response->set_npusch_maximum_peak_dmrs_evm(npusch_maximum_peak_dmrs_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchNPUSCHDataEVM(::grpc::ServerContext* context, const ModAccFetchNPUSCHDataEVMRequest* request, ModAccFetchNPUSCHDataEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 npusch_mean_rms_data_evm {};
+      float64 npusch_maximum_peak_data_evm {};
+      auto status = library_->ModAccFetchNPUSCHDataEVM(instrument, selector_string, timeout, &npusch_mean_rms_data_evm, &npusch_maximum_peak_data_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_npusch_mean_rms_data_evm(npusch_mean_rms_data_evm);
+        response->set_npusch_maximum_peak_data_evm(npusch_maximum_peak_data_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchNPUSCHSymbolPower(::grpc::ServerContext* context, const ModAccFetchNPUSCHSymbolPowerRequest* request, ModAccFetchNPUSCHSymbolPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 npusch_mean_data_power {};
+      float64 npusch_mean_dmrs_power {};
+      auto status = library_->ModAccFetchNPUSCHSymbolPower(instrument, selector_string, timeout, &npusch_mean_data_power, &npusch_mean_dmrs_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_npusch_mean_data_power(npusch_mean_data_power);
+        response->set_npusch_mean_dmrs_power(npusch_mean_dmrs_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH1024QAMConstellation(::grpc::ServerContext* context, const ModAccFetchPDSCH1024QAMConstellationRequest* request, ModAccFetchPDSCH1024QAMConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCH1024QAMConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> qam1024_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCH1024QAMConstellation(instrument, selector_string, timeout, qam1024_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(qam1024_constellation, response->mutable_qam1024_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_qam1024_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_qam1024_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH1024QAMEVM(::grpc::ServerContext* context, const ModAccFetchPDSCH1024QAMEVMRequest* request, ModAccFetchPDSCH1024QAMEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_rms_1024qam_evm {};
+      auto status = library_->ModAccFetchPDSCH1024QAMEVM(instrument, selector_string, timeout, &mean_rms_1024qam_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_rms_1024qam_evm(mean_rms_1024qam_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH1024QAMEVMArray(::grpc::ServerContext* context, const ModAccFetchPDSCH1024QAMEVMArrayRequest* request, ModAccFetchPDSCH1024QAMEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCH1024QAMEVMArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_1024qam_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_1024qam_evm = response->mutable_mean_rms_1024qam_evm()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCH1024QAMEVMArray(instrument, selector_string, timeout, mean_rms_1024qam_evm, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_rms_1024qam_evm()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH16QAMConstellation(::grpc::ServerContext* context, const ModAccFetchPDSCH16QAMConstellationRequest* request, ModAccFetchPDSCH16QAMConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCH16QAMConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> qam16_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCH16QAMConstellation(instrument, selector_string, timeout, qam16_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(qam16_constellation, response->mutable_qam16_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_qam16_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_qam16_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH256QAMConstellation(::grpc::ServerContext* context, const ModAccFetchPDSCH256QAMConstellationRequest* request, ModAccFetchPDSCH256QAMConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCH256QAMConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> qam256_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCH256QAMConstellation(instrument, selector_string, timeout, qam256_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(qam256_constellation, response->mutable_qam256_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_qam256_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_qam256_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH64QAMConstellation(::grpc::ServerContext* context, const ModAccFetchPDSCH64QAMConstellationRequest* request, ModAccFetchPDSCH64QAMConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCH64QAMConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> qam64_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCH64QAMConstellation(instrument, selector_string, timeout, qam64_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(qam64_constellation, response->mutable_qam64_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_qam64_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_qam64_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCHEVM(::grpc::ServerContext* context, const ModAccFetchPDSCHEVMRequest* request, ModAccFetchPDSCHEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_rms_evm {};
+      float64 mean_rms_qpsk_evm {};
+      float64 mean_rms_16qam_evm {};
+      float64 mean_rms_64qam_evm {};
+      float64 mean_rms_256qam_evm {};
+      auto status = library_->ModAccFetchPDSCHEVM(instrument, selector_string, timeout, &mean_rms_evm, &mean_rms_qpsk_evm, &mean_rms_16qam_evm, &mean_rms_64qam_evm, &mean_rms_256qam_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_rms_evm(mean_rms_evm);
+        response->set_mean_rms_qpsk_evm(mean_rms_qpsk_evm);
+        response->set_mean_rms_16qam_evm(mean_rms_16qam_evm);
+        response->set_mean_rms_64qam_evm(mean_rms_64qam_evm);
+        response->set_mean_rms_256qam_evm(mean_rms_256qam_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCHEVMArray(::grpc::ServerContext* context, const ModAccFetchPDSCHEVMArrayRequest* request, ModAccFetchPDSCHEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCHEVMArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_evm = response->mutable_mean_rms_evm()->mutable_data();
+        response->mutable_mean_rms_qpsk_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_qpsk_evm = response->mutable_mean_rms_qpsk_evm()->mutable_data();
+        response->mutable_mean_rms_16qam_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_16qam_evm = response->mutable_mean_rms_16qam_evm()->mutable_data();
+        response->mutable_mean_rms_64qam_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_64qam_evm = response->mutable_mean_rms_64qam_evm()->mutable_data();
+        response->mutable_mean_rms_256qam_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_256qam_evm = response->mutable_mean_rms_256qam_evm()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCHEVMArray(instrument, selector_string, timeout, mean_rms_evm, mean_rms_qpsk_evm, mean_rms_16qam_evm, mean_rms_64qam_evm, mean_rms_256qam_evm, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_rms_evm()->Resize(actual_array_size, 0);
+          response->mutable_mean_rms_qpsk_evm()->Resize(actual_array_size, 0);
+          response->mutable_mean_rms_16qam_evm()->Resize(actual_array_size, 0);
+          response->mutable_mean_rms_64qam_evm()->Resize(actual_array_size, 0);
+          response->mutable_mean_rms_256qam_evm()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCHQPSKConstellation(::grpc::ServerContext* context, const ModAccFetchPDSCHQPSKConstellationRequest* request, ModAccFetchPDSCHQPSKConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCHQPSKConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> qpsk_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCHQPSKConstellation(instrument, selector_string, timeout, qpsk_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(qpsk_constellation, response->mutable_qpsk_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_qpsk_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_qpsk_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPSSCHConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPSSCHConstellationTraceRequest* request, ModAccFetchPSSCHConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 data_constellation_actual_array_size {};
+      int32 dmrs_constellation_actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPSSCHConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &data_constellation_actual_array_size, nullptr, 0, &dmrs_constellation_actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> data_constellation(data_constellation_actual_array_size, NIComplexSingle());
+        std::vector<NIComplexSingle> dmrs_constellation(dmrs_constellation_actual_array_size, NIComplexSingle());
+        auto data_constellation_array_size = data_constellation_actual_array_size;
+        auto dmrs_constellation_array_size = dmrs_constellation_actual_array_size;
+        status = library_->ModAccFetchPSSCHConstellationTrace(instrument, selector_string, timeout, data_constellation.data(), data_constellation_array_size, &data_constellation_actual_array_size, dmrs_constellation.data(), dmrs_constellation_array_size, &dmrs_constellation_actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(data_constellation, response->mutable_data_constellation());
+          {
+            auto shrunk_size = data_constellation_actual_array_size;
+            auto current_size = response->mutable_data_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_data_constellation_actual_array_size(data_constellation_actual_array_size);
+          convert_to_grpc(dmrs_constellation, response->mutable_dmrs_constellation());
+          {
+            auto shrunk_size = dmrs_constellation_actual_array_size;
+            auto current_size = response->mutable_dmrs_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPSSCHDMRSEVM(::grpc::ServerContext* context, const ModAccFetchPSSCHDMRSEVMRequest* request, ModAccFetchPSSCHDMRSEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 pssch_mean_rms_dmrs_evm {};
+      float64 pssch_maximum_peak_dmrs_evm {};
+      auto status = library_->ModAccFetchPSSCHDMRSEVM(instrument, selector_string, timeout, &pssch_mean_rms_dmrs_evm, &pssch_maximum_peak_dmrs_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_pssch_mean_rms_dmrs_evm(pssch_mean_rms_dmrs_evm);
+        response->set_pssch_maximum_peak_dmrs_evm(pssch_maximum_peak_dmrs_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPSSCHDMRSEVMArray(::grpc::ServerContext* context, const ModAccFetchPSSCHDMRSEVMArrayRequest* request, ModAccFetchPSSCHDMRSEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPSSCHDMRSEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_pssch_mean_rms_dmrs_evm()->Resize(actual_array_size, 0);
+        float64* pssch_mean_rms_dmrs_evm = response->mutable_pssch_mean_rms_dmrs_evm()->mutable_data();
+        response->mutable_pssch_maximum_peak_dmrs_evm()->Resize(actual_array_size, 0);
+        float64* pssch_maximum_peak_dmrs_evm = response->mutable_pssch_maximum_peak_dmrs_evm()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPSSCHDMRSEVMArray(instrument, selector_string, timeout, pssch_mean_rms_dmrs_evm, pssch_maximum_peak_dmrs_evm, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_pssch_mean_rms_dmrs_evm()->Resize(actual_array_size, 0);
+          response->mutable_pssch_maximum_peak_dmrs_evm()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPSSCHDataEVM(::grpc::ServerContext* context, const ModAccFetchPSSCHDataEVMRequest* request, ModAccFetchPSSCHDataEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 pssch_mean_rms_data_evm {};
+      float64 pssch_maximum_peak_data_evm {};
+      auto status = library_->ModAccFetchPSSCHDataEVM(instrument, selector_string, timeout, &pssch_mean_rms_data_evm, &pssch_maximum_peak_data_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_pssch_mean_rms_data_evm(pssch_mean_rms_data_evm);
+        response->set_pssch_maximum_peak_data_evm(pssch_maximum_peak_data_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPSSCHDataEVMArray(::grpc::ServerContext* context, const ModAccFetchPSSCHDataEVMArrayRequest* request, ModAccFetchPSSCHDataEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPSSCHDataEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_pssch_mean_rms_data_evm()->Resize(actual_array_size, 0);
+        float64* pssch_mean_rms_data_evm = response->mutable_pssch_mean_rms_data_evm()->mutable_data();
+        response->mutable_pssch_maximum_peak_data_evm()->Resize(actual_array_size, 0);
+        float64* pssch_maximum_peak_data_evm = response->mutable_pssch_maximum_peak_data_evm()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPSSCHDataEVMArray(instrument, selector_string, timeout, pssch_mean_rms_data_evm, pssch_maximum_peak_data_evm, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_pssch_mean_rms_data_evm()->Resize(actual_array_size, 0);
+          response->mutable_pssch_maximum_peak_data_evm()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPSSCHSymbolPower(::grpc::ServerContext* context, const ModAccFetchPSSCHSymbolPowerRequest* request, ModAccFetchPSSCHSymbolPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 pssch_mean_data_power {};
+      float64 pssch_mean_dmrs_power {};
+      auto status = library_->ModAccFetchPSSCHSymbolPower(instrument, selector_string, timeout, &pssch_mean_data_power, &pssch_mean_dmrs_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_pssch_mean_data_power(pssch_mean_data_power);
+        response->set_pssch_mean_dmrs_power(pssch_mean_dmrs_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPSSCHSymbolPowerArray(::grpc::ServerContext* context, const ModAccFetchPSSCHSymbolPowerArrayRequest* request, ModAccFetchPSSCHSymbolPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPSSCHSymbolPowerArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_pssch_mean_data_power()->Resize(actual_array_size, 0);
+        float64* pssch_mean_data_power = response->mutable_pssch_mean_data_power()->mutable_data();
+        response->mutable_pssch_mean_dmrs_power()->Resize(actual_array_size, 0);
+        float64* pssch_mean_dmrs_power = response->mutable_pssch_mean_dmrs_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPSSCHSymbolPowerArray(instrument, selector_string, timeout, pssch_mean_data_power, pssch_mean_dmrs_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_pssch_mean_data_power()->Resize(actual_array_size, 0);
+          response->mutable_pssch_mean_dmrs_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPUSCHConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHConstellationTraceRequest* request, ModAccFetchPUSCHConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 data_constellation_actual_array_size {};
+      int32 dmrs_constellation_actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPUSCHConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &data_constellation_actual_array_size, nullptr, 0, &dmrs_constellation_actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> data_constellation(data_constellation_actual_array_size, NIComplexSingle());
+        std::vector<NIComplexSingle> dmrs_constellation(dmrs_constellation_actual_array_size, NIComplexSingle());
+        auto data_constellation_array_size = data_constellation_actual_array_size;
+        auto dmrs_constellation_array_size = dmrs_constellation_actual_array_size;
+        status = library_->ModAccFetchPUSCHConstellationTrace(instrument, selector_string, timeout, data_constellation.data(), data_constellation_array_size, &data_constellation_actual_array_size, dmrs_constellation.data(), dmrs_constellation_array_size, &dmrs_constellation_actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(data_constellation, response->mutable_data_constellation());
+          {
+            auto shrunk_size = data_constellation_actual_array_size;
+            auto current_size = response->mutable_data_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_data_constellation_actual_array_size(data_constellation_actual_array_size);
+          convert_to_grpc(dmrs_constellation, response->mutable_dmrs_constellation());
+          {
+            auto shrunk_size = dmrs_constellation_actual_array_size;
+            auto current_size = response->mutable_dmrs_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPUSCHDMRSEVM(::grpc::ServerContext* context, const ModAccFetchPUSCHDMRSEVMRequest* request, ModAccFetchPUSCHDMRSEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_rms_dmrs_evm {};
+      float64 maximum_peak_dmrs_evm {};
+      auto status = library_->ModAccFetchPUSCHDMRSEVM(instrument, selector_string, timeout, &mean_rms_dmrs_evm, &maximum_peak_dmrs_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_rms_dmrs_evm(mean_rms_dmrs_evm);
+        response->set_maximum_peak_dmrs_evm(maximum_peak_dmrs_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPUSCHDMRSEVMArray(::grpc::ServerContext* context, const ModAccFetchPUSCHDMRSEVMArrayRequest* request, ModAccFetchPUSCHDMRSEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPUSCHDMRSEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_dmrs_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_dmrs_evm = response->mutable_mean_rms_dmrs_evm()->mutable_data();
+        response->mutable_maximum_peak_dmrs_evm()->Resize(actual_array_size, 0);
+        float64* maximum_peak_dmrs_evm = response->mutable_maximum_peak_dmrs_evm()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPUSCHDMRSEVMArray(instrument, selector_string, timeout, mean_rms_dmrs_evm, maximum_peak_dmrs_evm, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_rms_dmrs_evm()->Resize(actual_array_size, 0);
+          response->mutable_maximum_peak_dmrs_evm()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPUSCHDataEVM(::grpc::ServerContext* context, const ModAccFetchPUSCHDataEVMRequest* request, ModAccFetchPUSCHDataEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_rms_data_evm {};
+      float64 maximum_peak_data_evm {};
+      auto status = library_->ModAccFetchPUSCHDataEVM(instrument, selector_string, timeout, &mean_rms_data_evm, &maximum_peak_data_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_rms_data_evm(mean_rms_data_evm);
+        response->set_maximum_peak_data_evm(maximum_peak_data_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPUSCHDataEVMArray(::grpc::ServerContext* context, const ModAccFetchPUSCHDataEVMArrayRequest* request, ModAccFetchPUSCHDataEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPUSCHDataEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_data_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_data_evm = response->mutable_mean_rms_data_evm()->mutable_data();
+        response->mutable_maximum_peak_data_evm()->Resize(actual_array_size, 0);
+        float64* maximum_peak_data_evm = response->mutable_maximum_peak_data_evm()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPUSCHDataEVMArray(instrument, selector_string, timeout, mean_rms_data_evm, maximum_peak_data_evm, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_rms_data_evm()->Resize(actual_array_size, 0);
+          response->mutable_maximum_peak_data_evm()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPUSCHDemodulatedBits(::grpc::ServerContext* context, const ModAccFetchPUSCHDemodulatedBitsRequest* request, ModAccFetchPUSCHDemodulatedBitsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPUSCHDemodulatedBits(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<int8> bits(actual_array_size);
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPUSCHDemodulatedBits(instrument, selector_string, timeout, bits.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_bits()->Clear();
+          response->mutable_bits()->Reserve(actual_array_size);
+          std::transform(
+            bits.begin(),
+            bits.begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_bits()),
+            [&](auto x) { 
+                return x;
+            });
+          response->mutable_bits()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPUSCHSymbolPower(::grpc::ServerContext* context, const ModAccFetchPUSCHSymbolPowerRequest* request, ModAccFetchPUSCHSymbolPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 pusch_mean_data_power {};
+      float64 pusch_mean_dmrs_power {};
+      auto status = library_->ModAccFetchPUSCHSymbolPower(instrument, selector_string, timeout, &pusch_mean_data_power, &pusch_mean_dmrs_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_pusch_mean_data_power(pusch_mean_data_power);
+        response->set_pusch_mean_dmrs_power(pusch_mean_dmrs_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPUSCHSymbolPowerArray(::grpc::ServerContext* context, const ModAccFetchPUSCHSymbolPowerArrayRequest* request, ModAccFetchPUSCHSymbolPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPUSCHSymbolPowerArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_pusch_mean_data_power()->Resize(actual_array_size, 0);
+        float64* pusch_mean_data_power = response->mutable_pusch_mean_data_power()->mutable_data();
+        response->mutable_pusch_mean_dmrs_power()->Resize(actual_array_size, 0);
+        float64* pusch_mean_dmrs_power = response->mutable_pusch_mean_dmrs_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPUSCHSymbolPowerArray(instrument, selector_string, timeout, pusch_mean_data_power, pusch_mean_dmrs_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_pusch_mean_data_power()->Resize(actual_array_size, 0);
+          response->mutable_pusch_mean_dmrs_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchRMSMagnitudeErrorPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchRMSMagnitudeErrorPerSymbolTraceRequest* request, ModAccFetchRMSMagnitudeErrorPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchRMSMagnitudeErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_rms_magnitude_error_per_symbol()->Resize(actual_array_size, 0);
+        float32* rms_magnitude_error_per_symbol = response->mutable_rms_magnitude_error_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchRMSMagnitudeErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, rms_magnitude_error_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_rms_magnitude_error_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchRMSPhaseErrorPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchRMSPhaseErrorPerSymbolTraceRequest* request, ModAccFetchRMSPhaseErrorPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchRMSPhaseErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_rms_phase_error_per_symbol()->Resize(actual_array_size, 0);
+        float32* rms_phase_error_per_symbol = response->mutable_rms_phase_error_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchRMSPhaseErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, rms_phase_error_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_rms_phase_error_per_symbol()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSRSConstellation(::grpc::ServerContext* context, const ModAccFetchSRSConstellationRequest* request, ModAccFetchSRSConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchSRSConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> srs_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchSRSConstellation(instrument, selector_string, timeout, srs_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(srs_constellation, response->mutable_srs_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_srs_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_srs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSRSEVM(::grpc::ServerContext* context, const ModAccFetchSRSEVMRequest* request, ModAccFetchSRSEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_rms_srs_evm {};
+      float64 mean_srs_power {};
+      auto status = library_->ModAccFetchSRSEVM(instrument, selector_string, timeout, &mean_rms_srs_evm, &mean_srs_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_rms_srs_evm(mean_rms_srs_evm);
+        response->set_mean_srs_power(mean_srs_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSRSEVMArray(::grpc::ServerContext* context, const ModAccFetchSRSEVMArrayRequest* request, ModAccFetchSRSEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchSRSEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_srs_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_srs_evm = response->mutable_mean_rms_srs_evm()->mutable_data();
+        response->mutable_mean_srs_power()->Resize(actual_array_size, 0);
+        float64* mean_srs_power = response->mutable_mean_srs_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchSRSEVMArray(instrument, selector_string, timeout, mean_rms_srs_evm, mean_srs_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_rms_srs_evm()->Resize(actual_array_size, 0);
+          response->mutable_mean_srs_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSpectralFlatness(::grpc::ServerContext* context, const ModAccFetchSpectralFlatnessRequest* request, ModAccFetchSpectralFlatnessResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 range1_maximum_to_range1_minimum {};
+      float64 range2_maximum_to_range2_minimum {};
+      float64 range1_maximum_to_range2_minimum {};
+      float64 range2_maximum_to_range1_minimum {};
+      auto status = library_->ModAccFetchSpectralFlatness(instrument, selector_string, timeout, &range1_maximum_to_range1_minimum, &range2_maximum_to_range2_minimum, &range1_maximum_to_range2_minimum, &range2_maximum_to_range1_minimum);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_range1_maximum_to_range1_minimum(range1_maximum_to_range1_minimum);
+        response->set_range2_maximum_to_range2_minimum(range2_maximum_to_range2_minimum);
+        response->set_range1_maximum_to_range2_minimum(range1_maximum_to_range2_minimum);
+        response->set_range2_maximum_to_range1_minimum(range2_maximum_to_range1_minimum);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSpectralFlatnessArray(::grpc::ServerContext* context, const ModAccFetchSpectralFlatnessArrayRequest* request, ModAccFetchSpectralFlatnessArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchSpectralFlatnessArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_range1_maximum_to_range1_minimum()->Resize(actual_array_size, 0);
+        float64* range1_maximum_to_range1_minimum = response->mutable_range1_maximum_to_range1_minimum()->mutable_data();
+        response->mutable_range2_maximum_to_range2_minimum()->Resize(actual_array_size, 0);
+        float64* range2_maximum_to_range2_minimum = response->mutable_range2_maximum_to_range2_minimum()->mutable_data();
+        response->mutable_range1_maximum_to_range2_minimum()->Resize(actual_array_size, 0);
+        float64* range1_maximum_to_range2_minimum = response->mutable_range1_maximum_to_range2_minimum()->mutable_data();
+        response->mutable_range2_maximum_to_range1_minimum()->Resize(actual_array_size, 0);
+        float64* range2_maximum_to_range1_minimum = response->mutable_range2_maximum_to_range1_minimum()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchSpectralFlatnessArray(instrument, selector_string, timeout, range1_maximum_to_range1_minimum, range2_maximum_to_range2_minimum, range1_maximum_to_range2_minimum, range2_maximum_to_range1_minimum, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_range1_maximum_to_range1_minimum()->Resize(actual_array_size, 0);
+          response->mutable_range2_maximum_to_range2_minimum()->Resize(actual_array_size, 0);
+          response->mutable_range1_maximum_to_range2_minimum()->Resize(actual_array_size, 0);
+          response->mutable_range2_maximum_to_range1_minimum()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSpectralFlatnessTrace(::grpc::ServerContext* context, const ModAccFetchSpectralFlatnessTraceRequest* request, ModAccFetchSpectralFlatnessTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchSpectralFlatnessTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_spectral_flatness()->Resize(actual_array_size, 0);
+        float32* spectral_flatness = response->mutable_spectral_flatness()->mutable_data();
+        response->mutable_spectral_flatness_lower_mask()->Resize(actual_array_size, 0);
+        float32* spectral_flatness_lower_mask = response->mutable_spectral_flatness_lower_mask()->mutable_data();
+        response->mutable_spectral_flatness_upper_mask()->Resize(actual_array_size, 0);
+        float32* spectral_flatness_upper_mask = response->mutable_spectral_flatness_upper_mask()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchSpectralFlatnessTrace(instrument, selector_string, timeout, &x0, &dx, spectral_flatness, spectral_flatness_lower_mask, spectral_flatness_upper_mask, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_spectral_flatness()->Resize(actual_array_size, 0);
+          response->mutable_spectral_flatness_lower_mask()->Resize(actual_array_size, 0);
+          response->mutable_spectral_flatness_upper_mask()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSubblockIQImpairments(::grpc::ServerContext* context, const ModAccFetchSubblockIQImpairmentsRequest* request, ModAccFetchSubblockIQImpairmentsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 subblock_mean_iq_origin_offset {};
+      float64 subblock_mean_iq_gain_imbalance {};
+      float64 subblock_mean_iq_quadrature_error {};
+      auto status = library_->ModAccFetchSubblockIQImpairments(instrument, selector_string, timeout, &subblock_mean_iq_origin_offset, &subblock_mean_iq_gain_imbalance, &subblock_mean_iq_quadrature_error);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_subblock_mean_iq_origin_offset(subblock_mean_iq_origin_offset);
+        response->set_subblock_mean_iq_gain_imbalance(subblock_mean_iq_gain_imbalance);
+        response->set_subblock_mean_iq_quadrature_error(subblock_mean_iq_quadrature_error);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSubblockInBandEmissionMargin(::grpc::ServerContext* context, const ModAccFetchSubblockInBandEmissionMarginRequest* request, ModAccFetchSubblockInBandEmissionMarginResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 subblock_in_band_emission_margin {};
+      auto status = library_->ModAccFetchSubblockInBandEmissionMargin(instrument, selector_string, timeout, &subblock_in_band_emission_margin);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_subblock_in_band_emission_margin(subblock_in_band_emission_margin);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSubblockInBandEmissionTrace(::grpc::ServerContext* context, const ModAccFetchSubblockInBandEmissionTraceRequest* request, ModAccFetchSubblockInBandEmissionTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchSubblockInBandEmissionTrace(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_subblock_in_band_emission()->Resize(actual_array_size, 0);
+        float64* subblock_in_band_emission = response->mutable_subblock_in_band_emission()->mutable_data();
+        response->mutable_subblock_in_band_emission_mask()->Resize(actual_array_size, 0);
+        float64* subblock_in_band_emission_mask = response->mutable_subblock_in_band_emission_mask()->mutable_data();
+        response->mutable_subblock_in_band_emission_rb_indices()->Resize(actual_array_size, 0);
+        float64* subblock_in_band_emission_rb_indices = response->mutable_subblock_in_band_emission_rb_indices()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchSubblockInBandEmissionTrace(instrument, selector_string, timeout, subblock_in_band_emission, subblock_in_band_emission_mask, subblock_in_band_emission_rb_indices, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_subblock_in_band_emission()->Resize(actual_array_size, 0);
+          response->mutable_subblock_in_band_emission_mask()->Resize(actual_array_size, 0);
+          response->mutable_subblock_in_band_emission_rb_indices()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSynchronizationSignalConstellation(::grpc::ServerContext* context, const ModAccFetchSynchronizationSignalConstellationRequest* request, ModAccFetchSynchronizationSignalConstellationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchSynchronizationSignalConstellation(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        std::vector<NIComplexSingle> sss_constellation(actual_array_size, NIComplexSingle());
+        std::vector<NIComplexSingle> pss_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchSynchronizationSignalConstellation(instrument, selector_string, timeout, sss_constellation.data(), pss_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          convert_to_grpc(sss_constellation, response->mutable_sss_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_sss_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_sss_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          convert_to_grpc(pss_constellation, response->mutable_pss_constellation());
+          {
+            auto shrunk_size = actual_array_size;
+            auto current_size = response->mutable_pss_constellation()->size();
+            if (shrunk_size != current_size) {
+              response->mutable_pss_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            }
+          }        
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSynchronizationSignalEVM(::grpc::ServerContext* context, const ModAccFetchSynchronizationSignalEVMRequest* request, ModAccFetchSynchronizationSignalEVMResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 mean_rms_pss_evm {};
+      float64 mean_rms_sss_evm {};
+      auto status = library_->ModAccFetchSynchronizationSignalEVM(instrument, selector_string, timeout, &mean_rms_pss_evm, &mean_rms_sss_evm);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_mean_rms_pss_evm(mean_rms_pss_evm);
+        response->set_mean_rms_sss_evm(mean_rms_sss_evm);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSynchronizationSignalEVMArray(::grpc::ServerContext* context, const ModAccFetchSynchronizationSignalEVMArrayRequest* request, ModAccFetchSynchronizationSignalEVMArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchSynchronizationSignalEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_mean_rms_pss_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_pss_evm = response->mutable_mean_rms_pss_evm()->mutable_data();
+        response->mutable_mean_rms_sss_evm()->Resize(actual_array_size, 0);
+        float64* mean_rms_sss_evm = response->mutable_mean_rms_sss_evm()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchSynchronizationSignalEVMArray(instrument, selector_string, timeout, mean_rms_pss_evm, mean_rms_sss_evm, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_mean_rms_pss_evm()->Resize(actual_array_size, 0);
+          response->mutable_mean_rms_sss_evm()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::OBWCfgAveraging(::grpc::ServerContext* context, const OBWCfgAveragingRequest* request, OBWCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxlte_grpc::OBWCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      int32 averaging_type;
+      switch (request->averaging_type_enum_case()) {
+        case nirfmxlte_grpc::OBWCfgAveragingRequest::AveragingTypeEnumCase::kAveragingType: {
+          averaging_type = static_cast<int32>(request->averaging_type());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgAveragingRequest::AveragingTypeEnumCase::kAveragingTypeRaw: {
+          averaging_type = static_cast<int32>(request->averaging_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgAveragingRequest::AveragingTypeEnumCase::AVERAGING_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OBWCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::OBWCfgRBWFilter(::grpc::ServerContext* context, const OBWCfgRBWFilterRequest* request, OBWCfgRBWFilterResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 rbw_auto;
+      switch (request->rbw_auto_enum_case()) {
+        case nirfmxlte_grpc::OBWCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
+          rbw_auto = static_cast<int32>(request->rbw_auto());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAutoRaw: {
+          rbw_auto = static_cast<int32>(request->rbw_auto_raw());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgRBWFilterRequest::RbwAutoEnumCase::RBW_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 rbw = request->rbw();
+      int32 rbw_filter_type;
+      switch (request->rbw_filter_type_enum_case()) {
+        case nirfmxlte_grpc::OBWCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterType: {
+          rbw_filter_type = static_cast<int32>(request->rbw_filter_type());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgRBWFilterRequest::RbwFilterTypeEnumCase::kRbwFilterTypeRaw: {
+          rbw_filter_type = static_cast<int32>(request->rbw_filter_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgRBWFilterRequest::RbwFilterTypeEnumCase::RBW_FILTER_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for rbw_filter_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->OBWCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::OBWCfgSweepTime(::grpc::ServerContext* context, const OBWCfgSweepTimeRequest* request, OBWCfgSweepTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxlte_grpc::OBWCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxlte_grpc::OBWCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 sweep_time_interval = request->sweep_time_interval();
+      auto status = library_->OBWCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::OBWFetchMeasurement(::grpc::ServerContext* context, const OBWFetchMeasurementRequest* request, OBWFetchMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 occupied_bandwidth {};
+      float64 absolute_power {};
+      float64 start_frequency {};
+      float64 stop_frequency {};
+      auto status = library_->OBWFetchMeasurement(instrument, selector_string, timeout, &occupied_bandwidth, &absolute_power, &start_frequency, &stop_frequency);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_occupied_bandwidth(occupied_bandwidth);
+        response->set_absolute_power(absolute_power);
+        response->set_start_frequency(start_frequency);
+        response->set_stop_frequency(stop_frequency);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::OBWFetchSpectrum(::grpc::ServerContext* context, const OBWFetchSpectrumRequest* request, OBWFetchSpectrumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OBWFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_spectrum()->Resize(actual_array_size, 0);
+        float32* spectrum = response->mutable_spectrum()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OBWFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_spectrum()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::PVTCfgAveraging(::grpc::ServerContext* context, const PVTCfgAveragingRequest* request, PVTCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxlte_grpc::PVTCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::PVTCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::PVTCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      int32 averaging_type;
+      switch (request->averaging_type_enum_case()) {
+        case nirfmxlte_grpc::PVTCfgAveragingRequest::AveragingTypeEnumCase::kAveragingType: {
+          averaging_type = static_cast<int32>(request->averaging_type());
+          break;
+        }
+        case nirfmxlte_grpc::PVTCfgAveragingRequest::AveragingTypeEnumCase::kAveragingTypeRaw: {
+          averaging_type = static_cast<int32>(request->averaging_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::PVTCfgAveragingRequest::AveragingTypeEnumCase::AVERAGING_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->PVTCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::PVTCfgMeasurementMethod(::grpc::ServerContext* context, const PVTCfgMeasurementMethodRequest* request, PVTCfgMeasurementMethodResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 measurement_method;
+      switch (request->measurement_method_enum_case()) {
+        case nirfmxlte_grpc::PVTCfgMeasurementMethodRequest::MeasurementMethodEnumCase::kMeasurementMethod: {
+          measurement_method = static_cast<int32>(request->measurement_method());
+          break;
+        }
+        case nirfmxlte_grpc::PVTCfgMeasurementMethodRequest::MeasurementMethodEnumCase::kMeasurementMethodRaw: {
+          measurement_method = static_cast<int32>(request->measurement_method_raw());
+          break;
+        }
+        case nirfmxlte_grpc::PVTCfgMeasurementMethodRequest::MeasurementMethodEnumCase::MEASUREMENT_METHOD_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurement_method was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->PVTCfgMeasurementMethod(instrument, selector_string, measurement_method);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::PVTCfgOFFPowerExclusionPeriods(::grpc::ServerContext* context, const PVTCfgOFFPowerExclusionPeriodsRequest* request, PVTCfgOFFPowerExclusionPeriodsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 off_power_exclusion_before = request->off_power_exclusion_before();
+      float64 off_power_exclusion_after = request->off_power_exclusion_after();
+      auto status = library_->PVTCfgOFFPowerExclusionPeriods(instrument, selector_string, off_power_exclusion_before, off_power_exclusion_after);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::PVTFetchMeasurement(::grpc::ServerContext* context, const PVTFetchMeasurementRequest* request, PVTFetchMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 measurement_status {};
+      float64 mean_absolute_off_power_before {};
+      float64 mean_absolute_off_power_after {};
+      float64 mean_absolute_on_power {};
+      float64 burst_width {};
+      auto status = library_->PVTFetchMeasurement(instrument, selector_string, timeout, &measurement_status, &mean_absolute_off_power_before, &mean_absolute_off_power_after, &mean_absolute_on_power, &burst_width);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_measurement_status(static_cast<nirfmxlte_grpc::PvtMeasurementStatus>(measurement_status));
+        response->set_measurement_status_raw(measurement_status);
+        response->set_mean_absolute_off_power_before(mean_absolute_off_power_before);
+        response->set_mean_absolute_off_power_after(mean_absolute_off_power_after);
+        response->set_mean_absolute_on_power(mean_absolute_on_power);
+        response->set_burst_width(burst_width);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::PVTFetchMeasurementArray(::grpc::ServerContext* context, const PVTFetchMeasurementArrayRequest* request, PVTFetchMeasurementArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->PVTFetchMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
+        int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
+        response->mutable_mean_absolute_off_power_before()->Resize(actual_array_size, 0);
+        float64* mean_absolute_off_power_before = response->mutable_mean_absolute_off_power_before()->mutable_data();
+        response->mutable_mean_absolute_off_power_after()->Resize(actual_array_size, 0);
+        float64* mean_absolute_off_power_after = response->mutable_mean_absolute_off_power_after()->mutable_data();
+        response->mutable_mean_absolute_on_power()->Resize(actual_array_size, 0);
+        float64* mean_absolute_on_power = response->mutable_mean_absolute_on_power()->mutable_data();
+        response->mutable_burst_width()->Resize(actual_array_size, 0);
+        float64* burst_width = response->mutable_burst_width()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->PVTFetchMeasurementArray(instrument, selector_string, timeout, measurement_status, mean_absolute_off_power_before, mean_absolute_off_power_after, mean_absolute_on_power, burst_width, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_measurement_status()->Clear();
+          response->mutable_measurement_status()->Reserve(actual_array_size);
+          std::transform(
+            response->measurement_status_raw().begin(),
+            response->measurement_status_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
+            [&](auto x) { 
+                return static_cast<nirfmxlte_grpc::PvtMeasurementStatus>(x);
+            });
+          response->mutable_measurement_status()->Resize(actual_array_size, 0);
+          response->mutable_mean_absolute_off_power_before()->Resize(actual_array_size, 0);
+          response->mutable_mean_absolute_off_power_after()->Resize(actual_array_size, 0);
+          response->mutable_mean_absolute_on_power()->Resize(actual_array_size, 0);
+          response->mutable_burst_width()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::PVTFetchSignalPowerTrace(::grpc::ServerContext* context, const PVTFetchSignalPowerTraceRequest* request, PVTFetchSignalPowerTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->PVTFetchSignalPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_signal_power()->Resize(actual_array_size, 0);
+        float32* signal_power = response->mutable_signal_power()->mutable_data();
+        response->mutable_absolute_limit()->Resize(actual_array_size, 0);
+        float32* absolute_limit = response->mutable_absolute_limit()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->PVTFetchSignalPowerTrace(instrument, selector_string, timeout, &x0, &dx, signal_power, absolute_limit, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_signal_power()->Resize(actual_array_size, 0);
+          response->mutable_absolute_limit()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ResetToDefault(::grpc::ServerContext* context, const ResetToDefaultRequest* request, ResetToDefaultResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->ResetToDefault(instrument, selector_string);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgAveraging(::grpc::ServerContext* context, const SEMCfgAveragingRequest* request, SEMCfgAveragingResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 averaging_enabled;
+      switch (request->averaging_enabled_enum_case()) {
+        case nirfmxlte_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabledRaw: {
+          averaging_enabled = static_cast<int32>(request->averaging_enabled_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::AVERAGING_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 averaging_count = request->averaging_count();
+      int32 averaging_type;
+      switch (request->averaging_type_enum_case()) {
+        case nirfmxlte_grpc::SEMCfgAveragingRequest::AveragingTypeEnumCase::kAveragingType: {
+          averaging_type = static_cast<int32>(request->averaging_type());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgAveragingRequest::AveragingTypeEnumCase::kAveragingTypeRaw: {
+          averaging_type = static_cast<int32>(request->averaging_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgAveragingRequest::AveragingTypeEnumCase::AVERAGING_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for averaging_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SEMCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgComponentCarrierMaximumOutputPower(::grpc::ServerContext* context, const SEMCfgComponentCarrierMaximumOutputPowerRequest* request, SEMCfgComponentCarrierMaximumOutputPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 component_carrier_maximum_output_power = request->component_carrier_maximum_output_power();
+      auto status = library_->SEMCfgComponentCarrierMaximumOutputPower(instrument, selector_string, component_carrier_maximum_output_power);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgComponentCarrierMaximumOutputPowerArray(::grpc::ServerContext* context, const SEMCfgComponentCarrierMaximumOutputPowerArrayRequest* request, SEMCfgComponentCarrierMaximumOutputPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto component_carrier_maximum_output_power = const_cast<float64*>(request->component_carrier_maximum_output_power().data());
+      int32 number_of_elements = static_cast<int32>(request->component_carrier_maximum_output_power().size());
+      auto status = library_->SEMCfgComponentCarrierMaximumOutputPowerArray(instrument, selector_string, component_carrier_maximum_output_power, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgDownlinkMask(::grpc::ServerContext* context, const SEMCfgDownlinkMaskRequest* request, SEMCfgDownlinkMaskResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 downlink_mask_type;
+      switch (request->downlink_mask_type_enum_case()) {
+        case nirfmxlte_grpc::SEMCfgDownlinkMaskRequest::DownlinkMaskTypeEnumCase::kDownlinkMaskType: {
+          downlink_mask_type = static_cast<int32>(request->downlink_mask_type());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgDownlinkMaskRequest::DownlinkMaskTypeEnumCase::kDownlinkMaskTypeRaw: {
+          downlink_mask_type = static_cast<int32>(request->downlink_mask_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgDownlinkMaskRequest::DownlinkMaskTypeEnumCase::DOWNLINK_MASK_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for downlink_mask_type was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 delta_f_maximum = request->delta_f_maximum();
+      float64 aggregated_maximum_power = request->aggregated_maximum_power();
+      auto status = library_->SEMCfgDownlinkMask(instrument, selector_string, downlink_mask_type, delta_f_maximum, aggregated_maximum_power);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgNumberOfOffsets(::grpc::ServerContext* context, const SEMCfgNumberOfOffsetsRequest* request, SEMCfgNumberOfOffsetsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 number_of_offsets = request->number_of_offsets();
+      auto status = library_->SEMCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetAbsoluteLimit(::grpc::ServerContext* context, const SEMCfgOffsetAbsoluteLimitRequest* request, SEMCfgOffsetAbsoluteLimitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 offset_absolute_limit_start = request->offset_absolute_limit_start();
+      float64 offset_absolute_limit_stop = request->offset_absolute_limit_stop();
+      auto status = library_->SEMCfgOffsetAbsoluteLimit(instrument, selector_string, offset_absolute_limit_start, offset_absolute_limit_stop);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetAbsoluteLimitArray(::grpc::ServerContext* context, const SEMCfgOffsetAbsoluteLimitArrayRequest* request, SEMCfgOffsetAbsoluteLimitArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto offset_absolute_limit_start = const_cast<float64*>(request->offset_absolute_limit_start().data());
+      auto offset_absolute_limit_stop = const_cast<float64*>(request->offset_absolute_limit_stop().data());
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->offset_absolute_limit_start_size(),
+        request->offset_absolute_limit_stop_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_absolute_limit_start, offset_absolute_limit_stop] do not match");
+      }
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
+      auto status = library_->SEMCfgOffsetAbsoluteLimitArray(instrument, selector_string, offset_absolute_limit_start, offset_absolute_limit_stop, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetBandwidthIntegral(::grpc::ServerContext* context, const SEMCfgOffsetBandwidthIntegralRequest* request, SEMCfgOffsetBandwidthIntegralResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 offset_bandwidth_integral = request->offset_bandwidth_integral();
+      auto status = library_->SEMCfgOffsetBandwidthIntegral(instrument, selector_string, offset_bandwidth_integral);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetBandwidthIntegralArray(::grpc::ServerContext* context, const SEMCfgOffsetBandwidthIntegralArrayRequest* request, SEMCfgOffsetBandwidthIntegralArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto offset_bandwidth_integral = const_cast<int32*>(reinterpret_cast<const int32*>(request->offset_bandwidth_integral().data()));
+      int32 number_of_elements = static_cast<int32>(request->offset_bandwidth_integral().size());
+      auto status = library_->SEMCfgOffsetBandwidthIntegralArray(instrument, selector_string, offset_bandwidth_integral, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetFrequency(::grpc::ServerContext* context, const SEMCfgOffsetFrequencyRequest* request, SEMCfgOffsetFrequencyResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 offset_start_frequency = request->offset_start_frequency();
+      float64 offset_stop_frequency = request->offset_stop_frequency();
+      int32 offset_sideband;
+      switch (request->offset_sideband_enum_case()) {
+        case nirfmxlte_grpc::SEMCfgOffsetFrequencyRequest::OffsetSidebandEnumCase::kOffsetSideband: {
+          offset_sideband = static_cast<int32>(request->offset_sideband());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgOffsetFrequencyRequest::OffsetSidebandEnumCase::kOffsetSidebandRaw: {
+          offset_sideband = static_cast<int32>(request->offset_sideband_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgOffsetFrequencyRequest::OffsetSidebandEnumCase::OFFSET_SIDEBAND_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for offset_sideband was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SEMCfgOffsetFrequency(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_sideband);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetFrequencyArray(::grpc::ServerContext* context, const SEMCfgOffsetFrequencyArrayRequest* request, SEMCfgOffsetFrequencyArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto offset_start_frequency = const_cast<float64*>(request->offset_start_frequency().data());
+      auto offset_stop_frequency = const_cast<float64*>(request->offset_stop_frequency().data());
+      auto offset_sideband_vector = std::vector<int32>();
+      offset_sideband_vector.reserve(request->offset_sideband().size());
+      std::transform(
+        request->offset_sideband().begin(),
+        request->offset_sideband().end(),
+        std::back_inserter(offset_sideband_vector),
+        [](auto x) { return x; });
+      auto offset_sideband = offset_sideband_vector.data();
+
+      auto number_of_elements_determine_from_sizes = std::array<int, 3>
+      {
+        request->offset_start_frequency_size(),
+        request->offset_stop_frequency_size(),
+        request->offset_sideband_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_start_frequency, offset_stop_frequency, offset_sideband] do not match");
+      }
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
+      auto status = library_->SEMCfgOffsetFrequencyArray(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_sideband, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetLimitFailMask(::grpc::ServerContext* context, const SEMCfgOffsetLimitFailMaskRequest* request, SEMCfgOffsetLimitFailMaskResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 limit_fail_mask;
+      switch (request->limit_fail_mask_enum_case()) {
+        case nirfmxlte_grpc::SEMCfgOffsetLimitFailMaskRequest::LimitFailMaskEnumCase::kLimitFailMask: {
+          limit_fail_mask = static_cast<int32>(request->limit_fail_mask());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgOffsetLimitFailMaskRequest::LimitFailMaskEnumCase::kLimitFailMaskRaw: {
+          limit_fail_mask = static_cast<int32>(request->limit_fail_mask_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgOffsetLimitFailMaskRequest::LimitFailMaskEnumCase::LIMIT_FAIL_MASK_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for limit_fail_mask was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SEMCfgOffsetLimitFailMask(instrument, selector_string, limit_fail_mask);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetLimitFailMaskArray(::grpc::ServerContext* context, const SEMCfgOffsetLimitFailMaskArrayRequest* request, SEMCfgOffsetLimitFailMaskArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto limit_fail_mask_vector = std::vector<int32>();
+      limit_fail_mask_vector.reserve(request->limit_fail_mask().size());
+      std::transform(
+        request->limit_fail_mask().begin(),
+        request->limit_fail_mask().end(),
+        std::back_inserter(limit_fail_mask_vector),
+        [](auto x) { return x; });
+      auto limit_fail_mask = limit_fail_mask_vector.data();
+
+      int32 number_of_elements = static_cast<int32>(request->limit_fail_mask().size());
+      auto status = library_->SEMCfgOffsetLimitFailMaskArray(instrument, selector_string, limit_fail_mask, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetRBWFilter(::grpc::ServerContext* context, const SEMCfgOffsetRBWFilterRequest* request, SEMCfgOffsetRBWFilterResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 offset_rbw = request->offset_rbw();
+      int32 offset_rbw_filter_type;
+      switch (request->offset_rbw_filter_type_enum_case()) {
+        case nirfmxlte_grpc::SEMCfgOffsetRBWFilterRequest::OffsetRbwFilterTypeEnumCase::kOffsetRbwFilterType: {
+          offset_rbw_filter_type = static_cast<int32>(request->offset_rbw_filter_type());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgOffsetRBWFilterRequest::OffsetRbwFilterTypeEnumCase::kOffsetRbwFilterTypeRaw: {
+          offset_rbw_filter_type = static_cast<int32>(request->offset_rbw_filter_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgOffsetRBWFilterRequest::OffsetRbwFilterTypeEnumCase::OFFSET_RBW_FILTER_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for offset_rbw_filter_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SEMCfgOffsetRBWFilter(instrument, selector_string, offset_rbw, offset_rbw_filter_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetRBWFilterArray(::grpc::ServerContext* context, const SEMCfgOffsetRBWFilterArrayRequest* request, SEMCfgOffsetRBWFilterArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto offset_rbw = const_cast<float64*>(request->offset_rbw().data());
+      auto offset_rbw_filter_type_vector = std::vector<int32>();
+      offset_rbw_filter_type_vector.reserve(request->offset_rbw_filter_type().size());
+      std::transform(
+        request->offset_rbw_filter_type().begin(),
+        request->offset_rbw_filter_type().end(),
+        std::back_inserter(offset_rbw_filter_type_vector),
+        [](auto x) { return x; });
+      auto offset_rbw_filter_type = offset_rbw_filter_type_vector.data();
+
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->offset_rbw_size(),
+        request->offset_rbw_filter_type_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_rbw, offset_rbw_filter_type] do not match");
+      }
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
+      auto status = library_->SEMCfgOffsetRBWFilterArray(instrument, selector_string, offset_rbw, offset_rbw_filter_type, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetRelativeLimit(::grpc::ServerContext* context, const SEMCfgOffsetRelativeLimitRequest* request, SEMCfgOffsetRelativeLimitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 relative_limit_start = request->relative_limit_start();
+      float64 relative_limit_stop = request->relative_limit_stop();
+      auto status = library_->SEMCfgOffsetRelativeLimit(instrument, selector_string, relative_limit_start, relative_limit_stop);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgOffsetRelativeLimitArray(::grpc::ServerContext* context, const SEMCfgOffsetRelativeLimitArrayRequest* request, SEMCfgOffsetRelativeLimitArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto relative_limit_start = const_cast<float64*>(request->relative_limit_start().data());
+      auto relative_limit_stop = const_cast<float64*>(request->relative_limit_stop().data());
+      auto number_of_elements_determine_from_sizes = std::array<int, 2>
+      {
+        request->relative_limit_start_size(),
+        request->relative_limit_stop_size()
+      };
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+
+      if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [relative_limit_start, relative_limit_stop] do not match");
+      }
+      auto number_of_elements = number_of_elements_size_calculation.size;
+
+      auto status = library_->SEMCfgOffsetRelativeLimitArray(instrument, selector_string, relative_limit_start, relative_limit_stop, number_of_elements);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgSweepTime(::grpc::ServerContext* context, const SEMCfgSweepTimeRequest* request, SEMCfgSweepTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 sweep_time_auto;
+      switch (request->sweep_time_auto_enum_case()) {
+        case nirfmxlte_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAutoRaw: {
+          sweep_time_auto = static_cast<int32>(request->sweep_time_auto_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::SWEEP_TIME_AUTO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sweep_time_auto was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 sweep_time_interval = request->sweep_time_interval();
+      auto status = library_->SEMCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMCfgUplinkMaskType(::grpc::ServerContext* context, const SEMCfgUplinkMaskTypeRequest* request, SEMCfgUplinkMaskTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 uplink_mask_type;
+      switch (request->uplink_mask_type_enum_case()) {
+        case nirfmxlte_grpc::SEMCfgUplinkMaskTypeRequest::UplinkMaskTypeEnumCase::kUplinkMaskType: {
+          uplink_mask_type = static_cast<int32>(request->uplink_mask_type());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgUplinkMaskTypeRequest::UplinkMaskTypeEnumCase::kUplinkMaskTypeRaw: {
+          uplink_mask_type = static_cast<int32>(request->uplink_mask_type_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SEMCfgUplinkMaskTypeRequest::UplinkMaskTypeEnumCase::UPLINK_MASK_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for uplink_mask_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SEMCfgUplinkMaskType(instrument, selector_string, uplink_mask_type);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchComponentCarrierMeasurement(::grpc::ServerContext* context, const SEMFetchComponentCarrierMeasurementRequest* request, SEMFetchComponentCarrierMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 absolute_integrated_power {};
+      float64 relative_integrated_power {};
+      auto status = library_->SEMFetchComponentCarrierMeasurement(instrument, selector_string, timeout, &absolute_integrated_power, &relative_integrated_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_absolute_integrated_power(absolute_integrated_power);
+        response->set_relative_integrated_power(relative_integrated_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchComponentCarrierMeasurementArray(::grpc::ServerContext* context, const SEMFetchComponentCarrierMeasurementArrayRequest* request, SEMFetchComponentCarrierMeasurementArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
+        float64* absolute_integrated_power = response->mutable_absolute_integrated_power()->mutable_data();
+        response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
+        float64* relative_integrated_power = response->mutable_relative_integrated_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, absolute_integrated_power, relative_integrated_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
+          response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchLowerOffsetMargin(::grpc::ServerContext* context, const SEMFetchLowerOffsetMarginRequest* request, SEMFetchLowerOffsetMarginResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 measurement_status {};
+      float64 margin {};
+      float64 margin_frequency {};
+      float64 margin_absolute_power {};
+      float64 margin_relative_power {};
+      auto status = library_->SEMFetchLowerOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_measurement_status(static_cast<nirfmxlte_grpc::SemLowerOffsetMeasurementStatus>(measurement_status));
+        response->set_measurement_status_raw(measurement_status);
+        response->set_margin(margin);
+        response->set_margin_frequency(margin_frequency);
+        response->set_margin_absolute_power(margin_absolute_power);
+        response->set_margin_relative_power(margin_relative_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchLowerOffsetMarginArray(::grpc::ServerContext* context, const SEMFetchLowerOffsetMarginArrayRequest* request, SEMFetchLowerOffsetMarginArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchLowerOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
+        int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
+        response->mutable_margin()->Resize(actual_array_size, 0);
+        float64* margin = response->mutable_margin()->mutable_data();
+        response->mutable_margin_frequency()->Resize(actual_array_size, 0);
+        float64* margin_frequency = response->mutable_margin_frequency()->mutable_data();
+        response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
+        float64* margin_absolute_power = response->mutable_margin_absolute_power()->mutable_data();
+        response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
+        float64* margin_relative_power = response->mutable_margin_relative_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchLowerOffsetMarginArray(instrument, selector_string, timeout, measurement_status, margin, margin_frequency, margin_absolute_power, margin_relative_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_measurement_status()->Clear();
+          response->mutable_measurement_status()->Reserve(actual_array_size);
+          std::transform(
+            response->measurement_status_raw().begin(),
+            response->measurement_status_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
+            [&](auto x) { 
+                return static_cast<nirfmxlte_grpc::SemLowerOffsetMeasurementStatus>(x);
+            });
+          response->mutable_measurement_status()->Resize(actual_array_size, 0);
+          response->mutable_margin()->Resize(actual_array_size, 0);
+          response->mutable_margin_frequency()->Resize(actual_array_size, 0);
+          response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchLowerOffsetPower(::grpc::ServerContext* context, const SEMFetchLowerOffsetPowerRequest* request, SEMFetchLowerOffsetPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 absolute_integrated_power {};
+      float64 relative_integrated_power {};
+      float64 absolute_peak_power {};
+      float64 peak_frequency {};
+      float64 relative_peak_power {};
+      auto status = library_->SEMFetchLowerOffsetPower(instrument, selector_string, timeout, &absolute_integrated_power, &relative_integrated_power, &absolute_peak_power, &peak_frequency, &relative_peak_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_absolute_integrated_power(absolute_integrated_power);
+        response->set_relative_integrated_power(relative_integrated_power);
+        response->set_absolute_peak_power(absolute_peak_power);
+        response->set_peak_frequency(peak_frequency);
+        response->set_relative_peak_power(relative_peak_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchLowerOffsetPowerArray(::grpc::ServerContext* context, const SEMFetchLowerOffsetPowerArrayRequest* request, SEMFetchLowerOffsetPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchLowerOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
+        float64* absolute_integrated_power = response->mutable_absolute_integrated_power()->mutable_data();
+        response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
+        float64* relative_integrated_power = response->mutable_relative_integrated_power()->mutable_data();
+        response->mutable_absolute_peak_power()->Resize(actual_array_size, 0);
+        float64* absolute_peak_power = response->mutable_absolute_peak_power()->mutable_data();
+        response->mutable_peak_frequency()->Resize(actual_array_size, 0);
+        float64* peak_frequency = response->mutable_peak_frequency()->mutable_data();
+        response->mutable_relative_peak_power()->Resize(actual_array_size, 0);
+        float64* relative_peak_power = response->mutable_relative_peak_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchLowerOffsetPowerArray(instrument, selector_string, timeout, absolute_integrated_power, relative_integrated_power, absolute_peak_power, peak_frequency, relative_peak_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
+          response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
+          response->mutable_absolute_peak_power()->Resize(actual_array_size, 0);
+          response->mutable_peak_frequency()->Resize(actual_array_size, 0);
+          response->mutable_relative_peak_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchMeasurementStatus(::grpc::ServerContext* context, const SEMFetchMeasurementStatusRequest* request, SEMFetchMeasurementStatusResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 measurement_status {};
+      auto status = library_->SEMFetchMeasurementStatus(instrument, selector_string, timeout, &measurement_status);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_measurement_status(static_cast<nirfmxlte_grpc::SemMeasurementStatus>(measurement_status));
+        response->set_measurement_status_raw(measurement_status);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchSpectrum(::grpc::ServerContext* context, const SEMFetchSpectrumRequest* request, SEMFetchSpectrumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_spectrum()->Resize(actual_array_size, 0);
+        float32* spectrum = response->mutable_spectrum()->mutable_data();
+        response->mutable_composite_mask()->Resize(actual_array_size, 0);
+        float32* composite_mask = response->mutable_composite_mask()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, spectrum, composite_mask, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_spectrum()->Resize(actual_array_size, 0);
+          response->mutable_composite_mask()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchSubblockMeasurement(::grpc::ServerContext* context, const SEMFetchSubblockMeasurementRequest* request, SEMFetchSubblockMeasurementResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 subblock_power {};
+      float64 integration_bandwidth {};
+      float64 frequency {};
+      auto status = library_->SEMFetchSubblockMeasurement(instrument, selector_string, timeout, &subblock_power, &integration_bandwidth, &frequency);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_subblock_power(subblock_power);
+        response->set_integration_bandwidth(integration_bandwidth);
+        response->set_frequency(frequency);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchTotalAggregatedPower(::grpc::ServerContext* context, const SEMFetchTotalAggregatedPowerRequest* request, SEMFetchTotalAggregatedPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 total_aggregated_power {};
+      auto status = library_->SEMFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_total_aggregated_power(total_aggregated_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchUpperOffsetMargin(::grpc::ServerContext* context, const SEMFetchUpperOffsetMarginRequest* request, SEMFetchUpperOffsetMarginResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 measurement_status {};
+      float64 margin {};
+      float64 margin_frequency {};
+      float64 margin_absolute_power {};
+      float64 margin_relative_power {};
+      auto status = library_->SEMFetchUpperOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_measurement_status(static_cast<nirfmxlte_grpc::SemUpperOffsetMeasurementStatus>(measurement_status));
+        response->set_measurement_status_raw(measurement_status);
+        response->set_margin(margin);
+        response->set_margin_frequency(margin_frequency);
+        response->set_margin_absolute_power(margin_absolute_power);
+        response->set_margin_relative_power(margin_relative_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchUpperOffsetMarginArray(::grpc::ServerContext* context, const SEMFetchUpperOffsetMarginArrayRequest* request, SEMFetchUpperOffsetMarginArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchUpperOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
+        int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
+        response->mutable_margin()->Resize(actual_array_size, 0);
+        float64* margin = response->mutable_margin()->mutable_data();
+        response->mutable_margin_frequency()->Resize(actual_array_size, 0);
+        float64* margin_frequency = response->mutable_margin_frequency()->mutable_data();
+        response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
+        float64* margin_absolute_power = response->mutable_margin_absolute_power()->mutable_data();
+        response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
+        float64* margin_relative_power = response->mutable_margin_relative_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchUpperOffsetMarginArray(instrument, selector_string, timeout, measurement_status, margin, margin_frequency, margin_absolute_power, margin_relative_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_measurement_status()->Clear();
+          response->mutable_measurement_status()->Reserve(actual_array_size);
+          std::transform(
+            response->measurement_status_raw().begin(),
+            response->measurement_status_raw().begin() + actual_array_size,
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
+            [&](auto x) { 
+                return static_cast<nirfmxlte_grpc::SemUpperOffsetMeasurementStatus>(x);
+            });
+          response->mutable_measurement_status()->Resize(actual_array_size, 0);
+          response->mutable_margin()->Resize(actual_array_size, 0);
+          response->mutable_margin_frequency()->Resize(actual_array_size, 0);
+          response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
+          response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchUpperOffsetPower(::grpc::ServerContext* context, const SEMFetchUpperOffsetPowerRequest* request, SEMFetchUpperOffsetPowerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 absolute_integrated_power {};
+      float64 relative_integrated_power {};
+      float64 absolute_peak_power {};
+      float64 peak_frequency {};
+      float64 relative_peak_power {};
+      auto status = library_->SEMFetchUpperOffsetPower(instrument, selector_string, timeout, &absolute_integrated_power, &relative_integrated_power, &absolute_peak_power, &peak_frequency, &relative_peak_power);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_absolute_integrated_power(absolute_integrated_power);
+        response->set_relative_integrated_power(relative_integrated_power);
+        response->set_absolute_peak_power(absolute_peak_power);
+        response->set_peak_frequency(peak_frequency);
+        response->set_relative_peak_power(relative_peak_power);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SEMFetchUpperOffsetPowerArray(::grpc::ServerContext* context, const SEMFetchUpperOffsetPowerArrayRequest* request, SEMFetchUpperOffsetPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SEMFetchUpperOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
+        float64* absolute_integrated_power = response->mutable_absolute_integrated_power()->mutable_data();
+        response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
+        float64* relative_integrated_power = response->mutable_relative_integrated_power()->mutable_data();
+        response->mutable_absolute_peak_power()->Resize(actual_array_size, 0);
+        float64* absolute_peak_power = response->mutable_absolute_peak_power()->mutable_data();
+        response->mutable_peak_frequency()->Resize(actual_array_size, 0);
+        float64* peak_frequency = response->mutable_peak_frequency()->mutable_data();
+        response->mutable_relative_peak_power()->Resize(actual_array_size, 0);
+        float64* relative_peak_power = response->mutable_relative_peak_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SEMFetchUpperOffsetPowerArray(instrument, selector_string, timeout, absolute_integrated_power, relative_integrated_power, absolute_peak_power, peak_frequency, relative_peak_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
+          response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
+          response->mutable_absolute_peak_power()->Resize(actual_array_size, 0);
+          response->mutable_peak_frequency()->Resize(actual_array_size, 0);
+          response->mutable_relative_peak_power()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SelectMeasurements(::grpc::ServerContext* context, const SelectMeasurementsRequest* request, SelectMeasurementsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      uInt32 measurements;
+      switch (request->measurements_enum_case()) {
+        case nirfmxlte_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurements: {
+          measurements = static_cast<uInt32>(request->measurements());
+          break;
+        }
+        case nirfmxlte_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurementsRaw: {
+          measurements = static_cast<uInt32>(request->measurements_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::MEASUREMENTS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for measurements was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 enable_all_traces = request->enable_all_traces();
+      auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      auto status = library_->SendSoftwareEdgeTrigger(instrument);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeF32(::grpc::ServerContext* context, const SetAttributeF32Request* request, SetAttributeF32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      float32 attr_val = request->attr_val();
+      auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeF32Array(::grpc::ServerContext* context, const SetAttributeF32ArrayRequest* request, SetAttributeF32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<float32*>(request->attr_val().data());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeF64(::grpc::ServerContext* context, const SetAttributeF64Request* request, SetAttributeF64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      float64 attr_val = request->attr_val();
+      auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeF64Array(::grpc::ServerContext* context, const SetAttributeF64ArrayRequest* request, SetAttributeF64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<float64*>(request->attr_val().data());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeI16(::grpc::ServerContext* context, const SetAttributeI16Request* request, SetAttributeI16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int16>::min() || attr_val_raw > std::numeric_limits<int16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int16>(attr_val_raw);
+
+      auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeI32(::grpc::ServerContext* context, const SetAttributeI32Request* request, SetAttributeI32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int32 attr_val;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxlte_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrVal: {
+          attr_val = static_cast<int32>(request->attr_val());
+          break;
+        }
+        case nirfmxlte_grpc::SetAttributeI32Request::AttrValEnumCase::kAttrValRaw: {
+          attr_val = static_cast<int32>(request->attr_val_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SetAttributeI32Request::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetAttributeI32(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeI32Array(::grpc::ServerContext* context, const SetAttributeI32ArrayRequest* request, SetAttributeI32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_vector = std::vector<int32>();
+      attr_val_vector.reserve(request->attr_val().size());
+      std::transform(
+        request->attr_val().begin(),
+        request->attr_val().end(),
+        std::back_inserter(attr_val_vector),
+        [](auto x) { return x; });
+      auto attr_val = attr_val_vector.data();
+
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeI64(::grpc::ServerContext* context, const SetAttributeI64Request* request, SetAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attr_val = request->attr_val();
+      auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeI64Array(::grpc::ServerContext* context, const SetAttributeI64ArrayRequest* request, SetAttributeI64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeI8(::grpc::ServerContext* context, const SetAttributeI8Request* request, SetAttributeI8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<int8>::min() || attr_val_raw > std::numeric_limits<int8>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int8");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<int8>(attr_val_raw);
+
+      auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeI8Array(::grpc::ServerContext* context, const SetAttributeI8ArrayRequest* request, SetAttributeI8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      auto attr_val = std::vector<int8>();
+      attr_val.reserve(attr_val_raw.size());
+      std::transform(
+        attr_val_raw.begin(),
+        attr_val_raw.end(),
+        std::back_inserter(attr_val),
+        [](auto x) { 
+              if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int8");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int8>(x);
+        });
+
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const SetAttributeNIComplexDoubleArrayRequest* request, SetAttributeNIComplexDoubleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const SetAttributeNIComplexSingleArrayRequest* request, SetAttributeNIComplexSingleArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeString(::grpc::ServerContext* context, const SetAttributeStringRequest* request, SetAttributeStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      char* attr_val;
+      switch (request->attr_val_enum_case()) {
+        case nirfmxlte_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
+          auto attr_val_imap_it = nirfmxltestringattributevaluesmapped_input_map_.find(request->attr_val_mapped());
+          if (attr_val_imap_it == nirfmxltestringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val_mapped was not specified or out of range.");
+          }
+          attr_val = const_cast<char*>((attr_val_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxlte_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValRaw: {
+          attr_val = const_cast<char*>(request->attr_val_raw().c_str());
+          break;
+        }
+        case nirfmxlte_grpc::SetAttributeStringRequest::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attr_val was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeU16(::grpc::ServerContext* context, const SetAttributeU16Request* request, SetAttributeU16Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val_raw = request->attr_val();
+      if (attr_val_raw < std::numeric_limits<uInt16>::min() || attr_val_raw > std::numeric_limits<uInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(attr_val_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto attr_val = static_cast<uInt16>(attr_val_raw);
+
+      auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeU32(::grpc::ServerContext* context, const SetAttributeU32Request* request, SetAttributeU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt32 attr_val = request->attr_val();
+      auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeU32Array(::grpc::ServerContext* context, const SetAttributeU32ArrayRequest* request, SetAttributeU32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeU64Array(::grpc::ServerContext* context, const SetAttributeU64ArrayRequest* request, SetAttributeU64ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeU8(::grpc::ServerContext* context, const SetAttributeU8Request* request, SetAttributeU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8 attr_val = request->attr_val();
+      auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SetAttributeU8Array(::grpc::ServerContext* context, const SetAttributeU8ArrayRequest* request, SetAttributeU8ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 attribute_id = request->attribute_id();
+      uInt8* attr_val = (uInt8*)request->attr_val().c_str();
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SlotPhaseCfgSynchronizationModeAndInterval(::grpc::ServerContext* context, const SlotPhaseCfgSynchronizationModeAndIntervalRequest* request, SlotPhaseCfgSynchronizationModeAndIntervalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 synchronization_mode;
+      switch (request->synchronization_mode_enum_case()) {
+        case nirfmxlte_grpc::SlotPhaseCfgSynchronizationModeAndIntervalRequest::SynchronizationModeEnumCase::kSynchronizationMode: {
+          synchronization_mode = static_cast<int32>(request->synchronization_mode());
+          break;
+        }
+        case nirfmxlte_grpc::SlotPhaseCfgSynchronizationModeAndIntervalRequest::SynchronizationModeEnumCase::kSynchronizationModeRaw: {
+          synchronization_mode = static_cast<int32>(request->synchronization_mode_raw());
+          break;
+        }
+        case nirfmxlte_grpc::SlotPhaseCfgSynchronizationModeAndIntervalRequest::SynchronizationModeEnumCase::SYNCHRONIZATION_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for synchronization_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 measurement_offset = request->measurement_offset();
+      int32 measurement_length = request->measurement_length();
+      auto status = library_->SlotPhaseCfgSynchronizationModeAndInterval(instrument, selector_string, synchronization_mode, measurement_offset, measurement_length);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SlotPhaseFetchMaximumPhaseDiscontinuity(::grpc::ServerContext* context, const SlotPhaseFetchMaximumPhaseDiscontinuityRequest* request, SlotPhaseFetchMaximumPhaseDiscontinuityResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 maximum_phase_discontinuity {};
+      auto status = library_->SlotPhaseFetchMaximumPhaseDiscontinuity(instrument, selector_string, timeout, &maximum_phase_discontinuity);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_maximum_phase_discontinuity(maximum_phase_discontinuity);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SlotPhaseFetchMaximumPhaseDiscontinuityArray(::grpc::ServerContext* context, const SlotPhaseFetchMaximumPhaseDiscontinuityArrayRequest* request, SlotPhaseFetchMaximumPhaseDiscontinuityArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SlotPhaseFetchMaximumPhaseDiscontinuityArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_maximum_phase_discontinuity()->Resize(actual_array_size, 0);
+        float64* maximum_phase_discontinuity = response->mutable_maximum_phase_discontinuity()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SlotPhaseFetchMaximumPhaseDiscontinuityArray(instrument, selector_string, timeout, maximum_phase_discontinuity, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_maximum_phase_discontinuity()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SlotPhaseFetchPhaseDiscontinuities(::grpc::ServerContext* context, const SlotPhaseFetchPhaseDiscontinuitiesRequest* request, SlotPhaseFetchPhaseDiscontinuitiesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SlotPhaseFetchPhaseDiscontinuities(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_slot_phase_discontinuity()->Resize(actual_array_size, 0);
+        float64* slot_phase_discontinuity = response->mutable_slot_phase_discontinuity()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SlotPhaseFetchPhaseDiscontinuities(instrument, selector_string, timeout, slot_phase_discontinuity, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_slot_phase_discontinuity()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SlotPhaseFetchSamplePhaseError(::grpc::ServerContext* context, const SlotPhaseFetchSamplePhaseErrorRequest* request, SlotPhaseFetchSamplePhaseErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SlotPhaseFetchSamplePhaseError(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_sample_phase_error()->Resize(actual_array_size, 0);
+        float32* sample_phase_error = response->mutable_sample_phase_error()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SlotPhaseFetchSamplePhaseError(instrument, selector_string, timeout, &x0, &dx, sample_phase_error, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_sample_phase_error()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SlotPhaseFetchSamplePhaseErrorLinearFitTrace(::grpc::ServerContext* context, const SlotPhaseFetchSamplePhaseErrorLinearFitTraceRequest* request, SlotPhaseFetchSamplePhaseErrorLinearFitTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SlotPhaseFetchSamplePhaseErrorLinearFitTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_sample_phase_error_linear_fit()->Resize(actual_array_size, 0);
+        float32* sample_phase_error_linear_fit = response->mutable_sample_phase_error_linear_fit()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SlotPhaseFetchSamplePhaseErrorLinearFitTrace(instrument, selector_string, timeout, &x0, &dx, sample_phase_error_linear_fit, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_x0(x0);
+          response->set_dx(dx);
+          response->mutable_sample_phase_error_linear_fit()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SlotPowerCfgMeasurementInterval(::grpc::ServerContext* context, const SlotPowerCfgMeasurementIntervalRequest* request, SlotPowerCfgMeasurementIntervalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 measurement_offset = request->measurement_offset();
+      int32 measurement_length = request->measurement_length();
+      auto status = library_->SlotPowerCfgMeasurementInterval(instrument, selector_string, measurement_offset, measurement_length);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::SlotPowerFetchPowers(::grpc::ServerContext* context, const SlotPowerFetchPowersRequest* request, SlotPowerFetchPowersResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->SlotPowerFetchPowers(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_subframe_power()->Resize(actual_array_size, 0);
+        float64* subframe_power = response->mutable_subframe_power()->mutable_data();
+        response->mutable_subframe_power_delta()->Resize(actual_array_size, 0);
+        float64* subframe_power_delta = response->mutable_subframe_power_delta()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->SlotPowerFetchPowers(instrument, selector_string, timeout, subframe_power, subframe_power_delta, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->mutable_subframe_power()->Resize(actual_array_size, 0);
+          response->mutable_subframe_power_delta()->Resize(actual_array_size, 0);
+          response->set_actual_array_size(actual_array_size);
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      float64 timeout = request->timeout();
+      auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
