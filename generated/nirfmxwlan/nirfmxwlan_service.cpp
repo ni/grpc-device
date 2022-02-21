@@ -1269,10 +1269,15 @@ namespace nirfmxwlan_grpc {
         request->start_time_size(),
         request->stop_time_size()
       };
-      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, true);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [start_time, stop_time] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (number_of_elements_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        start_time = request->start_time_size() ? std::move(start_time) : nullptr;
+        stop_time = request->stop_time_size() ? std::move(stop_time) : nullptr;
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -6389,10 +6394,16 @@ namespace nirfmxwlan_grpc {
         request->offset_stop_frequency_size(),
         request->offset_sideband_size()
       };
-      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, true);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [offset_start_frequency, offset_stop_frequency, offset_sideband] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (number_of_elements_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        offset_start_frequency = request->offset_start_frequency_size() ? std::move(offset_start_frequency) : nullptr;
+        offset_stop_frequency = request->offset_stop_frequency_size() ? std::move(offset_stop_frequency) : nullptr;
+        offset_sideband = request->offset_sideband_size() ? std::move(offset_sideband) : nullptr;
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 
@@ -6423,10 +6434,15 @@ namespace nirfmxwlan_grpc {
         request->relative_limit_start_size(),
         request->relative_limit_stop_size()
       };
-      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, false);
+      const auto number_of_elements_size_calculation = calculate_linked_array_size(number_of_elements_determine_from_sizes, true);
 
       if (number_of_elements_size_calculation.match_state == MatchState::MISMATCH) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [relative_limit_start, relative_limit_stop] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (number_of_elements_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        relative_limit_start = request->relative_limit_start_size() ? std::move(relative_limit_start) : nullptr;
+        relative_limit_stop = request->relative_limit_stop_size() ? std::move(relative_limit_stop) : nullptr;
       }
       auto number_of_elements = number_of_elements_size_calculation.size;
 

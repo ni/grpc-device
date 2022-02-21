@@ -243,6 +243,9 @@ functions = {
                 'name': 'frequency',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -252,6 +255,9 @@ functions = {
                 'name': 'externalAttenuation',
                 'size': {
                     'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'

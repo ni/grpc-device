@@ -306,10 +306,15 @@ namespace nirfmxinstr_grpc {
         request->frequency_size(),
         request->external_attenuation_size()
       };
-      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, false);
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
 
       if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, external_attenuation] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        frequency = request->frequency_size() ? std::move(frequency) : nullptr;
+        external_attenuation = request->external_attenuation_size() ? std::move(external_attenuation) : nullptr;
       }
       auto array_size = array_size_size_calculation.size;
 
