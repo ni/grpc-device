@@ -68,7 +68,7 @@ TEST_F(NiRFmxLTEDriverApiTests, Init_Close_Succeeds)
 
   auto close_response = client::close(stub(), session, 0);
 
-  EXPECT_SUCCESS(session, close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 TEST_F(NiRFmxLTEDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
@@ -82,7 +82,7 @@ TEST_F(NiRFmxLTEDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
 
   auto close_response = client::close(stub(), session, 0);
 
-  EXPECT_SUCCESS(session, close_response);
+  EXPECT_RESPONSE_SUCCESS(close_response);
 }
 
 }  // namespace
