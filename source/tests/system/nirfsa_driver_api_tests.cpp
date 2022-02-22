@@ -5,7 +5,6 @@
 
 #include "device_server.h"
 #include "ivi.h"  // VI_SUCCESS
-#include "niRFSA.h"
 #include "niRFSAErrors.h"
 #include "nirfsa/nirfsa_client.h"
 #include "niscope/niscope_client.h"
@@ -308,7 +307,7 @@ TEST_F(NiRFSADriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
   EXPECT_SUCCESS(session, set_response);
   EXPECT_SUCCESS(session, get_response);
   EXPECT_NE(initial_response.value(), get_response.value());
-  EXPECT_EQ(NIRFSA_VAL_REF_OUT_STR, get_response.value());
+  EXPECT_EQ("RefOut", get_response.value());
 }
 
 TEST_F(NiRFSADriverApiTests, ReconfigureFFTWindowType_UpdatesFFTWindowSuccessfully)
@@ -573,7 +572,7 @@ TEST_F(NiRFSADriverApiTests, IsSelfCalValid)
 
   EXPECT_SUCCESS(session, response);
   EXPECT_THAT(response.valid_steps_array(), ElementsAre(SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL));
-  EXPECT_EQ(NIRFSA_VAL_SELF_CAL_DIGITIZER_SELF_CAL, response.valid_steps_raw());
+  EXPECT_EQ(8, response.valid_steps_raw());
 }
 
 TEST_F(NiRFSADriverApiTests, SelfTest_Succeeds)
