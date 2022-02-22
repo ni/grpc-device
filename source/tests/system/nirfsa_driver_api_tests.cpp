@@ -572,7 +572,7 @@ TEST_F(NiRFSADriverApiTests, IsSelfCalValid)
 
   EXPECT_SUCCESS(session, response);
   EXPECT_THAT(response.valid_steps_array(), ElementsAre(SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL));
-  EXPECT_EQ(8, response.valid_steps_raw());
+  EXPECT_EQ(SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL, response.valid_steps_raw());
 }
 
 TEST_F(NiRFSADriverApiTests, SelfTest_Succeeds)
