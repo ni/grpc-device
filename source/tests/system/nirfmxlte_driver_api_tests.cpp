@@ -1,13 +1,14 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niRFmxLTE.h"
 #include "nirfmxlte/nirfmxlte_client.h"
+#include "nirfsa/nirfsa_client.h"
 #include "rfmx_macros.h"
 
 using namespace ::testing;
 using namespace nirfmxlte_grpc;
 namespace client = nirfmxlte_grpc::experimental::client;
+namespace nirfsa_client = nirfsa_grpc::experimental::client;
 
 namespace ni {
 namespace tests {
@@ -54,16 +55,34 @@ InitializeResponse init(const client::StubPtr& stub, const std::string& model)
   return client::initialize(stub, "FakeDevice", options);
 }
 
+nirfsa_grpc::InitWithOptionsResponse init_rfsa(const nirfsa_client::StubPtr& stub, const std::string& resource_name)
+{
+  return nirfsa_client::init_with_options(stub, resource_name, false, false, "Simulate=1, DriverSetup=Model:5663E");
+}
+
 TEST_F(NiRFmxLTEDriverApiTests, Init_Close_Succeeds)
 {
   auto init_response = init(stub(), PXI_5663E);
   auto session = init_response.instrument();
-  // TODO: use EXPECT_SUCCESS here when LTE has get_error and get_error_string
-  EXPECT_RESPONSE_SUCCESS(init_response);
+  EXPECT_SUCCESS(session, init_response);
 
   auto close_response = client::close(stub(), session, 0);
 
-  EXPECT_RESPONSE_SUCCESS(close_response);
+  EXPECT_SUCCESS(session, close_response);
+}
+
+TEST_F(NiRFmxLTEDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
+{
+  auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
+  auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
+  EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
+  auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
+  auto session = init_response.instrument();
+  EXPECT_SUCCESS(session, init_response);
+
+  auto close_response = client::close(stub(), session, 0);
+
+  EXPECT_SUCCESS(session, close_response);
 }
 
 }  // namespace
