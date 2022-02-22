@@ -2,7 +2,6 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niRFmxInstr.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
 #include "nirfsa/nirfsa_client.h"
@@ -12,8 +11,8 @@ using namespace ::testing;
 using namespace nirfmxinstr_grpc;
 namespace client = nirfmxinstr_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
+namespace pb = ::google::protobuf;
 namespace specan_client = nirfmxspecan_grpc::experimental::client;
-namespace pb = google::protobuf;
 
 namespace ni {
 namespace tests {
