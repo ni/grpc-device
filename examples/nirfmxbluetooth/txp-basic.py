@@ -298,6 +298,7 @@ try:
         f"Peak to Average Power Ratio Maximum (dB)        : {peak_to_average_power_ratio_maximum}"
     )
 
+    # These results are invalid for basic rate packets.
     if basic_rate_packets == False:
       print(f"EDR GFSK Average Power Mean (dBm)               : {edrgfsk_average_power_mean}")
       print(f"EDR DPSK Average Power Mean (dBm)               : {edrdpsk_average_power_mean}")
@@ -315,7 +316,6 @@ try:
           f"Peak Absolute Power Deviation Maximum (%)                        : {reference_period_peak_absolute_power_deviation_maximum}\n"
       )
 
-    # These results are invalid for basic rate packets.
     print("------------------LE CTE Transmit Slot Power Measurement------------------")
     if len(transmit_slot_average_power_mean) == 0:
         print("No data")
