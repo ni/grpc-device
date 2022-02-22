@@ -314,8 +314,8 @@ try:
         print(f"Upper Relative Powers (dB)           : {upper_relative_power[i]}")
         # Lower and Upper margin results are not applicable for ACP_OFFSET_CHANNEL_MODE_SYMMETRIC.
         if offset_channel_mode != nirfmxbluetooth_types.ACP_OFFSET_CHANNEL_MODE_SYMMETRIC:
-          print(f"Lower Margin (dB)                    : {lower_margin[i]}")
-          print(f"Upper Margin (dB)                    : {upper_margin[i]}\n")
+            print(f"Lower Margin (dB)                    : {lower_margin[i]}")
+            print(f"Upper Margin (dB)                    : {upper_margin[i]}\n")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:

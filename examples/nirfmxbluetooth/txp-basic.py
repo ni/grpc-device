@@ -300,21 +300,21 @@ try:
 
     # These results are invalid for basic rate packets.
     if not basic_rate_packets:
-      print(f"EDR GFSK Average Power Mean (dBm)               : {edrgfsk_average_power_mean}")
-      print(f"EDR DPSK Average Power Mean (dBm)               : {edrdpsk_average_power_mean}")
-      print(
-          f"EDR DPSK GFSK Average Power Ratio Mean (dB)     : {edR__dpsK__gfsk_average_power_ratio_mean}"
-      )
+        print(f"EDR GFSK Average Power Mean (dBm)               : {edrgfsk_average_power_mean}")
+        print(f"EDR DPSK Average Power Mean (dBm)               : {edrdpsk_average_power_mean}")
+        print(
+            f"EDR DPSK GFSK Average Power Ratio Mean (dB)     : {edR__dpsK__gfsk_average_power_ratio_mean}"
+        )
 
     # These results are invalid for basic rate packets.
     if not basic_rate_packets:
-      print("------------------LE CTE Reference Period Measurement------------------")
-      print(
-          f"Average Power Mean (dBm)                                         : {reference_period_average_power_mean}"
-      )
-      print(
-          f"Peak Absolute Power Deviation Maximum (%)                        : {reference_period_peak_absolute_power_deviation_maximum}\n"
-      )
+        print("------------------LE CTE Reference Period Measurement------------------")
+        print(
+            f"Average Power Mean (dBm)                                         : {reference_period_average_power_mean}"
+        )
+        print(
+            f"Peak Absolute Power Deviation Maximum (%)                        : {reference_period_peak_absolute_power_deviation_maximum}\n"
+        )
 
     print("------------------LE CTE Transmit Slot Power Measurement------------------")
     if len(transmit_slot_average_power_mean) == 0:
