@@ -2,7 +2,6 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niRFmxNR.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxnr/nirfmxnr_client.h"
 #include "nirfsa/nirfsa_client.h"
@@ -14,12 +13,16 @@ using namespace nirfmxnr_grpc;
 namespace client = nirfmxnr_grpc::experimental::client;
 namespace instr_client = nirfmxinstr_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
-namespace pb = google::protobuf;
+namespace pb = ::google::protobuf;
 
 namespace ni {
 namespace tests {
 namespace system {
 namespace {
+
+typedef pb::int32 int32;
+typedef pb::int64 int64;
+typedef double float64;
 
 constexpr auto PXI_5663E = "5663E";
 constexpr auto NR_SYNC_FAILURE_WARNING = 684300;
@@ -423,11 +426,11 @@ TEST_F(NiRFmxNRDriverApiTests, SemContiguousMultiCarrierFromExample_FetchData_Da
   std::vector<float64> componentCarrierRatedOutputPower{0.0, 0.0};
   std::vector<float64> offsetStartFrequency{15.0e3, 1.5e6, 5.5e6, 40.3e6};
   std::vector<float64> offsetStopFrequency{985.0e3, 4.5e6, 39.3e6, 44.3e6};
-  std::vector<int> offsetSideband{RFMXNR_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXNR_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXNR_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXNR_VAL_SEM_OFFSET_SIDEBAND_BOTH};
+  std::vector<int> offsetSideband{SEM_OFFSET_SIDEBAND_BOTH, SEM_OFFSET_SIDEBAND_BOTH, SEM_OFFSET_SIDEBAND_BOTH, SEM_OFFSET_SIDEBAND_BOTH};
   std::vector<float64> offsetRBW{10.0e3, 250.0e3, 1.0e6, 1.0e6};
-  std::vector<int> offsetRBWFilterType{RFMXNR_VAL_SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN, RFMXNR_VAL_SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN, RFMXNR_VAL_SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN, RFMXNR_VAL_SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN};
+  std::vector<int> offsetRBWFilterType{SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN, SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN, SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN, SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN};
   std::vector<int> bandwidthIntegral{3, 4, 1, 1};
-  std::vector<int> limitFailMask{RFMXNR_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE, RFMXNR_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE, RFMXNR_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE, RFMXNR_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE};
+  std::vector<int> limitFailMask{SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE, SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE, SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE, SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE};
   std::vector<float64> absoluteLimitStart{-22.5, -8.5, -11.5, -23.5};
   std::vector<float64> absoluteLimitStop{-22.5, -8.5, -11.5, -23.5};
   std::vector<float64> relativeLimitStart{-53.0, -53.0, -53.0, -53.0};
