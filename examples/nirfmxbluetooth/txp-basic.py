@@ -299,7 +299,7 @@ try:
     )
 
     # These results are invalid for basic rate packets.
-    if basic_rate_packets == False:
+    if not basic_rate_packets:
       print(f"EDR GFSK Average Power Mean (dBm)               : {edrgfsk_average_power_mean}")
       print(f"EDR DPSK Average Power Mean (dBm)               : {edrdpsk_average_power_mean}")
       print(
@@ -307,7 +307,7 @@ try:
       )
 
     # These results are invalid for basic rate packets.
-    if basic_rate_packets == False:
+    if not basic_rate_packets:
       print("------------------LE CTE Reference Period Measurement------------------")
       print(
           f"Average Power Mean (dBm)                                         : {reference_period_average_power_mean}"
