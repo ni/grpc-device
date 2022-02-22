@@ -1,4 +1,3 @@
-#include <NIDAQmx.h>
 #include <gmock/gmock.h>
 #include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
@@ -17,10 +16,29 @@ using namespace ::testing;
 using namespace nidaqmx_grpc;
 using google::protobuf::uint32;
 namespace client = nidaqmx_grpc::experimental::client;
+namespace pb = ::google::protobuf;
 
 namespace ni {
 namespace tests {
 namespace system {
+namespace {
+
+typedef pb::int16 int16;
+typedef pb::int32 int32;
+typedef pb::int64 int64;
+typedef pb::uint64 uInt64;
+typedef double float64;
+
+constexpr auto DAQmxSuccess = 0;
+constexpr auto DAQmxErrorSpecifiedAttrNotValid = -200233;
+constexpr auto DAQmxErrorInvalidAODataWrite = -200561;
+constexpr auto DAQmxErrorDoneEventAlreadyRegistered = -200950;
+constexpr auto DAQmxErrorWaitForValidTimestampNotSupported = -209833;
+constexpr auto DAQmxErrorInvalidAttributeValue = -200077;
+constexpr auto DAQmxErrorRetrievingNetworkDeviceProperties = -201401;
+constexpr auto DAQmxErrorTEDSSensorNotDetected = -200709;
+constexpr auto DAQmxErrorInvalidTerm_Routing = -89129;
+constexpr auto DAQmxErrorDeviceDoesNotSupportCDAQSyncConnections = -201450;
 
 // Creates a static TResponse instance that can be used as a default/in-line value (because it's not a temporary).
 template <typename TResponse>
@@ -1680,18 +1698,19 @@ TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureSampQuantSampsPerChan_Updates
 
 TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
 {
-  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Scale_Lin_Slope);
+  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
 
   EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
 {
-  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Dev_AO_PhysicalChans);
+  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
 
   EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
 }
 
+}  // namespace
 }  // namespace system
 }  // namespace tests
 }  // namespace ni
