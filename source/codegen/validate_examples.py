@@ -40,6 +40,7 @@ def _create_stage_dir(staging_dir):
 
 def validate_examples(driver_glob_expression: str, ip_address: str, device_name: str) -> None:
     staging_dir = Path(__file__).parent.parent.parent / "build" / "validate_examples"
+    staging_dir = staging_dir.resolve()
 
     print(f"Validating examples using staging_dir: {staging_dir}")
 
