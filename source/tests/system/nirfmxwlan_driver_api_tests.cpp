@@ -2,24 +2,27 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niRFmxWLAN.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxwlan/nirfmxwlan_client.h"
 #include "nirfsa/nirfsa_client.h"
 #include "rfmx_macros.h"
 #include "waveform_helpers.h"
 
-namespace pb = google::protobuf;
 using namespace ::testing;
 using namespace nirfmxwlan_grpc;
 namespace client = nirfmxwlan_grpc::experimental::client;
 namespace instr_client = nirfmxinstr_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
+namespace pb = ::google::protobuf;
 
 namespace ni {
 namespace tests {
 namespace system {
 namespace {
+
+typedef pb::int32 int32;
+typedef pb::int64 int64;
+typedef double float64;
 
 constexpr auto PXI_5663E = "5663E";
 constexpr auto RISING_EDGE_DETECTION_FAILED_WARNING = 379206;
@@ -260,7 +263,7 @@ TEST_F(NiRFmxWLANDriverApiTests, SEMCustomMaskFromExample_FetchData_DataLooksRea
   const auto NUMBER_OF_OFFSETS = 3;
   std::vector<float64> offset_start_frequency{9e06, 11e06, 20e06};
   std::vector<float64> offset_stop_frequency{11e06, 20e06, 40e06};
-  std::vector<int> offset_sideband{RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH, RFMXWLAN_VAL_SEM_OFFSET_SIDEBAND_BOTH};
+  std::vector<int> offset_sideband{SEM_OFFSET_SIDEBAND_BOTH, SEM_OFFSET_SIDEBAND_BOTH, SEM_OFFSET_SIDEBAND_BOTH};
   std::vector<float64> relative_limit_start{0.0, -20.0, -28.0};
   std::vector<float64> relative_limit_stop{-20.0, -28.0, -40.0};
   auto session = init_session(stub(), PXI_5663E);

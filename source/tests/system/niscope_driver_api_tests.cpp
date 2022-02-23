@@ -1,13 +1,20 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niscope/niscope_service.h"
+#include "niscope/niscope_client.h"
 
 namespace ni {
 namespace tests {
 namespace system {
 
 namespace scope = niscope_grpc;
+namespace pb = ::google::protobuf;
+
+typedef pb::int16 int16;
+typedef pb::int32 int32;
+typedef pb::int64 int64;
+typedef pb::uint32 uint32;
+typedef pb::uint16 uint16;
 
 const int kScopeDriverApiSuccess = 0;
 
@@ -142,7 +149,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     expect_api_success(response.status());
   }
 
-  ViBoolean get_bool_attribute(const char* channel_list, scope::NiScopeAttribute attribute_id)
+  bool get_bool_attribute(const char* channel_list, scope::NiScopeAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     scope::GetAttributeViBooleanRequest request;
@@ -156,7 +163,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     return response.value();
   }
 
-  ViInt32 get_int32_attribute(const char* channel_list, scope::NiScopeAttribute attribute_id)
+  int32 get_int32_attribute(const char* channel_list, scope::NiScopeAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     scope::GetAttributeViInt32Request request;
@@ -170,7 +177,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     return response.value();
   }
 
-  ViInt64 get_int64_attribute(const char* channel_list, scope::NiScopeAttribute attribute_id)
+  int64 get_int64_attribute(const char* channel_list, scope::NiScopeAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     scope::GetAttributeViInt64Request request;
@@ -184,7 +191,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
     return response.value();
   }
 
-  ViReal64 get_real64_attribute(const char* channel_list, scope::NiScopeAttribute attribute_id)
+  double get_real64_attribute(const char* channel_list, scope::NiScopeAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     scope::GetAttributeViReal64Request request;
@@ -248,9 +255,9 @@ TEST_F(NiScopeDriverApiTest, NiScopeReset_SendRequest_ResetCompletesSuccessfully
 
 TEST_F(NiScopeDriverApiTest, NiScopeRead_SendRequest_ReadCompletesWithCorrectSizes)
 {
-  const ViInt32 expected_num_samples = 100000;
+  const int32 expected_num_samples = 100000;
   const char* channel_list = "0";
-  const ViInt32 expected_num_waveforms = get_actual_num_wfms(channel_list);
+  const int32 expected_num_waveforms = get_actual_num_wfms(channel_list);
   ::grpc::ClientContext context;
   scope::ReadRequest request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -271,11 +278,11 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequest_FetchCompl
 {
   auto_setup();
   initiate_acquisition();
-  const ViInt32 expected_num_samples = 100000;
+  const int32 expected_num_samples = 100000;
   const char* channel_list = "0";
-  const ViInt32 expected_num_waveforms = get_actual_num_wfms(channel_list);
+  const int32 expected_num_waveforms = get_actual_num_wfms(channel_list);
   const niscope_grpc::ArrayMeasurement measurement_func = niscope_grpc::ArrayMeasurement::ARRAY_MEASUREMENT_NISCOPE_VAL_INVERSE;
-  const ViInt32 expected_waveform_size = get_actual_measurement_waveform_size(measurement_func);
+  const int32 expected_waveform_size = get_actual_measurement_waveform_size(measurement_func);
   ::grpc::ClientContext context;
   scope::FetchArrayMeasurementRequest request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -296,9 +303,9 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary16_SendRequest_FetchCompletesWith
 {
   auto_setup();
   initiate_acquisition();
-  const ViInt32 expected_num_samples = 100000;
+  const int32 expected_num_samples = 100000;
   const char* channel_list = "0";
-  const ViInt32 expected_num_waveforms = get_actual_num_wfms(channel_list);
+  const int32 expected_num_waveforms = get_actual_num_wfms(channel_list);
   ::grpc::ClientContext context;
   scope::FetchBinary16Request request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -319,9 +326,9 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary8_SendRequest_FetchCompletesWithC
 {
   auto_setup();
   initiate_acquisition();
-  const ViInt32 expected_num_samples = 100000;
+  const int32 expected_num_samples = 100000;
   const char* channel_list = "0";
-  const ViInt32 expected_num_waveforms = get_actual_num_wfms(channel_list);
+  const int32 expected_num_waveforms = get_actual_num_wfms(channel_list);
   ::grpc::ClientContext context;
   scope::FetchBinary8Request request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -342,7 +349,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt32Attribute_SendRequest_GetViInt32At
 {
   const char* channel_list = "";
   const scope::NiScopeAttribute attribute_to_set = scope::NiScopeAttribute::NISCOPE_ATTRIBUTE_HORZ_NUM_RECORDS;
-  const ViInt32 expected_value = 4;
+  const int32 expected_value = 4;
   ::grpc::ClientContext context;
   scope::SetAttributeViInt32Request request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -355,17 +362,17 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt32Attribute_SendRequest_GetViInt32At
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
 
-  ViInt32 get_attribute_value = get_int32_attribute(channel_list, attribute_to_set);
+  int32 get_attribute_value = get_int32_attribute(channel_list, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
 TEST_F(NiScopeDriverApiTest, NiScopeSetViInt64Attribute_SendRequest_GetViInt64AttributeMatches)
 {
   const char* channel_list = "";
-  // The ViInt64 attributes in niScope.h (p2p ones) can't be used on a simulated device. So
-  // we'll just set a ViInt32 attribute to still exercise the get and set ViInt64 methods.
+  // The int64 attributes in niScope.h (p2p ones) can't be used on a simulated device. So
+  // we'll just set a int32 attribute to still exercise the get and set int64 methods.
   const scope::NiScopeAttribute attribute_to_set = scope::NiScopeAttribute::NISCOPE_ATTRIBUTE_FETCH_NUM_RECORDS;
-  const ViInt64 expected_value = 4;
+  const int64 expected_value = 4;
   ::grpc::ClientContext context;
   scope::SetAttributeViInt64Request request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -378,7 +385,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt64Attribute_SendRequest_GetViInt64At
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
 
-  ViInt64 get_attribute_value = get_int64_attribute(channel_list, attribute_to_set);
+  int64 get_attribute_value = get_int64_attribute(channel_list, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
@@ -386,7 +393,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViReal64Attribute_SendRequest_GetViReal64
 {
   const char* channel_list = "";
   const scope::NiScopeAttribute attribute_to_set = scope::NiScopeAttribute::NISCOPE_ATTRIBUTE_REF_CLK_RATE;
-  const ViReal64 expected_value = 42.24;
+  const double expected_value = 42.24;
   ::grpc::ClientContext context;
   scope::SetAttributeViReal64Request request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -399,7 +406,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViReal64Attribute_SendRequest_GetViReal64
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
 
-  ViReal64 get_attribute_value = get_real64_attribute(channel_list, attribute_to_set);
+  double get_attribute_value = get_real64_attribute(channel_list, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
@@ -407,7 +414,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViStringAttribute_SendRequest_GetViString
 {
   const char* channel_list = "";
   const scope::NiScopeAttribute attribute_to_set = scope::NiScopeAttribute::NISCOPE_ATTRIBUTE_TRIGGER_SOURCE;
-  const ViString expected_value = "Hello world!";
+  const std::string expected_value = "Hello world!";
   ::grpc::ClientContext context;
   scope::SetAttributeViStringRequest request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -421,14 +428,14 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViStringAttribute_SendRequest_GetViString
   expect_api_success(response.status());
 
   std::string get_attribute_value = get_string_attribute(channel_list, attribute_to_set);
-  EXPECT_STREQ(expected_value, get_attribute_value.c_str());
+  EXPECT_STREQ(expected_value.c_str(), get_attribute_value.c_str());
 }
 
 TEST_F(NiScopeDriverApiTest, NiScopeSetBoolAttribute_SendRequest_GetBoolAttributeMatches)
 {
   const char* channel_list = "0";
   const scope::NiScopeAttribute attribute_to_set = scope::NiScopeAttribute::NISCOPE_ATTRIBUTE_CHANNEL_ENABLED;
-  const ViBoolean expected_value = true;
+  const bool expected_value = true;
   ::grpc::ClientContext context;
   scope::SetAttributeViBooleanRequest request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -441,7 +448,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetBoolAttribute_SendRequest_GetBoolAttribut
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
 
-  ViBoolean get_attribute_value = get_bool_attribute(channel_list, attribute_to_set);
+  bool get_attribute_value = get_bool_attribute(channel_list, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nirfmxnr/nirfmxnr_service.h"
+#include "nirfmxnr/nirfmxnr_client.h"
 
 namespace ni {
 namespace tests {

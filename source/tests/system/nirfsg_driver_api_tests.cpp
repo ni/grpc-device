@@ -4,7 +4,6 @@
 
 #include "device_server.h"
 #include "nirfsg/nirfsg_client.h"
-#include "nirfsg/nirfsg_service.h"
 #include "nitclk/nitclk_client.h"
 
 using namespace nirfsg_grpc;
@@ -14,7 +13,7 @@ namespace pb = google::protobuf;
 using namespace ::testing;
 
 namespace nidevice_grpc {
-// Needs to be in the nirfsg_grpc namespace for googletest to find this
+// Needs to be in the nidevice_grpc namespace for googletest to find this
 // because of argument-dependent lookup - see
 // https://stackoverflow.com/questions/33371088/how-to-get-a-custom-operator-to-work-with-google-test
 bool operator==(const NIComplexNumber& first, const NIComplexNumber& second)
@@ -30,6 +29,7 @@ namespace system {
 const auto PXI_5652 = "5652";
 const auto PXI_5820 = "5820";
 const auto PXI_5841 = "5841";
+const auto IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR = 0xBFFA0012;
 
 const int krfsgDriverApiSuccess = 0;
 
@@ -221,7 +221,7 @@ TEST_F(NiRFSGDriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
   EXPECT_SUCCESS(session, set_response);
   EXPECT_SUCCESS(session, get_response);
   EXPECT_NE(initial_response.value(), get_response.value());
-  EXPECT_EQ(NIRFSG_VAL_REF_OUT_STR, get_response.value());
+  EXPECT_EQ("RefOut", get_response.value());
 }
 
 TEST_F(NiRFSGDriverApiTests, SetAutomaticThermalCorrection_UpdatesSuccessfully)
@@ -519,7 +519,7 @@ TEST_F(NiRFSGDriverApiTests, TwoSessions_SetupTclkSyncPulseSenderSynchronization
 TEST_F(NiRFSGDriverApiTests, ErrorMessage_ReturnsErrorMessage)
 {
   auto session = init_session(stub(), PXI_5652);
-  const auto response = client::error_message(stub(), session, IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED);
+  const auto response = client::error_message(stub(), session, IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR);
 
   EXPECT_SUCCESS(session, response);
   EXPECT_EQ(

@@ -1,13 +1,17 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nidigitalpattern/nidigitalpattern_service.h"
+#include "nidigitalpattern/nidigitalpattern_client.h"
 
 namespace ni {
 namespace tests {
 namespace system {
 
 namespace digital = nidigitalpattern_grpc;
+namespace pb = ::google::protobuf;
+
+typedef pb::int32 int32;
+typedef pb::int64 int64;
 
 const int kDigitalDriverApiSuccess = 0;
 
@@ -98,7 +102,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     return response.error_message();
   }
 
-  void set_bool_attribute(const char* channel_name, digital::NiDigitalAttribute attribute, ViBoolean value)
+  void set_bool_attribute(const char* channel_name, digital::NiDigitalAttribute attribute, bool value)
   {
     ::grpc::ClientContext context;
     digital::SetAttributeViBooleanRequest request;
@@ -130,7 +134,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     expect_api_success(response.status());
   }
 
-  void set_int64_attribute(const char* channel_name, digital::NiDigitalAttribute attribute, ViInt64 value)
+  void set_int64_attribute(const char* channel_name, digital::NiDigitalAttribute attribute, int64 value)
   {
     ::grpc::ClientContext context;
     digital::SetAttributeViInt64Request request;
@@ -146,7 +150,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     expect_api_success(response.status());
   }
 
-  void set_string_attribute(const char* channel_name, digital::NiDigitalAttribute attribute, ViString value)
+  void set_string_attribute(const char* channel_name, digital::NiDigitalAttribute attribute, const std::string& value)
   {
     ::grpc::ClientContext context;
     digital::SetAttributeViStringRequest request;
@@ -155,14 +159,14 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     request.set_attribute(attribute);
     request.set_value_raw(value);
     digital::SetAttributeViStringResponse response;
-    
+
     ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
   }
 
-  ViBoolean get_bool_attribute(const char* channel_name, digital::NiDigitalAttribute attribute)
+  bool get_bool_attribute(const char* channel_name, digital::NiDigitalAttribute attribute)
   {
     ::grpc::ClientContext context;
     digital::GetAttributeViBooleanRequest request;
@@ -178,7 +182,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     return response.value();
   }
 
-  ViInt32 get_int32_attribute(const char* channel_name, digital::NiDigitalAttribute attribute)
+  int32 get_int32_attribute(const char* channel_name, digital::NiDigitalAttribute attribute)
   {
     ::grpc::ClientContext context;
     digital::GetAttributeViInt32Request request;
@@ -194,7 +198,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     return response.value();
   }
 
-  ViInt64 get_int64_attribute(const char* channel_name, digital::NiDigitalAttribute attribute)
+  int64 get_int64_attribute(const char* channel_name, digital::NiDigitalAttribute attribute)
   {
     ::grpc::ClientContext context;
     digital::GetAttributeViInt64Request request;
@@ -226,7 +230,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     return response.value();
   }
 
-  void configure_frequency_counter_measurement_time(const char* channel_list, ViReal64 value)
+  void configure_frequency_counter_measurement_time(const char* channel_list, double value)
   {
     ::grpc::ClientContext context;
     digital::FrequencyCounterConfigureMeasurementTimeRequest request;
@@ -236,7 +240,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     digital::FrequencyCounterConfigureMeasurementTimeResponse response;
 
     ::grpc::Status status = GetStub()->FrequencyCounterConfigureMeasurementTime(&context, request, &response);
-    
+
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
   }
@@ -250,7 +254,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     request.set_function(function_type);
     digital::SelectFunctionResponse response;
 
-    ::grpc::Status status = GetStub()->SelectFunction(&context, request, &response);    
+    ::grpc::Status status = GetStub()->SelectFunction(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
@@ -274,7 +278,7 @@ TEST_F(NiDigitalDriverApiTest, PerformReadStatic_CompletesSuccessfully)
   ::grpc::Status status = GetStub()->ReadStatic(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  expect_api_success(response.status()); 
+  expect_api_success(response.status());
 }
 
 TEST_F(NiDigitalDriverApiTest, PerformWriteStatic_CompletesSuccessfully)
@@ -296,7 +300,7 @@ TEST_F(NiDigitalDriverApiTest, PerformWriteStatic_CompletesSuccessfully)
 TEST_F(NiDigitalDriverApiTest, PerformFrequencyCounterMeasureFrequency_CompletesSuccessfully)
 {
   const char* channel_name = "";
-  ViReal64 measurement_time = 5.0;
+  double measurement_time = 5.0;
   ::grpc::ClientContext context;
   select_function(channel_name, digital::SelectedFunction::SELECTED_FUNCTION_NIDIGITAL_VAL_DIGITAL);
   configure_frequency_counter_measurement_time(channel_name, measurement_time);
@@ -307,7 +311,7 @@ TEST_F(NiDigitalDriverApiTest, PerformFrequencyCounterMeasureFrequency_Completes
   ::grpc::Status status = GetStub()->FrequencyCounterMeasureFrequency(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  expect_api_success(response.status()); 
+  expect_api_success(response.status());
 }
 
 TEST_F(NiDigitalDriverApiTest, SelfTest_SelfTestCompletesSuccessfully)
@@ -343,7 +347,7 @@ TEST_F(NiDigitalDriverApiTest, SetViInt32Attribute_GetViInt32Attribute_ValueMatc
   auto expected_value = digital::NiDigitalInt32AttributeValues::NIDIGITAL_INT32_SELECTED_FUNCTION_VAL_PPMU;
   set_int32_attribute(channel_name, attribute_to_set, expected_value);
 
-  ViInt32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
+  int32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
 
   EXPECT_EQ(expected_value, get_attribute_value);
 }
@@ -352,10 +356,10 @@ TEST_F(NiDigitalDriverApiTest, SetViInt64Attribute_GetViInt64Attribute_ValueMatc
 {
   const char* channel_name = "";
   const digital::NiDigitalAttribute attribute_to_set = digital::NiDigitalAttribute::NIDIGITAL_ATTRIBUTE_CYCLE_NUMBER_HISTORY_RAM_TRIGGER_CYCLE_NUMBER;
-  const ViInt64 expected_value = 4;
+  const int64 expected_value = 4;
   set_int64_attribute(channel_name, attribute_to_set, expected_value);
 
-  ViInt64 get_attribute_value = get_int64_attribute(channel_name, attribute_to_set);
+  int64 get_attribute_value = get_int64_attribute(channel_name, attribute_to_set);
 
   EXPECT_EQ(expected_value, get_attribute_value);
 }
@@ -364,22 +368,22 @@ TEST_F(NiDigitalDriverApiTest, SetViStringAttribute_GetViStringAttribute_ValueMa
 {
   const char* channel_name = "";
   const digital::NiDigitalAttribute attribute_to_set = digital::NiDigitalAttribute::NIDIGITAL_ATTRIBUTE_DIGITAL_EDGE_START_TRIGGER_SOURCE;
-  const ViString expected_value = "Hello world!";
+  const std::string expected_value = "Hello world!";
   set_string_attribute(channel_name, attribute_to_set, expected_value);
 
   std::string get_attribute_value = get_string_attribute(channel_name, attribute_to_set);
 
-  EXPECT_STREQ(expected_value, get_attribute_value.c_str());
+  EXPECT_STREQ(expected_value.c_str(), get_attribute_value.c_str());
 }
 
 TEST_F(NiDigitalDriverApiTest, SetBoolAttribute_GetBoolAttribute_ValueMatchesSetValue)
 {
   const char* channel_name = "";
   const digital::NiDigitalAttribute attribute_to_set = digital::NiDigitalAttribute::NIDIGITAL_ATTRIBUTE_CACHE;
-  const ViBoolean expected_value = true;
+  const bool expected_value = true;
   set_bool_attribute(channel_name, attribute_to_set, expected_value);
 
-  ViBoolean get_attribute_value = get_bool_attribute(channel_name, attribute_to_set);
+  bool get_attribute_value = get_bool_attribute(channel_name, attribute_to_set);
 
   EXPECT_EQ(expected_value, get_attribute_value);
 }

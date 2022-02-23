@@ -2,21 +2,19 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niRFmxBT.h"
 #include "nirfmxbluetooth/nirfmxbluetooth_client.h"
-#include "nirfmxbluetooth/nirfmxbluetooth_service.h"
 #include "nirfsa/nirfsa_client.h"
 #include "rfmx_macros.h"
 #include "waveform_helpers.h"
 
-namespace pb = google::protobuf;
 using namespace ::testing;
 using namespace nirfmxbluetooth_grpc;
 namespace client = nirfmxbluetooth_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
+namespace pb = ::google::protobuf;
 
 namespace nidevice_grpc {
-// Needs to be in the nirfmxbluetooth_grpc namespace for googletest to find this
+// Needs to be in the nidevice_grpc namespace for googletest to find this
 // because of argument-dependent lookup - see
 // https://stackoverflow.com/questions/33371088/how-to-get-a-custom-operator-to-work-with-google-test
 bool operator==(const NIComplexNumberF32& first, const NIComplexNumber& second)

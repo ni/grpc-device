@@ -1,13 +1,16 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nidaqmx/nidaqmx_service.h"
+#include "nidaqmx/nidaqmx_client.h"
 
 using namespace nidaqmx_grpc;
 
 namespace ni {
 namespace tests {
 namespace system {
+
+constexpr auto DAQMX_SUCCESS = 0;
+
 class NiDAQmxSessionTests : public ::testing::Test {
  protected:
   NiDAQmxSessionTests()
@@ -56,8 +59,8 @@ TEST_F(NiDAQmxSessionTests, CreateTask_ClearTask_Succeeds)
 
   EXPECT_TRUE(create_status.ok());
   EXPECT_TRUE(clear_status.ok());
-  EXPECT_EQ(DAQmxSuccess, create_response.status());
-  EXPECT_EQ(DAQmxSuccess, clear_response.status());
+  EXPECT_EQ(DAQMX_SUCCESS, create_response.status());
+  EXPECT_EQ(DAQMX_SUCCESS, clear_response.status());
   EXPECT_NE(0, create_response.task().id());
 }
 }  // namespace system

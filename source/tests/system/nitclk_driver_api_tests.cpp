@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niscope/niscope_service.h"
-#include "nitclk/nitclk_service.h"
+#include "niscope/niscope_client.h"
+#include "nitclk/nitclk_client.h"
 
 namespace ni {
 namespace tests {
@@ -10,6 +10,11 @@ namespace system {
 
 namespace scope = niscope_grpc;
 namespace tclk = nitclk_grpc;
+namespace pb = ::google::protobuf;
+
+typedef pb::int32 int32;
+typedef pb::uint32 uint32;
+typedef pb::uint16 uint16;
 
 const int kScopeDriverApiSuccess = 0;
 const int kTClkDriverApiSuccess = 0;
@@ -17,9 +22,9 @@ const int kTClkDriverApiSuccess = 0;
 class NiTClkDriverApiTest : public ::testing::Test {
  protected:
   NiTClkDriverApiTest()
-    : device_server_(DeviceServerInterface::Singleton()),
-      nitclk_stub_(tclk::NiTClk::NewStub(device_server_->InProcessChannel())),
-      niscope_stub_(scope::NiScope::NewStub(device_server_->InProcessChannel()))
+      : device_server_(DeviceServerInterface::Singleton()),
+        nitclk_stub_(tclk::NiTClk::NewStub(device_server_->InProcessChannel())),
+        niscope_stub_(scope::NiScope::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
@@ -43,7 +48,7 @@ class NiTClkDriverApiTest : public ::testing::Test {
 
   std::unique_ptr<tclk::NiTClk::Stub>& GetTClkStub()
   {
-      return nitclk_stub_;
+    return nitclk_stub_;
   }
 
   int GetScopeSessionId()
@@ -82,7 +87,7 @@ class NiTClkDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kScopeDriverApiSuccess, response.status());
   }
 
-  ViReal64 get_real64_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id)
+  double get_real64_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     tclk::GetAttributeViReal64Request request;
@@ -130,7 +135,7 @@ class NiTClkDriverApiTest : public ::testing::Test {
     return response.value();
   }
 
-  void set_real64_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id, const ViReal64 attribute_value)
+  void set_real64_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id, const double attribute_value)
   {
     ::grpc::ClientContext context;
     tclk::SetAttributeViReal64Request request;
@@ -162,7 +167,7 @@ class NiTClkDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kTClkDriverApiSuccess, response.status());
   }
 
-  void set_string_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id, const ViString attribute_value)
+  void set_string_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id, const std::string attribute_value)
   {
     ::grpc::ClientContext context;
     tclk::SetAttributeViStringRequest request;
@@ -213,10 +218,10 @@ TEST_F(NiTClkDriverApiTest, SetAttributeViReal64_CallGetAttributeViReal64_Values
 {
   const char* channel_name = "";
   const tclk::NiTClkAttribute attribute_to_set = tclk::NiTClkAttribute::NITCLK_ATTRIBUTE_SAMPLE_CLOCK_DELAY;
-  const ViReal64 expected_value = 4.24;
+  const double expected_value = 4.24;
   set_real64_attribute(channel_name, attribute_to_set, expected_value);
 
-  ViReal64 get_attribute_value = get_real64_attribute(channel_name, attribute_to_set);
+  double get_attribute_value = get_real64_attribute(channel_name, attribute_to_set);
 
   EXPECT_EQ(expected_value, get_attribute_value);
 }
@@ -237,12 +242,12 @@ TEST_F(NiTClkDriverApiTest, SetAttributeViString_CallGetAttributeViString_Values
 {
   const char* channel_name = "";
   const tclk::NiTClkAttribute attribute_to_set = tclk::NiTClkAttribute::NITCLK_ATTRIBUTE_SYNC_PULSE_SOURCE;
-  const ViString expected_value = "Hello world!";
+  const std::string expected_value = "Hello world!";
   set_string_attribute(channel_name, attribute_to_set, expected_value);
 
   std::string get_attribute_value = get_string_attribute(channel_name, attribute_to_set);
 
-  EXPECT_STREQ(expected_value, get_attribute_value.c_str());
+  EXPECT_STREQ(expected_value.c_str(), get_attribute_value.c_str());
 }
 
 }  // namespace system

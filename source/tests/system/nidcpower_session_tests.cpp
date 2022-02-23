@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nidcpower/nidcpower_service.h"
+#include "nidcpower/nidcpower_client.h"
 
 namespace ni {
 namespace tests {
@@ -11,7 +11,7 @@ namespace dcpower = nidcpower_grpc;
 
 const int kInvalidRsrc = -1074118656;
 const int kInvalidDCPowerSession = -1074130544;
-const char* kViErrorResourceNotFoundMessage = "Device was not recognized.  The device is not supported with this driver or version.";
+const char* kViErrorResourceNotFoundMessage = "Device was not recognized. The device is not supported with this driver or version.";
 const char* kInvalidDCPowerSessionMessage = "IVI: (Hex 0xBFFA1190) The session handle is not valid.";
 const char* kTestRsrc = "FakeDevice";
 const char* kOptionsString = "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe";

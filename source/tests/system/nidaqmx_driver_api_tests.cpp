@@ -1,4 +1,3 @@
-#include <NIDAQmx.h>
 #include <gmock/gmock.h>
 #include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
@@ -17,10 +16,29 @@ using namespace ::testing;
 using namespace nidaqmx_grpc;
 using google::protobuf::uint32;
 namespace client = nidaqmx_grpc::experimental::client;
+namespace pb = ::google::protobuf;
 
 namespace ni {
 namespace tests {
 namespace system {
+namespace {
+
+typedef pb::int16 int16;
+typedef pb::int32 int32;
+typedef pb::int64 int64;
+typedef pb::uint64 uInt64;
+typedef double float64;
+
+constexpr auto DAQMX_SUCCESS = 0;
+constexpr auto SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR = -200233;
+constexpr auto INVALID_AO_DATA_WRITE_ERROR = -200561;
+constexpr auto DONE_EVENT_ALREADY_REGISTERED_ERROR = -200950;
+constexpr auto WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR = -209833;
+constexpr auto INVALID_ATTRIBUTE_VALUE_ERROR = -200077;
+constexpr auto RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR = -201401;
+constexpr auto TEDS_SENSOR_NOT_DETECTED_ERROR = -200709;
+constexpr auto INVALID_TERM_ROUTING_ERROR = -89129;
+constexpr auto DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR = -201450;
 
 // Creates a static TResponse instance that can be used as a default/in-line value (because it's not a temporary).
 template <typename TResponse>
@@ -687,8 +705,8 @@ class NiDAQmxDriverApiTests : public Test {
   template <typename TResponse>
   void EXPECT_SUCCESS(const TResponse& response)
   {
-    EXPECT_EQ(DAQmxSuccess, response.status());
-    if (response.status() != DAQmxSuccess) {
+    EXPECT_EQ(DAQMX_SUCCESS, response.status());
+    if (response.status() != DAQMX_SUCCESS) {
       auto error_response = client::get_error_string(stub(), response.status());
       EXPECT_EQ("", error_response.error_string());
     }
@@ -987,7 +1005,7 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
       SCALE_NAME,
       (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
 
-  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
+  EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
@@ -1063,7 +1081,7 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAODataWithOutOfRangeValue_Re
   write_analog_f64(write_data, write_response);
   stop_task();
 
-  EXPECT_EQ(DAQmxErrorInvalidAODataWrite, write_response.status());
+  EXPECT_EQ(INVALID_AO_DATA_WRITE_ERROR, write_response.status());
 }
 
 TEST_F(NiDAQmxDriverApiTests, TaskWithAOChannel_GetNthTaskDevice_ReturnsDeviceForChannel)
@@ -1103,7 +1121,7 @@ TEST_F(NiDAQmxDriverApiTests, CreateCIFreqChannel_Succeeds)
 TEST_F(NiDAQmxDriverApiTests, GetErrorString_ReturnsErrorMessage)
 {
   GetErrorStringResponse response;
-  auto status = get_error_string(DAQmxErrorInvalidAttributeValue, response);
+  auto status = get_error_string(INVALID_ATTRIBUTE_VALUE_ERROR, response);
 
   EXPECT_SUCCESS(status, response);
   const auto& error_string = response.error_string();
@@ -1232,7 +1250,7 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegistered_RunCompleteFiniteAc
 
   RegisterDoneEventResponse response;
   reader->Read(&response);
-  EXPECT_EQ(DAQmxSuccess, response.status());
+  EXPECT_EQ(DAQMX_SUCCESS, response.status());
 }
 
 TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSamplesMultipleTimes_Succeeds)
@@ -1253,7 +1271,7 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithEveryNSamplesEventRegistered_WaitForSam
     read_analog_f64(N_SAMPLES, N_SAMPLES);
 
     EXPECT_EQ(N_SAMPLES, response.n_samples());
-    EXPECT_EQ(DAQmxSuccess, response.status());
+    EXPECT_EQ(DAQMX_SUCCESS, response.status());
   }
 }
 
@@ -1277,9 +1295,9 @@ TEST_F(NiDAQmxDriverApiTests, ChannelWithDoneEventRegisteredTwice_RunCompleteFin
 
   RegisterDoneEventResponse response;
   reader->Read(&response);
-  EXPECT_EQ(DAQmxSuccess, response.status());
+  EXPECT_EQ(DAQMX_SUCCESS, response.status());
   second_reader->Read(&response);
-  EXPECT_EQ(DAQmxErrorDoneEventAlreadyRegistered, response.status());
+  EXPECT_EQ(DONE_EVENT_ALREADY_REGISTERED_ERROR, response.status());
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_ConfigureInputBuffer_Succeeds)
@@ -1350,7 +1368,7 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_WaitForValidTimestamp_ReturnsErro
   auto response = WaitForValidTimestampResponse{};
   auto status = wait_for_valid_timestamp(response);
 
-  EXPECT_DAQ_ERROR(DAQmxErrorWaitForValidTimestampNotSupported, status, response);
+  EXPECT_DAQ_ERROR(WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR, status, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError)
@@ -1360,7 +1378,7 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError)
   auto response = CfgTimeStartTrigResponse{};
   auto status = cfg_time_start_trig(response);
 
-  EXPECT_DAQ_ERROR(DAQmxErrorInvalidAttributeValue, status, response);
+  EXPECT_DAQ_ERROR(INVALID_ATTRIBUTE_VALUE_ERROR, status, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpectedRange)
@@ -1397,14 +1415,14 @@ TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetwo
   auto response = AddNetworkDeviceResponse{};
   auto status = add_network_device("0.0.0.0", response);
 
-  EXPECT_DAQ_ERROR(DAQmxErrorRetrievingNetworkDeviceProperties, status, response);
+  EXPECT_DAQ_ERROR(RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR, status, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDetected)
 {
   auto response = client::configure_teds(stub(), AI_CHANNEL, "");
 
-  EXPECT_DAQ_ERROR(DAQmxErrorTEDSSensorNotDetected, response);
+  EXPECT_DAQ_ERROR(TEDS_SENSOR_NOT_DETECTED_ERROR, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, HardwareTimedTask_WaitForNextSampleClock_Succeeds)
@@ -1433,7 +1451,7 @@ TEST_F(NiDAQmxDriverApiTests, ConnectBogusTerms_FailsWithInvalidRoutingError)
   auto response = ConnectTermsResponse{};
   auto status = connect_terms("ABC", "123", response);
 
-  EXPECT_DAQ_ERROR(DAQmxErrorInvalidTerm_Routing, status, response);
+  EXPECT_DAQ_ERROR(INVALID_TERM_ROUTING_ERROR, status, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
@@ -1463,7 +1481,7 @@ TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupport
 {
   auto response = client::auto_configure_cdaq_sync_connections(stub(), DEVICE_NAME, 1.0);
 
-  EXPECT_DAQ_ERROR(DAQmxErrorDeviceDoesNotSupportCDAQSyncConnections, response);
+  EXPECT_DAQ_ERROR(DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBufferSize)
@@ -1680,18 +1698,19 @@ TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureSampQuantSampsPerChan_Updates
 
 TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
 {
-  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Scale_Lin_Slope);
+  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
 
-  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
+  EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, response);
 }
 
 TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
 {
-  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DAQmx_Dev_AO_PhysicalChans);
+  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
 
-  EXPECT_DAQ_ERROR(DAQmxErrorSpecifiedAttrNotValid, response);
+  EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, response);
 }
 
+}  // namespace
 }  // namespace system
 }  // namespace tests
 }  // namespace ni

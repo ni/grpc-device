@@ -2,7 +2,6 @@
 
 #include <stdexcept>
 
-#include <server/session_utilities_service.h>
 #include "device_server.h"
 
 namespace ni {

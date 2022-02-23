@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 
+#include "device_server.h"
+#include "nidmm/nidmm_client.h"
 #include "nidmm/nidmm_library.h"
-#include "nidmm/nidmm_service.h"
 
 namespace ni {
 namespace tests {
@@ -14,17 +15,10 @@ const int kDMMDriverApiSuccess = 0;
 class NiDmmDriverApiTest : public ::testing::Test {
  protected:
   NiDmmDriverApiTest()
+      : device_server_(DeviceServerInterface::Singleton()),
+        nidmm_stub_(dmm::NiDmm::NewStub(device_server_->InProcessChannel()))
   {
-    ::grpc::ServerBuilder builder;
-    session_repository_ = std::make_unique<nidevice_grpc::SessionRepository>();
-    using ResourceRepository = nidevice_grpc::SessionResourceRepository<ViSession>;
-    auto resource_repository = std::make_shared<ResourceRepository>(session_repository_.get());
-    nidmm_library_ = std::make_unique<dmm::NiDmmLibrary>();
-    nidmm_service_ = std::make_unique<dmm::NiDmmService>(nidmm_library_.get(), resource_repository);
-    builder.RegisterService(nidmm_service_.get());
-
-    server_ = builder.BuildAndStart();
-    ResetStub();
+    device_server_->ResetServer();
   }
 
   virtual ~NiDmmDriverApiTest() {}
@@ -37,12 +31,6 @@ class NiDmmDriverApiTest : public ::testing::Test {
   void TearDown() override
   {
     close_driver_session();
-  }
-
-  void ResetStub()
-  {
-    channel_ = server_->InProcessChannel(::grpc::ChannelArguments());
-    nidmm_stub_ = dmm::NiDmm::NewStub(channel_);
   }
 
   std::unique_ptr<dmm::NiDmm::Stub>& GetStub()
@@ -208,13 +196,9 @@ class NiDmmDriverApiTest : public ::testing::Test {
   }
 
  private:
-  std::shared_ptr<::grpc::Channel> channel_;
+  DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<dmm::NiDmm::Stub> nidmm_stub_;
-  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
-  std::unique_ptr<dmm::NiDmmLibrary> nidmm_library_;
-  std::unique_ptr<dmm::NiDmmService> nidmm_service_;
-  std::unique_ptr<::grpc::Server> server_;
 };
 
 TEST_F(NiDmmDriverApiTest, SelfTest_CompletesSuccessfully)

@@ -7,7 +7,6 @@
 #include "device_server.h"
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
-#include "nirfmxspecan/nirfmxspecan_service.h"
 #include "rfmx_macros.h"
 #include "waveform_helpers.h"
 

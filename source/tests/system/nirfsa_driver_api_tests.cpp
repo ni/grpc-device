@@ -4,8 +4,6 @@
 #include <algorithm>
 
 #include "device_server.h"
-#include "ivi.h"  // VI_SUCCESS
-#include "niRFSA.h"
 #include "niRFSAErrors.h"
 #include "nirfsa/nirfsa_client.h"
 #include "niscope/niscope_client.h"
@@ -25,11 +23,13 @@ namespace {
 
 const auto PXI_5663E = "5663E";
 const auto PXI_5603 = "5603";
+const auto IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR = 0xBFFA0012;
+const auto REF_OUT_STR = "RefOut";
 
 template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
 {
-  EXPECT_EQ(VI_SUCCESS, response.status());
+  EXPECT_EQ(0, response.status());
 }
 
 template <typename TResponse>
@@ -308,7 +308,7 @@ TEST_F(NiRFSADriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
   EXPECT_SUCCESS(session, set_response);
   EXPECT_SUCCESS(session, get_response);
   EXPECT_NE(initial_response.value(), get_response.value());
-  EXPECT_EQ(NIRFSA_VAL_REF_OUT_STR, get_response.value());
+  EXPECT_EQ(REF_OUT_STR, get_response.value());
 }
 
 TEST_F(NiRFSADriverApiTests, ReconfigureFFTWindowType_UpdatesFFTWindowSuccessfully)
@@ -497,7 +497,7 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_Reports
       {NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttribute::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
       true);
 
-  EXPECT_RFSA_ERROR(IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED, "Attribute or property not supported.", session, response);
+  EXPECT_RFSA_ERROR(IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR, "Attribute or property not supported.", session, response);
 }
 
 TEST_F(NiRFSADriverApiTests, GetScalingCoefficients_ReturnsCoefficients)
@@ -573,7 +573,7 @@ TEST_F(NiRFSADriverApiTests, IsSelfCalValid)
 
   EXPECT_SUCCESS(session, response);
   EXPECT_THAT(response.valid_steps_array(), ElementsAre(SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL));
-  EXPECT_EQ(NIRFSA_VAL_SELF_CAL_DIGITIZER_SELF_CAL, response.valid_steps_raw());
+  EXPECT_EQ(SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL, response.valid_steps_raw());
 }
 
 TEST_F(NiRFSADriverApiTests, SelfTest_Succeeds)
@@ -588,7 +588,7 @@ TEST_F(NiRFSADriverApiTests, SelfTest_Succeeds)
 TEST_F(NiRFSADriverApiTests, ErrorMessage_ReturnsErrorMessage)
 {
   auto session = init_session(stub(), PXI_5663E);
-  const auto response = client::error_message(stub(), session, IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED);
+  const auto response = client::error_message(stub(), session, IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR);
 
   EXPECT_SUCCESS(session, response);
   EXPECT_EQ(

@@ -2,7 +2,6 @@
 
 #include "device_server.h"
 #include "nidcpower/nidcpower_client.h"
-#include "nidcpower/nidcpower_service.h"
 
 namespace ni {
 namespace tests {
@@ -10,6 +9,12 @@ namespace system {
 
 namespace dcpower = nidcpower_grpc;
 namespace client = nidcpower_grpc::experimental::client;
+namespace pb = ::google::protobuf;
+
+typedef pb::int32 int32;
+typedef pb::int64 int64;
+typedef pb::uint32 uint32;
+typedef pb::uint16 uint16;
 
 const int kdcpowerDriverApiSuccess = 0;
 
@@ -115,7 +120,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     EXPECT_TRUE(status.ok());
   }
 
-  ViBoolean get_bool_attribute(const char* channel_list, dcpower::NiDCPowerAttribute attribute_id)
+  bool get_bool_attribute(const char* channel_list, dcpower::NiDCPowerAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     dcpower::GetAttributeViBooleanRequest request;
@@ -131,7 +136,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  ViInt32 get_int32_attribute(const char* channel_list, dcpower::NiDCPowerAttribute attribute_id)
+  int32 get_int32_attribute(const char* channel_list, dcpower::NiDCPowerAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     dcpower::GetAttributeViInt32Request request;
@@ -147,7 +152,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  ViInt64 get_int64_attribute(const char* channel_list, dcpower::NiDCPowerAttribute attribute_id)
+  int64 get_int64_attribute(const char* channel_list, dcpower::NiDCPowerAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     dcpower::GetAttributeViInt64Request request;
@@ -163,7 +168,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  ViReal64 get_real64_attribute(const char* channel_list, dcpower::NiDCPowerAttribute attribute_id)
+  double get_real64_attribute(const char* channel_list, dcpower::NiDCPowerAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     dcpower::GetAttributeViReal64Request request;
@@ -227,7 +232,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   }
 
-  void configure_voltage_level(const char* channel_name, ViReal64 level)
+  void configure_voltage_level(const char* channel_name, double level)
   {
     ::grpc::ClientContext context;
     dcpower::ConfigureVoltageLevelRequest request;
@@ -242,7 +247,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
   }
 
-  void configure_current_level(const char* channel_name, ViReal64 level)
+  void configure_current_level(const char* channel_name, double level)
   {
     ::grpc::ClientContext context;
     dcpower::ConfigureCurrentLevelRequest request;
@@ -369,7 +374,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViInt32_GetAttributeViInt32ReturnsSam
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
-  ViInt32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
+  int32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
@@ -384,7 +389,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViReal64_GetAttributeViReal64ReturnsS
       dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
       dcpower::NiDCPowerInt32AttributeValues::NIDCPOWER_INT32_MEASURE_WHEN_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE);
   const dcpower::NiDCPowerAttribute attribute_to_set = dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_SOURCE_DELAY;
-  const ViReal64 expected_value = 2.516;
+  const double expected_value = 2.516;
   ::grpc::ClientContext context;
   dcpower::SetAttributeViReal64Request request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -396,7 +401,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViReal64_GetAttributeViReal64ReturnsS
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
-  ViReal64 get_attribute_value_sourcedelay = get_real64_attribute(channel_name, attribute_to_set);
+  double get_attribute_value_sourcedelay = get_real64_attribute(channel_name, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value_sourcedelay);
 }
 
@@ -411,7 +416,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViBoolean_GetAttributeViBooleanReturn
       dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_MEASURE_WHEN,
       dcpower::NiDCPowerInt32AttributeValues::NIDCPOWER_INT32_MEASURE_WHEN_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE);
   const dcpower::NiDCPowerAttribute attribute_to_set = dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH_IS_FINITE;
-  const ViBoolean expected_value = true;
+  const bool expected_value = true;
   ::grpc::ClientContext context;
   dcpower::SetAttributeViBooleanRequest request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -423,7 +428,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViBoolean_GetAttributeViBooleanReturn
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
-  ViBoolean get_attribute_value = get_bool_attribute(channel_name, attribute_to_set);
+  bool get_attribute_value = get_bool_attribute(channel_name, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
@@ -452,7 +457,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViInt64_GetAttributeViInt64ReturnsSam
 {
   const char* channel_name = "";
   const dcpower::NiDCPowerAttribute attribute_to_set = dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_ACTIVE_ADVANCED_SEQUENCE_STEP;
-  const ViInt64 expected_value = 1;
+  const int64 expected_value = 1;
   ::grpc::ClientContext context;
   dcpower::SetAttributeViInt64Request request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -464,20 +469,20 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViInt64_GetAttributeViInt64ReturnsSam
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kdcpowerDriverApiSuccess, response.status());
-  ViInt64 get_attribute_value = get_int64_attribute(channel_name, attribute_to_set);
+  int64 get_attribute_value = get_int64_attribute(channel_name, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
 TEST_F(NiDCPowerDriverApiTest, ConfigureOutputFunctionAndVoltageLevel_ConfiguresSuccessfully)
 {
   const char* channel_name = "0";
-  ViReal64 expected_voltage_level = 3.0;
+  double expected_voltage_level = 3.0;
   auto expected_output_function_value = dcpower::OutputFunction::OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_VOLTAGE;
   configure_output_function(channel_name, expected_output_function_value);
   configure_voltage_level(channel_name, expected_voltage_level);
 
-  ViReal64 actual_voltage_level = get_real64_attribute(channel_name, dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL);
-  ViInt32 actual_output_function_value = get_int32_attribute(channel_name, dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_OUTPUT_FUNCTION);
+  double actual_voltage_level = get_real64_attribute(channel_name, dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_VOLTAGE_LEVEL);
+  int32 actual_output_function_value = get_int32_attribute(channel_name, dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_OUTPUT_FUNCTION);
   EXPECT_EQ(expected_voltage_level, actual_voltage_level);
   EXPECT_EQ(expected_output_function_value, actual_output_function_value);
 }
@@ -485,13 +490,13 @@ TEST_F(NiDCPowerDriverApiTest, ConfigureOutputFunctionAndVoltageLevel_Configures
 TEST_F(NiDCPowerDriverApiTest, ConfigureOutputFunctionAndCurrentLevel_ConfiguresSuccessfully)
 {
   const char* channel_name = "0";
-  ViReal64 expected_current_level = 3.0;
+  double expected_current_level = 3.0;
   auto expected_output_function_value = dcpower::OutputFunction::OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_CURRENT;
   configure_output_function(channel_name, expected_output_function_value);
   configure_current_level(channel_name, expected_current_level);
 
-  ViReal64 actual_current_level = get_real64_attribute(channel_name, dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_CURRENT_LEVEL);
-  ViInt32 actual_output_function_value = get_int32_attribute(channel_name, dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_OUTPUT_FUNCTION);
+  double actual_current_level = get_real64_attribute(channel_name, dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_CURRENT_LEVEL);
+  int32 actual_output_function_value = get_int32_attribute(channel_name, dcpower::NiDCPowerAttribute::NIDCPOWER_ATTRIBUTE_OUTPUT_FUNCTION);
   EXPECT_EQ(expected_current_level, actual_current_level);
   EXPECT_EQ(expected_output_function_value, actual_output_function_value);
 }

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niscope/niscope_service.h"
+#include "niscope/niscope_client.h"
 
 namespace ni {
 namespace tests {
