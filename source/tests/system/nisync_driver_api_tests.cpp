@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nisync/nisync_service.h"
 #include "enumerate_devices.h"
+#include "ivi.h"
+#include "nisync/nisync_client.h"
 
 namespace ni {
 namespace tests {
@@ -10,11 +11,33 @@ namespace system {
 
 namespace nisync = nisync_grpc;
 
-static const ViStatus kSyncInvalidSrcTerminal = 0xBFFA4032;
-static const char* kTestSessionName = "TestSession";
-static const char* kEmptySessionName = "";
-static const char* kInvalidRsrcName = "InvalidName";
-static const char* kInvalidTerminal = "Invalid";
+constexpr auto kSyncInvalidSrcTerminal = 0xBFFA4032;
+constexpr auto kTestSessionName = "TestSession";
+constexpr auto kEmptySessionName = "";
+constexpr auto kInvalidRsrcName = "InvalidName";
+constexpr auto kInvalidTerminal = "Invalid";
+constexpr auto NISYNC_VAL_OSCILLATOR = "Oscillator";
+constexpr auto NISYNC_VAL_CLKOUT = "ClkOut";
+constexpr auto NISYNC_ERROR_SRC_TERMINAL_INVALID = 0xBFFA4032;
+constexpr auto NISYNC_VAL_CLKIN = "ClkIn";
+constexpr auto NISYNC_VAL_SWTRIG_GLOBAL = "GlobalSorftwareTrigger";
+constexpr auto NISYNC_VAL_PXIEDSTARC = "PXIe_DStarC";
+constexpr auto NISYNC_VAL_SYNC_CLK_FULLSPEED = "SyncClkFullSpeed";
+constexpr auto NISYNC_VAL_CLK100 = "PXIe_Clk100";
+constexpr auto NISYNC_VAL_PFI0 = "PFI0";
+constexpr auto NISYNC_VAL_PFI1 = "PFI1";
+constexpr auto NISYNC_VAL_SYNC_CLK_ASYNC = "SyncClkAsync";
+constexpr auto NISYNC_VAL_1588_CLK_ACCURACY_WITHIN_1_USEC = 4;
+constexpr auto NISYNC_VAL_CLK10 = "PXI_Clk10";
+constexpr auto NISYNC_VAL_IRIG_TYPE_IRIGB_DC = 0;
+constexpr auto NISYNC_VAL_GND = "Ground";
+constexpr auto NISYNC_ERROR_TERMINAL_INVALID = 0xBFFA4036;
+constexpr auto NISYNC_ERROR_RSRC_NOT_RESERVED = 0xBFFA4048;
+constexpr auto NISYNC_VAL_EDGE_RISING = 0;
+constexpr auto NISYNC_ERROR_DRIVER_TIMEOUT = 0xBFFA400B;
+constexpr auto NISYNC_VAL_LEVEL_LOW = 0;
+constexpr auto NISYNC_VAL_LEVEL_HIGH = 1;
+constexpr auto NISYNC_ERROR_FEATURE_NOT_SUPPORTED = 0xBFFA4003;
 
 class NiSyncDriverApiTest : public ::testing::Test {
  protected:
@@ -33,7 +56,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
 
   void SetUp() override
   {
-    for(const auto& device : EnumerateDevices()) {
+    for (const auto& device : EnumerateDevices()) {
       if (device.model() == get_model_name()) {
         test_resource_name = device.name();
         break;
@@ -101,7 +124,6 @@ class NiSyncDriverApiTest : public ::testing::Test {
     return grpcStatus;
   }
 
-
   ::grpc::Status call_SendSoftwareTrigger(ViConstString srcTerminal, ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
@@ -141,13 +163,13 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_ConnectSWTrigToTerminal(
-    ViConstString srcTerminal,
-    ViConstString destTerminal,
-    ViConstString syncClock,
-    ViInt32 invert,
-    ViInt32 updateEdge,
-    ViReal64 delay,
-    ViStatus* viStatusOut)
+      ViConstString srcTerminal,
+      ViConstString destTerminal,
+      ViConstString syncClock,
+      ViInt32 invert,
+      ViInt32 updateEdge,
+      ViReal64 delay,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::ConnectSWTrigToTerminalRequest request;
@@ -178,12 +200,12 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_ConnectTrigTerminals(
-    ViConstString srcTerminal,
-    ViConstString destTerminal,
-    ViConstString syncClock,
-    ViInt32 invert,
-    ViInt32 updateEdge,
-    ViStatus* viStatusOut)
+      ViConstString srcTerminal,
+      ViConstString destTerminal,
+      ViConstString syncClock,
+      ViInt32 invert,
+      ViInt32 updateEdge,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::ConnectTrigTerminalsRequest request;
@@ -325,13 +347,13 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_MeasureFrequencyEx(
-     ViConstString srcTerminal,
-     ViReal64 duration,
-     ViUInt32 decimationCount,
-     ViReal64* actualDurationOut,
-     ViReal64* frequencyOut,
-     ViReal64* frequencyErrorOut,
-     ViStatus* viStatusOut)
+      ViConstString srcTerminal,
+      ViReal64 duration,
+      ViUInt32 decimationCount,
+      ViReal64* actualDurationOut,
+      ViReal64* frequencyOut,
+      ViReal64* frequencyErrorOut,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::MeasureFrequencyExRequest request;
@@ -349,10 +371,10 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_GetTime(
-     ViUInt32* timeSeconds,
-     ViUInt32* timeNanoseconds,
-     ViUInt16* timeFractionalNanoseconds,
-     ViStatus* viStatusOut)
+      ViUInt32* timeSeconds,
+      ViUInt32* timeNanoseconds,
+      ViUInt16* timeFractionalNanoseconds,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::GetTimeRequest request;
@@ -389,9 +411,9 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_SetTimeReferenceIRIG(
-     ViInt32 irigType,
-     ViConstString terminalName,
-     ViStatus* viStatusOut)
+      ViInt32 irigType,
+      ViConstString terminalName,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::SetTimeReferenceIRIGRequest request;
@@ -405,12 +427,12 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_SetTimeReferencePPS(
-     ViConstString terminalName,
-     ViBoolean useManualTime,
-     ViUInt32 initialTimeSeconds,
-     ViUInt32 initialTimeNanoseconds,
-     ViUInt16 initialTimeFractionalNanoseconds,
-     ViStatus* viStatusOut)
+      ViConstString terminalName,
+      ViBoolean useManualTime,
+      ViUInt32 initialTimeSeconds,
+      ViUInt32 initialTimeNanoseconds,
+      ViUInt16 initialTimeFractionalNanoseconds,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::SetTimeReferencePPSRequest request;
@@ -449,12 +471,12 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_CreateFutureTimeEvent(
-     ViConstString terminal,
-     ViInt32 outputLevel,
-     ViUInt32 timeSeconds,
-     ViUInt32 timeNanoseconds,
-     ViUInt16 timeFractionalNanoseconds,
-     ViStatus* viStatusOut)
+      ViConstString terminal,
+      ViInt32 outputLevel,
+      ViUInt32 timeSeconds,
+      ViUInt32 timeNanoseconds,
+      ViUInt16 timeFractionalNanoseconds,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::CreateFutureTimeEventRequest request;
@@ -471,27 +493,27 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   void CreateFutureTimeEvent(
-     ViConstString terminal,
-     ViInt32 outputLevel,
-     ViUInt32 timeSeconds,
-     ViUInt32 timeNanoseconds,
-     ViUInt16 timeFractionalNanoseconds)
+      ViConstString terminal,
+      ViInt32 outputLevel,
+      ViUInt32 timeSeconds,
+      ViUInt32 timeNanoseconds,
+      ViUInt16 timeFractionalNanoseconds)
   {
     ViStatus viStatus;
     auto grpcStatus = call_CreateFutureTimeEvent(
-      terminal,
-      outputLevel,
-      timeSeconds,
-      timeNanoseconds,
-      timeFractionalNanoseconds,
-      &viStatus);
+        terminal,
+        outputLevel,
+        timeSeconds,
+        timeNanoseconds,
+        timeFractionalNanoseconds,
+        &viStatus);
     ASSERT_TRUE(grpcStatus.ok());
     ASSERT_EQ(VI_SUCCESS, viStatus);
   }
 
   ::grpc::Status call_ClearFutureTimeEvents(
-     ViConstString terminal,
-     ViStatus* viStatusOut)
+      ViConstString terminal,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::ClearFutureTimeEventsRequest request;
@@ -504,16 +526,16 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_CreateClock(
-     ViConstString terminal,
-     ViUInt32 highTicks,
-     ViUInt32 lowTicks,
-     ViUInt32 startTimeSeconds,
-     ViUInt32 startTimeNanoseconds,
-     ViUInt16 startTimeFractionalNanoseconds,
-     ViUInt32 stopTimeSeconds,
-     ViUInt32 stopTimeNanoseconds,
-     ViUInt16 stopTimeFractionalNanoseconds,
-     ViStatus* viStatusOut)
+      ViConstString terminal,
+      ViUInt32 highTicks,
+      ViUInt32 lowTicks,
+      ViUInt32 startTimeSeconds,
+      ViUInt32 startTimeNanoseconds,
+      ViUInt16 startTimeFractionalNanoseconds,
+      ViUInt32 stopTimeSeconds,
+      ViUInt32 stopTimeNanoseconds,
+      ViUInt16 stopTimeFractionalNanoseconds,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::CreateClockRequest request;
@@ -534,8 +556,8 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_ClearClock(
-     ViConstString terminal,
-     ViStatus* viStatusOut)
+      ViConstString terminal,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::ClearClockRequest request;
@@ -548,8 +570,8 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_GetTimeReferenceNames(
-     std::string* valueOut,
-     ViStatus* viStatusOut)
+      std::string* valueOut,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::GetTimeReferenceNamesRequest request;
@@ -562,9 +584,9 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_EnableTimeStampTrigger(
-     ViConstString terminal,
-     ViInt32 activeEdge,
-     ViStatus* viStatusOut)
+      ViConstString terminal,
+      ViInt32 activeEdge,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::EnableTimeStampTriggerRequest request;
@@ -578,8 +600,8 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   void EnableTimeStampTrigger(
-     ViConstString terminal,
-     ViInt32 activeEdge)
+      ViConstString terminal,
+      ViInt32 activeEdge)
   {
     ViStatus viStatus;
     auto grpcStatus = call_EnableTimeStampTrigger(terminal, activeEdge, &viStatus);
@@ -588,13 +610,13 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_ReadTriggerTimeStamp(
-     ViConstString terminal,
-     ViReal64 timeout,
-     ViUInt32* timeSeconds,
-     ViUInt32* timeNanoseconds,
-     ViUInt16* timeFractionalNanoseconds,
-     ViInt32* detectedEdge,
-     ViStatus* viStatusOut)
+      ViConstString terminal,
+      ViReal64 timeout,
+      ViUInt32* timeSeconds,
+      ViUInt32* timeNanoseconds,
+      ViUInt16* timeFractionalNanoseconds,
+      ViInt32* detectedEdge,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::ReadTriggerTimeStampRequest request;
@@ -612,15 +634,15 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_ReadMultipleTriggerTimeStamp(
-     ViConstString terminal,
-     ViReal64 timeout,
-     ViUInt32 timestampsToRead,
-     ViUInt32* timeSecondsBuffer,
-     ViUInt32* timeNanosecondsBuffer,
-     ViUInt16* timeFractionalNanosecondsBuffer,
-     ViInt32* detectedEdgeBuffer,
-     ViUInt32* timestampsRead,
-     ViStatus* viStatusOut)
+      ViConstString terminal,
+      ViReal64 timeout,
+      ViUInt32 timestampsToRead,
+      ViUInt32* timeSecondsBuffer,
+      ViUInt32* timeNanosecondsBuffer,
+      ViUInt16* timeFractionalNanosecondsBuffer,
+      ViInt32* detectedEdgeBuffer,
+      ViUInt32* timestampsRead,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::ReadMultipleTriggerTimeStampRequest request;
@@ -640,8 +662,8 @@ class NiSyncDriverApiTest : public ::testing::Test {
   }
 
   ::grpc::Status call_DisableTimeStampTrigger(
-     ViConstString terminal,
-     ViStatus* viStatusOut)
+      ViConstString terminal,
+      ViStatus* viStatusOut)
   {
     ::grpc::ClientContext clientContext;
     nisync::DisableTimeStampTriggerRequest request;
@@ -659,31 +681,29 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ViUInt32 timeSeconds = 0, timeNanoseconds;
     ViUInt16 timeFractionalNanoseconds;
     auto grpcStatus = call_GetTime(
-      &timeSeconds,
-      &timeNanoseconds, // ignored
-      &timeFractionalNanoseconds, // ignored
-      &viStatus);
+        &timeSeconds,
+        &timeNanoseconds,            // ignored
+        &timeFractionalNanoseconds,  // ignored
+        &viStatus);
     EXPECT_TRUE(grpcStatus.ok());
     EXPECT_EQ(VI_SUCCESS, viStatus);
     return timeSeconds;
   }
 
-private:
+ private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<nisync::NiSync::Stub> nisync_stub_;
 };
 
-class NiSyncDriver6674Test : public NiSyncDriverApiTest
-{
-public:
+class NiSyncDriver6674Test : public NiSyncDriverApiTest {
+ public:
   NiSyncDriver6674Test() : NiSyncDriverApiTest() {}
   const char* get_model_name() const override { return "NI PXIe-6674T"; }
 };
 
-class NiSyncDriver6683Test : public NiSyncDriverApiTest
-{
-public:
+class NiSyncDriver6683Test : public NiSyncDriverApiTest {
+ public:
   NiSyncDriver6683Test() : NiSyncDriverApiTest() {}
   const char* get_model_name() const override { return "NI PXI-6683H"; }
 };
@@ -758,13 +778,13 @@ TEST_F(NiSyncDriver6674Test, ConnectSWTrigToTerminal_ReturnsSuccess)
   ViInt32 invert = VI_TRUE, updateEdge = VI_FALSE;
   ViReal64 delay = 0;
   auto grpcStatus = call_ConnectSWTrigToTerminal(
-    srcTerminal,
-    destTerminal,
-    syncClock,
-    invert,
-    updateEdge,
-    delay,
-    &viStatus);
+      srcTerminal,
+      destTerminal,
+      syncClock,
+      invert,
+      updateEdge,
+      delay,
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
@@ -779,13 +799,13 @@ TEST_F(NiSyncDriver6674Test, ConnectInvalidSWTrigToTerminal_ReturnsInvalidSrcTer
   ViInt32 invert = VI_TRUE, updateEdge = VI_FALSE;
   ViReal64 delay = 0;
   auto grpcStatus = call_ConnectSWTrigToTerminal(
-    srcTerminal,
-    destTerminal,
-    syncClock,
-    invert,
-    updateEdge,
-    delay,
-    &viStatus);
+      srcTerminal,
+      destTerminal,
+      syncClock,
+      invert,
+      updateEdge,
+      delay,
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
@@ -799,13 +819,13 @@ TEST_F(NiSyncDriver6674Test, ConnectedSWTrigToTerminal_DisconnectSWTrigFromTermi
   ViInt32 invert = VI_TRUE, updateEdge = VI_FALSE;
   ViReal64 delay = 0;
   auto grpcStatus = call_ConnectSWTrigToTerminal(
-    srcTerminal,
-    destTerminal,
-    syncClock,
-    invert,
-    updateEdge,
-    delay,
-    &viStatus);
+      srcTerminal,
+      destTerminal,
+      syncClock,
+      invert,
+      updateEdge,
+      delay,
+      &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
 
@@ -823,13 +843,13 @@ TEST_F(NiSyncDriver6674Test, SWTrigConnectedToTerminal_DisconnectSWTrigFromNotCo
   ViInt32 invert = VI_TRUE, updateEdge = VI_FALSE;
   ViReal64 delay = 0;
   auto grpcStatus = call_ConnectSWTrigToTerminal(
-    srcTerminal,
-    destTerminal,
-    syncClock,
-    invert,
-    updateEdge,
-    delay,
-    &viStatus);
+      srcTerminal,
+      destTerminal,
+      syncClock,
+      invert,
+      updateEdge,
+      delay,
+      &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
 
@@ -868,12 +888,12 @@ TEST_F(NiSyncDriver6674Test, ConnectTrigTerminals_ReturnsSuccess)
   auto syncClock = NISYNC_VAL_SYNC_CLK_ASYNC;
   ViInt32 invert = VI_FALSE, updateEdge = VI_FALSE;
   auto grpcStatus = call_ConnectTrigTerminals(
-    srcTerminal,
-    destTerminal,
-    syncClock,
-    invert,
-    updateEdge,
-    &viStatus);
+      srcTerminal,
+      destTerminal,
+      syncClock,
+      invert,
+      updateEdge,
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
@@ -887,12 +907,12 @@ TEST_F(NiSyncDriver6674Test, ConnectInvalidTrigTerminals_ReturnsInvalidSrcTermin
   auto syncClock = NISYNC_VAL_SYNC_CLK_ASYNC;
   ViInt32 invert = VI_FALSE, updateEdge = VI_FALSE;
   auto grpcStatus = call_ConnectTrigTerminals(
-    srcTerminal,
-    destTerminal,
-    syncClock,
-    invert,
-    updateEdge,
-    &viStatus);
+      srcTerminal,
+      destTerminal,
+      syncClock,
+      invert,
+      updateEdge,
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
@@ -905,12 +925,12 @@ TEST_F(NiSyncDriver6674Test, ConnectedTrigTerminals_DisconnectTrigTerminals_Retu
   auto syncClock = NISYNC_VAL_SYNC_CLK_ASYNC;
   ViInt32 invert = VI_FALSE, updateEdge = VI_FALSE;
   auto grpcStatus = call_ConnectTrigTerminals(
-    srcTerminal,
-    destTerminal,
-    syncClock,
-    invert,
-    updateEdge,
-    &viStatus);
+      srcTerminal,
+      destTerminal,
+      syncClock,
+      invert,
+      updateEdge,
+      &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
 
@@ -927,12 +947,12 @@ TEST_F(NiSyncDriver6674Test, NotConnectedTrigTerminals_DisconnectSWTrigFromTermi
   auto syncClock = NISYNC_VAL_SYNC_CLK_ASYNC;
   ViInt32 invert = VI_FALSE, updateEdge = VI_FALSE;
   auto grpcStatus = call_ConnectTrigTerminals(
-    srcTerminal,
-    destTerminal,
-    syncClock,
-    invert,
-    updateEdge,
-    &viStatus);
+      srcTerminal,
+      destTerminal,
+      syncClock,
+      invert,
+      updateEdge,
+      &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
 
@@ -948,7 +968,7 @@ TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViInt32_ReturnsValue)
 {
   ViStatus viStatus;
   auto activeItem = "";
-  ViAttr attribute = NISYNC_ATTR_SYNC_CLK_DIV1;
+  ViAttr attribute = nisync_grpc::NISYNC_ATTRIBUTE_SYNC_CLK_DIV1;
   ViInt32 expectedValue = NISYNC_VAL_1588_CLK_ACCURACY_WITHIN_1_USEC;
   auto grpcStatus = call_SetAttributeViInt32(activeItem, attribute, expectedValue, &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
@@ -966,7 +986,7 @@ TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViString_ReturnsValue)
 {
   ViStatus viStatus;
   auto activeItem = "";
-  ViAttr attribute = NISYNC_ATTR_FRONT_SYNC_CLK_SRC;
+  ViAttr attribute = nisync_grpc::NISYNC_ATTRIBUTE_FRONT_SYNC_CLK_SRC;
   ViConstString expectedValue = NISYNC_VAL_CLK10;
   auto grpcStatus = call_SetAttributeViString(activeItem, attribute, expectedValue, &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
@@ -984,7 +1004,7 @@ TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViBoolean_ReturnsValue)
 {
   ViStatus viStatus;
   auto activeItem = "";
-  ViAttr attribute = NISYNC_ATTR_CLKIN_ATTENUATION_DISABLE;
+  ViAttr attribute = nisync_grpc::NISYNC_ATTRIBUTE_CLKIN_ATTENUATION_DISABLE;
   ViBoolean expectedValue = VI_TRUE;
   auto grpcStatus = call_SetAttributeViBoolean(activeItem, attribute, expectedValue, &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
@@ -1002,7 +1022,7 @@ TEST_F(NiSyncDriver6674Test, AttributeSet_GetAttributeViReal64_ReturnsValue)
 {
   ViStatus viStatus;
   auto activeItem = "";
-  ViAttr attribute = NISYNC_ATTR_PFI0_THRESHOLD;
+  ViAttr attribute = nisync_grpc::NISYNC_ATTRIBUTE_PFI0_THRESHOLD;
   ViReal64 expectedValue = 2.3;
   auto grpcStatus = call_SetAttributeViReal64(activeItem, attribute, expectedValue, &viStatus);
   EXPECT_TRUE(grpcStatus.ok());
@@ -1023,17 +1043,17 @@ TEST_F(NiSyncDriver6674Test, MeasureFrequencyExOnTerminalWithNoFrequency_Returns
 {
   ViStatus viStatus;
   ViConstString srcTerminal = NISYNC_VAL_PFI0;
-  ViReal64 duration = 0.1; // duration is in seconds
-  ViUInt32 decimationCount = 0; // ignored for 6674
+  ViReal64 duration = 0.1;       // duration is in seconds
+  ViUInt32 decimationCount = 0;  // ignored for 6674
   ViReal64 actualDuration, frequency, frequencyError;
   auto grpcStatus = call_MeasureFrequencyEx(
-     srcTerminal,
-     duration,
-     decimationCount,
-     &actualDuration,
-     &frequency,
-     &frequencyError,
-     &viStatus);
+      srcTerminal,
+      duration,
+      decimationCount,
+      &actualDuration,
+      &frequency,
+      &frequencyError,
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
@@ -1045,21 +1065,21 @@ TEST_F(NiSyncDriver6674Test, MeasureFrequencyExOnOscillatorWithFrequency_Returns
 {
   ViStatus viStatus;
   ViConstString srcTerminal = NISYNC_VAL_OSCILLATOR;
-  ViReal64 duration = 0.1; // duration is in seconds
-  ViUInt32 decimationCount = 0; // ignored for 6674
+  ViReal64 duration = 0.1;       // duration is in seconds
+  ViUInt32 decimationCount = 0;  // ignored for 6674
   ViReal64 actualDuration, frequency, frequencyError;
   auto grpcStatus = call_MeasureFrequencyEx(
-     srcTerminal,
-     duration,
-     decimationCount,
-     &actualDuration,
-     &frequency,
-     &frequencyError,
-     &viStatus);
+      srcTerminal,
+      duration,
+      decimationCount,
+      &actualDuration,
+      &frequency,
+      &frequencyError,
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  EXPECT_GT(actualDuration, 0);  
+  EXPECT_GT(actualDuration, 0);
   EXPECT_GT(frequency, 0);
 }
 
@@ -1069,14 +1089,14 @@ TEST_F(NiSyncDriver6683Test, GetTime_ReturnsTime)
   ViUInt32 timeSeconds, timeNanoseconds;
   ViUInt16 timeFractionalNanoseconds;
   auto grpcStatus = call_GetTime(
-     &timeSeconds, 
-     &timeNanoseconds, 
-     &timeFractionalNanoseconds, // ignored
-     &viStatus);
+      &timeSeconds,
+      &timeNanoseconds,
+      &timeFractionalNanoseconds,  // ignored
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  EXPECT_GT(timeSeconds, (ViUInt32)0);  
+  EXPECT_GT(timeSeconds, (ViUInt32)0);
   EXPECT_GT(timeNanoseconds, (ViUInt32)0);
 }
 
@@ -1102,9 +1122,9 @@ TEST_F(NiSyncDriver6683Test, SetTimeReferenceIRIG_ReturnsSuccess)
 {
   ViStatus viStatus;
   auto grpcStatus = call_SetTimeReferenceIRIG(
-     NISYNC_VAL_IRIG_TYPE_IRIGB_DC, // irigType
-     NISYNC_VAL_PFI0, // terminalName
-     &viStatus);
+      NISYNC_VAL_IRIG_TYPE_IRIGB_DC,  // irigType
+      NISYNC_VAL_PFI0,                // terminalName
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
@@ -1114,9 +1134,9 @@ TEST_F(NiSyncDriver6683Test, SetTimeReferenceIRIGWithInvalidTerminal_ReturnsErro
 {
   ViStatus viStatus;
   auto grpcStatus = call_SetTimeReferenceIRIG(
-     NISYNC_VAL_IRIG_TYPE_IRIGB_DC, // irigType
-     NISYNC_VAL_GND, // terminalName
-     &viStatus);
+      NISYNC_VAL_IRIG_TYPE_IRIGB_DC,  // irigType
+      NISYNC_VAL_GND,                 // terminalName
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
@@ -1127,12 +1147,12 @@ TEST_F(NiSyncDriver6683Test, SetTimeReferencePPS_ReturnsSuccess)
   ViStatus viStatus;
   ViUInt32 initialTimeSeconds = 30, initialTimeNanoseconds = 500;
   auto grpcStatus = call_SetTimeReferencePPS(
-     NISYNC_VAL_PFI1, // terminalName
-     VI_TRUE, // useManualTime
-     initialTimeSeconds,
-     initialTimeNanoseconds,
-     0, // initialTimeFractionalNanoseconds, ignored
-     &viStatus);
+      NISYNC_VAL_PFI1,  // terminalName
+      VI_TRUE,          // useManualTime
+      initialTimeSeconds,
+      initialTimeNanoseconds,
+      0,  // initialTimeFractionalNanoseconds, ignored
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(VI_SUCCESS, viStatus);
@@ -1150,12 +1170,12 @@ TEST_F(NiSyncDriver6683Test, SetTimeReferencePPSWithInvalidTerminal_ReturnsError
   ViStatus viStatus;
   ViUInt32 initialTimeSeconds = 30, initialTimeNanoseconds = 500;
   auto grpcStatus = call_SetTimeReferencePPS(
-     NISYNC_VAL_GND, // terminalName
-     VI_TRUE, // useManualTime
-     initialTimeSeconds,
-     initialTimeNanoseconds,
-     0, // initialTimeFractionalNanoseconds, ignored
-     &viStatus);
+      NISYNC_VAL_GND,  // terminalName
+      VI_TRUE,         // useManualTime
+      initialTimeSeconds,
+      initialTimeNanoseconds,
+      0,  // initialTimeFractionalNanoseconds, ignored
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
@@ -1177,12 +1197,12 @@ TEST_F(NiSyncDriver6683Test, SetTimeReference8021AS_ReturnsSuccess)
   auto grpcStatus = call_SetTimeReference8021AS(&viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
-  #if defined(_MSC_VER)
+#if defined(_MSC_VER)
   // SetTimeReference8021AS is only supported on Linux RT targets.
   EXPECT_EQ(NISYNC_ERROR_FEATURE_NOT_SUPPORTED, viStatus);
-  #else
+#else
   EXPECT_EQ(VI_SUCCESS, viStatus);
-  #endif
+#endif
 }
 
 TEST_F(NiSyncDriver6683Test, CreateClearFutureTimeEvent_ReturnsSuccess)
@@ -1190,19 +1210,19 @@ TEST_F(NiSyncDriver6683Test, CreateClearFutureTimeEvent_ReturnsSuccess)
   ViStatus viStatusCreate;
   ViUInt32 timeSeconds = GetCurrentBoardTimeSeconds() + 30;
   auto grpcStatusCreate = call_CreateFutureTimeEvent(
-     NISYNC_VAL_PFI1, // terminalName
-     NISYNC_VAL_LEVEL_LOW, // outputLevel
-     timeSeconds,
-     0, // timeNanoseconds, ignored
-     0, // timeFractionalNanoseconds, ignored
-     &viStatusCreate);
+      NISYNC_VAL_PFI1,       // terminalName
+      NISYNC_VAL_LEVEL_LOW,  // outputLevel
+      timeSeconds,
+      0,  // timeNanoseconds, ignored
+      0,  // timeFractionalNanoseconds, ignored
+      &viStatusCreate);
   EXPECT_TRUE(grpcStatusCreate.ok());
   EXPECT_EQ(VI_SUCCESS, viStatusCreate);
 
   ViStatus viStatusClear;
   auto grpcStatusClear = call_ClearFutureTimeEvents(
-     NISYNC_VAL_PFI1,
-     &viStatusClear);
+      NISYNC_VAL_PFI1,
+      &viStatusClear);
   EXPECT_TRUE(grpcStatusClear.ok());
   EXPECT_EQ(VI_SUCCESS, viStatusClear);
 }
@@ -1212,28 +1232,28 @@ TEST_F(NiSyncDriver6683Test, CreateFutureTimeEventWithInvalidTerminal_ReturnsErr
   ViStatus viStatus;
   ViUInt32 timeSeconds = GetCurrentBoardTimeSeconds() + 30;
   auto grpcStatus = call_CreateFutureTimeEvent(
-     NISYNC_VAL_GND, // terminalName
-     NISYNC_VAL_LEVEL_LOW, // outputLevel
-     timeSeconds,
-     0, // timeNanoseconds, ignored
-     0, // timeFractionalNanoseconds, ignored
-     &viStatus);
+      NISYNC_VAL_GND,        // terminalName
+      NISYNC_VAL_LEVEL_LOW,  // outputLevel
+      timeSeconds,
+      0,  // timeNanoseconds, ignored
+      0,  // timeFractionalNanoseconds, ignored
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
-  // Bug 1462752: 6683 CreateFutureTimeEvent has different error behavior on Linux RT
-  #if defined(_MSC_VER)
+// Bug 1462752: 6683 CreateFutureTimeEvent has different error behavior on Linux RT
+#if defined(_MSC_VER)
   EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
-  #else
+#else
   EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
-  #endif
+#endif
 }
 
 TEST_F(NiSyncDriver6683Test, ClearFutureTimeEventsNotReserved_ReturnsError)
 {
   ViStatus viStatus;
   auto grpcStatus = call_ClearFutureTimeEvents(
-     NISYNC_VAL_PFI1, // terminalName
-     &viStatus);
+      NISYNC_VAL_PFI1,  // terminalName
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
@@ -1246,26 +1266,25 @@ TEST_F(NiSyncDriver6683Test, CreateClearClock_ReturnsSuccess)
   ViUInt32 startTimeSeconds = GetCurrentBoardTimeSeconds() + 30;
   ViUInt32 stopTimeSeconds = startTimeSeconds + 30;
   auto grpcStatusCreate = call_CreateClock(
-     NISYNC_VAL_PFI1, // terminalName
-     highTicks,
-     lowTicks,
-     startTimeSeconds,
-     0, // startTimeNanoseconds, ignored
-     0, // startTimeFractionalNanoseconds, ignored
-     stopTimeSeconds,
-     0, // stopTimeNanoseconds, ignored
-     0, // stopTimeFractionalNanoseconds, ignored
-     &viStatusCreate);
+      NISYNC_VAL_PFI1,  // terminalName
+      highTicks,
+      lowTicks,
+      startTimeSeconds,
+      0,  // startTimeNanoseconds, ignored
+      0,  // startTimeFractionalNanoseconds, ignored
+      stopTimeSeconds,
+      0,  // stopTimeNanoseconds, ignored
+      0,  // stopTimeFractionalNanoseconds, ignored
+      &viStatusCreate);
   EXPECT_TRUE(grpcStatusCreate.ok());
   EXPECT_EQ(VI_SUCCESS, viStatusCreate);
 
   ViStatus viStatusClear;
   auto grpcStatusClear = call_ClearClock(
-     NISYNC_VAL_PFI1,
-     &viStatusClear);
+      NISYNC_VAL_PFI1,
+      &viStatusClear);
   EXPECT_TRUE(grpcStatusClear.ok());
   EXPECT_EQ(VI_SUCCESS, viStatusClear);
-
 }
 
 TEST_F(NiSyncDriver6683Test, CreateClockWithInvalidTerminal_ReturnsError)
@@ -1275,32 +1294,32 @@ TEST_F(NiSyncDriver6683Test, CreateClockWithInvalidTerminal_ReturnsError)
   ViUInt32 startTimeSeconds = GetCurrentBoardTimeSeconds() + 30;
   ViUInt32 stopTimeSeconds = startTimeSeconds + 30;
   auto grpcStatus = call_CreateClock(
-     NISYNC_VAL_GND, // terminalName
-     highTicks,
-     lowTicks,
-     startTimeSeconds,
-     0, // startTimeNanoseconds, ignored
-     0, // startTimeFractionalNanoseconds, ignored
-     stopTimeSeconds,
-     0, // stopTimeNanoseconds, ignored
-     0, // stopTimeFractionalNanoseconds, ignored
-     &viStatus);
+      NISYNC_VAL_GND,  // terminalName
+      highTicks,
+      lowTicks,
+      startTimeSeconds,
+      0,  // startTimeNanoseconds, ignored
+      0,  // startTimeFractionalNanoseconds, ignored
+      stopTimeSeconds,
+      0,  // stopTimeNanoseconds, ignored
+      0,  // stopTimeFractionalNanoseconds, ignored
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
-  // Bug 1462754: 6683 CreateClock has different error behavior on Linux RT
-  #if defined(_MSC_VER)
+// Bug 1462754: 6683 CreateClock has different error behavior on Linux RT
+#if defined(_MSC_VER)
   EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
-  #else
+#else
   EXPECT_EQ(NISYNC_ERROR_DEST_TERMINAL_INVALID, viStatus);
-  #endif
+#endif
 }
 
 TEST_F(NiSyncDriver6683Test, ClearClockNotReserved_ReturnsError)
 {
   ViStatus viStatus;
   auto grpcStatus = call_ClearClock(
-     NISYNC_VAL_PFI1, // terminalName
-     &viStatus);
+      NISYNC_VAL_PFI1,  // terminalName
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
@@ -1311,8 +1330,8 @@ TEST_F(NiSyncDriver6683Test, GetTimeReferenceNames_ReturnsSuccess)
   ViStatus viStatus;
   std::string timeReferenceNames;
   auto grpcStatus = call_GetTimeReferenceNames(
-     &timeReferenceNames,
-     &viStatus);
+      &timeReferenceNames,
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_GT(timeReferenceNames.length(), 0);
@@ -1323,16 +1342,16 @@ TEST_F(NiSyncDriver6683Test, EnableTimeStampTrigger_ReturnsSuccess)
 {
   ViStatus viStatusEnable;
   auto grpcStatusEnable = call_EnableTimeStampTrigger(
-     NISYNC_VAL_PFI1, // terminalName
-     NISYNC_VAL_EDGE_RISING, // activeEdge
-     &viStatusEnable);
+      NISYNC_VAL_PFI1,         // terminalName
+      NISYNC_VAL_EDGE_RISING,  // activeEdge
+      &viStatusEnable);
   EXPECT_TRUE(grpcStatusEnable.ok());
   EXPECT_EQ(VI_SUCCESS, viStatusEnable);
 
   ViStatus viStatusDisable;
   auto grpcStatusDisable = call_DisableTimeStampTrigger(
-     NISYNC_VAL_PFI1,
-     &viStatusDisable);
+      NISYNC_VAL_PFI1,
+      &viStatusDisable);
   EXPECT_TRUE(grpcStatusDisable.ok());
   EXPECT_EQ(VI_SUCCESS, viStatusDisable);
 }
@@ -1341,9 +1360,9 @@ TEST_F(NiSyncDriver6683Test, EnableTimeStampTriggerWithInvalidTerminal_ReturnsEr
 {
   ViStatus viStatus;
   auto grpcStatus = call_EnableTimeStampTrigger(
-     NISYNC_VAL_GND, // terminalName
-     NISYNC_VAL_EDGE_RISING, // activeEdge
-     &viStatus);
+      NISYNC_VAL_GND,          // terminalName
+      NISYNC_VAL_EDGE_RISING,  // activeEdge
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(NISYNC_ERROR_TERMINAL_INVALID, viStatus);
@@ -1353,8 +1372,8 @@ TEST_F(NiSyncDriver6683Test, DisableTimeStampTriggerNotReserved_ReturnsError)
 {
   ViStatus viStatus;
   auto grpcStatus = call_DisableTimeStampTrigger(
-     NISYNC_VAL_PFI1, // terminalName
-     &viStatus);
+      NISYNC_VAL_PFI1,  // terminalName
+      &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
   EXPECT_EQ(NISYNC_ERROR_RSRC_NOT_RESERVED, viStatus);
@@ -1371,13 +1390,13 @@ TEST_F(NiSyncDriver6683Test, GivenNoTrigger_ReadTriggerTimeStamp_ReturnsTimeoutE
   ViUInt16 timeFractionalNanoseconds;
   ViInt32 detectedEdge;
   auto grpcStatusRead = call_ReadTriggerTimeStamp(
-     terminal,
-     timeout,
-     &timeSeconds,
-     &timeNanoseconds,
-     &timeFractionalNanoseconds,
-     &detectedEdge,
-     &viStatusRead);
+      terminal,
+      timeout,
+      &timeSeconds,
+      &timeNanoseconds,
+      &timeFractionalNanoseconds,
+      &detectedEdge,
+      &viStatusRead);
 
   EXPECT_TRUE(grpcStatusRead.ok());
   EXPECT_EQ(NISYNC_ERROR_DRIVER_TIMEOUT, viStatusRead);
@@ -1396,15 +1415,15 @@ TEST_F(NiSyncDriver6683Test, GivenNoTrigger_ReadMultipleTriggerTimeStamp_Returns
   ViInt32 detectedEdge;
   ViUInt32 timestampsRead;
   auto grpcStatusRead = call_ReadMultipleTriggerTimeStamp(
-     terminal,
-     timeout,
-     timestampsToRead,
-     &timeSeconds,
-     &timeNanoseconds,
-     &timeFractionalNanoseconds,
-     &detectedEdge,
-     &timestampsRead,
-     &viStatusRead);
+      terminal,
+      timeout,
+      timestampsToRead,
+      &timeSeconds,
+      &timeNanoseconds,
+      &timeFractionalNanoseconds,
+      &detectedEdge,
+      &timestampsRead,
+      &viStatusRead);
 
   EXPECT_TRUE(grpcStatusRead.ok());
   EXPECT_EQ(NISYNC_ERROR_DRIVER_TIMEOUT, viStatusRead);
@@ -1427,15 +1446,15 @@ TEST_F(NiSyncDriver6683Test, GivenOneTrigger_ReadMultipleTriggerTimeStamp_Return
   ViInt32 detectedEdge[timestampsToRead] = {};
   ViUInt32 timestampsRead = 0;
   auto grpcStatusRead = call_ReadMultipleTriggerTimeStamp(
-     terminal,
-     timeout,
-     timestampsToRead,
-     timeSeconds,
-     timeNanoseconds,
-     timeFractionalNanoseconds,
-     detectedEdge,
-     &timestampsRead,
-     &viStatusRead);
+      terminal,
+      timeout,
+      timestampsToRead,
+      timeSeconds,
+      timeNanoseconds,
+      timeFractionalNanoseconds,
+      detectedEdge,
+      &timestampsRead,
+      &viStatusRead);
 
   const ViUInt32 expectedTimestampsRead = 1;
   EXPECT_TRUE(grpcStatusRead.ok());
@@ -1467,15 +1486,15 @@ TEST_F(NiSyncDriver6683Test, GivenFiveTriggers_ReadMultipleTriggerTimeStamp_Retu
   ViInt32 detectedEdge[timestampsToRead] = {};
   ViUInt32 timestampsRead = 0;
   auto grpcStatusRead = call_ReadMultipleTriggerTimeStamp(
-     terminal,
-     timeout,
-     timestampsToRead,
-     timeSeconds,
-     timeNanoseconds,
-     timeFractionalNanoseconds,
-     detectedEdge,
-     &timestampsRead,
-     &viStatusRead);
+      terminal,
+      timeout,
+      timestampsToRead,
+      timeSeconds,
+      timeNanoseconds,
+      timeFractionalNanoseconds,
+      detectedEdge,
+      &timestampsRead,
+      &viStatusRead);
 
   EXPECT_TRUE(grpcStatusRead.ok());
   EXPECT_EQ(VI_SUCCESS, viStatusRead);
