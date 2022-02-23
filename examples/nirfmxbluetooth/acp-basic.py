@@ -124,7 +124,7 @@ try:
                 trigger_min_quiet_time_mode=nirfmxbluetooth_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
                 trigger_min_quiet_time_duration=100e-6,
                 iq_power_edge_level_type=nirfmxbluetooth_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE,
-                enable_trigger=True,
+                enable_trigger=False,
             )
         )
     )
@@ -312,8 +312,10 @@ try:
         print(f"Upper Absolute Powers (dBm)          : {upper_absolute_power[i]}")
         print(f"Lower Relative Powers (dB)           : {lower_relative_power[i]}")
         print(f"Upper Relative Powers (dB)           : {upper_relative_power[i]}")
-        print(f"Lower Margin (dB)                    : {lower_margin[i]}")
-        print(f"Upper Margin (dB)                    : {upper_margin[i]}\n")
+        # Lower and Upper margin results are not applicable for ACP_OFFSET_CHANNEL_MODE_SYMMETRIC.
+        if offset_channel_mode != nirfmxbluetooth_types.ACP_OFFSET_CHANNEL_MODE_SYMMETRIC:
+            print(f"Lower Margin (dB)                    : {lower_margin[i]}")
+            print(f"Upper Margin (dB)                    : {upper_margin[i]}\n")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:

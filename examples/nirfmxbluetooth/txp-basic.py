@@ -83,6 +83,7 @@ def raise_if_error(response):
 
 try:
     auto_level = True
+    basic_rate_packets = True
 
     initialize_response = raise_if_error(
         client.Initialize(
@@ -128,7 +129,7 @@ try:
                 trigger_min_quiet_time_mode=nirfmxbluetooth_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
                 trigger_min_quiet_time_duration=100e-6,
                 iq_power_edge_level_type=nirfmxbluetooth_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE,
-                enable_trigger=True,
+                enable_trigger=False,
             )
         )
     )
@@ -201,7 +202,7 @@ try:
             nirfmxbluetooth_types.TXPCfgBurstSynchronizationTypeRequest(
                 instrument=instr,
                 selector_string="",
-                burst_synchronization_type=nirfmxbluetooth_types.TXP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE,
+                burst_synchronization_type=nirfmxbluetooth_types.TXP_BURST_SYNCHRONIZATION_TYPE_NONE,
             )
         )
     )
@@ -296,19 +297,24 @@ try:
     print(
         f"Peak to Average Power Ratio Maximum (dB)        : {peak_to_average_power_ratio_maximum}"
     )
-    print(f"EDR GFSK Average Power Mean (dBm)               : {edrgfsk_average_power_mean}")
-    print(f"EDR DPSK Average Power Mean (dBm)               : {edrdpsk_average_power_mean}")
-    print(
-        f"EDR DPSK GFSK Average Power Ratio Mean (dB)     : {edR__dpsK__gfsk_average_power_ratio_mean}"
-    )
 
-    print("------------------LE CTE Reference Period Measurement------------------")
-    print(
-        f"Average Power Mean (dBm)                                         : {reference_period_average_power_mean}"
-    )
-    print(
-        f"Peak Absolute Power Deviation Maximum (%)                         : {reference_period_peak_absolute_power_deviation_maximum}\n"
-    )
+    # These results are invalid for basic rate packets.
+    if not basic_rate_packets:
+        print(f"EDR GFSK Average Power Mean (dBm)               : {edrgfsk_average_power_mean}")
+        print(f"EDR DPSK Average Power Mean (dBm)               : {edrdpsk_average_power_mean}")
+        print(
+            f"EDR DPSK GFSK Average Power Ratio Mean (dB)     : {edR__dpsK__gfsk_average_power_ratio_mean}"
+        )
+
+    # These results are invalid for basic rate packets.
+    if not basic_rate_packets:
+        print("------------------LE CTE Reference Period Measurement------------------")
+        print(
+            f"Average Power Mean (dBm)                                         : {reference_period_average_power_mean}"
+        )
+        print(
+            f"Peak Absolute Power Deviation Maximum (%)                        : {reference_period_peak_absolute_power_deviation_maximum}\n"
+        )
 
     print("------------------LE CTE Transmit Slot Power Measurement------------------")
     if len(transmit_slot_average_power_mean) == 0:
@@ -318,7 +324,7 @@ try:
             f"Average Power Mean (dBm)[{i}]                     : {transmit_slot_average_power_mean[i]}\n"
         )
         print(
-            f"Peak Absolute Power Deviation Maximum (%)[{i}]     : {transmit_slot_peak_absolute_power_deviation_maximum[i]}\n"
+            f"Peak Absolute Power Deviation Maximum (%)[{i}]    : {transmit_slot_peak_absolute_power_deviation_maximum[i]}\n"
         )
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
