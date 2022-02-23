@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "ivi.h"
 #include "niswitch/niswitch_client.h"
 
 namespace ni {
@@ -9,6 +8,11 @@ namespace tests {
 namespace system {
 
 namespace niswitch = niswitch_grpc;
+namespace pb = ::google::protobuf;
+
+typedef pb::int32 int32;
+typedef pb::uint32 uint32;
+typedef pb::uint16 uint16;
 
 const int kSwitchDriverApiSuccess = 0;
 const int kWaitForDebounceMaxTime = 5000;
@@ -173,7 +177,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
     return response.relay_position();
   }
 
-  ViReal64 get_real64_attribute(const char* channel_name, niswitch::NiSwitchAttribute attribute_id)
+  double get_real64_attribute(const char* channel_name, niswitch::NiSwitchAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     niswitch::GetAttributeViReal64Request request;
@@ -243,7 +247,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal
 {
   const char* channel_name = "";
   const niswitch::NiSwitchAttribute attribute_to_set = niswitch::NiSwitchAttribute::NISWITCH_ATTRIBUTE_SCAN_DELAY;
-  const ViReal64 expected_value = 402.24;
+  const double expected_value = 402.24;
   ::grpc::ClientContext context;
   niswitch::SetAttributeViReal64Request request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -256,7 +260,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal
 
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
-  ViReal64 get_attribute_value = get_real64_attribute(channel_name, attribute_to_set);
+  double get_attribute_value = get_real64_attribute(channel_name, attribute_to_set);
   EXPECT_EQ(expected_value, get_attribute_value);
 }
 
@@ -264,7 +268,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViStringAttribute_SendRequest_GetViStri
 {
   const char* channel_name = "";
   const niswitch::NiSwitchAttribute attribute_to_set = niswitch::NiSwitchAttribute::NISWITCH_ATTRIBUTE_SCAN_LIST;
-  const ViString expected_value = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3";
+  const std::string expected_value = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3";
   ::grpc::ClientContext context;
   niswitch::SetAttributeViStringRequest request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -278,7 +282,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViStringAttribute_SendRequest_GetViStri
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
   std::string get_attribute_value = get_string_attribute(channel_name, attribute_to_set);
-  EXPECT_STREQ(expected_value, get_attribute_value.c_str());
+  EXPECT_STREQ(expected_value.c_str(), get_attribute_value.c_str());
 }
 
 TEST_F(NiSwitchDriverApiTest, NiSwitchRelayControl_SendRequest_RelayPositionMatches)

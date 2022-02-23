@@ -3,7 +3,6 @@
 #include <thread>
 
 #include "device_server.h"
-#include "ivi.h"
 #include "nirfsg/nirfsg_client.h"
 #include "nitclk/nitclk_client.h"
 
@@ -30,6 +29,7 @@ namespace system {
 const auto PXI_5652 = "5652";
 const auto PXI_5820 = "5820";
 const auto PXI_5841 = "5841";
+const auto IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR = 0xBFFA0012;
 
 const int krfsgDriverApiSuccess = 0;
 
@@ -519,7 +519,7 @@ TEST_F(NiRFSGDriverApiTests, TwoSessions_SetupTclkSyncPulseSenderSynchronization
 TEST_F(NiRFSGDriverApiTests, ErrorMessage_ReturnsErrorMessage)
 {
   auto session = init_session(stub(), PXI_5652);
-  const auto response = client::error_message(stub(), session, IVI_ERROR_ATTRIBUTE_NOT_SUPPORTED);
+  const auto response = client::error_message(stub(), session, IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR);
 
   EXPECT_SUCCESS(session, response);
   EXPECT_EQ(

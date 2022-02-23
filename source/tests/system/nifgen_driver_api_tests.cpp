@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "ivi.h"
 #include "nifgen/nifgen_client.h"
 #include "waveform_helpers.h"
 
@@ -10,6 +9,13 @@ namespace tests {
 namespace system {
 
 namespace fgen = nifgen_grpc;
+namespace pb = ::google::protobuf;
+
+typedef pb::int16 int16;
+typedef pb::int32 int32;
+typedef pb::int64 int64;
+typedef pb::uint32 uint32;
+typedef pb::uint16 uint16;
 
 const int kFgenDriverApiSuccess = 0;
 
@@ -114,7 +120,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     return response.error_message();
   }
 
-  ViBoolean get_bool_attribute(const char* channel_list, fgen::NiFgenAttribute attribute_id)
+  bool get_bool_attribute(const char* channel_list, fgen::NiFgenAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     fgen::GetAttributeViBooleanRequest request;
@@ -130,7 +136,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  ViInt32 get_int32_attribute(const char* channel_list, fgen::NiFgenAttribute attribute_id)
+  int32 get_int32_attribute(const char* channel_list, fgen::NiFgenAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     fgen::GetAttributeViInt32Request request;
@@ -146,7 +152,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  ViInt64 get_int64_attribute(const char* channel_list, fgen::NiFgenAttribute attribute_id)
+  int64 get_int64_attribute(const char* channel_list, fgen::NiFgenAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     fgen::GetAttributeViInt64Request request;
@@ -162,7 +168,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     return response.attribute_value();
   }
 
-  ViReal64 get_real64_attribute(const char* channel_list, fgen::NiFgenAttribute attribute_id)
+  double get_real64_attribute(const char* channel_list, fgen::NiFgenAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     fgen::GetAttributeViReal64Request request;
@@ -210,7 +216,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     expect_api_success(response.status());
   }
 
-  void set_bool_attribute(const char* channel_name, fgen::NiFgenAttribute attribute, ViBoolean value)
+  void set_bool_attribute(const char* channel_name, fgen::NiFgenAttribute attribute, bool value)
   {
     ::grpc::ClientContext context;
     fgen::SetAttributeViBooleanRequest request;
@@ -297,14 +303,14 @@ class NiFgenDriverApiTest : public ::testing::Test {
     expect_api_success(response.status());
   }
 
-  ViInt32 create_arb_waveform(const char* channel_name)
+  int32 create_arb_waveform(const char* channel_name)
   {
     ::grpc::ClientContext context;
     fgen::CreateWaveformF64Request request;
-    const ViReal64 waveform_data_array[] = {1, 0, 0, 1};
+    const double waveform_data_array[] = {1, 0, 0, 1};
     request.mutable_vi()->set_id(GetSessionId());
     request.set_channel_name(channel_name);
-    for (ViReal64 waveform_data : waveform_data_array) {
+    for (double waveform_data : waveform_data_array) {
       request.add_waveform_data_array(waveform_data);
     }
     fgen::CreateWaveformF64Response response;
@@ -316,7 +322,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     return response.waveform_handle();
   }
 
-  int create_advanced_arb_sequence(ViInt32 sequence_length, ViInt32* waveform_handles_array, ViInt32* loop_counts_array, ViInt32* marker_location_array)
+  int create_advanced_arb_sequence(int32 sequence_length, int32* waveform_handles_array, int32* loop_counts_array, int32* marker_location_array)
   {
     ::grpc::ClientContext context;
     fgen::CreateAdvancedArbSequenceRequest request;
@@ -348,7 +354,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     expect_api_success(response.status());
   }
 
-  ViStatus write_named_waveform_f64(std::string channel_name, std::string waveform_name, int waveform_size, double waveform[])
+  int32 write_named_waveform_f64(std::string channel_name, std::string waveform_name, int waveform_size, double waveform[])
   {
     ::grpc::ClientContext context;
     fgen::WriteNamedWaveformF64Request request;
@@ -364,7 +370,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     return response.status();
   }
 
-  ViInt32 allocate_waveform(std::string channel_name, int waveform_size)
+  int32 allocate_waveform(std::string channel_name, int waveform_size)
   {
     ::grpc::ClientContext context;
     fgen::AllocateWaveformRequest request;
@@ -380,7 +386,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     return response.waveform_handle();
   }
 
-  ViStatus write_waveform_complexf64(std::string channel_name, int waveform_size, int waveform_handle, std::vector<nidevice_grpc::NIComplexNumber> waveform)
+  int32 write_waveform_complexf64(std::string channel_name, int waveform_size, int waveform_handle, std::vector<nidevice_grpc::NIComplexNumber> waveform)
   {
     ::grpc::ClientContext context;
     fgen::WriteWaveformComplexF64Request request;
@@ -455,7 +461,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViInt32_GetAttributeViInt32_ValueMatches
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
 
-  ViInt32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
+  int32 get_attribute_value = get_int32_attribute(channel_name, attribute_to_set);
 
   EXPECT_EQ(expected_value, get_attribute_value);
 }
@@ -464,7 +470,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViReal64_GetAttributeViReal64_ValueMatch
 {
   const char* channel_name = "";
   const fgen::NiFgenAttribute attribute_to_set = fgen::NiFgenAttribute::NIFGEN_ATTRIBUTE_DIGITAL_GAIN;
-  const ViReal64 expected_value = -1.0;
+  const double expected_value = -1.0;
   ::grpc::ClientContext context;
   fgen::SetAttributeViReal64Request request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -476,7 +482,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViReal64_GetAttributeViReal64_ValueMatch
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
 
-  ViReal64 get_attribute_value_sourcedelay = get_real64_attribute(channel_name, attribute_to_set);
+  double get_attribute_value_sourcedelay = get_real64_attribute(channel_name, attribute_to_set);
 
   EXPECT_EQ(expected_value, get_attribute_value_sourcedelay);
 }
@@ -485,10 +491,10 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViBoolean_GetAttributeViBoolean_ValueMat
 {
   const char* channel_name = "0";
   const fgen::NiFgenAttribute attribute_to_set = fgen::NiFgenAttribute::NIFGEN_ATTRIBUTE_OUTPUT_ENABLED;
-  const ViBoolean expected_value = true;
+  const bool expected_value = true;
   set_bool_attribute(channel_name, attribute_to_set, expected_value);
 
-  ViBoolean get_attribute_value = get_bool_attribute(channel_name, attribute_to_set);
+  bool get_attribute_value = get_bool_attribute(channel_name, attribute_to_set);
 
   EXPECT_EQ(expected_value, get_attribute_value);
 }
@@ -497,7 +503,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViString_GetAttributeViString_ValueMatch
 {
   const char* channel_name = "";
   const fgen::NiFgenAttribute attribute_to_set = fgen::NiFgenAttribute::NIFGEN_ATTRIBUTE_MARKER_EVENT_OUTPUT_TERMINAL;
-  const ViString expected_value = "sample";
+  const std::string expected_value = "sample";
   ::grpc::ClientContext context;
   fgen::SetAttributeViStringRequest request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -511,23 +517,23 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViString_GetAttributeViString_ValueMatch
 
   std::string get_attribute_value = get_string_attribute(channel_name, attribute_to_set);
 
-  EXPECT_STREQ(expected_value, get_attribute_value.c_str());
+  EXPECT_STREQ(expected_value.c_str(), get_attribute_value.c_str());
 }
 
 TEST_F(NiFgenDriverApiTest, ConfigureTriggerMode_ConfiguresSuccessfully)
 {
   const char* channel_name = "0";
-  ViInt32 expected_value = 2;  // NIFGEN_VAL_CONTINUOUS
+  int32 expected_value = 2;  // NIFGEN_VAL_CONTINUOUS
   configure_trigger_mode(channel_name, fgen::TriggerMode::TRIGGER_MODE_NIFGEN_VAL_CONTINUOUS);
 
-  ViInt32 actual_trigger_mode = get_int32_attribute(channel_name, fgen::NiFgenAttribute::NIFGEN_ATTRIBUTE_TRIGGER_MODE);
+  int32 actual_trigger_mode = get_int32_attribute(channel_name, fgen::NiFgenAttribute::NIFGEN_ATTRIBUTE_TRIGGER_MODE);
   EXPECT_EQ(expected_value, actual_trigger_mode);
 }
 
 TEST_F(NiFgenDriverApiTest, ResetInterchangeCheck_ResetsSuccessfully)
 {
   const char* channel_name = "0";
-  ViReal64 expected_current_level = 3.0;
+  double expected_current_level = 3.0;
   ::grpc::ClientContext context;
   fgen::ResetInterchangeCheckRequest request;
   request.mutable_vi()->set_id(GetSessionId());
@@ -561,7 +567,7 @@ TEST_F(NiFgenDriverApiTest, AllocateNamedWaveform_WriteNamedWaveformF64_Waveform
   allocate_named_waveform(channel_name, waveform_name, waveform_size);
 
   double waveform[] = {1.55, 40.4, 21.6, 0.7, 15.89};
-  ViStatus status = write_named_waveform_f64(channel_name, waveform_name, waveform_size, waveform);
+  int32 status = write_named_waveform_f64(channel_name, waveform_name, waveform_size, waveform);
 
   expect_api_success(status);
 }
@@ -569,7 +575,7 @@ TEST_F(NiFgenDriverApiTest, AllocateNamedWaveform_WriteNamedWaveformF64_Waveform
 TEST_F(NiFgenDriverApiTest, ExportTriggerMode_ResetAndImportConfiguration_TriggerModeConfigurationIsImported)
 {
   const char* channel_name = "0";
-  ViInt32 expected_trigger_mode = 1;  // NIFGEN_VAL_SINGLE
+  int32 expected_trigger_mode = 1;  // NIFGEN_VAL_SINGLE
   configure_trigger_mode(channel_name, fgen::TriggerMode::TRIGGER_MODE_NIFGEN_VAL_SINGLE);
   auto exported_configuration_response = export_attribute_configuration_buffer();
 
@@ -589,7 +595,7 @@ TEST_F(NiFgenDriverApiTest, AllocateWaveform_WriteWaveformComplexF64_WaveformWri
 
   set_bool_attribute(channel_name.c_str(), fgen::NiFgenAttribute::NIFGEN_ATTRIBUTE_OSP_ENABLED, true);
   set_int32_attribute(channel_name.c_str(), fgen::NiFgenAttribute::NIFGEN_ATTRIBUTE_OSP_DATA_PROCESSING_MODE, fgen::NiFgenInt32AttributeValues::NIFGEN_INT32_DATA_PROCESSING_MODE_VAL_OSP_COMPLEX);
-  ViStatus status = write_waveform_complexf64(channel_name, waveform_size, waveform_handle, complex_number_array({1.55, 40.4, 21.6, 0.7, 15.89}, {2.3, -20.4, 112.4, -100.3, 0.0}));
+  int32 status = write_waveform_complexf64(channel_name, waveform_size, waveform_handle, complex_number_array({1.55, 40.4, 21.6, 0.7, 15.89}, {2.3, -20.4, 112.4, -100.3, 0.0}));
 
   expect_api_success(status);
 }
@@ -597,10 +603,10 @@ TEST_F(NiFgenDriverApiTest, AllocateWaveform_WriteWaveformComplexF64_WaveformWri
 TEST_F(NiFgenDriverApiTest, OutputModeConfiguredToSeq_CreateAdvancedArbSequenceForArbitraryWaveform_CreatesSuccessfully)
 {
   const char* channel_name = "0";
-  ViInt32 sequence_length = 1;
-  ViInt32 waveform_handles_array[1];
-  ViInt32 loop_counts_array[] = {1};
-  ViInt32 marker_location_array[] = {-1};
+  int32 sequence_length = 1;
+  int32 waveform_handles_array[1];
+  int32 loop_counts_array[] = {1};
+  int32 marker_location_array[] = {-1};
   configure_output_mode(channel_name, fgen::OutputMode::OUTPUT_MODE_NIFGEN_VAL_OUTPUT_SEQ);
 
   waveform_handles_array[0] = create_arb_waveform(channel_name);
@@ -612,7 +618,7 @@ TEST_F(NiFgenDriverApiTest, OutputModeConfiguredToSeq_CreateAdvancedArbSequenceF
 TEST_F(NiFgenDriverApiTest, OutputModeConfiguredToArb_CreateWaveformI16_CreatesSuccessfully)
 {
   const char* channel_name = "0";
-  const ViInt16 waveform_data_array[] = {0, 1, 0, 1};
+  const int16 waveform_data_array[] = {0, 1, 0, 1};
   configure_output_mode(channel_name, fgen::OutputMode::OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB);
 
   ::grpc::ClientContext context;
