@@ -4,7 +4,7 @@ from os import getcwd, chdir, system as _system_core
 from pathlib import Path
 from shutil import rmtree
 from sys import exit
-from typing import NamedTuple
+from typing import List, NamedTuple
 
 from stage_client_files import stage_client_files
 
@@ -14,7 +14,7 @@ class _CommandRecord(NamedTuple):
     command: str
 
 
-_FAILED_COMMANDS: list[_CommandRecord] = []
+_FAILED_COMMANDS: List[_CommandRecord] = []
 
 
 def _system(command):
