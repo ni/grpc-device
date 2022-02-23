@@ -237,7 +237,8 @@ ACTION(ImmediatelyCallCallback)
   callback_function(CALLBACK_DATA_OUT, callback_token);
 }
 
-TEST_F(NiFakeNonIviServiceTests_EndToEnd, RegisterCallbackAndImmediatelyCall_ReadAsyncResponse_CallbackDataIncludedInResponse) {
+TEST_F(NiFakeNonIviServiceTests_EndToEnd, RegisterCallbackAndImmediatelyCall_ReadAsyncResponse_CallbackDataIncludedInResponse)
+{
   const myInt16 TEST_VALUE = 25;
   ::grpc::ClientContext context;
   RegisterCallbackRequest request;

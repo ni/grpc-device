@@ -19,8 +19,8 @@ const char* kDigitalInvalidResourceName = "";
 class NiDigitalSessionTest : public ::testing::Test {
  protected:
   NiDigitalSessionTest()
-    : device_server_(DeviceServerInterface::Singleton()),
-      nidigital_stub_(digital::NiDigital::NewStub(device_server_->InProcessChannel()))
+      : device_server_(DeviceServerInterface::Singleton()),
+        nidigital_stub_(digital::NiDigital::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
@@ -92,7 +92,7 @@ TEST_F(NiDigitalSessionTest, InitializedSession_CloseSession_ClosesDriverSession
 {
   digital::InitWithOptionsResponse init_response;
   call_init_with_options(kDigitalResourceName, kDigitalOptionsString, kDigitalSessionName, &init_response);
-  
+
   nidevice_grpc::Session session = init_response.vi();
   ::grpc::ClientContext context;
   digital::CloseRequest close_request;
