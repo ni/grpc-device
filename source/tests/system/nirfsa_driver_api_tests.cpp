@@ -24,6 +24,7 @@ namespace {
 const auto PXI_5663E = "5663E";
 const auto PXI_5603 = "5603";
 const auto IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR = 0xBFFA0012;
+const auto REF_OUT_STR = "RefOut";
 
 template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
@@ -307,7 +308,7 @@ TEST_F(NiRFSADriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
   EXPECT_SUCCESS(session, set_response);
   EXPECT_SUCCESS(session, get_response);
   EXPECT_NE(initial_response.value(), get_response.value());
-  EXPECT_EQ("RefOut", get_response.value());
+  EXPECT_EQ(REF_OUT_STR, get_response.value());
 }
 
 TEST_F(NiRFSADriverApiTests, ReconfigureFFTWindowType_UpdatesFFTWindowSuccessfully)
