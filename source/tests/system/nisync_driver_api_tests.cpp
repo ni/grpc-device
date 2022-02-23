@@ -11,11 +11,11 @@ namespace system {
 
 namespace nisync = nisync_grpc;
 
-constexpr auto kSyncInvalidSrcTerminal = 0xBFFA4032;
-constexpr auto kTestSessionName = "TestSession";
-constexpr auto kEmptySessionName = "";
-constexpr auto kInvalidRsrcName = "InvalidName";
-constexpr auto kInvalidTerminal = "Invalid";
+constexpr auto INVALID_SOURCE_TERMINAL = 0xBFFA4032;
+constexpr auto SESSION_NAME = "TestSession";
+constexpr auto EMPTY_SESSION_NAME = "";
+constexpr auto INVALID_RESOURCE_NAME = "InvalidName";
+constexpr auto INVALID_TERMINAL = "Invalid";
 constexpr auto NISYNC_VAL_OSCILLATOR = "Oscillator";
 constexpr auto NISYNC_VAL_CLKOUT = "ClkOut";
 constexpr auto NISYNC_ERROR_SRC_TERMINAL_INVALID = 0xBFFA4032;
@@ -86,7 +86,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::InitRequest request;
     nisync::InitResponse response;
     request.set_resource_name(test_resource_name);
-    request.set_session_name(kTestSessionName);
+    request.set_session_name(SESSION_NAME);
     request.set_reset_device(false);
 
     ::grpc::Status status = GetStub()->Init(&context, request, &response);
@@ -733,7 +733,7 @@ TEST_F(NiSyncDriver6674Test, ConnectClkTerminals_ReturnsSuccess)
 TEST_F(NiSyncDriver6674Test, ConnectInvalidClkTerminals_ReturnsInvalidSrcTerminal)
 {
   ViStatus viStatus;
-  auto srcTerminal = kInvalidTerminal, destTerminal = NISYNC_VAL_CLKOUT;
+  auto srcTerminal = INVALID_TERMINAL, destTerminal = NISYNC_VAL_CLKOUT;
   auto grpcStatus = call_ConnectClkTerminals(srcTerminal, destTerminal, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
@@ -794,7 +794,7 @@ TEST_F(NiSyncDriver6674Test, ConnectSWTrigToTerminal_ReturnsSuccess)
 TEST_F(NiSyncDriver6674Test, ConnectInvalidSWTrigToTerminal_ReturnsInvalidSrcTerminal)
 {
   ViStatus viStatus;
-  auto srcTerminal = kInvalidTerminal, destTerminal = NISYNC_VAL_PXIEDSTARC;
+  auto srcTerminal = INVALID_TERMINAL, destTerminal = NISYNC_VAL_PXIEDSTARC;
   auto syncClock = NISYNC_VAL_SYNC_CLK_FULLSPEED;
   ViInt32 invert = VI_TRUE, updateEdge = VI_FALSE;
   ViReal64 delay = 0;
@@ -808,7 +808,7 @@ TEST_F(NiSyncDriver6674Test, ConnectInvalidSWTrigToTerminal_ReturnsInvalidSrcTer
       &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
+  EXPECT_EQ(INVALID_SOURCE_TERMINAL, viStatus);
 }
 
 TEST_F(NiSyncDriver6674Test, ConnectedSWTrigToTerminal_DisconnectSWTrigFromTerminal_ReturnsSuccess)
@@ -874,7 +874,7 @@ TEST_F(NiSyncDriver6674Test, SendSoftwareTrigger_ReturnsSuccess)
 TEST_F(NiSyncDriver6674Test, SendSoftwareTriggerOnInvalidTerminal_ReturnsInvalidSrcTerminal)
 {
   ViStatus viStatus;
-  auto srcTerminal = kInvalidTerminal;
+  auto srcTerminal = INVALID_TERMINAL;
   auto grpcStatus = call_SendSoftwareTrigger(srcTerminal, &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
@@ -903,7 +903,7 @@ TEST_F(NiSyncDriver6674Test, ConnectTrigTerminals_ReturnsSuccess)
 TEST_F(NiSyncDriver6674Test, ConnectInvalidTrigTerminals_ReturnsInvalidSrcTerminal)
 {
   ViStatus viStatus;
-  auto srcTerminal = kInvalidTerminal, destTerminal = NISYNC_VAL_CLKOUT;
+  auto srcTerminal = INVALID_TERMINAL, destTerminal = NISYNC_VAL_CLKOUT;
   auto syncClock = NISYNC_VAL_SYNC_CLK_ASYNC;
   ViInt32 invert = VI_FALSE, updateEdge = VI_FALSE;
   auto grpcStatus = call_ConnectTrigTerminals(
@@ -915,7 +915,7 @@ TEST_F(NiSyncDriver6674Test, ConnectInvalidTrigTerminals_ReturnsInvalidSrcTermin
       &viStatus);
 
   EXPECT_TRUE(grpcStatus.ok());
-  EXPECT_EQ(kSyncInvalidSrcTerminal, viStatus);
+  EXPECT_EQ(INVALID_SOURCE_TERMINAL, viStatus);
 }
 
 TEST_F(NiSyncDriver6674Test, ConnectedTrigTerminals_DisconnectTrigTerminals_ReturnsSuccess)
