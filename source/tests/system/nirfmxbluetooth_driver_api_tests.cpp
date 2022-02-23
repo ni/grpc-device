@@ -3,7 +3,6 @@
 
 #include "device_server.h"
 #include "nirfmxbluetooth/nirfmxbluetooth_client.h"
-#include "nirfmxbluetooth/nirfmxbluetooth_service.h"
 #include "nirfsa/nirfsa_client.h"
 #include "rfmx_macros.h"
 #include "waveform_helpers.h"

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nifgen/nifgen_service.h"
+#include "nifgen/nifgen_client.h"
 
 namespace ni {
 namespace tests {

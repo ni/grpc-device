@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niscope/niscope_service.h"
-#include "nitclk/nitclk_service.h"
+#include "ivi.h"
+#include "niscope/niscope_client.h"
+#include "nitclk/nitclk_client.h"
 
 namespace ni {
 namespace tests {
@@ -17,9 +18,9 @@ const int kTClkDriverApiSuccess = 0;
 class NiTClkDriverApiTest : public ::testing::Test {
  protected:
   NiTClkDriverApiTest()
-    : device_server_(DeviceServerInterface::Singleton()),
-      nitclk_stub_(tclk::NiTClk::NewStub(device_server_->InProcessChannel())),
-      niscope_stub_(scope::NiScope::NewStub(device_server_->InProcessChannel()))
+      : device_server_(DeviceServerInterface::Singleton()),
+        nitclk_stub_(tclk::NiTClk::NewStub(device_server_->InProcessChannel())),
+        niscope_stub_(scope::NiScope::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
@@ -43,7 +44,7 @@ class NiTClkDriverApiTest : public ::testing::Test {
 
   std::unique_ptr<tclk::NiTClk::Stub>& GetTClkStub()
   {
-      return nitclk_stub_;
+    return nitclk_stub_;
   }
 
   int GetScopeSessionId()

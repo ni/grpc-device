@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nidigitalpattern/nidigitalpattern_service.h"
+#include "ivi.h"
+#include "nidigitalpattern/nidigitalpattern_client.h"
 
 namespace ni {
 namespace tests {
@@ -98,7 +99,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     return response.error_message();
   }
 
-  void set_bool_attribute(const char* channel_name, digital::NiDigitalAttribute attribute, ViBoolean value)
+  void set_bool_attribute(const char* channel_name, digital::NiDigitalAttribute attribute, bool value)
   {
     ::grpc::ClientContext context;
     digital::SetAttributeViBooleanRequest request;
@@ -155,7 +156,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     request.set_attribute(attribute);
     request.set_value_raw(value);
     digital::SetAttributeViStringResponse response;
-    
+
     ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
@@ -236,7 +237,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     digital::FrequencyCounterConfigureMeasurementTimeResponse response;
 
     ::grpc::Status status = GetStub()->FrequencyCounterConfigureMeasurementTime(&context, request, &response);
-    
+
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
   }
@@ -250,7 +251,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     request.set_function(function_type);
     digital::SelectFunctionResponse response;
 
-    ::grpc::Status status = GetStub()->SelectFunction(&context, request, &response);    
+    ::grpc::Status status = GetStub()->SelectFunction(&context, request, &response);
 
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
@@ -274,7 +275,7 @@ TEST_F(NiDigitalDriverApiTest, PerformReadStatic_CompletesSuccessfully)
   ::grpc::Status status = GetStub()->ReadStatic(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  expect_api_success(response.status()); 
+  expect_api_success(response.status());
 }
 
 TEST_F(NiDigitalDriverApiTest, PerformWriteStatic_CompletesSuccessfully)
@@ -307,7 +308,7 @@ TEST_F(NiDigitalDriverApiTest, PerformFrequencyCounterMeasureFrequency_Completes
   ::grpc::Status status = GetStub()->FrequencyCounterMeasureFrequency(&context, request, &response);
 
   EXPECT_TRUE(status.ok());
-  expect_api_success(response.status()); 
+  expect_api_success(response.status());
 }
 
 TEST_F(NiDigitalDriverApiTest, SelfTest_SelfTestCompletesSuccessfully)

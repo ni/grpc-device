@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "niswitch/niswitch_service.h"
+#include "ivi.h"
+#include "niswitch/niswitch_client.h"
 
 namespace ni {
 namespace tests {

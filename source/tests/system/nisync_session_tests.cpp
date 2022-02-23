@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nisync/nisync_service.h"
 #include "enumerate_devices.h"
+#include "nisync/nisync_client.h"
 
 namespace ni {
 namespace tests {
@@ -28,7 +28,7 @@ class NiSyncSessionTest : public ::testing::Test {
 
   void SetUp() override
   {
-    for(const auto& device : EnumerateDevices()) {
+    for (const auto& device : EnumerateDevices()) {
       if ((device.model() == "NI PXI-6683H") || (device.model() == "NI PXIe-6674T")) {
         test_resource_name = device.name();
         break;

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nidigitalpattern/nidigitalpattern_service.h"
+#include "nidigitalpattern/nidigitalpattern_client.h"
 
 namespace ni {
 namespace tests {

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nirfmxbluetooth/nirfmxbluetooth_service.h"
+#include "nirfmxbluetooth/nirfmxbluetooth_client.h"
 
 namespace ni {
 namespace tests {

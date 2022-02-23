@@ -3,8 +3,8 @@
 #include <thread>
 
 #include "device_server.h"
+#include "ivi.h"
 #include "nirfsg/nirfsg_client.h"
-#include "nirfsg/nirfsg_service.h"
 #include "nitclk/nitclk_client.h"
 
 using namespace nirfsg_grpc;
@@ -14,7 +14,7 @@ namespace pb = google::protobuf;
 using namespace ::testing;
 
 namespace nidevice_grpc {
-// Needs to be in the nirfsg_grpc namespace for googletest to find this
+// Needs to be in the nidevice_grpc namespace for googletest to find this
 // because of argument-dependent lookup - see
 // https://stackoverflow.com/questions/33371088/how-to-get-a-custom-operator-to-work-with-google-test
 bool operator==(const NIComplexNumber& first, const NIComplexNumber& second)
@@ -221,7 +221,7 @@ TEST_F(NiRFSGDriverApiTests, ReconfigureExportedRefClockOutTerminal_UpdatesRefCl
   EXPECT_SUCCESS(session, set_response);
   EXPECT_SUCCESS(session, get_response);
   EXPECT_NE(initial_response.value(), get_response.value());
-  EXPECT_EQ(NIRFSG_VAL_REF_OUT_STR, get_response.value());
+  EXPECT_EQ("RefOut", get_response.value());
 }
 
 TEST_F(NiRFSGDriverApiTests, SetAutomaticThermalCorrection_UpdatesSuccessfully)

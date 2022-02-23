@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
+#include "ivi.h"
 #include "nidcpower/nidcpower_client.h"
-#include "nidcpower/nidcpower_service.h"
 
 namespace ni {
 namespace tests {

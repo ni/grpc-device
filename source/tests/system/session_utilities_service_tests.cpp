@@ -1,7 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include "device_server.h"
 #include <server/session_utilities_service.h>
+
+#include "device_server.h"
 
 namespace ni {
 namespace tests {

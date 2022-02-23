@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nirfmxwlan/nirfmxwlan_service.h"
+#include "nirfmxwlan/nirfmxwlan_client.h"
 
 namespace ni {
 namespace tests {
