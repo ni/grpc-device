@@ -75,7 +75,7 @@ TEST(SessionResourceRepositoryTests, AddTwoSessionsWithSameResourceHandle_Remove
       resource_repository.access_session(session_id_two, ""));
 
   resource_repository.remove_session(session_id_one, "");
-  
+
   EXPECT_EQ(
       kNoSession,
       resource_repository.access_session(session_id_one, ""));
