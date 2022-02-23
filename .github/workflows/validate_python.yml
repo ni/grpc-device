@@ -6,6 +6,7 @@ on:
 
 jobs:
   validate:
+    name: Validate Python Code
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo

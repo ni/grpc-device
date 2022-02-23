@@ -1,12 +1,7 @@
 name: Desktop OS Builds
 
 on:
-  push:
-    branches:
-      - main
-      - 'releases/**'
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_call:
   workflow_dispatch:
 
 env:
@@ -14,10 +9,7 @@ env:
   BUILD_TYPE: Release
 
 jobs:
-  validate_python:
-    uses: ./.github/workflows/validate_python.yml
   build:
-    needs: validate_python
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
     strategy:
@@ -43,12 +35,6 @@ jobs:
           }
 
     steps:
-    - name: Cancel Build(s)
-      uses: styfle/cancel-workflow-action@0.7.0
-      if: "github.ref != 'refs/heads/main'"
-      with:
-        access_token: ${{ github.token }}
-
     - name: Checkout Repo
       uses: actions/checkout@v2
 
@@ -198,29 +184,3 @@ jobs:
           LICENSE
           ThirdPartyNotices.txt
         retention-days: 5
-
-  trigger_main_ci:
-    name: Trigger Main CI
-    needs: build
-    runs-on: windows-latest
-    if: ${{ github.repository == 'ni/grpc-device' && github.ref == 'refs/heads/main' }}
-    steps:
-    - name: Trigger Main CI
-      uses: Azure/pipelines@v1
-      with:
-        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
-        azure-pipeline-name: 'ni-central-grpc-device-main-desktop'
-        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-
-  trigger_release_ci:
-    name: Trigger Release CI
-    needs: build
-    runs-on: windows-latest
-    if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.ref, 'refs/heads/releases') }}
-    steps:
-    - name: Trigger Release CI
-      uses: Azure/pipelines@v1
-      with:
-        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
-        azure-pipeline-name: 'ni-central-grpc-device-release-desktop'
-        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}

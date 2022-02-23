@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+      - 'releases/**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  cancel_builds:
+    uses: ./.github/workflows/cancel_builds.yml
+  validate_python:
+    uses: ./.github/workflows/validate_python.yml
+  build_desktop:
+    needs: validate_python
+    uses: ./.github/workflows/build_cmake.yml
+  build_nilrt:
+    needs: validate_python
+    uses: ./.github/workflows/build_nilrt.yml
+  create_client_artifacts:
+    uses: ./.github/workflows/create_client_artifacts.yml
+  trigger_azdo_ci:
+    needs:
+     - build_desktop
+     - build_nilrt
+     - create_client_artifacts
+    uses: ./.github/workflows/trigger_azdo_ci.yml
