@@ -1141,7 +1141,6 @@ message AnalyzeIQ1WaveformRequest {
   double dx = 5;
   repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
   int32 reset = 7;
-  int64 reserved = 8;
 }
 
 message AnalyzeIQ1WaveformResponse {
@@ -1186,7 +1185,6 @@ message AnalyzeSpectrum1WaveformRequest {
   double dx = 5;
   repeated float spectrum = 6;
   int32 reset = 7;
-  int64 reserved = 8;
 }
 
 message AnalyzeSpectrum1WaveformResponse {
