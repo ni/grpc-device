@@ -617,7 +617,6 @@ TEST_F(NiRFmxLTEDriverApiTests, ObwSingleCarrierFromExample_FetchData_DataLooksR
 TEST_F(NiRFmxLTEDriverApiTests, SEMContiguousMultiCarrierFromExample_FetchData_DataLooksReasonable)
 {
   const auto NUMBER_OF_COMPONENT_CARRIERS = 2;
-  int32 linkDirection = LINK_DIRECTION_UPLINK;
   const std::vector<int> empty_int_vec;
   std::vector<float64> componentCarrierBandwidth{20e6, 20e6};
   std::vector<float64> componentCarrierFrequency{-9.9e6, 9.9e6};
@@ -633,17 +632,7 @@ TEST_F(NiRFmxLTEDriverApiTests, SEMContiguousMultiCarrierFromExample_FetchData_D
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SEM, true));
   EXPECT_SUCCESS(session, client::sem_cfg_sweep_time(stub(), session, "", SEM_SWEEP_TIME_AUTO_TRUE, 0.001));
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
-  if (linkDirection == LINK_DIRECTION_UPLINK) {
-    EXPECT_SUCCESS(session, client::sem_cfg_uplink_mask_type(stub(), session, "", SEM_UPLINK_MASK_TYPE_GENERAL_NS01));
-  }
-  else if (linkDirection == LINK_DIRECTION_DOWNLINK) {
-    EXPECT_SUCCESS(session, client::cfge_node_b_category(stub(), session, "", ENODEB_CATEGORY_WIDE_AREA_BASE_STATION_CATEGORY_A));
-    EXPECT_SUCCESS(session, client::sem_cfg_downlink_mask(stub(), session, "", SEM_DOWNLINK_MASK_TYPE_ENODEB_CATEGORY_BASED, 15.00e6, 0.00));
-    EXPECT_SUCCESS(session, client::sem_cfg_component_carrier_maximum_output_power_array(stub(), session, "", componentCarrierMaximumOutputPower));
-  }
-  else {
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXLTE_ATTRIBUTE_SEM_SIDELINK_MASK_TYPE, NIRFMXLTE_INT32_SEM_SIDELINK_MASK_TYPE_GENERAL_NS01));
-  }
+  EXPECT_SUCCESS(session, client::sem_cfg_uplink_mask_type(stub(), session, "", SEM_UPLINK_MASK_TYPE_GENERAL_NS01));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
   const auto sem_fetch_upper_offset_margin_array_response = EXPECT_SUCCESS(session, client::sem_fetch_upper_offset_margin_array(stub(), session, "", 10.0));
@@ -699,7 +688,6 @@ TEST_F(NiRFmxLTEDriverApiTests, SemAdvancedNonContiguousMultiCarrierFromExample_
   constexpr auto NUMBER_OF_COMPONENT_CARRIERS = 1;
   constexpr auto NUMBER_OF_SUBBLOCKS = 2;
   constexpr auto NUMBER_OF_OFFSET_SEGMENT = 4;
-  int32 linkDirection = LINK_DIRECTION_UPLINK;
   std::vector<float64> subblocks_center_frequency{1.95e+9, 30e+6};
   std::vector<int> subblocks_frequency_definition{NIRFMXLTE_INT32_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE, NIRFMXLTE_INT32_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE};
   std::vector<int32> subblocks_sideband(4, SEM_OFFSET_SIDEBAND_BOTH);
@@ -724,20 +712,16 @@ TEST_F(NiRFmxLTEDriverApiTests, SemAdvancedNonContiguousMultiCarrierFromExample_
     EXPECT_SUCCESS(session, client::sem_cfg_offset_bandwidth_integral_array(stub(), session, subblock_string_response.selector_string_out(), {3, 4, 4, 4}));
     EXPECT_SUCCESS(session, client::sem_cfg_offset_absolute_limit_array(stub(), session, subblock_string_response.selector_string_out(), {-19.5, -8.5, -11.5, -23.5}, {-19.5, -8.5, -11.5, -23.5}));
   }
-  EXPECT_SUCCESS(session, client::cfg_link_direction(stub(), session, "", LINK_DIRECTION_UPLINK));
+  EXPECT_SUCCESS(session, client::cfg_link_direction(stub(), session, "", LINK_DIRECTION_DOWNLINK));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_SEM, true));
   EXPECT_SUCCESS(session, client::sem_cfg_sweep_time(stub(), session, "", SEM_SWEEP_TIME_AUTO_TRUE, 1e-3));
   EXPECT_SUCCESS(session, client::sem_cfg_averaging(stub(), session, "", SEM_AVERAGING_ENABLED_FALSE, 10, SEM_AVERAGING_TYPE_RMS));
-  if (linkDirection == NIRFMXLTE_INT32_LINK_DIRECTION_UPLINK)
-    EXPECT_SUCCESS(session, client::sem_cfg_uplink_mask_type(stub(), session, "", SEM_UPLINK_MASK_TYPE_GENERAL_NS01));
-  else {
-    EXPECT_SUCCESS(session, client::cfge_node_b_category(stub(), session, "", ENODEB_CATEGORY_WIDE_AREA_BASE_STATION_CATEGORY_A));
-    EXPECT_SUCCESS(session, client::sem_cfg_downlink_mask(stub(), session, "", SEM_DOWNLINK_MASK_TYPE_ENODEB_CATEGORY_BASED, 15.00e6, 0.00));
-    for (int i = 0; i < NUMBER_OF_SUBBLOCKS; i++) {
-      auto subblock_string_response = client::build_subblock_string(stub(), "", i);
-      EXPECT_SUCCESS(session, subblock_string_response);
-      EXPECT_SUCCESS(session, client::sem_cfg_component_carrier_maximum_output_power_array(stub(), session, subblock_string_response.selector_string_out(), {0.0}));
-    }
+  EXPECT_SUCCESS(session, client::cfge_node_b_category(stub(), session, "", ENODEB_CATEGORY_WIDE_AREA_BASE_STATION_CATEGORY_A));
+  EXPECT_SUCCESS(session, client::sem_cfg_downlink_mask(stub(), session, "", SEM_DOWNLINK_MASK_TYPE_ENODEB_CATEGORY_BASED, 15.00e6, 0.00));
+  for (int i = 0; i < NUMBER_OF_SUBBLOCKS; i++) {
+    auto subblock_string_response = client::build_subblock_string(stub(), "", i);
+    EXPECT_SUCCESS(session, subblock_string_response);
+    EXPECT_SUCCESS(session, client::sem_cfg_component_carrier_maximum_output_power_array(stub(), session, subblock_string_response.selector_string_out(), {0.0}));
   }
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
@@ -756,48 +740,48 @@ TEST_F(NiRFmxLTEDriverApiTests, SemAdvancedNonContiguousMultiCarrierFromExample_
   const auto sem_fetch_measurement_status_response = EXPECT_SUCCESS(session, client::sem_fetch_measurement_status(stub(), session, "", 10.0));
   const auto sem_fetch_spectrum_response = EXPECT_SUCCESS(session, client::sem_fetch_spectrum(stub(), session, "", 10.0));
 
-  EXPECT_GT(0.0, sem_fetch_subblock_measurement_response.subblock_power());
+  EXPECT_LT(0.0, sem_fetch_subblock_measurement_response.subblock_power());
   EXPECT_LT(0.0, sem_fetch_subblock_measurement_response.integration_bandwidth());
   EXPECT_LT(0.0, sem_fetch_subblock_measurement_response.frequency());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.measurement_status().size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.measurement_status_size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.measurement_status().size());
   EXPECT_EQ(1, sem_fetch_upper_offset_margin_array_response.measurement_status(0));
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin().size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin_size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin().size());
   EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response.margin(0));
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_frequency_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_frequency().size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin_frequency_size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin_frequency().size());
   EXPECT_LT(0.0, sem_fetch_upper_offset_margin_array_response.margin_frequency(0));
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_absolute_power_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_absolute_power().size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin_absolute_power_size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin_absolute_power().size());
   EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response.margin_absolute_power(0));
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_relative_power_size());
-  EXPECT_EQ(4, sem_fetch_upper_offset_margin_array_response.margin_relative_power().size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin_relative_power_size());
+  EXPECT_EQ(3, sem_fetch_upper_offset_margin_array_response.margin_relative_power().size());
   EXPECT_GT(0.0, sem_fetch_upper_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.measurement_status_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.measurement_status().size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.measurement_status_size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.measurement_status().size());
   EXPECT_EQ(1, sem_fetch_lower_offset_margin_array_response.measurement_status(0));
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin().size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin_size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin().size());
   EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin(0));
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_frequency_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_frequency().size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin_frequency_size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin_frequency().size());
   EXPECT_LT(0.0, sem_fetch_lower_offset_margin_array_response.margin_frequency(0));
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_absolute_power_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_absolute_power().size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin_absolute_power_size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin_absolute_power().size());
   EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin_absolute_power(0));
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_relative_power_size());
-  EXPECT_EQ(4, sem_fetch_lower_offset_margin_array_response.margin_relative_power().size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin_relative_power_size());
+  EXPECT_EQ(3, sem_fetch_lower_offset_margin_array_response.margin_relative_power().size());
   EXPECT_GT(0.0, sem_fetch_lower_offset_margin_array_response.margin_relative_power(0));
-  EXPECT_GT(0.0, sem_fetch_total_aggregated_power_response.total_aggregated_power());
-  EXPECT_EQ(0, sem_fetch_measurement_status_response.measurement_status());
+  EXPECT_LT(0.0, sem_fetch_total_aggregated_power_response.total_aggregated_power());
+  EXPECT_EQ(1, sem_fetch_measurement_status_response.measurement_status());
   EXPECT_LT(0.0, sem_fetch_spectrum_response.x0());
   EXPECT_LT(0.0, sem_fetch_spectrum_response.dx());
-  EXPECT_EQ(99037, sem_fetch_spectrum_response.spectrum_size());
-  EXPECT_EQ(99037, sem_fetch_spectrum_response.spectrum().size());
+  EXPECT_EQ(32411, sem_fetch_spectrum_response.spectrum_size());
+  EXPECT_EQ(32411, sem_fetch_spectrum_response.spectrum().size());
   EXPECT_GT(0.0, sem_fetch_spectrum_response.spectrum(0));
-  EXPECT_EQ(99037, sem_fetch_spectrum_response.composite_mask_size());
-  EXPECT_EQ(99037, sem_fetch_spectrum_response.composite_mask().size());
+  EXPECT_EQ(32411, sem_fetch_spectrum_response.composite_mask_size());
+  EXPECT_EQ(32411, sem_fetch_spectrum_response.composite_mask().size());
   EXPECT_GT(0.0, sem_fetch_spectrum_response.composite_mask(0));
 }
 
@@ -1076,7 +1060,7 @@ TEST_F(NiRFmxLTEDriverApiTests, ULModAccMIMOFromExample_FetchData_DataLooksReaso
   EXPECT_GT(0.0, mod_acc_fetch_iq_impairments_array_response.mean_iq_origin_offset(0));
   EXPECT_EQ(1, mod_acc_fetch_iq_impairments_array_response.mean_iq_gain_imbalance_size());
   EXPECT_EQ(1, mod_acc_fetch_iq_impairments_array_response.mean_iq_gain_imbalance().size());
-  EXPECT_LT(0.0, mod_acc_fetch_iq_impairments_array_response.mean_iq_gain_imbalance(0));
+  EXPECT_NE(0.0, mod_acc_fetch_iq_impairments_array_response.mean_iq_gain_imbalance(0));
   EXPECT_EQ(1, mod_acc_fetch_iq_impairments_array_response.mean_iq_quadrature_error_size());
   EXPECT_EQ(1, mod_acc_fetch_iq_impairments_array_response.mean_iq_quadrature_error().size());
   EXPECT_NE(0.0, mod_acc_fetch_iq_impairments_array_response.mean_iq_quadrature_error(0));
