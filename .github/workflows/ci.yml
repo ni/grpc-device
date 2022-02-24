@@ -26,3 +26,5 @@ jobs:
      - build_nilrt
      - create_client_artifacts
     uses: ./.github/workflows/trigger_azdo_ci.yml
+    secrets:
+      AZDO_PIPELINE_TRIGGERS: ${{secrets.AZDO_PIPELINE_TRIGGERS}}

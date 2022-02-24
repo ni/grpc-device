@@ -2,6 +2,9 @@ name: Trigger AzDO CIs
 
 on:
   workflow_call:
+    secrets:
+      AZDO_PIPELINE_TRIGGERS:
+        required: true
   workflow_dispatch:
 
 jobs:
