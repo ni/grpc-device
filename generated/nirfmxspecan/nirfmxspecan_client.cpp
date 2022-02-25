@@ -1279,7 +1279,7 @@ abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 AnalyzeIQ1WaveformResponse
-analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset, const pb::int64& reserved)
+analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset)
 {
   ::grpc::ClientContext context;
 
@@ -1291,7 +1291,6 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
   request.set_dx(dx);
   copy_array(iq, request.mutable_iq());
   request.set_reset(reset);
-  request.set_reserved(reserved);
 
   auto response = AnalyzeIQ1WaveformResponse{};
 
@@ -1302,7 +1301,7 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 AnalyzeSpectrum1WaveformResponse
-analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset, const pb::int64& reserved)
+analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset)
 {
   ::grpc::ClientContext context;
 
@@ -1314,7 +1313,6 @@ analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& in
   request.set_dx(dx);
   copy_array(spectrum, request.mutable_spectrum());
   request.set_reset(reset);
-  request.set_reserved(reserved);
 
   auto response = AnalyzeSpectrum1WaveformResponse{};
 

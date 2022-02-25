@@ -2164,7 +2164,7 @@ namespace nirfmxspecan_grpc {
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
       int32 array_size = static_cast<int32>(request->iq().size());
       int32 reset = request->reset();
-      int64 reserved = request->reserved();
+      auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2191,7 +2191,7 @@ namespace nirfmxspecan_grpc {
       auto spectrum = const_cast<float32*>(request->spectrum().data());
       int32 array_size = static_cast<int32>(request->spectrum().size());
       int32 reset = request->reset();
-      int64 reserved = request->reserved();
+      auto reserved = 0;
       auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;

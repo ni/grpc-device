@@ -2060,6 +2060,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
                 'name': 'reserved',
                 'type': 'int64'
             }
@@ -2115,6 +2117,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
                 'name': 'reserved',
                 'type': 'int64'
             }

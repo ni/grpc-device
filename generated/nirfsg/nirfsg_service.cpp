@@ -1136,7 +1136,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViReal64 pll_settling_time = request->pll_settling_time();
       ViBoolean ensure_pll_locked = request->ensure_pll_locked();
-      ViInt32 reserved_for_future_use = request->reserved_for_future_use();
+      auto reserved_for_future_use = 0;
       auto status = library_->ConfigureUpconverterPLLSettlingTime(vi, pll_settling_time, ensure_pll_locked, reserved_for_future_use);
       response->set_status(status);
       return ::grpc::Status::OK;
