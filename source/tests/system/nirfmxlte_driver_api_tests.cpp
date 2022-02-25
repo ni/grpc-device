@@ -370,7 +370,6 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccFromExample_FetchData_DataLooksReason
     }
   }
   EXPECT_SUCCESS(session, mod_acc_fetch_composite_evm_response);
-  // EXPECT_EQ(1, attempts); // to check for failures without a lot of noise
   if (mod_acc_fetch_composite_evm_response.status() < 0) {
     return;
   }
@@ -445,7 +444,6 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccAcpChpObwSemCompositeSingleCarrierFro
     }
   }
   EXPECT_SUCCESS(session, mod_acc_fetch_composite_evm_response);
-  // EXPECT_EQ(1, attempts); // to check for failures without a lot of noise
   if (mod_acc_fetch_composite_evm_response.status() < 0) {
     return;
   }
@@ -1115,7 +1113,6 @@ TEST_F(NiRFmxLTEDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataL
     }
   }
   EXPECT_SUCCESS(session, mod_acc_fetch_composite_evm_response);
-  // EXPECT_EQ(1, attempts); // to check for failures without a lot of noise
   if (mod_acc_fetch_composite_evm_response.status() != 0) {
     return;
   }
@@ -1262,7 +1259,6 @@ TEST_F(NiRFmxLTEDriverApiTests, ULSlotPowerSingleCarrierFromExample_FetchData_Da
     }
   }
   EXPECT_SUCCESS(session, slot_power_fetch_powers_response);
-  // EXPECT_EQ(1, attempts); // to check for failures without a lot of noise
   if (slot_power_fetch_powers_response.status() != 0) {
     return;
   }
