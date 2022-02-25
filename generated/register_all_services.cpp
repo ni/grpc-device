@@ -40,6 +40,7 @@
 #include "niswitch/niswitch_service_registrar.h"
 #include "nisync/nisync_service_registrar.h"
 #include "nitclk/nitclk_service_registrar.h"
+#include "nixnet/nixnet_service_registrar.h"
 
 namespace nidevice_grpc {
 
@@ -161,6 +162,11 @@ std::shared_ptr<void> register_all_services(
       feature_toggles));
   service_vector->push_back(
     nitclk_grpc::register_service(
+      server_builder, 
+      vi_session_repository,
+      feature_toggles));
+  service_vector->push_back(
+    nixnet_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
