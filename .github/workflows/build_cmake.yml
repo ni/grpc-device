@@ -57,6 +57,10 @@ jobs:
       with:
         python-version: '3.x'
     
+    - name: Install nasm
+      if: ${{ runner.os == 'Windows' }}
+      run: choco install nasm
+    
     - name: Update Submodules
       run: git submodule update --init --recursive --depth=1
 
