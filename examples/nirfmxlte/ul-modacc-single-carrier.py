@@ -212,65 +212,65 @@ try:
         )
     )
 
-    mod_acc_fetch_composite_evm_response = raise_if_error(
+    modacc_fetch_composite_evm_response = raise_if_error(
         client.ModAccFetchCompositeEVM(
             nirfmxlte_types.ModAccFetchCompositeEVMRequest(
-                instrument=instr, selector_string="", timeout=10.000000
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
-    mean_rms_composite_evm = mod_acc_fetch_composite_evm_response.mean_rms_composite_evm
-    max_peak_composite_evm = mod_acc_fetch_composite_evm_response.maximum_peak_composite_evm
-    mean_frequency_error = mod_acc_fetch_composite_evm_response.mean_frequency_error
+    mean_rms_composite_evm = modacc_fetch_composite_evm_response.mean_rms_composite_evm
+    max_peak_composite_evm = modacc_fetch_composite_evm_response.maximum_peak_composite_evm
+    mean_frequency_error = modacc_fetch_composite_evm_response.mean_frequency_error
     peak_composite_evm_symbol_index = (
-        mod_acc_fetch_composite_evm_response.peak_composite_evm_symbol_index
+        modacc_fetch_composite_evm_response.peak_composite_evm_symbol_index
     )
     peak_composite_evm_subcarrier_index = (
-        mod_acc_fetch_composite_evm_response.peak_composite_evm_subcarrier_index
+        modacc_fetch_composite_evm_response.peak_composite_evm_subcarrier_index
     )
     peak_composite_evm_slot_index = (
-        mod_acc_fetch_composite_evm_response.peak_composite_evm_slot_index
+        modacc_fetch_composite_evm_response.peak_composite_evm_slot_index
     )
-    mod_acc_fetch_iq_impairments_response = raise_if_error(
+    modacc_fetch_iq_impairments_response = raise_if_error(
         client.ModAccFetchIQImpairments(
             nirfmxlte_types.ModAccFetchIQImpairmentsRequest(
-                instrument=instr, selector_string="", timeout=10.000000
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
-    mean_iq_origin_offset = mod_acc_fetch_iq_impairments_response.mean_iq_origin_offset
-    mean_iq_gain_imbalance = mod_acc_fetch_iq_impairments_response.mean_iq_gain_imbalance
-    mean_iq_quadrature_error = mod_acc_fetch_iq_impairments_response.mean_iq_quadrature_error
-    mod_acc_fetch_in_band_emission_margin_response = raise_if_error(
+    mean_iq_origin_offset = modacc_fetch_iq_impairments_response.mean_iq_origin_offset
+    mean_iq_gain_imbalance = modacc_fetch_iq_impairments_response.mean_iq_gain_imbalance
+    mean_iq_quadrature_error = modacc_fetch_iq_impairments_response.mean_iq_quadrature_error
+    modacc_fetch_in_band_emission_margin_response = raise_if_error(
         client.ModAccFetchInBandEmissionMargin(
             nirfmxlte_types.ModAccFetchInBandEmissionMarginRequest(
-                instrument=instr, selector_string="", timeout=10.000000
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
-    in_band_emission_margin = mod_acc_fetch_in_band_emission_margin_response.in_band_emission_margin
+    in_band_emission_margin = modacc_fetch_in_band_emission_margin_response.in_band_emission_margin
 
-    mod_acc_fetch_pusch_constellation_trace_response = raise_if_error(
+    modacc_fetch_pusch_constellation_trace_response = raise_if_error(
         client.ModAccFetchPUSCHConstellationTrace(
             nirfmxlte_types.ModAccFetchPUSCHConstellationTraceRequest(
-                instrument=instr, selector_string="", timeout=10.000000
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
-    data_constellation = mod_acc_fetch_pusch_constellation_trace_response.data_constellation
-    dmrs_constellation = mod_acc_fetch_pusch_constellation_trace_response.dmrs_constellation
+    data_constellation = modacc_fetch_pusch_constellation_trace_response.data_constellation
+    dmrs_constellation = modacc_fetch_pusch_constellation_trace_response.dmrs_constellation
 
-    mod_acc_fetch_evm_per_subcarrier_trace_response = raise_if_error(
+    modacc_fetch_evm_per_subcarrier_trace_response = raise_if_error(
         client.ModAccFetchEVMPerSubcarrierTrace(
             nirfmxlte_types.ModAccFetchEVMPerSubcarrierTraceRequest(
-                instrument=instr, selector_string="", timeout=10.000000
+                instrument=instr, selector_string="", timeout=10.0
             )
         )
     )
-    x0 = mod_acc_fetch_evm_per_subcarrier_trace_response.x0
-    dx = mod_acc_fetch_evm_per_subcarrier_trace_response.dx
+    x0 = modacc_fetch_evm_per_subcarrier_trace_response.x0
+    dx = modacc_fetch_evm_per_subcarrier_trace_response.dx
     mean_rmsevm_per_subcarrier = (
-        mod_acc_fetch_evm_per_subcarrier_trace_response.mean_rms_evm_per_subcarrier
+        modacc_fetch_evm_per_subcarrier_trace_response.mean_rms_evm_per_subcarrier
     )
 
     print("------------------Measurement------------------")
