@@ -899,12 +899,18 @@ def get_enum_value_cpp_type(enum: dict) -> str:
 
 
 def is_regular_string_arg(parameter: dict) -> bool:
-    """Exclude byte arrays."""
+    """Return whether the parameter is a "regular" string.
+
+    This excludes byte arrays.
+    """
     return is_string_arg(parameter) and not parameter["grpc_type"] == "bytes"
 
 
 def is_regular_byte_array_arg(parameter: dict) -> bool:
-    """Exclude strings and byte arrays that are mapped to enums."""
+    """Return whether the parameter is a "regular" byte array.
+
+    This excludes byte arrays that are mapped to enums.
+    """
     return parameter["grpc_type"] == "bytes" and not is_enum(parameter)
 
 
