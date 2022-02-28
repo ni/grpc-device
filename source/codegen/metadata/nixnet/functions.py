@@ -453,8 +453,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'DbFindObject': {
-        'codegen_method': 'no',
         'cname': 'nxdbFindObject',
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -473,6 +473,8 @@ functions = {
             },
             {
                 'direction': 'out',
+                # 'custom_session': 'nxDatabaseRef_t',
+                # 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'dbObjectRef',
                 'type': 'nxDatabaseRef_t'
             }

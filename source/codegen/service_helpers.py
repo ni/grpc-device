@@ -401,17 +401,17 @@ def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int
     }
 
 
-def get_resource_handle_type(config: dict) -> str:
-    return config.get("resource_handle_type", "ViSession")
+def get_resource_handle_types(config: dict) -> List[str]:
+    resource_handle_type = config.get("resource_handle_type", ["ViSession"])
+    if isinstance(resource_handle_type, str):
+        return [resource_handle_type]
+    else:
+        return resource_handle_type
 
 
 def get_shared_resource_repository_ptr_type(resource_handle_type: str) -> str:
     resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
     return f"std::shared_ptr<{resource_repository_type}>"
-
-
-def get_driver_shared_resource_repository_ptr_type(driver_config: dict) -> str:
-    return get_shared_resource_repository_ptr_type(get_resource_handle_type(driver_config))
 
 
 class CrossDriverSessionDependency(NamedTuple):
@@ -420,6 +420,29 @@ class CrossDriverSessionDependency(NamedTuple):
     resource_repository_type: str
     field_name: str
     local_name: str
+
+
+def get_driver_shared_resource_repository_ptr_deps(
+    driver_config: dict,
+) -> List[CrossDriverSessionDependency]:
+    resource_repository_deps = [
+        _create_cross_driver_session_dependency(resource_handle_type)
+        for resource_handle_type in get_resource_handle_types(driver_config)
+    ]
+
+    # TODO fix
+    resource_repository_deps[0] = CrossDriverSessionDependency(
+        resource_repository_deps[0].resource_handle_type,
+        "ResourceRepositorySharedPtr",
+        resource_repository_deps[0].resource_repository_type,
+        "session_repository_",
+        "resource_repository",
+    )
+    # resource_repository_deps[0].local_name = "resource_repository"
+    # resource_repository_deps[0].field_name = "resource_repository_"
+    # resource_repository_deps[0].resource_repository_alias = "ResourceRepositorySharedPtr"
+
+    return resource_repository_deps
 
 
 def _create_cross_driver_session_dependency(
@@ -474,14 +497,15 @@ def list_session_repository_handle_types(
 ) -> SessionRepositoryHandleTypeMap:
     session_repository_handle_type_map = {}
     for config in driver_configs:
-        handle_type = get_resource_handle_type(config)
-        if handle_type in session_repository_handle_type_map:
-            old_windows_only = session_repository_handle_type_map[handle_type]["windows_only"]
-            new_windows_only = config.get("windows_only", False) and old_windows_only
-            session_repository_handle_type_map[handle_type]["windows_only"] = new_windows_only
-        else:
-            session_repository_handle_type_map[handle_type] = {
-                "local_name": f"{common_helpers.pascal_to_snake(handle_type)}_repository",
-                "windows_only": config.get("windows_only", False),
-            }
+        handle_types = get_resource_handle_types(config)
+        for handle_type in handle_types:
+            if handle_type in session_repository_handle_type_map:
+                old_windows_only = session_repository_handle_type_map[handle_type]["windows_only"]
+                new_windows_only = config.get("windows_only", False) and old_windows_only
+                session_repository_handle_type_map[handle_type]["windows_only"] = new_windows_only
+            else:
+                session_repository_handle_type_map[handle_type] = {
+                    "local_name": f"{common_helpers.pascal_to_snake(handle_type)}_repository",
+                    "windows_only": config.get("windows_only", False),
+                }
     return session_repository_handle_type_map

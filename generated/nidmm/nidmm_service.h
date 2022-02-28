@@ -37,7 +37,7 @@ public:
 
   NiDmmService(
     NiDmmLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiDmmFeatureToggles& feature_toggles = {});
   virtual ~NiDmmService();
   

@@ -22,7 +22,7 @@ struct LibraryAndService {
       : library(), 
       service(
         &library, 
-        resource_repository, 
+        resource_repository,
         fake_cross_driver_handle_resource_repository,
         feature_toggles) {
   }

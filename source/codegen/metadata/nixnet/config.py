@@ -11,6 +11,7 @@ config = {
     'code_readiness': 'Release',
     'driver_name': 'NI-XNET',
     'status_ok': 'status >= 0',
+    'resource_handle_type': ['nxSessionRef_t', 'nxDatabaseRef_t'],
     'type_to_grpc_type': {
         'nxSessionRef_t': 'nidevice_grpc.Session',
         'nxDatabaseRef_t': 'nidevice_grpc.Session',

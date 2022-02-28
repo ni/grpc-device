@@ -39,7 +39,7 @@ public:
 
   NiFakeNonIviService(
     NiFakeNonIviLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
     const NiFakeNonIviFeatureToggles& feature_toggles = {});
   virtual ~NiFakeNonIviService();

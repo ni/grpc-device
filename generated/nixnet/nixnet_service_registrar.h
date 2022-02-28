@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <nixnet.h> // for ViSession
+#include <nixnet.h> // for nxSessionRef_t, nxDatabaseRef_t
 
 namespace grpc {
 class ServerBuilder;
@@ -22,7 +22,8 @@ using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
 
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& server_builder, 
-  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
+  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>& resource_repository,
+  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>& nx_database_ref_t_resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles);
 
 } // nixnet_grpc

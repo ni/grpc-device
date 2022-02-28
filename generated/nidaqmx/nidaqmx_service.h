@@ -38,7 +38,7 @@ public:
 
   NiDAQmxService(
     NiDAQmxLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiDAQmxFeatureToggles& feature_toggles = {});
   virtual ~NiDAQmxService();
   

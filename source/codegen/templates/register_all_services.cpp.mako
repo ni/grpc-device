@@ -51,14 +51,15 @@ std::shared_ptr<void> register_all_services(
 % for config, cross_driver_session_deps in zip(driver_configs, driver_cross_driver_session_deps):
 <%
   namespace = f"{config['namespace_component']}_grpc"
-  resource_handle_type = service_helpers.get_resource_handle_type(config)
-  resource_repository_local_name = repository_type_to_config[resource_handle_type]["local_name"]
+  resource_handle_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config)
 %>\
 <%block filter="common_helpers.os_conditional_compile_block(config)">\
   service_vector->push_back(
     ${namespace}::register_service(
       server_builder, 
-      ${resource_repository_local_name},
+% for resource_handle_dep in resource_handle_deps:
+      ${repository_type_to_config[resource_handle_dep.resource_handle_type]["local_name"]},
+% endfor
 % for cross_driver_dep in cross_driver_session_deps:
       ${repository_type_to_config[cross_driver_dep.resource_handle_type]["local_name"]},
 % endfor

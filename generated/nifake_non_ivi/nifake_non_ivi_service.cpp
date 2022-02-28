@@ -24,11 +24,11 @@ namespace nifake_non_ivi_grpc {
 
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
       const NiFakeNonIviFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       fake_cross_driver_handle_resource_repository_(fake_cross_driver_handle_resource_repository),
       feature_toggles_(feature_toggles)
   {

@@ -37,7 +37,7 @@ public:
 
   NiFakeService(
     NiFakeLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiFakeFeatureToggles& feature_toggles = {});
   virtual ~NiFakeService();
   

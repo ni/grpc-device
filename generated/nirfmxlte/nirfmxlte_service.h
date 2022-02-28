@@ -38,7 +38,7 @@ public:
 
   NiRFmxLTEService(
     NiRFmxLTELibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxLTEFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxLTEService();

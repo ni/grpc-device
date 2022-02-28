@@ -22,10 +22,12 @@ namespace nixnet_grpc {
 
   NiXnetService::NiXnetService(
       NiXnetLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
+      nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository,
       const NiXnetFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
+      nx_database_ref_t_resource_repository_(nx_database_ref_t_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }

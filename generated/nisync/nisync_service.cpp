@@ -25,10 +25,10 @@ namespace nisync_grpc {
 
   NiSyncService::NiSyncService(
       NiSyncLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiSyncFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }

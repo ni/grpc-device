@@ -21,6 +21,7 @@ any_ivi_dance_functions = any(
   common_helpers.has_ivi_dance_with_a_twist_param(functions[name]['parameters']) or
   common_helpers.has_ivi_dance_param(functions[name]['parameters']) for name in function_names)
 
+resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config)
 cross_driver_session_deps = service_helpers.get_cross_driver_session_dependencies(functions)
 %>\
 <%namespace name="mako_helper" file="/service_helpers.mako"/>\
@@ -66,13 +67,17 @@ namespace ${config["namespace_component"]}_grpc {
 % endif
   ${service_class_prefix}Service::${service_class_prefix}Service(
       ${service_class_prefix}LibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+% for resource_repository_dep in resource_repository_deps:
+      ${resource_repository_dep.resource_repository_alias} ${resource_repository_dep.local_name},
+% endfor
 % for cross_driver_dep in cross_driver_session_deps:
       ${cross_driver_dep.resource_repository_alias} ${cross_driver_dep.local_name},
 % endfor
       const ${service_class_prefix}FeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+% for resource_repository_dep in resource_repository_deps:
+      ${resource_repository_dep.field_name}(${resource_repository_dep.local_name}),
+% endfor
 % for cross_driver_dep in cross_driver_session_deps:
       ${cross_driver_dep.field_name}(${cross_driver_dep.local_name}),
 % endfor

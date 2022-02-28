@@ -38,7 +38,7 @@ public:
 
   NiRFmxSpecAnService(
     NiRFmxSpecAnLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxSpecAnFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxSpecAnService();

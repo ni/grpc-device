@@ -61,6 +61,8 @@ std::shared_ptr<void> register_all_services(
 #if defined(_MSC_VER)
   auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository.get());
 #endif // defined(_MSC_VER)
+  auto nx_session_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>(session_repository.get());
+  auto nx_database_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>(session_repository.get());
 
   service_vector->push_back(
     nidaqmx_grpc::register_service(
@@ -168,7 +170,8 @@ std::shared_ptr<void> register_all_services(
   service_vector->push_back(
     nixnet_grpc::register_service(
       server_builder, 
-      vi_session_repository,
+      nx_session_ref_t_repository,
+      nx_database_ref_t_repository,
       feature_toggles));
 
   return service_vector;

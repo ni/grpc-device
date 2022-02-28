@@ -38,7 +38,7 @@ public:
 
   NiRFmxBluetoothService(
     NiRFmxBluetoothLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxBluetoothFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxBluetoothService();

@@ -14,7 +14,7 @@ include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H"
 namespace_prefix = config["namespace_component"] + "_grpc::"
 custom_types = common_helpers.get_custom_types(config)
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
-resource_repository_ptr = service_helpers.get_driver_shared_resource_repository_ptr_type(config)
+resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config)
 
 async_functions = service_helpers.get_async_functions(functions)
 has_async_functions = any(async_functions)
@@ -62,14 +62,18 @@ struct ${service_class_prefix}FeatureToggles
 
 class ${service_class_prefix}Service final : public ${base_class_name} {
 public:
-  using ResourceRepositorySharedPtr = ${resource_repository_ptr};
+% for resource_repository_dep in resource_repository_deps:
+  using ${resource_repository_dep.resource_repository_alias} = ${resource_repository_dep.resource_repository_type};
+% endfor
 % for cross_driver_dep in cross_driver_session_deps:
   using ${cross_driver_dep.resource_repository_alias} = ${cross_driver_dep.resource_repository_type};
 % endfor
 
   ${service_class_prefix}Service(
     ${service_class_prefix}LibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+% for resource_repository_dep in resource_repository_deps:
+    ${resource_repository_dep.resource_repository_alias} ${resource_repository_dep.local_name},
+% endfor
 % for cross_driver_dep in cross_driver_session_deps:
     ${cross_driver_dep.resource_repository_alias} ${cross_driver_dep.local_name},
 % endfor
@@ -91,7 +95,9 @@ public:
 % endfor
 private:
   ${driver_library_interface}* library_;
-  ResourceRepositorySharedPtr session_repository_;
+% for resource_repository_dep in resource_repository_deps:
+  ${resource_repository_dep.resource_repository_alias} ${resource_repository_dep.field_name};
+% endfor
 % for cross_driver_dep in cross_driver_session_deps:
   ${cross_driver_dep.resource_repository_alias} ${cross_driver_dep.field_name};
 % endfor
