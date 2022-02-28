@@ -4,21 +4,18 @@ from shutil import copy2, copytree
 from tempfile import TemporaryDirectory
 from typing import Dict, Iterable, List
 
-from common_helpers import get_driver_readiness
-from template_helpers import load_metadata
+from .common_helpers import get_driver_readiness
+from .template_helpers import load_metadata
 
 
 class _ArtifactReadiness:
-    """
-    Helper class to determine whether a Path with a module-named artifact directory
-    is release-ready.
-    """
+    """Class to determine whether a Path with a module-named artifact directory is release-ready."""
 
-    _module_to_readiness = Dict[str, str]
+    _module_to_readiness = {}  # type: Dict[str, str]
 
     def __init__(self, metadata_dir: Path, include_prerelease: bool):
         modules = [
-            load_metadata(p) for p in metadata_dir.iterdir() if p.is_dir() and not "fake" in p.name
+            load_metadata(p) for p in metadata_dir.iterdir() if p.is_dir() and "fake" not in p.name
         ]
 
         self._module_to_readiness = {
@@ -28,9 +25,10 @@ class _ArtifactReadiness:
         self.include_prerelease = include_prerelease
 
     def is_release_ready(self, module_path: Path) -> bool:
-        """
-        Determine release-readiness by checking the name of the module_path directory
-        against code_readiness for the module_name in config.py.
+        """Determine release-readiness.
+
+        Do so by checking the name of the module_path directory against code_readiness for the
+        module_name in config.py.
         """
         module_name = module_path.name
         if "fake" in module_name:
@@ -39,15 +37,13 @@ class _ArtifactReadiness:
         if "session" == module_name:
             return True
 
-        if not module_name in self._module_to_readiness:
+        if module_name not in self._module_to_readiness:
             raise KeyError(f"No module config.py metadata for module_name: {module_path}")
 
         return self._module_to_readiness[module_name] == "Release"
 
     def get_release_ready_subdirs(self, directory: Path) -> Iterable[Path]:
-        """
-        Return all subdirectories of directory for which is_release_ready is True.
-        """
+        """Return all subdirectories of directory for which is_release_ready is True."""
         return (
             d
             for d in directory.iterdir()
@@ -88,8 +84,7 @@ def _get_release_proto_files(
 
 def _get_release_example_directories(
     artifact_locations: ArtifactLocations, readiness: _ArtifactReadiness
-) -> List[Path]:
-
+) -> Iterable[Path]:
     return readiness.get_release_ready_subdirs(artifact_locations.examples)
 
 

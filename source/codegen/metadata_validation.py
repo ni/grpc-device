@@ -1,7 +1,9 @@
-from typing import Any, Dict, Iterable, List, Set
-from schema import Schema, And, Optional, Or, Use
-import common_helpers
-import service_helpers
+from typing import Any, Dict, List, Set
+
+from schema import And, Optional, Or, Schema, Use  # type: ignore
+
+from . import common_helpers
+from . import service_helpers
 
 
 # Rules that can be suppressed
@@ -209,7 +211,7 @@ def validate_function(function_name: str, metadata: dict):
                     for callback_param in parameter["callback_params"]:
                         try:
                             PARAM_SCHEMA.validate(callback_param)
-                        except Exception as e:
+                        except Exception:
                             raise Exception(
                                 f"Failed to validate callback_param with name {callback_param['name']}"
                             )

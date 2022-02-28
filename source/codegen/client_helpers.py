@@ -1,9 +1,9 @@
-from typing import List, Tuple
-import common_helpers
 import re
 from collections import namedtuple
-from copy import deepcopy
 from enum import Enum
+from typing import List, Tuple
+
+from . import common_helpers
 
 
 class ParamMechanism(Enum):
@@ -151,6 +151,7 @@ def get_client_parameters(func: dict, enums: dict) -> List[ClientParam]:
 
 def split_types_from_variant(variant_type: str) -> Tuple[str, str]:
     match = re.match(r".*simple_variant<([^,]+), ([^>]+)>", variant_type)
+    assert match
     return (match[1], match[2])
 
 

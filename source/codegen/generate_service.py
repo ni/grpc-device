@@ -1,11 +1,11 @@
-import os
 import argparse
-import metadata_mutation
-import metadata_validation
-from mako.lookup import TemplateLookup
+import os
 
-import common_helpers
-from template_helpers import instantiate_mako_template, load_metadata, write_if_changed
+from mako.lookup import TemplateLookup  # type: ignore
+
+from . import metadata_mutation
+from . import metadata_validation
+from .template_helpers import instantiate_mako_template, load_metadata, write_if_changed
 
 
 def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):

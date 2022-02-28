@@ -36,8 +36,8 @@ def is_repeating_parameter(parameter: dict):
     return parameter.get("repeating_argument", False)
 
 
-def is_array(dataType: str):
-    return dataType.endswith("[]") or dataType.endswith("*")
+def is_array(data_type: str):
+    return data_type.endswith("[]") or data_type.endswith("*")
 
 
 def is_enum(parameter: dict):
@@ -85,9 +85,7 @@ def is_struct(parameter: dict) -> bool:
 
 
 def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
-    """
-    Returns true if the parameter data can be converted with convert_from_grpc and convert_to_grpc.
-    """
+    """Return whether the parameter can be converted with convert_from_grpc and convert_to_grpc."""
     return is_struct(parameter) or parameter["grpc_type"] == "repeated bool"
 
 
@@ -105,7 +103,7 @@ def get_custom_types(config: dict) -> dict:
 
 
 def get_input_and_output_custom_types(functions):
-    """Returns a set of custom types used by input and output parameters separately."""
+    """Return a set of custom types used by input and output parameters separately."""
     input_custom_types = set()
     output_custom_types = set()
     for function in functions:
@@ -133,7 +131,11 @@ def strip_repeated_from_grpc_type(grpc_type):
 
 
 def get_underlying_type_name(parameter_type: str) -> str:
-    """Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving just the underlying type name."""
+    """Get the underlying type name of the parameter.
+
+    Strip away information from type name like brackets for arrays, leading "struct ", etc. leaving
+    just the underlying type name.
+    """
     return parameter_type.replace("struct ", "").replace("[]", "")
 
 
@@ -196,7 +198,7 @@ def is_unsupported_size_mechanism(parameter: dict) -> bool:
 
 
 def is_unsupported_size_mechanism_type(size_mechanism: str) -> bool:
-    return not size_mechanism in {
+    return size_mechanism not in {
         "fixed",
         "len",
         "ivi-dance",
@@ -271,8 +273,7 @@ def is_actually_pascal(camel_or_pascal_string: str) -> bool:
 
 
 def _camel_to_snake(camel_string: str) -> str:
-    """
-    Returns a snake_string for a given camelString.
+    """Return a snake_string for a given camelString.
 
     External callers should use/create a wrapper instead (i.e. get_grpc_field_name).
     """
@@ -290,7 +291,7 @@ def _camel_to_snake(camel_string: str) -> str:
 
 
 def snake_to_pascal(snake_string):
-    """Returns a PascalString for a given snake_string."""
+    """Return a PascalString for a given snake_string."""
     snake_string = list(snake_string)
     index = 0
     snake_string[index] = snake_string[index].upper()
@@ -304,7 +305,7 @@ def snake_to_pascal(snake_string):
 
 
 def pascal_to_camel(pascal_string):
-    """Returns a camelString for a given PascalString."""
+    """Return a camelString for a given PascalString."""
     pascal_string = normalize_leading_special_case_pascal_tokens(pascal_string)
     if not is_actually_pascal(pascal_string):
         return pascal_string
@@ -325,8 +326,10 @@ def pascal_to_camel(pascal_string):
 
 
 def ensure_pascal_case(pascal_or_camel_string):
-    """Ensures that a camel/pascal case string is pascal case
-    NOTE: does not distinguish leading all-caps acronyms."""
+    """Ensure that a camel/pascal case string is pascal case.
+
+    NOTE: does not distinguish leading all-caps acronyms.
+    """
     pascal_or_camel_string = insert_leading_special_case_pascal_tokens(pascal_or_camel_string)
 
     match = re.fullmatch(r"^([a-z])(.*)$", pascal_or_camel_string)
@@ -337,14 +340,14 @@ def ensure_pascal_case(pascal_or_camel_string):
 
 
 def pascal_to_snake(pascal_string):
-    """Returns a snake_string for a given PascalString."""
+    """Return a snake_string for a given PascalString."""
     camel_string = pascal_to_camel(pascal_string)
     snake_string = _camel_to_snake(camel_string)
     return "".join(snake_string)
 
 
 def filter_proto_rpc_functions(functions):
-    """Returns function metadata only for those functions to include for generating proto rpc methods"""
+    """Return function metadata only for functions to include for generating proto rpc methods."""
     functions_for_proto = {"public", "CustomCode"}
     return [
         name
@@ -354,7 +357,7 @@ def filter_proto_rpc_functions(functions):
 
 
 def get_attribute_enums_by_type(attributes):
-    """Returns a dictionary of different attribute data types that use enum alongwith set of enums used"""
+    """Return a dict of attribute data types that use enum, along with set of enums used."""
     attribute_enums_by_type = defaultdict(set)
     # For Compatibility: Pre-adding the following types to the map causes them to use value_raw
     # params even if they have no enum values. This is part of the shipping API for MI drivers.
@@ -371,7 +374,7 @@ def get_attribute_enums_by_type(attributes):
 
 
 def get_function_enums(functions):
-    """Returns a set of enums used with functions."""
+    """Return a set of enums used with functions."""
     function_enums = set()
     for function in functions:
         for parameter in functions[function]["parameters"]:
@@ -385,7 +388,7 @@ def get_function_enums(functions):
 
 
 def has_viboolean_array_param(functions):
-    """Returns True if atleast one function has parameter of type ViBoolean[]"""
+    """Return whether at least one function has parameter of type ViBoolean[]."""
     for function in functions:
         for parameter in functions[function]["parameters"]:
             if parameter["type"] == "ViBoolean[]":
@@ -394,7 +397,7 @@ def has_viboolean_array_param(functions):
 
 
 def has_enum_array_string_out_param(functions):
-    """Returns True if atleast one function has output parameter of type ViChar[], ViInt8[] or ViUInt8[] that uses enum"""
+    """Return whether at least one function has output parameter of type ViChar[], ViInt8[] or ViUInt8[] that uses enum."""
     for function in functions:
         for parameter in functions[function]["parameters"]:
             if is_output_parameter(parameter) and is_string_arg(parameter) and is_enum(parameter):
@@ -423,13 +426,12 @@ def has_size_mechanism_tag(parameter: dict, tag: str) -> bool:
 
 
 def has_strlen_bug(parameter: dict) -> bool:
-    """True if the parameter is a string output where the size
-    mechanism implementation has the 'strlen bug':
-        Reports strlen instead of strlen + 1 for the required
-        buffersize
-    We assume that this bug may some day be fixed, so the
-    implementation needs to allocate the extra character but also
-    trim it off if it's an extra null.
+    """Return whether the parameter is a string output whose size mechanism has the 'strlen bug'.
+
+    Reports strlen instead of strlen + 1 for the required buffersize.
+
+    We assume that this bug may some day be fixed, so the implementation needs to allocate the extra
+    character but also trim it off if it's an extra null.
     """
     return has_size_mechanism_tag(parameter, "strlen-bug")
 
@@ -439,10 +441,10 @@ def is_optional(parameter: dict) -> bool:
 
 
 def get_buffer_size_expression(parameter: dict) -> str:
-    """Returns the C++ size expression for the size of the underlying
-    C API bugger for a string/array parameter.
-    Unlike get_size_expression, this will include the trailing null terminator
-    for strings (which is in the size reported by driver APIs).
+    """Return the C++ size expression for the underlying C API buffer for a string/array parameter.
+
+    Unlike get_size_expression, this will include the trailing null terminator for strings (which is
+    in the size reported by driver APIs).
     """
     size_mechanism = get_size_mechanism(parameter)
     if "size" not in parameter:
@@ -458,8 +460,7 @@ def get_buffer_size_expression(parameter: dict) -> str:
 
 
 def get_size_expression(parameter: dict) -> str:
-    """ "Returns the C++ size expression for sizing the C++ container type
-    for a given parameter."""
+    """Return the C++ size expression for sizing the C++ container type for a given parameter."""
     expression = get_buffer_size_expression(parameter)
     if is_null_terminated_in_c(parameter):
         # if the C API reports strlen instead of size:
@@ -497,18 +498,18 @@ def has_repeated_varargs_parameter(parameters):
 def can_mock_function(parameters):
     # I'm not sure this is exactly right, but it does enough to distinguish between
     # non-varargs functions and varargs functions that take > 100 parameters.
-    MAX_MOCK_PARAM_LEN = 20
+    max_mock_param_len = 20
     repeated_varargs_parameters = [p for p in parameters if is_repeated_varargs_parameter(p)]
     first_repeating_parameters = len([p for p in parameters if is_repeating_parameter(p)])
     if not any(repeated_varargs_parameters):
-        return len(parameters) - first_repeating_parameters <= MAX_MOCK_PARAM_LEN
+        return len(parameters) - first_repeating_parameters <= max_mock_param_len
     varargs_parameter = repeated_varargs_parameters[0]
     return (
         len(parameters)
         - first_repeating_parameters
         - len(repeated_varargs_parameters)
         + (first_repeating_parameters * varargs_parameter["max_length"])
-        <= MAX_MOCK_PARAM_LEN
+        <= max_mock_param_len
     )
 
 
@@ -570,10 +571,10 @@ class IviDanceWithATwistParamSet(NamedTuple):
 
     @property
     def is_in_out_twist(self) -> bool:
-        """
-        An "in-out" twist is a rare variant of ivi-dance-with-a-twist where the size and the
-        twist are the same param used as an in-out param, rather than separate input and output
-        params.
+        """Return whether this is an "in-out" twist.
+
+        An "in-out" twist is a rare variant of ivi-dance-with-a-twist where the size and the twist
+        are the same param used as an in-out param, rather than separate input and output params.
         """
         return self.size_param_name == self.twist_param_name
 
@@ -660,7 +661,9 @@ def get_library_interface_type_name(config):
 
 def indent(level):
     """For use as a mako filter.
-    Returns a function that indents a block of text to the provided level."""
+
+    Returns a function that indents a block of text to the provided level.
+    """
 
     def indent_text_to_level(text, level):
         result = ""
@@ -674,8 +677,10 @@ def indent(level):
 
 def trim_trailing_comma():
     """For use as a mako filter.
+
     Returns a function that removes the last comma from a block of text (preserves newlines).
-    Consider this as an alternative to str.join when it allows preserving context in the mako file."""
+    Consider this as an alternative to str.join when it allows preserving context in the mako file.
+    """
 
     def trim_trailing_comma_impl(text: str) -> str:
         i = text.rfind(",")
@@ -685,9 +690,11 @@ def trim_trailing_comma():
 
 
 def os_conditional_compile_block(config):
-    windows_only = config.get("windows_only", False)
     """For use as a mako filter.
-        That wraps a block of text in #if blocks based on the config's OS support."""
+
+    That wraps a block of text in #if blocks based on the config's OS support.
+    """
+    windows_only = config.get("windows_only", False)
 
     def windows_only_block_impl(text):
         # Pure python code, by default, will convert to platform-specific linesep characters on save.
@@ -706,7 +713,9 @@ def os_conditional_compile_block(config):
 
 def filter_parameters_for_grpc_fields(parameters_or_fields: List[dict]):
     """Filter out the parameters that shouldn't be represented by a field on a grpc message.
-    For example, get rid of any parameters whose values should be determined from another parameter."""
+
+    For example, get rid of any parameters whose values should be determined from another parameter.
+    """
     return [p for p in parameters_or_fields if p.get("include_in_proto", True)]
 
 
@@ -717,10 +726,7 @@ class AttributeGroup:
         self._config = config
 
     def get_attributes_split_by_sub_group(self):
-        """
-        Splits attributes by type, with an additional "Reset" sub-group
-        for resettable attributes.
-        """
+        """Split attributes by type, with an added "Reset" sub-group for resettable attributes."""
         if not get_split_attributes_by_type(self._config):
             return {"": self.attributes}
 
@@ -770,8 +776,8 @@ def replace_prefix(s: str, prefix: str, sub: str) -> str:
 
 
 def get_grpc_type_name_for_identifier(data_type, config):
-    """
-    Used to create an identifier string based on the grpc_type
+    """Create an identifier string based on the grpc_type.
+
     i.e., double -> Double. repeated double -> DoubleArray.
     """
     grpc_type = get_grpc_type(data_type, config)
@@ -878,10 +884,10 @@ def supports_raw_attributes(config: dict) -> bool:
 
 
 def get_enum_value_cpp_type(enum: dict) -> str:
-    """Uses the python datatype of the first value in the enum to
-    infer the C++ type.
+    """Use the python datatype of the first value in the enum to infer the C++ type.
 
-    Used for mapped enums."""
+    Used for mapped enums.
+    """
     enum_value = enum["values"][0]["value"]
     if isinstance(enum_value, float):
         return "double"
@@ -893,22 +899,22 @@ def get_enum_value_cpp_type(enum: dict) -> str:
 
 
 def is_regular_string_arg(parameter: dict) -> bool:
-    """Excludes: byte arrays"""
+    """Exclude byte arrays."""
     return is_string_arg(parameter) and not parameter["grpc_type"] == "bytes"
 
 
 def is_regular_byte_array_arg(parameter: dict) -> bool:
-    """Excludes: strings and byte arrays that are mapped to enums"""
+    """Exclude strings and byte arrays that are mapped to enums."""
     return parameter["grpc_type"] == "bytes" and not is_enum(parameter)
 
 
 def get_additional_headers(config: dict, including_from_file: str) -> List[str]:
     additional_header_requirements = config.get("additional_headers", {})
-    return (
+    return [
         header
         for header, required_by in additional_header_requirements.items()
         if including_from_file in required_by
-    )
+    ]
 
 
 def get_enum_value_prefix(enum_name: str, enum: dict) -> str:
@@ -920,8 +926,7 @@ def get_driver_readiness(config: dict) -> str:
 
 
 def get_grpc_field_name(param: dict) -> str:
-    """ "
-    Returns the name of the protobuf field for the given param.
+    """Return the name of the protobuf field for the given param.
 
     This will be a snake_case_string, that can be used in the proto
     definition itself, as well as in C++ code that accesses the field
@@ -931,30 +936,22 @@ def get_grpc_field_name(param: dict) -> str:
 
 
 def get_grpc_field_name_from_str(field_name: str) -> str:
-    """
-    NOTE: Does not account for "grpc_name" overrides, but can be used to
-    get a proto name from a camelCase field name when no overrides are present.
-    """
+    # NOTE: Does not account for "grpc_name" overrides, but can be used to get a proto name from a
+    # camelCase field name when no overrides are present.
     return _camel_to_snake(field_name)
 
 
 def get_cpp_local_name(param: dict) -> str:
-    """ "
-    Returns a similar token to get_grpc_field_name, but will ensure
-    that the name is valid as a C++ variable name.
+    """Return a similar token to get_grpc_field_name, but ensure it is valid as a C++ variable name.
 
-    NOTE: this is not used consistently to differentiate from get_grpc_field_name.
-    For that reason, the field respects the "grpc_name" override so that the two
-    will match in the vast majority of cases where "name" is not a reserved keyword.
-    If "grpc_name" is a reserved keyword, this may be an issue (but don't use
-    reserved grpc_name!).
+    NOTE: this is not used consistently to differentiate from get_grpc_field_name.  For that reason,
+    the field respects the "grpc_name" override so that the two will match in the vast majority of
+    cases where "name" is not a reserved keyword.  If "grpc_name" is a reserved keyword, this may be
+    an issue (but don't use reserved grpc_name!).
     """
     return param.get("grpc_name", _camel_to_snake(param["cppName"]))
 
 
 def get_grpc_field_names_for_param_names(params: List[dict], names: List[str]) -> List[str]:
-    """
-    Get the grpc field name for the corresponding param in params given a list
-    of names.
-    """
+    """Get the grpc field name for the corresponding param in params given a list of names."""
     return [get_grpc_field_name(get_param_with_name(params, name)) for name in names]

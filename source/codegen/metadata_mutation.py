@@ -1,6 +1,7 @@
 from collections import namedtuple
 from typing import Optional
-import common_helpers
+
+from . import common_helpers
 
 RESERVED_WORDS = [
     "abstract",
@@ -84,7 +85,10 @@ RESERVED_WORDS = [
 
 
 def sanitize_names(parameters):
-    """Sanitizes name fields on a list of parameter objects and populates the cppname field with the sanitized value."""
+    """Sanitize name fields on a list of parameter objects.
+
+    Also, populate the cppname field with the sanitized value.
+    """
     for parameter in parameters:
         if "callback_params" in parameter:
             sanitize_names(parameter["callback_params"])
@@ -94,14 +98,14 @@ def sanitize_names(parameters):
 
 
 def set_var_args_types(parameters, config):
-    """Sets information about varargs parameters in the metadata."""
+    """Set information about varargs parameters in the metadata."""
     for parameter in parameters:
         if common_helpers.is_repeated_varargs_parameter(parameter):
             parameter["type"] = "..."
 
 
 def mark_size_params(parameters):
-    """Marks the size parameters in the metadata."""
+    """Mark the size parameters in the metadata."""
     for param in parameters:
         mechanism = common_helpers.get_size_mechanism(param)
         if mechanism in {
@@ -133,7 +137,9 @@ def mark_coerced_narrow_numeric_parameters(parameters: dict) -> None:
 
 def mark_non_proto_params(parameters):
     """Mark the parameters that shouldn't be included in the proto request message.
-    Their values should be derived from other sources in the service handlers."""
+
+    Their values should be derived from other sources in the service handlers.
+    """
     for param in parameters:
         mechanism = common_helpers.get_size_mechanism(param)
         if mechanism in {"len", "ivi-dance", "ivi-dance-with-a-twist"}:
@@ -205,7 +211,8 @@ def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
             enum = enums[enum_name]
             is_mapped_enum = enum.get("generate-mappings", False)
             for value in enum["values"]:
-                # Remove the leading group name (if any) because it will be redundant in the aggregate enum.
+                # Remove the leading group name (if any) because it will be redundant in the
+                # aggregate enum.
                 value_name = remove_leading_group_name(value["name"], group_name)
                 # Add a leading enum to differentiate sub-enums within the aggregate values enum.
                 value_name = add_leading_enum_name(value_name, enum_name, enum)
@@ -228,8 +235,7 @@ AttributeReferencingParameter = namedtuple(
 
 
 class AttributeAccessorExpander:
-    """
-    Wraps an _attribute_type_map of:
+    """Wraps an _attribute_type_map of:
 
     group -> type -> attributes
 
@@ -311,7 +317,7 @@ class AttributeAccessorExpander:
 def expand_attribute_function_value_param(
     function, enums, attribute_enums_by_type, service_class_prefix
 ):
-    """For SetAttribute and CheckAttribute APIs, update function metadata to mark value parameter as enum."""
+    """For SetAttribute and CheckAttribute, update function metadata to mark value param as enum."""
     value_param = get_attribute_function_value_param(function)
     if not value_param:
         return
@@ -372,7 +378,8 @@ def add_enum(enum_name, enum_values, enums, enum_value_prefix, is_mapped=False):
 
 
 def move_zero_enums_to_front(enums: dict) -> None:
-    """
+    """Put the enum value with value 0 _first_ if there is one, or else add UNSPECIFIED enum value.
+
     protobuf requires that the first enum value be zero. For enums missing a zero value,
     we will add an UNSPECIFIED enum value to the front (this is the best practice). But if
     there already is a zero enum, make sure that pre-existing zero value is at the front.

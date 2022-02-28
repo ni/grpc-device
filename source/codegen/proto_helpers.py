@@ -1,5 +1,6 @@
 from typing import List
-import common_helpers
+
+from . import common_helpers
 
 
 def _is_attribute_values(enum_name):
@@ -7,8 +8,7 @@ def _is_attribute_values(enum_name):
 
 
 def _should_add_unspecified_enum_value(enum_name, enum_values_metadata):
-    """
-    Returns True if an UNSPECIFIED zero-value enum should be added to enum_values_metadata.
+    """Return whether an UNSPECIFIED zero-value enum should be added to enum_values_metadata.
 
     UNSPECIFIED zero-values are a best practice in protobuf. BUT they're not helpful if there
     is some other zero-value. In that case they introduce an unnecessary alias and don't serve
@@ -30,7 +30,9 @@ def should_allow_alias(enum_values_metadata):
 
 def generate_parameter_field_number(parameter, used_indexes, field_name_suffix=""):
     """Get unique field number for field corresponding to this parameter in proto file.
-    If field number is not stored in metadata of parameter, get the next unused integer value."""
+
+    If field number is not stored in metadata of parameter, get the next unused integer value.
+    """
     field_name_key = f"grpc{field_name_suffix}_field_number"
     if field_name_key in parameter:
         field_number = parameter[field_name_key]
@@ -80,11 +82,12 @@ def is_array_input(parameter: dict):
 
 
 def is_decomposable_enum(parameter: dict):
-    """
+    """Return whether the parameter is a decomposable enum.
+
     Enums are typically decomposed from a single param into an enum param and an _raw param.
     The exception is array_inputs which are left as single enum param.
-    This is because protobuf does not support oneof on repeated types, so the standard
-    input decomposition does not work for arrays.
+    This is because protobuf does not support oneof on repeated types, so the standard input
+    decomposition does not work for arrays.
     """
     return common_helpers.is_enum(parameter) and not (
         is_array_input(parameter) and parameter["grpc_type"] != "string"
@@ -234,8 +237,8 @@ def get_parameters(function):
 
 
 def get_callback_output_params(function):
-    """
-    Looks for a parameter that specifies callback_params and returns those params
+    """Look for a parameter that specifies callback_params and return those params.
+
     These will be used as the outputs of a streaming response.
     """
     params = [p for p in function["parameters"] if "callback_params" in p]

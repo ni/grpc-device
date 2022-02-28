@@ -1,14 +1,14 @@
 from argparse import ArgumentParser
 from pathlib import Path
 
-from template_helpers import instantiate_mako_template, write_if_changed, load_metadata
+from .template_helpers import instantiate_mako_template, write_if_changed, load_metadata
 
 
 def generate_register_all_services(metadata_dir: Path, output_dir: Path) -> None:
     driver_modules = [
         load_metadata(p)
         for p in sorted(metadata_dir.iterdir())
-        if p.is_dir() and not "fake" in p.name
+        if p.is_dir() and "fake" not in p.name
     ]
 
     template = instantiate_mako_template("register_all_services.h.mako")
