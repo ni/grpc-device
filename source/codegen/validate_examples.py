@@ -6,7 +6,7 @@ from shutil import rmtree
 from sys import exit
 from typing import List, NamedTuple
 
-from .stage_client_files import stage_client_files
+from stage_client_files import stage_client_files
 
 
 class _CommandRecord(NamedTuple):

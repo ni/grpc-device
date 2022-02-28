@@ -4,8 +4,8 @@ from shutil import copy2, copytree
 from tempfile import TemporaryDirectory
 from typing import Dict, Iterable, List
 
-from .common_helpers import get_driver_readiness
-from .template_helpers import load_metadata
+from common_helpers import get_driver_readiness
+from template_helpers import load_metadata
 
 
 class _ArtifactReadiness:

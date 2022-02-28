@@ -1,9 +1,8 @@
 from typing import Any, Dict, List, Set
 
+import common_helpers
+import service_helpers
 from schema import And, Optional, Or, Schema, Use  # type: ignore
-
-from . import common_helpers
-from . import service_helpers
 
 
 # Rules that can be suppressed

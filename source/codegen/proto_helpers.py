@@ -1,6 +1,6 @@
 from typing import List
 
-from . import common_helpers
+import common_helpers
 
 
 def _is_attribute_values(enum_name):

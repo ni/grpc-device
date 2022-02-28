@@ -1,7 +1,7 @@
 from collections import namedtuple
 from typing import Optional
 
-from . import common_helpers
+import common_helpers
 
 RESERVED_WORDS = [
     "abstract",

@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, NamedTuple, Optional
 
-from . import common_helpers
+import common_helpers
 
 
 def get_include_guard_name(config, suffix):

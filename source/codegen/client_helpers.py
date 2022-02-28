@@ -3,7 +3,7 @@ from collections import namedtuple
 from enum import Enum
 from typing import List, Tuple
 
-from . import common_helpers
+import common_helpers
 
 
 class ParamMechanism(Enum):
@@ -18,7 +18,6 @@ ClientParam = namedtuple("ClientParam", ["name", "type", "mechanism"])
 
 
 def to_parameter_list(client_params: List[ClientParam]) -> List[str]:
-
     param_list = [f"{p.type} {p.name}" for p in client_params]
 
     return param_list
