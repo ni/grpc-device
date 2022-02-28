@@ -430,7 +430,6 @@ def get_driver_shared_resource_repository_ptr_deps(
         for resource_handle_type in get_resource_handle_types(driver_config)
     ]
 
-    # TODO fix
     resource_repository_deps[0] = CrossDriverSessionDependency(
         resource_repository_deps[0].resource_handle_type,
         "ResourceRepositorySharedPtr",
@@ -438,10 +437,6 @@ def get_driver_shared_resource_repository_ptr_deps(
         "session_repository_",
         "resource_repository",
     )
-    # resource_repository_deps[0].local_name = "resource_repository"
-    # resource_repository_deps[0].field_name = "resource_repository_"
-    # resource_repository_deps[0].resource_repository_alias = "ResourceRepositorySharedPtr"
-
     return resource_repository_deps
 
 
