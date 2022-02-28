@@ -1,10 +1,9 @@
-import os
 import argparse
+import os
+
 import metadata_mutation
 import metadata_validation
-from mako.lookup import TemplateLookup
-
-import common_helpers
+from mako.lookup import TemplateLookup  # type: ignore
 from template_helpers import instantiate_mako_template, load_metadata, write_if_changed
 
 

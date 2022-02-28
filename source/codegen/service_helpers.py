@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, NamedTuple, Optional
+
 import common_helpers
 
 
@@ -67,10 +68,7 @@ def create_args_for_callback(parameters):
 
 
 def _is_array_that_requires_conversion(parameter):
-    """
-    Returns True for any array parameter where the protobuf representation is not the same
-    as the C API representation.
-    """
+    """Return whether the protobuf representation is not the same as the C API representation."""
     is_array = common_helpers.is_array(parameter["type"])
 
     if is_array:
@@ -271,7 +269,7 @@ def get_output_lookup_values(enum_data):
 
 
 def filter_api_functions(functions, only_mockable_functions=True):
-    """Returns function metadata only for those functions to include for generating the function types to the API library"""
+    """Return function metadata only for functions to include for generating the function types to the API library."""
 
     def filter_function(function):
         if function.get("codegen_method", "") == "no":
@@ -284,7 +282,7 @@ def filter_api_functions(functions, only_mockable_functions=True):
 
 
 def filter_proto_rpc_functions_to_generate(functions):
-    """Returns function metadata only for those functions to include for generating proto rpc methods"""
+    """Return function metadata only for functions to include for generating proto rpc methods."""
     functions_for_code_gen = {"public"}
     return [
         name
@@ -439,16 +437,14 @@ def get_cross_driver_session_type(parameter: dict) -> Optional[str]:
 
 
 def get_cross_driver_session_dependencies(
-    functions: List[dict],
+    functions: dict,
 ) -> List[CrossDriverSessionDependency]:
     return sorted(
         set(
-            [
-                _create_cross_driver_session_dependency(get_cross_driver_session_type(p))
-                for f in functions.values()
-                for p in f["parameters"]
-                if get_cross_driver_session_type(p)
-            ]
+            _create_cross_driver_session_dependency(get_cross_driver_session_type(p))
+            for f in functions.values()
+            for p in f["parameters"]
+            if get_cross_driver_session_type(p)
         )
     )
 
@@ -472,7 +468,7 @@ SessionRepositoryHandleTypeMap = Dict[str, Dict[str, Any]]
 def list_session_repository_handle_types(
     driver_configs: List[dict],
 ) -> SessionRepositoryHandleTypeMap:
-    session_repository_handle_type_map = {}
+    session_repository_handle_type_map = {}  # type: Dict[str, Dict[str, Any]]
     for config in driver_configs:
         handle_type = get_resource_handle_type(config)
         if handle_type in session_repository_handle_type_map:
