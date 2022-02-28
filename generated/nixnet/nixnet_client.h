@@ -32,8 +32,10 @@ CreateSessionByRefResponse create_session_by_ref(const StubPtr& stub, const std:
 DbAddAliasResponse db_add_alias(const StubPtr& stub, const pb::string& database_alias, const pb::string& database_filepath, const pb::uint32& default_baud_rate);
 DbAddAlias64Response db_add_alias64(const StubPtr& stub, const pb::string& database_alias, const pb::string& database_filepath, const pb::uint64& default_baud_rate);
 DbCloseDatabaseResponse db_close_database(const StubPtr& stub, const nidevice_grpc::Session& database_ref, const pb::uint32& close_all_refs);
+DbCreateObjectResponse db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object_ref, const pb::uint32& object_class, const pb::string& object_name);
 DbDeleteObjectResponse db_delete_object(const StubPtr& stub, const nidevice_grpc::Session& db_object_ref);
 DbDeployResponse db_deploy(const StubPtr& stub, const pb::string& ip_address, const pb::string& database_alias, const pb::uint32& wait_for_complete);
+DbFindObjectResponse db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object_ref, const pb::uint32& object_class, const pb::string& object_name);
 DbGetDatabaseListSizesResponse db_get_database_list_sizes(const StubPtr& stub, const pb::string& ip_address);
 DbGetPropertySizeResponse db_get_property_size(const StubPtr& stub, const nidevice_grpc::Session& db_object_ref, const simple_variant<DBProperties, pb::uint32>& property_id);
 DbMergeResponse db_merge(const StubPtr& stub, const nidevice_grpc::Session& target_cluster_ref, const nidevice_grpc::Session& source_obj_ref, const simple_variant<CopyMode, pb::uint32>& copy_mode, const pb::string& prefix, const pb::uint32& wait_for_complete);

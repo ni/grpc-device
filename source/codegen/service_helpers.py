@@ -480,13 +480,15 @@ def get_cross_driver_session_dependency(parameter: dict) -> CrossDriverSessionDe
     return _create_cross_driver_session_dependency(parameter["cross_driver_session"])
 
 
-def session_repository_field_name(param: dict) -> str:
+def session_repository_field_name(param: dict, config: dict) -> str:
     cross_driver_session_type = get_cross_driver_session_type(param)
 
     if cross_driver_session_type:
         return get_cross_driver_session_dependency(param).field_name
     else:
-        return "session_repository_"
+        resource_handle_deps = get_driver_shared_resource_repository_ptr_deps(config)
+        resource_handle_dep = next(r for r in resource_handle_deps if r.resource_handle_type == common_helpers.get_underlying_type(param))
+        return resource_handle_dep.field_name
 
 
 SessionRepositoryHandleTypeMap = Dict[str, Dict[str, Any]]

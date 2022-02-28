@@ -53,8 +53,10 @@ public:
   ::grpc::Status DbAddAlias(::grpc::ServerContext* context, const DbAddAliasRequest* request, DbAddAliasResponse* response) override;
   ::grpc::Status DbAddAlias64(::grpc::ServerContext* context, const DbAddAlias64Request* request, DbAddAlias64Response* response) override;
   ::grpc::Status DbCloseDatabase(::grpc::ServerContext* context, const DbCloseDatabaseRequest* request, DbCloseDatabaseResponse* response) override;
+  ::grpc::Status DbCreateObject(::grpc::ServerContext* context, const DbCreateObjectRequest* request, DbCreateObjectResponse* response) override;
   ::grpc::Status DbDeleteObject(::grpc::ServerContext* context, const DbDeleteObjectRequest* request, DbDeleteObjectResponse* response) override;
   ::grpc::Status DbDeploy(::grpc::ServerContext* context, const DbDeployRequest* request, DbDeployResponse* response) override;
+  ::grpc::Status DbFindObject(::grpc::ServerContext* context, const DbFindObjectRequest* request, DbFindObjectResponse* response) override;
   ::grpc::Status DbGetDatabaseListSizes(::grpc::ServerContext* context, const DbGetDatabaseListSizesRequest* request, DbGetDatabaseListSizesResponse* response) override;
   ::grpc::Status DbGetPropertySize(::grpc::ServerContext* context, const DbGetPropertySizeRequest* request, DbGetPropertySizeResponse* response) override;
   ::grpc::Status DbMerge(::grpc::ServerContext* context, const DbMergeRequest* request, DbMergeResponse* response) override;
