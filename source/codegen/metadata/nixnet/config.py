@@ -4,11 +4,11 @@ config = {
     'c_header': 'nixnet.h',
     'c_function_prefix': 'nx',
     'service_class_prefix': 'NiXnet',
-    'java_package': 'com.ni.grpc.xnet',
+    'java_package': 'com.ni.grpc.nixnet',
     'csharp_namespace': 'NationalInstruments.Grpc.NiXnet',
     'namespace_component': 'nixnet',
     'close_function': 'Clear',
-    'code_readiness': 'Release',
+    'code_readiness': 'NextRelease',
     'driver_name': 'NI-XNET',
     'status_ok': 'status >= 0',
     'type_to_grpc_type': {
@@ -47,5 +47,5 @@ config = {
     'metadata_version': '0.1',
     'module_name': 'nixnet',
     'session_class_description': 'An NI-XNET session.',
-    'session_handle_parameter_name': 'vi'
+    'session_handle_parameter_name': 'session'
 }

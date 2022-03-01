@@ -814,7 +814,7 @@ namespace nixnet_grpc {
       response->mutable_value_buffer()->Resize(size_of_value_buffer, 0);
       f64* value_buffer = response->mutable_value_buffer()->mutable_data();
       response->mutable_timestamp_buffer()->Resize(size_of_timestamp_buffer, 0);
-      nxTimestamp100ns_t* timestamp_buffer = response->mutable_timestamp_buffer()->mutable_data();
+      nxTimestamp100ns_t* timestamp_buffer = reinterpret_cast<nxTimestamp100ns_t*>(response->mutable_timestamp_buffer()->mutable_data());
       auto status = library_->ReadSignalSinglePoint(session_ref, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer);
       response->set_status(status);
       if (status_ok(status)) {
@@ -1117,7 +1117,7 @@ namespace nixnet_grpc {
 
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
-      auto timestamp_buffer = const_cast<nxTimestamp100ns_t*>(request->timestamp_buffer().data());
+      auto timestamp_buffer = const_cast<nxTimestamp100ns_t*>(reinterpret_cast<const nxTimestamp100ns_t*>(request->timestamp_buffer().data()));
       u32 size_of_timestamp_buffer = static_cast<u32>(request->timestamp_buffer().size());
       auto num_pairs_buffer = const_cast<u32*>(request->num_pairs_buffer().data());
       u32 size_of_num_pairs_buffer = static_cast<u32>(request->num_pairs_buffer().size());
@@ -1134,7 +1134,7 @@ namespace nixnet_grpc {
   NiXnetFeatureToggles::NiXnetFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nixnet", CodeReadiness::kRelease))
+        feature_toggles.is_feature_enabled("nixnet", CodeReadiness::kNextRelease))
   {
   }
 } // namespace nixnet_grpc
