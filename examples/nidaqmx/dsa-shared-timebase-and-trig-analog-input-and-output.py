@@ -1,96 +1,85 @@
-# This example configures a total of four tasks on two PXI Dynamic Signal Acquistion (DSA) devices.
-# Each device runs a task for analog input and another for analog output. This example illustrates
-# continuous analog input and output operations.
-#
-# Instructions for Running:
-#    1. Select which type of Synchronization method you want to use.
-#    2. Select the physical channel corresponding to the input signal
-#       on the DAQ device.
-#    3. Enter the minimum and maximum expected voltage for the input
-#       and output operations on each device.
-#    Note: For optimal accuracy, match the input range to the
-#          expected voltage level of the measured signal (for input)
-#          and generated signal (for output).
-#    4. Set the number of samples to acquire per channel. This
-#       parameter determines how many points will be read and
-#       generated with each iteration.
-#    5. Set the rate of the acquisition and generation. The same
-#       sampling rate is employed for input and output operations on
-#       each device.
-#    Note: The sampling rate should be at least 2.2 times the maximum
-#          frequency component of the signal being acquired on analog
-#          input and the signal being generated on analog output.
-#          Frequency components beyond about 0.47 times the sampling
-#          rate will be eliminated by the alias and imaging
-#          protection on the DSA device.
-#
-# Steps:
-#    1. Create a task.
-#    2. Create an analog input and output channel for both the leader
-#       and follower devices.
-#    3. Set timing parameters for a continuous acquisition. The
-#       sample rate and block size are set to the same values for
-#       each device.
-#    4. There are two types of synchronization available on DSA
-#       devices. The first method shares the Sample Clock Timebase
-#       across the PXI_Star bus. It also uses the Sync Pulse which is
-#       shared across the PXI_Trig / RTSI bus. The second method uses
-#       the Sync Pulse in conjunction with the PXI Reference clock 10
-#       on the PXI backplane.
-#    5. Call the Get Terminal Name with Device Prefix utility
-#       function. This will take a Task and a terminal and create a
-#       properly formatted device + terminal name. This signal is
-#       then used as an output generation trigger on the leader as
-#       well as and acquisition start trigger and generation start
-#       trigger on the follower. The signal is shared along the PXI_Trig
-#       / RTSI bus.
-#    6. Synthesize a standard sine waveform and load this data into
-#       the output RAM buffer for each device.
-#    7. Call the Start function to start the acquisition.
-#    8. Read all of the data continuously. The 'Samples per Channel'
-#       control will specify how many samples per channel are read
-#       each time. If either device reports an error or the user
-#       presses Enter, the acquisition will stop.
-#    9. Call the Clear Task function to clear the task.
-#    10. Display an error if any.
-#
-# I/O Connections Overview:
-#    Make sure your signal input and output terminals matches the
-#    Physical Channel I/O controls.
-#
-#    It is important to ensure that your PXI chassis has been
-#    properly configured in MAX. If your chassis has not been
-#    configured in software before running the example, your devices may
-#    fail to synchronize properly.
-#
-#
-# The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
-#
-# Getting Started:
-#
-# To run this example, install "NI-DAQmx Driver" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
-#
-# This example requires physical hardware.
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, leader_device, and follower_device can be passed as separate command line arguments.
-#   > python dsa-shared-timebase-and-trig-analog-input-and-output.py <server_address> <port_number> <leader_device> <follower_device>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with
-# "Dev1" as the leader device and "Dev2" as the follower device.
+r"""Configure a total of four tasks on two PXI Dynamic Signal Acquistion (DSA) devices.
+
+Each device runs a task for analog input and another for analog output. This example illustrates
+continuous analog input and output operations.
+
+Instructions for Running:
+  1. Select which type of Synchronization method you want to use.
+  2. Select the physical channel corresponding to the input signal on the DAQ device.
+  3. Enter the minimum and maximum expected voltage for the input and output operations on each
+     device.
+     Note: For optimal accuracy, match the input range to the expected voltage level of the
+           measured signal (for input) and generated signal (for output).
+  4. Set the number of samples to acquire per channel. This parameter determines how many points
+     will be read and generated with each iteration.
+  5. Set the rate of the acquisition and generation. The same sampling rate is employed for input
+     and output operations on each device.
+  Note: The sampling rate should be at least 2.2 times the maximum frequency component of the
+        signal being acquired on analog input and the signal being generated on analog output.
+        Frequency components beyond about 0.47 times the sampling rate will be eliminated by the
+        alias and imaging protection on the DSA device.
+
+Steps:
+  1. Create a task.
+  2. Create an analog input and output channel for both the leader and follower devices.
+  3. Set timing parameters for a continuous acquisition. The sample rate and block size are set to
+     the same values for each device.
+  4. There are two types of synchronization available on DSA devices. The first method shares the
+     Sample Clock Timebase across the PXI_Star bus. It also uses the Sync Pulse which is shared
+     across the PXI_Trig / RTSI bus. The second method uses the Sync Pulse in conjunction with the
+     PXI Reference clock 10 on the PXI backplane.
+  5. Call the Get Terminal Name with Device Prefix utility function. This will take a Task and a
+     terminal and create a properly formatted device + terminal name. This signal is then used as an
+     output generation trigger on the leader as well as and acquisition start trigger and generation
+     start trigger on the follower. The signal is shared along the PXI_Trig / RTSI bus.
+  6. Synthesize a standard sine waveform and load this data into the output RAM buffer for each
+     device.
+  7. Call the Start function to start the acquisition.
+  8. Read all of the data continuously. The 'Samples per Channel' control will specify how many
+     samples per channel are read each time. If either device reports an error or the user presses
+     Enter, the acquisition will stop.
+  9. Call the Clear Task function to clear the task.
+  10. Display an error if any.
+
+I/O Connections Overview:
+  Make sure your signal input and output terminals matches the Physical Channel I/O controls.
+
+  It is important to ensure that your PXI chassis has been properly configured in MAX. If your
+  chassis has not been configured in software before running the example, your devices may fail to
+  synchronize properly.
+
+
+The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
+  C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
+
+Getting Started:
+
+To run this example, install "NI-DAQmx Driver" on the server machine:
+  https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
+
+This example requires physical hardware.
+
+Running from command line:
+
+Server machine's IP address, port number, leader_device, and follower_device can be passed as
+separate command line arguments.
+  > python dsa-shared-timebase-and-trig-analog-input-and-output.py <server_address> <port_number> <leader_device> <follower_device>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "Dev1" as the leader device and "Dev2" as the follower device.
+"""  # noqa: W505
+
 import asyncio
-import grpc
 import math
 import sys
 
+import grpc
 import nidaqmx_pb2 as nidaqmx_types
 import nidaqmx_pb2_grpc as grpc_nidaqmx
 
@@ -123,7 +112,7 @@ num_leader_samples_written = 0
 num_follower_samples_written = 0
 
 
-async def main():
+async def _main():
     global client, leader_input_task, leader_output_task, follower_input_task, follower_output_task, num_leader_samples_written, num_follower_samples_written
     async with grpc.aio.insecure_channel(f"{server_address}:{server_port}") as channel:
         try:
@@ -175,6 +164,7 @@ async def main():
                 return (sinewave, new_phase)
 
             async def raise_if_error(response):
+                """Raise an exception if an error was returned."""
                 if response.status:
                     response = await client.GetErrorString(
                         nidaqmx_types.GetErrorStringRequest(error_code=response.status)
@@ -182,6 +172,7 @@ async def main():
                     raise Exception(f"Error: {response.error_string}")
 
             async def raise_if_error_async(awaitable_call):
+                """Await response, then raise an exception if an error was returned."""
                 response = await awaitable_call
                 await raise_if_error(response)
                 return response
@@ -346,7 +337,7 @@ async def main():
                 )
             else:
                 # Sample clock
-                # Note: If you are using PXI DSA devices, the leader device must reside in PXI Slot 2.
+                # Note: If you are using PXI DSA devices, the leader device must be in PXI Slot 2.
                 timebase_source = await get_terminal_name_with_dev_prefix(
                     task=leader_input_task, terminal_name="SampleClockTimebase"
                 )
@@ -482,7 +473,8 @@ async def main():
                 )
             )
 
-            # Wait for initial_metadata to ensure that the callback is registered before starting the task.
+            # Wait for initial_metadata to ensure that the callback is registered before starting
+            # the task.
             await every_n_samples_stream.initial_metadata()
 
             done_event_stream_list = []
@@ -591,11 +583,11 @@ async def main():
             print(f"{error_message}")
 
         finally:
-            await cleanup()
+            await _cleanup()
 
 
-async def cleanup():
-    global client, leader_input_task, leader_output_task, follower_input_task, follower_output_task
+async def _cleanup():
+    global leader_input_task, leader_output_task, follower_input_task, follower_output_task
     if client:
         if leader_input_task:
             await client.StopTask(nidaqmx_types.StopTaskRequest(task=leader_input_task))
@@ -617,11 +609,11 @@ async def cleanup():
 
 # Run main
 try:
-    futures = [main()]
+    futures = [_main()]
     loop = asyncio.get_event_loop()
     loop.run_until_complete(asyncio.wait(futures))
 finally:
     # This handles cleanup if the user presses Ctrl+C
-    cleanup_future = [cleanup()]
+    cleanup_future = [_cleanup()]
     loop = asyncio.get_event_loop()
     loop.run_until_complete(asyncio.wait(cleanup_future))
