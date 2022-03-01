@@ -88,6 +88,7 @@ PARAM_SCHEMA = Schema(
         Optional("use_in_python_api"): bool,
         Optional("cross_driver_session"): str,
         Optional("grpc_name"): str,
+        Optional("return_value"): bool,
     }
 )
 
@@ -111,6 +112,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("custom_close"): str,
         Optional("custom_close_method"): bool,
         Optional("python_name"): str,
+        Optional("status_expression"): str,
     }
 )
 

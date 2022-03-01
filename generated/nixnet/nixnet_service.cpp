@@ -238,7 +238,7 @@ namespace nixnet_grpc {
 
       auto init_lambda = [&] () {
         nxSessionRef_t session_ref;
-        int status = library_->CreateSession(database_name, cluster_name, list, interface_parameter, mode, &session_ref);
+        auto status = library_->CreateSession(database_name, cluster_name, list, interface_parameter, mode, &session_ref);
         return std::make_tuple(status, session_ref);
       };
       uint32_t session_id = 0;
@@ -292,7 +292,7 @@ namespace nixnet_grpc {
 
       auto init_lambda = [&] () {
         nxSessionRef_t session_ref;
-        int status = library_->CreateSessionByRef(number_of_database_ref, array_of_database_ref.data(), interface_parameter, mode, &session_ref);
+        auto status = library_->CreateSessionByRef(number_of_database_ref, array_of_database_ref.data(), interface_parameter, mode, &session_ref);
         return std::make_tuple(status, session_ref);
       };
       uint32_t session_id = 0;
@@ -531,7 +531,7 @@ namespace nixnet_grpc {
 
       auto init_lambda = [&] () {
         nxDatabaseRef_t database_ref;
-        int status = library_->DbOpenDatabase(database_name, &database_ref);
+        auto status = library_->DbOpenDatabase(database_name, &database_ref);
         return std::make_tuple(status, database_ref);
       };
       uint32_t session_id = 0;
@@ -972,7 +972,7 @@ namespace nixnet_grpc {
 
       auto init_lambda = [&] () {
         nxSessionRef_t system_ref;
-        int status = library_->SystemOpen(&system_ref);
+        auto status = library_->SystemOpen(&system_ref);
         return std::make_tuple(status, system_ref);
       };
       uint32_t session_id = 0;

@@ -253,7 +253,7 @@ namespace nifake_non_ivi_grpc {
 
       auto init_lambda = [&] () {
         FakeHandle handle;
-        int status = library_->Init(session_name, &handle);
+        auto status = library_->Init(session_name, &handle);
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;
@@ -284,7 +284,7 @@ namespace nifake_non_ivi_grpc {
 
       auto init_lambda = [&] () {
         FakeHandle handle;
-        int status = library_->InitFromCrossDriverSession(cross_driver_session, &handle);
+        auto status = library_->InitFromCrossDriverSession(cross_driver_session, &handle);
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;
@@ -321,7 +321,7 @@ namespace nifake_non_ivi_grpc {
 
       auto init_lambda = [&] () {
         FakeHandle handle;
-        int status = library_->InitFromCrossDriverSessionArray(cross_driver_session_array.data(), number_of_cross_driver_sessions, &handle);
+        auto status = library_->InitFromCrossDriverSessionArray(cross_driver_session_array.data(), number_of_cross_driver_sessions, &handle);
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;
@@ -351,7 +351,7 @@ namespace nifake_non_ivi_grpc {
 
       auto init_lambda = [&] () {
         FakeHandle handle;
-        int status = library_->InitWithHandleNameAsSessionName(handle_name, &handle);
+        auto status = library_->InitWithHandleNameAsSessionName(handle_name, &handle);
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;

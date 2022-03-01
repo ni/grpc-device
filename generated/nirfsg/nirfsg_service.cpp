@@ -2258,7 +2258,7 @@ namespace nirfsg_grpc {
 
       auto init_lambda = [&] () {
         ViSession new_vi;
-        int status = library_->Init(resource_name, id_query, reset_device, &new_vi);
+        auto status = library_->Init(resource_name, id_query, reset_device, &new_vi);
         return std::make_tuple(status, new_vi);
       };
       uint32_t session_id = 0;
@@ -2291,7 +2291,7 @@ namespace nirfsg_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

@@ -41,6 +41,7 @@
 #include "nisync/nisync_service_registrar.h"
 #include "nitclk/nitclk_service_registrar.h"
 #include "nixnet/nixnet_service_registrar.h"
+#include "nixnetsocket/nixnetsocket_service_registrar.h"
 
 namespace nidevice_grpc {
 
@@ -61,6 +62,7 @@ std::shared_ptr<void> register_all_services(
 #if defined(_MSC_VER)
   auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository.get());
 #endif // defined(_MSC_VER)
+  auto nx_socket_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSOCKET>>(session_repository.get());
 
   service_vector->push_back(
     nidaqmx_grpc::register_service(
@@ -169,6 +171,11 @@ std::shared_ptr<void> register_all_services(
     nixnet_grpc::register_service(
       server_builder, 
       vi_session_repository,
+      feature_toggles));
+  service_vector->push_back(
+    nixnetsocket_grpc::register_service(
+      server_builder, 
+      nx_socket_repository,
       feature_toggles));
 
   return service_vector;

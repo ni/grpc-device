@@ -110,6 +110,7 @@ def create_standard_arg(parameter):
 
 
 def create_args(parameters):
+    parameters = [p for p in parameters if not p.get("return_value")]
     result = ""
     have_expanded_varargs = False
     for parameter in parameters:
@@ -176,6 +177,9 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
 
 
 def create_params(parameters, expand_varargs=True):
+    parameters = [p for p in parameters if not p.get("return_value", False)]
+    if not len(parameters):
+        return ""
     repeated_parameters = [p for p in parameters if common_helpers.is_repeating_parameter(p)]
     # Some methods have both input and output repeated varargs parameters,
     # so only expand them once.
@@ -194,6 +198,7 @@ def get_array_param_size(parameter) -> str:
 
 
 def expand_varargs_parameters(parameters):
+    parameters = [p for p in parameters if not p.get("return_value", False)]
     if not common_helpers.has_repeated_varargs_parameter(parameters):
         return parameters
     # omit the varargs parameters that we're going to expand
@@ -481,3 +486,44 @@ def list_session_repository_handle_types(
                 "windows_only": config.get("windows_only", False),
             }
     return session_repository_handle_type_map
+
+
+def _get_return_value_parameter(parameters: List[dict]) -> Optional[dict]:
+    return next((p for p in parameters if p.get("return_value")), None)
+
+
+def get_return_value_name(function_data: dict) -> str:
+    """Get the name of the return value for function_data. The default is "status"."""
+    return_param = _get_return_value_parameter(function_data["parameters"])
+    return return_param["name"] if return_param else "status"
+
+
+def has_status_expression(function_data: dict) -> bool:
+    """Returns true if function_data has a custom status_expression.
+
+    The default is to use the value of status returned from the driver function.
+    """
+    return "status_expression" in function_data
+
+
+def get_status_expression(function_data: dict) -> str:
+    return function_data["status_expression"]
+
+
+def get_library_lval_for_potentially_umockable_function(config: dict, parameters: List[dict]):
+    return (
+        "library_"
+        if common_helpers.can_mock_function(parameters)
+        else f"(({config['service_class_prefix']}Library*)library_)"
+    )
+
+
+def is_session_returned_from_function(parameters: dict) -> bool:
+    return_param = _get_return_value_parameter(parameters)
+    return return_param and return_param["grpc_type"] == "nidevice_grpc.Session"
+
+
+def should_copy_to_response(parameter: dict) -> bool:
+    return parameter.get("include_in_proto", True) or common_helpers.is_repeating_parameter(
+        parameter
+    )

@@ -3301,7 +3301,7 @@ namespace nirfmxnr_grpc {
       int32 is_new_session {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
+        auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
@@ -3332,7 +3332,7 @@ namespace nirfmxnr_grpc {
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;

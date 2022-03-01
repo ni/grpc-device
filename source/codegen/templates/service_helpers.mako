@@ -20,12 +20,17 @@
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
       auto init_lambda = [&] () {
+## If the session is not returned, it's an output param and need to be declared before calling.
+% if not service_helpers.is_session_returned_from_function(parameters):
         ${resource_handle_type} ${session_output_var_name};
-% if common_helpers.can_mock_function(parameters):
-        int status = library_->${function_name}(${service_helpers.create_args(parameters)});
-% else:
-        int status = ((${config['service_class_prefix']}Library*)library_)->${function_name}(${service_helpers.create_args(parameters)});
 % endif
+${call_library_method(
+  function_name=function_name, 
+  function_data=function_data, 
+  arg_string=service_helpers.create_args(parameters),
+  indent_level=1,
+  library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
+}\
         return std::make_tuple(status, ${session_output_var_name});
       };
       uint32_t session_id = 0;
@@ -77,7 +82,12 @@ ${initialize_output_params(output_parameters_to_initialize)}\
 ${initialize_input_params(function_name, non_ivi_params)}\
 
       while (true) {
-        auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance(parameters)});
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args_for_ivi_dance(parameters),
+  indent_level=1)
+}\
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -87,7 +97,13 @@ ${initialize_input_params(function_name, non_ivi_params)}\
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(output_parameters)}\
 </%block>\
-        status = library_->${function_name}(${service_helpers.create_args(parameters)});
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args(parameters),
+  indent_level=1,
+  declare_outputs=False)
+}\
         ## We cast status into ${common_helpers.get_cpp_local_name(size_param)} above, so it's safe to cast
         ## back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(${common_helpers.get_cpp_local_name(size_param)})) {
@@ -118,7 +134,12 @@ ${set_response_values(output_parameters)}\
 ${initialize_input_params(function_name, non_ivi_params)}\
 ${initialize_output_params(scalar_output_parameters)}\
       while (true) {
-        auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance_with_a_twist(parameters)});
+${call_library_method(
+  function_name=function_name, 
+  function_data=function_data, 
+  arg_string=service_helpers.create_args_for_ivi_dance_with_a_twist(parameters),
+  indent_level=1)
+}\
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -131,7 +152,13 @@ ${initialize_output_params(array_output_parameters)}\
         auto ${ivi_param_set.size_param_name} = ${ivi_param_set.twist_param_name};
 %   endif
 % endfor
-        status = library_->${function_name}(${service_helpers.create_args(parameters)});
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args(parameters),
+  indent_level=1,
+  declare_outputs=False)
+}\
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -186,7 +213,13 @@ ${set_response_values(output_parameters=response_parameters)}\
 ${initialize_input_params(function_name, parameters)}\
 </%block>\
 
-        auto status = library->${function_name}(${service_helpers.create_args(parameters)});
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args(parameters),
+  library_lval="library",
+  indent_level=1)
+}\
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
@@ -220,11 +253,12 @@ ${initialize_input_params(function_name, parameters)}\
 ${initialize_input_params(function_name, parameters)}\
 ${initialize_output_params(output_parameters)}\
 ${set_output_vararg_parameter_sizes(parameters)}\
-% if common_helpers.can_mock_function(parameters):
-      auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
-% else:
-      auto status = ((${config['service_class_prefix']}Library*)library_)->${function_name}(${service_helpers.create_args(parameters)});
-% endif
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args(parameters),
+  library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
+}\
       response->set_status(status);
 % if output_parameters:
       if (status_ok(status)) {
@@ -249,7 +283,11 @@ ${initialize_output_params(output_parameters)}\
 %>\
       session_repository_->remove_session(${session_param_name}.id(), ${session_param_name}.name());
 % endif
-      auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
+${call_library_method(
+  function_name=function_name, 
+  function_data=function_data, 
+  arg_string=service_helpers.create_args(parameters))
+}\
       response->set_status(status);
 % if output_parameters:
       if (status_ok(status)) {
@@ -617,6 +655,9 @@ ${initialize_standard_input_param(function_name, parameter)}
 
 ## Initialize the output parameters for an API call.
 <%def name="initialize_output_params(output_parameters)">\
+<%
+  output_parameters = [p for p in output_parameters if not p.get("return_value")]
+%>\
 % for parameter in output_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
@@ -672,6 +713,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Set output parameters updated through API call on the gRPC response message.
 <%def name="set_response_values(output_parameters)">\
 <%
+  output_parameters = [p for p in output_parameters if service_helpers.should_copy_to_response(p)]
   config = data['config']
   enums = data['enums']
   namespace_prefix = config["namespace_component"] + "_grpc::"
@@ -816,4 +858,30 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
           [&](auto x) { 
               return ${transform_x};
           });
+</%def>
+
+## Call the driver library method function_name.
+## function_name: name of the function.
+## function_data: function metadata.
+## arg_string: comma separated argument list to pass to the function (see service_helpers.create_args),
+## indent_level: (Optional) levels of additional indentation for the call snippet.
+## library_lval: (Optional) variable or expression to use as the left-hand-side for the library pointer (default: this->library_).
+## declare_outputs: (Optional) If this is true, variables will be declared as "auto". If false, variables will just be assigned (default: False).
+<%def name="call_library_method(
+  function_name, 
+  function_data, 
+  arg_string, 
+  indent_level=0,
+  library_lval='library_',
+  declare_outputs=True)">\
+<%
+  return_value_name = service_helpers.get_return_value_name(function_data)
+  auto_decl = "auto " if declare_outputs else ""
+%>\
+<%block filter="common_helpers.indent(indent_level)">\
+      ${auto_decl}${return_value_name} = ${library_lval}->${function_name}(${arg_string});
+% if service_helpers.has_status_expression(function_data):
+      ${auto_decl}status = ${service_helpers.get_status_expression(function_data)};
+% endif
+</%block>\
 </%def>

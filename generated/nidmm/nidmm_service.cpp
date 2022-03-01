@@ -1983,7 +1983,7 @@ namespace nidmm_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->Init(resource_name, id_query, reset_device, &vi);
+        auto status = library_->Init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -2016,7 +2016,7 @@ namespace nidmm_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
