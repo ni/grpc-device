@@ -20,6 +20,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   ::grpc::Status check_function_exists(std::string functionName);
   int32 Close(FakeHandle handle);
   int32 GetCrossDriverSession(FakeHandle handle, int32* crossDriverSession);
+  const char* GetStringAsReturnedValue(char buf[512]);
   int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value);
   int32 GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value);
   int32 GetMarbleAttributeInt32Array(FakeHandle handle, int32 attribute, int32 value[]);
@@ -27,6 +28,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 InitFromCrossDriverSession(int32 crossDriverSession, FakeHandle* handle);
   int32 InitFromCrossDriverSessionArray(int32 crossDriverSessionArray[], int32 numberOfCrossDriverSessions, FakeHandle* handle);
   int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle);
+  FakeHandle InitWithReturnedSession(const char handleName[]);
   int32 InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
   int32 IotaWithCustomSize(int32 sizeOne, int32 sizeTwo, int32 data[]);
   int32 OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[]);
@@ -52,6 +54,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
  private:
   using ClosePtr = decltype(&niFakeNonIvi_Close);
   using GetCrossDriverSessionPtr = decltype(&niFakeNonIvi_GetCrossDriverSession);
+  using GetStringAsReturnedValuePtr = decltype(&niFakeNonIvi_GetStringAsReturnedValue);
   using GetMarbleAttributeDoublePtr = decltype(&niFakeNonIvi_GetMarbleAttributeDouble);
   using GetMarbleAttributeInt32Ptr = decltype(&niFakeNonIvi_GetMarbleAttributeInt32);
   using GetMarbleAttributeInt32ArrayPtr = decltype(&niFakeNonIvi_GetMarbleAttributeInt32Array);
@@ -59,6 +62,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using InitFromCrossDriverSessionPtr = decltype(&niFakeNonIvi_InitFromCrossDriverSession);
   using InitFromCrossDriverSessionArrayPtr = decltype(&niFakeNonIvi_InitFromCrossDriverSessionArray);
   using InitWithHandleNameAsSessionNamePtr = decltype(&niFakeNonIvi_InitWithHandleNameAsSessionName);
+  using InitWithReturnedSessionPtr = decltype(&niFakeNonIvi_InitWithReturnedSession);
   using InputArraysWithNarrowIntegerTypesPtr = decltype(&niFakeNonIvi_InputArraysWithNarrowIntegerTypes);
   using IotaWithCustomSizePtr = decltype(&niFakeNonIvi_IotaWithCustomSize);
   using OutputArraysWithNarrowIntegerTypesPtr = decltype(&niFakeNonIvi_OutputArraysWithNarrowIntegerTypes);
@@ -84,6 +88,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   typedef struct FunctionPointers {
     ClosePtr Close;
     GetCrossDriverSessionPtr GetCrossDriverSession;
+    GetStringAsReturnedValuePtr GetStringAsReturnedValue;
     GetMarbleAttributeDoublePtr GetMarbleAttributeDouble;
     GetMarbleAttributeInt32Ptr GetMarbleAttributeInt32;
     GetMarbleAttributeInt32ArrayPtr GetMarbleAttributeInt32Array;
@@ -91,6 +96,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     InitFromCrossDriverSessionPtr InitFromCrossDriverSession;
     InitFromCrossDriverSessionArrayPtr InitFromCrossDriverSessionArray;
     InitWithHandleNameAsSessionNamePtr InitWithHandleNameAsSessionName;
+    InitWithReturnedSessionPtr InitWithReturnedSession;
     InputArraysWithNarrowIntegerTypesPtr InputArraysWithNarrowIntegerTypes;
     IotaWithCustomSizePtr IotaWithCustomSize;
     OutputArraysWithNarrowIntegerTypesPtr OutputArraysWithNarrowIntegerTypes;

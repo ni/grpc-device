@@ -97,6 +97,29 @@ namespace nifake_non_ivi_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetStringAsReturnedValue(::grpc::ServerContext* context, const GetStringAsReturnedValueRequest* request, GetStringAsReturnedValueResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      std::string buf(512 - 1, '\0');
+      auto string_out = library_->GetStringAsReturnedValue((char*)buf.data());
+      auto status = string_out ? 0 : -1;
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_string_out(string_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeNonIviService::GetMarbleAttributeDouble(::grpc::ServerContext* context, const GetMarbleAttributeDoubleRequest* request, GetMarbleAttributeDoubleResponse* response)
   {
     if (context->IsCancelled()) {
@@ -352,6 +375,36 @@ namespace nifake_non_ivi_grpc {
       auto init_lambda = [&] () {
         FakeHandle handle;
         auto status = library_->InitWithHandleNameAsSessionName(handle_name, &handle);
+        return std::make_tuple(status, handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->handle_name();
+      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->mutable_handle()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitWithReturnedSession(::grpc::ServerContext* context, const InitWithReturnedSessionRequest* request, InitWithReturnedSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_name = request->handle_name().c_str();
+
+      auto init_lambda = [&] () {
+        auto handle = library_->InitWithReturnedSession(handle_name);
+        auto status = handle == 0xDEADBEEF ? -1 : 0;
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;
