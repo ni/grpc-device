@@ -499,18 +499,28 @@ def get_return_value_name(function_data: dict) -> str:
 
 
 def has_status_expression(function_data: dict) -> bool:
-    """Returns true if function_data has a custom status_expression.
-
-    The default is to use the value of status returned from the driver function.
-    """
+    """Returns true if function_data has a custom status_expression."""
     return "status_expression" in function_data
 
 
 def get_status_expression(function_data: dict) -> str:
+    """
+    Gets the custom status_expression for function_data.
+
+    The default is to use the value of status returned from the driver function.
+
+    Raises if "status_expression" is not present.
+    """
     return function_data["status_expression"]
 
 
 def get_library_lval_for_potentially_umockable_function(config: dict, parameters: List[dict]):
+    """
+    Gets the variable or expression to use as the left-hand-side for the library pointer.
+
+    Returns library_ if parameters can be mocked and called through the shared interface,
+    otherwise typecasts library to the concrete type.
+    """
     return (
         "library_"
         if common_helpers.can_mock_function(parameters)
@@ -519,11 +529,18 @@ def get_library_lval_for_potentially_umockable_function(config: dict, parameters
 
 
 def is_session_returned_from_function(parameters: dict) -> bool:
+    """
+    Returns true if parameters includes a return_value parameters with grpc_type
+    nidevice_grpc.Session.
+    """
     return_param = _get_return_value_parameter(parameters)
     return return_param and return_param["grpc_type"] == "nidevice_grpc.Session"
 
 
 def should_copy_to_response(parameter: dict) -> bool:
-    return parameter.get("include_in_proto", True) or common_helpers.is_repeating_parameter(
-        parameter
-    )
+    """Returns True if the value of parameter should be copied to the Response message."""
+    is_included_in_response_proto = parameter.get("include_in_proto", True)
+    # Repeating parameters do a special mapping in the copy logic.
+    # They should execute that map/copy logic even if include_in_proto is False.
+    is_mapped_as_repeating_parameter = common_helpers.is_repeating_parameter(parameter)
+    return is_included_in_response_proto or is_mapped_as_repeating_parameter
