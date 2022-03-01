@@ -330,6 +330,15 @@ try:
         print(f"Lower Absolute Power (dBm)   : {lower_absolute_power[i]}")
         print(f"Upper Absolute Power (dBm)   : {upper_absolute_power[i]}")
         print("------------------------------------------")
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
         client.Close(nirfmxlte_types.CloseRequest(instrument=instr, force_destroy=False))
