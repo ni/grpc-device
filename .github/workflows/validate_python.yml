@@ -25,7 +25,7 @@ jobs:
 
     - name: Validate python style with ni-python-styleguide
       run: |
-        ni-python-styleguide examples
+        ni-python-styleguide lint examples
 
     - name: Install poetry for validate_examples.py
       uses: abatilo/actions-poetry@v2.0.0
