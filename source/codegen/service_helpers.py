@@ -110,7 +110,7 @@ def create_standard_arg(parameter):
 
 
 def create_args(parameters):
-    parameters = [p for p in parameters if not p.get("return_value")]
+    parameters = [p for p in parameters if not common_helpers.is_return_value(p)]
     result = ""
     have_expanded_varargs = False
     for parameter in parameters:
@@ -177,7 +177,7 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
 
 
 def create_params(parameters, expand_varargs=True):
-    parameters = [p for p in parameters if not p.get("return_value", False)]
+    parameters = [p for p in parameters if not common_helpers.is_return_value(p)]
     if not len(parameters):
         return ""
     repeated_parameters = [p for p in parameters if common_helpers.is_repeating_parameter(p)]
@@ -198,7 +198,7 @@ def get_array_param_size(parameter) -> str:
 
 
 def expand_varargs_parameters(parameters):
-    parameters = [p for p in parameters if not p.get("return_value", False)]
+    parameters = [p for p in parameters if not common_helpers.is_return_value(p)]
     if not common_helpers.has_repeated_varargs_parameter(parameters):
         return parameters
     # omit the varargs parameters that we're going to expand
@@ -489,7 +489,7 @@ def list_session_repository_handle_types(
 
 
 def _get_return_value_parameter(parameters: List[dict]) -> Optional[dict]:
-    return next((p for p in parameters if p.get("return_value")), None)
+    return next((p for p in parameters if common_helpers.is_return_value(p)), None)
 
 
 def get_return_value_name(function_data: dict) -> str:

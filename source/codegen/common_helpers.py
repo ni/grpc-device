@@ -979,3 +979,8 @@ def get_cpp_local_name(param: dict) -> str:
 def get_grpc_field_names_for_param_names(params: List[dict], names: List[str]) -> List[str]:
     """Get the grpc field name for the corresponding param in params given a list of names."""
     return [get_grpc_field_name(get_param_with_name(params, name)) for name in names]
+
+
+def is_return_value(parameter: dict) -> bool:
+    """Returns true if parameters is marked as a return_value."""
+    return parameter.get("return_value", False)

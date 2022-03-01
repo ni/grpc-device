@@ -656,7 +656,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Initialize the output parameters for an API call.
 <%def name="initialize_output_params(output_parameters)">\
 <%
-  output_parameters = [p for p in output_parameters if not p.get("return_value")]
+  output_parameters = [p for p in output_parameters if not common_helpers.is_return_value(p)]
 %>\
 % for parameter in output_parameters:
 <%
