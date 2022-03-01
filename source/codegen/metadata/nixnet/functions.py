@@ -622,7 +622,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -650,7 +650,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -754,7 +754,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -850,7 +850,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -877,7 +877,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -904,7 +904,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -936,7 +936,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1146,7 +1146,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'ReadStateValue',
+                'enum': 'StateValue',
                 'name': 'stateValue',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1203,7 +1203,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1235,7 +1235,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1525,7 +1525,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ReadStateValue',
+                'enum': 'StateValue',
                 'name': 'stateValue',
                 'size': {
                     'mechanism': 'len',
