@@ -46,7 +46,6 @@ functions = {
     },
     'Socket': {
         'cname': 'nxsocket',
-        # 'codegen_method': "CustomCode",
         'init_method': True,
         'status_expression': 'socket == -1 ? -1 : 0',
         'parameters': [
