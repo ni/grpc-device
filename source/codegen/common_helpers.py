@@ -982,5 +982,5 @@ def get_grpc_field_names_for_param_names(params: List[dict], names: List[str]) -
 
 
 def is_return_value(parameter: dict) -> bool:
-    """Returns true if parameters is marked as a return_value."""
+    """Returns true if parameter is marked as a return_value."""
     return parameter.get("return_value", False)
