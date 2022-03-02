@@ -23,6 +23,7 @@ config = {
         'const char[]': 'string',
         'nxStatus_t': 'int32',
         'void[]': 'bytes',
+        'u8[]': 'bytes',
         'nxTimestamp1ns_t': 'uint64',
         'nxTimestamp100ns_t': 'uint64'
     },

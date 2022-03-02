@@ -48,7 +48,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertByteArrayToFramesSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -76,7 +75,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]'
             },
             {
                 'direction': 'in',
@@ -92,7 +91,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertFramesToByteArraySinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -106,7 +104,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfBytesForFrames'
                 },
-                'type': 'void[]'
+                'type': 'u8[]'
             },
             {
                 'direction': 'in',
@@ -131,7 +129,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertFramesToSignalsSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -145,7 +142,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfBytesForFrames'
                 },
-                'type': 'void[]'
+                'type': 'u8[]'
             },
             {
                 'direction': 'in',
@@ -184,7 +181,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertSignalsToFramesSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -212,7 +208,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]'
             },
             {
                 'direction': 'in',
@@ -949,7 +945,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadFrame': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -963,7 +958,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]'
             },
             {
                 'direction': 'in',
@@ -1362,7 +1357,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'WriteFrame': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1376,7 +1370,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfBytesForFrames'
                 },
-                'type': 'void[]'
+                'type': 'u8[]'
             },
             {
                 'direction': 'in',
