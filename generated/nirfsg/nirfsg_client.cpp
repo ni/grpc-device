@@ -780,7 +780,7 @@ configure_software_start_trigger(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 ConfigureUpconverterPLLSettlingTimeResponse
-configure_upconverter_pll_settling_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& pll_settling_time, const bool& ensure_pll_locked, const pb::int32& reserved_for_future_use)
+configure_upconverter_pll_settling_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& pll_settling_time, const bool& ensure_pll_locked)
 {
   ::grpc::ClientContext context;
 
@@ -788,7 +788,6 @@ configure_upconverter_pll_settling_time(const StubPtr& stub, const nidevice_grpc
   request.mutable_vi()->CopyFrom(vi);
   request.set_pll_settling_time(pll_settling_time);
   request.set_ensure_pll_locked(ensure_pll_locked);
-  request.set_reserved_for_future_use(reserved_for_future_use);
 
   auto response = ConfigureUpconverterPLLSettlingTimeResponse{};
 

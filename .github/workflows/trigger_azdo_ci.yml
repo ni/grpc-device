@@ -1,0 +1,45 @@
+name: Trigger AzDO CIs
+
+on:
+  workflow_call:
+    secrets:
+      AZDO_PIPELINE_TRIGGERS:
+        required: true
+  workflow_dispatch:
+
+jobs:
+  trigger_azdo_ci:
+    name: Trigger Main CI
+    runs-on: windows-latest
+    steps:
+    - name: Trigger Main CI
+      uses: Azure/pipelines@v1
+      if: ${{ github.repository == 'ni/grpc-device' && github.ref == 'refs/heads/main' }}
+      with:
+        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
+        azure-pipeline-name: 'ni-central-grpc-device-main-desktop'
+        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
+
+    - name: Trigger Release CI
+      uses: Azure/pipelines@v1
+      if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.ref, 'refs/heads/releases') }}
+      with:
+        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
+        azure-pipeline-name: 'ni-central-grpc-device-release-desktop'
+        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
+
+    - name: Trigger Main CI
+      uses: Azure/pipelines@v1
+      if: ${{ github.repository == 'ni/grpc-device' && github.ref == 'refs/heads/main' }}
+      with:
+        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
+        azure-pipeline-name: 'ni-central-grpc-device-main-linux-rt'
+        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
+
+    - name: Trigger Release CI
+      uses: Azure/pipelines@v1
+      if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.ref, 'refs/heads/releases') }}
+      with:
+        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
+        azure-pipeline-name: 'ni-central-grpc-device-release-linux-rt'
+        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}

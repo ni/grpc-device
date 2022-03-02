@@ -18,9 +18,7 @@ _FAILED_COMMANDS: List[_CommandRecord] = []
 
 
 def _system(command):
-    """
-    Capture the result of any failed system calls in _FAILED_COMMANDS.
-    """
+    """Capture the result of any failed system calls in _FAILED_COMMANDS."""
     exit_code = _system_core(command)
     if exit_code:
         _FAILED_COMMANDS.append(_CommandRecord(exit_code, command))
@@ -71,8 +69,8 @@ def validate_examples(driver_glob_expression: str, ip_address: str, device_name:
             if ip_address:
                 for file in dir.glob("*.py"):
                     print(f" -> Running example: {file.name}")
-                    PORT = 31763
-                    _system(rf"poetry run python {file} {ip_address} {PORT} {device_name}")
+                    port = 31763
+                    _system(rf"poetry run python {file} {ip_address} {port} {device_name}")
 
 
 if __name__ == "__main__":
