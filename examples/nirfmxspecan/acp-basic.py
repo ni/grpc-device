@@ -1,34 +1,42 @@
-# Steps:
-# 1. Open a new RFmx session
-# 2. Configure Selected Ports
-# 3. Configure the basic signal properties  (Center Frequency, Reference Level and External Attenuation)
-# 4. Configure ACP Averaging Parameters
-# 5. Configure ACP Integration BW, Number of Offset Channels and Channel Spacing
-# This function configures a Carrier Channel with Offset Channels as specified by the Number of Offsets
-# 6. Read ACP Measurement Results
-# This function returns Absolute Power for the Carrier Channel and Relative Powers for two Offset Channels
-# 7. Close the RFmx Session
-#
-# The gRPC API is built from the C API. RFmx SpecAn documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\SpecAn\Documentation\rfmxspecancvi.chm
-#
-# Getting Started:
-#
-# To run this example, install "RFmx SpecAn" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-specan.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFmxSpecAn gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFmxSpecAn-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python acp-basic.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+r"""Fetch ACP data.
 
+Steps:
+  1. Open a new RFmx session
+  2. Configure Selected Ports
+  3. Configure the basic signal properties  (Center Frequency, Reference Level and External
+     Attenuation)
+  4. Configure ACP Averaging Parameters
+  5. Configure ACP Integration BW, Number of Offset Channels and Channel Spacing
+     This function configures a Carrier Channel with Offset Channels as specified by the Number of
+     Offsets.
+  6. Read ACP Measurement Results
+     This function returns Absolute Power for the Carrier Channel and Relative Powers for two Offset
+     Channels.
+  7. Close the RFmx Session
+
+The gRPC API is built from the C API. RFmx SpecAn documentation is installed with the driver at:
+  C:\Program Files (x86)\National Instruments\RFmx\SpecAn\Documentation\rfmxspecancvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx SpecAn" on the server machine:
+  https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-specan.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmxSpecAn gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-RFmxSpecAn-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python acp-basic.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name.
+"""
 
 import sys
 
@@ -59,8 +67,8 @@ client = grpc_nirfmxspecan.NiRFmxSpecAnStub(channel)
 instr = None
 
 
-# Raise an exception if an error was returned
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.GetError(
             nirfmxspecan_types.GetErrorRequest(

@@ -1,29 +1,35 @@
-# Demonstrates how to write values to a digital output port.
-#
-# The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
-#
-# Getting Started:
-#
-# To run this example, install "NI-DAQmx Driver" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
-#
-# To run this example without hardware: create a simulated device in NI MAX on the server (Windows only).
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and lines name can be passed as separate command line arguments.
-#   > python digital-output.py <server_address> <port_number> <lines_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "Dev1/port0" as the lines name
-import grpc
+r"""Write values to a digital output port.
+
+The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
+  C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
+
+Getting Started:
+
+To run this example, install "NI-DAQmx Driver" on the server machine:
+  https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
+
+To run this example without hardware: create a simulated device in NI MAX on the server (Windows
+only).
+
+Running from command line:
+
+Server machine's IP address, port number, and lines name can be passed as separate command line
+arguments.
+  > python digital-output.py <server_address> <port_number> <lines_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "Dev1/port0" as the lines name.
+"""
+
 import sys
 
+import grpc
 import nidaqmx_pb2 as nidaqmx_types
 import nidaqmx_pb2_grpc as grpc_nidaqmx
 
@@ -44,8 +50,8 @@ client = grpc_nidaqmx.NiDAQmxStub(channel)
 task = None
 
 
-# Raise an exception if an error was returned
-def RaiseIfError(response):
+def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         response = client.GetErrorString(
             nidaqmx_types.GetErrorStringRequest(error_code=response.status)
@@ -55,10 +61,10 @@ def RaiseIfError(response):
 
 try:
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
-    RaiseIfError(response)
+    raise_if_error(response)
     task = response.task
 
-    RaiseIfError(
+    raise_if_error(
         client.CreateDOChan(
             nidaqmx_types.CreateDOChanRequest(
                 task=task, lines=lines, line_grouping=nidaqmx_types.LINE_GROUPING_CHAN_FOR_ALL_LINES
@@ -66,9 +72,9 @@ try:
         )
     )
 
-    RaiseIfError(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
+    raise_if_error(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
 
-    RaiseIfError(
+    raise_if_error(
         client.WriteDigitalU32(
             nidaqmx_types.WriteDigitalU32Request(
                 task=task,

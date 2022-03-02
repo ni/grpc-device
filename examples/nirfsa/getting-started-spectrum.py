@@ -1,35 +1,41 @@
-# Use this example to learn the basics of spectrum acquisition using the RF vector signal analyzer.
-# The example shows how to configure the following parameters of the spectrum acquisition:
-# reference clock source, reference level, start and stop frequencies, resolution bandwidth,
-# and the spectrum acquisition type.
-# If you configure the spectrum span (Stop Frequency - Start Frequency) to a value larger than
-# the instantaneous bandwidth of the device, NI-RFSA performs multiple acquisitions and combines
-# them into one spectrum of the size you requested.
-#
-# The gRPC API is built from the C API. NI-RFSA documentation is installed with the driver at:
-# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niRFSA\documentation\English\nirfsa.chm
-#
-# Getting Started:
-#
-# To run this example, install "NI-RFSA Driver" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/drivers/download.ni-rfsa.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFSA gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFSA-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python getting-started-spectrum.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763",
-# with "SimulatedRFSA" as the physical channel name
-import grpc
+r"""Configure a spectrum acquisition.
+
+The following parameters of the spectrum acquisition are configured:
+ * reference clock source, reference level, start and stop frequencies, resolution bandwidth, and
+   the spectrum acquisition type.
+
+If you configure the spectrum span (Stop Frequency - Start Frequency) to a value larger than the
+instantaneous bandwidth of the device, NI-RFSA performs multiple acquisitions and combines them into
+one spectrum of the size you requested.
+
+The gRPC API is built from the C API. NI-RFSA documentation is installed with the driver at:
+  C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niRFSA\documentation\English\nirfsa.chm
+
+Getting Started:
+
+To run this example, install "NI-RFSA Driver" on the server machine:
+  https://www.ni.com/en-us/support/downloads/drivers/download.ni-rfsa.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFSA gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-RFSA-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python getting-started-spectrum.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedRFSA" as the physical channel name.
+"""
+
 import math
 import sys
 
+import grpc
 import nirfsa_pb2 as nirfsa_types
 import nirfsa_pb2_grpc as grpc_nirfsa
 
@@ -57,8 +63,9 @@ channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_nirfsa.NiRFSAStub(channel)
 vi = None
 
-# Raise an exception if an error was returned
+
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.ErrorMessage(
             nirfsa_types.ErrorMessageRequest(status_code=response.status)
@@ -126,19 +133,19 @@ try:
     )
 
     # We will find the highest peak in a bin, which is not the actual highest
-    # peak and frequency we could find in the acquisition.  For an accurate
+    # peak and frequency we could find in the acquisition. For an accurate
     # peak search, we can analyze the data with the Spectral Measurements Toolset.
     spectrum_data = read_response.power_spectrum_data
     spectrum_info = read_response.spectrum_info
 
-    def get_frequency_for_bin(bin):
+    def _get_frequency_for_bin(bin):
         return spectrum_info.initial_frequency + spectrum_info.frequency_increment * bin
 
     greatest_peak_power = -math.inf
     for i, spectrum_data_point in enumerate(spectrum_data):
         if spectrum_data_point > greatest_peak_power:
             greatest_peak_power = spectrum_data_point
-            greatest_peak_frequency = get_frequency_for_bin(i)
+            greatest_peak_frequency = _get_frequency_for_bin(i)
 
     print(
         f"The highest peak in a bin is {greatest_peak_power:.1f} dBm at {greatest_peak_frequency/1e6:0.3f} MHz."

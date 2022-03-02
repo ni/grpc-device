@@ -1,32 +1,37 @@
-# Use this example to learn the basics of I/Q acquisition using the RF vector signal analyzer.
-# The example shows how to configure the following parameters of I/Q acquisition:
-# reference clock, reference level, carrier frequency, I/Q rate, number of samples per record,
-# and I/Q acquisition type. This example also reads and prints the I/Q data.
-#
-# The gRPC API is built from the C API. NI-RFSA documentation is installed with the driver at:
-# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niRFSA\documentation\English\nirfsa.chm
-#
-# Getting Started:
-#
-# To run this example, install "NI-RFSA Driver" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/drivers/download.ni-rfsa.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFSA gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFSA-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python getting-started-iq.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763",
-# with "SimulatedRFSA" as the physical channel name
-import grpc
+r"""Configure I/Q parameters; read and print the I/Q data.
+
+The following parameters of I/Q acquisition are configured:
+ * reference clock, reference level, carrier frequency, I/Q rate, number of samples per record,
+   and I/Q acquisition type.
+
+The gRPC API is built from the C API. NI-RFSA documentation is installed with the driver at:
+  C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niRFSA\documentation\English\nirfsa.chm
+
+Getting Started:
+
+To run this example, install "NI-RFSA Driver" on the server machine:
+  https://www.ni.com/en-us/support/downloads/drivers/download.ni-rfsa.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFSA gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-RFSA-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python getting-started-iq.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedRFSA" as the physical channel name.
+"""
+
 import math
 import sys
 
+import grpc
 import nirfsa_pb2 as nirfsa_types
 import nirfsa_pb2_grpc as grpc_nirfsa
 
@@ -54,8 +59,9 @@ channel = grpc.insecure_channel(f"{server_address}:{server_port}")
 client = grpc_nirfsa.NiRFSAStub(channel)
 vi = None
 
-# Raise an exception if an error was returned
+
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.ErrorMessage(
             nirfsa_types.ErrorMessageRequest(status_code=response.status)

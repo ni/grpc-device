@@ -1,40 +1,45 @@
-# Steps:
-# 1. Open a new RFmx Session.
-# 2. Configure Frequency Reference.
-# 3. Configure Selected Ports.
-# 4. Configure basic signal properties (Center Frequency, RF Attenuation and External Attenuation).
-# 5. Configure Trigger Parameters for IQ Power Edge Trigger.
-# 6. Configure Link Direction, Frequency Range and Carrier Bandwidth and Subcarrier Spacing.
-# 7. Configure Reference Level.
-# 8. Select ACP measurement and enable Traces.
-# 9. Configure Measurement Method.
-# 10. Configure Noise Compensation Parameter.
-# 11. Configure Sweep Time Parameters.
-# 12. Configure Averaging Parameters for ACP measurement.
-# 13. Initiate the Measurement.
-# 14. Fetch ACP Measurements and Traces.
-# 15. Close RFmx Session.
-#
-# The gRPC API is built from the C API. RFmx NR documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\NR\Documentation\rfmxnrcvi.chm
-#
-# Getting Started:
-#
-# To run this example, install "RFmx NR" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-nr.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFmxNR gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFmxNR-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python acp-single-carrier.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+r"""Fetch ACP data.
 
+Steps:
+  1. Open a new RFmx Session.
+  2. Configure Frequency Reference.
+  3. Configure Selected Ports.
+  4. Configure basic signal properties (Center Frequency, RF Attenuation and External Attenuation).
+  5. Configure Trigger Parameters for IQ Power Edge Trigger.
+  6. Configure Link Direction, Frequency Range and Carrier Bandwidth and Subcarrier Spacing.
+  7. Configure Reference Level.
+  8. Select ACP measurement and enable Traces.
+  9. Configure Measurement Method.
+  10. Configure Noise Compensation Parameter.
+  11. Configure Sweep Time Parameters.
+  12. Configure Averaging Parameters for ACP measurement.
+  13. Initiate the Measurement.
+  14. Fetch ACP Measurements and Traces.
+  15. Close RFmx Session.
+
+The gRPC API is built from the C API. RFmx NR documentation is installed with the driver at:
+  C:\Program Files (x86)\National Instruments\RFmx\NR\Documentation\rfmxnrcvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx NR" on the server machine:
+  https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-nr.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmxNR gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-RFmxNR-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python acp-single-carrier.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name.
+"""
 
 import sys
 
@@ -65,8 +70,8 @@ client = grpc_nirfmxnr.NiRFmxNRStub(channel)
 instr = None
 
 
-# Raise an exception if an error was returned
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.GetError(
             nirfmxnr_types.GetErrorRequest(
@@ -274,7 +279,7 @@ try:
             )
         )
     )
-    arraySize = len(acp_fetch_offset_measurement_array_response.lower_relative_power)
+    array_size = len(acp_fetch_offset_measurement_array_response.lower_relative_power)
     lower_relative_power = acp_fetch_offset_measurement_array_response.lower_relative_power
     upper_relative_power = acp_fetch_offset_measurement_array_response.upper_relative_power
     lower_absolute_power = acp_fetch_offset_measurement_array_response.lower_absolute_power
@@ -290,7 +295,7 @@ try:
     absolute_power = acp_fetch_component_carrier_measurement_response.absolute_power
     relative_power = acp_fetch_component_carrier_measurement_response.relative_power
 
-    for i in range(arraySize):
+    for i in range(array_size):
         acp_fetch_relative_powers_trace_response = raise_if_error(
             client.ACPFetchRelativePowersTrace(
                 nirfmxnr_types.ACPFetchRelativePowersTraceRequest(
@@ -316,7 +321,7 @@ try:
     print(f"\nCarrier Absolute Power (dBm or dBm/Hz) : {absolute_power}")
 
     print("\n-----------Offset Channel Measurements----------- \n")
-    for i in range(arraySize):
+    for i in range(array_size):
         print(f"Offset  {i}")
         print(f"Lower Relative Power (dB)              : {lower_relative_power[i]}")
         print(f"Upper Relative Power (dB)              : {upper_relative_power[i]}")
