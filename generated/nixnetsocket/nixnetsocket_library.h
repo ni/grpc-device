@@ -18,18 +18,21 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   virtual ~NiXnetSocketLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
+  int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
   int32_t Close(nxSOCKET socket);
   int32_t GetLastErrorNum();
   char* GetLastErrorStr(char buf[], size_t bufLen);
   nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol);
 
  private:
+  using BindPtr = decltype(&nxbind);
   using ClosePtr = decltype(&nxclose);
   using GetLastErrorNumPtr = decltype(&nxgetlasterrornum);
   using GetLastErrorStrPtr = decltype(&nxgetlasterrorstr);
   using SocketPtr = decltype(&nxsocket);
 
   typedef struct FunctionPointers {
+    BindPtr Bind;
     ClosePtr Close;
     GetLastErrorNumPtr GetLastErrorNum;
     GetLastErrorStrPtr GetLastErrorStr;

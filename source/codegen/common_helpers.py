@@ -122,9 +122,17 @@ def is_driver_typedef_with_same_size_but_different_qualifiers(type: str) -> bool
     )
 
 
+def _has_copy_convert_tag(parameter):
+    return parameter.get("supports_standard_copy_convert", False)
+
+
 def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
     """Whether the parameter can be converted with convert_from_grpc and convert_to_grpc."""
-    return is_struct(parameter) or parameter["grpc_type"] == "repeated bool"
+    return (
+        _has_copy_convert_tag(parameter)
+        or is_struct(parameter)
+        or parameter["grpc_type"] == "repeated bool"
+    )
 
 
 def any_function_uses_timestamp(functions):

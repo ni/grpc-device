@@ -107,11 +107,7 @@ def _create_standard_arg(parameter):
         return f"CallbackRouter::handle_callback, "
     elif "callback_token" in parameter:
         return f"handler->token(), "
-    elif (
-        not is_output
-        and common_helpers.is_pointer_parameter(parameter)
-        and "hardcoded_value" not in parameter
-    ):
+    elif is_size_param_passed_by_ptr(parameter):
         return f"&{parameter_name}_copy, "
     elif not is_array and is_output:
         return f"&{parameter_name}, "
@@ -578,3 +574,8 @@ def should_copy_to_response(parameter: dict) -> bool:
     # They should execute that map/copy logic even if include_in_proto is False.
     is_mapped_as_repeating_parameter = common_helpers.is_repeating_parameter(parameter)
     return is_included_in_response_proto or is_mapped_as_repeating_parameter
+
+
+def is_size_param_passed_by_ptr(parameter: dict) -> bool:
+    """Return whether parameters is a size param passed-by-pointer."""
+    return parameter.get("is_size_param") and parameter.get("pointer")

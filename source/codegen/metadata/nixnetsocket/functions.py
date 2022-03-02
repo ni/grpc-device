@@ -1,10 +1,35 @@
 functions = {
+    'Bind': {
+        'cname': 'nxbind',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'SockAddr',
+                'name': 'name',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'in',
+                'name': 'namelen',
+                'hardcoded_value': 'name.size()',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
     'Close': {
         'cname': 'nxclose',
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'socket',
                 'type': 'nxSOCKET'
             }
