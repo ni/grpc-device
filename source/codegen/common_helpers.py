@@ -84,6 +84,24 @@ def is_struct(parameter: dict) -> bool:
     )
 
 
+# Some of the drivers use different qualifiers for integers of same size on windows vs linux.
+# We need to reinterpret_cast in the generated code to get the correct value.
+def is_driver_typedef_with_same_size_but_different_qualifiers(type: str) -> bool:
+    return type in (
+        "ViAddr",
+        "ViInt32",
+        "ViUInt32",
+        "ViUInt16",
+        "uInt32",
+        "int32",
+        "uInt64",
+        "int64",
+        "nxTimestamp1ns_t",
+        "nxTimestamp100ns_t",
+        "ViAttr",
+    )
+
+
 def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
     """Return whether the parameter can be converted with convert_from_grpc and convert_to_grpc."""
     return is_struct(parameter) or parameter["grpc_type"] == "repeated bool"
