@@ -645,7 +645,7 @@ namespace niswitch_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 array_size = status;
-      
+
         std::string attribute_value;
         if (array_size > 0) {
             attribute_value.resize(array_size - 1);
@@ -713,7 +713,7 @@ namespace niswitch_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string channel_name_buffer;
         if (buffer_size > 0) {
             channel_name_buffer.resize(buffer_size - 1);
@@ -754,7 +754,7 @@ namespace niswitch_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         ViStatus code {};
         std::string description;
         if (buffer_size > 0) {
@@ -797,7 +797,7 @@ namespace niswitch_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string coercion_record;
         if (buffer_size > 0) {
             coercion_record.resize(buffer_size - 1);
@@ -838,7 +838,7 @@ namespace niswitch_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string interchange_warning;
         if (buffer_size > 0) {
             interchange_warning.resize(buffer_size - 1);
@@ -881,7 +881,7 @@ namespace niswitch_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string path;
         if (buffer_size > 0) {
             path.resize(buffer_size - 1);
@@ -947,7 +947,7 @@ namespace niswitch_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 relay_name_buffer_size = status;
-      
+
         std::string relay_name_buffer;
         if (relay_name_buffer_size > 0) {
             relay_name_buffer.resize(relay_name_buffer_size - 1);

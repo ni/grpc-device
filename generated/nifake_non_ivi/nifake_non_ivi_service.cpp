@@ -253,7 +253,7 @@ namespace nifake_non_ivi_grpc {
           response->value_raw().begin(),
           response->value_raw().begin() + 10,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-          [&](auto x) { 
+          [&](auto x) {
               return checked_convert_value(x);
           });
       }
@@ -437,7 +437,7 @@ namespace nifake_non_ivi_grpc {
         u16_array_raw.begin(),
         u16_array_raw.end(),
         std::back_inserter(u16_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<myUInt16>::min() || x > std::numeric_limits<myUInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -455,7 +455,7 @@ namespace nifake_non_ivi_grpc {
         i16_array_raw.begin(),
         i16_array_raw.end(),
         std::back_inserter(i16_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<myInt16>::min() || x > std::numeric_limits<myInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -473,7 +473,7 @@ namespace nifake_non_ivi_grpc {
         i8_array_raw.begin(),
         i8_array_raw.end(),
         std::back_inserter(i8_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<myInt8>::min() || x > std::numeric_limits<myInt8>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -542,7 +542,7 @@ namespace nifake_non_ivi_grpc {
           u16_data.begin(),
           u16_data.begin() + number_of_u16_samples,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
         response->mutable_i16_data()->Clear();
@@ -551,7 +551,7 @@ namespace nifake_non_ivi_grpc {
           i16_data.begin(),
           i16_data.begin() + number_of_i16_samples,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_i16_data()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
         response->mutable_i8_data()->Clear();
@@ -560,7 +560,7 @@ namespace nifake_non_ivi_grpc {
           i8_data.begin(),
           i8_data.begin() + number_of_i8_samples,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_i8_data()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
       }
@@ -633,7 +633,7 @@ namespace nifake_non_ivi_grpc {
           u16_data.begin(),
           u16_data.begin() + array_size_copy,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
       }
