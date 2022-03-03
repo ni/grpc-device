@@ -1373,6 +1373,7 @@ message InitializeResponse {
   int32 status = 1;
   nidevice_grpc.Session instrument = 2;
   int32 is_new_session = 3;
+  string error_message = 4;
 }
 
 message InitializeFromNIRFSASessionRequest {
@@ -1383,6 +1384,7 @@ message InitializeFromNIRFSASessionRequest {
 message InitializeFromNIRFSASessionResponse {
   int32 status = 1;
   nidevice_grpc.Session instrument = 2;
+  string error_message = 3;
 }
 
 message InitiateRequest {

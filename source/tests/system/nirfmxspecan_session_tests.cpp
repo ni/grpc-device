@@ -1,3 +1,4 @@
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "device_server.h"
@@ -8,6 +9,7 @@ namespace tests {
 namespace system {
 
 namespace rfmxspecan = nirfmxspecan_grpc;
+using ::testing::IsEmpty;
 
 const int kInvalidRsrc = -200220;
 const int kInvalidRFmxSpecAnSession = -380598;
@@ -43,18 +45,6 @@ class NiRFmxSpecAnSessionTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->Initialize(&context, request, response);
     return status;
-  }
-
-  void expect_error_string(nidevice_grpc::Session& session, google::protobuf::int32 error_code, const char* expected_error_string)
-  {
-    ::grpc::ClientContext context;
-    rfmxspecan::GetErrorRequest error_request;
-    error_request.mutable_instrument()->set_id(session.id());
-    rfmxspecan::GetErrorResponse error_response;
-    ::grpc::Status status = GetStub()->GetError(&context, error_request, &error_response);
-    EXPECT_TRUE(status.ok());
-    EXPECT_STREQ(expected_error_string, error_response.error_description().c_str());
-    EXPECT_EQ(error_code, error_response.error_code());
   }
 
  private:
@@ -107,16 +97,31 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSess
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, close_response.status());
+  EXPECT_THAT(init_response.error_message(), IsEmpty());
 }
 
-TEST_F(NiRFmxSpecAnSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage)
+// Note: the error_message is included in the Init response because querying for errors
+// afterwards will fail to get the error_message if the request is handled on a different thread.
+TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   rfmxspecan::InitializeResponse init_response;
   call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &init_response);
   EXPECT_EQ(kInvalidRsrc, init_response.status());
 
   nidevice_grpc::Session session = init_response.instrument();
-  expect_error_string(session, init_response.status(), kRFmxSpecAnErrorResourceNotFoundMessage);
+  EXPECT_EQ(std::string(kRFmxSpecAnErrorResourceNotFoundMessage), init_response.error_message());
+}
+
+TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReInitSuccessfully_ErrorMessageIsEmpty)
+{
+  rfmxspecan::InitializeResponse failed_init_response;
+  call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &failed_init_response);
+
+  rfmxspecan::InitializeResponse successful_init_response;
+  call_initialize(kRFmxSpecAnTestRsrc, kRFmxSpecAnOptionsString, kRFmxSpecAnTestSession, &successful_init_response);
+
+  EXPECT_EQ(std::string(kRFmxSpecAnErrorResourceNotFoundMessage), failed_init_response.error_message());
+  EXPECT_THAT(successful_init_response.error_message(), IsEmpty());
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
