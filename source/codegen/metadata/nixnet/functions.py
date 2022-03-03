@@ -1121,7 +1121,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadState': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1143,11 +1142,7 @@ functions = {
                 'direction': 'out',
                 'enum': 'StateValue',
                 'name': 'stateValue',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'stateSize'
-                },
-                'type': 'void[]'
+                'grpc-type' : 'StateValue'
             },
             {
                 'direction': 'out',
