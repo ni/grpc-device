@@ -9385,9 +9385,9 @@ namespace nirfmxspecan_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-      float64 measurerment_offset = request->measurerment_offset();
-      float64 measurerment_length = request->measurerment_length();
-      auto status = library_->PAVTCfgMeasurementInterval(instrument, selector_string, measurerment_offset, measurerment_length);
+      float64 measurement_offset = request->measurement_offset();
+      float64 measurement_length = request->measurement_length();
+      auto status = library_->PAVTCfgMeasurementInterval(instrument, selector_string, measurement_offset, measurement_length);
       response->set_status(status);
       return ::grpc::Status::OK;
     }

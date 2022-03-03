@@ -8900,11 +8900,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'measurement_offset',
                 'name': 'measurermentOffset',
                 'type': 'float64'
             },
             {
                 'direction': 'in',
+                'grpc_name': 'measurement_length',
                 'name': 'measurermentLength',
                 'type': 'float64'
             }

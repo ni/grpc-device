@@ -5618,15 +5618,15 @@ pavt_cfg_measurement_bandwidth(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 PAVTCfgMeasurementIntervalResponse
-pavt_cfg_measurement_interval(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& measurerment_offset, const double& measurerment_length)
+pavt_cfg_measurement_interval(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& measurement_offset, const double& measurement_length)
 {
   ::grpc::ClientContext context;
 
   auto request = PAVTCfgMeasurementIntervalRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_measurerment_offset(measurerment_offset);
-  request.set_measurerment_length(measurerment_length);
+  request.set_measurement_offset(measurement_offset);
+  request.set_measurement_length(measurement_length);
 
   auto response = PAVTCfgMeasurementIntervalResponse{};
 

@@ -6068,8 +6068,8 @@ message PAVTCfgMeasurementBandwidthResponse {
 message PAVTCfgMeasurementIntervalRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  double measurerment_offset = 3;
-  double measurerment_length = 4;
+  double measurement_offset = 3;
+  double measurement_length = 4;
 }
 
 message PAVTCfgMeasurementIntervalResponse {
