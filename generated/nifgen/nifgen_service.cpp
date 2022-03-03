@@ -1702,7 +1702,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 size_in_bytes = status;
-      
+
         response->mutable_configuration()->Resize(size_in_bytes, 0);
         ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
@@ -1924,7 +1924,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 array_size = status;
-      
+
         std::string attribute_value;
         if (array_size > 0) {
             attribute_value.resize(array_size - 1);
@@ -1966,7 +1966,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string channel_string;
         if (buffer_size > 0) {
             channel_string.resize(buffer_size - 1);
@@ -2007,7 +2007,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 error_description_buffer_size = status;
-      
+
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
@@ -2190,7 +2190,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string coercion_record;
         if (buffer_size > 0) {
             coercion_record.resize(buffer_size - 1);
@@ -2231,7 +2231,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string interchange_warning;
         if (buffer_size > 0) {
             interchange_warning.resize(buffer_size - 1);

@@ -270,7 +270,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -311,7 +311,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -352,7 +352,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -393,7 +393,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -434,7 +434,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_length = status;
-      
+
         std::string selector_string;
         if (selector_string_length > 0) {
             selector_string.resize(selector_string_length - 1);
@@ -475,7 +475,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -516,7 +516,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -1413,7 +1413,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -2037,7 +2037,7 @@ namespace nirfmxwlan_grpc {
             response->attr_val_raw().begin(),
             response->attr_val_raw().begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) { 
+            [&](auto x) {
                 return checked_convert_attr_val(x);
             });
           response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2175,7 +2175,7 @@ namespace nirfmxwlan_grpc {
             attr_val.begin(),
             attr_val.begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) { 
+            [&](auto x) {
                 return x;
             });
           response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2224,7 +2224,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -2270,7 +2270,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -2301,7 +2301,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 array_size = status;
-      
+
         std::string attr_val;
         if (array_size > 0) {
             attr_val.resize(array_size - 1);
@@ -2537,7 +2537,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 error_description_buffer_size = status;
-      
+
         int32 error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
@@ -2581,7 +2581,7 @@ namespace nirfmxwlan_grpc {
           return ::grpc::Status::OK;
         }
         int32 error_description_buffer_size = status;
-      
+
         std::string error_description;
         if (error_description_buffer_size > 0) {
             error_description.resize(error_description_buffer_size - 1);
@@ -3708,7 +3708,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4694,7 +4694,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pilot_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5712,7 +5712,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_user_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5758,7 +5758,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_user_pilot_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6633,7 +6633,7 @@ namespace nirfmxwlan_grpc {
             response->measurement_status_raw().begin(),
             response->measurement_status_raw().begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
-            [&](auto x) { 
+            [&](auto x) {
                 return static_cast<nirfmxwlan_grpc::SemLowerOffsetMeasurementStatus>(x);
             });
           response->mutable_measurement_status()->Resize(actual_array_size, 0);
@@ -6886,7 +6886,7 @@ namespace nirfmxwlan_grpc {
             response->measurement_status_raw().begin(),
             response->measurement_status_raw().begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
-            [&](auto x) { 
+            [&](auto x) {
                 return static_cast<nirfmxwlan_grpc::SemUpperOffsetMeasurementStatus>(x);
             });
           response->mutable_measurement_status()->Resize(actual_array_size, 0);
@@ -7335,7 +7335,7 @@ namespace nirfmxwlan_grpc {
         attr_val_raw.begin(),
         attr_val_raw.end(),
         std::back_inserter(attr_val),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));

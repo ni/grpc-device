@@ -1499,7 +1499,7 @@ namespace nirfsa_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buf_size = status;
-      
+
         std::string value;
         if (buf_size > 0) {
             value.resize(buf_size - 1);
@@ -1603,7 +1603,7 @@ namespace nirfsa_grpc {
             if (shrunk_size != current_size) {
               response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_number_of_sparameters(number_of_sparameters);
           response->set_number_of_ports(number_of_ports);
         }
@@ -1694,7 +1694,7 @@ namespace nirfsa_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 error_description_buffer_size = status;
-      
+
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
@@ -1900,7 +1900,7 @@ namespace nirfsa_grpc {
             if (shrunk_size != current_size) {
               response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_number_of_coefficient_sets(number_of_coefficient_sets);
         }
         return ::grpc::Status::OK;
@@ -2049,7 +2049,7 @@ namespace nirfsa_grpc {
             if (shrunk_size != current_size) {
               response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_number_of_coefficient_sets(number_of_coefficient_sets);
         }
         return ::grpc::Status::OK;

@@ -319,7 +319,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 size_in_bytes = status;
-      
+
         std::string configuration(size_in_bytes, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size_in_bytes)) {
@@ -481,7 +481,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string a_string;
         if (buffer_size > 0) {
             a_string.resize(buffer_size - 1);
@@ -604,7 +604,7 @@ namespace nifake_grpc {
             if (shrunk_size != current_size) {
               response->mutable_array_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_size(actual_size);
         }
         return ::grpc::Status::OK;
@@ -808,7 +808,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 array_size = status;
-      
+
         response->mutable_array_out()->Resize(array_size, 0);
         ViReal64* array_out = response->mutable_array_out()->mutable_data();
         status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
@@ -997,7 +997,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string attribute_value;
         if (buffer_size > 0) {
             attribute_value.resize(buffer_size - 1);
@@ -1802,7 +1802,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 string_size = status;
-      
+
         ViBoolean a_boolean {};
         ViInt32 an_int32 {};
         ViInt64 an_int64 {};

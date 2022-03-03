@@ -1182,7 +1182,7 @@ namespace nidmm_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 size = status;
-      
+
         std::string configuration(size, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size, (ViInt8*)configuration.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -1494,7 +1494,7 @@ namespace nidmm_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string attribute_value;
         if (buffer_size > 0) {
             attribute_value.resize(buffer_size - 1);
@@ -1606,7 +1606,7 @@ namespace nidmm_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string channel_string;
         if (buffer_size > 0) {
             channel_string.resize(buffer_size - 1);
@@ -1671,7 +1671,7 @@ namespace nidmm_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         ViStatus error_code {};
         std::string description;
         if (buffer_size > 0) {
@@ -1715,7 +1715,7 @@ namespace nidmm_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string error_message;
         if (buffer_size > 0) {
             error_message.resize(buffer_size - 1);
@@ -1841,7 +1841,7 @@ namespace nidmm_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string coercion_record;
         if (buffer_size > 0) {
             coercion_record.resize(buffer_size - 1);
@@ -1882,7 +1882,7 @@ namespace nidmm_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string interchange_warning;
         if (buffer_size > 0) {
             interchange_warning.resize(buffer_size - 1);
