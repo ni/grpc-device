@@ -1,3 +1,5 @@
+"""Helpers for mako templates."""
+
 from importlib import import_module
 from pathlib import Path
 from typing import Union
@@ -7,6 +9,7 @@ from mako.template import Template  # type: ignore
 
 
 def instantiate_mako_template(template_file_name: str) -> Template:
+    """Instantiate the mako template in the given file."""
     current_dir = Path(__file__).parent
     template_directory = current_dir / "templates"
     template_file_path = template_directory / template_file_name
@@ -26,6 +29,7 @@ def write_if_changed(output_file_path: Union[Path, str], new_contents: str) -> N
 
 
 def load_metadata(metadata_dir: Union[Path, str]) -> dict:
+    """Load the metadata from the given directory."""
     metadata_path = Path(metadata_dir)
     module = import_module("metadata." + metadata_path.name)
 

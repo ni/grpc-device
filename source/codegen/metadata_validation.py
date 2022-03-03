@@ -1,3 +1,5 @@
+"""Metadata validation."""
+
 from typing import Any, Dict, List, Set
 
 import common_helpers
@@ -5,32 +7,17 @@ import service_helpers
 from schema import And, Optional, Or, Schema, Use  # type: ignore
 
 
-# Rules that can be suppressed
 class RULES:
+    """Rules that can be suppressed."""
+
     # In general, arrays should have sizes passed in to the underlying C API.
     ARRAY_PARAMETER_NEEDS_SIZE = "ARRAY_PARAMETER_NEEDS_SIZE"
-    # The gRPC layer can determine the size of input arrays, so we should not require
-    # callers to pass in the size. We should not add any new suppressions of this type.
+    # The gRPC layer can determine the size of input arrays, so we should not require callers to
+    # pass in the size. We should not add any new suppressions of this type.
     INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE = "INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE"
-    # In general, enums shouldn't have duplicate values. This is helpful for catching typos
-    # although there are a few enums that have legitimate duplicates.
+    # In general, enums shouldn't have duplicate values. This is helpful for catching typos although
+    # there are a few enums that have legitimate duplicates.
     ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES = "ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES"
-
-
-def validate_metadata(metadata: dict):
-    try:
-        for function_name in metadata["functions"]:
-            validate_function(function_name, metadata)
-        for attribute_group in common_helpers.get_attribute_groups(metadata):
-            for attribute_id in attribute_group.attributes:
-                validate_attribute(attribute_group.attributes[attribute_id], metadata)
-        function_enums = get_function_enums(metadata["functions"])
-        attribute_enums = get_attribute_enums(metadata)
-        used_enums = function_enums.union(attribute_enums)
-        for enum_name in metadata["enums"]:
-            validate_enum(enum_name, used_enums, metadata)
-    except Exception as e:
-        raise Exception(f"Failed to validate {metadata['config']['namespace_component']}") from e
 
 
 DOCUMENTATION_SCHEMA = Schema(
@@ -92,7 +79,6 @@ PARAM_SCHEMA = Schema(
     }
 )
 
-
 FUNCTION_SCHEMA = Schema(
     {
         "parameters": [PARAM_SCHEMA],
@@ -115,7 +101,6 @@ FUNCTION_SCHEMA = Schema(
         Optional("status_expression"): str,
     }
 )
-
 
 ATTRIBUTE_SCHEMA = Schema(
     {
@@ -160,7 +145,24 @@ ENUM_SCHEMA = Schema(
 )
 
 
-def rule_is_suppressed(metadata: dict, rule: str, path: List[str]) -> bool:
+def validate_metadata(metadata: dict):
+    """Validate the given metadata."""
+    try:
+        for function_name in metadata["functions"]:
+            _validate_function(function_name, metadata)
+        for attribute_group in common_helpers.get_attribute_groups(metadata):
+            for attribute_id in attribute_group.attributes:
+                _validate_attribute(attribute_group.attributes[attribute_id], metadata)
+        function_enums = _get_function_enums(metadata["functions"])
+        attribute_enums = _get_attribute_enums(metadata)
+        used_enums = function_enums.union(attribute_enums)
+        for enum_name in metadata["enums"]:
+            _validate_enum(enum_name, used_enums, metadata)
+    except Exception as e:
+        raise Exception(f"Failed to validate {metadata['config']['namespace_component']}") from e
+
+
+def _rule_is_suppressed(metadata: dict, rule: str, path: List[str]) -> bool:
     suppression_dict_name = path[0] + "_validation_suppressions"
     suppression_dict = metadata.get(suppression_dict_name, {})
     for entry in path[1:-1]:
@@ -171,11 +173,11 @@ def rule_is_suppressed(metadata: dict, rule: str, path: List[str]) -> bool:
     return rule in suppression_dict[last_entry]
 
 
-def parameter_name_exists(function: dict, name: str) -> bool:
+def _parameter_name_exists(function: dict, name: str) -> bool:
     return any([param for param in function["parameters"] if param["name"] == name])
 
 
-def validate_function(function_name: str, metadata: dict):
+def _validate_function(function_name: str, metadata: dict):
     try:
         function: Dict[str, Any] = metadata["functions"][function_name]
         ivi_dance_with_a_twist_params = []
@@ -190,7 +192,7 @@ def validate_function(function_name: str, metadata: dict):
             )
             is_init_method = function.get("init_method", False)
             for parameter in function["parameters"]:
-                validate_parameter_size(parameter, function_name, metadata)
+                _validate_parameter_size(parameter, function_name, metadata)
                 if "type" not in parameter:
                     if "grpc_type" not in parameter:
                         raise Exception(f"parameter {parameter['name']} has no type or grpc_type!")
@@ -217,7 +219,8 @@ def validate_function(function_name: str, metadata: dict):
                                 f"Failed to validate callback_param with name {callback_param['name']}"
                             )
                 if parameter.get("pointer", False):
-                    # This is technically legal in other cdses but we should only need it for hardcoded values/callback tokens
+                    # This is technically legal in other cdses but we should only need it for
+                    # hardcoded values/callback tokens
                     if "hardcoded_value" not in parameter and "callback_token" not in parameter:
                         raise Exception(
                             f"parameter {parameter['name']} is pointer but not hardcoded_value or callback_token!"
@@ -232,8 +235,8 @@ def validate_function(function_name: str, metadata: dict):
                             f"parameter {parameter['name']} has hardcoded_value but is include_in_proto!"
                         )
                 if "cross_driver_session" in parameter:
-                    # Assumption: there's no code that automatically sets the grpc_type for cross_driver_sessions and nidevice_grpc.Session
-                    # is the only type that works.
+                    # Assumption: there's no code that automatically sets the grpc_type for
+                    # cross_driver_sessions and nidevice_grpc.Session is the only type that works.
                     if parameter.get("grpc_type", None) not in [
                         "nidevice_grpc.Session",
                         "repeated nidevice_grpc.Session",
@@ -241,8 +244,9 @@ def validate_function(function_name: str, metadata: dict):
                         raise Exception(
                             f"parameter {parameter['name']} is a cross_driver_session but does not have a grpc_type of nidevice_grpc.Session!"
                         )
-                    # Assumption: a method that creates a session (via accessing a cross-driver session) must be an init_method to ensure
-                    # that the session is tracked in the session repository.
+                    # Assumption: a method that creates a session (via accessing a cross-driver
+                    # session) must be an init_method to ensure that the session is tracked in the
+                    # session repository.
                     if parameter["direction"] == "out" and not function.get("init_method"):
                         raise Exception(
                             f"parameter {parameter['name']} is a cross_driver_session output but {function_name} is not an init_method!"
@@ -264,7 +268,7 @@ def validate_function(function_name: str, metadata: dict):
         raise Exception(f"Failed to validate function {function_name}") from e
 
 
-def validate_attribute(attribute: dict, metadata: dict):
+def _validate_attribute(attribute: dict, metadata: dict):
     try:
         if metadata["config"]["module_name"] == "nisync":
             # The attributes for nisync only have a name
@@ -283,7 +287,7 @@ def validate_attribute(attribute: dict, metadata: dict):
         ) from e
 
 
-def validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
+def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
     try:
         enum: Dict[str, Any] = metadata["enums"][enum_name]
         ENUM_SCHEMA.validate(enum)
@@ -299,7 +303,7 @@ def validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
             values = [value["value"] for value in enum["values"]]
             values_set = set(values)
             if len(values) != len(values_set):
-                if not rule_is_suppressed(
+                if not _rule_is_suppressed(
                     metadata, RULES.ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES, ["enums", enum_name]
                 ):
                     raise Exception(f"Duplicate values in enum!")
@@ -307,14 +311,14 @@ def validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
         raise Exception(f"Failed to validate enum with name {enum_name}") from e
 
 
-def validate_parameter_size(parameter: dict, function_name: str, metadata: dict):
+def _validate_parameter_size(parameter: dict, function_name: str, metadata: dict):
     function: Dict[str, Any] = metadata["functions"][function_name]
     size = parameter.get("size", None)
     if size is None:
-        if common_helpers.is_array(parameter.get("type", "")) and not is_string_type(
+        if common_helpers.is_array(parameter.get("type", "")) and not _is_string_type(
             parameter, metadata
         ):
-            if not rule_is_suppressed(
+            if not _rule_is_suppressed(
                 metadata,
                 RULES.ARRAY_PARAMETER_NEEDS_SIZE,
                 ["functions", function_name, "parameters", parameter["name"]],
@@ -331,7 +335,7 @@ def validate_parameter_size(parameter: dict, function_name: str, metadata: dict)
             "passed-in-by-ptr",
             "two-dimension",
         ]:
-            if not parameter_name_exists(function, size["value"]):
+            if not _parameter_name_exists(function, size["value"]):
                 raise Exception(
                     f"parameter {parameter['name']} refers to nonexistant parameter {size['value']} in its size value!"
                 )
@@ -348,7 +352,7 @@ def validate_parameter_size(parameter: dict, function_name: str, metadata: dict)
                 raise Exception(
                     f"parameter {parameter['name']} doesn't have value_twist in its size parameter!"
                 )
-            if not parameter_name_exists(function, size["value_twist"]):
+            if not _parameter_name_exists(function, size["value_twist"]):
                 raise Exception(
                     f"parameter {parameter['name']} refers to nonexistant parameter {size['value_twist']} in its size value_twist!"
                 )
@@ -359,7 +363,7 @@ def validate_parameter_size(parameter: dict, function_name: str, metadata: dict)
                 )
         if parameter["direction"] == "in":
             if mechanism == "passed-in" or mechanism == "passed-in-by-ptr":
-                if not rule_is_suppressed(
+                if not _rule_is_suppressed(
                     metadata,
                     RULES.INPUT_ARRAY_SHOULD_NOT_HAVE_PASSED_IN_SIZE,
                     ["functions", function_name, "parameters", parameter["name"]],
@@ -378,7 +382,7 @@ def validate_parameter_size(parameter: dict, function_name: str, metadata: dict)
                 )
 
 
-def get_function_enums(functions_metadata: dict) -> Set[str]:
+def _get_function_enums(functions_metadata: dict) -> Set[str]:
     function_enums = set()
     for function_name in functions_metadata:
         function = functions_metadata[function_name]
@@ -388,7 +392,7 @@ def get_function_enums(functions_metadata: dict) -> Set[str]:
     return function_enums
 
 
-def get_attribute_enums(metadata: dict) -> Set[str]:
+def _get_attribute_enums(metadata: dict) -> Set[str]:
     attribute_enums = set()
     for attribute_group in common_helpers.get_attribute_groups(metadata):
         for attribute_id in attribute_group.attributes:
@@ -398,7 +402,7 @@ def get_attribute_enums(metadata: dict) -> Set[str]:
     return attribute_enums
 
 
-def is_string_type(parameter: dict, metadata: dict) -> bool:
+def _is_string_type(parameter: dict, metadata: dict) -> bool:
     if parameter.get("is_compound_type", False):
         return False
     grpc_type = parameter.get("grpc_type", None)
