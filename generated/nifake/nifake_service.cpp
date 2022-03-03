@@ -518,7 +518,7 @@ namespace nifake_grpc {
       auto total_length = std::accumulate(request->array_lengths().cbegin(), request->array_lengths().cend(), 0);
 
       if (total_length != request->array_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array array does not match the exected size from the sum of array_lengths");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array array does not match the expected size from the sum of array_lengths");
       }
 
       auto array_lengths = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->array_lengths().data()));
