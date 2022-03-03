@@ -128,6 +128,52 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto fd_grpc_session = request->fd();
+      nxSOCKET fd = session_repository_->access_session(fd_grpc_session.id(), fd_grpc_session.name());
+      auto set = convert_from_grpc<nxfd_set>(request->set(), session_repository_);
+      auto is_set = library_->IsSet(fd, set);
+      auto status = 0;
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_is_set(is_set);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::Select(::grpc::ServerContext* context, const SelectRequest* request, SelectResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto nfds = 0;
+      auto read_fds = convert_from_grpc<nxfd_set>(request->read_fds(), session_repository_);
+      auto write_fds = convert_from_grpc<nxfd_set>(request->write_fds(), session_repository_);
+      auto except_fds = convert_from_grpc<nxfd_set>(request->except_fds(), session_repository_);
+      auto timeout = convert_from_grpc<nxtimeval>(request->timeout());
+      auto status = library_->Select(nfds, read_fds, write_fds, except_fds, timeout);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::Socket(::grpc::ServerContext* context, const SocketRequest* request, SocketResponse* response)
   {
     if (context->IsCancelled()) {

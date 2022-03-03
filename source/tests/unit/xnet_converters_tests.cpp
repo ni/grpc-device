@@ -112,6 +112,126 @@ TEST(XnetConvertersTests, UnsetGrpcSockAddr_ConvertFromGrpc_CreatesEmptySockAddr
   EXPECT_EQ(0, converted_addr.size());
   EXPECT_EQ(nxAF_UNSPEC, addr_ptr->sa_family);
 }
+
+using ResourceRepositorySharedPtr = ResourceRepositorySharedPtr_;
+struct ResourceRepositoryHolder {
+  ResourceRepositoryHolder()
+      : session_repository(std::make_unique<nidevice_grpc::SessionRepository>()),
+        resource_repository(std::make_shared<nidevice_grpc::SessionResourceRepository<nxSOCKET>>(session_repository.get()))
+  {
+  }
+  operator ResourceRepositorySharedPtr()
+  {
+    return resource_repository;
+  }
+  std::unique_ptr<nidevice_grpc::SessionRepository> session_repository;
+  ResourceRepositorySharedPtr resource_repository;
+};
+
+ResourceRepositoryHolder create_resource_repository(std::unordered_map<std::string, nxSOCKET> socket_sessions)
+{
+  auto repository = ResourceRepositoryHolder{};
+  for (const auto pair : socket_sessions) {
+    uint32_t session_id;
+    repository.resource_repository->add_session(
+        pair.first, [pair]() { return std::tuple(0, pair.second); }, nullptr, session_id);
+  }
+
+  return repository;
+}
+
+nidevice_grpc::Session create_session(std::string name)
+{
+  auto session = nidevice_grpc::Session{};
+  session.set_name(name);
+  return session;
+}
+
+TEST(XnetConvertersTests, EmptyListOfSockets_ConvertFromGrpc_CreatesZeroedOutSocketSet)
+{
+  auto resource_repository = create_resource_repository({});
+  auto grpc_socket_list = pb::RepeatedPtrField<nidevice_grpc::Session>{};
+
+  auto converted_set = convert_from_grpc<nxfd_set>(grpc_socket_list, resource_repository);
+  auto set_ptr = static_cast<nxfd_set*>(converted_set);
+
+  EXPECT_EQ(0, set_ptr->fd_count);
+}
+
+TEST(XnetConvertersTests, ListOfTwoSockets_ConvertFromGrpc_CreateSocketSetWithBothSockets)
+{
+  constexpr auto SESSION_NAME_1 = "one";
+  constexpr auto SESSION_NAME_2 = "two";
+  constexpr auto SOCKET_1 = 1001;
+  constexpr auto SOCKET_2 = 2002;
+  auto resource_repository = create_resource_repository({{SESSION_NAME_1, SOCKET_1}, {SESSION_NAME_2, SOCKET_2}});
+  auto grpc_socket_list = pb::RepeatedPtrField<nidevice_grpc::Session>{};
+  grpc_socket_list.Add(create_session(SESSION_NAME_1));
+  grpc_socket_list.Add(create_session(SESSION_NAME_2));
+
+  auto converted_set = convert_from_grpc<nxfd_set>(grpc_socket_list, resource_repository);
+  auto set_ptr = static_cast<nxfd_set*>(converted_set);
+
+  EXPECT_EQ(2, set_ptr->fd_count);
+  EXPECT_EQ(SOCKET_1, set_ptr->fd_array[0]);
+  EXPECT_EQ(SOCKET_2, set_ptr->fd_array[1]);
+}
+
+TEST(XnetConvertersTests, ListWithSocketNotInRepository_ConvertFromGrpc_CreatesListWithOneZeroValuedSocket)
+{
+  constexpr auto SESSION_NAME = "test";
+  auto resource_repository = create_resource_repository({});
+  auto grpc_socket_list = pb::RepeatedPtrField<nidevice_grpc::Session>{};
+  grpc_socket_list.Add(create_session(SESSION_NAME));
+
+  auto converted_set = convert_from_grpc<nxfd_set>(grpc_socket_list, resource_repository);
+  auto set_ptr = static_cast<nxfd_set*>(converted_set);
+
+  EXPECT_EQ(1, set_ptr->fd_count);
+  EXPECT_EQ(0, set_ptr->fd_array[0]);
+}
+
+TEST(XnetConvertersTests, EmptyDuration_ConvertFromGrpc_CreatesEmptyTimeVal)
+{
+  const auto duration = pb::Duration{};
+
+  auto converted_timeval = convert_from_grpc<nxtimeval>(duration);
+  auto timeval_ptr = static_cast<nxtimeval*>(converted_timeval);
+
+  EXPECT_EQ(0, timeval_ptr->tv_sec);
+  EXPECT_EQ(0, timeval_ptr->tv_usec);
+}
+
+TEST(XnetConvertersTests, Duration_ConvertFromGrpc_CreatesCorrespondingTimeVal)
+{
+  constexpr auto SECONDS = 100;
+  constexpr auto MICROS = 500;
+  auto duration = pb::Duration{};
+  duration.set_seconds(SECONDS);
+  duration.set_nanos(MICROS * 1000);
+
+  auto converted_timeval = convert_from_grpc<nxtimeval>(duration);
+  auto timeval_ptr = static_cast<nxtimeval*>(converted_timeval);
+
+  EXPECT_EQ(SECONDS, timeval_ptr->tv_sec);
+  EXPECT_EQ(MICROS, timeval_ptr->tv_usec);
+}
+
+TEST(XnetConvertersTests, DurationWithSubMicroSecondResolution_ConvertFromGrpc_CreatesCorrespondingTimeValWithFlooredValue)
+{
+  constexpr auto SECONDS = 100;
+  constexpr auto NANOS = 5555;
+  constexpr auto MICROS = 5;
+  auto duration = pb::Duration{};
+  duration.set_seconds(SECONDS);
+  duration.set_nanos(NANOS);
+
+  auto converted_timeval = convert_from_grpc<nxtimeval>(duration);
+  auto timeval_ptr = static_cast<nxtimeval*>(converted_timeval);
+
+  EXPECT_EQ(SECONDS, timeval_ptr->tv_sec);
+  EXPECT_EQ(MICROS, timeval_ptr->tv_usec);
+}
 }  // namespace
 }  // namespace unit
 }  // namespace tests

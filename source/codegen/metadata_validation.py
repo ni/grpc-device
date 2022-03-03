@@ -78,6 +78,7 @@ PARAM_SCHEMA = Schema(
         Optional("return_value"): bool,
         Optional("supports_standard_copy_convert"): bool,
         Optional("get_last_error"): bool,
+        Optional("additional_arguments_to_copy_convert"): [str],
     }
 )
 
@@ -85,7 +86,7 @@ FUNCTION_SCHEMA = Schema(
     {
         "parameters": [PARAM_SCHEMA],
         "returns": str,
-        Optional("cname"): str,
+        Optional("cname"): Or(str, bool),
         Optional("codegen_method"): And(
             str, lambda s: s in ("public", "private", "CustomCode", "no", "python-only")
         ),

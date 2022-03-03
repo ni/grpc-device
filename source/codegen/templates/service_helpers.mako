@@ -540,6 +540,8 @@ ${initialize_standard_input_param(function_name, parameter)}
       auto ${parameter_name} = ${request_snippet}.c_str();\
 % elif common_helpers.is_string_arg(parameter):
       ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
+% elif common_helpers.supports_standard_copy_conversion_routines(parameter):
+      auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${str.join(", ", [request_snippet] + parameter.get("additional_arguments_to_copy_convert", []))});\
 % elif grpc_type == 'repeated nidevice_grpc.Session':
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
@@ -564,8 +566,6 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
         [](auto x) { return (${c_type_underlying_type})x; }); \
- % elif common_helpers.supports_standard_copy_conversion_routines(parameter):
-      auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${request_snippet});\
 % elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
 % elif grpc_type == 'nidevice_grpc.Session':

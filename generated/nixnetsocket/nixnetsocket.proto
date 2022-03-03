@@ -14,12 +14,15 @@ option csharp_namespace = "NationalInstruments.Grpc.NiXnetSocket";
 package nixnetsocket_grpc;
 
 import "session.proto";
+import "google/protobuf/duration.proto";
 
 service NiXnetSocket {
   rpc Bind(BindRequest) returns (BindResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
   rpc GetLastErrorStr(GetLastErrorStrRequest) returns (GetLastErrorStrResponse);
+  rpc IsSet(IsSetRequest) returns (IsSetResponse);
+  rpc Select(SelectRequest) returns (SelectResponse);
   rpc Socket(SocketRequest) returns (SocketResponse);
 }
 
@@ -77,6 +80,27 @@ message GetLastErrorStrRequest {
 message GetLastErrorStrResponse {
   int32 status = 1;
   string error = 2;
+}
+
+message IsSetRequest {
+  nidevice_grpc.Session fd = 1;
+  repeated nidevice_grpc.Session set = 2;
+}
+
+message IsSetResponse {
+  int32 status = 1;
+  int32 is_set = 2;
+}
+
+message SelectRequest {
+  repeated nidevice_grpc.Session read_fds = 1;
+  repeated nidevice_grpc.Session write_fds = 2;
+  repeated nidevice_grpc.Session except_fds = 3;
+  google.protobuf.Duration timeout = 4;
+}
+
+message SelectResponse {
+  int32 status = 1;
 }
 
 message SocketRequest {
