@@ -33,19 +33,19 @@ import grpc
 import nidaqmx_pb2 as nidaqmx_types
 import nidaqmx_pb2_grpc as grpc_nidaqmx
 
-server_address = "localhost"
-server_port = "31763"
-counter_name = "Dev1/ctr0"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+COUNTER_NAME = "Dev1/ctr0"
 
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    counter_name = sys.argv[3]
+    COUNTER_NAME = sys.argv[3]
 
 # Create a gRPC channel + client.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nidaqmx.NiDAQmxStub(channel)
 task = None
 
@@ -68,7 +68,7 @@ try:
         client.CreateCIFreqChan(
             nidaqmx_types.CreateCIFreqChanRequest(
                 task=task,
-                counter=counter_name,
+                counter=COUNTER_NAME,
                 min_val=1.192093,
                 max_val=10000000,
                 units=nidaqmx_types.FREQUENCY_UNITS3_HZ,
@@ -90,7 +90,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
