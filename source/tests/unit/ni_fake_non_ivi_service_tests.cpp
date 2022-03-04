@@ -1688,6 +1688,44 @@ TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValueReturnsNull_ReturnsErro
   EXPECT_EQ(FAILED_GET, response.status());
 }
 
+TEST_F(NiFakeNonIviServiceTests, InitWithError_CallsGetLatestErrorAndReturnsMessage)
+{
+  constexpr auto SOME_ERROR = -1;
+  const auto ERROR_MESSAGE = std::string("Some error occurred!");
+  const auto ERROR_MESSAGE_BUFFER_SIZE = static_cast<int32>(ERROR_MESSAGE.size() + 1);
+  EXPECT_CALL(library_, Init(_, _))
+      .WillOnce(Return(SOME_ERROR));
+  EXPECT_CALL(library_, GetLatestErrorMessage(nullptr, 0))
+      .WillOnce(Return(ERROR_MESSAGE_BUFFER_SIZE));
+  EXPECT_CALL(library_, GetLatestErrorMessage(_, ERROR_MESSAGE_BUFFER_SIZE))
+      .WillOnce(
+          DoAll(
+              SetArrayArgument<0>(ERROR_MESSAGE.c_str(), ERROR_MESSAGE.c_str() + ERROR_MESSAGE_BUFFER_SIZE),
+              Return(0)));
+  ::grpc::ServerContext context;
+  InitRequest request;
+  InitResponse response;
+  service_.Init(&context, &request, &response);
+
+  EXPECT_EQ(ERROR_MESSAGE, response.error_message());
+  EXPECT_EQ(SOME_ERROR, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, InitWithNoError_DoesNotCallGetLatestError)
+{
+  EXPECT_CALL(library_, Init(_, _))
+      .WillOnce(Return(kDriverSuccess));
+  EXPECT_CALL(library_, GetLatestErrorMessage(_, _))
+      .Times(0);
+  ::grpc::ServerContext context;
+  InitRequest request;
+  InitResponse response;
+  service_.Init(&context, &request, &response);
+
+  EXPECT_THAT(response.error_message(), IsEmpty());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

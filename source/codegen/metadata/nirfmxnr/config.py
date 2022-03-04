@@ -9,7 +9,7 @@ config = {
     'namespace_component': 'nirfmxnr',
     'close_function': 'Close',
     'custom_types': [],
-    'additional_headers': {},
+    'additional_headers': {'custom/nirfmx_errors.h': ['service.cpp']},
     'type_to_grpc_type': {
         "char[]": "string",
         "float32": "float",
@@ -60,3 +60,4 @@ config = {
     'session_class_description': 'An NI-RFmxNR instrument handle',
     'duplicate_resource_handles_allowed': True
 }
+
