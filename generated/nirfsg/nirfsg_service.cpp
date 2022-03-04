@@ -1736,7 +1736,7 @@ namespace nirfsg_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buf_size = status;
-      
+
         std::string value;
         if (buf_size > 0) {
             value.resize(buf_size - 1);
@@ -1778,7 +1778,7 @@ namespace nirfsg_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string name;
         if (buffer_size > 0) {
             name.resize(buffer_size - 1);
@@ -1865,7 +1865,7 @@ namespace nirfsg_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 error_description_buffer_size = status;
-      
+
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
@@ -2065,7 +2065,7 @@ namespace nirfsg_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string terminal_name;
         if (buffer_size > 0) {
             terminal_name.resize(buffer_size - 1);

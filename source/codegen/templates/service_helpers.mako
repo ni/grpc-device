@@ -98,7 +98,7 @@ ${call_library_method(
           return ::grpc::Status::OK;
         }
         ${size_param['type']} ${common_helpers.get_cpp_local_name(size_param)} = status;
-      
+
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(output_parameters)}\
 </%block>\
@@ -861,7 +861,7 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
           ${source_buffer}.begin(),
           ${source_buffer}.begin() + ${size},
           google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
-          [&](auto x) { 
+          [&](auto x) {
               return ${transform_x};
           });
 </%def>

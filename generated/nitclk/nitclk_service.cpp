@@ -161,7 +161,7 @@ namespace nitclk_grpc {
           return ::grpc::Status::OK;
         }
         ViUInt32 error_string_size = status;
-      
+
         std::string error_string;
         if (error_string_size > 0) {
             error_string.resize(error_string_size - 1);

@@ -1093,7 +1093,7 @@ namespace nisync_grpc {
           return ::grpc::Status::OK;
         }
         ViUInt32 buffer_size = status;
-      
+
         std::string time_reference_names;
         if (buffer_size > 0) {
             time_reference_names.resize(buffer_size - 1);
@@ -1211,7 +1211,7 @@ namespace nisync_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string value;
         if (buffer_size > 0) {
             value.resize(buffer_size - 1);

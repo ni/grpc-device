@@ -1342,7 +1342,7 @@ namespace niscope_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 size_in_bytes = status;
-      
+
         std::string configuration(size_in_bytes, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size_in_bytes)) {
@@ -1564,7 +1564,7 @@ namespace niscope_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buf_size = status;
-      
+
         std::string value;
         if (buf_size > 0) {
             value.resize(buf_size - 1);
@@ -1606,7 +1606,7 @@ namespace niscope_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string channel_string;
         if (buffer_size > 0) {
             channel_string.resize(buffer_size - 1);
@@ -1648,7 +1648,7 @@ namespace niscope_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string name;
         if (buffer_size > 0) {
             name.resize(buffer_size - 1);
@@ -1714,7 +1714,7 @@ namespace niscope_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         ViStatus error_code {};
         std::string description;
         if (buffer_size > 0) {
@@ -1758,7 +1758,7 @@ namespace niscope_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string error_message;
         if (buffer_size > 0) {
             error_message.resize(buffer_size - 1);

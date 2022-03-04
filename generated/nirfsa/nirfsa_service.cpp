@@ -1499,7 +1499,7 @@ namespace nirfsa_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buf_size = status;
-      
+
         std::string value;
         if (buf_size > 0) {
             value.resize(buf_size - 1);
@@ -1694,7 +1694,7 @@ namespace nirfsa_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 error_description_buffer_size = status;
-      
+
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
