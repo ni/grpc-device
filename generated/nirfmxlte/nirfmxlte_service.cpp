@@ -3845,7 +3845,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3891,7 +3891,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4586,7 +4586,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_csrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4932,7 +4932,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pbch_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4978,7 +4978,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pcfich_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5024,7 +5024,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pdcch_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5070,7 +5070,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_phich_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5820,7 +5820,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_data_constellation_actual_array_size(data_constellation_actual_array_size);
           convert_to_grpc(dmrs_constellation, response->mutable_dmrs_constellation());
           {
@@ -5829,7 +5829,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5956,7 +5956,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qam1024_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6067,7 +6067,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qam16_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6113,7 +6113,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qam256_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6159,7 +6159,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qam64_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6290,7 +6290,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qpsk_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6339,7 +6339,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_data_constellation_actual_array_size(data_constellation_actual_array_size);
           convert_to_grpc(dmrs_constellation, response->mutable_dmrs_constellation());
           {
@@ -6348,7 +6348,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6607,7 +6607,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_data_constellation_actual_array_size(data_constellation_actual_array_size);
           convert_to_grpc(dmrs_constellation, response->mutable_dmrs_constellation());
           {
@@ -6616,7 +6616,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -7008,7 +7008,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_srs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -7355,7 +7355,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_sss_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           convert_to_grpc(pss_constellation, response->mutable_pss_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -7363,7 +7363,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pss_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;

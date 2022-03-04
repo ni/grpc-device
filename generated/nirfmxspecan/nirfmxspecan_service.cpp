@@ -1978,7 +1978,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_processed_mean_acquired_waveform()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -2028,7 +2028,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_processed_reference_waveform()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4100,7 +4100,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_waveform_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
           response->set_papr(papr);
           response->set_power_offset(power_offset);
@@ -4172,7 +4172,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_waveform_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
           response->set_papr(papr);
         }
@@ -4972,7 +4972,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_dpd_polynomial()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5021,7 +5021,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_complex_gains()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5096,7 +5096,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_processed_mean_acquired_waveform()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5146,7 +5146,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_processed_reference_waveform()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6054,7 +6054,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6100,7 +6100,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -7655,7 +7655,7 @@ namespace nirfmxspecan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_data()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;

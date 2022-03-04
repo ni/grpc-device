@@ -604,7 +604,7 @@ namespace nifake_grpc {
             if (shrunk_size != current_size) {
               response->mutable_array_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_size(actual_size);
         }
         return ::grpc::Status::OK;

@@ -390,7 +390,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 
 
 ## Initialize an enum array input parameter.
-## This is a straight copy and does not support all of the features of enum parameters 
+## This is a straight copy and does not support all of the features of enum parameters
 ## (i.e. mapped enums, _raw fields, etc.)
 <%def name="initialize_enum_array_input_param(function_name, parameter)">\
 <%
@@ -441,7 +441,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 %   else:
           ${parameter_name} = static_cast<${parameter['type']}>(${enum_request_snippet});
 %   endif
-%   if validate_attribute_enum: 
+%   if validate_attribute_enum:
 ## "raw" attributes always validate non-raw enum values before passing to driver
 ## this can be important if (a) the driver can't handle all validation scenarios
 ## and (b) the caller passes/casts an invalid enum value.
@@ -489,7 +489,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   size_sources = common_helpers.get_grpc_field_names_for_param_names(
-    parameters, 
+    parameters,
     parameter["determine_size_from"]
   )
   size_field_name = common_helpers.get_grpc_field_name_from_str(size_sources[-1])
@@ -840,7 +840,7 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
           if (shrunk_size != current_size) {
             response->mutable_${parameter_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
           }
-        }        
+        }
 %     else:
 ## This code doesn't handle all parameter types (i.e., enums), see what initialize_output_params() does for that.
         response->mutable_${parameter_name}()->Resize(${size}, 0);

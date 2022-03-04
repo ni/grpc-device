@@ -1835,7 +1835,7 @@ namespace nirfsg_grpc {
             if (shrunk_size != current_size) {
               response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_number_of_sparameters(number_of_sparameters);
           response->set_number_of_ports(number_of_ports);
         }

@@ -1413,7 +1413,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -2224,7 +2224,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -2270,7 +2270,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3708,7 +3708,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4694,7 +4694,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pilot_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5712,7 +5712,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_user_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5758,7 +5758,7 @@ namespace nirfmxwlan_grpc {
             if (shrunk_size != current_size) {
               response->mutable_user_pilot_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
