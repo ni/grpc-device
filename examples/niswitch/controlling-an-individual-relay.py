@@ -33,31 +33,31 @@ import grpc
 import niswitch_pb2 as niswitch_types
 import niswitch_pb2_grpc as grpc_niswitch
 
-server_address = "localhost"
-server_port = "31763"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
 
 # Resource name, topology string and relay name for a simulated 2529 module. Refer to NI-SWITCH help
 # to find valid values for the device being used.
-# If you are using real hardware device, use the appropriate resource name and set the simulation
-# parameter to false.
-resource = ""
-topology_string = "2571/66-SPDT"
-relay_name = "k15"
-simulation = True
+# If you are using real hardware device, use the appropriate resource name and set the SIMULATION
+# variable to False.
+RESOURCE = ""
+TOPOLOGY_STRING = "2571/66-SPDT"
+RELAY_NAME = "k15"
+SIMULATION = True
 
 # Set the maximimum time to wait for debounce.
-max_time = 1000
-session_name = "NI-Switch-Session-1"
+MAX_DEBOUNCE_TIME = 1000
+SESSION_NAME = "NI-Switch-Session-1"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 
 # Create the communcation channel for the remote host and create a connection to the NI-SWITCH
 # service.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 niswitch_client = grpc_niswitch.NiSwitchStub(channel)
 
 
@@ -74,16 +74,16 @@ try:
     # Open session to NI-SWITCH and set topology.
     init_with_topology_response = niswitch_client.InitWithTopology(
         niswitch_types.InitWithTopologyRequest(
-            session_name=session_name,
-            resource_name=resource,
-            topology=topology_string,
-            simulate=simulation,
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            topology=TOPOLOGY_STRING,
+            simulate=SIMULATION,
             reset_device=False,
         )
     )
     vi = init_with_topology_response.vi
     check_for_error(vi, init_with_topology_response.status)
-    print("Topology set to : ", topology_string)
+    print("Topology set to : ", TOPOLOGY_STRING)
 
     # Close the relay. Use values that are valid for the model being used.
     check_for_error(
@@ -92,7 +92,7 @@ try:
             niswitch_client.RelayControl(
                 niswitch_types.RelayControlRequest(
                     vi=vi,
-                    relay_name=relay_name,
+                    relay_name=RELAY_NAME,
                     relay_action=niswitch_types.RelayAction.RELAY_ACTION_NISWITCH_VAL_CLOSE_RELAY,
                 )
             )
@@ -105,7 +105,7 @@ try:
         vi,
         (
             niswitch_client.WaitForDebounce(
-                niswitch_types.WaitForDebounceRequest(vi=vi, maximum_time_ms=max_time)
+                niswitch_types.WaitForDebounceRequest(vi=vi, maximum_time_ms=MAX_DEBOUNCE_TIME)
             )
         ).status,
     )
@@ -115,7 +115,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

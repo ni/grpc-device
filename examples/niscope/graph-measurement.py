@@ -38,15 +38,24 @@ import matplotlib.pyplot as plt
 import niscope_pb2 as niscope_types
 import niscope_pb2_grpc as grpc_scope
 
-server_address = "localhost"
-server_port = "31763"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE
 # model.
-resource = "SimulatedScope"
-options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
+RESOURCE = "SimulatedScope"
+OPTIONS = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
 
-channels = "0"
+CHANNELS = "0"
+
+# Read in cmd args
+if len(sys.argv) >= 2:
+    SERVER_ADDRESS = sys.argv[1]
+if len(sys.argv) >= 3:
+    SERVER_PORT = sys.argv[2]
+if len(sys.argv) >= 4:
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 
 def check_for_error(vi, status):
@@ -58,25 +67,16 @@ def check_for_error(vi, status):
         raise Exception(error_message_response.error_message)
 
 
-# Read in cmd args
-if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
-if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
-if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
-
 # Create the communication channel for the remote host (in this case we are connecting to a local
 # server) and create a connection to the NI-SCOPE service
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 niscope_client = grpc_scope.NiScopeStub(channel)
 
 try:
     # Initialize the scope
     init_result = niscope_client.InitWithOptions(
         niscope_types.InitWithOptionsRequest(
-            session_name="demo", resource_name=resource, id_query=False, option_string=options
+            session_name="demo", resource_name=RESOURCE, id_query=False, option_string=OPTIONS
         )
     )
     vi = init_result.vi
@@ -86,7 +86,7 @@ try:
     vertical_result = niscope_client.ConfigureVertical(
         niscope_types.ConfigureVerticalRequest(
             vi=vi,
-            channel_list=channels,
+            channel_list=CHANNELS,
             range=10.0,
             offset=0,
             coupling=niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
@@ -122,7 +122,7 @@ try:
     conf_trigger_edge_result = niscope_client.ConfigureTriggerEdge(
         niscope_types.ConfigureTriggerEdgeRequest(
             vi=vi,
-            trigger_source=channels,
+            trigger_source=CHANNELS,
             level=0.00,
             slope=niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
             trigger_coupling=niscope_types.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
@@ -134,7 +134,7 @@ try:
     result = niscope_client.SetAttributeViInt32(
         niscope_types.SetAttributeViInt32Request(
             vi=vi,
-            channel_list=channels,
+            channel_list=CHANNELS,
             attribute_id=niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
             value=niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE,
         )
@@ -155,7 +155,7 @@ try:
             # Read a waveform from the scope
             read_result = niscope_client.Read(
                 niscope_types.ReadRequest(
-                    vi=vi, channel_list=channels, timeout=1, num_samples=10000
+                    vi=vi, channel_list=CHANNELS, timeout=1, num_samples=10000
                 )
             )
             check_for_error(vi, read_result.status)
@@ -171,7 +171,7 @@ try:
             fetch_result = niscope_client.FetchMeasurementStats(
                 niscope_types.FetchMeasurementStatsRequest(
                     vi=vi,
-                    channel_list=channels,
+                    channel_list=CHANNELS,
                     timeout=1,
                     scalar_meas_function=niscope_types.ScalarMeasurement.SCALAR_MEASUREMENT_NISCOPE_VAL_AVERAGE_FREQUENCY,
                 )
@@ -187,7 +187,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
