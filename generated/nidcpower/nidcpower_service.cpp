@@ -769,7 +769,7 @@ namespace nidcpower_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitializeWithIndependentChannels(resource_name, reset, option_string, &vi);
+        auto status = library_->InitializeWithIndependentChannels(resource_name, reset, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -2854,7 +2854,7 @@ namespace nidcpower_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitializeWithChannels(resource_name, channels, reset, option_string, &vi);
+        auto status = library_->InitializeWithChannels(resource_name, channels, reset, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

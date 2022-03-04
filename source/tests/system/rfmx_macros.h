@@ -1,6 +1,9 @@
 #ifndef NIDEVICE_GRPC_TESTS_RFMX_EXPECT_MACROS
 #define NIDEVICE_GRPC_TESTS_RFMX_EXPECT_MACROS
 
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
+
 #define EXPECT_NO_ERROR_MESSAGE(session, response)                                                  \
   if (1) {                                                                                          \
     if ((response).status() != 0) {                                                                 \

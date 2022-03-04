@@ -1,12 +1,7 @@
 name: NI Linux Real-Time Build
 
 on:
-  push:
-    branches:
-      - main
-      - 'releases/**'
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_call:
   workflow_dispatch:
 
 env:
@@ -19,12 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Cancel Build(s)
-      uses: styfle/cancel-workflow-action@0.7.0
-      if: "github.ref != 'refs/heads/main'"
-      with:
-        access_token: ${{ github.token }}
-
     - name: Checkout Repo
       uses: actions/checkout@v2
 
@@ -179,19 +168,3 @@ jobs:
         name: ni-grpc-device-tests-ni-linux-rt-x64
         path: ni-grpc-device-tests-ni-linux-rt-x64.tar.gz
         retention-days: 5
-
-    - name: Trigger Main CI
-      uses: Azure/pipelines@v1
-      if: ${{ github.repository == 'ni/grpc-device' && github.ref == 'refs/heads/main' }}
-      with:
-        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
-        azure-pipeline-name: 'ni-central-grpc-device-main-linux-rt'
-        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-
-    - name: Trigger Release CI
-      uses: Azure/pipelines@v1
-      if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.ref, 'refs/heads/releases') }}
-      with:
-        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
-        azure-pipeline-name: 'ni-central-grpc-device-release-linux-rt'
-        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}

@@ -1,4 +1,7 @@
+"""Helpers for creating .proto files."""
+
 from typing import List
+
 import common_helpers
 
 
@@ -7,8 +10,7 @@ def _is_attribute_values(enum_name):
 
 
 def _should_add_unspecified_enum_value(enum_name, enum_values_metadata):
-    """
-    Returns True if an UNSPECIFIED zero-value enum should be added to enum_values_metadata.
+    """Return whether an UNSPECIFIED zero-value enum should be added to enum_values_metadata.
 
     UNSPECIFIED zero-values are a best practice in protobuf. BUT they're not helpful if there
     is some other zero-value. In that case they introduce an unnecessary alias and don't serve
@@ -21,7 +23,7 @@ def _should_add_unspecified_enum_value(enum_name, enum_values_metadata):
     return _is_attribute_values(enum_name) or 0 not in (v["value"] for v in enum_values_metadata)
 
 
-def should_allow_alias(enum_values_metadata):
+def _should_allow_alias(enum_values_metadata):
     # if enum.get("generate-mappings", False):
     #   return False
     enum_values = [e["value"] for e in enum_values_metadata]
@@ -30,7 +32,9 @@ def should_allow_alias(enum_values_metadata):
 
 def generate_parameter_field_number(parameter, used_indexes, field_name_suffix=""):
     """Get unique field number for field corresponding to this parameter in proto file.
-    If field number is not stored in metadata of parameter, get the next unused integer value."""
+
+    If field number is not stored in metadata of parameter, get the next unused integer value.
+    """
     field_name_key = f"grpc{field_name_suffix}_field_number"
     if field_name_key in parameter:
         field_number = parameter[field_name_key]
@@ -41,7 +45,10 @@ def generate_parameter_field_number(parameter, used_indexes, field_name_suffix="
 
 
 def get_enum_definitions(enums_to_define, enums):
-    """Get simplified definition for enums and values in it that can be used for defining enums in proto file."""
+    """Get a simplified definition for enums and the values in it.
+
+    This is intended to be used for defining enums in the proto file.
+    """
     enum_definitions = {}
     for enum_name in (e for e in enums if e in enums_to_define):
         enum = enums[enum_name]
@@ -65,7 +72,7 @@ def get_enum_definitions(enums_to_define, enums):
             )
             values.insert(0, {"name": unspecified_value_name, "value": 0})
 
-        allow_alias = should_allow_alias(values)
+        allow_alias = _should_allow_alias(values)
         enum_definition = {"allow_alias": allow_alias, "values": values}
 
         enum_definitions.update({enum_name: enum_definition})
@@ -73,26 +80,30 @@ def get_enum_definitions(enums_to_define, enums):
     return enum_definitions
 
 
-def is_array_input(parameter: dict):
+def _is_array_input(parameter: dict):
     return common_helpers.is_array(parameter["type"]) and common_helpers.is_input_parameter(
         parameter
     )
 
 
-def is_decomposable_enum(parameter: dict):
-    """
+def _is_decomposable_enum(parameter: dict):
+    """Return whether the parameter is a decomposable enum.
+
     Enums are typically decomposed from a single param into an enum param and an _raw param.
     The exception is array_inputs which are left as single enum param.
-    This is because protobuf does not support oneof on repeated types, so the standard
-    input decomposition does not work for arrays.
+    This is because protobuf does not support oneof on repeated types, so the standard input
+    decomposition does not work for arrays.
     """
     return common_helpers.is_enum(parameter) and not (
-        is_array_input(parameter) and parameter["grpc_type"] != "string"
+        _is_array_input(parameter) and parameter["grpc_type"] != "string"
     )
 
 
 def get_message_parameter_definitions(parameters):
-    """Get simplified list of all parameters that can be used for defining request/respones messages in proto file."""
+    """Get a simplified list of all parameters.
+
+    This is intended to be used for defining requests/respones messages in proto file.
+    """
     parameter_definitions = []
     used_indexes = []
     for parameter in parameters:
@@ -100,10 +111,10 @@ def get_message_parameter_definitions(parameters):
             common_helpers.is_array(parameter["type"]) and not parameter["grpc_type"] == "string"
         )
         parameter_name = common_helpers.get_grpc_field_name(parameter)
-        parameter_type = get_parameter_type(parameter)
-        if is_decomposable_enum(parameter):
+        parameter_type = _get_parameter_type(parameter)
+        if _is_decomposable_enum(parameter):
             is_request_message = common_helpers.is_input_parameter(parameter)
-            enum_parameters = get_enum_parameters(
+            enum_parameters = _get_enum_parameters(
                 parameter, parameter_name, parameter_type, is_array, used_indexes
             )
             if is_request_message:
@@ -120,7 +131,8 @@ def get_message_parameter_definitions(parameters):
                 parameter_definitions.extend(enum_parameters)
         else:
             if common_helpers.is_enum(parameter):
-                # For input arrays of enums, don't generate a raw type, but do use the correct enum type.
+                # For input arrays of enums, don't generate a raw type, but do use the correct enum
+                # type.
                 parameter_type = f'repeated {parameter["enum"]}'
             grpc_field_number = generate_parameter_field_number(parameter, used_indexes)
             parameter_definitions.append(
@@ -133,7 +145,7 @@ def get_message_parameter_definitions(parameters):
     return parameter_definitions
 
 
-def get_enum_parameters(parameter, parameter_name, parameter_type, is_array, used_indexes):
+def _get_enum_parameters(parameter, parameter_name, parameter_type, is_array, used_indexes):
     """Get list of mapped/unmapped/raw parameters for enums as applicable."""
     enum_parameters = []
     if parameter.get("enum", None):
@@ -182,13 +194,14 @@ def get_enum_parameters(parameter, parameter_name, parameter_type, is_array, use
     return enum_parameters
 
 
-def get_parameter_type(parameter):
+def _get_parameter_type(parameter):
     if "grpc_type" not in parameter:
         raise KeyError(f"grpc_type not in {parameter['name']} with {parameter['type']}")
     return parameter["grpc_type"]
 
 
 def is_session_name(parameter):
+    """Whether the parameter is a session name parameter."""
     return parameter.get("is_session_name", False)
 
 
@@ -209,6 +222,10 @@ def _prepend_proto_only_session_name_parameter_if_necessary(
 
 
 def get_parameters(function):
+    """Filter the parameters to ones we use in gRPC, and split into input/output parameters.
+
+    Add a default "status" output parameter if there isn't one already.
+    """
     parameter_array = common_helpers.filter_parameters_for_grpc_fields(function["parameters"])
     input_parameters = [p for p in parameter_array if common_helpers.is_input_parameter(p)]
     if common_helpers.is_init_method(function):
@@ -217,7 +234,7 @@ def get_parameters(function):
     default_status_param = {"name": "status", "type": "int32", "grpc_type": "int32"}
     output_parameters = [default_status_param]
 
-    callback_parameters = get_callback_output_params(function)
+    callback_parameters = _get_callback_output_params(function)
 
     if callback_parameters:
         if any((p for p in callback_parameters if p["name"] == "status")):
@@ -233,9 +250,9 @@ def get_parameters(function):
     return (input_parameters, output_parameters)
 
 
-def get_callback_output_params(function):
-    """
-    Looks for a parameter that specifies callback_params and returns those params
+def _get_callback_output_params(function):
+    """Look for a parameter that specifies callback_params and return those params.
+
     These will be used as the outputs of a streaming response.
     """
     params = [p for p in function["parameters"] if "callback_params" in p]
@@ -246,4 +263,5 @@ def get_callback_output_params(function):
 
 
 def get_streaming_response_qualifier(function):
+    """Get a qualifier to add to the function's returned response object if it uses streaming."""
     return "stream " if common_helpers.has_streaming_response(function) else ""

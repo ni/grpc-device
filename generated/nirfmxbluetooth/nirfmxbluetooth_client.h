@@ -34,7 +34,7 @@ ACPFetchOffsetMeasurementArrayResponse acp_fetch_offset_measurement_array(const 
 ACPFetchReferenceChannelPowerResponse acp_fetch_reference_channel_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 ACPFetchSpectrumResponse acp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 AbortMeasurementsResponse abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
-AnalyzeIQ1WaveformResponse analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset, const pb::int64& reserved);
+AnalyzeIQ1WaveformResponse analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset);
 AutoDetectSignalResponse auto_detect_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 AutoLevelResponse auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& measurement_interval);
 BuildOffsetStringResponse build_offset_string(const StubPtr& stub, const pb::string& selector_string, const pb::int32& offset_number);

@@ -1622,6 +1622,72 @@ TEST_F(NiFakeNonIviServiceTests, SessionAlreadyInCrossDriverSessionRepository_Ge
 
   EXPECT_EQ(original_session_id, cross_driver_resource_repository_->resolve_session_id(CROSS_DRIVER_HANDLE));
 }
+
+TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSession_AccessSession_ReturnsInitializeSessionHandle)
+{
+  constexpr auto SESSION_NAME = "session";
+  constexpr auto SESSION_HANDLE = 0x1234UL;
+  EXPECT_CALL(library_, InitWithReturnedSession(StrEq(SESSION_NAME)))
+      .WillOnce(Return(SESSION_HANDLE));
+  ::grpc::ServerContext context;
+  InitWithReturnedSessionRequest request;
+  InitWithReturnedSessionResponse response;
+  request.set_handle_name(SESSION_NAME);
+  service_.InitWithReturnedSession(&context, &request, &response);
+
+  const auto accessed_handle = resource_repository_->access_session(response.handle().id(), "");
+
+  EXPECT_EQ(kDriverSuccess, response.status());
+  EXPECT_EQ(SESSION_HANDLE, accessed_handle);
+}
+
+TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSessionFailsInit_AccessSession_SessionIsNotInMapAndStatusValueIsReturned)
+{
+  constexpr auto SESSION_NAME = "session";
+  constexpr auto BAD_SESSION_HANDLE = 0xDEADBEEF;  // Fake non-ivi uses 0xDEADBEEF as failed/null session (See functions.py).
+  constexpr auto FAILED_INIT = -1;
+  EXPECT_CALL(library_, InitWithReturnedSession(StrEq(SESSION_NAME)))
+      .WillOnce(Return(BAD_SESSION_HANDLE));
+  ::grpc::ServerContext context;
+  InitWithReturnedSessionRequest request;
+  InitWithReturnedSessionResponse response;
+  request.set_handle_name(SESSION_NAME);
+  service_.InitWithReturnedSession(&context, &request, &response);
+
+  const auto accessed_handle = resource_repository_->access_session(response.handle().id(), "");
+
+  EXPECT_EQ(FAILED_INIT, response.status());
+  EXPECT_EQ(0, accessed_handle);
+}
+
+TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValue_ReturnsString)
+{
+  constexpr auto STRING_VAL = "Hello Returned World!";
+  EXPECT_CALL(library_, GetStringAsReturnedValue(_))
+      .WillOnce(Return(STRING_VAL));
+  ::grpc::ServerContext context;
+  GetStringAsReturnedValueRequest request;
+  GetStringAsReturnedValueResponse response;
+  service_.GetStringAsReturnedValue(&context, &request, &response);
+
+  EXPECT_EQ(std::string(STRING_VAL), response.string_out());
+  EXPECT_EQ(kDriverSuccess, response.status());
+}
+
+TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValueReturnsNull_ReturnsErrorAndEmptryString)
+{
+  constexpr auto FAILED_GET = -1;
+  EXPECT_CALL(library_, GetStringAsReturnedValue(_))
+      .WillOnce(Return(nullptr));
+  ::grpc::ServerContext context;
+  GetStringAsReturnedValueRequest request;
+  GetStringAsReturnedValueResponse response;
+  service_.GetStringAsReturnedValue(&context, &request, &response);
+
+  EXPECT_THAT(response.string_out(), IsEmpty());
+  EXPECT_EQ(FAILED_GET, response.status());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

@@ -1,3 +1,5 @@
+"""Script for validating the examples."""
+
 from argparse import ArgumentParser
 from contextlib import contextmanager
 from os import getcwd, chdir, system as _system_core
@@ -18,9 +20,7 @@ _FAILED_COMMANDS: List[_CommandRecord] = []
 
 
 def _system(command):
-    """
-    Capture the result of any failed system calls in _FAILED_COMMANDS.
-    """
+    """Capture the result of any failed system calls in _FAILED_COMMANDS."""
     exit_code = _system_core(command)
     if exit_code:
         _FAILED_COMMANDS.append(_CommandRecord(exit_code, command))
@@ -38,7 +38,7 @@ def _create_stage_dir(staging_dir):
         chdir(initial_dir)
 
 
-def validate_examples(driver_glob_expression: str, ip_address: str, device_name: str) -> None:
+def _validate_examples(driver_glob_expression: str, ip_address: str, device_name: str) -> None:
     staging_dir = Path(__file__).parent.parent.parent / "build" / "validate_examples"
     staging_dir = staging_dir.resolve()
 
@@ -71,8 +71,8 @@ def validate_examples(driver_glob_expression: str, ip_address: str, device_name:
             if ip_address:
                 for file in dir.glob("*.py"):
                     print(f" -> Running example: {file.name}")
-                    PORT = 31763
-                    _system(rf"poetry run python {file} {ip_address} {PORT} {device_name}")
+                    port = 31763
+                    _system(rf"poetry run python {file} {ip_address} {port} {device_name}")
 
 
 if __name__ == "__main__":
@@ -98,7 +98,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    validate_examples(args.pattern, args.server, args.device)
+    _validate_examples(args.pattern, args.server, args.device)
 
     if any(_FAILED_COMMANDS):
         for code, command in _FAILED_COMMANDS:

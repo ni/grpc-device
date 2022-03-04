@@ -83,7 +83,7 @@ namespace nirfmxwlan_grpc {
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
       int32 array_size = static_cast<int32>(request->iq().size());
       int32 reset = request->reset();
-      int64 reserved = request->reserved();
+      auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -111,7 +111,7 @@ namespace nirfmxwlan_grpc {
       auto total_length = std::accumulate(request->iq_sizes().cbegin(), request->iq_sizes().cend(), 0);
 
       if (total_length != request->iq_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array iq does not match the exected size from the sum of iq_sizes");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array iq does not match the expected size from the sum of iq_sizes");
       }
 
       auto iq_sizes = const_cast<int32*>(reinterpret_cast<const int32*>(request->iq_sizes().data()));
@@ -156,7 +156,7 @@ namespace nirfmxwlan_grpc {
       auto total_length = std::accumulate(request->spectrum_sizes().cbegin(), request->spectrum_sizes().cend(), 0);
 
       if (total_length != request->spectrum_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array spectrum does not match the exected size from the sum of spectrum_sizes");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array spectrum does not match the expected size from the sum of spectrum_sizes");
       }
 
       auto spectrum_sizes = const_cast<int32*>(reinterpret_cast<const int32*>(request->spectrum_sizes().data()));
@@ -200,7 +200,7 @@ namespace nirfmxwlan_grpc {
       auto spectrum = const_cast<float32*>(request->spectrum().data());
       int32 array_size = static_cast<int32>(request->spectrum().size());
       int32 reset = request->reset();
-      int64 reserved = request->reserved();
+      auto reserved = 0;
       auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2618,7 +2618,7 @@ namespace nirfmxwlan_grpc {
       int32 is_new_session {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
+        auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
@@ -2649,7 +2649,7 @@ namespace nirfmxwlan_grpc {
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
@@ -3062,7 +3062,7 @@ namespace nirfmxwlan_grpc {
       auto total_length = std::accumulate(request->reference_waveform_sizes().cbegin(), request->reference_waveform_sizes().cend(), 0);
 
       if (total_length != request->reference_waveform_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array reference_waveform does not match the exected size from the sum of reference_waveform_sizes");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array reference_waveform does not match the expected size from the sum of reference_waveform_sizes");
       }
 
       auto reference_waveform_sizes = const_cast<int32*>(reinterpret_cast<const int32*>(request->reference_waveform_sizes().data()));

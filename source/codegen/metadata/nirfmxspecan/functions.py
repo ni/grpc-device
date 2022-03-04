@@ -2060,6 +2060,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
                 'name': 'reserved',
                 'type': 'int64'
             }
@@ -2115,6 +2117,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
                 'name': 'reserved',
                 'type': 'int64'
             }
@@ -8896,11 +8900,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'measurement_offset',
                 'name': 'measurermentOffset',
                 'type': 'float64'
             },
             {
                 'direction': 'in',
+                'grpc_name': 'measurement_length',
                 'name': 'measurermentLength',
                 'type': 'float64'
             }

@@ -6,6 +6,7 @@ on:
 
 jobs:
   validate:
+    name: Validate Python Code
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
@@ -19,9 +20,9 @@ jobs:
     - name: Install build dependencies
       run: python -m pip install -r python_build_requirements.txt
 
-    - name: Validate python style with black
+    - name: Validate python style with ni-python-styleguide
       run: |
-        black source/codegen examples --check
+        ni-python-styleguide lint source/codegen/*.py examples
 
     - name: Install poetry for validate_examples.py
       uses: abatilo/actions-poetry@v2.0.0

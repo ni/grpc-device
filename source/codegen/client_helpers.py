@@ -1,12 +1,14 @@
-from typing import List, Tuple
-import common_helpers
+"""Helpers for creating client .h/.cpp files."""
+
 import re
 from collections import namedtuple
-from copy import deepcopy
 from enum import Enum
+from typing import List, Tuple
+
+import common_helpers
 
 
-class ParamMechanism(Enum):
+class ParamMechanism(Enum):  # noqa: D101
     BASIC = 0
     ARRAY = 1
     ENUM = 2
@@ -17,32 +19,7 @@ class ParamMechanism(Enum):
 ClientParam = namedtuple("ClientParam", ["name", "type", "mechanism"])
 
 
-def to_parameter_list(client_params: List[ClientParam]) -> List[str]:
-
-    param_list = [f"{p.type} {p.name}" for p in client_params]
-
-    return param_list
-
-
-def stub_param() -> str:
-    return f"const {stub_ptr_alias()}& stub"
-
-
-def create_streaming_params(client_params: List[ClientParam]) -> str:
-    params = to_parameter_list(client_params)
-    client_context_param = "::grpc::ClientContext& context"
-    params = [stub_param()] + [client_context_param] + params
-    return str.join(", ", params)
-
-
-def create_unary_params(client_params: List[ClientParam]) -> str:
-    params = to_parameter_list(client_params)
-    params = [stub_param()] + params
-    return str.join(", ", params)
-
-
 PROTOBUF_PRIM_TYPES = ["bool", "double", "float"]
-
 PROTOBUF_TYPE_TO_CPP_TYPE = {
     "double": "double",
     "float": "float",
@@ -62,7 +39,33 @@ PROTOBUF_TYPE_TO_CPP_TYPE = {
 }
 
 
-def is_basic_type(grpc_type: str) -> bool:
+def _to_parameter_list(client_params: List[ClientParam]) -> List[str]:
+    param_list = [f"{p.type} {p.name}" for p in client_params]
+
+    return param_list
+
+
+def stub_param() -> str:
+    """Get the C++ stub parameter."""
+    return f"const {stub_ptr_alias()}& stub"
+
+
+def create_streaming_params(client_params: List[ClientParam]) -> str:
+    """Build the C++ parameter list for streaming functions."""
+    params = _to_parameter_list(client_params)
+    client_context_param = "::grpc::ClientContext& context"
+    params = [stub_param()] + [client_context_param] + params
+    return str.join(", ", params)
+
+
+def create_unary_params(client_params: List[ClientParam]) -> str:
+    """Build the C++ parameter list for normal functions."""
+    params = _to_parameter_list(client_params)
+    params = [stub_param()] + params
+    return str.join(", ", params)
+
+
+def _is_basic_type(grpc_type: str) -> bool:
     return (
         grpc_type in PROTOBUF_PRIM_TYPES
         or grpc_type in PROTOBUF_TYPE_TO_CPP_TYPE
@@ -72,19 +75,20 @@ def is_basic_type(grpc_type: str) -> bool:
 
 
 def protobuf_namespace_alias() -> str:
+    """Get the protobuf namespace alias."""
     return "pb"
 
 
-def get_cpp_client_param_type(param: dict, enums: dict) -> str:
+def _get_cpp_client_param_type(param: dict, enums: dict) -> str:
     grpc_type = param["grpc_type"]
 
-    if is_grpc_array(param):
+    if _is_grpc_array(param):
         underlying_type = common_helpers.strip_prefix(grpc_type, "repeated ")
-        underlying_type = get_cpp_type_for_protobuf_type(underlying_type)
+        underlying_type = _get_cpp_type_for_protobuf_type(underlying_type)
         return f"std::vector<{underlying_type}>"
 
     if "enum" in param:
-        base_type = get_cpp_type_for_protobuf_type(grpc_type)
+        base_type = _get_cpp_type_for_protobuf_type(grpc_type)
         if base_type:
             return f"simple_variant<{param['enum']}, {base_type}>"
         return param["enum"]
@@ -94,10 +98,10 @@ def get_cpp_client_param_type(param: dict, enums: dict) -> str:
         base_type = common_helpers.get_enum_value_cpp_type(enums[enum])
         return f"simple_variant<{enum}, {base_type}>"
 
-    return get_cpp_type_for_protobuf_type(grpc_type)
+    return _get_cpp_type_for_protobuf_type(grpc_type)
 
 
-def get_cpp_type_for_protobuf_type(protobuf_type: str) -> str:
+def _get_cpp_type_for_protobuf_type(protobuf_type: str) -> str:
     if protobuf_type in PROTOBUF_PRIM_TYPES:
         return protobuf_type
 
@@ -108,61 +112,67 @@ def get_cpp_type_for_protobuf_type(protobuf_type: str) -> str:
     return protobuf_type.replace(".", "::")
 
 
-def const_ref_t(t: str) -> str:
+def _const_ref_t(t: str) -> str:
     return f"const {t}&"
 
 
-def get_param_mechanism(param: dict) -> ParamMechanism:
-    if is_grpc_array(param):
+def _get_param_mechanism(param: dict) -> ParamMechanism:
+    if _is_grpc_array(param):
         return ParamMechanism.ARRAY
     if "enum" in param:
         return ParamMechanism.ENUM
     if "mapped-enum" in param:
         return ParamMechanism.MAPPED_ENUM
-    if is_basic_type(param["grpc_type"]):
+    if _is_basic_type(param["grpc_type"]):
         return ParamMechanism.BASIC
     return ParamMechanism.COPY
 
 
-def create_client_param(param: dict, enums: dict) -> ClientParam:
+def _create_client_param(param: dict, enums: dict) -> ClientParam:
     name = common_helpers.get_grpc_field_name(param)
-    param_type = get_cpp_client_param_type(param, enums)
-    param_type = const_ref_t(param_type)
-    param_mechanism = get_param_mechanism(param)
+    param_type = _get_cpp_client_param_type(param, enums)
+    param_type = _const_ref_t(param_type)
+    param_mechanism = _get_param_mechanism(param)
 
     return ClientParam(name, param_type, param_mechanism)
 
 
-def is_grpc_array(param: dict) -> bool:
+def _is_grpc_array(param: dict) -> bool:
     return param["grpc_type"].startswith("repeated ")
 
 
 def stub_ptr_alias():
+    """Get the stub pointer alias."""
     return "StubPtr"
 
 
 def get_client_parameters(func: dict, enums: dict) -> List[ClientParam]:
+    """Create a list of ClientParam objects for the given function."""
     inputs = [p for p in func["parameters"] if common_helpers.is_input_parameter(p)]
 
     inputs = common_helpers.filter_parameters_for_grpc_fields(inputs)
 
-    return [create_client_param(p, enums) for p in inputs]
+    return [_create_client_param(p, enums) for p in inputs]
 
 
-def split_types_from_variant(variant_type: str) -> Tuple[str, str]:
+def _split_types_from_variant(variant_type: str) -> Tuple[str, str]:
     match = re.match(r".*simple_variant<([^,]+), ([^>]+)>", variant_type)
+    assert match
     return (match[1], match[2])
 
 
 def get_enum_value_type(param: ClientParam) -> str:
-    enum, _ = split_types_from_variant(param.type)
+    """Get the enum name of the given enum ClientParam."""
+    enum, _ = _split_types_from_variant(param.type)
     return enum
 
 
 def get_enum_raw_type(param: ClientParam) -> str:
-    _, raw = split_types_from_variant(param.type)
+    """Get the raw C++ value_type of the given enum ClientParam."""
+    _, raw = _split_types_from_variant(param.type)
     return raw
 
 
 def streaming_response_type(response_type: str) -> str:
+    """Wrap the given response type with a reader for streaming functions."""
     return f"std::unique_ptr<grpc::ClientReader<{response_type}>>"

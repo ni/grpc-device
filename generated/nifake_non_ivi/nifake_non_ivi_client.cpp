@@ -49,6 +49,21 @@ get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& hand
   return response;
 }
 
+GetStringAsReturnedValueResponse
+get_string_as_returned_value(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetStringAsReturnedValueRequest{};
+
+  auto response = GetStringAsReturnedValueResponse{};
+
+  raise_if_error(
+      stub->GetStringAsReturnedValue(&context, request, &response));
+
+  return response;
+}
+
 GetMarbleAttributeDoubleResponse
 get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute)
 {
@@ -181,6 +196,22 @@ init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& han
 
   raise_if_error(
       stub->InitWithHandleNameAsSessionName(&context, request, &response));
+
+  return response;
+}
+
+InitWithReturnedSessionResponse
+init_with_returned_session(const StubPtr& stub, const pb::string& handle_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitWithReturnedSessionRequest{};
+  request.set_handle_name(handle_name);
+
+  auto response = InitWithReturnedSessionResponse{};
+
+  raise_if_error(
+      stub->InitWithReturnedSession(&context, request, &response));
 
   return response;
 }

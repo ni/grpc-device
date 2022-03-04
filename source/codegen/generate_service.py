@@ -1,14 +1,15 @@
-import os
+"""Service generation."""
+
 import argparse
+import os
+
 import metadata_mutation
 import metadata_validation
-from mako.lookup import TemplateLookup
-
-import common_helpers
+from mako.lookup import TemplateLookup  # type: ignore
 from template_helpers import instantiate_mako_template, load_metadata, write_if_changed
 
 
-def generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
+def _generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
     module_name = metadata["config"]["module_name"]
     output_dir = os.path.join(gen_dir, module_name)
     file_name = module_name + generated_file_suffix
@@ -19,7 +20,7 @@ def generate_service_file(metadata, template_file_name, generated_file_suffix, g
     write_if_changed(output_file_path, template.render(data=metadata))
 
 
-def mutate_metadata(metadata: dict):
+def _mutate_metadata(metadata: dict):
     config = metadata["config"]
 
     metadata_mutation.move_zero_enums_to_front(metadata["enums"])
@@ -39,7 +40,7 @@ def mutate_metadata(metadata: dict):
         attribute_expander.patch_attribute_enum_type(function_name, function)
 
 
-def generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
+def _generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
     metadata = load_metadata(metadata_dir)
     metadata_validation.validate_metadata(metadata)
     if validate_only:
@@ -47,18 +48,20 @@ def generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
 
     lookup = TemplateLookup(directories=metadata_dir)
     metadata["lookup"] = lookup
-    mutate_metadata(metadata)
-    generate_service_file(metadata, "proto.mako", ".proto", gen_dir)
-    generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)
-    generate_service_file(metadata, "service.cpp.mako", "_service.cpp", gen_dir)
-    generate_service_file(metadata, "service_registrar.h.mako", "_service_registrar.h", gen_dir)
-    generate_service_file(metadata, "service_registrar.cpp.mako", "_service_registrar.cpp", gen_dir)
-    generate_service_file(metadata, "library_interface.h.mako", "_library_interface.h", gen_dir)
-    generate_service_file(metadata, "library.cpp.mako", "_library.cpp", gen_dir)
-    generate_service_file(metadata, "library.h.mako", "_library.h", gen_dir)
-    generate_service_file(metadata, "mock_library.h.mako", "_mock_library.h", gen_dir)
-    generate_service_file(metadata, "client.h.mako", "_client.h", gen_dir)
-    generate_service_file(metadata, "client.cpp.mako", "_client.cpp", gen_dir)
+    _mutate_metadata(metadata)
+    _generate_service_file(metadata, "proto.mako", ".proto", gen_dir)
+    _generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)
+    _generate_service_file(metadata, "service.cpp.mako", "_service.cpp", gen_dir)
+    _generate_service_file(metadata, "service_registrar.h.mako", "_service_registrar.h", gen_dir)
+    _generate_service_file(
+        metadata, "service_registrar.cpp.mako", "_service_registrar.cpp", gen_dir
+    )
+    _generate_service_file(metadata, "library_interface.h.mako", "_library_interface.h", gen_dir)
+    _generate_service_file(metadata, "library.cpp.mako", "_library.cpp", gen_dir)
+    _generate_service_file(metadata, "library.h.mako", "_library.h", gen_dir)
+    _generate_service_file(metadata, "mock_library.h.mako", "_mock_library.h", gen_dir)
+    _generate_service_file(metadata, "client.h.mako", "_client.h", gen_dir)
+    _generate_service_file(metadata, "client.cpp.mako", "_client.cpp", gen_dir)
 
 
 if __name__ == "__main__":
@@ -82,4 +85,4 @@ if __name__ == "__main__":
         help="Just validate the metadata and don't generate any files",
     )
     args = parser.parse_args()
-    generate_all(args.metadata, "." if args.output is None else args.output, args.validate)
+    _generate_all(args.metadata, "." if args.output is None else args.output, args.validate)

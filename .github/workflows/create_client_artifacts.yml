@@ -1,12 +1,7 @@
 name: Create Client Artifacts
 
 on:
-  push:
-    branches:
-      - main
-      - 'releases/**'
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_call:
   workflow_dispatch:
 
 jobs:
@@ -18,11 +13,11 @@ jobs:
       matrix:
         config:
         - {
-            name: "Windows Build", artifact: "Windows.tar.xz",
+            name: "Windows Artifacts", artifact: "Windows.tar.xz",
             os: windows-latest,
           }
         - {
-            name: "Ubuntu Build", artifact: "Linux.tar.xz",
+            name: "Linux Artifacts", artifact: "Linux.tar.xz",
             os: ubuntu-18.04,
           }
 
@@ -63,5 +58,3 @@ jobs:
         path: |
           ${{ runner.temp }}/staging
         retention-days: 5
-
-

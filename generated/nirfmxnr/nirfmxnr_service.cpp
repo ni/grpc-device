@@ -780,7 +780,7 @@ namespace nirfmxnr_grpc {
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
       int32 array_size = static_cast<int32>(request->iq().size());
       int32 reset = request->reset();
-      int64 reserved = request->reserved();
+      auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -807,7 +807,7 @@ namespace nirfmxnr_grpc {
       auto spectrum = const_cast<float32*>(request->spectrum().data());
       int32 array_size = static_cast<int32>(request->spectrum().size());
       int32 reset = request->reset();
-      int64 reserved = request->reserved();
+      auto reserved = 0;
       auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3301,7 +3301,7 @@ namespace nirfmxnr_grpc {
       int32 is_new_session {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
+        auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
@@ -3332,7 +3332,7 @@ namespace nirfmxnr_grpc {
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;

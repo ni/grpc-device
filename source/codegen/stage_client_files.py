@@ -1,3 +1,5 @@
+"""Stage client files."""
+
 from argparse import ArgumentParser
 from pathlib import Path
 from shutil import copy2, copytree
@@ -9,16 +11,13 @@ from template_helpers import load_metadata
 
 
 class _ArtifactReadiness:
-    """
-    Helper class to determine whether a Path with a module-named artifact directory
-    is release-ready.
-    """
+    """Class to determine whether a Path with a module-named artifact directory is release-ready."""
 
-    _module_to_readiness = Dict[str, str]
+    _module_to_readiness = {}  # type: Dict[str, str]
 
     def __init__(self, metadata_dir: Path, include_prerelease: bool):
         modules = [
-            load_metadata(p) for p in metadata_dir.iterdir() if p.is_dir() and not "fake" in p.name
+            load_metadata(p) for p in metadata_dir.iterdir() if p.is_dir() and "fake" not in p.name
         ]
 
         self._module_to_readiness = {
@@ -28,9 +27,10 @@ class _ArtifactReadiness:
         self.include_prerelease = include_prerelease
 
     def is_release_ready(self, module_path: Path) -> bool:
-        """
-        Determine release-readiness by checking the name of the module_path directory
-        against code_readiness for the module_name in config.py.
+        """Determine release-readiness.
+
+        Do so by checking the name of the module_path directory against code_readiness for the
+        module_name in config.py.
         """
         module_name = module_path.name
         if "fake" in module_name:
@@ -39,15 +39,13 @@ class _ArtifactReadiness:
         if "session" == module_name:
             return True
 
-        if not module_name in self._module_to_readiness:
+        if module_name not in self._module_to_readiness:
             raise KeyError(f"No module config.py metadata for module_name: {module_path}")
 
         return self._module_to_readiness[module_name] == "Release"
 
     def get_release_ready_subdirs(self, directory: Path) -> Iterable[Path]:
-        """
-        Return all subdirectories of directory for which is_release_ready is True.
-        """
+        """Return all subdirectories of directory for which is_release_ready is True."""
         return (
             d
             for d in directory.iterdir()
@@ -55,7 +53,7 @@ class _ArtifactReadiness:
         )
 
 
-class ArtifactLocations:
+class _ArtifactLocations:
     repo_root: Path
 
     def __init__(self, repo_root: Path):
@@ -79,7 +77,7 @@ class ArtifactLocations:
 
 
 def _get_release_proto_files(
-    artifact_locations: ArtifactLocations, readiness: _ArtifactReadiness
+    artifact_locations: _ArtifactLocations, readiness: _ArtifactReadiness
 ) -> List[Path]:
 
     release_driver_dirs = readiness.get_release_ready_subdirs(artifact_locations.generated_files)
@@ -87,15 +85,15 @@ def _get_release_proto_files(
 
 
 def _get_release_example_directories(
-    artifact_locations: ArtifactLocations, readiness: _ArtifactReadiness
-) -> List[Path]:
-
+    artifact_locations: _ArtifactLocations, readiness: _ArtifactReadiness
+) -> Iterable[Path]:
     return readiness.get_release_ready_subdirs(artifact_locations.examples)
 
 
 def stage_client_files(output_path: Path, include_prerelease: bool):
+    """Stage the client files into the given output path."""
     repo_root = Path(__file__).parent.parent.parent
-    artifact_locations = ArtifactLocations(repo_root)
+    artifact_locations = _ArtifactLocations(repo_root)
     readiness = _ArtifactReadiness(artifact_locations.metadata_dir, include_prerelease)
 
     proto_path = output_path / "proto"

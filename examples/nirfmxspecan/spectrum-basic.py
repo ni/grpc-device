@@ -1,36 +1,43 @@
-# This program demonstrates the use of RFmx SpecAn to read a spectrum. The steps are:
-# 1. Open a new RFmx session
-# 2. Configure the basic signal properties  (Center Frequency, Reference Level and External Attenuation)
-# 3. Configure Spectrum Span
-# 4. Configure Spectrum RBW filter
-# 5. Configure Spectrum Averaging
-# 6. Read Spectrum Measurement Results
-# 7. Close the RFmx Session
-#
-# The gRPC API is built from the C API. RFmx SpecAn documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\SpecAn\Documentation\rfmxspecancvi.chm
-#
-# Getting Started:
-#
-# To run this example, install "RFmx SpecAn" on the server machine.
-# Link: # https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-specan.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFmxSpecAn gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFmxSpecAn-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python spectrum-basic.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedRFSA" as the resource name
+r"""Read a spectrum.
 
-from math import floor
-import grpc
+Steps:
+  1. Open a new RFmx session
+  2. Configure the basic signal properties  (Center Frequency, Reference Level and External
+     Attenuation)
+  3. Configure Spectrum Span
+  4. Configure Spectrum RBW filter
+  5. Configure Spectrum Averaging
+  6. Read Spectrum Measurement Results
+  7. Close the RFmx Session
+
+The gRPC API is built from the C API. RFmx SpecAn documentation is installed with the driver at:
+  C:\Program Files (x86)\National Instruments\RFmx\SpecAn\Documentation\rfmxspecancvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx SpecAn" on the server machine:
+  # https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-specan.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmxSpecAn gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-RFmxSpecAn-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python spectrum-basic.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedRFSA" as the resource name.
+"""
+
 import sys
+from math import floor
 
+import grpc
 import nirfmxspecan_pb2 as nirfmxspecan_types
 import nirfmxspecan_pb2_grpc as grpc_nirfmxspecan
 
@@ -57,7 +64,7 @@ client = grpc_nirfmxspecan.NiRFmxSpecAnStub(channel)
 instr = None
 
 
-def format_frequency(f):
+def _format_frequency(f):
     # adapted from https://stackoverflow.com/a/1094933
     suffix = "Hz"
     for unit in ["", "k", "M", "G"]:
@@ -67,8 +74,8 @@ def format_frequency(f):
     return f"{f:.3f} G{suffix}"
 
 
-# Raise an exception if an error was returned
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.GetError(
             nirfmxspecan_types.GetErrorRequest(
@@ -146,14 +153,14 @@ try:
     )
 
     print(
-        f"min frequency: {format_frequency(read_response.x0)}: {read_response.spectrum[0]:.1f} dBm"
+        f"min frequency: {_format_frequency(read_response.x0)}: {read_response.spectrum[0]:.1f} dBm"
     )
     midpoint_x = floor(read_response.actual_array_size / 2)
     print(
-        f"midpoint frequency: {format_frequency(read_response.x0 + read_response.dx * midpoint_x)}: {read_response.spectrum[midpoint_x]:.1f} dBm"
+        f"midpoint frequency: {_format_frequency(read_response.x0 + read_response.dx * midpoint_x)}: {read_response.spectrum[midpoint_x]:.1f} dBm"
     )
     print(
-        f"max frequency: {format_frequency(read_response.x0 + read_response.dx * (read_response.actual_array_size - 1))}: {read_response.spectrum[-1]:.1f} dBm"
+        f"max frequency: {_format_frequency(read_response.x0 + read_response.dx * (read_response.actual_array_size - 1))}: {read_response.spectrum[-1]:.1f} dBm"
     )
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()

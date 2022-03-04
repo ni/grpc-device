@@ -1165,7 +1165,6 @@ message ConfigureUpconverterPLLSettlingTimeRequest {
   nidevice_grpc.Session vi = 1;
   double pll_settling_time = 2;
   bool ensure_pll_locked = 3;
-  sint32 reserved_for_future_use = 4;
 }
 
 message ConfigureUpconverterPLLSettlingTimeResponse {

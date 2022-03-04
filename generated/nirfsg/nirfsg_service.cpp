@@ -1136,7 +1136,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViReal64 pll_settling_time = request->pll_settling_time();
       ViBoolean ensure_pll_locked = request->ensure_pll_locked();
-      ViInt32 reserved_for_future_use = request->reserved_for_future_use();
+      auto reserved_for_future_use = 0;
       auto status = library_->ConfigureUpconverterPLLSettlingTime(vi, pll_settling_time, ensure_pll_locked, reserved_for_future_use);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2258,7 +2258,7 @@ namespace nirfsg_grpc {
 
       auto init_lambda = [&] () {
         ViSession new_vi;
-        int status = library_->Init(resource_name, id_query, reset_device, &new_vi);
+        auto status = library_->Init(resource_name, id_query, reset_device, &new_vi);
         return std::make_tuple(status, new_vi);
       };
       uint32_t session_id = 0;
@@ -2291,7 +2291,7 @@ namespace nirfsg_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

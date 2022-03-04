@@ -57,7 +57,7 @@ namespace nisync_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->Init(resource_name, id_query, reset_device, &vi);
+        auto status = library_->Init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -1548,7 +1548,7 @@ namespace nisync_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitExtCal(resource_name, password, &vi);
+        auto status = library_->InitExtCal(resource_name, password, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

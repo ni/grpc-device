@@ -518,7 +518,7 @@ namespace nifake_grpc {
       auto total_length = std::accumulate(request->array_lengths().cbegin(), request->array_lengths().cend(), 0);
 
       if (total_length != request->array_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array array does not match the exected size from the sum of array_lengths");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array array does not match the expected size from the sum of array_lengths");
       }
 
       auto array_lengths = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->array_lengths().data()));
@@ -1255,7 +1255,7 @@ namespace nifake_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -1286,7 +1286,7 @@ namespace nifake_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitExtCal(resource_name, calibration_password, &vi);
+        auto status = library_->InitExtCal(resource_name, calibration_password, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -1336,7 +1336,7 @@ namespace nifake_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithVarArgs(resource_name, &vi, get_stringArg_if(name_and_turtle, 0), get_turtle_if(name_and_turtle, 0), get_stringArg_if(name_and_turtle, 1), get_turtle_if(name_and_turtle, 1), get_stringArg_if(name_and_turtle, 2), get_turtle_if(name_and_turtle, 2), get_stringArg_if(name_and_turtle, 3), get_turtle_if(name_and_turtle, 3));
+        auto status = library_->InitWithVarArgs(resource_name, &vi, get_stringArg_if(name_and_turtle, 0), get_turtle_if(name_and_turtle, 0), get_stringArg_if(name_and_turtle, 1), get_turtle_if(name_and_turtle, 1), get_stringArg_if(name_and_turtle, 2), get_turtle_if(name_and_turtle, 2), get_stringArg_if(name_and_turtle, 3), get_turtle_if(name_and_turtle, 3));
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

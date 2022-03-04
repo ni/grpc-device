@@ -1,39 +1,44 @@
-# Steps:
-# 1. Open a new RFmx Session.
-# 2. Configure Frequency Reference.
-# 3. Configure basic signal properties(Center Frequency, Reference Level and External Attenuation).
-# 4. Configure Trigger Type and Trigger Parameters.
-# 5. Configure Packet Type.
-# 6. Configure Data Rate.
-# 7. Configure Payload Length.
-# 8. Select ACP measurement and enable Traces.
-# 9. Configure ACP Burst Sync Type.
-# 10. Configure Averaging Parameters for ACP measurement.
-# 11. Configure Number of Offsets or Channel Number depending on Offset Channel Mode.
-# 12. Initiate the Measurement.
-# 13. Fetch ACP Measurements and Trace.
-# 14. Close RFmx Session.
-#
-# The gRPC API is built from the C API. RFmx Bluetooth documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\BT\Documentation\rfmxbtcvi.chm
-#
-# Getting Started:
-#
-# To run this example, install "RFmx Bluetooth" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-bluetooth.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFmxBluetooth gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFmxBluetooth-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python acp-basic.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+r"""Fetch ACP data.
 
+Steps:
+  1. Open a new RFmx Session.
+  2. Configure Frequency Reference.
+  3. Configure basic signal properties(Center Frequency, Reference Level and External Attenuation).
+  4. Configure Trigger Type and Trigger Parameters.
+  5. Configure Packet Type.
+  6. Configure Data Rate.
+  7. Configure Payload Length.
+  8. Select ACP measurement and enable Traces.
+  9. Configure ACP Burst Sync Type.
+  10. Configure Averaging Parameters for ACP measurement.
+  11. Configure Number of Offsets or Channel Number depending on Offset Channel Mode.
+  12. Initiate the Measurement.
+  13. Fetch ACP Measurements and Trace.
+  14. Close RFmx Session.
+
+The gRPC API is built from the C API. RFmx Bluetooth documentation is installed with the driver at:
+  C:\Program Files (x86)\National Instruments\RFmx\BT\Documentation\rfmxbtcvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx Bluetooth" on the server machine:
+  https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-bluetooth.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmxBluetooth gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-RFmxBluetooth-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python acp-basic.py <server_address> <port_number> <physical_channel_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name.
+"""
 
 import sys
 
@@ -64,8 +69,8 @@ client = grpc_nirfmxbluetooth.NiRFmxBluetoothStub(channel)
 instr = None
 
 
-# Raise an exception if an error was returned
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.GetError(
             nirfmxbluetooth_types.GetErrorRequest(
