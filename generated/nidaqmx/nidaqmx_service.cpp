@@ -17105,7 +17105,7 @@ namespace nidaqmx_grpc {
         write_array_raw.begin(),
         write_array_raw.end(),
         std::back_inserter(write_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<int16>::min() || x > std::numeric_limits<int16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -17213,7 +17213,7 @@ namespace nidaqmx_grpc {
         write_array_raw.begin(),
         write_array_raw.end(),
         std::back_inserter(write_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -17595,7 +17595,7 @@ namespace nidaqmx_grpc {
         write_array_raw.begin(),
         write_array_raw.end(),
         std::back_inserter(write_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));

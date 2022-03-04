@@ -9490,7 +9490,7 @@ namespace nirfmxlte_grpc {
         attr_val_raw.begin(),
         attr_val_raw.end(),
         std::back_inserter(attr_val),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));

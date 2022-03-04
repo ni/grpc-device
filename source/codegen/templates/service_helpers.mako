@@ -628,7 +628,7 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_raw.begin(),
         ${parameter_name}_raw.end(),
         std::back_inserter(${parameter_name}),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<${c_element_type_that_needs_coercion}>::min() || x > std::numeric_limits<${c_element_type_that_needs_coercion}>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));

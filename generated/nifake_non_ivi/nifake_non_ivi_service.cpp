@@ -437,7 +437,7 @@ namespace nifake_non_ivi_grpc {
         u16_array_raw.begin(),
         u16_array_raw.end(),
         std::back_inserter(u16_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<myUInt16>::min() || x > std::numeric_limits<myUInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -455,7 +455,7 @@ namespace nifake_non_ivi_grpc {
         i16_array_raw.begin(),
         i16_array_raw.end(),
         std::back_inserter(i16_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<myInt16>::min() || x > std::numeric_limits<myInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -473,7 +473,7 @@ namespace nifake_non_ivi_grpc {
         i8_array_raw.begin(),
         i8_array_raw.end(),
         std::back_inserter(i8_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<myInt8>::min() || x > std::numeric_limits<myInt8>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
