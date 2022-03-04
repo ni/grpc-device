@@ -1055,7 +1055,7 @@ def is_get_last_error_output_param(parameter: dict) -> bool:
     return "get_last_error" in parameter
 
 
-def get_driver_api_params(parameters: List[dict]) -> bool:
+def get_driver_api_params(parameters: List[dict]) -> List[dict]:
     """Return all parameters that are passed as parameters to the driver API.
 
     Excludes:

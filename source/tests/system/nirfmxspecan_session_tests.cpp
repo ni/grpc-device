@@ -112,7 +112,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
   EXPECT_EQ(std::string(kRFmxSpecAnErrorResourceNotFoundMessage), init_response.error_message());
 }
 
-TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReInitSuccessfully_ErrorMessageIsEmpty)
+TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReinitSuccessfully_ErrorMessageIsEmpty)
 {
   rfmxspecan::InitializeResponse failed_init_response;
   call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &failed_init_response);
