@@ -4272,7 +4272,7 @@ namespace nirfmxbluetooth_grpc {
   NiRFmxBluetoothFeatureToggles::NiRFmxBluetoothFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxbluetooth", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxbluetooth", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxbluetooth_grpc
