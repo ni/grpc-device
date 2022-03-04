@@ -460,10 +460,13 @@ class CrossDriverSessionDependency(NamedTuple):  # noqa: D101
     local_name: str
 
 
+SessionRepositoryHandleTypeDependencyMap = Dict[str, CrossDriverSessionDependency]
+
+
 def get_driver_shared_resource_repository_ptr_deps(
-    driver_config: dict,
-) -> List[CrossDriverSessionDependency]:
-    """Get list of CrossDriverSessionDependency for all resource_handle_type used by this driver."""
+    driver_config: dict, functions: dict
+) -> SessionRepositoryHandleTypeDependencyMap:
+    """Get per-handle type CrossDriverSessionDependency for all resource_handle_type used by this driver."""
     resource_repository_deps = [
         _create_cross_driver_session_dependency(resource_handle_type)
         for resource_handle_type in get_resource_handle_types(driver_config)
@@ -476,7 +479,13 @@ def get_driver_shared_resource_repository_ptr_deps(
         "session_repository_",
         "resource_repository",
     )
-    return resource_repository_deps
+
+    resource_repository_type_dependency_map = {d.resource_handle_type: d for d in resource_repository_deps}
+
+    for d in get_cross_driver_session_dependencies(functions):
+        resource_repository_type_dependency_map.update({d.resource_handle_type: d})
+
+    return resource_repository_type_dependency_map
 
 
 def _create_cross_driver_session_dependency(
@@ -517,11 +526,14 @@ def session_repository_field_name(param: dict, config: dict) -> str:
     if cross_driver_session_type:
         return get_cross_driver_session_dependency(param).field_name
     else:
-        resource_handle_deps = get_driver_shared_resource_repository_ptr_deps(config)
+        resource_handle_deps = get_driver_shared_resource_repository_ptr_deps(
+            config,
+            functions={},  # This is called for retrieving session repo field name for specific parameter, functions is not needed
+        )
         resource_handle_dep = next(
-            r
-            for r in resource_handle_deps
-            if r.resource_handle_type == common_helpers.get_underlying_type(param)
+            resource_handle_deps[resource_handle_type]
+            for resource_handle_type in resource_handle_deps
+            if resource_handle_type == common_helpers.get_underlying_type(param)
         )
         return resource_handle_dep.field_name
 

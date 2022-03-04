@@ -391,7 +391,7 @@ functions = {
     },
     'DbCreateObject': {
         'init_method': True,
-        'custom_close': "", # we don't need to close reference from this method
+        'custom_close': "DbDeleteObject(id)",
         'cname': 'nxdbCreateObject',
         'parameters': [
             {
@@ -458,7 +458,6 @@ functions = {
     'DbFindObject': {
         'cname': 'nxdbFindObject',
         'init_method': True,
-        'custom_close': "", # we don't need to close reference from this method
         'parameters': [
             {
                 'direction': 'in',
@@ -476,7 +475,9 @@ functions = {
                 'type': 'const char[]'
             },
             {
+                'cross_driver_session': 'nxDatabaseRef_t',
                 'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'dbObjectRef',
                 'type': 'nxDatabaseRef_t'
             }

@@ -35,11 +35,7 @@ ${call_library_method(
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->${session_field_name}();
-% if close_function_call == "":
-      auto cleanup_lambda = nullptr;
-% else:
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
-% endif
       int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status_ok(status)) {

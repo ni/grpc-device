@@ -393,7 +393,7 @@ namespace nixnet_grpc {
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = nullptr;
+      auto cleanup_lambda = [&] (nxDatabaseRef_t id) { library_->DbDeleteObject(id); };
       int status = nx_database_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       response->set_status(status);
       if (status_ok(status)) {
@@ -463,17 +463,17 @@ namespace nixnet_grpc {
       u32 object_class = request->object_class();
       auto object_name = request->object_name().c_str();
 
+      auto initiating_session_id = nx_database_ref_t_resource_repository_->access_session_id(parent_object_ref_grpc_session.id(), parent_object_ref_grpc_session.name());
       auto init_lambda = [&] () {
         nxDatabaseRef_t db_object_ref;
-        auto status = library_->DbFindObject(parent_object_ref, object_class, object_name, &db_object_ref);
+        int status = library_->DbFindObject(parent_object_ref, object_class, object_name, &db_object_ref);
         return std::make_tuple(status, db_object_ref);
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
-      auto cleanup_lambda = nullptr;
-      int status = nx_database_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = nx_database_ref_t_resource_repository_->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
       response->set_status(status);
-      if (status_ok(status)) {
+      if (status == 0) {
         response->mutable_db_object_ref()->set_id(session_id);
       }
       return ::grpc::Status::OK;
