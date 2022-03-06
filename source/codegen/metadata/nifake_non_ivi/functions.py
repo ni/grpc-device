@@ -10,6 +10,18 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CloseSecondarySession': {
+        'custom_close_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'secondarySessionHandle',
+                'type': 'SecondarySessionHandle',
+            },
+        ],
+        'returns': 'int32',
+    },
     'GetCrossDriverSession': {
         'init_method': True,
         'parameters': [
@@ -178,6 +190,19 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'InitSecondarySession': {
+        'init_method': True,
+        'custom_close': 'CloseSecondarySession(id)',
+        'parameters': [
+            {
+                'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'secondarySessionHandle',
+                'type': 'SecondarySessionHandle',
+            },
+        ],
+        'returns': 'int32',
     },
     'InitWithHandleNameAsSessionName': {
         'init_method': True,

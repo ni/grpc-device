@@ -19,6 +19,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
 
   ::grpc::Status check_function_exists(std::string functionName);
   int32 Close(FakeHandle handle);
+  int32 CloseSecondarySession(SecondarySessionHandle secondarySessionHandle);
   int32 GetCrossDriverSession(FakeHandle handle, int32* crossDriverSession);
   const char* GetStringAsReturnedValue(char buf[512]);
   int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value);
@@ -27,6 +28,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 Init(const char sessionName[], FakeHandle* handle);
   int32 InitFromCrossDriverSession(int32 crossDriverSession, FakeHandle* handle);
   int32 InitFromCrossDriverSessionArray(int32 crossDriverSessionArray[], int32 numberOfCrossDriverSessions, FakeHandle* handle);
+  int32 InitSecondarySession(SecondarySessionHandle* secondarySessionHandle);
   int32 InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle);
   FakeHandle InitWithReturnedSession(const char handleName[]);
   int32 InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]);
@@ -53,6 +55,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
 
  private:
   using ClosePtr = decltype(&niFakeNonIvi_Close);
+  using CloseSecondarySessionPtr = decltype(&niFakeNonIvi_CloseSecondarySession);
   using GetCrossDriverSessionPtr = decltype(&niFakeNonIvi_GetCrossDriverSession);
   using GetStringAsReturnedValuePtr = decltype(&niFakeNonIvi_GetStringAsReturnedValue);
   using GetMarbleAttributeDoublePtr = decltype(&niFakeNonIvi_GetMarbleAttributeDouble);
@@ -61,6 +64,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using InitPtr = decltype(&niFakeNonIvi_Init);
   using InitFromCrossDriverSessionPtr = decltype(&niFakeNonIvi_InitFromCrossDriverSession);
   using InitFromCrossDriverSessionArrayPtr = decltype(&niFakeNonIvi_InitFromCrossDriverSessionArray);
+  using InitSecondarySessionPtr = decltype(&niFakeNonIvi_InitSecondarySession);
   using InitWithHandleNameAsSessionNamePtr = decltype(&niFakeNonIvi_InitWithHandleNameAsSessionName);
   using InitWithReturnedSessionPtr = decltype(&niFakeNonIvi_InitWithReturnedSession);
   using InputArraysWithNarrowIntegerTypesPtr = decltype(&niFakeNonIvi_InputArraysWithNarrowIntegerTypes);
@@ -87,6 +91,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
 
   typedef struct FunctionPointers {
     ClosePtr Close;
+    CloseSecondarySessionPtr CloseSecondarySession;
     GetCrossDriverSessionPtr GetCrossDriverSession;
     GetStringAsReturnedValuePtr GetStringAsReturnedValue;
     GetMarbleAttributeDoublePtr GetMarbleAttributeDouble;
@@ -95,6 +100,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     InitPtr Init;
     InitFromCrossDriverSessionPtr InitFromCrossDriverSession;
     InitFromCrossDriverSessionArrayPtr InitFromCrossDriverSessionArray;
+    InitSecondarySessionPtr InitSecondarySession;
     InitWithHandleNameAsSessionNamePtr InitWithHandleNameAsSessionName;
     InitWithReturnedSessionPtr InitWithReturnedSession;
     InputArraysWithNarrowIntegerTypesPtr InputArraysWithNarrowIntegerTypes;
