@@ -480,7 +480,9 @@ def get_driver_shared_resource_repository_ptr_deps(
         "resource_repository",
     )
 
-    resource_repository_type_dependency_map = {d.resource_handle_type: d for d in resource_repository_deps}
+    resource_repository_type_dependency_map = {
+        d.resource_handle_type: d for d in resource_repository_deps
+    }
 
     for d in get_cross_driver_session_dependencies(functions):
         resource_repository_type_dependency_map.update({d.resource_handle_type: d})
