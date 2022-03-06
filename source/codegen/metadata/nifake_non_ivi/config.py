@@ -12,6 +12,7 @@ config = {
     'driver_name': 'NI-FAKE-NON-IVI',
     'resource_handle_type': ['FakeHandle', 'SecondarySessionHandle'],
     'status_ok': 'status >= 0',
+    'additional_headers': { 'custom/nifake_non_ivi_errors.h': ['service.cpp'] },
     'custom_types': [
         {
             'name': 'StringAndEnum',

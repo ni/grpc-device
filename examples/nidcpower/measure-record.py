@@ -34,29 +34,29 @@ import nidcpower_pb2 as nidcpower_types
 import nidcpower_pb2_grpc as grpc_nidcpower
 import numpy as np
 
-server_address = "localhost"
-server_port = "31763"
-session_name = "NI-DCPower-Session"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+SESSION_NAME = "NI-DCPower-Session"
 
 # Resource name, channel name and options for a simulated 4147 client. Change them according to
 # NI-DCPower model.
-resource = "SimulatedDCPower"
-options = "Simulate=1,DriverSetup=Model:4147;BoardType:PXIe"
-channels = "0"
+RESOURCE = "SimulatedDCPower"
+OPTIONS = "Simulate=1,DriverSetup=Model:4147;BoardType:PXIe"
+CHANNELS = "0"
 
 # Parameters
-record_length = 10
-buffer_multiplier = 10
-voltage_level = 5.0
+RECORD_LENGTH = 10
+BUFFER_MULTIPLIER = 10
+VOLTAGE_LEVEL = 5.0
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 
 def check_for_error(vi, status):
@@ -70,18 +70,18 @@ def check_for_error(vi, status):
 
 # Create the communication channel for the remote host and create connections to the NI-DCPower and
 # session services.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nidcpower.NiDCPowerStub(channel)
 
 try:
     # Initialize the session.
     initialize_with_channels_response = client.InitializeWithChannels(
         nidcpower_types.InitializeWithChannelsRequest(
-            session_name=session_name,
-            resource_name=resource,
-            channels=channels,
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            channels=CHANNELS,
             reset=False,
-            option_string=options,
+            option_string=OPTIONS,
         )
     )
     vi = initialize_with_channels_response.vi
@@ -99,7 +99,7 @@ try:
 
     # set the voltage level.
     configure_voltage_level = client.ConfigureVoltageLevel(
-        nidcpower_types.ConfigureVoltageLevelRequest(vi=vi, level=voltage_level)
+        nidcpower_types.ConfigureVoltageLevelRequest(vi=vi, level=VOLTAGE_LEVEL)
     )
     check_for_error(vi, configure_voltage_level.status)
 
@@ -108,7 +108,7 @@ try:
         nidcpower_types.SetAttributeViInt32Request(
             vi=vi,
             attribute_id=nidcpower_types.NiDCPowerAttribute.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH,
-            attribute_value=record_length,
+            attribute_value=RECORD_LENGTH,
         )
     )
     check_for_error(vi, configure_measure_record_length.status)
@@ -165,7 +165,7 @@ try:
     print("\nReading values in loop. CTRL+C or Close window to stop.\n")
 
     # Create a buffer for fetching the values.
-    y_axis = [0.0] * (record_length * buffer_multiplier)
+    y_axis = [0.0] * (RECORD_LENGTH * BUFFER_MULTIPLIER)
     x_start = 0
 
     try:
@@ -177,18 +177,18 @@ try:
             plt.ylabel("Amplitude")
 
             fetch_multiple_response = client.FetchMultiple(
-                nidcpower_types.FetchMultipleRequest(vi=vi, timeout=10, count=record_length)
+                nidcpower_types.FetchMultipleRequest(vi=vi, timeout=10, count=RECORD_LENGTH)
             )
             check_for_error(vi, fetch_multiple_response.status)
 
             # Append the fetched values in the buffer.
             y_axis.extend(fetch_multiple_response.voltage_measurements)
-            y_axis = y_axis[record_length:]
+            y_axis = y_axis[RECORD_LENGTH:]
 
             # Updating the precision of the fetched values.
             y_axis_new = []
             for value in y_axis:
-                if value < voltage_level:
+                if value < VOLTAGE_LEVEL:
                     y_axis_new.append(math.floor(value * 100) / 100)
                 else:
                     y_axis_new.append(math.ceil(value * 100) / 100)
@@ -196,9 +196,9 @@ try:
             # Plotting
             y_axis = y_axis_new
             x_axis = np.arange(
-                start=x_start, stop=x_start + record_length * buffer_multiplier, step=1
+                start=x_start, stop=x_start + RECORD_LENGTH * BUFFER_MULTIPLIER, step=1
             )
-            x_start = x_start + record_length
+            x_start = x_start + RECORD_LENGTH
             plt.plot(x_axis, y_axis)
             plt.pause(0.001)
             time.sleep(0.1)
@@ -211,7 +211,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

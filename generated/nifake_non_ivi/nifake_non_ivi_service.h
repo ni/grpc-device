@@ -49,6 +49,7 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status CloseSecondarySession(::grpc::ServerContext* context, const CloseSecondarySessionRequest* request, CloseSecondarySessionResponse* response) override;
   ::grpc::Status GetCrossDriverSession(::grpc::ServerContext* context, const GetCrossDriverSessionRequest* request, GetCrossDriverSessionResponse* response) override;
+  ::grpc::Status GetLatestErrorMessage(::grpc::ServerContext* context, const GetLatestErrorMessageRequest* request, GetLatestErrorMessageResponse* response) override;
   ::grpc::Status GetStringAsReturnedValue(::grpc::ServerContext* context, const GetStringAsReturnedValueRequest* request, GetStringAsReturnedValueResponse* response) override;
   ::grpc::Status GetMarbleAttributeDouble(::grpc::ServerContext* context, const GetMarbleAttributeDoubleRequest* request, GetMarbleAttributeDoubleResponse* response) override;
   ::grpc::Status GetMarbleAttributeInt32(::grpc::ServerContext* context, const GetMarbleAttributeInt32Request* request, GetMarbleAttributeInt32Response* response) override;

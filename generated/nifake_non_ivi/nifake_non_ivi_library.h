@@ -21,6 +21,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   int32 Close(FakeHandle handle);
   int32 CloseSecondarySession(SecondarySessionHandle secondarySessionHandle);
   int32 GetCrossDriverSession(FakeHandle handle, int32* crossDriverSession);
+  int32 GetLatestErrorMessage(char message[], uInt32 size);
   const char* GetStringAsReturnedValue(char buf[512]);
   int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value);
   int32 GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value);
@@ -57,6 +58,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
   using ClosePtr = decltype(&niFakeNonIvi_Close);
   using CloseSecondarySessionPtr = decltype(&niFakeNonIvi_CloseSecondarySession);
   using GetCrossDriverSessionPtr = decltype(&niFakeNonIvi_GetCrossDriverSession);
+  using GetLatestErrorMessagePtr = decltype(&niFakeNonIvi_GetLatestErrorMessage);
   using GetStringAsReturnedValuePtr = decltype(&niFakeNonIvi_GetStringAsReturnedValue);
   using GetMarbleAttributeDoublePtr = decltype(&niFakeNonIvi_GetMarbleAttributeDouble);
   using GetMarbleAttributeInt32Ptr = decltype(&niFakeNonIvi_GetMarbleAttributeInt32);
@@ -93,6 +95,7 @@ class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInter
     ClosePtr Close;
     CloseSecondarySessionPtr CloseSecondarySession;
     GetCrossDriverSessionPtr GetCrossDriverSession;
+    GetLatestErrorMessagePtr GetLatestErrorMessage;
     GetStringAsReturnedValuePtr GetStringAsReturnedValue;
     GetMarbleAttributeDoublePtr GetMarbleAttributeDouble;
     GetMarbleAttributeInt32Ptr GetMarbleAttributeInt32;

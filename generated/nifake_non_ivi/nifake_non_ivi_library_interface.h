@@ -18,6 +18,7 @@ class NiFakeNonIviLibraryInterface {
   virtual int32 Close(FakeHandle handle) = 0;
   virtual int32 CloseSecondarySession(SecondarySessionHandle secondarySessionHandle) = 0;
   virtual int32 GetCrossDriverSession(FakeHandle handle, int32* crossDriverSession) = 0;
+  virtual int32 GetLatestErrorMessage(char message[], uInt32 size) = 0;
   virtual const char* GetStringAsReturnedValue(char buf[512]) = 0;
   virtual int32 GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value) = 0;
   virtual int32 GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value) = 0;

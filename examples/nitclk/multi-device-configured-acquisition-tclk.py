@@ -45,19 +45,16 @@ import nitclk_pb2 as nitclk_types
 import nitclk_pb2_grpc as grpc_tclk
 import numpy as np
 
-server_address = "localhost"
-server_port = "31763"
-resources = []
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE
 # model.
-resource1 = "SimulatedScope1"
-resource2 = "SimulatedScope2"
-options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe;"
-resources.extend([resource1, resource2])
+OPTIONS = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe;"
+RESOURCES = ["SimulatedScope1", "SimulatedScope2"]
 
 # Parameters
-channels = "0"
+CHANNELS = "0"
 previous_max_input_frequency = -10.0
 previous_min_sample_rate = -10
 previous_min_record_length = -10
@@ -68,16 +65,16 @@ num_records = 1
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    resources = sys.argv[3].split(",")
-    options = ""
+    RESOURCES = [r.strip() for r in sys.argv[3].split(",")]
+    OPTIONS = ""
 
 # Create the communication channel for the remote host (in this case we are connecting to a local
 # server) and create a connection to the NI-SCOPE service and NI-TClk service.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 niscope_client = grpc_scope.NiScopeStub(channel)
 nitclk_client = grpc_tclk.NiTClkStub(channel)
 sessions = []
@@ -99,14 +96,14 @@ def check_for_error(client, vi, status):
 try:
     # Initialize the session
     i = 1
-    for resource in resources:
+    for resource in RESOURCES:
         init_result = niscope_client.InitWithOptions(
             niscope_types.InitWithOptionsRequest(
                 session_name="session" + str(i),
                 resource_name=resource,
                 id_query=False,
                 reset_device=False,
-                option_string=options,
+                option_string=OPTIONS,
             )
         )
         i = i + 1
@@ -126,7 +123,7 @@ try:
         vertical_result = niscope_client.ConfigureVertical(
             niscope_types.ConfigureVerticalRequest(
                 vi=session,
-                channel_list=channels,
+                channel_list=CHANNELS,
                 range=10.0,
                 offset=0.0,
                 coupling=niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
@@ -140,7 +137,7 @@ try:
         channel_characteristics_result = niscope_client.ConfigureChanCharacteristics(
             niscope_types.ConfigureChanCharacteristicsRequest(
                 vi=session,
-                channel_list=channels,
+                channel_list=CHANNELS,
                 input_impedance=1000000.0,
                 max_input_frequency=0.0,
             )
@@ -277,7 +274,7 @@ try:
             for i in range(len(sessions)):
                 fetch_result = niscope_client.Fetch(
                     niscope_types.FetchRequest(
-                        vi=sessions[i], channel_list=channels, timeout=1, num_samples=500
+                        vi=sessions[i], channel_list=CHANNELS, timeout=1, num_samples=500
                     )
                 )
                 check_for_error(niscope_client, session, fetch_result.status)
@@ -300,14 +297,14 @@ try:
         record_length_result = niscope_client.ActualRecordLength(
             niscope_types.ActualRecordLengthRequest(vi=session)
         )
-        print(resources[i])
+        print(RESOURCES[i])
         print("Actual Sample Rate = %f" % sample_rate_result.sample_rate)
         print("Actual Record Length = %f\n" % record_length_result.record_length)
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

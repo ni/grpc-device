@@ -65,6 +65,21 @@ get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& hand
   return response;
 }
 
+GetLatestErrorMessageResponse
+get_latest_error_message(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetLatestErrorMessageRequest{};
+
+  auto response = GetLatestErrorMessageResponse{};
+
+  raise_if_error(
+      stub->GetLatestErrorMessage(&context, request, &response));
+
+  return response;
+}
+
 GetStringAsReturnedValueResponse
 get_string_as_returned_value(const StubPtr& stub)
 {

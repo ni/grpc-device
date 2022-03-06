@@ -20,6 +20,7 @@ service NiFakeNonIvi {
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc CloseSecondarySession(CloseSecondarySessionRequest) returns (CloseSecondarySessionResponse);
   rpc GetCrossDriverSession(GetCrossDriverSessionRequest) returns (GetCrossDriverSessionResponse);
+  rpc GetLatestErrorMessage(GetLatestErrorMessageRequest) returns (GetLatestErrorMessageResponse);
   rpc GetStringAsReturnedValue(GetStringAsReturnedValueRequest) returns (GetStringAsReturnedValueResponse);
   rpc GetMarbleAttributeDouble(GetMarbleAttributeDoubleRequest) returns (GetMarbleAttributeDoubleResponse);
   rpc GetMarbleAttributeInt32(GetMarbleAttributeInt32Request) returns (GetMarbleAttributeInt32Response);
@@ -136,6 +137,14 @@ message GetCrossDriverSessionResponse {
   nidevice_grpc.Session cross_driver_session = 2;
 }
 
+message GetLatestErrorMessageRequest {
+}
+
+message GetLatestErrorMessageResponse {
+  int32 status = 1;
+  string message = 2;
+}
+
 message GetStringAsReturnedValueRequest {
 }
 
@@ -192,6 +201,7 @@ message InitRequest {
 message InitResponse {
   int32 status = 1;
   nidevice_grpc.Session handle = 2;
+  string error_message = 3;
 }
 
 message InitFromCrossDriverSessionRequest {

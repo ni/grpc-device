@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nirfmx_errors.h"
 #include <server/converters.h>
 
 namespace nirfmxbluetooth_grpc {
@@ -2404,6 +2405,11 @@ namespace nirfmxbluetooth_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+        response->set_is_new_session(is_new_session);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -2435,6 +2441,10 @@ namespace nirfmxbluetooth_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }

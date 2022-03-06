@@ -25,6 +25,7 @@ using namespace nidevice_grpc::experimental::client;
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& handle);
 CloseSecondarySessionResponse close_secondary_session(const StubPtr& stub, const nidevice_grpc::Session& secondary_session_handle);
 GetCrossDriverSessionResponse get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& handle);
+GetLatestErrorMessageResponse get_latest_error_message(const StubPtr& stub);
 GetStringAsReturnedValueResponse get_string_as_returned_value(const StubPtr& stub);
 GetMarbleAttributeDoubleResponse get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleDoubleAttribute, pb::int32>& attribute);
 GetMarbleAttributeInt32Response get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& handle, const simple_variant<MarbleInt32Attribute, pb::int32>& attribute);

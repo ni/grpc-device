@@ -44,21 +44,21 @@ from grpclib.client import Channel
 from grpclib.exceptions import GRPCError
 from nidevice import nidaqmx_grpc
 
-server_address = "localhost"
-server_port = "31763"
-lines = "Dev1/port0"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+LINES = "Dev1/port0"
 
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    lines = sys.argv[3]
+    LINES = sys.argv[3]
 
 
 async def _main():
     # Create a gRPC channel + await daq_service.
-    channel = Channel(host=server_address, port=server_port)
+    channel = Channel(host=SERVER_ADDRESS, port=SERVER_PORT)
     daq_service = nidaqmx_grpc.NiDAQmxStub(channel)
     task = None
 
@@ -76,7 +76,7 @@ async def _main():
         await raise_if_error(
             await daq_service.create_d_i_chan(
                 task=task,
-                lines=lines,
+                lines=LINES,
                 line_grouping_raw=nidaqmx_grpc.LineGrouping.LINE_GROUPING_CHAN_FOR_ALL_LINES,
             )
         )

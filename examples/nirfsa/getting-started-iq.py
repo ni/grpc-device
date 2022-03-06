@@ -23,7 +23,7 @@ Running from command line:
 
 Server machine's IP address, port number, and physical channel name can be passed as separate
 command line arguments.
-  > python getting-started-iq.py <server_address> <port_number> <physical_channel_name>
+  > python getting-started-iq.py <server_address> <port_number> <resource_name>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "SimulatedRFSA" as the physical channel name.
 """
@@ -35,27 +35,27 @@ import grpc
 import nirfsa_pb2 as nirfsa_types
 import nirfsa_pb2_grpc as grpc_nirfsa
 
-server_address = "localhost"
-server_port = "31763"
-session_name = "NI-RFSA-Session"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+SESSION_NAME = "NI-RFSA-Session"
 
 # Resource name, channel name and options for a simulated 5663 client.
-resource = "SimulatedRFSA"
-options = "Simulate=1,DriverSetup=Model:5663"
+RESOURCE = "SimulatedRFSA"
+OPTIONS = "Simulate=1,DriverSetup=Model:5663"
 
 NUMBER_OF_SAMPLES = 1000
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 # Create a gRPC channel + client.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfsa.NiRFSAStub(channel)
 vi = None
 
@@ -75,7 +75,7 @@ try:
     init_response = raise_if_error(
         client.InitWithOptions(
             nirfsa_types.InitWithOptionsRequest(
-                session_name=session_name, resource_name=resource, option_string=options
+                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
             )
         )
     )
@@ -138,7 +138,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nifake_non_ivi_errors.h"
 #include <server/converters.h>
 #include <server/callback_router.h>
 #include <server/server_reactor.h>
@@ -21,6 +22,9 @@ namespace nifake_non_ivi_grpc {
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
+
+  const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
@@ -111,6 +115,45 @@ namespace nifake_non_ivi_grpc {
         response->mutable_cross_driver_session()->set_id(session_id);
       }
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetLatestErrorMessage(::grpc::ServerContext* context, const GetLatestErrorMessageRequest* request, GetLatestErrorMessageResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+
+      while (true) {
+        auto status = library_->GetLatestErrorMessage(nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+
+        std::string message;
+        if (size > 0) {
+            message.resize(size - 1);
+        }
+        status = library_->GetLatestErrorMessage((char*)message.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_message(message);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_message()));
+        }
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -308,6 +351,10 @@ namespace nifake_non_ivi_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_handle()->set_id(session_id);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }

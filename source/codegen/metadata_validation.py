@@ -76,6 +76,7 @@ PARAM_SCHEMA = Schema(
         Optional("cross_driver_session"): str,
         Optional("grpc_name"): str,
         Optional("return_value"): bool,
+        Optional("get_last_error"): bool,
     }
 )
 

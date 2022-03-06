@@ -29,38 +29,36 @@ import matplotlib.pyplot as plt
 import nifgen_pb2 as nifgen_types
 import nifgen_pb2_grpc as grpc_nifgen
 
-server_address = "localhost"
-server_port = "31763"
-session_name = "NI-FGEN-Session"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+SESSION_NAME = "NI-FGEN-Session"
 
 # Resource name and options for a simulated 5441 client. Change them according to the NI-FGEN model.
-resource = "SimulatedFGEN"
-options = "Simulate=1, DriverSetup=Model:5441; BoardType:PXI"
+RESOURCE = "SimulatedFGEN"
+OPTIONS = "Simulate=1, DriverSetup=Model:5441; BoardType:PXI"
 
 # parameters
-channel_name = "0"
-sample_rate = 40e6
-gain = 1.0
-dc_offset = 0.0
-waveform_size = 64
+CHANNEL_NAME = "0"
+SAMPLE_RATE = 40e6
+GAIN = 1.0
+DC_OFFSET = 0.0
+WAVEFORM_SIZE = 64
 
 # initialize sine waveform data
-sine = []
-for i in range(waveform_size):
-    sine.append(math.sin((i / waveform_size) * 2 * math.pi))
+SINE = [math.sin((i / WAVEFORM_SIZE) * 2 * math.pi) for i in range(WAVEFORM_SIZE)]
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 # Create the communication channel for the remote host and create connections to the NI-FGEN and
 # session services.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 nifgen_client = grpc_nifgen.NiFgenStub(channel)
 
 
@@ -77,7 +75,7 @@ try:
     # Initalize NI-FGEN session
     init_with_options_resp = nifgen_client.InitWithOptions(
         nifgen_types.InitWithOptionsRequest(
-            session_name=session_name, resource_name=resource, option_string=options
+            session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
         )
     )
     vi = init_with_options_resp.vi
@@ -85,7 +83,7 @@ try:
 
     # Configure channels
     config_channels_resp = nifgen_client.ConfigureChannels(
-        nifgen_types.ConfigureChannelsRequest(vi=vi, channels=channel_name)
+        nifgen_types.ConfigureChannelsRequest(vi=vi, channels=CHANNEL_NAME)
     )
     check_for_error(vi, config_channels_resp.status)
 
@@ -100,7 +98,7 @@ try:
     # Create waveform
     create_waveform_resp = nifgen_client.CreateWaveformF64(
         nifgen_types.CreateWaveformF64Request(
-            vi=vi, channel_name=channel_name, waveform_data_array=sine
+            vi=vi, channel_name=CHANNEL_NAME, waveform_data_array=SINE
         )
     )
     waveform_handle = create_waveform_resp.waveform_handle
@@ -110,10 +108,10 @@ try:
     config_waveform_resp = nifgen_client.ConfigureArbWaveform(
         nifgen_types.ConfigureArbWaveformRequest(
             vi=vi,
-            channel_name=channel_name,
+            channel_name=CHANNEL_NAME,
             waveform_handle=waveform_handle,
-            gain=gain,
-            offset=dc_offset,
+            gain=GAIN,
+            offset=DC_OFFSET,
         )
     )
     check_for_error(vi, config_waveform_resp.status)
@@ -128,13 +126,13 @@ try:
 
     # Configure sample rate
     config_sample_rate_resp = nifgen_client.ConfigureSampleRate(
-        nifgen_types.ConfigureSampleRateRequest(vi=vi, sample_rate=sample_rate)
+        nifgen_types.ConfigureSampleRateRequest(vi=vi, sample_rate=SAMPLE_RATE)
     )
     check_for_error(vi, config_sample_rate_resp.status)
 
     # Configure output enabled
     config_outenbl_resp = nifgen_client.ConfigureOutputEnabled(
-        nifgen_types.ConfigureOutputEnabledRequest(vi=vi, channel_name=channel_name, enabled=True)
+        nifgen_types.ConfigureOutputEnabledRequest(vi=vi, channel_name=CHANNEL_NAME, enabled=True)
     )
     check_for_error(vi, config_outenbl_resp.status)
 
@@ -142,14 +140,14 @@ try:
     init_gen_resp = nifgen_client.InitiateGeneration(nifgen_types.InitiateGenerationRequest(vi=vi))
     check_for_error(vi, init_gen_resp.status)
 
-    print(f"Generating sine wave at {sample_rate} Hz...")
+    print(f"Generating sine wave at {SAMPLE_RATE} Hz...")
     print("Close the window or press Ctrl+C to stop generation")
 
     try:
         # Plot the sine wave
         fig = plt.gcf()
         fig.canvas.manager.set_window_title("Sample Waveform")
-        plt.plot(sine)
+        plt.plot(SINE)
         plt.suptitle("Close the window to stop generation", fontsize=10)
         plt.xlabel("Samples")
         plt.ylabel("Amplitude")
@@ -161,7 +159,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
