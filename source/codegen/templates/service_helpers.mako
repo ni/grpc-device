@@ -299,7 +299,7 @@ ${initialize_len_input_param(parameter, parameters)}
 ${initialize_two_dimension_input_param(function_name, parameter, parameters)}
 % elif 'hardcoded_value' in parameter:
 ${initialize_hardcoded_parameter(parameter)}
-% elif parameter.get('pointer', False):
+% elif service_helpers.is_size_param_passed_by_ptr(parameter):
 ${initialize_pointer_input_parameter(parameter)}
 % else:
 ${initialize_standard_input_param(function_name, parameter)}

@@ -76,6 +76,7 @@ PARAM_SCHEMA = Schema(
         Optional("cross_driver_session"): str,
         Optional("grpc_name"): str,
         Optional("return_value"): bool,
+        Optional("supports_standard_copy_convert"): bool,
         Optional("get_last_error"): bool,
     }
 )
@@ -219,17 +220,6 @@ def _validate_function(function_name: str, metadata: dict):
                             raise Exception(
                                 f"Failed to validate callback_param with name {callback_param['name']}"
                             )
-                if parameter.get("pointer", False):
-                    # This is technically legal in other cdses but we should only need it for
-                    # hardcoded values/callback tokens
-                    if "hardcoded_value" not in parameter and "callback_token" not in parameter:
-                        raise Exception(
-                            f"parameter {parameter['name']} is pointer but not hardcoded_value or callback_token!"
-                        )
-                    if parameter.get("include_in_proto", True):
-                        raise Exception(
-                            f"parameter {parameter['name']} is pointer but is include_in_proto!"
-                        )
                 if "hardcoded_value" in parameter:
                     if parameter.get("include_in_proto", True):
                         raise Exception(

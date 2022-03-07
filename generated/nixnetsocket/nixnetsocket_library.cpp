@@ -21,6 +21,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   if (!loaded) {
     return;
   }
+  function_pointers_.Bind = reinterpret_cast<BindPtr>(shared_library_.get_function_pointer("nxbind"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("nxclose"));
   function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
   function_pointers_.GetLastErrorStr = reinterpret_cast<GetLastErrorStrPtr>(shared_library_.get_function_pointer("nxgetlasterrorstr"));
@@ -36,6 +37,18 @@ NiXnetSocketLibrary::~NiXnetSocketLibrary()
   return shared_library_.function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
+}
+
+int32_t NiXnetSocketLibrary::Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen)
+{
+  if (!function_pointers_.Bind) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxbind.");
+  }
+#if defined(_MSC_VER)
+  return nxbind(socket, name, namelen);
+#else
+  return function_pointers_.Bind(socket, name, namelen);
+#endif
 }
 
 int32_t NiXnetSocketLibrary::Close(nxSOCKET socket)
