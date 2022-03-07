@@ -136,6 +136,9 @@ foreach(api ${nidrivers})
     "${metadata_dir}/${api}/functions.py"
     "${metadata_dir}/${api}/functions_addon.py"
     "${metadata_dir}/${api}/__init__.py")
+  if (EXISTS "${metadata_dir}/${api}/custom_proto.mako")
+    set(codegen_dependencies ${codegen_dependencies} "${metadata_dir}/${api}/custom_proto.mako")
+  endif()
   set(all_codegen_dependencies
     ${all_codegen_dependencies}
     ${codegen_dependencies}
