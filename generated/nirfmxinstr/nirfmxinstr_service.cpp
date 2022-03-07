@@ -2932,7 +2932,7 @@ namespace nirfmxinstr_grpc {
   NiRFmxInstrFeatureToggles::NiRFmxInstrFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxinstr", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxinstr", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxinstr_grpc

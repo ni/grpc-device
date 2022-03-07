@@ -14668,7 +14668,7 @@ namespace nirfmxspecan_grpc {
   NiRFmxSpecAnFeatureToggles::NiRFmxSpecAnFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxspecan", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxspecan", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxspecan_grpc
