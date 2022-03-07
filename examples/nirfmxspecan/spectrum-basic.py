@@ -74,6 +74,15 @@ def _format_frequency(f):
     return f"{f:.3f} G{suffix}"
 
 
+def raise_if_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+    return response
+
+
 def raise_if_error(response):
     """Raise an exception if an error was returned."""
     if response.status != 0:

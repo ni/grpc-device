@@ -76,6 +76,15 @@ instr_client = grpc_nirfmxinstr.NiRFmxInstrStub(channel)
 instr = None
 
 
+def raise_if_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+    return response
+
+
 def raise_if_error(response):
     """Raise an exception if an error was returned."""
     if response.status != 0:
@@ -93,7 +102,7 @@ def raise_if_error(response):
 
 
 try:
-    initialize_response = raise_if_error(
+    initialize_response = raise_if_initialization_error(
         instr_client.Initialize(
             nirfmxinstr_types.InitializeRequest(
                 session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
