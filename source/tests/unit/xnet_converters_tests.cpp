@@ -101,13 +101,14 @@ TEST(XnetConvertersTests, IPv6GrpcSockAddrTooLongAddress_ConvertFromGrpc_Creates
   EXPECT_IPV6_ADDR(converted_addr, PORT, FLOW_INFO, TRUNCATED_ADDRESS, SCOPE_ID);
 }
 
-TEST(XnetConvertersTests, UnsetGrpcSockAddr_ConvertFromGrpc_CreatesZeroedOutSockAddr)
+TEST(XnetConvertersTests, UnsetGrpcSockAddr_ConvertFromGrpc_CreatesEmptySockAddrWithUnspecifiedAddressFamily)
 {
   auto grpc_sock_addr = SockAddr{};
 
   auto converted_addr = convert_from_grpc<nxsockaddr>(grpc_sock_addr);
   auto addr_ptr = static_cast<nxsockaddr*>(converted_addr);
 
+  // Note: these are the values for a zeroed out nxsockaddr struct from our initial std::memset.
   EXPECT_EQ(0, converted_addr.size());
   EXPECT_EQ(nxAF_UNSPEC, addr_ptr->sa_family);
 }
