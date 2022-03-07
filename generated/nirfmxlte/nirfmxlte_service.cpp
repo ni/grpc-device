@@ -3107,27 +3107,6 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxLTEService::CfgSubblockFrequencyDefinition(::grpc::ServerContext* context, const CfgSubblockFrequencyDefinitionRequest* request, CfgSubblockFrequencyDefinitionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      int32 subblock_frequency_definition = request->subblock_frequency_definition();
-      auto status = library_->CfgSubblockFrequencyDefinition(instrument, selector_string, subblock_frequency_definition);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::CfgTransmitAntennaToAnalyze(::grpc::ServerContext* context, const CfgTransmitAntennaToAnalyzeRequest* request, CfgTransmitAntennaToAnalyzeResponse* response)
   {
     if (context->IsCancelled()) {

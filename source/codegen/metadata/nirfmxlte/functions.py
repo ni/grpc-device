@@ -2695,27 +2695,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'CfgSubblockFrequencyDefinition': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'subblockFrequencyDefinition',
-                'type': 'int32'
-            }
-        ],
-        'returns': 'int32'
-    },
     'CfgTransmitAntennaToAnalyze': {
         'parameters': [
             {

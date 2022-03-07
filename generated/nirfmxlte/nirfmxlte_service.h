@@ -133,7 +133,6 @@ public:
   ::grpc::Status CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response) override;
   ::grpc::Status CfgReferenceLevel(::grpc::ServerContext* context, const CfgReferenceLevelRequest* request, CfgReferenceLevelResponse* response) override;
   ::grpc::Status CfgSoftwareEdgeTrigger(::grpc::ServerContext* context, const CfgSoftwareEdgeTriggerRequest* request, CfgSoftwareEdgeTriggerResponse* response) override;
-  ::grpc::Status CfgSubblockFrequencyDefinition(::grpc::ServerContext* context, const CfgSubblockFrequencyDefinitionRequest* request, CfgSubblockFrequencyDefinitionResponse* response) override;
   ::grpc::Status CfgTransmitAntennaToAnalyze(::grpc::ServerContext* context, const CfgTransmitAntennaToAnalyzeRequest* request, CfgTransmitAntennaToAnalyzeResponse* response) override;
   ::grpc::Status CfgeNodeBCategory(::grpc::ServerContext* context, const CfgeNodeBCategoryRequest* request, CfgeNodeBCategoryResponse* response) override;
   ::grpc::Status CheckMeasurementStatus(::grpc::ServerContext* context, const CheckMeasurementStatusRequest* request, CheckMeasurementStatusResponse* response) override;

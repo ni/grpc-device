@@ -107,7 +107,6 @@ service NiRFmxLTE {
   rpc CfgRFAttenuation(CfgRFAttenuationRequest) returns (CfgRFAttenuationResponse);
   rpc CfgReferenceLevel(CfgReferenceLevelRequest) returns (CfgReferenceLevelResponse);
   rpc CfgSoftwareEdgeTrigger(CfgSoftwareEdgeTriggerRequest) returns (CfgSoftwareEdgeTriggerResponse);
-  rpc CfgSubblockFrequencyDefinition(CfgSubblockFrequencyDefinitionRequest) returns (CfgSubblockFrequencyDefinitionResponse);
   rpc CfgTransmitAntennaToAnalyze(CfgTransmitAntennaToAnalyzeRequest) returns (CfgTransmitAntennaToAnalyzeResponse);
   rpc CfgeNodeBCategory(CfgeNodeBCategoryRequest) returns (CfgeNodeBCategoryResponse);
   rpc CheckMeasurementStatus(CheckMeasurementStatusRequest) returns (CheckMeasurementStatusResponse);
@@ -339,7 +338,6 @@ enum NiRFmxLTEAttribute {
   NIRFMXLTE_ATTRIBUTE_PUSCH_DELTA_SEQUENCE_SHIFT = 3145761;
   NIRFMXLTE_ATTRIBUTE_PUSCH_NUMBER_OF_RESOURCE_BLOCKS = 3145762;
   NIRFMXLTE_ATTRIBUTE_NUMBER_OF_SUBBLOCKS = 3145763;
-  NIRFMXLTE_ATTRIBUTE_SUBBLOCK_FREQUENCY_DEFINITION = 3145764;
   NIRFMXLTE_ATTRIBUTE_AUTO_RESOURCE_BLOCK_DETECTION_ENABLED = 3145766;
   NIRFMXLTE_ATTRIBUTE_PUSCH_POWER = 3145767;
   NIRFMXLTE_ATTRIBUTE_AUTO_DMRS_DETECTION_ENABLED = 3145768;
@@ -1441,8 +1439,6 @@ enum NiRFmxLTEInt32AttributeValues {
   NIRFMXLTE_INT32_SRS_ENABLED_TRUE = 1;
   NIRFMXLTE_INT32_SRS_MAXIMUM_UP_PTS_ENABLED_FALSE = 0;
   NIRFMXLTE_INT32_SRS_MAXIMUM_UP_PTS_ENABLED_TRUE = 1;
-  NIRFMXLTE_INT32_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE = 0;
-  NIRFMXLTE_INT32_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE = 1;
   NIRFMXLTE_INT32_TRANSMITTER_ARCHITECTURE_LO_PER_COMPONENT_CARRIER = 0;
   NIRFMXLTE_INT32_TRANSMITTER_ARCHITECTURE_LO_PER_SUBBLOCK = 1;
   NIRFMXLTE_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
@@ -2631,16 +2627,6 @@ message CfgSoftwareEdgeTriggerRequest {
 }
 
 message CfgSoftwareEdgeTriggerResponse {
-  int32 status = 1;
-}
-
-message CfgSubblockFrequencyDefinitionRequest {
-  nidevice_grpc.Session instrument = 1;
-  string selector_string = 2;
-  int32 subblock_frequency_definition = 3;
-}
-
-message CfgSubblockFrequencyDefinitionResponse {
   int32 status = 1;
 }
 
