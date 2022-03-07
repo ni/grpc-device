@@ -86,7 +86,7 @@ FUNCTION_SCHEMA = Schema(
     {
         "parameters": [PARAM_SCHEMA],
         "returns": str,
-        Optional("cname"): Or(str, bool),
+        Optional("cname"): str,
         Optional("codegen_method"): And(
             str, lambda s: s in ("public", "private", "CustomCode", "no", "python-only")
         ),
