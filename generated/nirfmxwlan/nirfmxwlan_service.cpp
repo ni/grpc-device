@@ -7813,7 +7813,7 @@ namespace nirfmxwlan_grpc {
   NiRFmxWLANFeatureToggles::NiRFmxWLANFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxwlan", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxwlan", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxwlan_grpc
