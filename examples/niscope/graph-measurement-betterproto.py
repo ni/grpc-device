@@ -46,27 +46,27 @@ from grpclib.client import Channel
 from grpclib.exceptions import GRPCError
 from nidevice import niscope_grpc
 
-server_address = "localhost"
-server_port = "31763"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE
 # model.
-resource = "SimulatedScope"
-options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
+RESOURCE = "SimulatedScope"
+OPTIONS = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
 
-channels = "0"
+CHANNELS = "0"
+
+# set to false to disable graph and increase speed
+SHOW_PLOT = True
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) == 4:
-    resource = sys.argv[3]
-    options = ""
-
-# set to false to disable graph and increase speed
-show_plot = True
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 # Handle closing of plot window.
 closed = False
@@ -84,22 +84,17 @@ async def check_for_error(scope_service, vi, result):
         raise Exception(error_result.error_message)
 
 
-# Entry Points
-channel = None
-
-
 async def open_grpc_scope(resource_name: str, server_address: str, server_port):
     """Initialize the scope."""
-    global channel
     channel = Channel(host=server_address, port=server_port)
     scope_service = niscope_grpc.NiScopeStub(channel)
 
     init_result = await scope_service.init_with_options(
         session_name="demoSession",
-        resource_name=resource,
+        resource_name=RESOURCE,
         id_query=False,
         reset_device=False,
-        option_string=options,
+        option_string=OPTIONS,
     )
     vi = init_result.vi
     await check_for_error(scope_service, vi, init_result)
@@ -122,7 +117,7 @@ async def configure_grpc_scope(scope_service: niscope_grpc.NiScopeStub, channel,
     # Configure Vertical
     config_vertical_result = await scope_service.configure_vertical(
         vi=vi,
-        channel_list=channels,
+        channel_list=CHANNELS,
         range=10.0,
         offset=0,
         coupling_raw=niscope_grpc.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
@@ -141,7 +136,7 @@ async def configure_grpc_scope(scope_service: niscope_grpc.NiScopeStub, channel,
 
     configure_trigger_result = await scope_service.configure_trigger_edge(
         vi=vi,
-        trigger_source=channels,
+        trigger_source=CHANNELS,
         level=0.00,
         slope_raw=niscope_grpc.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
         trigger_coupling_raw=niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
@@ -151,7 +146,7 @@ async def configure_grpc_scope(scope_service: niscope_grpc.NiScopeStub, channel,
 
     set_units_result = await scope_service.set_attribute_vi_int32(
         vi=vi,
-        channel_list=channels,
+        channel_list=CHANNELS,
         attribute_id=niscope_grpc.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
         value_raw=niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE,
     )
@@ -160,7 +155,7 @@ async def configure_grpc_scope(scope_service: niscope_grpc.NiScopeStub, channel,
 
 async def measure_grpc_scope(scope_service: niscope_grpc.NiScopeStub, channel, vi):
     """Acquire data."""
-    if show_plot:
+    if SHOW_PLOT:
         fig = plt.gcf()  # Setup a plot to draw the captured waveform
         fig.show()
         fig.canvas.draw()
@@ -169,7 +164,7 @@ async def measure_grpc_scope(scope_service: niscope_grpc.NiScopeStub, channel, v
     print("\nReading values in loop. CTRL+C to stop.\n")
     try:
         while not closed:
-            if show_plot:
+            if SHOW_PLOT:
                 plt.clf()  # clear from last iteration
                 plt.axis([0, 100, -6, 6])  # setup axis again
 
@@ -182,7 +177,7 @@ async def measure_grpc_scope(scope_service: niscope_grpc.NiScopeStub, channel, v
             print(values)
 
             # Update the plot with the new waveform
-            if show_plot:
+            if SHOW_PLOT:
                 plt.plot(read_result.waveform[0:100])
                 fig.canvas.draw()
                 plt.pause(0.001)
@@ -190,7 +185,7 @@ async def measure_grpc_scope(scope_service: niscope_grpc.NiScopeStub, channel, v
             # Fetch the measured average frequency
             fetch_result = await scope_service.fetch_measurement_stats(
                 vi=vi,
-                channel_list=channels,
+                channel_list=CHANNELS,
                 timeout=1,
                 scalar_meas_function_raw=niscope_grpc.ScalarMeasurement.SCALAR_MEASUREMENT_NISCOPE_VAL_AVERAGE_FREQUENCY,
             )
@@ -203,15 +198,12 @@ async def measure_grpc_scope(scope_service: niscope_grpc.NiScopeStub, channel, v
         pass
 
 
-grpc_scope = ()
-
-
 async def _main():
+    channel = None
     try:
-        global grpc_scope
-        grpc_scope = await open_grpc_scope(resource, server_address, server_port)
-        await configure_grpc_scope(*grpc_scope)
-        await measure_grpc_scope(*grpc_scope)
+        scope_service, channel, vi = await open_grpc_scope(RESOURCE, SERVER_ADDRESS, SERVER_PORT)
+        await configure_grpc_scope(scope_service, channel, vi)
+        await measure_grpc_scope(scope_service, channel, vi)
     except GRPCError as e:
         if e.status.name == "UNIMPLEMENTED":
             print("The operation is not implemented or is not supported/enabled in this service")
@@ -220,12 +212,12 @@ async def _main():
     except Exception as e:
         print(str(e))
     finally:
-        if grpc_scope:
-            await open_grpc_scope(*grpc_scope)
-        channel.close()
+        if channel:
+            await open_grpc_scope(scope_service, channel, vi)
+            channel.close()
 
 
-## Run the main
+# Run the main
 loop = asyncio.get_event_loop()
 future = asyncio.ensure_future(_main())
 loop.run_until_complete(future)

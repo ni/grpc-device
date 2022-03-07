@@ -28,6 +28,25 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetLatestErrorMessage': {
+        'parameters': [
+            {
+                'direction': 'out',
+                'name': 'message',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetStringAsReturnedValue': {
         'status_expression': 'string_out ? 0 : -1',
         'parameters': [
@@ -130,6 +149,12 @@ functions = {
                 'direction': 'out',
                 'name': 'handle',
                 'type': 'FakeHandle'
+            },
+            {
+                'direction': 'out',
+                'get_last_error': True,
+                'name': 'errorMessage',
+                'type': 'char[]'
             }
         ],
         'returns': 'int32'

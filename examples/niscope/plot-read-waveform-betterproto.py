@@ -44,24 +44,24 @@ from grpclib.client import Channel
 from grpclib.exceptions import GRPCError
 from nidevice import niscope_grpc
 
-server_address = "localhost"
-server_port = "31763"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE
 # model.
-resource = "SimulatedScope"
-options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
+RESOURCE = "SimulatedScope"
+OPTIONS = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe; MemorySize:1610612736"
 
-channels = "0"
+CHANNELS = "0"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) == 4:
-    resource = sys.argv[3]
-    options = ""
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 # Error Reporting
 async def check_for_error(scope_service, vi, result):
@@ -76,16 +76,16 @@ async def perform_acquire():
     try:
         # Create the communcation channel for the remote host (in this case we are connecting to a
         # local server) and create a connection to the niScope service
-        channel = Channel(host=server_address, port=server_port)
+        channel = Channel(host=SERVER_ADDRESS, port=SERVER_PORT)
         scope_service = niscope_grpc.NiScopeStub(channel)
 
         # Initialize the scope
         init_result = await scope_service.init_with_options(
             session_name="demoSession",
-            resource_name=resource,
+            resource_name=RESOURCE,
             id_query=False,
             reset_device=False,
-            option_string=options,
+            option_string=OPTIONS,
         )
         vi = init_result.vi
         await check_for_error(scope_service, vi, init_result)
@@ -104,7 +104,7 @@ async def perform_acquire():
         # Configure vertical timing
         vertical_result = await scope_service.configure_vertical(
             vi=vi,
-            channel_list=channels,
+            channel_list=CHANNELS,
             range=10.0,
             offset=0,
             coupling_raw=niscope_grpc.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
@@ -115,7 +115,7 @@ async def perform_acquire():
 
         conf_trigger_edge_result = await scope_service.configure_trigger_edge(
             vi=vi,
-            trigger_source=channels,
+            trigger_source=CHANNELS,
             level=0.00,
             holdoff=0.0,
             trigger_coupling_raw=niscope_grpc.TriggerCoupling.TRIGGER_COUPLING_NISCOPE_VAL_DC,
@@ -125,14 +125,14 @@ async def perform_acquire():
 
         set_result = await scope_service.set_attribute_vi_int32(
             vi=vi,
-            channel_list=channels,
+            channel_list=CHANNELS,
             attribute_id=niscope_grpc.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
             value_raw=niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE,
         )
         await check_for_error(scope_service, vi, set_result)
 
         read_result = await scope_service.read(
-            vi=vi, channel_list=channels, timeout=10000, num_samples=100000
+            vi=vi, channel_list=CHANNELS, timeout=10000, num_samples=100000
         )
         await check_for_error(scope_service, vi, read_result)
 

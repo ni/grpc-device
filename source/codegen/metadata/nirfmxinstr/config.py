@@ -9,7 +9,7 @@ config = {
     'namespace_component': 'nirfmxinstr',
     'close_function': 'Close',
     'custom_types': [],
-    'additional_headers': { "ivi.h": ["service.h"] },
+    'additional_headers': { 'ivi.h': ['service.h'], 'custom/nirfmx_errors.h': ['service.cpp'] },
     'type_to_grpc_type': {
         "char[]": "string",
         "float32": "float",
@@ -28,7 +28,7 @@ config = {
         "NIComplexDouble": "nidevice_grpc.NIComplexNumber",
         "CVIAbsoluteTime": "google.protobuf.Timestamp",
     },
-    'code_readiness': 'NextRelease',
+    'code_readiness': 'Release',
     'feature_toggles': {},
     'driver_name': 'NI-RFMXINSTR',
     'extra_errors_used': [

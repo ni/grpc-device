@@ -37,10 +37,7 @@ ${call_library_method(
       const std::string& grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_${session_output_var_name}()->set_id(session_id);
-      }
+${populate_response(output_parameters=output_parameters, init_method=True)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -110,14 +107,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-% if output_parameters:
-        if (status_ok(status)) {
-<%block filter="common_helpers.indent(1)">\
-${set_response_values(output_parameters)}\
-</%block>\
-        }
-% endif
+${populate_response(output_parameters=output_parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -163,14 +153,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-% if output_parameters:
-        if (status_ok(status)) {
-<%block filter="common_helpers.indent(1)">\
-${set_response_values(output_parameters)}\
-</%block>\
-        }
-% endif
+${populate_response(output_parameters=output_parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -203,7 +186,7 @@ ${set_response_values(output_parameters)}\
             ${response_type} callback_response;
             auto response = &callback_response;
 <%block filter="common_helpers.indent(2)">\
-${set_response_values(output_parameters=response_parameters)}\
+${set_response_values(output_parameters=response_parameters, init_method=False)}\
 </%block>\
             queue_write(callback_response);
             return 0;
@@ -259,12 +242,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args(parameters),
   library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
 }\
-      response->set_status(status);
-% if output_parameters:
-      if (status_ok(status)) {
-${set_response_values(output_parameters=output_parameters)}\
-      }
-% endif
+${populate_response(output_parameters=output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -288,12 +266,7 @@ ${call_library_method(
   function_data=function_data, 
   arg_string=service_helpers.create_args(parameters))
 }\
-      response->set_status(status);
-% if output_parameters:
-      if (status_ok(status)) {
-${set_response_values(output_parameters=output_parameters)}\
-      }
-% endif
+${populate_response(output_parameters=output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -656,7 +629,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Initialize the output parameters for an API call.
 <%def name="initialize_output_params(output_parameters)">\
 <%
-  output_parameters = [p for p in output_parameters if not common_helpers.is_return_value(p)]
+  output_parameters = common_helpers.get_driver_api_params(output_parameters)
 %>\
 % for parameter in output_parameters:
 <%
@@ -710,8 +683,35 @@ ${initialize_standard_input_param(function_name, parameter)}
 % endfor
 </%def>
 
+
+## Handles populating the response message after calling the driver API.
+<%def name="populate_response(output_parameters, indent_level=0, init_method=False)">\
+<%
+  get_last_error_output = service_helpers.get_last_error_output_param(output_parameters)
+  normal_outputs = [p for p in output_parameters if p is not get_last_error_output]
+%>\
+<%block filter="common_helpers.indent(indent_level)">\
+      response->set_status(status);
+%if output_parameters:
+      if (status_ok(status)) {
+${set_response_values(normal_outputs, init_method)}\
+      }
+%   if get_last_error_output:
+<%
+  get_last_error_output_name = common_helpers.get_grpc_field_name(get_last_error_output)
+%>\
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_${get_last_error_output_name}(last_error_buffer.data());
+      }
+%   endif
+%endif
+</%block>\
+</%def>
+
+
 ## Set output parameters updated through API call on the gRPC response message.
-<%def name="set_response_values(output_parameters)">\
+<%def name="set_response_values(output_parameters, init_method)">\
 <%
   output_parameters = [p for p in output_parameters if service_helpers.should_copy_to_response(p)]
   config = data['config']
@@ -801,8 +801,10 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
         convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
 %   elif common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
-%   elif parameter['type'] == 'ViSession':
+%   elif parameter['grpc_type'] == 'nidevice_grpc.Session':
+%      if not init_method: # Non-init methods need to resolve the session ID from the out param.
         auto session_id = session_repository_->resolve_session_id(${parameter_name});
+%      endif
         response->mutable_${parameter_name}()->set_id(session_id);
 %   elif common_helpers.is_array(parameter['type']):
 %     if common_helpers.get_size_mechanism(parameter) == 'passed-in-by-ptr':

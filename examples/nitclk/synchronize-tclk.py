@@ -33,31 +33,26 @@ import nitclk_pb2 as nitclk_types
 import nitclk_pb2_grpc as grpc_nitclk
 
 # parameters
-sample_rate = 20000000.0
-waveform_size = 16
+SAMPLE_RATE = 20000000.0
+WAVEFORM_SIZE = 16
 # Create waveform data
-waveform_data = []
-for i in range(waveform_size // 2):
-    waveform_data.append(0.0)
-for i in range(waveform_size // 2, waveform_size):
-    waveform_data.append(1.0)
+WAVEFORM_DATA = [0.0 if i < WAVEFORM_SIZE // 2 else 1.0 for i in range(WAVEFORM_SIZE)]
 
 # Read in cmd args
 if len(sys.argv) < 4:
-    print(
-        "This example is not supported in simulation mode. Please provide server address, server port and resource name as follows:"
-    )
-    sys.exit(
-        "python synchronize-tclk.py <server_address> <port_number> <resource_name1,resource_name2>"
-    )
+    msg = "This example is not supported in simulation mode. "
+    msg += "Please provide server address, server port and resource name as follows:\n"
+    msg += "  python synchronize-tclk.py <server_address> <port_number> <resource_name1,resource_name2>\n"
+    sys.stderr.write(msg)
+    sys.exit(1)
 else:
-    server_address = sys.argv[1]
-    server_port = sys.argv[2]
-    resources = list(map(str.strip, sys.argv[3].split(",")))
+    SERVER_ADDRESS = sys.argv[1]
+    SERVER_PORT = sys.argv[2]
+    RESOURCES = [r.strip() for r in sys.argv[3].split(",")]
 
 # Create the communication channel for the remote host and create connections to the NI-FGEN and
 # session services.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 nifgen_client = grpc_nifgen.NiFgenStub(channel)
 nitclk_client = grpc_nitclk.NiTClkStub(channel)
 
@@ -79,7 +74,7 @@ try:
     # list of sessions
     sessions = []
     i = 0
-    for resource in resources:
+    for resource in RESOURCES:
         # Initalize NI-FGEN session
         init_with_options_resp = nifgen_client.InitWithOptions(
             nifgen_types.InitWithOptionsRequest(
@@ -105,14 +100,14 @@ try:
 
         # Configure sample rate
         config_sample_rate_resp = nifgen_client.ConfigureSampleRate(
-            nifgen_types.ConfigureSampleRateRequest(vi=vi, sample_rate=sample_rate)
+            nifgen_types.ConfigureSampleRateRequest(vi=vi, sample_rate=SAMPLE_RATE)
         )
         check_for_error(nifgen_client, vi, config_sample_rate_resp.status)
 
         # Create waveform
         create_waveform_resp = nifgen_client.CreateWaveformF64(
             nifgen_types.CreateWaveformF64Request(
-                vi=vi, channel_name="0", waveform_data_array=waveform_data
+                vi=vi, channel_name="0", waveform_data_array=WAVEFORM_DATA
             )
         )
         check_for_error(nifgen_client, vi, create_waveform_resp.status)
@@ -132,14 +127,14 @@ try:
     initiate_resp = nitclk_client.Initiate(nitclk_types.InitiateRequest(sessions=sessions))
     check_for_error(nitclk_client, None, initiate_resp.status)
 
-    print(f"Generating square wave with sample rate {sample_rate} on {resources}...")
+    print(f"Generating square wave with sample rate {SAMPLE_RATE} on {RESOURCES}...")
     print("Close the graph or press Ctrl+C to stop generation")
 
     try:
         # Plot waveform
         fig = plt.gcf()
         fig.canvas.manager.set_window_title("Sample Waveform")
-        plt.plot(waveform_data)
+        plt.plot(WAVEFORM_DATA)
         plt.suptitle("Close the window to stop generation", fontsize=10)
         plt.xlabel("Samples")
         plt.ylabel("Amplitude")
@@ -151,7 +146,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

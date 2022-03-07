@@ -116,7 +116,7 @@ def _create_standard_arg(parameter):
 
 def create_args(parameters):
     """Get the args needed to call the library function."""
-    parameters = [p for p in parameters if not common_helpers.is_return_value(p)]
+    parameters = common_helpers.get_driver_api_params(parameters)
     result = ""
     have_expanded_varargs = False
     for parameter in parameters:
@@ -186,7 +186,7 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
 
 def create_params(parameters, expand_varargs=True):
     """Get the params needed for defining the library function."""
-    parameters = [p for p in parameters if not common_helpers.is_return_value(p)]
+    parameters = common_helpers.get_driver_api_params(parameters)
     if not len(parameters):
         return ""
     repeated_parameters = [p for p in parameters if common_helpers.is_repeating_parameter(p)]
@@ -212,7 +212,7 @@ def expand_varargs_parameters(parameters):
     The max_length value comes from the first repeated_var_args parameter. Each repeated parameter
     gets a number (starting at zero) appended to the parameter name.
     """
-    parameters = [p for p in parameters if not common_helpers.is_return_value(p)]
+    parameters = common_helpers.get_driver_api_params(parameters)
     if not common_helpers.has_repeated_varargs_parameter(parameters):
         return parameters
     # omit the varargs parameters that we're going to expand
@@ -579,3 +579,12 @@ def should_copy_to_response(parameter: dict) -> bool:
 def is_size_param_passed_by_ptr(parameter: dict) -> bool:
     """Return whether parameters is a size param passed-by-pointer."""
     return parameter.get("is_size_param") and parameter.get("pointer")
+
+
+def get_last_error_output_param(parameters: List[dict]) -> Optional[dict]:
+    """Get the get_last_error parameter if any (or None)."""
+    get_last_error_outputs = [
+        p for p in parameters if common_helpers.is_get_last_error_output_param(p)
+    ]
+    assert len(get_last_error_outputs) <= 1, "Only one get_last_error output is supported"
+    return get_last_error_outputs[0] if get_last_error_outputs else None

@@ -35,23 +35,23 @@ import grpc
 import nidaqmx_pb2 as nidaqmx_types
 import nidaqmx_pb2_grpc as grpc_nidaqmx
 
-server_address = "localhost"
-server_port = "31763"
-physical_channel = "Dev1/ai0"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+PHYSICAL_CHANNEL = "Dev1/ai0"
 
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    physical_channel = sys.argv[3]
+    PHYSICAL_CHANNEL = sys.argv[3]
 
 
 async def _main():
     client = None
     task = None
 
-    async with grpc.aio.insecure_channel(f"{server_address}:{server_port}") as channel:
+    async with grpc.aio.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
@@ -78,7 +78,7 @@ async def _main():
                 client.CreateAIVoltageChan(
                     nidaqmx_types.CreateAIVoltageChanRequest(
                         task=task,
-                        physical_channel=physical_channel,
+                        physical_channel=PHYSICAL_CHANNEL,
                         min_val=-10.0,
                         max_val=10.0,
                         terminal_config=nidaqmx_types.InputTermCfgWithDefault.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
@@ -181,7 +181,7 @@ async def _main():
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-                error_message = f"Failed to connect to server on {server_address}:{server_port}"
+                error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
             elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
                 error_message = (
                     "The operation is not implemented or is not supported/enabled in this service"

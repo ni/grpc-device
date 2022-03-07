@@ -33,33 +33,33 @@ import nidmm_pb2 as nidmm_types
 import nidmm_pb2_grpc as grpc_nidmm
 import numpy as np
 
-server_address = "localhost"
-server_port = "31763"
-session_name = "NI-DMM-Session"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+SESSION_NAME = "NI-DMM-Session"
 
 # Resource name and options for a simulated 4080 client. Change them according to the NI-DMM model.
-resource = "SimulatedDMM"
-options = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe"
+RESOURCE = "SimulatedDMM"
+OPTIONS = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe"
 
 # parameters
-MAXPTSTOREAD = 1000
-config_range = 10.0
-resolution = 5.5
-measurement_type = nidmm_types.Function.FUNCTION_NIDMM_VAL_DC_VOLTS
-powerline_freq = nidmm_types.PowerLineFrequencies.POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ
+MAX_PTS_TO_READ = 1000
+CONFIG_RANGE = 10.0
+RESOLUTION = 5.5
+MEASUREMENT_TYPE = nidmm_types.Function.FUNCTION_NIDMM_VAL_DC_VOLTS
+POWERLINE_FREQ = nidmm_types.PowerLineFrequencies.POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 # Create the communication channel for the remote host and create connections to the NI-DMM and
 # session services.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 nidmm_client = grpc_nidmm.NiDmmStub(channel)
 
 
@@ -76,7 +76,7 @@ try:
     # Open session to NI-DMM with options
     init_with_options_response = nidmm_client.InitWithOptions(
         nidmm_types.InitWithOptionsRequest(
-            session_name=session_name, resource_name=resource, id_query=False, option_string=options
+            session_name=SESSION_NAME, resource_name=RESOURCE, id_query=False, option_string=OPTIONS
         )
     )
     vi = init_with_options_response.vi
@@ -86,9 +86,9 @@ try:
     config_measurement_response = nidmm_client.ConfigureMeasurementDigits(
         nidmm_types.ConfigureMeasurementDigitsRequest(
             vi=vi,
-            measurement_function=measurement_type,
-            range=config_range,
-            resolution_digits=resolution,
+            measurement_function=MEASUREMENT_TYPE,
+            range=CONFIG_RANGE,
+            resolution_digits=RESOLUTION,
         )
     )
     check_for_error(vi, config_measurement_response.status)
@@ -108,7 +108,7 @@ try:
     # Configure powerline frequency
     config_powlinefreq_response = nidmm_client.ConfigurePowerLineFrequency(
         nidmm_types.ConfigurePowerLineFrequencyRequest(
-            vi=vi, power_line_frequency_hz=powerline_freq
+            vi=vi, power_line_frequency_hz=POWERLINE_FREQ
         )
     )
     check_for_error(vi, config_powlinefreq_response.status)
@@ -149,10 +149,9 @@ try:
             check_for_error(vi, read_status_response.status)
             pts_available = read_status_response.acquisition_backlog
 
-            # if there are more than MAXPTSTOREAD measurements
-            # available, set pts_available to MAXPTSTOREAD in order to
-            # avoid reallocating the array for measurements
-            pts_available = min(pts_available, MAXPTSTOREAD)
+            # if there are more than MAX_PTS_TO_READ measurements available, set pts_available to
+            # MAX_PTS_TO_READ in order to avoid reallocating the array for measurements
+            pts_available = min(pts_available, MAX_PTS_TO_READ)
             if pts_available > 0:
                 # Clear the plot and setup the axis
                 plt.clf()
@@ -198,7 +197,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

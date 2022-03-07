@@ -36,7 +36,7 @@ Running from command line:
 
 Server machine's IP address, port number, and physical channel name can be passed as separate
 command line arguments.
-  > python txp-basic.py <server_address> <port_number> <physical_channel_name>
+  > python txp-basic.py <server_address> <port_number> <resource_name>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "SimulatedDevice" as the resource name.
 """
@@ -47,27 +47,36 @@ import grpc
 import nirfmxbluetooth_pb2 as nirfmxbluetooth_types
 import nirfmxbluetooth_pb2_grpc as grpc_nirfmxbluetooth
 
-server_address = "localhost"
-server_port = "31763"
-session_name = "RFmxBluetoothSession"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+SESSION_NAME = "RFmxBluetoothSession"
 
 # Resource name and options for a simulated 5663 client.
-resource = "SimulatedDevice"
-options = "Simulate=1,DriverSetup=Model:5663"
+RESOURCE = "SimulatedDevice"
+OPTIONS = "Simulate=1,DriverSetup=Model:5663"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
     resource = sys.argv[3]
-    options = ""
+    OPTIONS = ""
 
 # Create a gRPC channel + client.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfmxbluetooth.NiRFmxBluetoothStub(channel)
 instr = None
+
+
+def raise_if_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+    return response
 
 
 def raise_if_error(response):
@@ -90,10 +99,10 @@ try:
     auto_level = True
     basic_rate_packets = True
 
-    initialize_response = raise_if_error(
+    initialize_response = raise_if_initialization_error(
         client.Initialize(
             nirfmxbluetooth_types.InitializeRequest(
-                session_name=session_name, resource_name=resource, option_string=options
+                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
             )
         )
     )
@@ -334,7 +343,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

@@ -35,29 +35,29 @@ import grpc
 import niswitch_pb2 as niswitch_types
 import niswitch_pb2_grpc as grpc_niswitch
 
-server_address = "localhost"
-server_port = "31763"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
 
 # Resource name, topology string and scanlist for a simulated 2529 module. Refer to NI-SWITCH help
 # to find valid values for the device being used.
-# If you are using real hardware device, use the appropriate resource name and set the simulation
-# parameter to false.
-resource = ""
-topology_string = "2529/2-Wire Dual 4x16 Matrix"
-scan_list = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3"
-simulation = True
+# If you are using real hardware device, use the appropriate resource name and set the SIMULATION
+# variable to False.
+RESOURCE = ""
+TOPOLOGY_STRING = "2529/2-Wire Dual 4x16 Matrix"
+SCAN_LIST = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3"
+SIMULATION = True
 
-session_name = "NI-Switch-Session-1"
+SESSION_NAME = "NI-Switch-Session-1"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 
 # Create the communcation channel for the remote host and create a connection to the NI-SWITCH
 # service.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 niswitch_client = grpc_niswitch.NiSwitchStub(channel)
 number_of_triggers = 5
 
@@ -75,16 +75,16 @@ try:
     # Open session to NI-SWITCH and set topology.
     init_with_topology_response = niswitch_client.InitWithTopology(
         niswitch_types.InitWithTopologyRequest(
-            session_name=session_name,
-            resource_name=resource,
-            topology=topology_string,
-            simulate=simulation,
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            topology=TOPOLOGY_STRING,
+            simulate=SIMULATION,
             reset_device=False,
         )
     )
     vi = init_with_topology_response.vi
     check_for_error(vi, init_with_topology_response.status)
-    print("Topology set to : ", topology_string)
+    print("Topology set to : ", TOPOLOGY_STRING)
 
     # Configure the scan list.
     check_for_error(
@@ -93,7 +93,7 @@ try:
             niswitch_client.ConfigureScanList(
                 niswitch_types.ConfigureScanListRequest(
                     vi=vi,
-                    scanlist=scan_list,
+                    scanlist=SCAN_LIST,
                     scan_mode=niswitch_types.ScanMode.SCAN_MODE_NISWITCH_VAL_BREAK_BEFORE_MAKE,
                 )
             )
@@ -153,7 +153,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

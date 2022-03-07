@@ -45,21 +45,21 @@ from grpclib.client import Channel
 from grpclib.exceptions import GRPCError
 from nidevice import nidaqmx_grpc
 
-server_address = "localhost"
-server_port = "31763"
-physical_channel = "Dev1/ai0"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+PHYSICAL_CHANNEL = "Dev1/ai0"
 
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    physical_channel = sys.argv[3]
+    PHYSICAL_CHANNEL = sys.argv[3]
 
 
 async def _main():
     # Create a gRPC channel + client.
-    channel = Channel(host=server_address, port=server_port)
+    channel = Channel(host=SERVER_ADDRESS, port=SERVER_PORT)
     daq_service = nidaqmx_grpc.NiDAQmxStub(channel)
     task = None
 
@@ -77,7 +77,7 @@ async def _main():
         await raise_if_error(
             await daq_service.create_a_i_voltage_chan(
                 task=task,
-                physical_channel=physical_channel,
+                physical_channel=PHYSICAL_CHANNEL,
                 terminal_config_raw=nidaqmx_grpc.InputTermCfgWithDefault.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
                 min_val=-10.0,
                 max_val=10.0,

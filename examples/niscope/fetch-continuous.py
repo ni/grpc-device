@@ -35,17 +35,31 @@ import niscope_pb2 as niscope_types
 import niscope_pb2_grpc as grpc_niscope
 import numpy as np
 
-server_address = "localhost"
-server_port = "31763"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
 
 # Resource name and options for a simulated 5164 client. Change them according to the NI-SCOPE
 # model.
-resource = "SimulatedScope"
-options = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
+RESOURCE = "SimulatedScope"
+OPTIONS = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe"
 
-channels = "0,1"
-total_acquisition_time_in_seconds = 10
-sample_rate_in_hz = 1000
+CHANNELS = "0,1"
+TOTAL_ACQUISITION_TIME_IN_SECONDS = 10
+SAMPLE_RATE_IN_HZ = 1000
+
+# Read in cmd args
+if len(sys.argv) >= 2:
+    SERVER_ADDRESS = sys.argv[1]
+if len(sys.argv) >= 3:
+    SERVER_PORT = sys.argv[2]
+if len(sys.argv) >= 4:
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
+
+# Create the communication channel for the remote host and create a connection to the NI-SCOPE
+# service.
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
+client = grpc_niscope.NiScopeStub(channel)
 
 
 def check_for_error(vi, status):
@@ -57,25 +71,11 @@ def check_for_error(vi, status):
         raise Exception(error_message_response.error_message)
 
 
-# Read in cmd args
-if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
-if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
-if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
-
-# Create the communication channel for the remote host and create a connection to the NI-SCOPE
-# service.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
-client = grpc_niscope.NiScopeStub(channel)
-
 try:
     # Open session to NI-SCOPE module with options.
     init_with_options_response = client.InitWithOptions(
         niscope_types.InitWithOptionsRequest(
-            resource_name=resource, id_query=False, option_string=options
+            resource_name=RESOURCE, id_query=False, option_string=OPTIONS
         )
     )
     vi = init_with_options_response.vi
@@ -89,7 +89,7 @@ try:
             client.ConfigureVertical(
                 niscope_types.ConfigureVerticalRequest(
                     vi=vi,
-                    channel_list=channels,
+                    channel_list=CHANNELS,
                     range=voltage,
                     offset=0.0,
                     coupling=niscope_types.VerticalCoupling.VERTICAL_COUPLING_NISCOPE_VAL_DC,
@@ -107,7 +107,7 @@ try:
             client.ConfigureHorizontalTiming(
                 niscope_types.ConfigureHorizontalTimingRequest(
                     vi=vi,
-                    min_sample_rate=sample_rate_in_hz,
+                    min_sample_rate=SAMPLE_RATE_IN_HZ,
                     min_num_pts=1,
                     ref_position=0.0,
                     num_records=1,
@@ -135,8 +135,8 @@ try:
 
     # Allocate space for the waveform according to the max number of
     # points to fetch and the number of waveforms.
-    channel_list = channels.split(",")
-    total_samples = int(total_acquisition_time_in_seconds * sample_rate_in_hz)
+    channel_list = CHANNELS.split(",")
+    total_samples = int(TOTAL_ACQUISITION_TIME_IN_SECONDS * SAMPLE_RATE_IN_HZ)
     waveforms = [np.ndarray(total_samples, dtype=np.float64) for c in channel_list]
 
     # Set fetch relative to attribute.
@@ -186,7 +186,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

@@ -1056,3 +1056,18 @@ def get_grpc_field_names_for_param_names(params: List[dict], names: List[str]) -
 def is_return_value(parameter: dict) -> bool:
     """Whether the parameter is marked as a return_value."""
     return parameter.get("return_value", False)
+
+
+def is_get_last_error_output_param(parameter: dict) -> bool:
+    """Return True if pararameter is a get_last_error parameter."""
+    return "get_last_error" in parameter
+
+
+def get_driver_api_params(parameters: List[dict]) -> List[dict]:
+    """Return all parameters that are passed as parameters to the driver API.
+
+    Excludes:
+    * Return values.
+    * Outputs that are calculated/populated after the API call.
+    """
+    return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
