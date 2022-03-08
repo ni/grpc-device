@@ -17,7 +17,7 @@ namespace {
 
 constexpr auto INVALID_XNET_SOCKET = -1;
 constexpr auto GENERIC_NXSOCKET_ERROR = -1;
-constexpr auto SOCKET_COULD_NOT_BE_FOUND = -13009;
+constexpr auto SOCKET_COULD_NOT_BE_FOUND_ERROR = -13009;
 constexpr auto SOCKET_COULD_NOT_BE_FOUND_MESSAGE = "The specified socket could not be found.";
 constexpr auto NXSOCKET_FALSE = 0;
 constexpr auto NXSOCKET_TRUE = 1;
@@ -100,7 +100,7 @@ TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedE
 
   EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, socket_response);
   EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, bind_response);
-  EXPECT_XNET_ERROR(SOCKET_COULD_NOT_BE_FOUND, bind_get_last_error);
+  EXPECT_XNET_ERROR(SOCKET_COULD_NOT_BE_FOUND_ERROR, bind_get_last_error);
   EXPECT_THAT(SOCKET_COULD_NOT_BE_FOUND_MESSAGE, bind_get_last_error_str.error());
 }
 
@@ -122,7 +122,7 @@ TEST_F(NiXnetDriverApiTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
   EXPECT_EQ(NXSOCKET_TRUE, is_set_response.is_set());
 }
 
-TEST_F(NiXnetDriverApiTests, Select)
+TEST_F(NiXnetDriverApiTests, InvalidSocket_Select_ReturnsAndSetsExpectedErrors)
 {
   auto socket_response = socket(stub());
   auto duration = pb::Duration{};
@@ -133,7 +133,7 @@ TEST_F(NiXnetDriverApiTests, Select)
   auto select_last_error_str = client::get_last_error_str(stub(), 512);
 
   EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, select_response);
-  EXPECT_XNET_ERROR(SOCKET_COULD_NOT_BE_FOUND, select_last_error);
+  EXPECT_XNET_ERROR(SOCKET_COULD_NOT_BE_FOUND_ERROR, select_last_error);
   EXPECT_THAT(SOCKET_COULD_NOT_BE_FOUND_MESSAGE, select_last_error_str.error());
 }
 }  // namespace
