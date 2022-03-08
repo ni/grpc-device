@@ -2310,18 +2310,6 @@ enums = {
             }
         ]
     },
-    'SubblockFrequencyDefinition': {
-        'values': [
-            {
-                'name': 'RELATIVE',
-                'value': 0
-            },
-            {
-                'name': 'ABSOLUTE',
-                'value': 1
-            }
-        ]
-    },
     'TransmitterArchitecture': {
         'values': [
             {

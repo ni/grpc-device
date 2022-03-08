@@ -75,12 +75,6 @@ attributes = {
         'name': 'NUMBER_OF_SUBBLOCKS',
         'type': 'int32'
     },
-    9437201: {
-        'access': 'read-write',
-        'enum': 'SubblockFrequencyDefinition',
-        'name': 'SUBBLOCK_FREQUENCY_DEFINITION',
-        'type': 'int32'
-    },
     9437202: {
         'access': 'read-write',
         'name': 'BAND',

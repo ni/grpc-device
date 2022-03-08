@@ -120,7 +120,6 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
   const auto NUMBER_OF_SUBBLOCKS = 2;
   const auto NUMBER_OF_COMPONENT_CARRIERS = 2;
   float64 centerFrequency[NUMBER_OF_SUBBLOCKS] = {3.5e9, 200.0e6};
-  int32 subblockFrequencyDefinition[NUMBER_OF_SUBBLOCKS] = {NIRFMXNR_INT32_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE, NIRFMXNR_INT32_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE};
   float64 componentCarrierFrequency[NUMBER_OF_SUBBLOCKS][NUMBER_OF_COMPONENT_CARRIERS] = {{-49.98e6, 50.01e6}, {-49.98e6, 50.01e6}};
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10.0e6));
@@ -134,7 +133,6 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
     const auto subblock_string_response = EXPECT_SUCCESS(session, client::build_subblock_string(stub(), "", i));
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE, NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CENTER_FREQUENCY, centerFrequency[i]));
-    EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_SUBBLOCK_FREQUENCY_DEFINITION, subblockFrequencyDefinition[i]));
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_SPACING_TYPE, NIRFMXNR_INT32_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL));
     EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_CHANNEL_RASTER, 15e3));
     EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, subblock_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_AT_CENTER_FREQUENCY, -1));

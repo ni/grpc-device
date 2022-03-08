@@ -171,12 +171,6 @@ attributes = {
         'name': 'NUMBER_OF_SUBBLOCKS',
         'type': 'int32'
     },
-    3145764: {
-        'access': 'read-write',
-        'enum': 'SubblockFrequencyDefinition',
-        'name': 'SUBBLOCK_FREQUENCY_DEFINITION',
-        'type': 'int32'
-    },
     3145766: {
         'access': 'read-write',
         'enum': 'AutoResourceBlockDetectionEnabled',

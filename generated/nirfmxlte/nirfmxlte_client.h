@@ -112,7 +112,6 @@ CfgRFResponse cfg_rf(const StubPtr& stub, const nidevice_grpc::Session& instrume
 CfgRFAttenuationResponse cfg_rf_attenuation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const simple_variant<RFAttenuationAuto, pb::int32>& rf_attenuation_auto, const double& rf_attenuation_value);
 CfgReferenceLevelResponse cfg_reference_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& reference_level);
 CfgSoftwareEdgeTriggerResponse cfg_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& trigger_delay, const pb::int32& enable_trigger);
-CfgSubblockFrequencyDefinitionResponse cfg_subblock_frequency_definition(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& subblock_frequency_definition);
 CfgTransmitAntennaToAnalyzeResponse cfg_transmit_antenna_to_analyze(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& transmit_antenna_to_analyze);
 CfgeNodeBCategoryResponse cfge_node_b_category(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<ENodeBCategory, pb::int32>& enodeb_category);
 CheckMeasurementStatusResponse check_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
