@@ -391,7 +391,6 @@ functions = {
     },
     'DbCreateObject': {
         'init_method': True,
-        'custom_close': "DbDeleteObject(id)",
         'cname': 'nxdbCreateObject',
         'parameters': [
             {
@@ -410,9 +409,11 @@ functions = {
                 'type': 'const char[]'
             },
             {
+                'cross_driver_session': 'nxDatabaseRef_t',
                 'direction': 'out',
                 'name': 'dbObjectRef',
-                'type': 'nxDatabaseRef_t'
+                'type': 'nxDatabaseRef_t',
+                'grpc_type': 'nidevice_grpc.Session'
             }
         ],
         'returns': 'nxStatus_t'
