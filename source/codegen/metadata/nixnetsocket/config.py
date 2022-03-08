@@ -31,7 +31,7 @@ config = {
     'extra_errors_used': [
     ],
     'init_function': 'Socket',
-    'resource_handle_type': 'nxSOCKET',
+    'resource_handle_type': ['nxSOCKET', 'nxIpStackRef_t'],
     'status_ok': 'status >= 0',
     'library_info': {
         'Linux': {

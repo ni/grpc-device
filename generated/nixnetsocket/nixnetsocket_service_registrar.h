@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <nxsocket.h> // for nxSOCKET
+#include <nxsocket.h> // for nxSOCKET, nxIpStackRef_t
 
 namespace grpc {
 class ServerBuilder;
@@ -23,6 +23,7 @@ using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& server_builder, 
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSOCKET>>& resource_repository,
+  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxIpStackRef_t>>& nx_ip_stack_ref_t_resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles);
 
 } // nixnetsocket_grpc

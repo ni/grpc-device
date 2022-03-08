@@ -22,6 +22,34 @@ constexpr auto SOCKET_COULD_NOT_BE_FOUND_MESSAGE = "The specified socket could n
 constexpr auto NXSOCKET_FALSE = 0;
 constexpr auto NXSOCKET_TRUE = 1;
 
+constexpr auto SIMPLE_CONFIG_JSON = R"(
+{
+  "schema": "file:///NIXNET_Documentation/xnetIpStackSchema-03.json",
+  "xnetInterfaces": [
+    {
+      "name": "ENET1",
+      "MACs": [
+        {
+          "address": "inherit",
+          "VLANs": [
+            {
+              "IPv4": {
+                "mode": "static",
+                "staticAddresses": [
+                  {
+                    "address": "192.22.33.44",
+                    "subnetMask": "255.0.0.0"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+})";
+
 class NiXnetDriverApiTests : public ::testing::Test {
  protected:
   NiXnetDriverApiTests()
@@ -63,9 +91,14 @@ class NiXnetDriverApiTests : public ::testing::Test {
     EXPECT_EQ(error, (response).status()); \
   }
 
+SocketResponse socket(client::StubPtr& stub, const nidevice_grpc::Session& stack)
+{
+  return client::socket(stub, stack, 2 /* nxAF_INET */, 1 /* STREAM */, 6 /* TCP */);
+}
+
 SocketResponse socket(client::StubPtr& stub)
 {
-  return client::socket(stub, 2 /* nxAF_INET */, 1 /* STREAM */, 6 /* TCP */);
+  return socket(stub, nidevice_grpc::Session{});
 }
 
 TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Close_ReturnsAndSetsExpectedErrors)
@@ -136,6 +169,31 @@ TEST_F(NiXnetDriverApiTests, InvalidSocket_Select_ReturnsAndSetsExpectedErrors)
   EXPECT_XNET_ERROR(SOCKET_COULD_NOT_BE_FOUND_ERROR, select_last_error);
   EXPECT_THAT(SOCKET_COULD_NOT_BE_FOUND_MESSAGE, select_last_error_str.error());
 }
+
+TEST_F(NiXnetDriverApiTests, InvalidEmptyConfigJson_IpStackCreate_ReturnsInvalidInterfaceNameError)
+{
+  constexpr auto TEST_CONFIG = "{}";
+  constexpr auto FAILED_TO_CREATE_STACK = -13107;
+  const auto stack_response = client::ip_stack_create(stub(), "test", "{}");
+  auto get_last_error_str = client::get_last_error_str(stub(), 512);
+
+  EXPECT_XNET_ERROR(FAILED_TO_CREATE_STACK, stack_response);
+  EXPECT_THAT(get_last_error_str.error(), IsEmpty());
+}
+
+TEST_F(NiXnetDriverApiTests, ValidConfigJsonForMissingDevice_IpStackCreate_ReturnsInvalidInterfaceNameError)
+{
+  constexpr auto EST_CONFIG = SIMPLE_CONFIG_JSON;
+  constexpr auto FAILED_TO_CREATE_STACK = -13107;
+  constexpr auto JSON_MISSING_VALUE = (int32_t)0xFFFFCD27;
+  constexpr auto INVALID_INTERFACE_NAME = -1074384758;
+  const auto stack_response = client::ip_stack_create(stub(), "test", SIMPLE_CONFIG_JSON);
+  auto get_last_error_str = client::get_last_error_str(stub(), 512);
+
+  EXPECT_XNET_ERROR(INVALID_INTERFACE_NAME, stack_response);
+  EXPECT_THAT(get_last_error_str.error(), HasSubstr("An object in the IP Stack configuration is missing a required member. Refer to the IP Stack configuration schema for the expected members."));
+}
+
 }  // namespace
 }  // namespace system
 }  // namespace tests

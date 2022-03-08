@@ -81,6 +81,39 @@ get_last_error_str(const StubPtr& stub, const pb::uint64& buf_len)
   return response;
 }
 
+IpStackClearResponse
+ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IpStackClearRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+
+  auto response = IpStackClearResponse{};
+
+  raise_if_error(
+      stub->IpStackClear(&context, request, &response));
+
+  return response;
+}
+
+IpStackCreateResponse
+ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IpStackCreateRequest{};
+  request.set_stack_name(stack_name);
+  request.set_config(config);
+
+  auto response = IpStackCreateResponse{};
+
+  raise_if_error(
+      stub->IpStackCreate(&context, request, &response));
+
+  return response;
+}
+
 IsSetResponse
 is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
 {
@@ -118,11 +151,12 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds,
 }
 
 SocketResponse
-socket(const StubPtr& stub, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol)
+socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol)
 {
   ::grpc::ClientContext context;
 
   auto request = SocketRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
   request.set_domain(domain);
   request.set_type(type);
   request.set_prototcol(prototcol);
