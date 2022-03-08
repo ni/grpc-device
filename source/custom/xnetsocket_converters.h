@@ -13,7 +13,8 @@
 
 namespace nixnetsocket_grpc {
 
-namespace pb = ::google::protobuf;
+// Add underscore to usings so they don't conflict with including files in the same namespace.
+namespace pb_ = ::google::protobuf;
 using ResourceRepositorySharedPtr_ = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSOCKET>>;
 
 // This class allows us to have something allocated on the stack that can be used as an
@@ -86,7 +87,7 @@ struct SockAddrHolder {
 
 struct SetHolder {
   SetHolder(
-      const pb::RepeatedPtrField<nidevice_grpc::Session>& input,
+      const pb_::RepeatedPtrField<nidevice_grpc::Session>& input,
       const ResourceRepositorySharedPtr_& resource_repository)
   {
     nxFD_ZERO(&set);
@@ -110,7 +111,7 @@ struct SetHolder {
 };
 
 struct TimeValHolder {
-  TimeValHolder(const pb::Duration& input)
+  TimeValHolder(const pb_::Duration& input)
   {
     time_val.tv_sec = input.seconds();
     time_val.tv_usec = input.nanos() / 1000;
@@ -137,14 +138,14 @@ inline SockAddrHolder convert_from_grpc(const SockAddr& input)
 
 template <typename TSet>
 inline SetHolder convert_from_grpc(
-    const pb::RepeatedPtrField<nidevice_grpc::Session>& input,
+    const pb_::RepeatedPtrField<nidevice_grpc::Session>& input,
     const ResourceRepositorySharedPtr_& resource_repository)
 {
   return SetHolder(input, resource_repository);
 }
 
 template <typename TSet>
-inline TimeValHolder convert_from_grpc(const pb::Duration& input)
+inline TimeValHolder convert_from_grpc(const pb_::Duration& input)
 {
   return TimeValHolder(input);
 }
