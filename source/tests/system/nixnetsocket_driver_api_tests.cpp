@@ -19,6 +19,8 @@ constexpr auto INVALID_XNET_SOCKET = -1;
 constexpr auto GENERIC_NXSOCKET_ERROR = -1;
 constexpr auto SOCKET_COULD_NOT_BE_FOUND = -13009;
 constexpr auto SOCKET_COULD_NOT_BE_FOUND_MESSAGE = "The specified socket could not be found.";
+constexpr auto NXSOCKET_FALSE = 0;
+constexpr auto NXSOCKET_TRUE = 1;
 
 class NiXnetDriverApiTests : public ::testing::Test {
  protected:
@@ -108,7 +110,7 @@ TEST_F(NiXnetDriverApiTests, SocketAndEmptySet_IsSet_ReturnsFalse)
   auto is_set_response = client::is_set(stub(), socket_response.socket(), {});
 
   EXPECT_SUCCESS(is_set_response);
-  EXPECT_EQ(FALSE, is_set_response.is_set());
+  EXPECT_EQ(NXSOCKET_FALSE, is_set_response.is_set());
 }
 
 TEST_F(NiXnetDriverApiTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
@@ -117,7 +119,7 @@ TEST_F(NiXnetDriverApiTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
   auto is_set_response = client::is_set(stub(), socket_response.socket(), {socket_response.socket()});
 
   EXPECT_SUCCESS(is_set_response);
-  EXPECT_EQ(TRUE, is_set_response.is_set());
+  EXPECT_EQ(NXSOCKET_TRUE, is_set_response.is_set());
 }
 
 TEST_F(NiXnetDriverApiTests, Select)
