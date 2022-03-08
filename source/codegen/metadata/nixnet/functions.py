@@ -390,8 +390,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'DbCreateObject': {
-        'init_method': True,
         'cname': 'nxdbCreateObject',
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -411,9 +411,9 @@ functions = {
             {
                 'cross_driver_session': 'nxDatabaseRef_t',
                 'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'dbObjectRef',
-                'type': 'nxDatabaseRef_t',
-                'grpc_type': 'nidevice_grpc.Session'
+                'type': 'nxDatabaseRef_t'
             }
         ],
         'returns': 'nxStatus_t'
@@ -707,8 +707,8 @@ functions = {
     },
     'DbOpenDatabase': {
         'cname': 'nxdbOpenDatabase',
-        'init_method': True,
         'custom_close': 'DbCloseDatabase(id, false)',
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1328,8 +1328,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'SystemOpen': {
-        'init_method': True,
         'custom_close': 'SystemClose(id)',
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'out',
