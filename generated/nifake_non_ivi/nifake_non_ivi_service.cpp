@@ -28,11 +28,13 @@ namespace nifake_non_ivi_grpc {
 
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
+      SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository,
       FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
       const NiFakeNonIviFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
+      secondary_session_handle_resource_repository_(secondary_session_handle_resource_repository),
       fake_cross_driver_handle_resource_repository_(fake_cross_driver_handle_resource_repository),
       feature_toggles_(feature_toggles)
   {
@@ -60,6 +62,26 @@ namespace nifake_non_ivi_grpc {
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
       session_repository_->remove_session(handle_grpc_session.id(), handle_grpc_session.name());
       auto status = library_->Close(handle);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::CloseSecondarySession(::grpc::ServerContext* context, const CloseSecondarySessionRequest* request, CloseSecondarySessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto secondary_session_handle_grpc_session = request->secondary_session_handle();
+      SecondarySessionHandle secondary_session_handle = secondary_session_handle_resource_repository_->access_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
+      secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
+      auto status = library_->CloseSecondarySession(secondary_session_handle);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -401,6 +423,35 @@ namespace nifake_non_ivi_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_handle()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitSecondarySession(::grpc::ServerContext* context, const InitSecondarySessionRequest* request, InitSecondarySessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+
+      auto init_lambda = [&] () {
+        SecondarySessionHandle secondary_session_handle;
+        auto status = library_->InitSecondarySession(&secondary_session_handle);
+        return std::make_tuple(status, secondary_session_handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (SecondarySessionHandle id) { library_->CloseSecondarySession(id); };
+      int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->mutable_secondary_session_handle()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }

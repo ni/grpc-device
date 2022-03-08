@@ -10,7 +10,7 @@ config = {
     'namespace_component': 'nifake_non_ivi',
     'close_function': 'Close',
     'driver_name': 'NI-FAKE-NON-IVI',
-    'resource_handle_type': 'FakeHandle',
+    'resource_handle_type': ['FakeHandle', 'SecondarySessionHandle'],
     'status_ok': 'status >= 0',
     'additional_headers': { 'custom/nifake_non_ivi_errors.h': ['service.cpp'] },
     'custom_types': [

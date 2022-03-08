@@ -22,6 +22,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
     return;
   }
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niFakeNonIvi_Close"));
+  function_pointers_.CloseSecondarySession = reinterpret_cast<CloseSecondarySessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_CloseSecondarySession"));
   function_pointers_.GetCrossDriverSession = reinterpret_cast<GetCrossDriverSessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetCrossDriverSession"));
   function_pointers_.GetLatestErrorMessage = reinterpret_cast<GetLatestErrorMessagePtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetLatestErrorMessage"));
   function_pointers_.GetStringAsReturnedValue = reinterpret_cast<GetStringAsReturnedValuePtr>(shared_library_.get_function_pointer("niFakeNonIvi_GetStringAsReturnedValue"));
@@ -31,6 +32,7 @@ NiFakeNonIviLibrary::NiFakeNonIviLibrary() : shared_library_(kLibraryName)
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFakeNonIvi_Init"));
   function_pointers_.InitFromCrossDriverSession = reinterpret_cast<InitFromCrossDriverSessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitFromCrossDriverSession"));
   function_pointers_.InitFromCrossDriverSessionArray = reinterpret_cast<InitFromCrossDriverSessionArrayPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitFromCrossDriverSessionArray"));
+  function_pointers_.InitSecondarySession = reinterpret_cast<InitSecondarySessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitSecondarySession"));
   function_pointers_.InitWithHandleNameAsSessionName = reinterpret_cast<InitWithHandleNameAsSessionNamePtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithHandleNameAsSessionName"));
   function_pointers_.InitWithReturnedSession = reinterpret_cast<InitWithReturnedSessionPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InitWithReturnedSession"));
   function_pointers_.InputArraysWithNarrowIntegerTypes = reinterpret_cast<InputArraysWithNarrowIntegerTypesPtr>(shared_library_.get_function_pointer("niFakeNonIvi_InputArraysWithNarrowIntegerTypes"));
@@ -76,6 +78,18 @@ int32 NiFakeNonIviLibrary::Close(FakeHandle handle)
   return niFakeNonIvi_Close(handle);
 #else
   return function_pointers_.Close(handle);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::CloseSecondarySession(SecondarySessionHandle secondarySessionHandle)
+{
+  if (!function_pointers_.CloseSecondarySession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_CloseSecondarySession.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_CloseSecondarySession(secondarySessionHandle);
+#else
+  return function_pointers_.CloseSecondarySession(secondarySessionHandle);
 #endif
 }
 
@@ -184,6 +198,18 @@ int32 NiFakeNonIviLibrary::InitFromCrossDriverSessionArray(int32 crossDriverSess
   return niFakeNonIvi_InitFromCrossDriverSessionArray(crossDriverSessionArray, numberOfCrossDriverSessions, handle);
 #else
   return function_pointers_.InitFromCrossDriverSessionArray(crossDriverSessionArray, numberOfCrossDriverSessions, handle);
+#endif
+}
+
+int32 NiFakeNonIviLibrary::InitSecondarySession(SecondarySessionHandle* secondarySessionHandle)
+{
+  if (!function_pointers_.InitSecondarySession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InitSecondarySession.");
+  }
+#if defined(_MSC_VER)
+  return niFakeNonIvi_InitSecondarySession(secondarySessionHandle);
+#else
+  return function_pointers_.InitSecondarySession(secondarySessionHandle);
 #endif
 }
 

@@ -374,6 +374,7 @@ functions = {
     },
     'DbCloseDatabase': {
         'cname': 'nxdbCloseDatabase',
+        'custom_close_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -389,8 +390,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'DbCreateObject': {
-        'codegen_method': 'no',
         'cname': 'nxdbCreateObject',
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -408,7 +409,9 @@ functions = {
                 'type': 'const char[]'
             },
             {
+                'cross_driver_session': 'nxDatabaseRef_t',
                 'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'dbObjectRef',
                 'type': 'nxDatabaseRef_t'
             }
@@ -417,6 +420,7 @@ functions = {
     },
     'DbDeleteObject': {
         'cname': 'nxdbDeleteObject',
+        'custom_close_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -453,8 +457,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'DbFindObject': {
-        'codegen_method': 'no',
         'cname': 'nxdbFindObject',
+        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -472,7 +476,9 @@ functions = {
                 'type': 'const char[]'
             },
             {
+                'cross_driver_session': 'nxDatabaseRef_t',
                 'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'dbObjectRef',
                 'type': 'nxDatabaseRef_t'
             }
@@ -701,6 +707,7 @@ functions = {
     },
     'DbOpenDatabase': {
         'cname': 'nxdbOpenDatabase',
+        'custom_close': 'DbCloseDatabase(id, false)',
         'init_method': True,
         'parameters': [
             {
@@ -1310,6 +1317,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'SystemClose': {
+        'custom_close_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1320,6 +1328,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'SystemOpen': {
+        'custom_close': 'SystemClose(id)',
         'init_method': True,
         'parameters': [
             {

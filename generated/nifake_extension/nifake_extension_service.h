@@ -37,7 +37,7 @@ public:
 
   NiFakeExtensionService(
     NiFakeExtensionLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiFakeExtensionFeatureToggles& feature_toggles = {});
   virtual ~NiFakeExtensionService();
   

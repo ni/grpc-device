@@ -162,21 +162,27 @@ MATCHER_P(CVIAbsoluteTimeEq, lhs, "")
 class NiFakeNonIviServiceTests : public ::testing::Test {
  public:
   using FakeResourceRepository = nidevice_grpc::SessionResourceRepository<FakeHandle>;
+  using SecondaryResourceRepository = nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>;
   using FakeCrossDriverResourceRepository = nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>;
   nidevice_grpc::SessionRepository session_repository_;
+  nidevice_grpc::SessionRepository secondary_session_repository_;
   std::shared_ptr<FakeCrossDriverResourceRepository> cross_driver_resource_repository_;
   std::shared_ptr<FakeResourceRepository> resource_repository_;
+  std::shared_ptr<SecondaryResourceRepository> secondary_resource_repository_;
   NiFakeNonIviMockLibrary library_;
   NiFakeNonIviService service_;
 
   NiFakeNonIviServiceTests(const nidevice_grpc::FeatureToggles& feature_toggles = {})
       : session_repository_(),
+        secondary_session_repository_(),
         cross_driver_resource_repository_(std::make_shared<FakeCrossDriverResourceRepository>(&session_repository_)),
         resource_repository_(std::make_shared<FakeResourceRepository>(&session_repository_)),
+        secondary_resource_repository_(std::make_shared<SecondaryResourceRepository>(&secondary_session_repository_)),
         library_(),
         service_(
             &library_,
             resource_repository_,
+            secondary_resource_repository_,
             cross_driver_resource_repository_,
             feature_toggles)
   {
@@ -199,6 +205,21 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     return response.handle().id();
   }
 
+  uint32_t init_secondary_session(const std::string& session_name, SecondarySessionHandle handle)
+  {
+    EXPECT_CALL(library_, InitSecondarySession(_))
+        .WillOnce(DoAll(SetArgPointee<0>(handle), Return(kDriverSuccess)));
+
+    ::grpc::ServerContext context;
+    InitSecondarySessionRequest request;
+    request.set_session_name(session_name.c_str());
+    InitSecondarySessionResponse response;
+
+    service_.InitSecondarySession(&context, &request, &response);
+
+    return response.secondary_session_handle().id();
+  }
+
   uint32_t init_with_handle_name_as_session_name(const std::string& handle_name, FakeHandle handle)
   {
     EXPECT_CALL(library_, InitWithHandleNameAsSessionName(StrEq(handle_name.c_str()), _))
@@ -212,6 +233,19 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     service_.InitWithHandleNameAsSessionName(&context, &request, &response);
 
     return response.handle().id();
+  }
+
+  int32 close_secondary_session_with_expected_handle(uint32_t session_id, SecondarySessionHandle expected_closed_handle)
+  {
+    EXPECT_CALL(library_, CloseSecondarySession(expected_closed_handle))
+        .WillOnce(Return(kDriverSuccess));
+    ::grpc::ServerContext context;
+    CloseSecondarySessionRequest request;
+    request.mutable_secondary_session_handle()->set_id(session_id);
+    CloseSecondarySessionResponse response;
+    service_.CloseSecondarySession(&context, &request, &response);
+
+    return response.status();
   }
 
   int32 close_with_expected_handle(uint32_t session_id, FakeHandle expected_closed_handle)
@@ -248,6 +282,24 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
     EXPECT_THAT(actual, ContainerEq(expected));
   }
 };
+
+TEST_F(NiFakeNonIviServiceTests, InitSecondarySession_AddsSessionHandleToSecondaryRepository)
+{
+  const SecondarySessionHandle kHandle = 1234UL;
+  auto session = init_secondary_session("test", kHandle);
+
+  EXPECT_NE(0, session);
+  EXPECT_EQ(kHandle, secondary_resource_repository_->access_session(session, ""));
+}
+
+TEST_F(NiFakeNonIviServiceTests, InitSecondarySession_CloseSecondarySession_ClosesSecondarySession)
+{
+  const SecondarySessionHandle kHandle = 1234UL;
+  auto session = init_secondary_session("test", kHandle);
+
+  EXPECT_NE(0, session);
+  EXPECT_EQ(kDriverSuccess, close_secondary_session_with_expected_handle(session, kHandle));
+}
 
 TEST_F(NiFakeNonIviServiceTests, InitSession_CloseSession_ClosesHandleAndSucceeds)
 {

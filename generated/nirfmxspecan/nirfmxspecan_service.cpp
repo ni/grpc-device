@@ -26,11 +26,11 @@ namespace nirfmxspecan_grpc {
 
   NiRFmxSpecAnService::NiRFmxSpecAnService(
       NiRFmxSpecAnLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxSpecAnFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {

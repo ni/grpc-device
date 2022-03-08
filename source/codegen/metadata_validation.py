@@ -251,7 +251,7 @@ def _validate_function(function_name: str, metadata: dict):
                     if not is_init_method:
                         if parameter["direction"] == "out" and parameter[
                             "type"
-                        ] == service_helpers.get_resource_handle_type(metadata["config"]):
+                        ] in service_helpers.get_resource_handle_types(metadata["config"]):
                             raise Exception(
                                 f"{metadata['config']['namespace_component']} allows duplicate resource handles in the session repository. Therefore, the handle we'd get for \"{parameter['name']}\" can't be mapped back to a Session to provide to the client!"
                             )

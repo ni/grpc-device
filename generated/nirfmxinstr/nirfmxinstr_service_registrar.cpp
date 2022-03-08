@@ -22,7 +22,7 @@ struct LibraryAndService {
       : library(), 
       service(
         &library, 
-        resource_repository, 
+        resource_repository,
         vi_session_resource_repository,
         feature_toggles) {
   }

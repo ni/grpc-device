@@ -26,11 +26,11 @@ namespace nirfmxlte_grpc {
 
   NiRFmxLTEService::NiRFmxLTEService(
       NiRFmxLTELibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxLTEFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {

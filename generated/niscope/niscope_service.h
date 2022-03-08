@@ -37,7 +37,7 @@ public:
 
   NiScopeService(
     NiScopeLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiScopeFeatureToggles& feature_toggles = {});
   virtual ~NiScopeService();
   

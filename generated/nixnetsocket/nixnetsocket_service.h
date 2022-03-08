@@ -37,7 +37,7 @@ public:
 
   NiXnetSocketService(
     NiXnetSocketLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiXnetSocketFeatureToggles& feature_toggles = {});
   virtual ~NiXnetSocketService();
   

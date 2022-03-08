@@ -37,7 +37,7 @@ public:
 
   NiDigitalService(
     NiDigitalLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiDigitalFeatureToggles& feature_toggles = {});
   virtual ~NiDigitalService();
   

@@ -23,6 +23,7 @@ using namespace nidevice_grpc::experimental::client;
 
 
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& handle);
+CloseSecondarySessionResponse close_secondary_session(const StubPtr& stub, const nidevice_grpc::Session& secondary_session_handle);
 GetCrossDriverSessionResponse get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& handle);
 GetLatestErrorMessageResponse get_latest_error_message(const StubPtr& stub);
 GetStringAsReturnedValueResponse get_string_as_returned_value(const StubPtr& stub);
@@ -32,6 +33,7 @@ GetMarbleAttributeInt32ArrayResponse get_marble_attribute_int32_array(const Stub
 InitResponse init(const StubPtr& stub, const pb::string& session_name);
 InitFromCrossDriverSessionResponse init_from_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& cross_driver_session);
 InitFromCrossDriverSessionArrayResponse init_from_cross_driver_session_array(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& cross_driver_session_array);
+InitSecondarySessionResponse init_secondary_session(const StubPtr& stub);
 InitWithHandleNameAsSessionNameResponse init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& handle_name);
 InitWithReturnedSessionResponse init_with_returned_session(const StubPtr& stub, const pb::string& handle_name);
 InputArraysWithNarrowIntegerTypesResponse input_arrays_with_narrow_integer_types(const StubPtr& stub, const std::vector<pb::uint32>& u16_array, const std::vector<pb::int32>& i16_array, const std::vector<pb::int32>& i8_array);

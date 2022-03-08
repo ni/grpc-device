@@ -36,13 +36,14 @@ ${call_library_method(
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
 ${populate_response(output_parameters=output_parameters, init_method=True)}\
       return ::grpc::Status::OK;\
 </%def>
 
 <%def name="define_cross_driver_init_method_body(function_name, function_data, parameters)">\
 <%
+  config = data['config']
   initiating_driver_input_param = next(p for p in parameters if common_helpers.is_input_parameter(p) and p['grpc_type'] == 'nidevice_grpc.Session')
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next(p for p in output_parameters if p['grpc_type'] == 'nidevice_grpc.Session')
@@ -54,7 +55,7 @@ ${populate_response(output_parameters=output_parameters, init_method=True)}\
 %>\
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
-      auto initiating_session_id = session_repository_->access_session_id(${initiating_driver_c_name}.id(), ${initiating_driver_c_name}.name());
+      auto initiating_session_id = ${service_helpers.session_repository_field_name(initiating_driver_input_param, config)}->access_session_id(${initiating_driver_c_name}.id(), ${initiating_driver_c_name}.name());
       auto init_lambda = [&] () {
         ${cross_driver_dep.resource_handle_type} ${session_output_var_name};
         int status = library_->${function_name}(${service_helpers.create_args(parameters)});
@@ -259,7 +260,7 @@ ${initialize_output_params(output_parameters)}\
   session_param = common_helpers.get_first_session_param(parameters)
   session_param_name = f'{common_helpers.get_cpp_local_name(session_param)}_grpc_session'
 %>\
-      session_repository_->remove_session(${session_param_name}.id(), ${session_param_name}.name());
+      ${service_helpers.session_repository_field_name(session_param, config)}->remove_session(${session_param_name}.id(), ${session_param_name}.name());
 % endif
 ${call_library_method(
   function_name=function_name, 
@@ -526,6 +527,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Initialize an input parameter for an API call.
 <%def name="initialize_standard_input_param(function_name, parameter)">\
 <%
+  config = data['config']
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   field_name = common_helpers.get_grpc_field_name(parameter)
   request_snippet = f'request->{field_name}()'
@@ -547,7 +549,7 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.begin(),
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
-        [&](auto session) { return ${service_helpers.session_repository_field_name(parameter)}->access_session(session.id(), session.name()); }); \
+        [&](auto session) { return ${service_helpers.session_repository_field_name(parameter, config)}->access_session(session.id(), session.name()); }); \
 % elif c_type == 'ViBoolean[]':
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
@@ -570,7 +572,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
 % elif grpc_type == 'nidevice_grpc.Session':
       auto ${parameter_name}_grpc_session = ${request_snippet};
-      ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter)}->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
+      ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter, config)}->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
 % elif is_array and common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(c_type_underlying_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 %elif c_type in ['const int32[]', 'const uInt32[]']:
@@ -803,7 +805,7 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
         response->set_${parameter_name}(${parameter_name});
 %   elif parameter['grpc_type'] == 'nidevice_grpc.Session':
 %      if not init_method: # Non-init methods need to resolve the session ID from the out param.
-        auto session_id = session_repository_->resolve_session_id(${parameter_name});
+        auto session_id = ${service_helpers.session_repository_field_name(parameter, config)}->resolve_session_id(${parameter_name});
 %      endif
         response->mutable_${parameter_name}()->set_id(session_id);
 %   elif common_helpers.is_array(parameter['type']):

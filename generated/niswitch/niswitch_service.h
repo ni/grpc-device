@@ -37,7 +37,7 @@ public:
 
   NiSwitchService(
     NiSwitchLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiSwitchFeatureToggles& feature_toggles = {});
   virtual ~NiSwitchService();
   

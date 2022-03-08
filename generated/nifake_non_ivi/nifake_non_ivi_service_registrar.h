@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <niFakeNonIvi.h> // for FakeHandle
+#include <niFakeNonIvi.h> // for FakeHandle, SecondarySessionHandle
 
 namespace grpc {
 class ServerBuilder;
@@ -23,6 +23,7 @@ using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& server_builder, 
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeHandle>>& resource_repository,
+  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>>& secondary_session_handle_resource_repository,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>>& fake_cross_driver_handle_resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles);
 

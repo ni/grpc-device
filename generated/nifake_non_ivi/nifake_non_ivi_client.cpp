@@ -33,6 +33,22 @@ close(const StubPtr& stub, const nidevice_grpc::Session& handle)
   return response;
 }
 
+CloseSecondarySessionResponse
+close_secondary_session(const StubPtr& stub, const nidevice_grpc::Session& secondary_session_handle)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CloseSecondarySessionRequest{};
+  request.mutable_secondary_session_handle()->CopyFrom(secondary_session_handle);
+
+  auto response = CloseSecondarySessionResponse{};
+
+  raise_if_error(
+      stub->CloseSecondarySession(&context, request, &response));
+
+  return response;
+}
+
 GetCrossDriverSessionResponse
 get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& handle)
 {
@@ -195,6 +211,21 @@ init_from_cross_driver_session_array(const StubPtr& stub, const std::vector<nide
 
   raise_if_error(
       stub->InitFromCrossDriverSessionArray(&context, request, &response));
+
+  return response;
+}
+
+InitSecondarySessionResponse
+init_secondary_session(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitSecondarySessionRequest{};
+
+  auto response = InitSecondarySessionResponse{};
+
+  raise_if_error(
+      stub->InitSecondarySession(&context, request, &response));
 
   return response;
 }
