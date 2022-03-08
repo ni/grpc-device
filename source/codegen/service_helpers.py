@@ -467,8 +467,8 @@ def get_driver_shared_resource_repository_ptr_deps(
     driver_config: dict, functions: dict
 ) -> SessionRepositoryHandleTypeDependencyMap:
     """Get handle-type to CrossDriverSessionDependency map used by this driver.
- 
-    Combine resource_handle_type and cross_driver_session types in single map since both 
+
+    Combine resource_handle_type and cross_driver_session types in single map since both
     of them together decide repositories required by driver. Combining into single map also
     helps remove duplicates.
     """
