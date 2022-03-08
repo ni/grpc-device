@@ -10078,7 +10078,7 @@ namespace nirfmxlte_grpc {
   NiRFmxLTEFeatureToggles::NiRFmxLTEFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxlte", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxlte", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxlte_grpc
