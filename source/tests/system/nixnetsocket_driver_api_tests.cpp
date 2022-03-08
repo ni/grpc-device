@@ -3,12 +3,17 @@
 #include <gtest/gtest.h>
 #include <nixnetsocket/nixnetsocket_client.h>
 
+#include <iostream>
+#include <nlohmann/json.hpp>
+
 #include "device_server.h"
+#include "enumerate_devices.h"
 
 using namespace nixnetsocket_grpc;
 namespace client = nixnetsocket_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
+using nlohmann::json;
 
 namespace ni {
 namespace tests {
@@ -22,13 +27,8 @@ constexpr auto SOCKET_COULD_NOT_BE_FOUND_MESSAGE = "The specified socket could n
 constexpr auto NXSOCKET_FALSE = 0;
 constexpr auto NXSOCKET_TRUE = 1;
 
-constexpr auto SIMPLE_CONFIG_JSON = R"(
-{
-  "schema": "file:///NIXNET_Documentation/xnetIpStackSchema-03.json",
-  "xnetInterfaces": [
-    {
-      "name": "ENET1",
-      "MACs": [
+constexpr auto SCHEMA = "file:///NIXNET_Documentation/xnetIpStackSchema-03.json";
+const auto SIMPLE_INTERFACE_CONFIG = R"(      
         {
           "address": "inherit",
           "VLANs": [
@@ -45,20 +45,48 @@ constexpr auto SIMPLE_CONFIG_JSON = R"(
             }
           ]
         }
-      ]
-    }
-  ]
-})";
+)"_json;
 
-class NiXnetDriverApiTests : public ::testing::Test {
+std::string create_simple_config(const std::string& interface_name)
+{
+  auto interface_config = json{};
+  interface_config["name"] = interface_name;
+  interface_config["MACs"] = std::vector<json>{SIMPLE_INTERFACE_CONFIG};
+
+  auto config = json{};
+  config["schema"] = SCHEMA;
+  config["xnetInterfaces"] = std::vector<json>{interface_config};
+
+  return config.dump();
+}
+
+class NiXnetSocketDriverApiTests : public ::testing::Test {
  protected:
-  NiXnetDriverApiTests()
+  NiXnetSocketDriverApiTests()
       : device_server_(DeviceServerInterface::Singleton()),
         stub_(NiXnetSocket::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
-  virtual ~NiXnetDriverApiTests() {}
+  virtual ~NiXnetSocketDriverApiTests() {}
+
+  void SetUp() override
+  {
+    const auto discovered_devices = EnumerateDevices();
+
+    for (const auto& required_name : required_interfaces()) {
+      auto found = std::find_if(
+          discovered_devices.cbegin(),
+          discovered_devices.cend(),
+          [&required_name](const nidevice_grpc::DeviceProperties& properties) {
+            return properties.name() == required_name;
+          });
+
+      if (found == discovered_devices.cend()) {
+        GTEST_SKIP() << "Interface not found: " << required_name;
+      }
+    }
+  }
 
   void TearDown() override
   {
@@ -76,9 +104,25 @@ class NiXnetDriverApiTests : public ::testing::Test {
     return stub_;
   }
 
+  virtual std::vector<std::string> required_interfaces() const = 0;
+
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiXnetSocket::Stub> stub_;
+};
+
+class NiXnetSocketLoopbackTests : public NiXnetSocketDriverApiTests {
+  virtual std::vector<std::string> required_interfaces() const override
+  {
+    return {"ENET1,ENET2,ENET3,ENET4"};
+  }
+};
+
+class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
+  virtual std::vector<std::string> required_interfaces() const override
+  {
+    return {};
+  }
 };
 
 #define EXPECT_SUCCESS(response)       \
@@ -91,7 +135,8 @@ class NiXnetDriverApiTests : public ::testing::Test {
     EXPECT_EQ(error, (response).status()); \
   }
 
-SocketResponse socket(client::StubPtr& stub, const nidevice_grpc::Session& stack)
+SocketResponse
+socket(client::StubPtr& stub, const nidevice_grpc::Session& stack)
 {
   return client::socket(stub, stack, 2 /* nxAF_INET */, 1 /* STREAM */, 6 /* TCP */);
 }
@@ -101,7 +146,7 @@ SocketResponse socket(client::StubPtr& stub)
   return socket(stub, nidevice_grpc::Session{});
 }
 
-TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Close_ReturnsAndSetsExpectedErrors)
+TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsExpectedErrors)
 {
   auto socket_response = socket(stub());
   auto socket_get_last_error = client::get_last_error_num(stub());
@@ -121,7 +166,7 @@ TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Close_ReturnsAndSetsExpected
   EXPECT_THAT("The specified socket could not be found.", close_get_last_error_str.error());
 }
 
-TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedErrors)
+TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedErrors)
 {
   auto sock_addr = SockAddr{};
   sock_addr.mutable_ipv4()->set_addr(0x7F000001);
@@ -137,7 +182,7 @@ TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedE
   EXPECT_THAT(SOCKET_COULD_NOT_BE_FOUND_MESSAGE, bind_get_last_error_str.error());
 }
 
-TEST_F(NiXnetDriverApiTests, SocketAndEmptySet_IsSet_ReturnsFalse)
+TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
 {
   auto socket_response = socket(stub());
   auto is_set_response = client::is_set(stub(), socket_response.socket(), {});
@@ -146,7 +191,7 @@ TEST_F(NiXnetDriverApiTests, SocketAndEmptySet_IsSet_ReturnsFalse)
   EXPECT_EQ(NXSOCKET_FALSE, is_set_response.is_set());
 }
 
-TEST_F(NiXnetDriverApiTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
+TEST_F(NiXnetSocketNoHardwareTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
 {
   auto socket_response = socket(stub());
   auto is_set_response = client::is_set(stub(), socket_response.socket(), {socket_response.socket()});
@@ -155,7 +200,7 @@ TEST_F(NiXnetDriverApiTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
   EXPECT_EQ(NXSOCKET_TRUE, is_set_response.is_set());
 }
 
-TEST_F(NiXnetDriverApiTests, InvalidSocket_Select_ReturnsAndSetsExpectedErrors)
+TEST_F(NiXnetSocketNoHardwareTests, InvalidSocket_Select_ReturnsAndSetsExpectedErrors)
 {
   auto socket_response = socket(stub());
   auto duration = pb::Duration{};
@@ -170,28 +215,44 @@ TEST_F(NiXnetDriverApiTests, InvalidSocket_Select_ReturnsAndSetsExpectedErrors)
   EXPECT_THAT(SOCKET_COULD_NOT_BE_FOUND_MESSAGE, select_last_error_str.error());
 }
 
-TEST_F(NiXnetDriverApiTests, InvalidEmptyConfigJson_IpStackCreate_ReturnsInvalidInterfaceNameError)
+TEST_F(NiXnetSocketNoHardwareTests, InvalidEmptyConfigJson_IpStackCreate_ReturnsInvalidInterfaceNameError)
 {
   constexpr auto TEST_CONFIG = "{}";
-  constexpr auto FAILED_TO_CREATE_STACK = -13107;
+  constexpr auto JSON_OBJECT_MISSING_VALUE = -13017;
   const auto stack_response = client::ip_stack_create(stub(), "test", "{}");
-  auto get_last_error_str = client::get_last_error_str(stub(), 512);
 
-  EXPECT_XNET_ERROR(FAILED_TO_CREATE_STACK, stack_response);
-  EXPECT_THAT(get_last_error_str.error(), IsEmpty());
+  EXPECT_XNET_ERROR(JSON_OBJECT_MISSING_VALUE, stack_response);
 }
 
-TEST_F(NiXnetDriverApiTests, ValidConfigJsonForMissingDevice_IpStackCreate_ReturnsInvalidInterfaceNameError)
+TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreate_ReturnsInvalidInterfaceNameError)
 {
-  constexpr auto EST_CONFIG = SIMPLE_CONFIG_JSON;
-  constexpr auto FAILED_TO_CREATE_STACK = -13107;
-  constexpr auto JSON_MISSING_VALUE = (int32_t)0xFFFFCD27;
+  const auto TEST_CONFIG = create_simple_config("ENET6");
   constexpr auto INVALID_INTERFACE_NAME = -1074384758;
-  const auto stack_response = client::ip_stack_create(stub(), "test", SIMPLE_CONFIG_JSON);
-  auto get_last_error_str = client::get_last_error_str(stub(), 512);
+  const auto stack_response = client::ip_stack_create(stub(), "test", TEST_CONFIG);
 
   EXPECT_XNET_ERROR(INVALID_INTERFACE_NAME, stack_response);
-  EXPECT_THAT(get_last_error_str.error(), HasSubstr("An object in the IP Stack configuration is missing a required member. Refer to the IP Stack configuration schema for the expected members."));
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IpStackCreate_CreateSocketWithIpStack_Succeeds)
+{
+  const auto stack_response = client::ip_stack_create(stub(), "test", create_simple_config("ENET1"));
+
+  const auto socket_response = socket(stub(), stack_response.stack_ref());
+
+  EXPECT_SUCCESS(stack_response);
+  EXPECT_SUCCESS(socket_response);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IpStackCreateAndClear_CreateSocketWithIpStack_Fails)
+{
+  const auto create_stack_response = client::ip_stack_create(stub(), "test", create_simple_config("ENET1"));
+  const auto clear_stack_response = client::ip_stack_clear(stub(), create_stack_response.stack_ref());
+
+  const auto socket_response = socket(stub(), create_stack_response.stack_ref());
+
+  EXPECT_SUCCESS(create_stack_response);
+  EXPECT_SUCCESS(clear_stack_response);
+  EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, socket_response);
 }
 
 }  // namespace
