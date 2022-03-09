@@ -19,8 +19,6 @@ import "google/protobuf/duration.proto";
 service NiXnetSocket {
   rpc Bind(BindRequest) returns (BindResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
-  rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
-  rpc GetLastErrorStr(GetLastErrorStrRequest) returns (GetLastErrorStrResponse);
   rpc IsSet(IsSetRequest) returns (IsSetResponse);
   rpc Select(SelectRequest) returns (SelectResponse);
   rpc Socket(SocketRequest) returns (SocketResponse);
@@ -56,6 +54,8 @@ message BindRequest {
 
 message BindResponse {
   int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
 }
 
 message CloseRequest {
@@ -64,22 +64,8 @@ message CloseRequest {
 
 message CloseResponse {
   int32 status = 1;
-}
-
-message GetLastErrorNumRequest {
-}
-
-message GetLastErrorNumResponse {
-  int32 status = 1;
-}
-
-message GetLastErrorStrRequest {
-  uint64 buf_len = 1;
-}
-
-message GetLastErrorStrResponse {
-  int32 status = 1;
-  string error = 2;
+  string error_message = 2;
+  int32 error_num = 3;
 }
 
 message IsSetRequest {
@@ -90,6 +76,8 @@ message IsSetRequest {
 message IsSetResponse {
   int32 status = 1;
   int32 is_set = 2;
+  string error_message = 3;
+  int32 error_num = 4;
 }
 
 message SelectRequest {
@@ -101,6 +89,8 @@ message SelectRequest {
 
 message SelectResponse {
   int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
 }
 
 message SocketRequest {
@@ -113,5 +103,7 @@ message SocketRequest {
 message SocketResponse {
   int32 status = 1;
   nidevice_grpc.Session socket = 2;
+  string error_message = 3;
+  int32 error_num = 4;
 }
 

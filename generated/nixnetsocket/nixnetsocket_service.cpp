@@ -12,6 +12,7 @@
 #include <atomic>
 #include <vector>
 #include "custom/xnetsocket_converters.h"
+#include "custom/xnetsocket_errors.h"
 #include <server/converters.h>
 
 namespace nixnetsocket_grpc {
@@ -55,6 +56,14 @@ namespace nixnetsocket_grpc {
       auto namelen = name.size();
       auto status = library_->Bind(socket, name, namelen);
       response->set_status(status);
+      if (status_ok(status)) {
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -75,49 +84,13 @@ namespace nixnetsocket_grpc {
       session_repository_->remove_session(socket_grpc_session.id(), socket_grpc_session.name());
       auto status = library_->Close(socket);
       response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::GetLastErrorNum(::grpc::ServerContext* context, const GetLastErrorNumRequest* request, GetLastErrorNumResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto status = library_->GetLastErrorNum();
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::GetLastErrorStr(::grpc::ServerContext* context, const GetLastErrorStrRequest* request, GetLastErrorStrResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      size_t buf_len = request->buf_len();
-      std::string buf;
-      if (buf_len > 0) {
-          buf.resize(buf_len - 1);
-      }
-      auto error = library_->GetLastErrorStr((char*)buf.data(), buf_len);
-      auto status = error ? 0 : -1;
-      response->set_status(status);
       if (status_ok(status)) {
-        response->set_error(error);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error()));
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
       }
       return ::grpc::Status::OK;
     }
@@ -143,6 +116,12 @@ namespace nixnetsocket_grpc {
       if (status_ok(status)) {
         response->set_is_set(is_set);
       }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -165,6 +144,14 @@ namespace nixnetsocket_grpc {
       auto timeout = convert_from_grpc<nxtimeval>(request->timeout());
       auto status = library_->Select(nfds, read_fds, write_fds, except_fds, timeout);
       response->set_status(status);
+      if (status_ok(status)) {
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -197,6 +184,12 @@ namespace nixnetsocket_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_socket()->set_id(session_id);
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
       }
       return ::grpc::Status::OK;
     }

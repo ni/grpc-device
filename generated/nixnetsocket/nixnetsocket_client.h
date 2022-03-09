@@ -24,8 +24,6 @@ using namespace nidevice_grpc::experimental::client;
 
 BindResponse bind(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& socket);
-GetLastErrorNumResponse get_last_error_num(const StubPtr& stub);
-GetLastErrorStrResponse get_last_error_str(const StubPtr& stub, const pb::uint64& buf_len);
 IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set);
 SelectResponse select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout);
 SocketResponse socket(const StubPtr& stub, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol);

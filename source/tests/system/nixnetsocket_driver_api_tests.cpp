@@ -17,8 +17,10 @@ namespace {
 
 constexpr auto INVALID_XNET_SOCKET = -1;
 constexpr auto GENERIC_NXSOCKET_ERROR = -1;
-constexpr auto SOCKET_COULD_NOT_BE_FOUND_ERROR = -13009;
-constexpr auto SOCKET_COULD_NOT_BE_FOUND_MESSAGE = "The specified socket could not be found.";
+constexpr auto INVALID_SOCKET_ERROR = -13008;
+constexpr auto INVALID_SOCKET_MESSAGE = "The specified socket could not be found.";
+constexpr auto INVALID_IP_STACK_ERROR = -13009;
+constexpr auto INVALID_IP_STACK_MESSAGE = "The specified IP Stack could not be found.";
 constexpr auto NXSOCKET_FALSE = 0;
 constexpr auto NXSOCKET_TRUE = 1;
 
@@ -70,22 +72,16 @@ SocketResponse socket(client::StubPtr& stub)
 
 TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Close_ReturnsAndSetsExpectedErrors)
 {
-  auto socket_response = socket(stub());
-  auto socket_get_last_error = client::get_last_error_num(stub());
-  auto socket_get_last_error_str = client::get_last_error_str(stub(), 512);
+  auto socket_response = client::socket(stub(), 2 /* nxAF_INET */, 1 /* STREAM */, 6 /* TCP */);
 
   auto close_response = client::close(stub(), socket_response.socket());
-  auto close_get_last_error = client::get_last_error_num(stub());
-  auto close_get_last_error_str = client::get_last_error_str(stub(), 512);
 
   EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, socket_response);
-  EXPECT_SUCCESS(socket_get_last_error);
-  EXPECT_SUCCESS(socket_get_last_error_str);
-  EXPECT_EQ("The specified IP Stack could not be found.", socket_get_last_error_str.error());
-  EXPECT_XNET_ERROR(INVALID_XNET_SOCKET, close_response);
-  EXPECT_XNET_ERROR(-13009, close_get_last_error);
-  EXPECT_SUCCESS(close_get_last_error_str);
-  EXPECT_THAT("The specified socket could not be found.", close_get_last_error_str.error());
+  EXPECT_EQ(INVALID_IP_STACK_ERROR, socket_response.error_num());
+  EXPECT_EQ(INVALID_IP_STACK_MESSAGE, socket_response.error_message());
+  EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, close_response);
+  EXPECT_EQ(INVALID_SOCKET_ERROR, close_response.error_num());
+  EXPECT_EQ(INVALID_SOCKET_MESSAGE, close_response.error_message());
 }
 
 TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedErrors)
@@ -95,13 +91,11 @@ TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedE
   sock_addr.mutable_ipv4()->set_port(31764);
   auto socket_response = socket(stub());
   auto bind_response = client::bind(stub(), socket_response.socket(), sock_addr);
-  auto bind_get_last_error = client::get_last_error_num(stub());
-  auto bind_get_last_error_str = client::get_last_error_str(stub(), 512);
 
   EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, socket_response);
   EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, bind_response);
-  EXPECT_XNET_ERROR(SOCKET_COULD_NOT_BE_FOUND_ERROR, bind_get_last_error);
-  EXPECT_THAT(SOCKET_COULD_NOT_BE_FOUND_MESSAGE, bind_get_last_error_str.error());
+  EXPECT_EQ(INVALID_SOCKET_ERROR, bind_response.error_num());
+  EXPECT_EQ(INVALID_SOCKET_MESSAGE, bind_response.error_message());
 }
 
 TEST_F(NiXnetDriverApiTests, SocketAndEmptySet_IsSet_ReturnsFalse)
@@ -129,12 +123,10 @@ TEST_F(NiXnetDriverApiTests, InvalidSocket_Select_ReturnsAndSetsExpectedErrors)
   duration.set_seconds(1);
   duration.set_nanos(500000);
   auto select_response = client::select(stub(), {socket_response.socket()}, {socket_response.socket()}, {}, duration);
-  auto select_last_error = client::get_last_error_num(stub());
-  auto select_last_error_str = client::get_last_error_str(stub(), 512);
 
   EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, select_response);
-  EXPECT_XNET_ERROR(SOCKET_COULD_NOT_BE_FOUND_ERROR, select_last_error);
-  EXPECT_THAT(SOCKET_COULD_NOT_BE_FOUND_MESSAGE, select_last_error_str.error());
+  EXPECT_EQ(INVALID_SOCKET_ERROR, select_response.error_num());
+  EXPECT_EQ(INVALID_SOCKET_MESSAGE, select_response.error_message());
 }
 }  // namespace
 }  // namespace system
