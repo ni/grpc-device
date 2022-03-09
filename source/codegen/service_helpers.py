@@ -291,7 +291,7 @@ def get_id_type_value(enum_data):
     for i, value in enumerate(enum_data["values"]):
         formated_value = _format_value(value['value'])
         type = value["type"]
-        id_type_content += f"{{{formated_value}, {type}}},"
+        id_type_content += f"{{{formated_value}, {type}_}},"
     return id_type_content
 
 
@@ -445,7 +445,7 @@ def get_type_from_enum(enums: dict) -> str:
             for i, value in enumerate(enums[enum_name]["values"]):
                 type = value["type"]
                 if type not in distinct_type:
-                    s += f"{type}, "
+                    s += f"{type}_, "
                     distinct_type.add(type)
     return s
 

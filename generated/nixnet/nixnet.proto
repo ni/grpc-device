@@ -822,7 +822,7 @@ message u32Array {
 }
 
 message refArray {
-    repeated  nidevice_grpc.Session ref = 1;
+    repeated nidevice_grpc.Session ref = 1;
 }
 
 message GetPropertyRequest {
@@ -843,7 +843,7 @@ message GetPropertyResponse {
         int32 i32_scalar = 6;
         double f64_scalar = 7;
         nidevice_grpc.Session ref = 8;
-        bytes string_array = 9;
+        string string_array = 9;
         u32Array u32_array = 10;
         refArray ref_array = 11;
     }

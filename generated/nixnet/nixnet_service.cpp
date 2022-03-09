@@ -11,7 +11,6 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include "custom/xnet_converters.h"
 #include <server/converters.h>
 
 namespace nixnet_grpc {
