@@ -43,6 +43,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.DisconnectTerminals = reinterpret_cast<DisconnectTerminalsPtr>(shared_library_.get_function_pointer("nxDisconnectTerminals"));
   function_pointers_.Flush = reinterpret_cast<FlushPtr>(shared_library_.get_function_pointer("nxFlush"));
   function_pointers_.FutureTimeTrigger = reinterpret_cast<FutureTimeTriggerPtr>(shared_library_.get_function_pointer("nxFutureTimeTrigger"));
+  function_pointers_.GetProperty = reinterpret_cast<GetPropertyPtr>(shared_library_.get_function_pointer("nxGetProperty"));
   function_pointers_.GetPropertySize = reinterpret_cast<GetPropertySizePtr>(shared_library_.get_function_pointer("nxGetPropertySize"));
   function_pointers_.GetSubPropertySize = reinterpret_cast<GetSubPropertySizePtr>(shared_library_.get_function_pointer("nxGetSubPropertySize"));
   function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(shared_library_.get_function_pointer("nxReadSignalSinglePoint"));
@@ -329,6 +330,18 @@ nxStatus_t NiXnetLibrary::FutureTimeTrigger(nxSessionRef_t sessionRef, nxTimesta
   return nxFutureTimeTrigger(sessionRef, when, timescale);
 #else
   return function_pointers_.FutureTimeTrigger(sessionRef, when, timescale);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::GetProperty(nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue)
+{
+  if (!function_pointers_.GetProperty) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxGetProperty.");
+  }
+#if defined(_MSC_VER)
+  return nxGetProperty(sessionRef, propertyID, propertySize, propertyValue);
+#else
+  return function_pointers_.GetProperty(sessionRef, propertyID, propertySize, propertyValue);
 #endif
 }
 

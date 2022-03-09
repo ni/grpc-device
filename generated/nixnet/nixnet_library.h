@@ -40,6 +40,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t DisconnectTerminals(nxSessionRef_t sessionRef, const char source[], const char destination[]);
   nxStatus_t Flush(nxSessionRef_t sessionRef);
   nxStatus_t FutureTimeTrigger(nxSessionRef_t sessionRef, nxTimestamp1ns_t when, u32 timescale);
+  nxStatus_t GetProperty(nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue);
   nxStatus_t GetPropertySize(nxSessionRef_t sessionRef, u32 propertyID, u32* propertySize);
   nxStatus_t GetSubPropertySize(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize);
   nxStatus_t ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer);
@@ -76,6 +77,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using DisconnectTerminalsPtr = decltype(&nxDisconnectTerminals);
   using FlushPtr = decltype(&nxFlush);
   using FutureTimeTriggerPtr = decltype(&nxFutureTimeTrigger);
+  using GetPropertyPtr = decltype(&nxGetProperty);
   using GetPropertySizePtr = decltype(&nxGetPropertySize);
   using GetSubPropertySizePtr = decltype(&nxGetSubPropertySize);
   using ReadSignalSinglePointPtr = decltype(&nxReadSignalSinglePoint);
@@ -112,6 +114,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     DisconnectTerminalsPtr DisconnectTerminals;
     FlushPtr Flush;
     FutureTimeTriggerPtr FutureTimeTrigger;
+    GetPropertyPtr GetProperty;
     GetPropertySizePtr GetPropertySize;
     GetSubPropertySizePtr GetSubPropertySize;
     ReadSignalSinglePointPtr ReadSignalSinglePoint;

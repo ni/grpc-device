@@ -37,6 +37,7 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t DisconnectTerminals(nxSessionRef_t sessionRef, const char source[], const char destination[]) = 0;
   virtual nxStatus_t Flush(nxSessionRef_t sessionRef) = 0;
   virtual nxStatus_t FutureTimeTrigger(nxSessionRef_t sessionRef, nxTimestamp1ns_t when, u32 timescale) = 0;
+  virtual nxStatus_t GetProperty(nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue) = 0;
   virtual nxStatus_t GetPropertySize(nxSessionRef_t sessionRef, u32 propertyID, u32* propertySize) = 0;
   virtual nxStatus_t GetSubPropertySize(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize) = 0;
   virtual nxStatus_t ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer) = 0;

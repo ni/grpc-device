@@ -622,7 +622,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -650,7 +650,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -754,7 +754,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -841,7 +841,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'GetProperty': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeButNoProtoMessage',
         'parameters': [
             {
                 'direction': 'in',
@@ -850,11 +850,12 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
             {
+                'include_in_proto': False,
                 'direction': 'in',
                 'name': 'propertySize',
                 'type': 'u32'
@@ -863,7 +864,11 @@ functions = {
                 'direction': 'out',
                 'enum': 'PropertyValue',
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': ''
+                },
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -877,7 +882,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -904,7 +909,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -936,7 +941,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1146,7 +1151,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'ReadStateValue',
+                'enum': 'StateValue',
                 'name': 'stateValue',
                 'size': {
                     'mechanism': 'passed-in',
@@ -1203,7 +1208,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1235,7 +1240,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1525,7 +1530,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ReadStateValue',
+                'enum': 'StateValue',
                 'name': 'stateValue',
                 'size': {
                     'mechanism': 'len',

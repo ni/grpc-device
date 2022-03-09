@@ -250,7 +250,9 @@ def _create_param(parameter, expand_varargs=True, repeated_parameters=None):
             return "..."
     elif common_helpers.is_array(type):
         array_size = _get_array_param_size(parameter)
-        return f"{type[:-2]} {name}[{array_size}]"
+        if type[:-2] == 'void':
+            return f"{type[:-2]}* {name}"
+        else: return f"{type[:-2]} {name}[{array_size}]"
     elif common_helpers.is_pointer_parameter(parameter):
         return f"{type}* {name}"
     else:
@@ -287,6 +289,14 @@ def get_output_lookup_values(enum_data):
         formated_value = _format_value(value["value"])
         out_value_format += f"{{{formated_value}, {i + 1}}},"
     return out_value_format
+
+def get_id_type_value(enum_data):
+    id_type_content = ""
+    for i, value in enumerate(enum_data["values"]):
+        formated_value = _format_value(value['value'])
+        type = value["type"]
+        id_type_content += f"{{{formated_value}, {type}}},"
+    return id_type_content
 
 
 def filter_api_functions(functions, only_mockable_functions=True):
@@ -423,6 +433,25 @@ def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
     function_enums = common_helpers.get_function_enums(functions)
     return [e for e in function_enums if should_generate_mappings(e)]
 
+
+def get_enums_to_map_type(enums: dict) ->List[str]:
+    list_of_enums: List[str] = []
+    for enum_name in enums.keys():
+        if "generate-mapping-type" in enums[enum_name]:
+            list_of_enums.append(enum_name)
+    return list_of_enums
+
+def get_type_from_enum(enums: dict) -> str:
+    s = ""
+    distinct_type = set()
+    for enum_name in enums.keys():
+        if "generate-mapping-type" in enums[enum_name]:
+            for i, value in enumerate(enums[enum_name]["values"]):
+                type = value["type"]
+                if type not in distinct_type:
+                    s += f"{type}, "
+                    distinct_type.add(type)
+    return s
 
 def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int, str]:
     """Get a mapping from bitfield values to the corresponding C++ enum value constants."""

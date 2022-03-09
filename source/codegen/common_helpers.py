@@ -401,13 +401,21 @@ def pascal_to_snake(pascal_string):
 
 def filter_proto_rpc_functions(functions):
     """Return function metadata only for functions to include for generating proto rpc methods."""
-    functions_for_proto = {"public", "CustomCode"}
+    functions_for_proto = {"public", "CustomCode", "CustomCodeButNoProtoMessage"}
     return [
         name
         for name, function in functions.items()
         if function.get("codegen_method", "public") in functions_for_proto
     ]
 
+def filter_proto_rpc_functions_message(functions):
+    """Return function metadata only for functions to include for generating proto rpc methods."""
+    functions_for_proto = {"public", "CustomCode"}
+    return [
+        name
+        for name, function in functions.items()
+        if function.get("codegen_method", "public") in functions_for_proto
+    ]
 
 def get_attribute_enums_by_type(attributes):
     """Return a dict of attribute data types that use enum, along with set of enums used."""

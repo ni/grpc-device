@@ -11,6 +11,7 @@ config = {
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-XNET',
     'status_ok': 'status >= 0',
+    'additional_headers': { "custom/xnet_converters.h": ["service.cpp"] },
     'type_to_grpc_type': {
         'nxSessionRef_t': 'nidevice_grpc.Session',
         'nxDatabaseRef_t': 'nidevice_grpc.Session',
