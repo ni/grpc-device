@@ -241,6 +241,24 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds,
   return response;
 }
 
+SetSocketOptionResponse
+set_socket_option(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetSocketOptionRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_level(level);
+  request.mutable_opt_data()->CopyFrom(opt_data);
+
+  auto response = SetSocketOptionResponse{};
+
+  raise_if_error(
+      stub->SetSocketOption(&context, request, &response));
+
+  return response;
+}
+
 SocketResponse
 socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol)
 {
