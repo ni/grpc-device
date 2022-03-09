@@ -25,10 +25,6 @@ using namespace nidevice_grpc::experimental::client;
 BlinkResponse blink(const StubPtr& stub, const nidevice_grpc::Session& interface_ref, const simple_variant<BlinkMode, pb::uint32>& modifier);
 ClearResponse clear(const StubPtr& stub, const nidevice_grpc::Session& session_ref);
 ConnectTerminalsResponse connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TerminalName, std::string>& source, const simple_variant<TerminalName, std::string>& destination);
-ConvertByteArrayToFramesSinglePointResponse convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& value_buffer, const pb::uint32& size_of_buffer);
-ConvertFramesToByteArraySinglePointResponse convert_frames_to_byte_array_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& frame_buffer, const pb::uint32& size_of_value_buffer);
-ConvertFramesToSignalsSinglePointResponse convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& frame_buffer, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer);
-ConvertSignalsToFramesSinglePointResponse convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer, const pb::uint32& size_of_buffer);
 ConvertTimestamp100nsTo1nsResponse convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from);
 ConvertTimestamp1nsTo100nsResponse convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from);
 CreateSessionResponse create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface, const simple_variant<CreateSessionMode, pb::uint32>& mode);
@@ -52,7 +48,6 @@ FlushResponse flush(const StubPtr& stub, const nidevice_grpc::Session& session_r
 FutureTimeTriggerResponse future_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint64& when, const simple_variant<TimeScale, pb::uint32>& timescale);
 GetPropertySizeResponse get_property_size(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<Property, pb::uint32>& property_id);
 GetSubPropertySizeResponse get_sub_property_size(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& active_index, const simple_variant<SubProperty, pb::uint32>& property_id);
-ReadFrameResponse read_frame(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& size_of_buffer, const simple_variant<TimeOut, double>& timeout);
 ReadSignalSinglePointResponse read_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer);
 ReadSignalWaveformResponse read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const pb::uint32& size_of_value_buffer);
 ReadStateResponse read_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<ReadState, pb::uint32>& state_id, const pb::uint32& state_size);
@@ -62,7 +57,6 @@ StopResponse stop(const StubPtr& stub, const nidevice_grpc::Session& session_ref
 SystemCloseResponse system_close(const StubPtr& stub, const nidevice_grpc::Session& system_ref);
 SystemOpenResponse system_open(const StubPtr& stub);
 WaitResponse wait(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<WaitCondition, pb::uint32>& condition, const pb::uint32& param_in, const double& timeout);
-WriteFrameResponse write_frame(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& buffer, const simple_variant<TimeOut, double>& timeout);
 WriteSignalSinglePointResponse write_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer);
 WriteSignalWaveformResponse write_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const std::vector<double>& value_buffer);
 WriteSignalXYResponse write_signal_xy(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const std::vector<double>& value_buffer, const std::vector<pb::uint64>& timestamp_buffer, const std::vector<pb::uint32>& num_pairs_buffer);

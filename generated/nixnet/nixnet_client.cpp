@@ -89,79 +89,6 @@ connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session_ref
   return response;
 }
 
-ConvertByteArrayToFramesSinglePointResponse
-convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& value_buffer, const pb::uint32& size_of_buffer)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConvertByteArrayToFramesSinglePointRequest{};
-  request.mutable_session_ref()->CopyFrom(session_ref);
-  request.set_value_buffer(value_buffer);
-  request.set_size_of_buffer(size_of_buffer);
-
-  auto response = ConvertByteArrayToFramesSinglePointResponse{};
-
-  raise_if_error(
-      stub->ConvertByteArrayToFramesSinglePoint(&context, request, &response));
-
-  return response;
-}
-
-ConvertFramesToByteArraySinglePointResponse
-convert_frames_to_byte_array_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& frame_buffer, const pb::uint32& size_of_value_buffer)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConvertFramesToByteArraySinglePointRequest{};
-  request.mutable_session_ref()->CopyFrom(session_ref);
-  request.set_frame_buffer(frame_buffer);
-  request.set_size_of_value_buffer(size_of_value_buffer);
-
-  auto response = ConvertFramesToByteArraySinglePointResponse{};
-
-  raise_if_error(
-      stub->ConvertFramesToByteArraySinglePoint(&context, request, &response));
-
-  return response;
-}
-
-ConvertFramesToSignalsSinglePointResponse
-convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& frame_buffer, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConvertFramesToSignalsSinglePointRequest{};
-  request.mutable_session_ref()->CopyFrom(session_ref);
-  request.set_frame_buffer(frame_buffer);
-  request.set_size_of_value_buffer(size_of_value_buffer);
-  request.set_size_of_timestamp_buffer(size_of_timestamp_buffer);
-
-  auto response = ConvertFramesToSignalsSinglePointResponse{};
-
-  raise_if_error(
-      stub->ConvertFramesToSignalsSinglePoint(&context, request, &response));
-
-  return response;
-}
-
-ConvertSignalsToFramesSinglePointResponse
-convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer, const pb::uint32& size_of_buffer)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConvertSignalsToFramesSinglePointRequest{};
-  request.mutable_session_ref()->CopyFrom(session_ref);
-  copy_array(value_buffer, request.mutable_value_buffer());
-  request.set_size_of_buffer(size_of_buffer);
-
-  auto response = ConvertSignalsToFramesSinglePointResponse{};
-
-  raise_if_error(
-      stub->ConvertSignalsToFramesSinglePoint(&context, request, &response));
-
-  return response;
-}
-
 ConvertTimestamp100nsTo1nsResponse
 convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from)
 {
@@ -624,31 +551,6 @@ get_sub_property_size(const StubPtr& stub, const nidevice_grpc::Session& session
   return response;
 }
 
-ReadFrameResponse
-read_frame(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& size_of_buffer, const simple_variant<TimeOut, double>& timeout)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ReadFrameRequest{};
-  request.mutable_session_ref()->CopyFrom(session_ref);
-  request.set_size_of_buffer(size_of_buffer);
-  const auto timeout_ptr = timeout.get_if<TimeOut>();
-  const auto timeout_raw_ptr = timeout.get_if<double>();
-  if (timeout_ptr) {
-    request.set_timeout(*timeout_ptr);
-  }
-  else if (timeout_raw_ptr) {
-    request.set_timeout_raw(*timeout_raw_ptr);
-  }
-
-  auto response = ReadFrameResponse{};
-
-  raise_if_error(
-      stub->ReadFrame(&context, request, &response));
-
-  return response;
-}
-
 ReadSignalSinglePointResponse
 read_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer)
 {
@@ -843,31 +745,6 @@ wait(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simpl
 
   raise_if_error(
       stub->Wait(&context, request, &response));
-
-  return response;
-}
-
-WriteFrameResponse
-write_frame(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& buffer, const simple_variant<TimeOut, double>& timeout)
-{
-  ::grpc::ClientContext context;
-
-  auto request = WriteFrameRequest{};
-  request.mutable_session_ref()->CopyFrom(session_ref);
-  request.set_buffer(buffer);
-  const auto timeout_ptr = timeout.get_if<TimeOut>();
-  const auto timeout_raw_ptr = timeout.get_if<double>();
-  if (timeout_ptr) {
-    request.set_timeout(*timeout_ptr);
-  }
-  else if (timeout_raw_ptr) {
-    request.set_timeout_raw(*timeout_raw_ptr);
-  }
-
-  auto response = WriteFrameResponse{};
-
-  raise_if_error(
-      stub->WriteFrame(&context, request, &response));
 
   return response;
 }
