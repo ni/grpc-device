@@ -111,7 +111,8 @@ functions = {
                     'value': 'size'
                 },
                 'pointer': True,
-                'type': 'char[]' # not sure what type to make this
+                'grpc_type': 'bytes',
+                'type': 'char[]'
             },
             {
                 'direction': 'in',
@@ -158,7 +159,8 @@ functions = {
                     'value': 'size'
                 },
                 'pointer': True,
-                'type': 'char[]' # not sure what type to make this
+                'grpc_type': 'bytes',
+                'type': 'char[]'
             },
             {
                 'direction': 'in',
@@ -189,7 +191,8 @@ functions = {
                     'value': 'size'
                 },
                 'pointer': True,
-                'type': 'char[]' # type?
+                'grpc_type': 'bytes',
+                'type': 'char[]'
             },
             {
                 'direction': 'in',
@@ -236,7 +239,8 @@ functions = {
                     'value': 'size'
                 },
                 'pointer': True,
-                'type': 'char[]' # type?
+                'grpc_type': 'bytes',
+                'type': 'char[]'
             },
             {
                 'direction': 'in',

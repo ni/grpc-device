@@ -97,7 +97,7 @@ message ListenResponse {
 
 message SendToRequest {
   nidevice_grpc.Session socket = 1;
-  string dataptr = 2;
+  bytes dataptr = 2;
   int32 flags = 3;
   SockAddr to = 4;
 }
@@ -108,7 +108,7 @@ message SendToResponse {
 
 message SendRequest {
   nidevice_grpc.Session socket = 1;
-  string dataptr = 2;
+  bytes dataptr = 2;
   int32 flags = 3;
 }
 
@@ -118,7 +118,7 @@ message SendResponse {
 
 message RecVFromRequest {
   nidevice_grpc.Session socket = 1;
-  string mem = 2;
+  bytes mem = 2;
   int32 flags = 3;
   SockAddr from = 4;
 }
@@ -129,7 +129,7 @@ message RecVFromResponse {
 
 message RecVRequest {
   nidevice_grpc.Session socket = 1;
-  string mem = 2;
+  bytes mem = 2;
   int32 flags = 3;
 }
 
