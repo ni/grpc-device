@@ -34,23 +34,6 @@ bind(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& 
   return response;
 }
 
-AcceptResponse
-accept(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& addr)
-{
-  ::grpc::ClientContext context;
-
-  auto request = AcceptRequest{};
-  request.mutable_socket()->CopyFrom(socket);
-  request.mutable_addr()->CopyFrom(addr);
-
-  auto response = AcceptResponse{};
-
-  raise_if_error(
-      stub->Accept(&context, request, &response));
-
-  return response;
-}
-
 ConnectResponse
 connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name)
 {
@@ -122,25 +105,6 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
   return response;
 }
 
-RecVFromResponse
-rec_v_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags, const SockAddr& from)
-{
-  ::grpc::ClientContext context;
-
-  auto request = RecVFromRequest{};
-  request.mutable_socket()->CopyFrom(socket);
-  request.set_mem(mem);
-  request.set_flags(flags);
-  request.mutable_from()->CopyFrom(from);
-
-  auto response = RecVFromResponse{};
-
-  raise_if_error(
-      stub->RecVFrom(&context, request, &response));
-
-  return response;
-}
-
 RecVResponse
 rec_v(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
 {
@@ -155,40 +119,6 @@ rec_v(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::strin
 
   raise_if_error(
       stub->RecV(&context, request, &response));
-
-  return response;
-}
-
-GetSockNameResponse
-get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& addr)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetSockNameRequest{};
-  request.mutable_socket()->CopyFrom(socket);
-  request.mutable_addr()->CopyFrom(addr);
-
-  auto response = GetSockNameResponse{};
-
-  raise_if_error(
-      stub->GetSockName(&context, request, &response));
-
-  return response;
-}
-
-GetPeerNameResponse
-get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& addr)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetPeerNameRequest{};
-  request.mutable_socket()->CopyFrom(socket);
-  request.mutable_addr()->CopyFrom(addr);
-
-  auto response = GetPeerNameResponse{};
-
-  raise_if_error(
-      stub->GetPeerName(&context, request, &response));
 
   return response;
 }

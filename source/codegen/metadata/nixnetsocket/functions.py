@@ -25,33 +25,6 @@ functions = {
         ],
         'returns': 'int32_t'
     },
-    'Accept': {
-        'cname': 'nxaccept',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'grpc_type': 'SockAddr',
-                'name': 'addr',
-                'pointer': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'in',
-                'name': 'addrlen',
-                'pointer': True,
-                'hardcoded_value': '(nxsocklen_t*)(addr.size())', # this builds but its incorrect 'hardcoded_value': '(nxsocklen_t*)(addr.size())',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            },
-        ],
-        'returns': 'nxSOCKET'
-    },
     'Connect': {
         'cname': 'nxconnect',
         'parameters': [
@@ -175,54 +148,6 @@ functions = {
         ],
         'returns': 'int32_t'
     },
-    'RecVFrom': {
-        'cname': 'nxrecvfrom',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'name': 'mem',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'pointer': True,
-                'grpc_type': 'bytes',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'int32_t'
-            },
-            {
-                'direction': 'in',
-                'name': 'flags',
-                'type': 'int32_t'
-            },
-            {
-                'direction': 'in',
-                'grpc_type': 'SockAddr',
-                'name': 'from',
-                'pointer': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'in',
-                'name': 'fromlen',
-                'pointer': True,
-                'hardcoded_value': '(nxsocklen_t*)(from.size())', # cast?
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
     'RecV': {
         'cname': 'nxrecv',
         'parameters': [
@@ -251,60 +176,6 @@ functions = {
                 'direction': 'in',
                 'name': 'flags',
                 'type': 'int32_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'GetSockName': {
-        'cname': 'nxgetsockname',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'grpc_type': 'SockAddr',
-                'name': 'addr',
-                'pointer': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'in',
-                'name': 'addrlen',
-                'pointer': True,
-                'hardcoded_value': '(nxsocklen_t*)(addr.size())', # this builds but its incorrect 'hardcoded_value': '(nxsocklen_t*)(addr.size())',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'GetPeerName': {
-        'cname': 'nxgetpeername',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'grpc_type': 'SockAddr',
-                'name': 'addr',
-                'pointer': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'in',
-                'name': 'addrlen',
-                'pointer': True,
-                'hardcoded_value': '(nxsocklen_t*)(addr.size())', # this builds but its incorrect 'hardcoded_value': '(nxsocklen_t*)(addr.size())',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
             },
         ],
         'returns': 'int32_t'

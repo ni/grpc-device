@@ -19,15 +19,11 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
 
   ::grpc::Status check_function_exists(std::string functionName);
   int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
-  nxSOCKET Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
   int32_t Listen(nxSOCKET socket, int32_t backlog);
   int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen);
   int32_t Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags);
-  int32_t RecVFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen);
   int32_t RecV(nxSOCKET socket, char mem[], int32_t size, int32_t flags);
-  int32_t GetSockName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
-  int32_t GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t Shutdown(nxSOCKET socket, int32_t how);
   int32_t Close(nxSOCKET socket);
   int32_t GetLastErrorNum();
@@ -38,15 +34,11 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
 
  private:
   using BindPtr = decltype(&nxbind);
-  using AcceptPtr = decltype(&nxaccept);
   using ConnectPtr = decltype(&nxconnect);
   using ListenPtr = decltype(&nxlisten);
   using SendToPtr = decltype(&nxsendto);
   using SendPtr = decltype(&nxsend);
-  using RecVFromPtr = decltype(&nxrecvfrom);
   using RecVPtr = decltype(&nxrecv);
-  using GetSockNamePtr = decltype(&nxgetsockname);
-  using GetPeerNamePtr = decltype(&nxgetpeername);
   using ShutdownPtr = decltype(&nxshutdown);
   using ClosePtr = decltype(&nxclose);
   using GetLastErrorNumPtr = decltype(&nxgetlasterrornum);
@@ -57,15 +49,11 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
 
   typedef struct FunctionPointers {
     BindPtr Bind;
-    AcceptPtr Accept;
     ConnectPtr Connect;
     ListenPtr Listen;
     SendToPtr SendTo;
     SendPtr Send;
-    RecVFromPtr RecVFrom;
     RecVPtr RecV;
-    GetSockNamePtr GetSockName;
-    GetPeerNamePtr GetPeerName;
     ShutdownPtr Shutdown;
     ClosePtr Close;
     GetLastErrorNumPtr GetLastErrorNum;

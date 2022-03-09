@@ -22,15 +22,11 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
     return;
   }
   function_pointers_.Bind = reinterpret_cast<BindPtr>(shared_library_.get_function_pointer("nxbind"));
-  function_pointers_.Accept = reinterpret_cast<AcceptPtr>(shared_library_.get_function_pointer("nxaccept"));
   function_pointers_.Connect = reinterpret_cast<ConnectPtr>(shared_library_.get_function_pointer("nxconnect"));
   function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
   function_pointers_.SendTo = reinterpret_cast<SendToPtr>(shared_library_.get_function_pointer("nxsendto"));
   function_pointers_.Send = reinterpret_cast<SendPtr>(shared_library_.get_function_pointer("nxsend"));
-  function_pointers_.RecVFrom = reinterpret_cast<RecVFromPtr>(shared_library_.get_function_pointer("nxrecvfrom"));
   function_pointers_.RecV = reinterpret_cast<RecVPtr>(shared_library_.get_function_pointer("nxrecv"));
-  function_pointers_.GetSockName = reinterpret_cast<GetSockNamePtr>(shared_library_.get_function_pointer("nxgetsockname"));
-  function_pointers_.GetPeerName = reinterpret_cast<GetPeerNamePtr>(shared_library_.get_function_pointer("nxgetpeername"));
   function_pointers_.Shutdown = reinterpret_cast<ShutdownPtr>(shared_library_.get_function_pointer("nxshutdown"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("nxclose"));
   function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
@@ -60,18 +56,6 @@ int32_t NiXnetSocketLibrary::Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t
   return nxbind(socket, name, namelen);
 #else
   return function_pointers_.Bind(socket, name, namelen);
-#endif
-}
-
-nxSOCKET NiXnetSocketLibrary::Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
-{
-  if (!function_pointers_.Accept) {
-    throw nidevice_grpc::LibraryLoadException("Could not find nxaccept.");
-  }
-#if defined(_MSC_VER)
-  return nxaccept(socket, addr, addrlen);
-#else
-  return function_pointers_.Accept(socket, addr, addrlen);
 #endif
 }
 
@@ -123,18 +107,6 @@ int32_t NiXnetSocketLibrary::Send(nxSOCKET socket, char dataptr[], int32_t size,
 #endif
 }
 
-int32_t NiXnetSocketLibrary::RecVFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen)
-{
-  if (!function_pointers_.RecVFrom) {
-    throw nidevice_grpc::LibraryLoadException("Could not find nxrecvfrom.");
-  }
-#if defined(_MSC_VER)
-  return nxrecvfrom(socket, mem, size, flags, from, fromlen);
-#else
-  return function_pointers_.RecVFrom(socket, mem, size, flags, from, fromlen);
-#endif
-}
-
 int32_t NiXnetSocketLibrary::RecV(nxSOCKET socket, char mem[], int32_t size, int32_t flags)
 {
   if (!function_pointers_.RecV) {
@@ -144,30 +116,6 @@ int32_t NiXnetSocketLibrary::RecV(nxSOCKET socket, char mem[], int32_t size, int
   return nxrecv(socket, mem, size, flags);
 #else
   return function_pointers_.RecV(socket, mem, size, flags);
-#endif
-}
-
-int32_t NiXnetSocketLibrary::GetSockName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
-{
-  if (!function_pointers_.GetSockName) {
-    throw nidevice_grpc::LibraryLoadException("Could not find nxgetsockname.");
-  }
-#if defined(_MSC_VER)
-  return nxgetsockname(socket, addr, addrlen);
-#else
-  return function_pointers_.GetSockName(socket, addr, addrlen);
-#endif
-}
-
-int32_t NiXnetSocketLibrary::GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
-{
-  if (!function_pointers_.GetPeerName) {
-    throw nidevice_grpc::LibraryLoadException("Could not find nxgetpeername.");
-  }
-#if defined(_MSC_VER)
-  return nxgetpeername(socket, addr, addrlen);
-#else
-  return function_pointers_.GetPeerName(socket, addr, addrlen);
 #endif
 }
 

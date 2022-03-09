@@ -18,15 +18,11 @@ import "google/protobuf/duration.proto";
 
 service NiXnetSocket {
   rpc Bind(BindRequest) returns (BindResponse);
-  rpc Accept(AcceptRequest) returns (AcceptResponse);
   rpc Connect(ConnectRequest) returns (ConnectResponse);
   rpc Listen(ListenRequest) returns (ListenResponse);
   rpc SendTo(SendToRequest) returns (SendToResponse);
   rpc Send(SendRequest) returns (SendResponse);
-  rpc RecVFrom(RecVFromRequest) returns (RecVFromResponse);
   rpc RecV(RecVRequest) returns (RecVResponse);
-  rpc GetSockName(GetSockNameRequest) returns (GetSockNameResponse);
-  rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
   rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
@@ -65,15 +61,6 @@ message BindRequest {
 }
 
 message BindResponse {
-  int32 status = 1;
-}
-
-message AcceptRequest {
-  nidevice_grpc.Session socket = 1;
-  SockAddr addr = 2;
-}
-
-message AcceptResponse {
   int32 status = 1;
 }
 
@@ -116,17 +103,6 @@ message SendResponse {
   int32 status = 1;
 }
 
-message RecVFromRequest {
-  nidevice_grpc.Session socket = 1;
-  bytes mem = 2;
-  int32 flags = 3;
-  SockAddr from = 4;
-}
-
-message RecVFromResponse {
-  int32 status = 1;
-}
-
 message RecVRequest {
   nidevice_grpc.Session socket = 1;
   bytes mem = 2;
@@ -134,24 +110,6 @@ message RecVRequest {
 }
 
 message RecVResponse {
-  int32 status = 1;
-}
-
-message GetSockNameRequest {
-  nidevice_grpc.Session socket = 1;
-  SockAddr addr = 2;
-}
-
-message GetSockNameResponse {
-  int32 status = 1;
-}
-
-message GetPeerNameRequest {
-  nidevice_grpc.Session socket = 1;
-  SockAddr addr = 2;
-}
-
-message GetPeerNameResponse {
   int32 status = 1;
 }
 

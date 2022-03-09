@@ -64,27 +64,6 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::Accept(::grpc::ServerContext* context, const AcceptRequest* request, AcceptResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
-      auto addr = convert_from_grpc<nxsockaddr>(request->addr());
-      auto addrlen = (nxsocklen_t*)(addr.size());
-      auto status = library_->Accept(socket, addr, addrlen);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::Connect(::grpc::ServerContext* context, const ConnectRequest* request, ConnectResponse* response)
   {
     if (context->IsCancelled()) {
@@ -172,30 +151,6 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::RecVFrom(::grpc::ServerContext* context, const RecVFromRequest* request, RecVFromResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
-      char* mem = (char*)request->mem().c_str();
-      int32_t size = static_cast<int32_t>(request->mem().size());
-      int32_t flags = request->flags();
-      auto from = convert_from_grpc<nxsockaddr>(request->from());
-      auto fromlen = (nxsocklen_t*)(from.size());
-      auto status = library_->RecVFrom(socket, mem, size, flags, from, fromlen);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::RecV(::grpc::ServerContext* context, const RecVRequest* request, RecVResponse* response)
   {
     if (context->IsCancelled()) {
@@ -208,48 +163,6 @@ namespace nixnetsocket_grpc {
       int32_t size = static_cast<int32_t>(request->mem().size());
       int32_t flags = request->flags();
       auto status = library_->RecV(socket, mem, size, flags);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::GetSockName(::grpc::ServerContext* context, const GetSockNameRequest* request, GetSockNameResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
-      auto addr = convert_from_grpc<nxsockaddr>(request->addr());
-      auto addrlen = (nxsocklen_t*)(addr.size());
-      auto status = library_->GetSockName(socket, addr, addrlen);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::GetPeerName(::grpc::ServerContext* context, const GetPeerNameRequest* request, GetPeerNameResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
-      auto addr = convert_from_grpc<nxsockaddr>(request->addr());
-      auto addrlen = (nxsocklen_t*)(addr.size());
-      auto status = library_->GetPeerName(socket, addr, addrlen);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
