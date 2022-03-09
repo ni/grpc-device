@@ -81,6 +81,31 @@ get_last_error_str(const StubPtr& stub, const pb::uint64& buf_len)
   return response;
 }
 
+GetSocketOptionResponse
+get_socket_option(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const simple_variant<SocketOptions, pb::int32>& opt_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSocketOptionRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_level(level);
+  const auto opt_name_ptr = opt_name.get_if<SocketOptions>();
+  const auto opt_name_raw_ptr = opt_name.get_if<pb::int32>();
+  if (opt_name_ptr) {
+    request.set_opt_name(*opt_name_ptr);
+  }
+  else if (opt_name_raw_ptr) {
+    request.set_opt_name_raw(*opt_name_raw_ptr);
+  }
+
+  auto response = GetSocketOptionResponse{};
+
+  raise_if_error(
+      stub->GetSocketOption(&context, request, &response));
+
+  return response;
+}
+
 IsSetResponse
 is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
 {

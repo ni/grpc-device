@@ -37,6 +37,10 @@ def is_pointer_parameter(parameter):
     """Whether the parameter is a pointer parameter."""
     return is_output_parameter(parameter) or parameter.get("pointer", False)
 
+def is_void(parameter):
+    """Whether the parameter is a void type."""
+    return parameter['type'] in ["void"]
+
 
 def is_repeated_varargs_parameter(parameter: dict):
     """Whether the parameter is a repeated varargs parameter.

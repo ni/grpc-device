@@ -45,6 +45,7 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status GetLastErrorNum(::grpc::ServerContext* context, const GetLastErrorNumRequest* request, GetLastErrorNumResponse* response) override;
   ::grpc::Status GetLastErrorStr(::grpc::ServerContext* context, const GetLastErrorStrRequest* request, GetLastErrorStrResponse* response) override;
+  ::grpc::Status GetSocketOption(::grpc::ServerContext* context, const GetSocketOptionRequest* request, GetSocketOptionResponse* response) override;
   ::grpc::Status IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response) override;
   ::grpc::Status Select(::grpc::ServerContext* context, const SelectRequest* request, SelectResponse* response) override;
   ::grpc::Status SetSocketOption(::grpc::ServerContext* context, const SetSocketOptionRequest* request, SetSocketOptionResponse* response) override;

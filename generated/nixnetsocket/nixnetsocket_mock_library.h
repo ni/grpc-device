@@ -21,6 +21,7 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, Close, (nxSOCKET socket), (override));
   MOCK_METHOD(int32_t, GetLastErrorNum, (), (override));
   MOCK_METHOD(char*, GetLastErrorStr, (char buf[], size_t bufLen), (override));
+  MOCK_METHOD(int32_t, GetSocketOption, (nxSOCKET socket, int32_t level, int32_t opt_name, void* optval, nxsocklen_t* optlen), (override));
   MOCK_METHOD(int32_t, IsSet, (nxSOCKET fd, nxfd_set* set), (override));
   MOCK_METHOD(int32_t, Select, (int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout), (override));
   MOCK_METHOD(int32_t, SetSocketOption, (nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen), (override));

@@ -21,6 +21,7 @@ service NiXnetSocket {
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
   rpc GetLastErrorStr(GetLastErrorStrRequest) returns (GetLastErrorStrResponse);
+  rpc GetSocketOption(GetSocketOptionRequest) returns (GetSocketOptionResponse);
   rpc IsSet(IsSetRequest) returns (IsSetResponse);
   rpc Select(SelectRequest) returns (SelectResponse);
   rpc SetSocketOption(SetSocketOptionRequest) returns (SetSocketOptionResponse);
@@ -29,6 +30,18 @@ service NiXnetSocket {
 
 enum NiXnetSocketAttribute {
   NIXNETSOCKET_ATTRIBUTE_UNSPECIFIED = 0;
+}
+
+enum SocketOptions {
+  SOCKET_OPTIONS_UNSPECIFIED = 0;
+  SOCKET_OPTIONS_RX_DATA = 257;
+  SOCKET_OPTIONS_RCV_BUF = 258;
+  SOCKET_OPTIONS_SND_BUF = 259;
+  SOCKET_OPTIONS_NON_BLOCK = 260;
+  SOCKET_OPTIONS_BIND_TO_DEVICE = 261;
+  SOCKET_OPTIONS_ERROR = 262;
+  SOCKET_OPTIONS_LINGER = 263;
+  SOCKET_OPTIONS_REUSE_ADDR = 264;
 }
 
 message SockAddrIPv4 {
@@ -51,7 +64,7 @@ message SockAddr {
 }
 
 message SockOptData {
-  int32 opt = 1;
+  SocketOptions opt = 1;
   oneof data {
     int32 data_int32 = 2;
     bool data_bool = 3;
@@ -90,6 +103,20 @@ message GetLastErrorStrRequest {
 message GetLastErrorStrResponse {
   int32 status = 1;
   string error = 2;
+}
+
+message GetSocketOptionRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 level = 2;
+  oneof opt_name_enum {
+    SocketOptions opt_name = 3;
+    int32 opt_name_raw = 4;
+  }
+}
+
+message GetSocketOptionResponse {
+  int32 status = 1;
+  SockOptData optval = 2;
 }
 
 message IsSetRequest {

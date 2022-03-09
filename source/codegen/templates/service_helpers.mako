@@ -679,6 +679,8 @@ ${initialize_standard_input_param(function_name, parameter)}
       response->mutable_${parameter_name}()->Resize(${size}, 0);
       ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->mutable_data();
 %     endif
+%   elif common_helpers.is_void(parameter):
+      ${underlying_param_type}* ${parameter_name};
 %   else:
       ${underlying_param_type} ${parameter_name} {};
 %   endif
@@ -800,7 +802,7 @@ ${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_na
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
 ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x", size=common_helpers.get_size_expression(parameter))}\
 %   elif common_helpers.supports_standard_copy_conversion_routines(parameter):
-        convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
+        convert_to_grpc(${parameter_name}, ${str.join(", ", [f"response->mutable_{parameter_name}()"] + parameter.get("additional_arguments_to_copy_convert", []))});
 %   elif common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
 %   elif parameter['grpc_type'] == 'nidevice_grpc.Session':

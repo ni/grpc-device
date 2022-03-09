@@ -22,6 +22,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t Close(nxSOCKET socket);
   int32_t GetLastErrorNum();
   char* GetLastErrorStr(char buf[], size_t bufLen);
+  int32_t GetSocketOption(nxSOCKET socket, int32_t level, int32_t opt_name, void* optval, nxsocklen_t* optlen);
   int32_t IsSet(nxSOCKET fd, nxfd_set* set);
   int32_t Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout);
   int32_t SetSocketOption(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen);
@@ -32,6 +33,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using ClosePtr = decltype(&nxclose);
   using GetLastErrorNumPtr = decltype(&nxgetlasterrornum);
   using GetLastErrorStrPtr = decltype(&nxgetlasterrorstr);
+  using GetSocketOptionPtr = decltype(&nxgetsockopt);
   using IsSetPtr = decltype(&nxfd_isset);
   using SelectPtr = decltype(&nxselect);
   using SetSocketOptionPtr = decltype(&nxsetsockopt);
@@ -42,6 +44,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     ClosePtr Close;
     GetLastErrorNumPtr GetLastErrorNum;
     GetLastErrorStrPtr GetLastErrorStr;
+    GetSocketOptionPtr GetSocketOption;
     IsSetPtr IsSet;
     SelectPtr Select;
     SetSocketOptionPtr SetSocketOption;

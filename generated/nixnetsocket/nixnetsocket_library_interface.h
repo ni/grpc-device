@@ -19,6 +19,7 @@ class NiXnetSocketLibraryInterface {
   virtual int32_t Close(nxSOCKET socket) = 0;
   virtual int32_t GetLastErrorNum() = 0;
   virtual char* GetLastErrorStr(char buf[], size_t bufLen) = 0;
+  virtual int32_t GetSocketOption(nxSOCKET socket, int32_t level, int32_t opt_name, void* optval, nxsocklen_t* optlen) = 0;
   virtual int32_t IsSet(nxSOCKET fd, nxfd_set* set) = 0;
   virtual int32_t Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout) = 0;
   virtual int32_t SetSocketOption(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen) = 0;

@@ -69,6 +69,43 @@ functions = {
         ],
         'returns': 'char*'
     },
+    'GetSocketOption': {
+        'cname': 'nxgetsockopt',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'level',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'opt_name',
+                'type': 'int32_t',
+                'enum': 'SocketOptions'
+            },
+            {
+                'direction': 'out',
+                'name': 'optval',
+                'grpc_type': 'SockOptData',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['request->opt_name()', 'optlen'],
+                'pointer': True,
+                'type': 'void'
+            },
+            {
+                'direction': 'out',
+                'name': 'optlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            }
+        ],
+        'returns': 'int32_t'
+    },
     'IsSet': {
         'cname': 'nxfd_isset',
         'status_expression': '0',
