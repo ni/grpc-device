@@ -19,6 +19,8 @@ service NiXnet {
   rpc Blink(BlinkRequest) returns (BlinkResponse);
   rpc Clear(ClearRequest) returns (ClearResponse);
   rpc ConnectTerminals(ConnectTerminalsRequest) returns (ConnectTerminalsResponse);
+  rpc ConvertByteArrayToFramesSinglePoint(ConvertByteArrayToFramesSinglePointRequest) returns (ConvertByteArrayToFramesSinglePointResponse);
+  rpc ConvertSignalsToFramesSinglePoint(ConvertSignalsToFramesSinglePointRequest) returns (ConvertSignalsToFramesSinglePointResponse);
   rpc ConvertTimestamp100nsTo1ns(ConvertTimestamp100nsTo1nsRequest) returns (ConvertTimestamp100nsTo1nsResponse);
   rpc ConvertTimestamp1nsTo100ns(ConvertTimestamp1nsTo100nsRequest) returns (ConvertTimestamp1nsTo100nsResponse);
   rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
@@ -844,6 +846,16 @@ enum WriteState {
   WRITE_STATE_STATE_ETHERNET_WAKE = 1245317;
 }
 
+message Frame {
+    uint64 timestamp = 1;
+    uint32 identifier = 2;
+    uint32 type = 3;
+    uint32 flags = 4;
+    uint32 info = 5;
+    uint32 payload_length = 6;
+    bytes payload = 7;
+}
+
 message BlinkRequest {
   nidevice_grpc.Session interface_ref = 1;
   oneof modifier_enum {
@@ -878,6 +890,28 @@ message ConnectTerminalsRequest {
 
 message ConnectTerminalsResponse {
   int32 status = 1;
+}
+
+message ConvertByteArrayToFramesSinglePointRequest {
+  nidevice_grpc.Session session_ref = 1;
+  bytes value_buffer = 2;
+  uint32 size_of_buffer = 3;
+}
+
+message ConvertByteArrayToFramesSinglePointResponse {
+  int32 status = 1;
+  repeated Frame buffer = 2;
+}
+
+message ConvertSignalsToFramesSinglePointRequest {
+  nidevice_grpc.Session session_ref = 1;
+  repeated double value_buffer = 2;
+  uint32 size_of_buffer = 3;
+}
+
+message ConvertSignalsToFramesSinglePointResponse {
+  int32 status = 1;
+  repeated Frame buffer = 2;
 }
 
 message ConvertTimestamp100nsTo1nsRequest {

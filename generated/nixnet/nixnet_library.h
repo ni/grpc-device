@@ -21,6 +21,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t Blink(nxSessionRef_t interfaceRef, u32 modifier);
   nxStatus_t Clear(nxSessionRef_t sessionRef);
   nxStatus_t ConnectTerminals(nxSessionRef_t sessionRef, const char source[], const char destination[]);
+  nxStatus_t ConvertByteArrayToFramesSinglePoint(nxSessionRef_t sessionRef, u8 valueBuffer[], u32 sizeOfValueBuffer, void* buffer, u32 sizeOfBuffer, u32* numberOfBytesReturned);
+  nxStatus_t ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, void* buffer, u32 sizeOfBuffer, u32* numberOfBytesReturned);
   nxStatus_t ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from, nxTimestamp1ns_t* to);
   nxStatus_t ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from, nxTimestamp100ns_t* to);
   nxStatus_t CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef);
@@ -59,6 +61,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using BlinkPtr = decltype(&nxBlink);
   using ClearPtr = decltype(&nxClear);
   using ConnectTerminalsPtr = decltype(&nxConnectTerminals);
+  using ConvertByteArrayToFramesSinglePointPtr = decltype(&nxConvertByteArrayToFramesSinglePoint);
+  using ConvertSignalsToFramesSinglePointPtr = decltype(&nxConvertSignalsToFramesSinglePoint);
   using ConvertTimestamp100nsTo1nsPtr = decltype(&nxConvertTimestamp100nsTo1ns);
   using ConvertTimestamp1nsTo100nsPtr = decltype(&nxConvertTimestamp1nsTo100ns);
   using CreateSessionPtr = decltype(&nxCreateSession);
@@ -97,6 +101,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     BlinkPtr Blink;
     ClearPtr Clear;
     ConnectTerminalsPtr ConnectTerminals;
+    ConvertByteArrayToFramesSinglePointPtr ConvertByteArrayToFramesSinglePoint;
+    ConvertSignalsToFramesSinglePointPtr ConvertSignalsToFramesSinglePoint;
     ConvertTimestamp100nsTo1nsPtr ConvertTimestamp100nsTo1ns;
     ConvertTimestamp1nsTo100nsPtr ConvertTimestamp1nsTo100ns;
     CreateSessionPtr CreateSession;

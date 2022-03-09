@@ -48,7 +48,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertByteArrayToFramesSinglePoint': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -62,7 +62,8 @@ functions = {
                     'mechanism': 'len',
                     'value': 'sizeOfValueBuffer'
                 },
-                'type': 'u8[]'
+                'type': 'u8[]',
+                'grpc_type': 'bytes'
             },
             {
                 'direction': 'in',
@@ -76,7 +77,8 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'void[]',
+                'grpc_type': 'repeated Frame'
             },
             {
                 'direction': 'in',
@@ -86,6 +88,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
+                'include_in_proto': False,
                 'type': 'u32'
             }
         ],
@@ -184,7 +187,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertSignalsToFramesSinglePoint': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -212,7 +215,8 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'void[]',
+                'grpc_type': 'repeated Frame'
             },
             {
                 'direction': 'in',
@@ -222,7 +226,8 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
-                'type': 'u32'
+                'type': 'u32',
+                'include_in_proto': False
             }
         ],
         'returns': 'nxStatus_t'
