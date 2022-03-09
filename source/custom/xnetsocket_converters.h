@@ -215,6 +215,73 @@ inline TimeValInputConverter convert_from_grpc(const pb_::Duration& input)
 {
   return TimeValInputConverter(input);
 }
+
+// This class allows us to have something allocated on the stack that can be used as an
+// nxsockaddr* and initialized from a grpc SockAddr using standard codegen and copy convert routines.
+struct SockOptDataHolder {
+  SockOptData opt_data;
+  int32_t data_int;
+  bool data_bool;
+  std::string data_string;
+
+  SockOptDataHolder(const SockOptData& input) : opt_data(input)
+  {
+    data_int = opt_data.data_int32();
+    data_bool = opt_data.data_bool();
+    data_string = std::string(opt_data.data_string());
+  }
+
+  int32_t name() const
+  {
+    return opt_data.opt();
+  }
+
+  void* data()
+  {
+    void* dummy_pointer;
+    switch (opt_data.data_case()) {
+      case SockOptData::DataCase::kDataInt32:
+        dummy_pointer = &data_int;
+        break;
+      case SockOptData::DataCase::kDataString:
+        dummy_pointer = &data_string;
+        break;
+      case SockOptData::DataCase::kDataBool:
+        dummy_pointer = &data_bool;
+        break;
+      default:
+        // pass dummy_pointer
+        break;
+    }
+    return dummy_pointer;
+  }
+
+  // size() method is used to simplify codegen calculating the size of the
+  // selected data.
+  nxsocklen_t size() const
+  {
+    switch (opt_data.data_case()) {
+      case SockOptData::DataCase::kDataInt32:
+        return sizeof(int32_t);
+        break;
+      case SockOptData::DataCase::kDataString:
+        return opt_data.data_string().size();
+        break;
+      case SockOptData::DataCase::kDataBool:
+        return sizeof(bool);
+      default:
+        return 0;
+        break;
+    }
+  }
+};
+
+template <typename TSockOptData>
+inline SockOptDataHolder convert_from_grpc(const SockOptData& input)
+{
+  return SockOptDataHolder(input);
+}
+
 }  // namespace nixnetsocket_grpc
 
 // Template specializations go in nidevice_grpc::converters.
