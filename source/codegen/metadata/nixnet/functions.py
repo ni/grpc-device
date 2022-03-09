@@ -1121,6 +1121,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadState': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1140,9 +1141,13 @@ functions = {
             },
             {
                 'direction': 'out',
-                'enum': 'StateValue',
                 'name': 'stateValue',
-                'grpc-type' : 'StateValue'
+                'type': 'void *',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'stateSize'
+                },
+                'grpc_type' : 'StateValue'
             },
             {
                 'direction': 'out',
@@ -1153,7 +1158,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadStateTimeTrigger': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1178,7 +1183,8 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'type': 'void *',
+                'grpc_type' : 'TimeLocalNetwork'
             }
         ],
         'returns': 'nxStatus_t'
@@ -1514,13 +1520,14 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'StateValue',
+                #'enum': 'StateValue',
                 'name': 'stateValue',
                 'size': {
                     'mechanism': 'len',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'type': 'void *',
+                'grpc_type' : 'StateValue'
             }
         ],
         'returns': 'nxStatus_t'

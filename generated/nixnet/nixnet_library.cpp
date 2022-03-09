@@ -52,6 +52,8 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadFrame = reinterpret_cast<ReadFramePtr>(shared_library_.get_function_pointer("nxReadFrame"));
   function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(shared_library_.get_function_pointer("nxReadSignalSinglePoint"));
   function_pointers_.ReadSignalWaveform = reinterpret_cast<ReadSignalWaveformPtr>(shared_library_.get_function_pointer("nxReadSignalWaveform"));
+  function_pointers_.ReadState = reinterpret_cast<ReadStatePtr>(shared_library_.get_function_pointer("nxReadState"));
+  function_pointers_.ReadStateTimeTrigger = reinterpret_cast<ReadStateTimeTriggerPtr>(shared_library_.get_function_pointer("nxReadStateTimeTrigger"));
   function_pointers_.Start = reinterpret_cast<StartPtr>(shared_library_.get_function_pointer("nxStart"));
   function_pointers_.Stop = reinterpret_cast<StopPtr>(shared_library_.get_function_pointer("nxStop"));
   function_pointers_.SystemClose = reinterpret_cast<SystemClosePtr>(shared_library_.get_function_pointer("nxSystemClose"));
@@ -443,6 +445,30 @@ nxStatus_t NiXnetLibrary::ReadSignalWaveform(nxSessionRef_t sessionRef, f64 time
   return nxReadSignalWaveform(sessionRef, timeout, startTime, deltaTime, valueBuffer, sizeOfValueBuffer, numberOfValuesReturned);
 #else
   return function_pointers_.ReadSignalWaveform(sessionRef, timeout, startTime, deltaTime, valueBuffer, sizeOfValueBuffer, numberOfValuesReturned);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::ReadState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault)
+{
+  if (!function_pointers_.ReadState) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxReadState.");
+  }
+#if defined(_MSC_VER)
+  return nxReadState(sessionRef, stateID, stateSize, stateValue, fault);
+#else
+  return function_pointers_.ReadState(sessionRef, stateID, stateSize, stateValue, fault);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::ReadStateTimeTrigger(nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, void* stateValue)
+{
+  if (!function_pointers_.ReadStateTimeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxReadStateTimeTrigger.");
+  }
+#if defined(_MSC_VER)
+  return nxReadStateTimeTrigger(sessionRef, timeout, stateSize, stateValue);
+#else
+  return function_pointers_.ReadStateTimeTrigger(sessionRef, timeout, stateSize, stateValue);
 #endif
 }
 

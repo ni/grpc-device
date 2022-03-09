@@ -47,6 +47,8 @@ service NiXnet {
   rpc ReadFrame(ReadFrameRequest) returns (ReadFrameResponse);
   rpc ReadSignalSinglePoint(ReadSignalSinglePointRequest) returns (ReadSignalSinglePointResponse);
   rpc ReadSignalWaveform(ReadSignalWaveformRequest) returns (ReadSignalWaveformResponse);
+  rpc ReadState(ReadStateRequest) returns (ReadStateResponse);
+  rpc ReadStateTimeTrigger(ReadStateTimeTriggerRequest) returns (ReadStateTimeTriggerResponse);
   rpc Start(StartRequest) returns (StartResponse);
   rpc Stop(StopRequest) returns (StopResponse);
   rpc SystemClose(SystemCloseRequest) returns (SystemCloseResponse);
@@ -729,44 +731,6 @@ enum StartStopScope {
   START_STOP_SCOPE_START_STOP_SESSION_ONLY_BLOCKING = 3;
 }
 
-enum StateValue {
-  option allow_alias = true;
-  STATE_VALUE_SESSION_INFO_STATE_STOPPED = 0;
-  STATE_VALUE_SESSION_INFO_STATE_STARTED = 1;
-  STATE_VALUE_SESSION_INFO_STATE_MIX = 2;
-  STATE_VALUE_CAN_COMM_STATE_ERROR_ACTIVE = 0;
-  STATE_VALUE_CAN_COMM_STATE_ERROR_PASSIVE = 1;
-  STATE_VALUE_CAN_COMM_STATE_BUS_OFF = 2;
-  STATE_VALUE_CAN_COMM_STATE_INIT = 3;
-  STATE_VALUE_CAN_LAST_ERR_NONE = 0;
-  STATE_VALUE_CAN_LAST_ERR_STUFF = 1;
-  STATE_VALUE_CAN_LAST_ERR_FORM = 2;
-  STATE_VALUE_CAN_LAST_ERR_ACK = 3;
-  STATE_VALUE_CAN_LAST_ERR_BIT_1 = 4;
-  STATE_VALUE_CAN_LAST_ERR_BIT_0 = 5;
-  STATE_VALUE_CAN_LAST_ERR_CRC = 6;
-  STATE_VALUE_FLEX_RAY_POC_STATE_DEFAULT_CONFIG = 0;
-  STATE_VALUE_FLEX_RAY_POC_STATE_READY = 1;
-  STATE_VALUE_FLEX_RAY_POC_STATE_NORMAL_ACTIVE = 2;
-  STATE_VALUE_FLEX_RAY_POC_STATE_NORMAL_PASSIVE = 3;
-  STATE_VALUE_FLEX_RAY_POC_STATE_HALT = 4;
-  STATE_VALUE_FLEX_RAY_POC_STATE_MONITOR = 5;
-  STATE_VALUE_FLEX_RAY_POC_STATE_CONFIG = 15;
-  STATE_VALUE_LIN_COMM_STATE_IDLE = 0;
-  STATE_VALUE_LIN_COMM_STATE_ACTIVE = 1;
-  STATE_VALUE_LIN_COMM_STATE_INACTIVE = 2;
-  STATE_VALUE_LIN_DIAGNOSTIC_SCHEDULE_NULL = 0;
-  STATE_VALUE_LIN_DIAGNOSTIC_SCHEDULE_MASTER_REQ = 1;
-  STATE_VALUE_LIN_DIAGNOSTIC_SCHEDULE_SLAVE_RESP = 2;
-  STATE_VALUE_LIN_LAST_ERR_CODE_NONE = 0;
-  STATE_VALUE_LIN_LAST_ERR_CODE_UNKNOWN_ID = 1;
-  STATE_VALUE_LIN_LAST_ERR_CODE_FORM = 2;
-  STATE_VALUE_LIN_LAST_ERR_CODE_FRAMING = 3;
-  STATE_VALUE_LIN_LAST_ERR_CODE_READBACK = 4;
-  STATE_VALUE_LIN_LAST_ERR_CODE_TIMEOUT = 5;
-  STATE_VALUE_LIN_LAST_ERR_CODE_CRC = 6;
-}
-
 enum SubProperty {
   SUB_PROPERTY_UNSPECIFIED = 0;
   SUB_PROPERTY_SESSION_SUB_CAN_START_TIME_OFF = 17825921;
@@ -848,6 +812,47 @@ enum WriteState {
   WRITE_STATE_STATE_ETHERNET_WAKE = 1245317;
 }
 
+message FlexRayStats {
+    uint32 NumSyntaxErrorChA = 1;
+    uint32 NumSyntaxErrorChB = 2;
+    uint32 NumContentErrorChA = 3;
+    uint32 NumContentErrorChB = 4;
+    uint32 NumSlotBoundaryViolationChA = 5;
+    uint32 NumSlotBoundaryViolationChB = 6;
+}
+
+message J1939CommState{
+    uint32 PGN = 1;
+    uint32  SourceAddress = 2;
+    uint32  DestinationAddress = 3;
+    uint32  TransmitError = 4;
+    uint32  ReceiveError = 5;
+    uint32 Reserved1 = 6;
+    uint32 Reserved2 = 7;
+}
+
+message TimeLocalNetwork{
+    uint64 LocalTime = 1;
+    uint64 NetworkTime = 2;
+    uint32 Flags = 3;
+}
+
+message StateValue {
+    oneof value{
+        uint64 time_current = 1;
+        uint64 time_communicating = 2;
+        uint64 time_start = 3;
+        uint32 can_comm = 4;
+        uint32 flex_ray_comm = 5;
+        FlexRayStats flex_ray_stat = 6;
+        uint32 lin_comm = 7;
+        uint32 session_info = 8;
+        J1939CommState comm_stat = 9;
+        TimeLocalNetwork time_current2 = 10;
+        TimeLocalNetwork time_communicating2 = 11;
+        TimeLocalNetwork time_start2 = 12;
+    }
+}
 message BlinkRequest {
   nidevice_grpc.Session interface_ref = 1;
   oneof modifier_enum {
@@ -1211,6 +1216,35 @@ message ReadSignalWaveformResponse {
   double delta_time = 3;
   repeated double value_buffer = 4;
   uint32 number_of_values_returned = 5;
+}
+
+message ReadStateRequest {
+  nidevice_grpc.Session session_ref = 1;
+  oneof state_id_enum {
+    ReadState state_id = 2;
+    uint32 state_id_raw = 3;
+  }
+  uint32 state_size = 4;
+}
+
+message ReadStateResponse {
+  int32 status = 1;
+  StateValue state_value = 2;
+  int32 fault = 3;
+}
+
+message ReadStateTimeTriggerRequest {
+  nidevice_grpc.Session session_ref = 1;
+  oneof timeout_enum {
+    TimeOut timeout = 2;
+    double timeout_raw = 3;
+  }
+  uint32 state_size = 4;
+}
+
+message ReadStateTimeTriggerResponse {
+  int32 status = 1;
+  TimeLocalNetwork state_value = 2;
 }
 
 message StartRequest {

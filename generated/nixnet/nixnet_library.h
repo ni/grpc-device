@@ -49,6 +49,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t ReadFrame(nxSessionRef_t sessionRef, u8 buffer[], u32 sizeOfBuffer, f64 timeout, u32* numberOfBytesReturned);
   nxStatus_t ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer);
   nxStatus_t ReadSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned);
+  nxStatus_t ReadState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault);
+  nxStatus_t ReadStateTimeTrigger(nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, void* stateValue);
   nxStatus_t Start(nxSessionRef_t sessionRef, u32 scope);
   nxStatus_t Stop(nxSessionRef_t sessionRef, u32 scope);
   nxStatus_t SystemClose(nxSessionRef_t systemRef);
@@ -91,6 +93,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using ReadFramePtr = decltype(&nxReadFrame);
   using ReadSignalSinglePointPtr = decltype(&nxReadSignalSinglePoint);
   using ReadSignalWaveformPtr = decltype(&nxReadSignalWaveform);
+  using ReadStatePtr = decltype(&nxReadState);
+  using ReadStateTimeTriggerPtr = decltype(&nxReadStateTimeTrigger);
   using StartPtr = decltype(&nxStart);
   using StopPtr = decltype(&nxStop);
   using SystemClosePtr = decltype(&nxSystemClose);
@@ -133,6 +137,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     ReadFramePtr ReadFrame;
     ReadSignalSinglePointPtr ReadSignalSinglePoint;
     ReadSignalWaveformPtr ReadSignalWaveform;
+    ReadStatePtr ReadState;
+    ReadStateTimeTriggerPtr ReadStateTimeTrigger;
     StartPtr Start;
     StopPtr Stop;
     SystemClosePtr SystemClose;

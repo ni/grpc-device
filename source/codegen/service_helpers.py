@@ -226,6 +226,8 @@ def create_param(parameter, expand_varargs=True, repeated_parameters=None):
         else:
             return "..."
     elif common_helpers.is_array(type):
+        if(type == "void *"):
+            return f"void* {name}"
         array_size = get_array_param_size(parameter)
         return f"{type[:-2]} {name}[{array_size}]"
     elif common_helpers.is_pointer_parameter(parameter):
