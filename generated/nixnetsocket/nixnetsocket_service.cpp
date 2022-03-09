@@ -174,6 +174,30 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::SetSocketOption(::grpc::ServerContext* context, const SetSocketOptionRequest* request, SetSocketOptionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto socket_grpc_session = request->socket();
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      int32_t level = request->level();
+      auto opt_data = convert_from_grpc<SockOptDataHolder>(request->opt_data());
+      auto optname = opt_data.name();
+      auto optval = opt_data.data();
+      auto optlen = opt_data.size();
+      auto status = library_->SetSocketOption(socket, level, optname, optval, optlen);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::Socket(::grpc::ServerContext* context, const SocketRequest* request, SocketResponse* response)
   {
     if (context->IsCancelled()) {

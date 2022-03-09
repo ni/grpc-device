@@ -47,6 +47,7 @@ public:
   ::grpc::Status GetLastErrorStr(::grpc::ServerContext* context, const GetLastErrorStrRequest* request, GetLastErrorStrResponse* response) override;
   ::grpc::Status IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response) override;
   ::grpc::Status Select(::grpc::ServerContext* context, const SelectRequest* request, SelectResponse* response) override;
+  ::grpc::Status SetSocketOption(::grpc::ServerContext* context, const SetSocketOptionRequest* request, SetSocketOptionResponse* response) override;
   ::grpc::Status Socket(::grpc::ServerContext* context, const SocketRequest* request, SocketResponse* response) override;
 private:
   NiXnetSocketLibraryInterface* library_;
