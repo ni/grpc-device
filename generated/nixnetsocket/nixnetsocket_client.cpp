@@ -81,6 +81,42 @@ get_last_error_str(const StubPtr& stub, const pb::uint64& buf_len)
   return response;
 }
 
+IsSetResponse
+is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IsSetRequest{};
+  request.mutable_fd()->CopyFrom(fd);
+  copy_array(set, request.mutable_set());
+
+  auto response = IsSetResponse{};
+
+  raise_if_error(
+      stub->IsSet(&context, request, &response));
+
+  return response;
+}
+
+SelectResponse
+select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SelectRequest{};
+  copy_array(read_fds, request.mutable_read_fds());
+  copy_array(write_fds, request.mutable_write_fds());
+  copy_array(except_fds, request.mutable_except_fds());
+  request.mutable_timeout()->CopyFrom(timeout);
+
+  auto response = SelectResponse{};
+
+  raise_if_error(
+      stub->Select(&context, request, &response));
+
+  return response;
+}
+
 SocketResponse
 socket(const StubPtr& stub, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol)
 {

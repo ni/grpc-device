@@ -135,14 +135,21 @@ def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
     )
 
 
-def any_function_uses_timestamp(functions):
-    """Whether the function has any parameters whose type is a timestamp."""
-    for function in functions:
-        if any(
-            p["grpc_type"] == "google.protobuf.Timestamp" for p in functions[function]["parameters"]
-        ):
-            return True
-    return False
+def _any_function_uses_grpc_type(functions, type_name):
+    return any(p["grpc_type"] == type_name for f in functions for p in functions[f]["parameters"])
+
+
+def list_external_proto_dependencies(functions: dict) -> List[str]:
+    """Return a list of external proto files required by the functions dictionary."""
+    mappings = {
+        "google.protobuf.Timestamp": "google/protobuf/timestamp.proto",
+        "google.protobuf.Duration": "google/protobuf/duration.proto",
+    }
+    return [
+        proto_name
+        for type_name, proto_name in mappings.items()
+        if _any_function_uses_grpc_type(functions, type_name)
+    ]
 
 
 def get_custom_types(config: dict) -> List[Dict[str, Any]]:
