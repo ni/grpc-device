@@ -46,6 +46,14 @@ def is_repeated_varargs_parameter(parameter: dict):
     """
     return parameter.get("repeated_var_args", False)
 
+def is_meta_parameter(parameter: dict):
+    """Whether the parameter is a meta parameter only included in proto.
+
+    This means the parameter is an extra paramater included in the proto but not
+    in the API.
+    """
+    return parameter.get("meta_param", False)
+
 
 def is_repeating_parameter(parameter: dict):
     """Whether the parameter is a repeating parameter.
@@ -1076,5 +1084,6 @@ def get_driver_api_params(parameters: List[dict]) -> List[dict]:
     Excludes:
     * Return values.
     * Outputs that are calculated/populated after the API call.
+    * Meta params (proto only)
     """
-    return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
+    return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p) or is_meta_parameter(p))]

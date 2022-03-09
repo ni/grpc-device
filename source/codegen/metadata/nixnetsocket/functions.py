@@ -138,8 +138,52 @@ functions = {
             },
         ],
         'returns': 'int32_t'
-
-
+    },
+    'SetSocketOption': {
+        'cname': 'nxsetsockopt',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'level',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'opt_data',
+                'grpc_type': 'SockOptData',
+                'supports_standard_copy_convert': True,
+                'meta_param': True,
+                'type': 'SockOptDataHolder'
+            },
+            {
+                'direction': 'in',
+                'name': 'optname',
+                'hardcoded_value': 'opt_data.name()',
+                'include_in_proto': False,
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'optval',
+                'hardcoded_value': 'opt_data.data()',
+                'include_in_proto': False,
+                'pointer': True,
+                'type': 'void'
+            },
+            {
+                'direction': 'in',
+                'name': 'optlen',
+                'hardcoded_value': 'opt_data.size()',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            }
+        ],
+        'returns': 'int32_t'
     },
     'Socket': {
         'cname': 'nxsocket',
