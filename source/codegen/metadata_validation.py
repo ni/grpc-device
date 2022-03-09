@@ -200,7 +200,9 @@ def _validate_function(function_name: str, metadata: dict):
                 if "type" not in parameter:
                     if "grpc_type" not in parameter:
                         raise Exception(f"parameter {parameter['name']} has no type or grpc_type!")
-                    if not parameter.get("repeated_var_args", False) and not parameter.get("meta_param", False):
+                    if not parameter.get("repeated_var_args", False) and not parameter.get(
+                        "meta_param", False
+                    ):
                         raise Exception(
                             f"parameter {parameter['name']} has no type and repeated_var_args or meta_param is not set!"
                         )

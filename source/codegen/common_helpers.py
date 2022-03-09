@@ -37,9 +37,10 @@ def is_pointer_parameter(parameter):
     """Whether the parameter is a pointer parameter."""
     return is_output_parameter(parameter) or parameter.get("pointer", False)
 
+
 def is_void(parameter):
     """Whether the parameter is a void type."""
-    return parameter['type'] in ["void"]
+    return parameter["type"] in ["void"]
 
 
 def is_repeated_varargs_parameter(parameter: dict):
@@ -49,6 +50,7 @@ def is_repeated_varargs_parameter(parameter: dict):
     arbitrary repetition of fixed arguments.
     """
     return parameter.get("repeated_var_args", False)
+
 
 def is_meta_parameter(parameter: dict):
     """Whether the parameter is a meta parameter only included in proto.
@@ -1090,4 +1092,8 @@ def get_driver_api_params(parameters: List[dict]) -> List[dict]:
     * Outputs that are calculated/populated after the API call.
     * Meta params (proto only)
     """
-    return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p) or is_meta_parameter(p))]
+    return [
+        p
+        for p in parameters
+        if not (is_return_value(p) or is_get_last_error_output_param(p) or is_meta_parameter(p))
+    ]
