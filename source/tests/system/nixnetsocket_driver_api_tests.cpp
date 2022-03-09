@@ -136,6 +136,27 @@ TEST_F(NiXnetDriverApiTests, InvalidSocket_Select_ReturnsAndSetsExpectedErrors)
   EXPECT_XNET_ERROR(SOCKET_COULD_NOT_BE_FOUND_ERROR, select_last_error);
   EXPECT_THAT(SOCKET_COULD_NOT_BE_FOUND_MESSAGE, select_last_error_str.error());
 }
+
+TEST_F(NiXnetDriverApiTests, Socket_GetSocketOptionMulticastTTL_ResponseIsReasonable)
+{
+  auto socket_response = socket(stub());
+  auto get_socket_option_response = client::get_socket_option(stub(), socket_response.socket(), 13 /* nxSOL_SOCKET */, SocketOptions::SOCKET_OPTIONS_SND_BUF);
+
+  EXPECT_SUCCESS(get_socket_option_response);
+  EXPECT_EQ(get_socket_option_response.optval().data_int32(), 1);
+}
+
+TEST_F(NiXnetDriverApiTests, Socket_SetSocketOptionMulticastTTL_ResponseIsReasonable)
+{
+  auto socket_response = socket(stub());
+  SockOptData sock_opt_data;
+  sock_opt_data.set_opt(SocketOptions::SOCKET_OPTIONS_SND_BUF);
+  sock_opt_data.set_data_int32(1000);
+  auto set_socket_option_response = client::set_socket_option(stub(), socket_response.socket(), 13 /* nxSOL_SOCKET */, sock_opt_data);
+
+  EXPECT_SUCCESS(set_socket_option_response);
+}
+
 }  // namespace
 }  // namespace system
 }  // namespace tests

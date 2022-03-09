@@ -43,14 +43,15 @@ inline bool status_ok(int32 status)
       }
     }
 
-    response->mutable_optval()->set_opt(request->opt_name_raw());
+    response->mutable_optval()->set_opt(request->opt_name());
     nxsocklen_t optlen{};
     int32_t status;
-    switch (request->opt_name_raw()) {
+    switch (request->opt_name()) {
       case SocketOptions::SOCKET_OPTIONS_RX_DATA:
       case SocketOptions::SOCKET_OPTIONS_RCV_BUF:
       case SocketOptions::SOCKET_OPTIONS_SND_BUF: {
         int32_t data = 0;
+        optlen = static_cast<nxsocklen_t>(sizeof(data));
         status = library_->GetSocketOption(socket, level, opt_name, &data, &optlen);
         response->set_status(status);
         if (status_ok(status)) {
