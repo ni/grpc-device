@@ -18,7 +18,9 @@ namespace unit {
 class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInterface {
  public:
   MOCK_METHOD(int32, Close, (FakeHandle handle), (override));
+  MOCK_METHOD(int32, CloseSecondarySession, (SecondarySessionHandle secondarySessionHandle), (override));
   MOCK_METHOD(int32, GetCrossDriverSession, (FakeHandle handle, int32* crossDriverSession), (override));
+  MOCK_METHOD(int32, GetLatestErrorMessage, (char message[], uInt32 size), (override));
   MOCK_METHOD(const char*, GetStringAsReturnedValue, (char buf[512]), (override));
   MOCK_METHOD(int32, GetMarbleAttributeDouble, (FakeHandle handle, int32 attribute, double* value), (override));
   MOCK_METHOD(int32, GetMarbleAttributeInt32, (FakeHandle handle, int32 attribute, int32* value), (override));
@@ -26,6 +28,7 @@ class NiFakeNonIviMockLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryI
   MOCK_METHOD(int32, Init, (const char sessionName[], FakeHandle* handle), (override));
   MOCK_METHOD(int32, InitFromCrossDriverSession, (int32 crossDriverSession, FakeHandle* handle), (override));
   MOCK_METHOD(int32, InitFromCrossDriverSessionArray, (int32 crossDriverSessionArray[], int32 numberOfCrossDriverSessions, FakeHandle* handle), (override));
+  MOCK_METHOD(int32, InitSecondarySession, (SecondarySessionHandle* secondarySessionHandle), (override));
   MOCK_METHOD(int32, InitWithHandleNameAsSessionName, (const char handleName[], FakeHandle* handle), (override));
   MOCK_METHOD(FakeHandle, InitWithReturnedSession, (const char handleName[]), (override));
   MOCK_METHOD(int32, InputArraysWithNarrowIntegerTypes, (const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[]), (override));

@@ -17,6 +17,23 @@
 
 namespace nixnetsocket_grpc::experimental::client {
 
+BindResponse
+bind(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BindRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.mutable_name()->CopyFrom(name);
+
+  auto response = BindResponse{};
+
+  raise_if_error(
+      stub->Bind(&context, request, &response));
+
+  return response;
+}
+
 CloseResponse
 close(const StubPtr& stub, const nidevice_grpc::Session& socket)
 {

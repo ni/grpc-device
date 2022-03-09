@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nirfmx_errors.h"
 #include <server/converters.h>
 
 namespace nirfmxlte_grpc {
@@ -25,11 +26,11 @@ namespace nirfmxlte_grpc {
 
   NiRFmxLTEService::NiRFmxLTEService(
       NiRFmxLTELibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxLTEFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
@@ -3106,27 +3107,6 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxLTEService::CfgSubblockFrequencyDefinition(::grpc::ServerContext* context, const CfgSubblockFrequencyDefinitionRequest* request, CfgSubblockFrequencyDefinitionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      int32 subblock_frequency_definition = request->subblock_frequency_definition();
-      auto status = library_->CfgSubblockFrequencyDefinition(instrument, selector_string, subblock_frequency_definition);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::CfgTransmitAntennaToAnalyze(::grpc::ServerContext* context, const CfgTransmitAntennaToAnalyzeRequest* request, CfgTransmitAntennaToAnalyzeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -4249,6 +4229,11 @@ namespace nirfmxlte_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+        response->set_is_new_session(is_new_session);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -4280,6 +4265,10 @@ namespace nirfmxlte_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -10089,7 +10078,7 @@ namespace nirfmxlte_grpc {
   NiRFmxLTEFeatureToggles::NiRFmxLTEFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxlte", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxlte", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxlte_grpc

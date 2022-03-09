@@ -136,6 +136,9 @@ foreach(api ${nidrivers})
     "${metadata_dir}/${api}/functions.py"
     "${metadata_dir}/${api}/functions_addon.py"
     "${metadata_dir}/${api}/__init__.py")
+  if (EXISTS "${metadata_dir}/${api}/custom_proto.mako")
+    set(codegen_dependencies ${codegen_dependencies} "${metadata_dir}/${api}/custom_proto.mako")
+  endif()
   set(all_codegen_dependencies
     ${all_codegen_dependencies}
     ${codegen_dependencies}
@@ -386,6 +389,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
+    "source/tests/unit/xnet_converters_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/feature_toggles.cpp"
     "source/server/semaphore.cpp"
@@ -403,6 +407,7 @@ add_executable(UnitTestsRunner
     "${proto_srcs_dir}/nifake_extension.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
+    "${proto_srcs_dir}/nixnetsocket.pb.cc"
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifake_extension/nifake_extension_service.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_service.cpp"

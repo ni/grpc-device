@@ -28,8 +28,10 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t DbAddAlias(const char databaseAlias[], const char databaseFilepath[], u32 defaultBaudRate);
   nxStatus_t DbAddAlias64(const char databaseAlias[], const char databaseFilepath[], u64 defaultBaudRate);
   nxStatus_t DbCloseDatabase(nxDatabaseRef_t databaseRef, u32 closeAllRefs);
+  nxStatus_t DbCreateObject(nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef);
   nxStatus_t DbDeleteObject(nxDatabaseRef_t dbObjectRef);
   nxStatus_t DbDeploy(const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete);
+  nxStatus_t DbFindObject(nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef);
   nxStatus_t DbGetDatabaseListSizes(const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer);
   nxStatus_t DbGetPropertySize(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32* propertySize);
   nxStatus_t DbMerge(nxDatabaseRef_t targetClusterRef, nxDatabaseRef_t sourceObjRef, u32 copyMode, char prefix[], u32 waitForComplete, u32* percentComplete);
@@ -65,8 +67,10 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using DbAddAliasPtr = decltype(&nxdbAddAlias);
   using DbAddAlias64Ptr = decltype(&nxdbAddAlias64);
   using DbCloseDatabasePtr = decltype(&nxdbCloseDatabase);
+  using DbCreateObjectPtr = decltype(&nxdbCreateObject);
   using DbDeleteObjectPtr = decltype(&nxdbDeleteObject);
   using DbDeployPtr = decltype(&nxdbDeploy);
+  using DbFindObjectPtr = decltype(&nxdbFindObject);
   using DbGetDatabaseListSizesPtr = decltype(&nxdbGetDatabaseListSizes);
   using DbGetPropertySizePtr = decltype(&nxdbGetPropertySize);
   using DbMergePtr = decltype(&nxdbMerge);
@@ -102,8 +106,10 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     DbAddAliasPtr DbAddAlias;
     DbAddAlias64Ptr DbAddAlias64;
     DbCloseDatabasePtr DbCloseDatabase;
+    DbCreateObjectPtr DbCreateObject;
     DbDeleteObjectPtr DbDeleteObject;
     DbDeployPtr DbDeploy;
+    DbFindObjectPtr DbFindObject;
     DbGetDatabaseListSizesPtr DbGetDatabaseListSizes;
     DbGetPropertySizePtr DbGetPropertySize;
     DbMergePtr DbMerge;

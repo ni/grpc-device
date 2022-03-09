@@ -107,11 +107,7 @@ def _create_standard_arg(parameter):
         return f"CallbackRouter::handle_callback, "
     elif "callback_token" in parameter:
         return f"handler->token(), "
-    elif (
-        not is_output
-        and common_helpers.is_pointer_parameter(parameter)
-        and "hardcoded_value" not in parameter
-    ):
+    elif is_size_param_passed_by_ptr(parameter):
         return f"&{parameter_name}_copy, "
     elif not is_array and is_output:
         return f"&{parameter_name}, "
@@ -120,7 +116,7 @@ def _create_standard_arg(parameter):
 
 def create_args(parameters):
     """Get the args needed to call the library function."""
-    parameters = [p for p in parameters if not common_helpers.is_return_value(p)]
+    parameters = common_helpers.get_driver_api_params(parameters)
     result = ""
     have_expanded_varargs = False
     for parameter in parameters:
@@ -190,7 +186,7 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
 
 def create_params(parameters, expand_varargs=True):
     """Get the params needed for defining the library function."""
-    parameters = [p for p in parameters if not common_helpers.is_return_value(p)]
+    parameters = common_helpers.get_driver_api_params(parameters)
     if not len(parameters):
         return ""
     repeated_parameters = [p for p in parameters if common_helpers.is_repeating_parameter(p)]
@@ -216,7 +212,7 @@ def expand_varargs_parameters(parameters):
     The max_length value comes from the first repeated_var_args parameter. Each repeated parameter
     gets a number (starting at zero) appended to the parameter name.
     """
-    parameters = [p for p in parameters if not common_helpers.is_return_value(p)]
+    parameters = common_helpers.get_driver_api_params(parameters)
     if not common_helpers.has_repeated_varargs_parameter(parameters):
         return parameters
     # omit the varargs parameters that we're going to expand
@@ -467,19 +463,18 @@ def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int
     }
 
 
-def get_resource_handle_type(config: dict) -> str:
+def get_resource_handle_types(config: dict) -> List[str]:
     """Get the resource_handle_type config setting."""
-    return config.get("resource_handle_type", "ViSession")
+    resource_handle_type = config.get("resource_handle_type", ["ViSession"])
+    if isinstance(resource_handle_type, str):
+        return [resource_handle_type]
+    else:
+        return resource_handle_type
 
 
 def _get_shared_resource_repository_ptr_type(resource_handle_type: str) -> str:
     resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
     return f"std::shared_ptr<{resource_repository_type}>"
-
-
-def get_driver_shared_resource_repository_ptr_type(driver_config: dict) -> str:
-    """Get the SessionResourceRepository pointer type for this driver."""
-    return _get_shared_resource_repository_ptr_type(get_resource_handle_type(driver_config))
 
 
 class CrossDriverSessionDependency(NamedTuple):  # noqa: D101
@@ -488,6 +483,41 @@ class CrossDriverSessionDependency(NamedTuple):  # noqa: D101
     resource_repository_type: str
     field_name: str
     local_name: str
+
+
+SessionRepositoryHandleTypeDependencyMap = Dict[str, CrossDriverSessionDependency]
+
+
+def get_driver_shared_resource_repository_ptr_deps(
+    driver_config: dict, functions: dict
+) -> SessionRepositoryHandleTypeDependencyMap:
+    """Get handle-type to CrossDriverSessionDependency map used by this driver.
+
+    Combine resource_handle_type and cross_driver_session types in single map since both
+    of them together decide repositories required by driver. Combining into single map also
+    helps remove duplicates.
+    """
+    resource_repository_deps = [
+        _create_cross_driver_session_dependency(resource_handle_type)
+        for resource_handle_type in get_resource_handle_types(driver_config)
+    ]
+
+    resource_repository_deps[0] = CrossDriverSessionDependency(
+        resource_repository_deps[0].resource_handle_type,
+        "ResourceRepositorySharedPtr",
+        resource_repository_deps[0].resource_repository_type,
+        "session_repository_",
+        "resource_repository",
+    )
+
+    resource_repository_type_dependency_map = {
+        d.resource_handle_type: d for d in resource_repository_deps
+    }
+
+    for d in get_cross_driver_session_dependencies(functions):
+        resource_repository_type_dependency_map.update({d.resource_handle_type: d})
+
+    return resource_repository_type_dependency_map
 
 
 def _create_cross_driver_session_dependency(
@@ -521,14 +551,23 @@ def get_cross_driver_session_dependency(parameter: dict) -> CrossDriverSessionDe
     return _create_cross_driver_session_dependency(parameter["cross_driver_session"])
 
 
-def session_repository_field_name(param: dict) -> str:
+def session_repository_field_name(param: dict, config: dict) -> str:
     """Get the name of the session repository field used for the given parameter."""
     cross_driver_session_type = _get_cross_driver_session_type(param)
 
     if cross_driver_session_type:
         return get_cross_driver_session_dependency(param).field_name
     else:
-        return "session_repository_"
+        resource_handle_deps = get_driver_shared_resource_repository_ptr_deps(
+            config,
+            functions={},  # This is called for retrieving session repo field name for specific parameter, functions is not needed
+        )
+        resource_handle_dep = next(
+            resource_handle_deps[resource_handle_type]
+            for resource_handle_type in resource_handle_deps
+            if resource_handle_type == common_helpers.get_underlying_type(param)
+        )
+        return resource_handle_dep.field_name
 
 
 SessionRepositoryHandleTypeMap = Dict[str, Dict[str, Any]]
@@ -543,16 +582,17 @@ def list_session_repository_handle_types(
     """
     session_repository_handle_type_map = {}  # type: SessionRepositoryHandleTypeMap
     for config in driver_configs:
-        handle_type = get_resource_handle_type(config)
-        if handle_type in session_repository_handle_type_map:
-            old_windows_only = session_repository_handle_type_map[handle_type]["windows_only"]
-            new_windows_only = config.get("windows_only", False) and old_windows_only
-            session_repository_handle_type_map[handle_type]["windows_only"] = new_windows_only
-        else:
-            session_repository_handle_type_map[handle_type] = {
-                "local_name": f"{common_helpers.pascal_to_snake(handle_type)}_repository",
-                "windows_only": config.get("windows_only", False),
-            }
+        handle_types = get_resource_handle_types(config)
+        for handle_type in handle_types:
+            if handle_type in session_repository_handle_type_map:
+                old_windows_only = session_repository_handle_type_map[handle_type]["windows_only"]
+                new_windows_only = config.get("windows_only", False) and old_windows_only
+                session_repository_handle_type_map[handle_type]["windows_only"] = new_windows_only
+            else:
+                session_repository_handle_type_map[handle_type] = {
+                    "local_name": f"{common_helpers.pascal_to_snake(handle_type)}_repository",
+                    "windows_only": config.get("windows_only", False),
+                }
     return session_repository_handle_type_map
 
 
@@ -607,3 +647,17 @@ def should_copy_to_response(parameter: dict) -> bool:
     # They should execute that map/copy logic even if include_in_proto is False.
     is_mapped_as_repeating_parameter = common_helpers.is_repeating_parameter(parameter)
     return is_included_in_response_proto or is_mapped_as_repeating_parameter
+
+
+def is_size_param_passed_by_ptr(parameter: dict) -> bool:
+    """Return whether parameters is a size param passed-by-pointer."""
+    return parameter.get("is_size_param") and parameter.get("pointer")
+
+
+def get_last_error_output_param(parameters: List[dict]) -> Optional[dict]:
+    """Get the get_last_error parameter if any (or None)."""
+    get_last_error_outputs = [
+        p for p in parameters if common_helpers.is_get_last_error_output_param(p)
+    ]
+    assert len(get_last_error_outputs) <= 1, "Only one get_last_error output is supported"
+    return get_last_error_outputs[0] if get_last_error_outputs else None

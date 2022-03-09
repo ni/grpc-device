@@ -12,6 +12,7 @@
 #include <atomic>
 #include <vector>
 #include <numeric>
+#include "custom/nirfmx_errors.h"
 #include <server/converters.h>
 
 namespace nirfmxwlan_grpc {
@@ -26,11 +27,11 @@ namespace nirfmxwlan_grpc {
 
   NiRFmxWLANService::NiRFmxWLANService(
       NiRFmxWLANLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxWLANFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
@@ -2628,6 +2629,11 @@ namespace nirfmxwlan_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+        response->set_is_new_session(is_new_session);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -2659,6 +2665,10 @@ namespace nirfmxwlan_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -7803,7 +7813,7 @@ namespace nirfmxwlan_grpc {
   NiRFmxWLANFeatureToggles::NiRFmxWLANFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxwlan", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxwlan", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxwlan_grpc

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nifake_non_ivi_errors.h"
 #include <server/converters.h>
 #include <server/callback_router.h>
 #include <server/server_reactor.h>
@@ -22,13 +23,18 @@ namespace nifake_non_ivi_grpc {
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
 
+  const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
+
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
+      SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository,
       FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
       const NiFakeNonIviFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
+      secondary_session_handle_resource_repository_(secondary_session_handle_resource_repository),
       fake_cross_driver_handle_resource_repository_(fake_cross_driver_handle_resource_repository),
       feature_toggles_(feature_toggles)
   {
@@ -66,6 +72,26 @@ namespace nifake_non_ivi_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::CloseSecondarySession(::grpc::ServerContext* context, const CloseSecondarySessionRequest* request, CloseSecondarySessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto secondary_session_handle_grpc_session = request->secondary_session_handle();
+      SecondarySessionHandle secondary_session_handle = secondary_session_handle_resource_repository_->access_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
+      secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
+      auto status = library_->CloseSecondarySession(secondary_session_handle);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeNonIviService::GetCrossDriverSession(::grpc::ServerContext* context, const GetCrossDriverSessionRequest* request, GetCrossDriverSessionResponse* response)
   {
     if (context->IsCancelled()) {
@@ -89,6 +115,45 @@ namespace nifake_non_ivi_grpc {
         response->mutable_cross_driver_session()->set_id(session_id);
       }
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetLatestErrorMessage(::grpc::ServerContext* context, const GetLatestErrorMessageRequest* request, GetLatestErrorMessageResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+
+      while (true) {
+        auto status = library_->GetLatestErrorMessage(nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+
+        std::string message;
+        if (size > 0) {
+            message.resize(size - 1);
+        }
+        status = library_->GetLatestErrorMessage((char*)message.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_message(message);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_message()));
+        }
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -287,6 +352,10 @@ namespace nifake_non_ivi_grpc {
       if (status_ok(status)) {
         response->mutable_handle()->set_id(session_id);
       }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -354,6 +423,35 @@ namespace nifake_non_ivi_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_handle()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitSecondarySession(::grpc::ServerContext* context, const InitSecondarySessionRequest* request, InitSecondarySessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+
+      auto init_lambda = [&] () {
+        SecondarySessionHandle secondary_session_handle;
+        auto status = library_->InitSecondarySession(&secondary_session_handle);
+        return std::make_tuple(status, secondary_session_handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (SecondarySessionHandle id) { library_->CloseSecondarySession(id); };
+      int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->mutable_secondary_session_handle()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }

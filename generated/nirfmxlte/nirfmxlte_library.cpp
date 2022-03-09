@@ -111,7 +111,6 @@ NiRFmxLTELibrary::NiRFmxLTELibrary() : shared_library_(kLibraryName)
   function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_.get_function_pointer("RFmxLTE_CfgRFAttenuation"));
   function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_.get_function_pointer("RFmxLTE_CfgReferenceLevel"));
   function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_.get_function_pointer("RFmxLTE_CfgSoftwareEdgeTrigger"));
-  function_pointers_.CfgSubblockFrequencyDefinition = reinterpret_cast<CfgSubblockFrequencyDefinitionPtr>(shared_library_.get_function_pointer("RFmxLTE_CfgSubblockFrequencyDefinition"));
   function_pointers_.CfgTransmitAntennaToAnalyze = reinterpret_cast<CfgTransmitAntennaToAnalyzePtr>(shared_library_.get_function_pointer("RFmxLTE_CfgTransmitAntennaToAnalyze"));
   function_pointers_.CfgeNodeBCategory = reinterpret_cast<CfgeNodeBCategoryPtr>(shared_library_.get_function_pointer("RFmxLTE_CfgeNodeBCategory"));
   function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_.get_function_pointer("RFmxLTE_CheckMeasurementStatus"));
@@ -1397,18 +1396,6 @@ int32 NiRFmxLTELibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandl
   return RFmxLTE_CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
 #else
   return function_pointers_.CfgSoftwareEdgeTrigger(instrumentHandle, selectorString, triggerDelay, enableTrigger);
-#endif
-}
-
-int32 NiRFmxLTELibrary::CfgSubblockFrequencyDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 subblockFrequencyDefinition)
-{
-  if (!function_pointers_.CfgSubblockFrequencyDefinition) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_CfgSubblockFrequencyDefinition.");
-  }
-#if defined(_MSC_VER)
-  return RFmxLTE_CfgSubblockFrequencyDefinition(instrumentHandle, selectorString, subblockFrequencyDefinition);
-#else
-  return function_pointers_.CfgSubblockFrequencyDefinition(instrumentHandle, selectorString, subblockFrequencyDefinition);
 #endif
 }
 

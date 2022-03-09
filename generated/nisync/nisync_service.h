@@ -37,7 +37,7 @@ public:
 
   NiSyncService(
     NiSyncLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiSyncFeatureToggles& feature_toggles = {});
   virtual ~NiSyncService();
   

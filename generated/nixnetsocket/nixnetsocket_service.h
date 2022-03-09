@@ -37,10 +37,11 @@ public:
 
   NiXnetSocketService(
     NiXnetSocketLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiXnetSocketFeatureToggles& feature_toggles = {});
   virtual ~NiXnetSocketService();
   
+  ::grpc::Status Bind(::grpc::ServerContext* context, const BindRequest* request, BindResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status GetLastErrorNum(::grpc::ServerContext* context, const GetLastErrorNumRequest* request, GetLastErrorNumResponse* response) override;
   ::grpc::Status GetLastErrorStr(::grpc::ServerContext* context, const GetLastErrorStrRequest* request, GetLastErrorStrResponse* response) override;

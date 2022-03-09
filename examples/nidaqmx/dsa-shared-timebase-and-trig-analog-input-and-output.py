@@ -84,37 +84,37 @@ import nidaqmx_pb2 as nidaqmx_types
 import nidaqmx_pb2_grpc as grpc_nidaqmx
 
 # False = sample clock, True = reference clock
-synchronization_type_is_reference_clock = False
-server_address = "localhost"
-server_port = "31763"
-leader_device = "Dev1"
-follower_device = "Dev2"
+SYNCHRONIZATION_TYPE_IS_REFERENCE_CLOCK = False
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+LEADER_DEVICE = "Dev1"
+FOLLOWER_DEVICE = "Dev2"
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    leader_device = sys.argv[3]
+    LEADER_DEVICE = sys.argv[3]
 if len(sys.argv) >= 5:
-    follower_device = sys.argv[4]
+    FOLLOWER_DEVICE = sys.argv[4]
 
-leader_input_channel = f"{leader_device}/ai0"
-leader_output_channel = f"{leader_device}/ao0"
-follower_input_channel = f"{follower_device}/ai0"
-follower_output_channel = f"{follower_device}/ao0"
+LEADER_INPUT_CHANNEL = f"{LEADER_DEVICE}/ai0"
+LEADER_OUTPUT_CHANNEL = f"{LEADER_DEVICE}/ao0"
+FOLLOWER_INPUT_CHANNEL = f"{FOLLOWER_DEVICE}/ai0"
+FOLLOWER_OUTPUT_CHANNEL = f"{FOLLOWER_DEVICE}/ao0"
 
 client = None
 leader_input_task = None
 leader_output_task = None
 follower_input_task = None
 follower_output_task = None
-num_leader_samples_written = 0
-num_follower_samples_written = 0
 
 
 async def _main():
-    global client, leader_input_task, leader_output_task, follower_input_task, follower_output_task, num_leader_samples_written, num_follower_samples_written
-    async with grpc.aio.insecure_channel(f"{server_address}:{server_port}") as channel:
+    global client, leader_input_task, leader_output_task, follower_input_task, follower_output_task
+    num_leader_samples_written = 0
+    num_follower_samples_written = 0
+    async with grpc.aio.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
@@ -186,7 +186,7 @@ async def _main():
                 client.CreateAIVoltageChan(
                     nidaqmx_types.CreateAIVoltageChanRequest(
                         task=leader_input_task,
-                        physical_channel=leader_input_channel,
+                        physical_channel=LEADER_INPUT_CHANNEL,
                         min_val=-10.0,
                         max_val=10.0,
                         units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
@@ -216,7 +216,7 @@ async def _main():
                 client.CreateAOVoltageChan(
                     nidaqmx_types.CreateAOVoltageChanRequest(
                         task=leader_output_task,
-                        physical_channel=leader_output_channel,
+                        physical_channel=LEADER_OUTPUT_CHANNEL,
                         min_val=-10.0,
                         max_val=10.0,
                         units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
@@ -245,7 +245,7 @@ async def _main():
                 client.CreateAIVoltageChan(
                     nidaqmx_types.CreateAIVoltageChanRequest(
                         task=follower_input_task,
-                        physical_channel=follower_input_channel,
+                        physical_channel=FOLLOWER_INPUT_CHANNEL,
                         min_val=-10.0,
                         max_val=10.0,
                         units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
@@ -275,7 +275,7 @@ async def _main():
                 client.CreateAOVoltageChan(
                     nidaqmx_types.CreateAOVoltageChanRequest(
                         task=follower_output_task,
-                        physical_channel=follower_output_channel,
+                        physical_channel=FOLLOWER_OUTPUT_CHANNEL,
                         min_val=-10.0,
                         max_val=10.0,
                         units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
@@ -295,7 +295,7 @@ async def _main():
             )
 
             # DAQmx Clock Synchronization code
-            if synchronization_type_is_reference_clock:
+            if SYNCHRONIZATION_TYPE_IS_REFERENCE_CLOCK:
                 # Note: Not all DSA devices support reference clock synchronization. Refer to
                 # your hardware device manual for further information on whether this method
                 # of synchronization is supported for your particular device.
@@ -517,7 +517,7 @@ async def _main():
             )
 
             async def read_data():
-                global num_leader_samples_written, num_follower_samples_written
+                nonlocal num_leader_samples_written, num_follower_samples_written
                 async for every_n_samples_response in every_n_samples_stream:
                     await raise_if_error(every_n_samples_response)
                     leader_response: nidaqmx_types.ReadAnalogF64Response = (
@@ -575,7 +575,7 @@ async def _main():
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-                error_message = f"Failed to connect to server on {server_address}:{server_port}"
+                error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
             elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
                 error_message = (
                     "The operation is not implemented or is not supported/enabled in this service"

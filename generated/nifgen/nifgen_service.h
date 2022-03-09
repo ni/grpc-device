@@ -37,7 +37,7 @@ public:
 
   NiFgenService(
     NiFgenLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiFgenFeatureToggles& feature_toggles = {});
   virtual ~NiFgenService();
   

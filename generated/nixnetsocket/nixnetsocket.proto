@@ -16,6 +16,7 @@ package nixnetsocket_grpc;
 import "session.proto";
 
 service NiXnetSocket {
+  rpc Bind(BindRequest) returns (BindResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
   rpc GetLastErrorStr(GetLastErrorStrRequest) returns (GetLastErrorStrResponse);
@@ -24,6 +25,34 @@ service NiXnetSocket {
 
 enum NiXnetSocketAttribute {
   NIXNETSOCKET_ATTRIBUTE_UNSPECIFIED = 0;
+}
+
+message SockAddrIPv4 {
+  uint32 port = 1;
+  uint32 addr = 2;
+}
+
+message SockAddrIPv6 {
+  uint32 port = 1;
+  uint32 flow_info = 2;
+  bytes addr = 3;
+  uint32 scope_id = 4;
+}
+
+message SockAddr {
+  oneof addr {
+    SockAddrIPv4 ipv4 = 1;
+    SockAddrIPv6 ipv6 = 2;
+  }
+}
+
+message BindRequest {
+  nidevice_grpc.Session socket = 1;
+  SockAddr name = 2;
+}
+
+message BindResponse {
+  int32 status = 1;
 }
 
 message CloseRequest {

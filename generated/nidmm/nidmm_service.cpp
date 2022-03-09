@@ -25,10 +25,10 @@ namespace nidmm_grpc {
 
   NiDmmService::NiDmmService(
       NiDmmLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiDmmFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }

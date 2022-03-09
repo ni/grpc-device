@@ -78,6 +78,22 @@ TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Close_ReturnsAndSetsExpected
   EXPECT_SUCCESS(close_get_last_error_str);
   EXPECT_THAT("The specified socket could not be found.", close_get_last_error_str.error());
 }
+
+TEST_F(NiXnetDriverApiTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedErrors)
+{
+  auto sock_addr = SockAddr{};
+  sock_addr.mutable_ipv4()->set_addr(0x7F000001);
+  sock_addr.mutable_ipv4()->set_port(31764);
+  auto socket_response = client::socket(stub(), 2 /* nxAF_INET */, 1 /* STREAM */, 6 /* TCP */);
+  auto bind_response = client::bind(stub(), socket_response.socket(), sock_addr);
+  auto bind_get_last_error = client::get_last_error_num(stub());
+  auto bind_get_last_error_str = client::get_last_error_str(stub(), 512);
+
+  EXPECT_XNET_ERROR(FAILED_INIT, socket_response);
+  EXPECT_XNET_ERROR(FAILED_INIT, bind_response);
+  EXPECT_XNET_ERROR(-13009, bind_get_last_error);
+  EXPECT_THAT("The specified socket could not be found.", bind_get_last_error_str.error());
+}
 }  // namespace
 }  // namespace system
 }  // namespace tests

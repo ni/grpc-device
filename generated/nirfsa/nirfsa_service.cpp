@@ -26,10 +26,10 @@ namespace nirfsa_grpc {
 
   NiRFSAService::NiRFSAService(
       NiRFSALibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiRFSAFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }

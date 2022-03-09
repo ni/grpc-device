@@ -37,7 +37,7 @@ public:
 
   NiDCPowerService(
     NiDCPowerLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiDCPowerFeatureToggles& feature_toggles = {});
   virtual ~NiDCPowerService();
   

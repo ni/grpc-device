@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nirfmx_errors.h"
 #include <server/converters.h>
 
 namespace nirfmxnr_grpc {
@@ -25,11 +26,11 @@ namespace nirfmxnr_grpc {
 
   NiRFmxNRService::NiRFmxNRService(
       NiRFmxNRLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxNRFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
@@ -3311,6 +3312,11 @@ namespace nirfmxnr_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+        response->set_is_new_session(is_new_session);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -3342,6 +3348,10 @@ namespace nirfmxnr_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -7787,7 +7797,7 @@ namespace nirfmxnr_grpc {
   NiRFmxNRFeatureToggles::NiRFmxNRFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxnr", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxnr", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxnr_grpc

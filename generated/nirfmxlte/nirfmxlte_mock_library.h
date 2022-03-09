@@ -107,7 +107,6 @@ class NiRFmxLTEMockLibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   MOCK_METHOD(int32, CfgRFAttenuation, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue), (override));
   MOCK_METHOD(int32, CfgReferenceLevel, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel), (override));
   MOCK_METHOD(int32, CfgSoftwareEdgeTrigger, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger), (override));
-  MOCK_METHOD(int32, CfgSubblockFrequencyDefinition, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 subblockFrequencyDefinition), (override));
   MOCK_METHOD(int32, CfgTransmitAntennaToAnalyze, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 transmitAntennaToAnalyze), (override));
   MOCK_METHOD(int32, CfgeNodeBCategory, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 eNodeBCategory), (override));
   MOCK_METHOD(int32, CheckMeasurementStatus, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone), (override));

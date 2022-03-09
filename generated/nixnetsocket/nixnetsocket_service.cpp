@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/xnetsocket_converters.h"
 #include <server/converters.h>
 
 namespace nixnetsocket_grpc {
@@ -22,10 +23,10 @@ namespace nixnetsocket_grpc {
 
   NiXnetSocketService::NiXnetSocketService(
       NiXnetSocketLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiXnetSocketFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -38,6 +39,27 @@ namespace nixnetsocket_grpc {
   inline bool status_ok(int32 status)
   {
     return status >= 0;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::Bind(::grpc::ServerContext* context, const BindRequest* request, BindResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto socket_grpc_session = request->socket();
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      auto name = convert_from_grpc<nxsockaddr>(request->name());
+      auto namelen = name.size();
+      auto status = library_->Bind(socket, name, namelen);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------

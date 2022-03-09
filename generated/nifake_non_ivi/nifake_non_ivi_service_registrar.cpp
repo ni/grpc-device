@@ -17,12 +17,14 @@ namespace {
 struct LibraryAndService {
   LibraryAndService(
     const std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeHandle>>& resource_repository,
+    const std::shared_ptr<nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>>& secondary_session_handle_resource_repository,
     const std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>>& fake_cross_driver_handle_resource_repository,
     const NiFakeNonIviFeatureToggles& feature_toggles) 
       : library(), 
       service(
         &library, 
-        resource_repository, 
+        resource_repository,
+        secondary_session_handle_resource_repository,
         fake_cross_driver_handle_resource_repository,
         feature_toggles) {
   }
@@ -34,6 +36,7 @@ struct LibraryAndService {
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& builder, 
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeHandle>>& resource_repository,
+  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>>& secondary_session_handle_resource_repository,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>>& fake_cross_driver_handle_resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles)
 {
@@ -43,6 +46,7 @@ std::shared_ptr<void> register_service(
   {
     auto library_and_service_ptr = std::make_shared<LibraryAndService>(
       resource_repository,
+      secondary_session_handle_resource_repository,
       fake_cross_driver_handle_resource_repository,
       toggles);
     auto& service = library_and_service_ptr->service;

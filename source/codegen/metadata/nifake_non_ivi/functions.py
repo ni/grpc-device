@@ -10,6 +10,18 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CloseSecondarySession': {
+        'custom_close_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'secondarySessionHandle',
+                'type': 'SecondarySessionHandle',
+            },
+        ],
+        'returns': 'int32',
+    },
     'GetCrossDriverSession': {
         'init_method': True,
         'parameters': [
@@ -25,6 +37,25 @@ functions = {
                 'name': 'crossDriverSession',
                 'type': 'int32'
             },
+        ],
+        'returns': 'int32'
+    },
+    'GetLatestErrorMessage': {
+        'parameters': [
+            {
+                'direction': 'out',
+                'name': 'message',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
         ],
         'returns': 'int32'
     },
@@ -130,6 +161,12 @@ functions = {
                 'direction': 'out',
                 'name': 'handle',
                 'type': 'FakeHandle'
+            },
+            {
+                'direction': 'out',
+                'get_last_error': True,
+                'name': 'errorMessage',
+                'type': 'char[]'
             }
         ],
         'returns': 'int32'
@@ -178,6 +215,19 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'InitSecondarySession': {
+        'init_method': True,
+        'custom_close': 'CloseSecondarySession(id)',
+        'parameters': [
+            {
+                'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'secondarySessionHandle',
+                'type': 'SecondarySessionHandle',
+            },
+        ],
+        'returns': 'int32',
     },
     'InitWithHandleNameAsSessionName': {
         'init_method': True,

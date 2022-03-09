@@ -3,7 +3,6 @@ import common_helpers
 import service_helpers
 
 driver_configs = [data["config"] for data in drivers]
-driver_cross_driver_session_deps = [service_helpers.get_cross_driver_session_dependencies(data["functions"]) for data in drivers]
 repository_type_to_config = service_helpers.list_session_repository_handle_types(driver_configs)
 %>\
 //---------------------------------------------------------------------
@@ -48,19 +47,18 @@ std::shared_ptr<void> register_all_services(
 </%block>\
 % endfor
 
-% for config, cross_driver_session_deps in zip(driver_configs, driver_cross_driver_session_deps):
+% for driver in drivers:
 <%
+  config = driver["config"]
   namespace = f"{config['namespace_component']}_grpc"
-  resource_handle_type = service_helpers.get_resource_handle_type(config)
-  resource_repository_local_name = repository_type_to_config[resource_handle_type]["local_name"]
+  resource_handle_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config, driver["functions"])
 %>\
 <%block filter="common_helpers.os_conditional_compile_block(config)">\
   service_vector->push_back(
     ${namespace}::register_service(
       server_builder, 
-      ${resource_repository_local_name},
-% for cross_driver_dep in cross_driver_session_deps:
-      ${repository_type_to_config[cross_driver_dep.resource_handle_type]["local_name"]},
+% for resource_handle_type in resource_handle_deps:
+      ${repository_type_to_config[resource_handle_type]["local_name"]},
 % endfor
       feature_toggles));
 </%block>\

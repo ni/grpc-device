@@ -15,6 +15,7 @@ class NiXnetSocketLibraryInterface {
  public:
   virtual ~NiXnetSocketLibraryInterface() {}
 
+  virtual int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen) = 0;
   virtual int32_t Close(nxSOCKET socket) = 0;
   virtual int32_t GetLastErrorNum() = 0;
   virtual char* GetLastErrorStr(char buf[], size_t bufLen) = 0;

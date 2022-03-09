@@ -37,7 +37,7 @@ public:
 
   NiRFSGService(
     NiRFSGLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiRFSGFeatureToggles& feature_toggles = {});
   virtual ~NiRFSGService();
   

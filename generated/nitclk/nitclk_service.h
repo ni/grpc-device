@@ -37,7 +37,7 @@ public:
 
   NiTClkService(
     NiTClkLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     const NiTClkFeatureToggles& feature_toggles = {});
   virtual ~NiTClkService();
   

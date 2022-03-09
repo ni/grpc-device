@@ -2018,24 +2018,6 @@ cfg_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& ins
   return response;
 }
 
-CfgSubblockFrequencyDefinitionResponse
-cfg_subblock_frequency_definition(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& subblock_frequency_definition)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CfgSubblockFrequencyDefinitionRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-  request.set_subblock_frequency_definition(subblock_frequency_definition);
-
-  auto response = CfgSubblockFrequencyDefinitionResponse{};
-
-  raise_if_error(
-      stub->CfgSubblockFrequencyDefinition(&context, request, &response));
-
-  return response;
-}
-
 CfgTransmitAntennaToAnalyzeResponse
 cfg_transmit_antenna_to_analyze(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& transmit_antenna_to_analyze)
 {
